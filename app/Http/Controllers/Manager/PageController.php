@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Manager;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Model\Base\Page;
 
 class PageController extends Controller
 {
@@ -11,8 +12,8 @@ class PageController extends Controller
 	 * Get data of certain page
 	 * @return json
 	 */
-	public function get() {
-		return 'rgth';
+	public function get(int $id) {
+		return response()->json(Page::find($id), 200);
 	}
 
 	/**

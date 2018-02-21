@@ -11,6 +11,11 @@ const styles = theme => ({
 		fontSize: theme.typography.pxToRem(20),
 		lineHeight: 2.5,
 	},
+	breadcrumbs: {
+		textAlign: 'left',
+		fontSize: theme.typography.pxToRem(16),
+		fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+	},
 	button: {
 		margin: theme.spacing.unit,
 	},

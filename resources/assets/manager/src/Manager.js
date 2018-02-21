@@ -22,6 +22,15 @@ class Manager {
 	xhr() {
 		let XHR = ('onload' in new XMLHttpRequest()) ? XMLHttpRequest : XDomainRequest;
 		return new XHR();
+	}
+
+	getLocationProps() {
+		return params = location.search.replace('?', '').split('&').reduce((p, e) => {
+			var a = e.split('=')
+				p[decodeURIComponent(a[0])] = decodeURIComponent(a[1])
+				return p
+			}, {});
+	}
 };
 
 export default new Manager();

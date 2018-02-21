@@ -1,10 +1,10 @@
 <?php
 
-namespace App;
+namespace App\Model\Base;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Component extends Model
+class Setting extends Model
 {
     //
 }
