@@ -12,5 +12,25 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('index');
+});
+
+Route::get('/news', function (){
+    return view('news');
+});
+
+Route::get('/shop', function (){
+    return view('shop');
+});
+
+Route::get('/service', function (){
+    return view('service');
+});
+
+Route::get('/contacts', function (){
+    return view('contacts');
+});
+
+Route::get('/cart', function (){
+    return view('cart');
 });
