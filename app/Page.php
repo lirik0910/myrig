@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Collection;
 
 class Page extends Model
 {
@@ -21,4 +22,9 @@ class Page extends Model
 	public function view() {
 		return $this->belongsTo(View::class);
 	}
+
+	public function get(){
+	    $pages = $this->get();
+	    return $pages;
+    }
 }
