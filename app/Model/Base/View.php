@@ -1,15 +1,16 @@
 <?php
 
-namespace App;
+namespace App\Model\Base;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Context extends Model
+class View extends Model
 {
 	/**
 	 * Bind width page model
 	 */
-	public function page() {
+	public function page()
+	{
 		return $this->belongsToMany(Page::class);
 	}
 }

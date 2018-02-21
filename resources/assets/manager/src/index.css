@@ -10,3 +10,13 @@ body {
 a {
 	text-decoration: none;
 }
+
+.breadcrumbs__container,
+.breadcrumbs__container li {
+	display: inline-block;
+}
+
+.breadcrumbs__container li:before {
+	margin: 8px;
+	content: '/';
+}

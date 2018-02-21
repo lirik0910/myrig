@@ -1,10 +1,10 @@
 <?php
 
-namespace App;
+namespace App\Model\Base;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Promocode extends Model
+class Component extends Model
 {
     //
 }

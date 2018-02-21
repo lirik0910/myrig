@@ -11,7 +11,9 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
+import Manager from '../Manager.js';
 import styles from './styles.js';
 import PropTypes from 'prop-types';
 import Paper from 'material-ui/Paper';
@@ -85,6 +87,8 @@ class Pages extends Component {
 		let { classes } = this.props;
 		let { edit, remove } = this.state;
 
+		console.log(Manager.getLocationProps())
+
 		return <Paper className={classes.root} zdepth={1}>
 					<ExpansionPanel className={classes.expansion}>
 						<ExpansionPanelSummary className={classes.summary} expandIcon={<ExpandMoreIcon />}>
@@ -93,19 +97,30 @@ class Pages extends Component {
 
 						<ExpansionPanelDetails className={classes.details}>
 							<div className={classes.options}>
-								<Button className={classes.button}>
-									Добавить страницу
-								</Button>
+								<Grid container spacing={24}>
+									<Grid item xs={12} sm={6} className={classes.breadcrumbs}>
+										<ul className="breadcrumbs__container">
+											<li><Link to="#">Add</Link></li>
+											<li><Link to="#">Add</Link></li>
+										</ul>
+									</Grid>
 
-								{edit !== 0 ?
-									<Button className={classes.button}>
-										Редактировать
-									</Button> : ''}
+									<Grid item xs={12} sm={6}>
+										<Button className={classes.button}>
+											Добавить страницу
+										</Button>
 
-								{remove.length > 0 ?
-									<Button color="secondary" className={classes.button}>
-										Удалить отмеченные
-									</Button> : ''}
+										{edit !== 0 ?
+											<Button className={classes.button}>
+												Редактировать
+											</Button> : ''}
+
+										{remove.length > 0 ?
+											<Button color="secondary" className={classes.button}>
+												Удалить отмеченные
+											</Button> : ''}
+									</Grid>
+								</Grid>
 							</div>
 
 							<ManagerTable columns={[{
@@ -131,12 +146,12 @@ class Pages extends Component {
 							}]}
 							data={[{
 								id: 1,
-								link: '/',
+								link: <Link to="?c=/">/</Link>,
 								title: 'Главная',
 								description: 'Главная страница сайта',
 							}, {
 								id: 2,
-								link: '/contacts',
+								link: <Link to="?c=/contacts/">/contacts</Link>,
 								title: 'Lorem ipsum dolor sit amet',
 								description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
 							}]}
