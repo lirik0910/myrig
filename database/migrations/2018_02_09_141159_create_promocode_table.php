@@ -6,31 +6,51 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreatePromocodeTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
-    public function up()
-    {
-        Schema::create('promocode', function (Blueprint $table){
-            $table->increments('id');
-            $table->string('title');
-            $table->text('description');
-            $table->integer('count');
-            $table->float('value');
-            $table->integer('percent');
-            $table->tinyInteger('active');
-        });
-    }
+	/**
+	 * Run the migrations.
+	 *
+	 * @return void
+	 */
+	public function up()
+	{
+		Schema::create('promocodes', function (Blueprint $table){
+			$table->increments('id');
+			
+			$table->string('title', 255)
+				->nullable(false)
+				->comment('Promocode name');
+			
+			$table->text('description')
+				->nullable(true)
+				->comment('Promocode description');
+			
+			$table->integer('count', false, true)
+				->default(1)
+				->comment('Number of promocode used');
+			
+			$table->float('value')
+				->dafult('1.00')
+				->comment('Fixed promocode discount');
+			
+			$table->integer('percent', false, true)
+				->dafult(1)
+				->comment('Percent promocode discount');;
+			
+			$table->tinyInteger('active')
+				->default(1)
+				->comment('Promocode active status');
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        //
-    }
+			$table->timestamps();
+		});
+	}
+
+	/**
+	 * Reverse the migrations.
+	 *
+	 * @return void
+	 */
+	public function down()
+	{
+		//
+	}
 }

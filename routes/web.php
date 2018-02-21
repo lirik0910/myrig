@@ -34,3 +34,4 @@ Route::get('/contacts', function (){
 Route::get('/cart', function (){
     return view('cart');
 });
+

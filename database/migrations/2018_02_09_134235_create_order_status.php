@@ -6,29 +6,43 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateOrderStatus extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
-    public function up()
-    {
-        Schema::create('orderStatus', function (Blueprint $table){
-            $table->increments('id');
-            $table->string('title');
-            $table->text('description');
-            $table->string('colour');
-            $table->tinyInteger('active');
-        });
-    }
+	/**
+	 * Run the migrations.
+	 *
+	 * @return void
+	 */
+	public function up()
+	{
+		Schema::create('order_statuses', function (Blueprint $table){
+			$table->increments('id');
+			
+			$table->string('title', 255)
+				->nullable(false)
+				->comment('Status name');
+			
+			$table->text('description')
+				->nullable(true)
+				->comment('Status description');
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        //
-    }
+			$table->string('color', 255)
+				->default('#000')
+				->comment('Status color');
+
+			$table->tinyInteger('active')
+				->default(1)
+				->comment('Status active status');
+
+			$table->timestamps();
+		});
+	}
+
+	/**
+	 * Reverse the migrations.
+	 *
+	 * @return void
+	 */
+	public function down()
+	{
+		//
+	}
 }

@@ -6,39 +6,59 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateOrderTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
-    public function up()
-    {
-        Schema::create('order', function (Blueprint $table){
-            $table->increments('id');
-            $table->integer('number')
-                ->unsigned();;
-            $table->integer('user_id')
-                ->unsigned();
-            $table->float('cost');
-            $table->float('prepayment');
-            $table->integer('status_id')
-                ->unsigned();
-            $table->tinyInteger('paid');
-            $table->integer('paymentType_id')
-                ->unsigned();
-            $table->integer('context')
-                ->unsigned();
-            $table->timestamp('createdtime');
-        });
-    }
+	/**
+	 * Run the migrations.
+	 *
+	 * @return void
+	 */
+	public function up()
+	{
+		Schema::create('orders', function (Blueprint $table) {
+			$table->increments('id');
+			
+			$table->integer('number', false, true)
+				->nullable(false)
+				->comment('Order number');
+			
+			$table->integer('user_id', false, true)
+				->nullable(false)
+				->comment('Customer user ID');
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        //
-    }
+			$table->float('cost')
+				->default('0.00')
+				->comment('Order cost');
+
+			$table->float('prepayment')
+				->defaut('0.00')
+				->comment('Order prepayment');
+
+			$table->integer('status_id', false, true)
+				->nullable(false)
+				->comment('Order status ID');
+
+			$table->tinyInteger('paid')
+				->default(0)
+				->comment('Order paid status');
+
+			$table->integer('payment_type_id', false, true)
+				->nullable(false)
+				->comment('Payment type of order');
+			
+			$table->integer('context_id', false, true)
+				->nullable(false)
+				->comment('Order context ID');
+
+			$table->timestamps();
+		});
+	}
+
+	/**
+	 * Reverse the migrations.
+	 *
+	 * @return void
+	 */
+	public function down()
+	{
+		//
+	}
 }
