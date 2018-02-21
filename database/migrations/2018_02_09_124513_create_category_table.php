@@ -6,36 +6,47 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateCategoryTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
-    public function up()
-    {
-        Schema::create('category', function (Blueprint $table){
-            $table->increments('id');
-            $table->integer('parent_id')
-                ->unsigned()
-                ->nullable()
-                ->comment('Parent category ID');
-            $table->string('title')
-                ->comment('Category title');
-            $table->text('description')
-                ->comment('Category desc');
-            $table->string('icon')
-                ->comment('Category icon');
-            $table->tinyInteger('active');
-        });
-    }
+	/**
+	 * Run the migrations.
+	 *
+	 * @return void
+	 */
+	public function up()
+	{
+		Schema::create('product_categories', function (Blueprint $table) {
+			$table->increments('id');
+			
+			$table->integer('parent_id', false, true)
+				->default(0)
+				->comment('Parent category ID');
+			
+			$table->string('title', 255)
+				->nullable(false)
+				->comment('Category name');
+			
+			$table->text('description')
+				->nullable(true)
+				->comment('Category description');
+			
+			$table->string('icon', 255)
+				->nullable(false)
+				->comment('Category icon');
+			
+			$table->tinyInteger('active')
+				->default(1)
+				->comment('Category active status');
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        //
-    }
+			$table->timestamps();
+		});
+	}
+
+	/**
+	 * Reverse the migrations.
+	 *
+	 * @return void
+	 */
+	public function down()
+	{
+		//
+	}
 }
