@@ -14,6 +14,10 @@ class CreatePaymentTypeTable extends Migration
 	public function up()
 	{
 		Schema::create('payment_types', function (Blueprint $table){
+			$table->engine = 'InnoDB';
+			$table->charset = 'utf8';
+			$table->collation = 'utf8_unicode_ci';
+			
 			$table->increments('id');
 
 			$table->string('title', 255)

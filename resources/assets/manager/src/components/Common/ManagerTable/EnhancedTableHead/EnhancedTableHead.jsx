@@ -23,15 +23,7 @@ import {
 	TableRow,
 	TableSortLabel,
 } from 'material-ui/Table';
-
-const columnData = [
-	{ id: 'name', numeric: false, disablePadding: true, label: 'Название страницы' },
-	{ id: 'calories', numeric: true, disablePadding: false, label: 'Calories' },
-	{ id: 'fat', numeric: true, disablePadding: false, label: 'Fat (g)' },
-	{ id: 'carbs', numeric: true, disablePadding: false, label: 'Carbs (g)' },
-	{ id: 'protein', numeric: true, disablePadding: false, label: 'Protein (g)' },
-];
-
+import * as StateElementAction from '../../../../actions/StateElementAction.js';
 /**
  * Header block
  * @extends Component
@@ -63,7 +55,7 @@ class EnhancedTableHead extends Component {
 	 * @return {Object} jsx object
 	 */
 	render() {
-		const { onSelectAllClick, order, orderBy, numSelected, rowCount, columns, selecting } = this.props;
+		let { onSelectAllClick, order, orderBy, numSelected, rowCount, columns, selecting, defaultSort } = this.props;
 
 		return <TableHead>
 				<TableRow>
@@ -73,7 +65,7 @@ class EnhancedTableHead extends Component {
 								indeterminate={numSelected > 0 && numSelected < rowCount}
 								checked={numSelected === rowCount}
 								onChange={onSelectAllClick} />
-						</TableCell> : ''}
+						</TableCell> : null}
 	
 					{columns.map(column => {
 						return <TableCell
@@ -83,19 +75,21 @@ class EnhancedTableHead extends Component {
 										order : 
 										false}>
 
-									<Tooltip
-										title="Sort"
-										placement={column.numeric ? 
-											'bottom-end' : 
-											'bottom-start'}
-										enterDelay={300}>
-											<TableSortLabel
-												active={orderBy === column.id}
-												direction={order}
-												onClick={this.createSortHandler(column.id)}>
-													{column.label}
-											</TableSortLabel>
-									</Tooltip>
+									{defaultSort === true ?
+										<Tooltip
+											title="Sort"
+											placement={column.numeric ? 
+												'bottom-end' : 
+												'bottom-start'}
+											enterDelay={300}>
+												<TableSortLabel
+													active={orderBy === column.id}
+													direction={order}
+													onClick={this.createSortHandler(column.id)}>
+														{column.label}
+												</TableSortLabel>
+										</Tooltip> : 
+										column.label}
 								</TableCell>
 						}, this)}
 				</TableRow>
@@ -121,7 +115,7 @@ function mapStateToProps(state) {
  */
 function mapDispatchToProps(dispatch) {
 	return {
-		//StateElementAction: bindActionCreators(StateElementAction, dispatch),
+		StateElementAction: bindActionCreators(StateElementAction, dispatch),
 	}
 }
 

@@ -14,6 +14,10 @@ class CreateProductPromocodeTable extends Migration
 	public function up()
 	{
 		Schema::create('product_promocodes', function (Blueprint $table){
+			$table->engine = 'InnoDB';
+			$table->charset = 'utf8';
+			$table->collation = 'utf8_unicode_ci';
+			
 			$table->increments('id');
 			
 			$table->integer('promocode_id', false, true)

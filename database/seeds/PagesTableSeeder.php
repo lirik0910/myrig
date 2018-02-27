@@ -13,12 +13,12 @@ class PagesTableSeeder extends Seeder
 	{
 		/** Get base context
 		 */
-		$context = App\Context::where('title', 'Base')->firstOrFail();
+		$context = App\Model\Base\Context::where('title', 'Base')->firstOrFail();
 
 		/** Get default views
 		 */
-		$viewIndex = App\View::where('title', 'Index')->firstOrFail();
-		$view404 = App\View::where('title', '404')->firstOrFail();
+		$viewIndex = App\Model\Base\View::where('title', 'Index')->firstOrFail();
+		$view404 = App\Model\Base\View::where('title', '404')->firstOrFail();
 
 		/** Get default user
 		 */
@@ -26,13 +26,13 @@ class PagesTableSeeder extends Seeder
 
 		/** Add index page
 		 */
-		$index = App\Page::create([
+		$index = App\Model\Base\Page::create([
 			'parent_id' => 0,
 			'context_id' => $context->id,
 			'view_id' => $viewIndex->id,
 			'link' => '/',
-			'title' => 'Главная',
-			'description' => 'Главная страница сайта',
+			'title' => 'Index page',
+			'description' => 'Site index page',
 			'introtext' => '',
 			'content' => '',
 			'createdby_id' => $user->id,
@@ -46,13 +46,13 @@ class PagesTableSeeder extends Seeder
 
 		/** Add 404 page
 		 */
-		$index = App\Page::create([
+		$index = App\Model\Base\Page::create([
 			'parent_id' => 0,
 			'context_id' => $context->id,
 			'view_id' => $view404->id,
 			'link' => '/',
-			'title' => 'Ошибка404',
-			'description' => 'Страница ошибки 404',
+			'title' => '404',
+			'description' => 'Page not found',
 			'introtext' => '',
 			'content' => '',
 			'createdby_id' => $user->id,

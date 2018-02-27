@@ -390,6 +390,5 @@
     /* ]]> */
 </script>
 <script type='text/javascript' src='https://myrig.com.ua/wp-includes/js/wp-embed.min.js?ver=4.9.4'></script>
-
 </body>
 </html>

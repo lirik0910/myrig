@@ -25,6 +25,12 @@ const styles = theme => ({
 	expansion: {
 		boxShadow: 'none'
 	},
+	control: {
+		width: '40px',
+		minWidth: '40px',
+		padding: '8px',
+		display: 'inline-block'
+	},
 	details: {
 		display: 'block',
 		paddingTop: 0

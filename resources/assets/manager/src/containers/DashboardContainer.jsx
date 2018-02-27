@@ -14,6 +14,7 @@ import { connect } from 'react-redux';
 
 import Header from '../components/Header/Header.jsx';
 import Menu from '../components/Menu/Menu.jsx';
+import * as StateElementAction from '../actions/StateElementAction.js';
 
 /**
  * DashboardContainer base container
@@ -27,7 +28,7 @@ class DashboardContainer extends Component {
 	 */
 	render() {
 		return <div className="dashboard__container">
-					<Header />
+					<Header title="Статистика" />
 					<Menu />
 				</div>
 	}
@@ -40,6 +41,7 @@ class DashboardContainer extends Component {
  */
 function mapStateToProps(state) {
 	return {
+		elements: state.elements
 	}
 }
 
@@ -50,6 +52,7 @@ function mapStateToProps(state) {
  */
 function mapDispatchToProps(dispatch) {
 	return {
+		StateElementAction: bindActionCreators(StateElementAction, dispatch),
 	}
 }
 

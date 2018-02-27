@@ -13,9 +13,23 @@ class ContextsTableSeeder extends Seeder
 	{
 		/** Add base context
 		 */
-		App\Context::create([
+		App\Model\Base\Context::create([
 			'title' => 'Base',
-			'description' => 'Базовый контекст'
+			'description' => 'Base context'
+		]);
+
+		/** Add ua context
+		 */
+		App\Model\Base\Context::create([
+			'title' => 'UA',
+			'description' => 'UA context'
+		]);
+
+		/** Add ru context
+		 */
+		App\Model\Base\Context::create([
+			'title' => 'RU',
+			'description' => 'RU context'
 		]);
 	}
 }
