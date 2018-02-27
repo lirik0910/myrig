@@ -36,7 +36,7 @@ class CreateProductTable extends Migration
 				->default(1)
 				->comment('Product active status');
 
-			$table->float('price')
+			$table->float('price', 8,2)
 				->default('0.00')
 				->comment('Product price');
 

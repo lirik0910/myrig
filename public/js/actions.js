@@ -237,11 +237,11 @@ jQuery(document).ready(function ($) {
 				e.preventDefault();
 				$('body').animate({
 					'opacity': 0.7
-				}, 400)
+				}, 400);
 				var fd = new FormData($(this)[0]);
-				 
+				var url = global.url + $('#callback').attr('action');
 				$.ajax({
-					url: global.url,
+					url: url,
 					data: fd,
 					type: 'POST',
 					//dataType: 'json',
@@ -291,9 +291,10 @@ jQuery(document).ready(function ($) {
 				'opacity': 0.7
 			}, 400)
 			var fd = new FormData($(this)[0]);
+			var url = global.url + $('#ticketback').attr('action');
 
 			$.ajax({
-				url: global.url,
+				url: ,
 				data: fd,
 				type: 'POST',
 				//dataType: 'json',

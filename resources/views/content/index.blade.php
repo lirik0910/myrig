@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+
 <main>
     <div class="main-back"></div>
     <script>
@@ -20,52 +21,18 @@
             <div class="row">
 
                 <div class="main-slider owl-carousel owl-theme" id="mainSlider">
-                    <div class="main-slide" data-dot="<span><p class='dashnav-progress'></p></span>">
-                        <div class="container">
-                            <div class="slide-text">
-                                <div class="title"><!--:ru-->DRAGON<strong>MINT</strong><!--:--></div>
-                                <div class="subtitle"><!--:ru-->Новый уровень Bitcoin майнинга<!--:--></div>
-                                <a href="https://myrig.com.ua/shop/" class="btn-default" data-wpel-link="internal">Подробнее</a>
+                    @foreach($products as $product)
+                        <div class="main-slide" data-dot="<span><p class='dashnav-progress'></p></span>">
+                            <div class="container">
+                                <div class="slide-text">
+                                    <div class="title"><!--:ru-->{{ $product->title }}<!--:--></div>
+                                    <div class="subtitle"><!--:ru-->{{ $product->description }}<!--:--></div>
+                                    <a href="{{url('/shop')}}" class="btn-default" data-wpel-link="internal">Подробнее</a>
+                                </div>
+                                <div class="slide-img" style="background-image: url({{asset($product->images[0]->url)}})"></div>
                             </div>
-                            <div class="slide-img" style="background-image: url({{URL::asset('uploads/1111111-e1516113029802-1024x941.png')}})"></div>
                         </div>
-                    </div>
-
-                    <div class="main-slide" data-dot="<span><p class='dashnav-progress'></p></span>">
-                        <div class="container">
-                            <div class="slide-text">
-                                <div class="title"><!--:ru-->ANT<strong>MINER S9</strong><!--:--></div>
-                                <div class="subtitle"><!--:ru-->Самый энергоэффективный майнер в мире<!--:--></div>
-                                <a href="https://myrig.com.ua/shop/" class="btn-default" data-wpel-link="internal">Подробнее</a>
-                            </div>
-                            <div class="slide-img" style="background-image: url({{URL::asset('uploads/1-copy-1024x768.png')}}"></div>
-                        </div>
-                    </div>
-
-                    <div class="main-slide" data-dot="<span><p class='dashnav-progress'></p></span>">
-                        <div class="container">
-                            <div class="slide-text">
-                                <div class="title"><!--:ru-->ANT<strong>MINER L3+</strong><!--:--></div>
-                                <div class="subtitle"><!--:ru-->Лучшее решение для майнинга Litecoin<!--:--></div>
-                                <a href="https://myrig.com.ua/shop/" class="btn-default" data-wpel-link="internal">Подробнее</a>
-                            </div>
-                            <div class="slide-img" style="background-image: url({{URL::asset('uploads/l3.png')}})"></div>
-                        </div>
-                    </div>
-
-                    <div class="main-slide" data-dot="<span><p class='dashnav-progress'></p></span>">
-                        <div class="container">
-                            <div class="slide-text">
-                                <div class="title"><!--:ru-->ANT<strong>MINER D3</strong><!--:--></div>
-                                <div class="subtitle"><!--:ru-->Майнинг DASH на максимальной мощности<!--:--></div>
-                                <a href="https://myrig.com.ua/shop/" class="btn-default" data-wpel-link="internal">Подробнее</a>
-                            </div>
-                            <div class="slide-img" style="background-image: url({{URL::asset('uploads/d3-1024x1024.png')}})"></div>
-                        </div>
-                    </div>
-
-
-
+                    @endforeach
                 </div>
             </div>
         </div>
@@ -226,28 +193,28 @@ display: none; justify-content: center; align-content: center; top: 0; position:
     <section class="banners">
         <div class="container">
             <div class="row">
-                <a href="https://myrig.com.ua/news/" class="banner col-sm-4" data-wpel-link="internal">
+                <a href="{{url('/news')}}" class="banner col-sm-4" data-wpel-link="internal">
                     <div class="banner-text">
                         <div class="title"><!--:ru-->НОВОСТИ<!--:--></div>
                         <div class="subtitle"><!--:ru-->Последние события мира криптовалют<!--:--></div>
                     </div>
-                    <div class="banner-back" style="background-image: url({{URL::asset('uploads/icon_Anton-02.svg')}})  ;    top: 37px ; width: 80px;
+                    <div class="banner-back" style="background-image: url({{URL::asset('images/icon_Anton-02.svg')}})  ;    top: 37px ; width: 80px;
     right: 54px; left: 300px;"></div>
                 </a>
-                <a href="https://myrig.com.ua/kalkulyator/" class="banner col-sm-4" data-wpel-link="internal">
+                <a href="{{url('/calculator')}}" class="banner col-sm-4" data-wpel-link="internal">
                     <div class="banner-text">
                         <div class="title"><!--:ru-->КАЛЬКУЛЯТОР<!--:--></div>
                         <div class="subtitle"><!--:ru-->Правильный расчет прибыли от майнинга<!--:--></div>
                     </div>
-                    <div class="banner-back" style="background-image: url({{URL::asset('uploads/calc.svg')}})  ;    top: 37px ; width: 80px;
+                    <div class="banner-back" style="background-image: url({{URL::asset('images/calc.svg')}})  ;    top: 37px ; width: 80px;
     right: 54px; left: 300px;"></div>
                 </a>
-                <a href="https://myrig.com.ua/info/" class="banner col-sm-4" data-wpel-link="internal">
+                <a href="{{url('/info')}}" class="banner col-sm-4" data-wpel-link="internal">
                     <div class="banner-text">
                         <div class="title"><!--:ru-->ИНФОРМАЦИЯ<!--:--></div>
                         <div class="subtitle"><!--:ru-->Полезная информация и новости компании<!--:--></div>
                     </div>
-                    <div class="banner-back" style="background-image: url({{URL::asset('uploads/articles.svg')}})  ;    top: 37px ; width: 80px;
+                    <div class="banner-back" style="background-image: url({{URL::asset('images/articles.svg')}})  ;    top: 37px ; width: 80px;
     right: 54px; left: 300px;"></div>
                 </a>
 

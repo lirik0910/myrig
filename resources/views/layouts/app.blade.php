@@ -58,11 +58,11 @@
 <body class="home">
 <div id="canvas">
     <nav id="myNavmenu" class="navmenu navmenu-default" role="navigation">
-        <ul id="menu-main-menu" class="nav"><li id="menu-item-31" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-31"><a href="https://myrig.com.ua/shop/" data-wpel-link="internal">Товары</a></li>
+        <ul id="menu-main-menu" class="nav"><li id="menu-item-31" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-31"><a href="{{url('/shop')}}" data-wpel-link="internal">Товары</a></li>
             <li id="menu-item-26" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-26"><a href="https://myrig.com.ua/hosting/" data-wpel-link="internal">Хостинг</a></li>
-            <li id="menu-item-29" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-29"><a href="https://myrig.com.ua/service/" data-wpel-link="internal">Сервис</a></li>
-            <li id="menu-item-27" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-27"><a href="https://myrig.com.ua/news/" data-wpel-link="internal">Новости</a></li>
-            <li id="menu-item-30" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-30"><a href="https://myrig.com.ua/kontaktyi/" data-wpel-link="internal">Контакты</a></li>
+            <li id="menu-item-29" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-29"><a href="{{url('/service')}}" data-wpel-link="internal">Сервис</a></li>
+            <li id="menu-item-27" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-27"><a href="{{url('/news')}}" data-wpel-link="internal">Новости</a></li>
+            <li id="menu-item-30" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-30"><a href="{{url('/contacts')}}" data-wpel-link="internal">Контакты</a></li>
         </ul>        </nav>
 </div>
 <header class="header">
@@ -78,18 +78,18 @@
                     <a class="navbar-brand" href="https://myrig.com.ua" data-wpel-link="internal"><img src="https://myrig.com.ua/wp-content/themes/bitmain/img/l.png" alt=""/></a>
                 </div>
                 <div class="collapse navbar-collapse" id="myNavbar">
-                    <ul id="menu-main-menu-1" class="nav navbar-nav"><li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-31"><a href="https://myrig.com.ua/shop/" data-wpel-link="internal">Товары</a></li>
+                    <ul id="menu-main-menu-1" class="nav navbar-nav"><li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-31"><a href="{{url('/shop')}}" data-wpel-link="internal">Товары</a></li>
                         <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-26"><a href="https://myrig.com.ua/hosting/" data-wpel-link="internal">Хостинг</a></li>
-                        <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-29"><a href="https://myrig.com.ua/service/" data-wpel-link="internal">Сервис</a></li>
-                        <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-27"><a href="https://myrig.com.ua/news/" data-wpel-link="internal">Новости</a></li>
-                        <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-30"><a href="https://myrig.com.ua/kontaktyi/" data-wpel-link="internal">Контакты</a></li>
+                        <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-29"><a href="{{url('/service')}}" data-wpel-link="internal">Сервис</a></li>
+                        <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-27"><a href="{{url('/news')}}" data-wpel-link="internal">Новости</a></li>
+                        <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-30"><a href="{{url('/contacts')}}" data-wpel-link="internal">Контакты</a></li>
                     </ul>
                 </div>
                 <div class="user-panel">
                     <a href="https://myrig.com.ua/sso-login/" class="reg-f0" data-wpel-link="internal"><img src="https://myrig.com.ua/wp-content/themes/bitmain/img/icons-07.svg" alt=""/></a>
 
                     <!-- <a href="#reg" class="reg-f" data-wpel-link="internal"><img src="https://myrig.com.ua/wp-content/themes/bitmain/img/icons-07.svg" alt=""/></a>  -->
-                    <a href="https://myrig.com.ua/cart/" data-wpel-link="internal"><img src="https://myrig.com.ua/wp-content/themes/bitmain/img/icons-02.svg" alt=""/><div class="label">0</div></a>
+                    <a href="{{url('/cart')}}" data-wpel-link="internal"><img src="https://myrig.com.ua/wp-content/themes/bitmain/img/icons-02.svg" alt=""/><div class="label">0</div></a>
                 </div>
             </div>
         </div>
@@ -145,10 +145,10 @@
                     </div>
                 </div>
                 <div class="col-sm-10 col-md-7 col-lg-7 footer-menu">
-                    <ul id="menu-footer-menu-1" class=""><li id="menu-item-144" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-144"><a href="https://myrig.com.ua/shop/" data-wpel-link="internal">Товары</a></li>
+                    <ul id="menu-footer-menu-1" class=""><li id="menu-item-144" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-144"><a href="{{url('/shop')}}" data-wpel-link="internal">Товары</a></li>
                         <li id="menu-item-38" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-38"><a href="https://myrig.com.ua/hosting/" data-wpel-link="internal">Хостинг</a></li>
-                        <li id="menu-item-40" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-40"><a href="https://myrig.com.ua/service/" data-wpel-link="internal">Сервис</a></li>
-                        <li id="menu-item-150" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-150"><a href="https://myrig.com.ua/news/" data-wpel-link="internal">Новости</a></li>
+                        <li id="menu-item-40" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-40"><a href="{{url('/service')}}" data-wpel-link="internal">Сервис</a></li>
+                        <li id="menu-item-150" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-150"><a href="{{url('/news')}}" data-wpel-link="internal">Новости</a></li>
                     </ul>                    <ul id="menu-footer-menu-2" class=""><li id="menu-item-820" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-820"><a href="https://myrig.com.ua/dostavka-otgruzka/" data-wpel-link="internal">Доставка и отгрузка</a></li>
                         <li id="menu-item-730" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-730"><a href="https://myrig.com.ua/wrnt/" data-wpel-link="internal">Расширенная гарантия</a></li>
                         <li id="menu-item-4714" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-4714"><a href="https://myrig.com.ua/how-to-repair/" data-wpel-link="internal">Упаковка отправлений</a></li>
@@ -288,7 +288,8 @@
         </div>
         <div class="modal-body">
             <div id="call-field">
-                <form id="callback" action="#">
+                <form id="callback" action="/back_call">
+                    {{csrf_field()}}
                     <div class="form-group">
                         <input id="name" type="text" name="name" class="form-control" placeholder="Имя" required="required" data-bv-message=" " data-bv-remote-message="Email уже занят"/></div>
                     <div class="form-group">
@@ -317,7 +318,8 @@
         </div>
         <div class="modal-body">
             <div id="ticket-field">
-                <form id="ticketback" action="#">
+                <form id="ticketback" action="/service_ticket">
+                    {{csrf_field()}}
                     <div class="form-group">
                         <input type="email" name="email" class="form-control" placeholder="Электронная почта" required="required" data-bv-message=" " data-bv-remote-message="Email уже занят"/></div>
                     <div class="form-group">
@@ -380,7 +382,11 @@
 <script type='text/javascript' src="{{URL::asset('js/actions.js?ver=1.12')}}"></script>
 <script type='text/javascript'>
     /* <![CDATA[ */
-    var global = {"url":"https:\/\/myrig.com.ua\/wp-admin\/admin-ajax.php"};
+    @foreach($settings as $setting)
+        @if($setting->title == 'site_url')
+            var global = {"url":"{{$setting->value}}"};
+        @endif
+    @endforeach
     /* ]]> */
 </script>
 <script type='text/javascript' src='https://myrig.com.ua/wp-includes/js/wp-embed.min.js?ver=4.9.4'></script>

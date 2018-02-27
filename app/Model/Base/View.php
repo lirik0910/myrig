@@ -13,4 +13,9 @@ class View extends Model
 	{
 		return $this->belongsToMany(Page::class);
 	}
+
+	public function viewVariables()
+    {
+	    return $this->hasMany(ViewVariable::class);
+    }
 }

@@ -10,29 +10,19 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+use Illuminate\Http\Request;
 
-Route::get('/', function () {
-    //return
-    return view('index');
+
+
+$request = new Request();
+//var_dump($request->getQueryString()); die;
+Route::get('/news', 'PageController@view');
+//var_dump($request->post()); die;
+Route::post('/back_call', function (Request $request){
+    var_dump($request->post()); die;
 });
-
-Route::get('/news', function (){
+Route::post('manager/views/{id}', function (){
     return view('news');
 });
 
-Route::get('/shop', function (){
-    return view('shop');
-});
-
-Route::get('/service', function (){
-    return view('service');
-});
-
-Route::get('/contacts', function (){
-    return view('contacts');
-});
-
-Route::get('/cart', function (){
-    return view('cart');
-});
 
