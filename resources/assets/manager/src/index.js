@@ -10,6 +10,7 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
+import Manager from './Manager.js';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import configureStore from './store/configureStore.js';
 import './index.css';
@@ -17,6 +18,8 @@ import './index.css';
 import DashboardContainer from './containers/DashboardContainer.jsx';
 import UsersContainer from './containers/UsersContainer.jsx';
 import PagesContainer from './containers/PagesContainer.jsx';
+import PageEditContainer from './containers/PageEditContainer.jsx';
+import FilesContainer from './containers/FilesContainer.jsx';
 
 /** 
  * Redux store configuration
@@ -34,16 +37,19 @@ socket.on('message', (data) => {
 /** 
  * Render all application to root container
  */
+
 render (<BrowserRouter>
 			<Provider store={store}>
 				<Switch>
-					<Route exact path='/' component={DashboardContainer} />
-					<Route exact path='/pages' component={PagesContainer} />
-					<Route exact path='/users' component={UsersContainer} />
-					<Route exact path='/settings' component={DashboardContainer} />
-					<Route exact path='/orders' component={DashboardContainer} />
-					<Route exact path='/products' component={DashboardContainer} />
-					<Route exact path='/tickets' component={DashboardContainer} />
+					<Route exact path={Manager.url} component={DashboardContainer} />
+					<Route exact path={Manager.url +'/pages'} component={PagesContainer} />
+					<Route exact path={Manager.url +'/pages/:number'} component={PageEditContainer} />
+					<Route exact path={Manager.url +'/users'} component={UsersContainer} />
+					<Route exact path={Manager.url +'/settings'} component={DashboardContainer} />
+					<Route exact path={Manager.url +'/orders'} component={DashboardContainer} />
+					<Route exact path={Manager.url +'/products'} component={DashboardContainer} />
+					<Route exact path={Manager.url +'/tickets'} component={DashboardContainer} />
+					<Route exact path={Manager.url +'/files'} component={FilesContainer} />
 				</Switch>
 			</Provider>
 		</BrowserRouter>, document.getElementById('root'));

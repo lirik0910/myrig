@@ -13,4 +13,12 @@ class View extends Model
 	{
 		return $this->belongsToMany(Page::class);
 	}
+
+	/**
+	 * Bind width variable model
+	 */
+	public function variable()
+	{
+		return $this->belongsToMany(Variable::class, 'view_variables', 'view_id', 'variable_id');
+	}
 }

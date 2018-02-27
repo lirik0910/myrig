@@ -13,47 +13,83 @@ class ComponentsTableSeeder extends Seeder
 	{
 		/** Add dashboard component
 		 */
-		App\Component::create([
-			'name' => 'Статистика',
-			'description' => 'Базовые показатели и статистика сайта',
+		App\Model\Base\Component::create([
+			'name' => 'Statistic',
+			'description' => 'Site statistic',
 			'link' => '/',
-			'icon' => ''
+			'icon' => 'Home'
 		]);
 
 		/** Add pages component
 		 */
-		App\Component::create([
-			'name' => 'Страницы',
-			'description' => 'Создание и редактирование страниц на сайте',
+		App\Model\Base\Component::create([
+			'name' => 'Pages',
+			'description' => 'Site pages',
 			'link' => '/pages',
-			'icon' => ''
+			'icon' => 'ContentCopy'
 		]);
 
 		/** Add users component
 		 */
-		App\Component::create([
-			'name' => 'Пользователи',
-			'description' => 'Управление пользователями',
+		App\Model\Base\Component::create([
+			'name' => 'Users',
+			'description' => 'Manage users',
 			'link' => '/users',
-			'icon' => ''
+			'icon' => 'People'
 		]);
 
 		/** Add views component
 		 */
-		App\Component::create([
-			'name' => 'Шаблоны',
-			'description' => 'Шаблоны страниц сайта',
+		App\Model\Base\Component::create([
+			'name' => 'Views',
+			'description' => 'Site view templates',
 			'link' => '/views',
-			'icon' => ''
+			'icon' => 'ViewCompact'
 		]);
 
 		/** Add settings component
 		 */
-		App\Component::create([
-			'name' => 'Настройки',
-			'description' => 'Настройка и управление сайтом',
+		App\Model\Base\Component::create([
+			'name' => 'Settings',
+			'description' => 'Site settings',
 			'link' => '/settings',
-			'icon' => ''
+			'icon' => 'Settings'
+		]);
+
+		/** Add orders component
+		 */
+		App\Model\Base\Component::create([
+			'name' => 'Orders',
+			'description' => 'Order list',
+			'link' => '/orders',
+			'icon' => 'Assignment'
+		]);
+
+		/** Add products component
+		 */
+		App\Model\Base\Component::create([
+			'name' => 'Products',
+			'description' => 'Shop products',
+			'link' => '/products',
+			'icon' => 'Store'
+		]);
+
+		/** Add tickets component
+		 */
+		App\Model\Base\Component::create([
+			'name' => 'Tickets',
+			'description' => 'Ticket list',
+			'link' => '/tickets',
+			'icon' => 'Chat'
+		]);
+
+		/** Add file manager component
+		 */
+		App\Model\Base\Component::create([
+			'name' => 'Files',
+			'description' => 'File manager',
+			'link' => '/files',
+			'icon' => 'Photo'
 		]);
 	}
 }

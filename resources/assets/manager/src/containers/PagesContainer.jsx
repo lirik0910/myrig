@@ -15,6 +15,7 @@ import { connect } from 'react-redux';
 import Header from '../components/Header/Header.jsx';
 import Menu from '../components/Menu/Menu.jsx';
 import Pages from '../components/Pages/Pages.jsx';
+import * as StateElementAction from '../actions/StateElementAction.js';
 
 /**
  * Base container of site pages list
@@ -28,7 +29,7 @@ class PagesContainer extends Component {
 	 */
 	render() {
 		return <div className="pages__container">
-					<Header />
+					<Header title="Страницы" />
 					<Menu />
 					<Pages />
 				</div>
@@ -42,6 +43,7 @@ class PagesContainer extends Component {
  */
 function mapStateToProps(state) {
 	return {
+		elements: state.elements
 	}
 }
 
@@ -52,6 +54,7 @@ function mapStateToProps(state) {
  */
 function mapDispatchToProps(dispatch) {
 	return {
+		StateElementAction: bindActionCreators(StateElementAction, dispatch),
 	}
 }
 

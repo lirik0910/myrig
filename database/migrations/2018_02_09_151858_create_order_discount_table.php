@@ -14,6 +14,10 @@ class CreateOrderDiscountTable extends Migration
 	public function up()
 	{
 		Schema::create('order_discounts', function (Blueprint $table){
+			$table->engine = 'InnoDB';
+			$table->charset = 'utf8';
+			$table->collation = 'utf8_unicode_ci';
+			
 			$table->increments('id');
 			
 			$table->integer('order_id', false, true)

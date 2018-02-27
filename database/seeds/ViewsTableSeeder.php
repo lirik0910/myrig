@@ -13,17 +13,17 @@ class ViewsTableSeeder extends Seeder
 	{
 		/** Add index view
 		 */
-		App\View::create([
+		App\Model\Base\View::create([
 			'title' => 'Index',
-			'description' => 'Шаблон главной страницы',
+			'description' => 'Template for index page',
 			'path' => '/content/index.blade.php'
 		]);
 
 		/** Add 404 view
 		 */
-		App\View::create([
+		App\Model\Base\View::create([
 			'title' => '404',
-			'description' => 'Шаблон страницы 404',
+			'description' => 'Template for 404 page',
 			'path' => '/content/404.blade.php'
 		]);
 	}

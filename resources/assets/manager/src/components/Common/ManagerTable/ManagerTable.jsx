@@ -25,8 +25,6 @@
  */
 
 import React, { Component } from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
 
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
@@ -39,12 +37,6 @@ import Table, {
 } from 'material-ui/Table';
 import Paper from 'material-ui/Paper';
 import Checkbox from 'material-ui/Checkbox';
-import { MenuItem } from 'material-ui/Menu';
-import { FormControl, FormHelperText } from 'material-ui/Form';
-import Select from 'material-ui/Select';
-import Button from 'material-ui/Button';
-import Input, { InputLabel } from 'material-ui/Input';
-import EnhancedTableToolbar from './EnhancedTableToolbar/EnhancedTableToolbar.jsx';
 import EnhancedTableHead from './EnhancedTableHead/EnhancedTableHead.jsx';
 import styles from './styles.js';
 
@@ -74,7 +66,8 @@ class ManagerTable extends Component {
 		page: 0,
 		rowsPerPage: 20,
 		orderBy: 'id',
-		select: () => {}
+		select: () => {},
+		defaultSort: true
 	}
 
 	/**
@@ -199,20 +192,74 @@ class ManagerTable extends Component {
 	}
 
 	/**
+	 * Pass on childs for correct rows building
+	 * @param {Array} data
+	 * @param {Array} rows
+	 * @return {Array}
+	 */
+	defineChilds(data, rows = []) {
+		var i;
+
+		for(i = 0; i < data.length; i++) {
+			rows.push(data[i]);
+			if(typeof data[i].childs !== 'undefined' && 
+				data[i].childs.length > 0 && 
+				data[i].props.showChilds === true) {
+					this.defineChilds(data[i].childs, rows);
+			}
+		}
+		return rows;
+	}
+
+	/**
+	 * Build table rows
+	 * @return Array
+	 */
+	createRows(data, pagePaginStart, pagePaginFinish, k = 0) {
+		const { classes, selecting } = this.props;
+
+		var i,
+			cells;
+
+		return data.slice(pagePaginStart, pagePaginFinish).map(n => {
+			const isSelected = this.isSelected(n.id);
+
+			cells = [];
+			for(i in n) {
+				if(i !== 'props' && i !== 'childs') {
+					cells.push(<TableCell key={k}>{n[i]}</TableCell>);
+					k++;
+				}
+			}
+
+			return <TableRow
+					hover
+					onClick={event => this.handleClick(event, n.id)}
+					role="checkbox"
+					aria-checked={isSelected}
+					tabIndex={-1}
+					key={n.id}
+					selected={isSelected}>
+						{selecting === true ? 
+							<TableCell padding="checkbox" className={classes.checkbox}>
+								<Checkbox checked={isSelected} />
+							</TableCell> : null}
+											
+							{cells}
+						</TableRow>
+		});
+	}
+
+	/**
 	 * Render component
 	 * @return {Object} jsx object
 	 */
 	render() {
-		const { classes, columns, selecting, footer } = this.props;
+		const { classes, columns, selecting, footer, defaultSort } = this.props;
 		const { data, order, orderBy, selected, rowsPerPage, page, } = this.state;
-		const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
 
 		let pagePaginStart = page * rowsPerPage;
 		let pagePaginFinish = page * rowsPerPage + rowsPerPage;
-
-		var row = [],
-			i,
-			k;
 
 		return <Paper className={classes.root}>
 				<div className={classes.tableWrapper}>
@@ -222,37 +269,13 @@ class ManagerTable extends Component {
 							numSelected={selected.length}
 							order={order}
 							orderBy={orderBy}
+							defaultSort={defaultSort}
 							onSelectAllClick={this.handleSelectAllClick}
 							onRequestSort={this.handleRequestSort}
 							rowCount={data.length}
 							selecting={selecting} />
 						<TableBody>
-							{data.slice(pagePaginStart, pagePaginFinish).map(n => {
-								const isSelected = this.isSelected(n.id);
-
-								k = 0;
-								row = [];
-								for(i in n) {
-									row.push(<TableCell key={k}>{n[i]}</TableCell>);
-									k++;
-								}
-
-								return <TableRow
-										hover
-										onClick={event => this.handleClick(event, n.id)}
-										role="checkbox"
-										aria-checked={isSelected}
-										tabIndex={-1}
-										key={n.id}
-										selected={isSelected}>
-											{selecting === true ? 
-												<TableCell padding="checkbox" className={classes.checkbox}>
-													<Checkbox checked={isSelected} />
-												</TableCell> : ''}
-														
-											{row}
-								</TableRow>
-							})}
+							{this.createRows(this.defineChilds(data), pagePaginStart, pagePaginFinish)}
 						</TableBody>
 				
 						{footer === true ?
@@ -272,7 +295,7 @@ class ManagerTable extends Component {
 										onChangePage={this.handleChangePage}
 										onChangeRowsPerPage={this.handleChangeRowsPerPage}/>
 								</TableRow>
-							</TableFooter> : ''}
+							</TableFooter> : null}
 					</Table>
 				</div>
 			</Paper>

@@ -11,6 +11,10 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import * as StateElementAction from '../actions/StateElementAction.js';
+import Header from '../components/Header/Header.jsx';
+import Menu from '../components/Menu/Menu.jsx';
+import Users from '../components/Users/Users.jsx';
 
 /**
  * Users base container
@@ -24,7 +28,9 @@ class UsersContainer extends Component {
 	 */
 	render() {
 		return <div className="users__container">
-					Users
+					<Header title="Пользователи" />
+					<Menu />
+					<Users />
 				</div>
 	}
 }
@@ -36,6 +42,7 @@ class UsersContainer extends Component {
  */
 function mapStateToProps(state) {
 	return {
+		elements: state.elements
 	}
 }
 
@@ -46,6 +53,7 @@ function mapStateToProps(state) {
  */
 function mapDispatchToProps(dispatch) {
 	return {
+		StateElementAction: bindActionCreators(StateElementAction, dispatch),
 	}
 }
 

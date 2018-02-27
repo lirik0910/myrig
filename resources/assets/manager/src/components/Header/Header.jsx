@@ -12,13 +12,13 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
+import Manager from '../../Manager.js';
 import styles from './styles.js';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
-import Button from 'material-ui/Button';
 import IconButton from 'material-ui/IconButton';
 import MenuIcon from 'material-ui-icons/Menu';
 import MoreVertIcon from 'material-ui-icons/MoreVert';
@@ -81,11 +81,13 @@ class Header extends Component {
 	 * @return {Object} jsx object
 	 */
 	render() {
-		const { anchorEl } = this.state;
-		return <div className={this.props.classes.root}>
+		let { anchorEl } = this.state;
+		let { title, classes } = this.props;
+
+		return <div className={classes.root}>
 					<AppBar position="static">
 						<Toolbar>
-							<IconButton className={this.props.classes.menuButton} 
+							<IconButton className={classes.menuButton} 
 								color="inherit" 
 								aria-label="Menu"
 								onClick={this.asideMenuOpen}>
@@ -94,8 +96,8 @@ class Header extends Component {
 
 							<Typography type="title" 
 								color="inherit" 
-								className={this.props.classes.flex}>
-									Общая статистика
+								className={classes.flex}>
+									{title}
 							</Typography>
 
 							<IconButton
@@ -112,11 +114,19 @@ class Header extends Component {
 									<MenuItem onClick={this.handleClose}>Словарь</MenuItem>
 									<MenuItem onClick={this.handleClose}>Очистить кэш</MenuItem>
 									<Divider />
-									<MenuItem onClick={this.handleClose}>Выход</MenuItem>
+									<MenuItem onClick={() => {
+										var form = document.getElementById('logour-form');
+										if (form) {
+											form.submit();
+										}
+									}}>Выход</MenuItem>
 							</Menu>
 
 						</Toolbar>
 					</AppBar>
+					<form action={Manager.url +'/logout'} method="POST" style={{display: 'none'}} id="logour-form">
+						<input type="hiddent" name="_token" value={Manager.csrf()} />
+					</form>
 				</div>
 	}
 }

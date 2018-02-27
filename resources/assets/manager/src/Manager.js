@@ -6,6 +6,13 @@
 class Manager {
 
 	/**
+	 * Manager URL adreess
+	 * @type {String}
+	 * @inner
+	 */
+	url = '/manager'
+
+	/**
 	 * Base class props
 	 * @type {Object} 
 	 * @inner
@@ -24,12 +31,54 @@ class Manager {
 		return new XHR();
 	}
 
+	/**
+	 * Define all URL props
+	 * @return {Object}
+	 */
 	getLocationProps() {
-		return params = location.search.replace('?', '').split('&').reduce((p, e) => {
+		return window.location.search.replace('?', '').split('&').reduce((p, e) => {
 			var a = e.split('=')
-				p[decodeURIComponent(a[0])] = decodeURIComponent(a[1])
-				return p
-			}, {});
+			p[decodeURIComponent(a[0])] = decodeURIComponent(a[1])
+			return p
+		}, {});
+	}
+
+	/**
+	 * Define array of resorce tree
+	 * @return {Array}
+	 */
+	defineResourceProps() {
+		var a = [];
+		window.location.pathname.split('/').reduce((p, e) => {
+			if(e !== '') {
+				a.push(e);
+			}
+		}, []);
+		return a;
+	}
+
+	/**
+	 * Get token
+	 * @return {String}
+	 */
+	csrf() {
+		let csrf = document.getElementById('csrf_token');
+		if(csrf) {
+			return csrf.content;
+		}
+	}
+
+	/**
+	 * Check object is empty
+	 * @param {Object}
+	 * @return {Boolean}
+	 */
+	isEmpty(obj) {
+		for(var key in obj) {
+			if (obj.hasOwnProperty(key))
+				return false;
+		}
+		return true;
 	}
 };
 

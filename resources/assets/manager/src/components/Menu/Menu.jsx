@@ -13,27 +13,31 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
+import Manager from '../../Manager.js';
 import styles from './styles.js';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import Drawer from 'material-ui/Drawer';
-import Button from 'material-ui/Button';
 import Divider from 'material-ui/Divider';
 import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
-import Home from 'material-ui-icons/Home';
-import Store from 'material-ui-icons/Store';
-import People from 'material-ui-icons/People';
-import Settings from 'material-ui-icons/Settings';
-import ContentCopy from 'material-ui-icons/ContentCopy';
-import Assignment from 'material-ui-icons/Assignment';
-import Chat from 'material-ui-icons/Chat';
 import * as StateElementAction from '../../actions/StateElementAction.js';
+import * as MaterialIcons from 'material-ui-icons';
 
 /**
  * Menu aside block
  * @extends Component
  */
 class Menu extends Component {
+
+	/**
+	 * State object of component
+	 * @type {Object} 
+	 * @inner
+	 * @property {Array} components Array of app components
+	 */
+	state = {
+		components: []
+	}
 
 	/**
 	 * Init default props
@@ -54,80 +58,64 @@ class Menu extends Component {
 	}
 
 	/**
+	 * Invoked just before mounting occurs
+	 * @fires componentWillMount
+	 */
+	componentWillMount() {
+		this.getComponentsData();
+	}
+
+	/**
+	 * Query for getting components date
+	 */
+	getComponentsData() {
+		let xhr = Manager.xhr();
+
+		xhr.open('GET', Manager.url +'/api/components/', true);
+		xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+		xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+		xhr.setRequestHeader('X-CSRF-Token', Manager.csrf);
+		xhr.send();
+
+		xhr.onreadystatechange = () => {
+			if((xhr.status === 200 || xhr.status === 201) && xhr.readyState === 4) {
+				var r = JSON.parse(xhr.response);
+				if(r) {
+					this.setState({ components: r });
+				}
+			}
+		}
+	}
+
+	/**
 	 * Render component
 	 * @return {Object} jsx object
 	 */
 	render() {
-		let elements = this.props.elements;
+		let { elements, classes } = this.props;
+		let { components } = this.state;
+
+		if(!components.length) {
+			return <div></div>
+		}
+
+		var Icon;
 		return <Drawer anchor="left" 
 					open={elements.aside_menu} 
 					onBackdropClick={this.asideMenuClose}>
 						<div tabIndex={0} role="button" onClick={this.asideMenuClose}>
-							<List className={this.props.classes.list}>
-								<Link to="/">
+							<List className={classes.list}>
+							{components.map((item, i) => {
+								Icon = MaterialIcons[item.icon];
+								return <Link to={Manager.url + item.link}>
 									<ListItem button>
 										<ListItemIcon>
-											<Home />
+											{Icon ? <Icon /> : ''}
 										</ListItemIcon>
-										<ListItemText primary="Статистика" />
+										<ListItemText primary={item.name} />
 									</ListItem>
 								</Link>
-
-								<Link to="/pages">
-									<ListItem button>
-										<ListItemIcon>
-											<ContentCopy />
-										</ListItemIcon>
-										<ListItemText primary="Страницы" />
-									</ListItem>
-								</Link>
-
-								<Link to="/users">
-									<ListItem button>
-										<ListItemIcon>
-											<People />
-										</ListItemIcon>
-										<ListItemText primary="Пользователи" />
-									</ListItem>
-								</Link>
-
-								<Link to="/settings">
-									<ListItem button>
-										<ListItemIcon>
-											<Settings />
-										</ListItemIcon>
-										<ListItemText primary="Настройки" />
-									</ListItem>
-								</Link>
-
-								<Divider />
-
-								<Link to="/orders">
-									<ListItem button>
-										<ListItemIcon>
-											<Assignment />
-										</ListItemIcon>
-										<ListItemText primary="Заказы" />
-									</ListItem>
-								</Link>
-
-								<Link to="/orders">
-									<ListItem button>
-										<ListItemIcon>
-											<Store />
-										</ListItemIcon>
-										<ListItemText primary="Продукты" />
-									</ListItem>
-								</Link>
-
-								<Link to="/orders">
-									<ListItem button>
-										<ListItemIcon>
-											<Chat />
-										</ListItemIcon>
-										<ListItemText primary="Тикеты" />
-									</ListItem>
-								</Link>
+							})}
 							</List>
 						</div>
 				</Drawer>
