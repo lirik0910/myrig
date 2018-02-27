@@ -1,5 +1,6 @@
 const styles = theme => ({
 	root: {
+		margin: 0,
 		width: '100%',
 		boxShadow: '0 0 1px rgba(0, 0, 0, 0.5)'
 	},
