@@ -21,7 +21,7 @@ class CreateVariablesTable extends Migration
 			$table->increments('id');
 
 			$table->string('type', 255)
-				->default('string')
+				->default('input')
 				->comment('Variable type');
 
 			$table->string('title', 255)

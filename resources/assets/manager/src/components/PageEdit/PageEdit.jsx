@@ -181,7 +181,6 @@ class PageEdit extends Component {
 						for (i = 0; i < r.length; i++) {
 							for (a = 0; a < variables.length; a++) {
 								if(r[i].variable_id === variables[a].id) {
-									console.log(variables[a].type)
 									if (variables[a].type === 'richtext') {
 										blocksFromHTML = convertFromHTML(r[i].content);
 										state = ContentState.createFromBlockArray(
@@ -269,16 +268,20 @@ class PageEdit extends Component {
 			if((xhr.status === 200 || xhr.status === 201) && xhr.readyState === 4) {
 				r = JSON.parse(xhr.response);
 				if(r) {
-					let blocksFromHTML = convertFromHTML(r.content);
-					let state = ContentState.createFromBlockArray(
-						blocksFromHTML.contentBlocks,
-						blocksFromHTML.entityMap
-					);
+					if (r.content) {
+						let blocksFromHTML = convertFromHTML(r.content);
+						let state = ContentState.createFromBlockArray(
+							blocksFromHTML.contentBlocks,
+							blocksFromHTML.entityMap
+						);
 
-					this.setState({ 
-						page: r,
-						editorState: EditorState.createWithContent(state),
-					}, () => callback());
+						this.setState({ 
+							page: r,
+							editorState: EditorState.createWithContent(state),
+						}, () => callback());
+					}
+
+					else this.setState({ page: r }, () => callback());
 				}
 			}
 		}
