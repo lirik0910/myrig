@@ -18,11 +18,21 @@ class PageController extends Controller
 	/**
 	 * Get data of certain page
 	 * @param {Int} $id
-	 * @return \Illuminate\Http\JsonResponse
+	 * @return JsonResponse
 	 */
 	public function get(int $id) : JsonResponse
 	{
-		return response()->json(Page::find($id), 200);
+		/** Try get model
+		 */
+		try {
+			$page = Page::find($id);
+		}
+		catch(\Exception $e) {
+			logger($e->getMessage());
+			return response()->json(['message' => $e->getMessage()], 422);
+		}
+		
+		return response()->json($page, 200);
 	}
 
 	/**

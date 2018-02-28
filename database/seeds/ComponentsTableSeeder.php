@@ -40,21 +40,21 @@ class ComponentsTableSeeder extends Seeder
 
 		/** Add views component
 		 */
-		App\Model\Base\Component::create([
+		/*App\Model\Base\Component::create([
 			'name' => 'Views',
 			'description' => 'Site view templates',
 			'link' => '/views',
 			'icon' => 'ViewCompact'
-		]);
+		]);*/
 
 		/** Add settings component
 		 */
-		App\Model\Base\Component::create([
+		/*App\Model\Base\Component::create([
 			'name' => 'Settings',
 			'description' => 'Site settings',
 			'link' => '/settings',
 			'icon' => 'Settings'
-		]);
+		]);*/
 
 		/** Add orders component
 		 */
@@ -76,12 +76,12 @@ class ComponentsTableSeeder extends Seeder
 
 		/** Add tickets component
 		 */
-		App\Model\Base\Component::create([
+		/*App\Model\Base\Component::create([
 			'name' => 'Tickets',
 			'description' => 'Ticket list',
 			'link' => '/tickets',
 			'icon' => 'Chat'
-		]);
+		]);*/
 
 		/** Add file manager component
 		 */

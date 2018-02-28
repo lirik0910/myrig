@@ -66,8 +66,11 @@ class ManagerTable extends Component {
 		page: 0,
 		rowsPerPage: 20,
 		orderBy: 'id',
+		defaultSort: true,
 		select: () => {},
-		defaultSort: true
+		getStart: () => {},
+		getLimit: () => {},
+		total: 0
 	}
 
 	/**
@@ -76,11 +79,12 @@ class ManagerTable extends Component {
 	 */
 	componentWillMount() {
 		this.setState({
-			data: this.props.data.sort((a, b) => (a.calories < b.calories ? -1 : 1)),
+			data: this.props.data,
 			order: this.props.order,
 			page: this.props.page,
 			rowsPerPage: this.props.rowsPerPage,
-			orderBy: this.props.orderBy
+			orderBy: this.props.orderBy,
+			total: this.props.total === 0 ? this.props.data.length : this.props.total
 		})
 	}
 
@@ -116,7 +120,9 @@ class ManagerTable extends Component {
 	 * @param {Object} event
 	 */
 	handleChangeRowsPerPage = event => {
-		this.setState({rowsPerPage: event.target.value});
+		this.setState({rowsPerPage: event.target.value}, () => {
+			this.props.getLimit(event.target.value);
+		});
 	}
 
 	/**
@@ -124,7 +130,9 @@ class ManagerTable extends Component {
 	 * @param {Object} event
 	 */
 	handleChangePage = (event, page) => {
-		this.setState({page});
+		this.setState({page}, () => {
+			this.props.getStart(page);
+		});
 	}
 
 	/**
@@ -221,7 +229,7 @@ class ManagerTable extends Component {
 		var i,
 			cells;
 
-		return data.slice(pagePaginStart, pagePaginFinish).map(n => {
+		return data.map(n => {
 			const isSelected = this.isSelected(n.id);
 
 			cells = [];
@@ -256,7 +264,15 @@ class ManagerTable extends Component {
 	 */
 	render() {
 		const { classes, columns, selecting, footer, defaultSort } = this.props;
-		const { data, order, orderBy, selected, rowsPerPage, page, } = this.state;
+		const { 
+			data, 
+			order, 
+			orderBy, 
+			selected, 
+			rowsPerPage, 
+			page,
+			total
+		} = this.state;
 
 		let pagePaginStart = page * rowsPerPage;
 		let pagePaginFinish = page * rowsPerPage + rowsPerPage;
@@ -272,7 +288,7 @@ class ManagerTable extends Component {
 							defaultSort={defaultSort}
 							onSelectAllClick={this.handleSelectAllClick}
 							onRequestSort={this.handleRequestSort}
-							rowCount={data.length}
+							rowCount={total}
 							selecting={selecting} />
 						<TableBody>
 							{this.createRows(this.defineChilds(data), pagePaginStart, pagePaginFinish)}
@@ -283,7 +299,7 @@ class ManagerTable extends Component {
 								<TableRow>
 									<TablePagination
 										colSpan={6}
-										count={data.length}
+										count={total}
 										rowsPerPage={rowsPerPage}
 										page={page}
 										backIconButtonProps={{

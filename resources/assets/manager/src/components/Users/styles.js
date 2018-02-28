@@ -10,9 +10,6 @@ const styles = theme => ({
 		padding: '8px',
 		display: 'inline-block'
 	},
-	button: {
-		margin: '6px 0'
-	},
 	search: {
 		minWidth: '36px',
 		minHeight: '36px',
@@ -28,6 +25,13 @@ const styles = theme => ({
 		padding: '8px 10px',
 		margin: '6px 0 0 6px'
 	},
+	formControl: {
+		display: 'block',
+		margin: '12px 0'
+	},
+	textField: {
+		width: '328px'
+	}
 });
 
 export default styles;

@@ -19,6 +19,12 @@ Route::prefix('files')
 		Route::get('/', 'Manager\ViewController@index');
 });
 
+Route::prefix('users')
+	->middleware('auth')
+	->group(function () {
+		Route::get('/', 'Manager\ViewController@index');
+});
+
 Route::prefix('api')
 	->middleware('auth')
 	->group(function() {
@@ -33,6 +39,15 @@ Route::prefix('api')
 			Route::put('/{id}', 'Manager\PageController@update');
 			Route::post('/', 'Manager\PageController@create');
 			Route::delete('/{id}', 'Manager\PageController@remove');
+		});
+
+		Route::prefix('user')->group(function() {
+			Route::get('/', 'Manager\UserController@all');
+			Route::delete('/', 'Manager\UserController@delete');
+		});
+
+		Route::prefix('policy')->group(function() {
+			Route::get('/', 'Manager\PolicyController@all');
 		});
 
 		Route::prefix('variable')->group(function() {

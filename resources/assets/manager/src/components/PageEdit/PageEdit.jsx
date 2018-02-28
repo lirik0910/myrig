@@ -181,6 +181,7 @@ class PageEdit extends Component {
 						for (i = 0; i < r.length; i++) {
 							for (a = 0; a < variables.length; a++) {
 								if(r[i].variable_id === variables[a].id) {
+									console.log(variables[a].type)
 									if (variables[a].type === 'richtext') {
 										blocksFromHTML = convertFromHTML(r[i].content);
 										state = ContentState.createFromBlockArray(
