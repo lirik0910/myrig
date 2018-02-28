@@ -10,7 +10,17 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+use Illuminate\Http\Request;
 
-Route::get('/', function () {
-    return view('welcome');
+
+
+$request = new Request();
+//var_dump($request->getQueryString()); die;
+Route::get($request->path(), 'PageController@view');
+
+Route::post('/back_call', function (Request $request){
+    var_dump($request->post()); die;
 });
+
+
+

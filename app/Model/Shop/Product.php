@@ -10,4 +10,12 @@ class Product extends Model
     {
         return $this->hasOne('App\Model\Shop\Category');
     }
+
+    public function images(){
+        return $this->hasMany(Image::class);
+    }
+
+    public function options(){
+        return $this->hasMany(ProductOption::class);
+    }
 }
