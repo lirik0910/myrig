@@ -126,7 +126,7 @@ class Users extends Component {
 		let { data, remove } = this.state;
 
 		return <div>
-				<Grid container spacing={24}>
+				<Grid container spacing={24} className={classes.root}>
 					<Grid item xs={10}>
 						<TextField
 							placeholder="Search field"
