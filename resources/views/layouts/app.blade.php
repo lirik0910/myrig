@@ -382,11 +382,7 @@
 <script type='text/javascript' src="{{URL::asset('js/actions.js?ver=1.12')}}"></script>
 <script type='text/javascript'>
     /* <![CDATA[ */
-    @foreach($settings as $setting)
-        @if($setting->title == 'site_url')
-            var global = {"url":"{{$setting->value}}"};
-        @endif
-    @endforeach
+            var global = {"url":"{{env('APP_URL')}}"};
     /* ]]> */
 </script>
 <script type='text/javascript' src='https://myrig.com.ua/wp-includes/js/wp-embed.min.js?ver=4.9.4'></script>

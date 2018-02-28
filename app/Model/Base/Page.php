@@ -38,7 +38,7 @@ class Page extends Model
         $page = $this->where(['link' => $link])->with('view', 'variables')->first();
 
         if(!$page){
-            return view('404');
+            return view('content/404');
         }
 
         $data = [];
@@ -47,7 +47,7 @@ class Page extends Model
 
         if($page->link == '/'){
             $data['products'] = Product::where(['active' => 1])->orderBy('price', 'DESC')->limit(4)->with('images')->get();
-        } elseif($page->link == '/news'){
+        } elseif($page->link == '/news' || $page->link == '/info'){
             $data['news'] = Page::where(['id' => $page->id])->orderBy('created_at', 'DESC')->paginate(10);
         } elseif ($page->link == '/shop'){
             $data['products'] = Product::where(['active' => 1])->orderBy('price', 'DESC')->with('images', 'options')->get();

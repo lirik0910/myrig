@@ -16,13 +16,11 @@ use Illuminate\Http\Request;
 
 $request = new Request();
 //var_dump($request->getQueryString()); die;
-Route::get('/news', 'PageController@view');
-//var_dump($request->post()); die;
+Route::get($request->path(), 'PageController@view');
+
 Route::post('/back_call', function (Request $request){
     var_dump($request->post()); die;
 });
-Route::post('manager/views/{id}', function (){
-    return view('news');
-});
+
 
 
