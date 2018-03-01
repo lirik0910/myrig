@@ -9,16 +9,25 @@
  */
 
 import React, { Component } from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
 
 import Manager from '../../Manager.js';
+import ManagerTable from '../Common/ManagerTable/ManagerTable.jsx';
+import ContextSelect from '../Common/ContextSelect/ContextSelect.jsx';
+import SearchField from '../Common/SearchField/SearchField.jsx';
+import ProductCategories from '../ProductCategories/ProductCategories.jsx';
+
 import styles from './styles.js';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import Slide from 'material-ui/transitions/Slide';
+import Grid from 'material-ui/Grid';
+import Paper from 'material-ui/Paper';
+import Button from 'material-ui/Button';
+import Tabs, { Tab } from 'material-ui/Tabs';
 import { LinearProgress } from 'material-ui/Progress';
-import * as StateElementAction from '../../actions/StateElementAction.js';
+import Add from 'material-ui-icons/Add';
+import Edit from 'material-ui-icons/Edit';
+import Delete from 'material-ui-icons/Delete';
 
 /**
  * Animate opening dialog
@@ -52,11 +61,13 @@ class Products extends Component {
 	 * @property {Array} data Table pages data 
 	 */
 	state = {
+		tab: 0,
 		data: [],
 		total: 0,
 		start: 0,
-		limit: 10,
-		search: '',
+		limit: 5,
+		contextID: 0,
+		searchText: '',
 		completed: 0,
 		forRemove: [],
 		dialog: {
@@ -72,9 +83,110 @@ class Products extends Component {
 	 * @fires componentWillMount
 	 */
 	componentWillMount() {
+		this.loadProductsData();
+	}
+
+	loadProductsData(callback = () => {}) {
 		this.setState({ completed: 0 }, () => {
-			this.setState({ completed: 100 });
+			this.productsGetRequest(() => {
+				this.setState({ completed: 100 }, () => callback());
+			});
 		});
+	}
+
+	/**
+	 * Get product list from server
+	 * @param {Function} callback
+	 */
+	productsGetRequest(callback = () => {}) {
+		let { classes } = this.props;
+		let { start, limit, searchText, contextID } = this.state;
+		let xhr = Manager.xhr();
+
+		/** Build base request string
+		 */
+		var query = Manager.url +'/api/product?';
+			query += 'start='+ (start + 1);
+			query += '&limit='+ limit;
+
+		/** Add search text filter to query
+		 */
+		if (searchText !== '' && searchText.length > 0) {
+			query += '&search='+ searchText;
+		}
+
+		/** Add context filter to query
+		 */
+		if (contextID !== 0) {
+			query += '&context_id='+ contextID;
+		}
+
+		xhr.open('GET', query, true);
+		xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+		xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+		xhr.setRequestHeader('X-CSRF-Token', Manager.csrf());
+		xhr.send();
+
+		var r,
+			i,
+			data = [];
+		xhr.onreadystatechange = () => {
+			if (xhr.readyState === 4) {
+				if (xhr.status === 200 || xhr.status === 201) {
+					r = JSON.parse(xhr.response);
+					if(r) {
+						for (i in r.data) {
+							r.data[i]['control'] = this.getButtonControl(r.data[i]);
+							data.push(r.data[i]);
+						}
+
+						for (i in data) {
+							data[i]['control'] = this.getButtonControl(data[i]);
+							data[i].description = data[i].description.substr(0, 51) + '...';
+							data[i].icon = <img src={window.site.uploads_url +'/'+ data[i].icon} 
+								alt={data[i].title}
+								className={classes.icon} />
+						}
+
+						this.setState({ 
+							data: data, 
+							total: r.total 
+						}, () => callback());
+					}
+				}
+			}
+		}
+	}
+
+	/**
+	 * Change tab
+	 * @fires click
+	 * @param {Object} event
+	 */
+	handleChangeTab = (event, tab) => {
+		this.setState({ tab });
+	}
+
+	/**
+	 * Build control buttons
+	 * @param {Number} id Current page identificator
+	 * @param {Number} childs Amount children pages
+	 * @return {Object} JSX object
+	 */
+	getButtonControl(item) {
+		let { classes } = this.props;
+
+		return <div style={{width: '80px'}}>
+				<Button className={classes.control}
+					title={'Edit'}>
+						<Edit />
+				</Button>
+				
+				<Button className={classes.control}
+					title={'Delete'}>
+						<Delete />
+				</Button>
+			</div>
 	}
 
 	/**
@@ -83,14 +195,16 @@ class Products extends Component {
 	render() {
 		let { classes } = this.props;
 		let { 
+			tab,
 			data, 
 			start, 
 			limit, 
 			total,
-			search,
 			dialog, 
 			forRemove, 
-			completed
+			completed,
+			contextID,
+			searchText
 		} = this.state;
 
 		if(completed === 0) {
@@ -100,31 +214,133 @@ class Products extends Component {
 		}
 
 		return <div>
-			
+			<Grid container spacing={24} className={classes.root}>
+				<Grid item xs={8}>
+					<Tabs value={tab} onChange={this.handleChangeTab}>
+						<Tab label={'Product list'} />
+						<Tab label={'Categories'} />
+					</Tabs>
+				</Grid>
+
+				<Grid item xs={4} style={{textAlign: 'right'}}>
+					<Button className={classes.button}
+						title={'Add product'}>
+							<Add />Add product
+					</Button>
+
+					{forRemove.length > 0 && <Button className={classes.button}
+						color="secondary"
+						title={'Delete selected'}>
+							<Delete />Delete selected
+					</Button>}
+				</Grid>
+			</Grid>
+
+			{tab === 0 && <Grid container spacing={24} className={classes.root}>
+				<Grid item xs={12}>
+					<Paper className={classes.paper}>
+						<Grid container spacing={24} className={classes.root}>
+							<Grid item xs={12} sm={2}>
+								<SearchField 
+									defaultText={searchText}
+									onSubmited={searchText => {
+										this.setState({ searchText }, () => {
+											this.loadProductsData();
+										});
+									}} />
+							</Grid>
+
+							<Grid item xs={12} sm={2}>
+								<ContextSelect onSelected={contextID => {
+									this.setState({ contextID }, () => {
+										this.loadProductsData();
+									});
+								}} />
+							</Grid>
+						</Grid>
+					</Paper>
+				</Grid>
+			</Grid>}
+
+			{tab === 0 && <Grid container spacing={24} className={classes.root}>
+				<Grid item xs={9}>
+					<Paper className={classes.paper}>
+						<ManagerTable 
+							page={start}
+							rowsPerPage={limit}
+							total={total}
+							except={[
+								'created_at', 
+								'updated_at', 
+								'active', 
+								'category_id', 
+								'context_id',
+								'description'
+							]}
+							columns={[{
+								id: 'id', 
+								numeric: false, 
+								disablePadding: true, 
+								label: 'ID'
+							}, {
+								id: 'title', 
+								numeric: false, 
+								disablePadding: true, 
+								label: 'Name'
+							}, {
+								id: 'icon', 
+								numeric: false, 
+								disablePadding: true, 
+								label: 'Image'
+							}, {
+								id: 'price', 
+								numeric: false, 
+								disablePadding: true, 
+								label: 'Price'
+							}, {
+								id: 'control',
+								numeric: false,
+								disablePadding: true,
+								label: 'Control'
+							}]}
+							data={data}
+							select={forRemove => this.setState({ forRemove })}
+							getStart={start => {
+								this.setState({ 
+									start,
+									completed: 0,
+								}, () => this.productsGetRequest(() => {
+									this.setState({ completed: 100 });
+								}));
+							}}
+							getLimit={limit => this.setState({ limit })} />
+					</Paper>
+				</Grid>
+
+				<Grid item xs={3}>
+					<Paper className={classes.paper}>
+						<ProductCategories />
+					</Paper>
+				</Grid>
+			</Grid>}
+
+			{tab === 1 && <Grid container spacing={24} className={classes.root}>
+				<Grid item xs={12}>
+					<Paper className={classes.paper}>xs=6 sm=3</Paper>
+				</Grid>
+			</Grid>}
+
+			{tab === 1 && <Grid container spacing={24} className={classes.root}>
+				<Grid item xs={9}>
+					<Paper className={classes.paper}>xs=6 sm=3</Paper>
+				</Grid>
+
+				<Grid item xs={3}>
+					<Paper className={classes.paper}>xs=6 sm=3</Paper>
+				</Grid>
+			</Grid>}
 		</div>
 	}
 }
 
-/**
- * Init redux states
- * @param {Object} state
- * @return {Object}
- */
-function mapStateToProps(state) {
-	return {
-		elements: state.elements
-	}
-}
-
-/**
- * Init redux actions
- * @param {Function} dispatch
- * @return {Object}
- */
-function mapDispatchToProps(dispatch) {
-	return {
-		StateElementAction: bindActionCreators(StateElementAction, dispatch),
-	}
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Products));
+export default withStyles(styles)(Products);

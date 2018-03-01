@@ -32,10 +32,6 @@ class CreateCategoryTable extends Migration
 				->nullable(true)
 				->comment('Category description');
 			
-			$table->string('icon', 255)
-				->nullable(false)
-				->comment('Category icon');
-			
 			$table->tinyInteger('active')
 				->default(1)
 				->comment('Category active status');

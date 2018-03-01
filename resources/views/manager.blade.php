@@ -12,5 +12,10 @@
 <body>
 	<div id="root"></div>
 	<script src="{{URL::asset('static/js/' . $js)}}"></script>
+	<script type="text/javascript">
+		window.site = {
+			uploads_url: "{{URL::asset('uploads/')}}",
+		}
+	</script>
 </body>
 </html>

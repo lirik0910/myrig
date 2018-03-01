@@ -10,7 +10,7 @@ class Manager {
 	 * @type {String}
 	 * @inner
 	 */
-	url = '/manager'
+	url = '/manager';
 
 	/**
 	 * Base class props

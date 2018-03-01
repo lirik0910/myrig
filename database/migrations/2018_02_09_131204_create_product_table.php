@@ -23,6 +23,10 @@ class CreateProductTable extends Migration
 			$table->integer('category_id', false, true)
 				->default(0)
 				->comment('Product category ID');
+
+			$table->integer('context_id', false, true)
+				->default(0)
+				->comment('Context ID');
 			
 			$table->string('title', 255)
 				->nullable(false)

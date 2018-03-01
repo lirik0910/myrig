@@ -53,6 +53,10 @@ Route::prefix('api')
 			Route::delete('/{id}', 'Manager\PageController@remove');
 		});
 
+		Route::prefix('product')->group(function() {
+			Route::get('/', 'Manager\ProductController@all');
+		});
+
 		Route::prefix('user')->group(function() {
 			Route::get('/', 'Manager\UserController@all');
 			Route::get('/{id}', 'Manager\UserController@get');
