@@ -18,7 +18,6 @@ import styles from './styles.js';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import Drawer from 'material-ui/Drawer';
-import Divider from 'material-ui/Divider';
 import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
 import * as StateElementAction from '../../actions/StateElementAction.js';
 import * as MaterialIcons from 'material-ui-icons';

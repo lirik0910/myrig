@@ -28,7 +28,7 @@ class DashboardContainer extends Component {
 	 */
 	render() {
 		return <div className="dashboard__container">
-					<Header title="Статистика" />
+					<Header title="Statistic" />
 					<Menu />
 				</div>
 	}

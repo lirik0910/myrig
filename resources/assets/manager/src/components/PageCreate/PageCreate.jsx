@@ -20,7 +20,7 @@ import Select from 'material-ui/Select';
 import { MenuItem } from 'material-ui/Menu';
 import Tabs, { Tab } from 'material-ui/Tabs';
 import Input, { InputLabel } from 'material-ui/Input';
-import { FormControl, FormHelperText } from 'material-ui/Form';
+import { FormControl } from 'material-ui/Form';
 import Button from 'material-ui/Button';
 import Typography from 'material-ui/Typography';
 import Dialog, {
@@ -31,12 +31,9 @@ import Dialog, {
 } from 'material-ui/Dialog';
 import { LinearProgress } from 'material-ui/Progress';
 import Save from 'material-ui-icons/Save';
-import Delete from 'material-ui-icons/Delete';
-import AddIcon from 'material-ui-icons/Add';
 import { Editor } from 'react-draft-wysiwyg';
-import { EditorState, convertToRaw, ContentState } from 'draft-js';
+import { EditorState, convertToRaw } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
-import htmlToDraft from 'html-to-draftjs';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import Slide from 'material-ui/transitions/Slide';
 import * as StateElementAction from '../../actions/StateElementAction.js';

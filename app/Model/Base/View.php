@@ -18,8 +18,10 @@ class View extends Model
     {
 	    return $this->hasMany(ViewVariable::class);
     }
+	
 	/**
 	 * Bind width variable model
+	 * @return boolean
 	 */
 	public function variable()
 	{

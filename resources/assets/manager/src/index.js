@@ -20,6 +20,8 @@ import UsersContainer from './containers/UsersContainer.jsx';
 import PagesContainer from './containers/PagesContainer.jsx';
 import PageEditContainer from './containers/PageEditContainer.jsx';
 import FilesContainer from './containers/FilesContainer.jsx';
+import OrdersContainer from './containers/OrdersContainer.jsx';
+import ProductsContainer from './containers/ProductsContainer.jsx';
 
 /** 
  * Redux store configuration
@@ -46,8 +48,8 @@ render (<BrowserRouter>
 					<Route exact path={Manager.url +'/pages/:number'} component={PageEditContainer} />
 					<Route exact path={Manager.url +'/users'} component={UsersContainer} />
 					<Route exact path={Manager.url +'/settings'} component={DashboardContainer} />
-					<Route exact path={Manager.url +'/orders'} component={DashboardContainer} />
-					<Route exact path={Manager.url +'/products'} component={DashboardContainer} />
+					<Route exact path={Manager.url +'/orders'} component={OrdersContainer} />
+					<Route exact path={Manager.url +'/products'} component={ProductsContainer} />
 					<Route exact path={Manager.url +'/tickets'} component={DashboardContainer} />
 					<Route exact path={Manager.url +'/files'} component={FilesContainer} />
 				</Switch>

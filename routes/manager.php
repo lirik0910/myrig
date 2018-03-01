@@ -25,6 +25,18 @@ Route::prefix('users')
 		Route::get('/', 'Manager\ViewController@index');
 });
 
+Route::prefix('orders')
+	->middleware('auth')
+	->group(function () {
+		Route::get('/', 'Manager\ViewController@index');
+});
+
+Route::prefix('products')
+	->middleware('auth')
+	->group(function () {
+		Route::get('/', 'Manager\ViewController@index');
+});
+
 Route::prefix('api')
 	->middleware('auth')
 	->group(function() {
@@ -43,6 +55,8 @@ Route::prefix('api')
 
 		Route::prefix('user')->group(function() {
 			Route::get('/', 'Manager\UserController@all');
+			Route::get('/{id}', 'Manager\UserController@get');
+			Route::put('/{id}', 'Manager\UserController@edit');
 			Route::delete('/', 'Manager\UserController@delete');
 		});
 

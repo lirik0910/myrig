@@ -14,8 +14,6 @@ import Files from '../Files/Files.jsx';
 import styles from './styles.js';
 import PropTypes from 'prop-types';
 import Paper from 'material-ui/Paper';
-import AppBar from 'material-ui/AppBar';
-import Toolbar from 'material-ui/Toolbar';
 import { withStyles } from 'material-ui/styles';
 import Grid from 'material-ui/Grid';
 import TextField from 'material-ui/TextField';
@@ -41,7 +39,6 @@ import CloseIcon from 'material-ui-icons/Close';
 import { Editor } from 'react-draft-wysiwyg';
 import { EditorState, convertToRaw, ContentState, convertFromHTML } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
-import htmlToDraft from 'html-to-draftjs';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import Slide from 'material-ui/transitions/Slide';
 import * as StateElementAction from '../../actions/StateElementAction.js';
@@ -251,8 +248,6 @@ class PageEdit extends Component {
 	 * Get current page data
 	 */
 	getPageData(callback = () => {}) {
-		let { page, editorState } = this.state;
-
 		let query = Manager.defineResourceProps();
 		let id = query[query.length - 1];
 		let xhr = Manager.xhr();
@@ -765,7 +760,7 @@ class PageEdit extends Component {
 	 * @param {Object} editorState
 	 */
 	onEditorFieldsChange(variable, field, editorState) {
-		let { variables, page } = this.state;
+		let { variables } = this.state;
 		var i,
 			a;
 
@@ -1026,7 +1021,7 @@ class PageEdit extends Component {
 							</Grid>
 
 							<Grid item xs={1}>
-								<IconButton color="inherit" 
+								<IconButton 
 									className={classes.button} 
 									color="secondary"
 									onClick={this.filesDialog.bind(this, false, () => {

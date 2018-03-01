@@ -28,7 +28,7 @@ class UsersContainer extends Component {
 	 */
 	render() {
 		return <div className="users__container">
-					<Header title="Пользователи" />
+					<Header title="Users" />
 					<Menu />
 					<Users />
 				</div>

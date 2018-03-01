@@ -11,29 +11,21 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 
 import Manager from '../../Manager.js';
 import styles from './styles.js';
 import PropTypes from 'prop-types';
 import Paper from 'material-ui/Paper';
 import { withStyles } from 'material-ui/styles';
-import ExpansionPanel, {
-	ExpansionPanelSummary,
-	ExpansionPanelDetails,
-} from 'material-ui/ExpansionPanel';
 import Grid from 'material-ui/Grid';
-import Typography from 'material-ui/Typography';
 import Button from 'material-ui/Button';
 import Input, { InputLabel } from 'material-ui/Input';
 import Select from 'material-ui/Select';
-import { FormControl, FormHelperText } from 'material-ui/Form';
-import ExpandMoreIcon from 'material-ui-icons/ExpandMore';
+import { FormControl } from 'material-ui/Form';
 import * as StateElementAction from '../../actions/StateElementAction.js';
 import ManagerTable from '../Common/ManagerTable/ManagerTable.jsx';
 import Edit from 'material-ui-icons/Edit';
 import Search from 'material-ui-icons/Search';
-import ArrowDropDown from 'material-ui-icons/ArrowDropDown';
 import Dialog, {
 	DialogActions,
 	DialogContent,
@@ -86,9 +78,12 @@ class Users extends Component {
 			actions: '',
 			open: false,
 		},
+		editUser: '',
+		editDialog: false,
 		start: 0,
-		limit: 5,
+		limit: 10,
 		total: 0,
+		search: '',
 		forRemove: [],
 		completed: 0
 	}
@@ -128,7 +123,7 @@ class Users extends Component {
 					}
 				}
 
-				if(xhr.status === 422 || xhr.status === 500 || xhr.status === 419) {
+				else {
 					r = JSON.parse(xhr.response);
 					if(r.message) {
 						this.openDialog('Ошибка во время получения пользоваетелей', 
@@ -151,10 +146,18 @@ class Users extends Component {
 	 * @param {Function} callback
 	 */
 	loadUsersData(callback = () => {}) {
-		let { start, limit } = this.state;
+		let { start, limit, search } = this.state;
 		let xhr = Manager.xhr();
 
-		xhr.open('GET', Manager.url +'/api/user/?start='+ (start + 1) +'&limit='+ limit, true);
+		var query = Manager.url +'/api/user/?';
+			query += 'start='+ (start + 1);
+			query += '&limit='+ limit;
+
+		if (search !== '' && search.length > 0) {
+			query += '&search='+ search;
+		}
+
+		xhr.open('GET', query, true);
 		xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 		xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 		xhr.setRequestHeader('X-CSRF-Token', Manager.csrf());
@@ -180,7 +183,7 @@ class Users extends Component {
 					}
 				}
 
-				if(xhr.status === 422 || xhr.status === 500 || xhr.status === 419) {
+				else {
 					r = JSON.parse(xhr.response);
 					if(r.message) {
 						this.openDialog('Ошибка во время получения пользоваетелей', 
@@ -274,13 +277,21 @@ class Users extends Component {
 	/**
 	 * Change select fields
 	 * @fires click
+	 * @param {Object} user
+	 * @apram {String} param
 	 * @param {Object} e
 	 */
-	handleChangeSelect(e) {
+	handleChangeSelect(param, user, e) {
 		let { data } = this.state;
 
-		/*page[type] = e.target.value;
-		this.setState({ page });*/
+		for (var i in data) {
+			if (data[i].id === user.id) {
+				data[i][param] = e.target.value;
+				break;
+			}
+		}
+
+		this.setState({ data });
 	};
 
 	/**
@@ -290,87 +301,10 @@ class Users extends Component {
 	 * @param {Object} e
 	 */
 	handleClickOpenEditDialog(item, e) {
-		let { classes } = this.props;
-		let { policies } = this.state;
-
-		this.openDialog('Edit', <div>
-			<FormControl className={classes.formControl}>
-				<TextField
-					id="name"
-					label="Имя"
-					type="text"
-					name="name"
-					defaultValue={item.name}
-					className={classes.textField}
-					InputLabelProps={{
-						shrink: true
-					}} />
-			</FormControl>
-
-			<FormControl className={classes.formControl}>
-				<TextField
-					id="email"
-					label="Email"
-					type="email"
-					name="email"
-					defaultValue={item.email}
-					className={classes.textField}
-					InputLabelProps={{
-						shrink: true
-					}} />
-			</FormControl>
-
-			<FormControl className={classes.formControl}>
-				<TextField
-					id="password"
-					label="New password"
-					type="password"
-					name="new_password"
-					defaultValue=""
-					className={classes.textField}
-					InputLabelProps={{
-						shrink: true
-					}} />
-			</FormControl>
-
-			<FormControl className={classes.formControl}>
-				<TextField
-					id="confirm-password"
-					label="Confirm password"
-					type="password"
-					name="confirm_password"
-					defaultValue=""
-					className={classes.textField}
-					InputLabelProps={{
-						shrink: true
-					}} />
-			</FormControl>
-
-			<FormControl className={classes.formControl}>
-				<InputLabel htmlFor="policy">Access policy</InputLabel>
-				<Select
-					value={1}
-					onChange={this.handleChangeSelect.bind(this)}
-					input={<Input name="policy" id="policy" />}>
-						{policies.map((item, i) => {
-							return <MenuItem
-									key={i} 
-									value={item.id}>
-										{item.name}
-								</MenuItem>
-						})}
-				</Select>
-			</FormControl>
-			</div>,
-			<DialogActions>
-				<Button onClick={this.closeDialog.bind(this)} color="primary">
-					Cancel
-				</Button>
-
-				<Button onClick={this.updateUserRequest.bind(this)} color="primary">
-					OK
-				</Button>
-			</DialogActions>);
+		this.setState({
+			editUser: item,
+			editDialog: true
+		});
 	}
 
 	/**
@@ -379,7 +313,64 @@ class Users extends Component {
 	 * @param {Object} e
 	 */
 	updateUserRequest(e) {
+		var form = document.getElementById('edit-user-form');
+		if (form) {
+			let { editUser } = this.state;
+			let xhr = Manager.xhr();
 
+			var i,
+				body = '';
+
+			for (i = 0; i < form.elements.length; i++) {
+				body += form.elements[i].name +'='+ encodeURIComponent(form.elements[i].value) +'&';
+			}
+			body = body.substring(0, body.length - 1);
+
+			xhr.open('PUT', Manager.url +'/api/user/'+ editUser.id, true);
+			xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+			xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+			xhr.setRequestHeader('X-CSRF-Token', Manager.csrf());
+			xhr.send(body);
+
+			var r;
+			xhr.onreadystatechange = () => {
+				if(xhr.readyState === 4) {
+					if(xhr.status === 200 || xhr.status === 201) {
+						this.openDialog('Ответ', 
+							<DialogContentText id="alert-dialog-slide-description">
+								Запрос выполнен успешно
+							</DialogContentText>,
+							<DialogActions>
+								<Button onClick={this.closeDialog.bind(this)} color="primary">
+									OK
+								</Button>
+							</DialogActions>, () => this.setState({ 
+								completed: 0,
+								editUser: '',
+								editDialog: false,
+								forRemove: []
+							}, () => {
+								this.loadUsersData(() => this.setState({ completed: 100 }))
+							}));
+					}
+
+					else {
+						r = JSON.parse(xhr.response);
+						if(r.message) {
+							this.openDialog('Ошибка во время редактирования', 
+								<DialogContentText id="alert-dialog-slide-description">
+									{r.message}
+								</DialogContentText>,
+								<DialogActions>
+									<Button onClick={this.closeDialog.bind(this)} color="primary">
+										OK
+									</Button>
+								</DialogActions>);
+						}
+					}
+				}
+			}
+		}
 	}
 
 	/**
@@ -420,12 +411,12 @@ class Users extends Component {
 						}));
 				}
 
-				if(xhr.status === 422 || xhr.status === 500 || xhr.status === 419) {
+				else {
 					r = JSON.parse(xhr.response);
 					if(r.message) {
 						this.openDialog('Ошибка во время удаления', 
 							<DialogContentText id="alert-dialog-slide-description">
-								r.message
+								{r.message}
 							</DialogContentText>,
 							<DialogActions>
 								<Button onClick={this.closeDialog.bind(this)} color="primary">
@@ -436,6 +427,15 @@ class Users extends Component {
 				}
 			}
 		}
+	}
+
+	/**
+	 * Get query for search users
+	 * @fires input
+	 * @param {Object} e
+	 */
+	getSearchQuery(e) {
+		this.setState({ search: e.target.value });
 	}
 
 	/**
@@ -451,7 +451,11 @@ class Users extends Component {
 			completed, 
 			start, 
 			limit, 
-			total 
+			total,
+			policies,
+			editUser,
+			editDialog,
+			search
 		} = this.state;
 
 		if(completed === 0) {
@@ -463,23 +467,33 @@ class Users extends Component {
 		return <div>
 			<Grid container spacing={24} className={classes.root}>
 				<Grid item xs={10}>
-					<TextField
-						placeholder="Search field"
-						InputProps={{
-							disableUnderline: true,
-							classes: {
-								root: classes.textFieldRoot,
-								input: classes.textFieldInput,
-							},
-						}}
-						InputLabelProps={{
-							shrink: true,
-							className: classes.textFieldFormLabel,
-						}} />
-			
-					<Button className={classes.search}>
-						<Search />
-					</Button>
+					<form onSubmit={e => {
+						this.setState({ completed: 0 }, () => {
+							this.loadUsersData(() => {
+								this.setState({ completed: 100 });
+							});
+						});
+					}}>
+						<TextField
+							placeholder="Search field"
+							onInput={this.getSearchQuery.bind(this)}
+							InputProps={{
+								disableUnderline: true,
+								classes: {
+									root: classes.textFieldRoot,
+									input: classes.textFieldInput,
+								},
+							}}
+							defaultValue={search}
+							InputLabelProps={{
+								shrink: true,
+								className: classes.textFieldFormLabel,
+							}} />
+				
+						<Button type="submit" className={classes.search}>
+							<Search />
+						</Button>
+					</form>
 				</Grid>
 			
 				<Grid item xs={2}>
@@ -496,6 +510,7 @@ class Users extends Component {
 					page={start}
 					rowsPerPage={limit}
 					total={total}
+					except={['policy_id']}
 					columns={[{
 						id: 'id', 
 						numeric: false, 
@@ -557,6 +572,103 @@ class Users extends Component {
 				</DialogContent>
 
 				{dialog.actions}
+			</Dialog>}
+
+			{editDialog === true && <Dialog
+				open={editDialog}
+				transition={Transition}
+				keepMounted
+				aria-labelledby="edit-alert-dialog-slide-title"
+				aria-describedby="alert-dialog-slide-description">
+				
+				<DialogTitle id="edit-alert-dialog-slide-title">
+					{'Edit'}
+				</DialogTitle>
+
+				<DialogContent>
+					<form id="edit-user-form">	
+						<FormControl className={classes.formControl}>
+							<TextField
+								id="name"
+								label="Имя"
+								type="text"
+								name="name"
+								defaultValue={editUser.name}
+								className={classes.textField}
+								InputLabelProps={{
+									shrink: true
+								}} />
+						</FormControl>
+
+						<FormControl className={classes.formControl}>
+							<TextField
+								id="email"
+								label="Email"
+								type="email"
+								name="email"
+								defaultValue={editUser.email}
+								className={classes.textField}
+								InputLabelProps={{
+									shrink: true
+								}} />
+						</FormControl>
+
+						<FormControl className={classes.formControl}>
+							<TextField
+								id="password"
+								label="New password"
+								type="password"
+								name="new_password"
+								defaultValue=""
+								className={classes.textField}
+								InputLabelProps={{
+									shrink: true
+								}} />
+						</FormControl>
+
+						<FormControl className={classes.formControl}>
+							<TextField
+								id="confirm-password"
+								label="Confirm password"
+								type="password"
+								name="confirm_password"
+								defaultValue=""
+								className={classes.textField}
+								InputLabelProps={{
+									shrink: true
+								}} />
+						</FormControl>
+
+						<FormControl className={classes.formControl}>
+							<InputLabel htmlFor="policy">Access policy</InputLabel>
+							<Select
+								value={editUser.policy_id}
+								onChange={this.handleChangeSelect.bind(this, 'policy_id', editUser)}
+								input={<Input name="policy_id" id="policy" />}>
+									{policies.map((policy, i) => {
+										return <MenuItem
+												key={i} 
+												value={policy.id}>
+													{policy.name}
+											</MenuItem>
+									})}
+							</Select>
+						</FormControl>
+					</form>
+				</DialogContent>
+
+				<DialogActions>
+					<Button onClick={e => this.setState({ 
+						editUser: '',
+						editDialog: false
+					})} color="primary">
+						Cancel
+					</Button>
+
+					<Button onClick={this.updateUserRequest.bind(this)} color="primary">
+						OK
+					</Button>
+				</DialogActions>
 			</Dialog>}
 		</div>
 	}

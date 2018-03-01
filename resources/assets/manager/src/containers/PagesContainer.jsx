@@ -29,7 +29,7 @@ class PagesContainer extends Component {
 	 */
 	render() {
 		return <div className="pages__container">
-					<Header title="Страницы" />
+					<Header title="Pages" />
 					<Menu />
 					<Pages />
 				</div>

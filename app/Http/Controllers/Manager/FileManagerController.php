@@ -18,13 +18,19 @@ class FileManagerController extends Controller
 	 */
 	public function folder(Request $request) : JsonResponse
 	{
-		$request->validate([
-			'path' => [
-				'max:255',
-				'string',
-				'regex:/^[^*?"<>|:]*$/'
-			]
-		]);
+		try {
+			$request->validate([
+				'path' => [
+					'max:255',
+					'string',
+					'regex:/^[^*?"<>|:]*$/'
+				]
+			]);
+		}
+		catch (\Exception $e) {
+			logger($e->getMessage());
+			return response()->json(['message' => $e->getMessage()], 422);
+		}
 
 		/** Try to get paths array
 		 */
@@ -51,13 +57,19 @@ class FileManagerController extends Controller
 	 */
 	public function file(Request $request) : JsonResponse
 	{
-		$request->validate([
-			'path' => [
-				'max:255',
-				'string',
-				'regex:/^[^*?"<>|:]*$/'
-			]
-		]);
+		try {
+			$request->validate([
+				'path' => [
+					'max:255',
+					'string',
+					'regex:/^[^*?"<>|:]*$/'
+				]
+			]);
+		}
+		catch (\Exception $e) {
+			logger($e->getMessage());
+			return response()->json(['message' => $e->getMessage()], 422);
+		}
 
 		/** Try to get files array
 		 */
@@ -88,18 +100,24 @@ class FileManagerController extends Controller
 	 */
 	public function rename(Request $request) : JsonResponse
 	{
-		$request->validate([
-			'path' => [
-				'max:255',
-				'string',
-				'regex:/^[^*?"<>|:]*$/'
-			],
-			'name' => [
-				'max:255',
-				'string',
-				'regex:/^[^*?"<>|:]*$/'
-			]
-		]);
+		try {
+			$request->validate([
+				'path' => [
+					'max:255',
+					'string',
+					'regex:/^[^*?"<>|:]*$/'
+				],
+				'name' => [
+					'max:255',
+					'string',
+					'regex:/^[^*?"<>|:]*$/'
+				]
+			]);
+		}
+		catch (\Exception $e) {
+			logger($e->getMessage());
+			return response()->json(['message' => $e->getMessage()], 422);
+		}
 
 		/** Try to rename folder
 		 */
@@ -121,13 +139,19 @@ class FileManagerController extends Controller
 	 */
 	public function deleteFolder(Request $request) : JsonResponse
 	{
-		$request->validate([
-			'path' => [
-				'max:255',
-				'string',
-				'regex:/^[^*?"<>|:]*$/'
-			]
-		]);
+		try {
+			$request->validate([
+				'path' => [
+					'max:255',
+					'string',
+					'regex:/^[^*?"<>|:]*$/'
+				]
+			]);
+		}
+		catch (\Exception $e) {
+			logger($e->getMessage());
+			return response()->json(['message' => $e->getMessage()], 422);
+		}
 
 		/** Try to rename folder
 		 */
@@ -149,13 +173,19 @@ class FileManagerController extends Controller
 	 */
 	public function deleteFile(Request $request) : JsonResponse
 	{
-		$request->validate([
-			'path' => [
-				'max:255',
-				'string',
-				'regex:/^[^*?"<>|:]*$/'
-			]
-		]);
+		try {
+			$request->validate([
+				'path' => [
+					'max:255',
+					'string',
+					'regex:/^[^*?"<>|:]*$/'
+				]
+			]);
+		}
+		catch (\Exception $e) {
+			logger($e->getMessage());
+			return response()->json(['message' => $e->getMessage()], 422);
+		}
 
 		/** Try to rename folder
 		 */
@@ -177,13 +207,19 @@ class FileManagerController extends Controller
 	 */
 	public function createFolder(Request $request) : JsonResponse
 	{
-		$request->validate([
-			'path' => [
-				'max:255',
-				'string',
-				'regex:/^[^*?"<>|:]*$/'
-			]
-		]);
+		try {
+			$request->validate([
+				'path' => [
+					'max:255',
+					'string',
+					'regex:/^[^*?"<>|:]*$/'
+				]
+			]);
+		}
+		catch (\Exception $e) {
+			logger($e->getMessage());
+			return response()->json(['message' => $e->getMessage()], 422);
+		}
 
 		try {
 			Storage::disk('uploads')->makeDirectory($request->input('path'));
@@ -203,13 +239,19 @@ class FileManagerController extends Controller
 	 */
 	public function createFile(Request $request) : JsonResponse
 	{
-		$request->validate([
-			'path' => [
-				'max:255',
-				'string',
-				'regex:/^[^*?"<>|:]*$/'
-			]
-		]);
+		try {
+			$request->validate([
+				'path' => [
+					'max:255',
+					'string',
+					'regex:/^[^*?"<>|:]*$/'
+				]
+			]);
+		}
+		catch (\Exception $e) {
+			logger($e->getMessage());
+			return response()->json(['message' => $e->getMessage()], 422);
+		}
 
 		foreach ($request->file('file') as $file) {
 			try {

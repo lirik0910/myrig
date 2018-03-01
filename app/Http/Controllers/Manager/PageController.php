@@ -87,7 +87,7 @@ class PageController extends Controller
 		try {
 			$model->save();
 		}
-		catch(\Exception $e) {
+		catch (\Exception $e) {
 			logger($e->getMessage());
 			return response()->json(['message' => $e->getMessage()], 422);
 		}
@@ -105,9 +105,16 @@ class PageController extends Controller
 	{
 		/** Value of the link field must be only one
 		 */
-		$request->validate([
-			'link' => [Rule::unique('pages')->ignore($id)]
-		]);
+		try {
+			$request->validate([
+				'link' => [Rule::unique('pages')->ignore($id)]
+			]);
+		}
+		catch (\Exception $e) {
+			logger($e->getMessage());
+			return response()->json(['message' => $e->getMessage()], 422);
+		}
+
 		$data = $request->only([
 			'title',
 			'description',
@@ -129,7 +136,7 @@ class PageController extends Controller
 		try {
 			$page = Page::find($id);
 		}
-		catch(\Exception $e) {
+		catch (\Exception $e) {
 			logger($e->getMessage());
 			return response()->json(['message' => $e->getMessage()], 422);
 		}
@@ -141,7 +148,7 @@ class PageController extends Controller
 		try {
 			$page->save();
 		}
-		catch(\Exception $e) {
+		catch (\Exception $e) {
 			logger($e->getMessage());
 			return response()->json(['message' => $e->getMessage()], 422);
 		}
@@ -163,7 +170,7 @@ class PageController extends Controller
 		try {
 			$page = Page::find($id);
 		}
-		catch(\Exception $e) {
+		catch (\Exception $e) {
 			logger($e->getMessage());
 			return response()->json(['message' => $e->getMessage()], 422);
 		}
@@ -173,7 +180,7 @@ class PageController extends Controller
 		try {
 			Page::removeChilds($page->id);
 		}
-		catch(\Exception $e) {
+		catch (\Exception $e) {
 			logger($e->getMessage());
 			return response()->json(['message' => $e->getMessage()], 422);
 		}
@@ -183,7 +190,7 @@ class PageController extends Controller
 		try {
 			$page->delete();
 		}
-		catch(\Exception $e) {
+		catch (\Exception $e) {
 			logger($e->getMessage());
 			return response()->json(['message' => $e->getMessage()], 422);
 		}

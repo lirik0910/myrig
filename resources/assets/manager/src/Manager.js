@@ -53,6 +53,7 @@ class Manager {
 			if(e !== '') {
 				a.push(e);
 			}
+			return true;
 		}, []);
 		return a;
 	}

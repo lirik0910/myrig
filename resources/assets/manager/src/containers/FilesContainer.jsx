@@ -28,7 +28,7 @@ class FilesContainer extends Component {
 	 */
 	render() {
 		return <div className="files__container">
-					<Header title="Файлы" />
+					<Header title="Files" />
 					<Menu />
 					<Files />
 				</div>

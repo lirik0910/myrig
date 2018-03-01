@@ -11,12 +11,10 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import Dropzone from 'react-dropzone';
 
 import Manager from '../../Manager.js';
 import styles from './styles.js';
-import Jquery from 'jquery';
 import { withStyles } from 'material-ui/styles';
 import * as StateElementAction from '../../actions/StateElementAction.js';
 import Paper from 'material-ui/Paper';
@@ -28,10 +26,8 @@ import Reply from 'material-ui-icons/Reply';
 import Create from 'material-ui-icons/Create';
 import Delete from 'material-ui-icons/Delete';
 import InsertDriveFile from 'material-ui-icons/InsertDriveFile';
-import Typography from 'material-ui/Typography';
 import CreateNewFolder from 'material-ui-icons/CreateNewFolder';
-import Table from '../Common/ManagerTable/ManagerTable.jsx';
-import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
+import List, { ListItem, ListItemIcon } from 'material-ui/List';
 import Dialog, {
 	DialogActions,
 	DialogContent,
@@ -106,7 +102,7 @@ class Files extends Component {
 	 */
 	loadFolders(callback = () => {}) {
 		let xhr = Manager.xhr();
-		let { path, folders } = this.state;
+		let { path } = this.state;
 
 		xhr.open('GET', Manager.url +'/api/folder?path='+ path, true);
 		xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
@@ -153,7 +149,7 @@ class Files extends Component {
 	 */
 	loadFiles(callback = () => {}) {
 		let xhr = Manager.xhr();
-		let { path, files } = this.state;
+		let { path } = this.state;
 
 		xhr.open('GET', Manager.url +'/api/file?path='+ path, true);
 		xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
@@ -216,22 +212,6 @@ class Files extends Component {
 		dialog.open = false;
 
 		this.setState({ dialog });
-	}
-
-	/**
-	 * Drop files
-	 * @param {Array} acceptedFiles
-	 * @param {Array} rejectedFiles
-	 */
-	onDrop(acceptedFiles, rejectedFiles) {
-		let { filesToBeSent, filesPreview, printcount } = this.state;
-
-		filesToBeSent.push(acceptedFiles);
-		for (var i in filesToBeSent) {
-			filesPreview.push(<div key={i}>{filesToBeSent[i][0].name}<a href="#">clear</a></div>);
-		}
-
-		this.setState({ filesToBeSent, filesPreview });
 	}
 
 	/**
@@ -371,7 +351,7 @@ class Files extends Component {
 
 		if (name && name.value) {
 			let xhr = Manager.xhr();
-			let { path, dialog, click } = this.state;
+			let { path, click } = this.state;
 
 			if(click === false) {
 				var body = '',
@@ -429,12 +409,9 @@ class Files extends Component {
 
 	deleteFileRequest(currentName) {
 		let xhr = Manager.xhr();
-		let { path, dialog, click } = this.state;
+		let { path, click } = this.state;
 
 		if(click === false) {
-			var r,
-				body = '';
-
 			this.setState({ 
 				completed: 0, 
 				click: true 
@@ -446,6 +423,7 @@ class Files extends Component {
 			xhr.setRequestHeader('X-CSRF-Token', Manager.csrf());
 			xhr.send('path='+ encodeURIComponent(path + currentName));
 
+			var r;
 			xhr.onreadystatechange = () => {
 				if (xhr.readyState === 4) {
 					if (xhr.status === 200 || xhr.status === 201) {
@@ -459,7 +437,7 @@ class Files extends Component {
 						)
 					}
 
-					if(xhr.status === 422 || xhr.status === 500 || xhr.status === 419) {
+					else {
 						r = JSON.parse(xhr.response);
 						if(r.message) {
 							this.openDialog('Ошибка во время удаления файла', 
@@ -487,12 +465,9 @@ class Files extends Component {
 	 */
 	deleteFolderRequest(currentName) {
 		let xhr = Manager.xhr();
-		let { path, dialog, click } = this.state;
+		let { path, click } = this.state;
 
 		if(click === false) {
-			var r,
-				body = '';
-
 			this.setState({ 
 				completed: 0, 
 				click: true 
@@ -504,6 +479,7 @@ class Files extends Component {
 			xhr.setRequestHeader('X-CSRF-Token', Manager.csrf());
 			xhr.send('path='+ encodeURIComponent(path + currentName));
 
+			var r;
 			xhr.onreadystatechange = () => {
 				if (xhr.readyState === 4) {
 					if (xhr.status === 200 || xhr.status === 201) {
@@ -517,7 +493,7 @@ class Files extends Component {
 						)
 					}
 
-					if(xhr.status === 422 || xhr.status === 500 || xhr.status === 419) {
+					else {
 						r = JSON.parse(xhr.response);
 						if(r.message) {
 							this.openDialog('Ошибка во время удаления каталога', 
@@ -549,7 +525,7 @@ class Files extends Component {
 
 		if (name && name.value) {
 			let xhr = Manager.xhr();
-			let { path, dialog, click } = this.state;
+			let { path, click } = this.state;
 
 			if(click === false) {
 				var r;
@@ -606,7 +582,7 @@ class Files extends Component {
 	 * @fires click
 	 */
 	uploadFilesRequest(files) {
-		let { path, dialog, click } = this.state;
+		let { path, click } = this.state;
 
 		if(click === false) {
 			let xhr = Manager.xhr();
@@ -669,7 +645,7 @@ class Files extends Component {
 	 * @return {Object} jsx object
 	 */
 	render() {
-		let { filesPreview, path, dialog, completed, folders, files } = this.state;
+		let { path, dialog, completed, folders, files } = this.state;
 		let { classes } = this.props;
 
 		return <div style={{height: '100%'}}>
@@ -694,7 +670,7 @@ class Files extends Component {
 								</Grid>
 
 								<Grid item xs={1}>
-									<Button className={classes.button} 
+									<Button
 										variant="raised" 
 										size="small"
 										className={classes.button}

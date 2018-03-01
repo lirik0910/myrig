@@ -64,6 +64,7 @@ class ManagerTable extends Component {
 		footer: true,
 		order: 'asc',
 		page: 0,
+		except: [],
 		rowsPerPage: 20,
 		orderBy: 'id',
 		defaultSort: true,
@@ -224,7 +225,7 @@ class ManagerTable extends Component {
 	 * @return Array
 	 */
 	createRows(data, pagePaginStart, pagePaginFinish, k = 0) {
-		const { classes, selecting } = this.props;
+		const { classes, selecting, except } = this.props;
 
 		var i,
 			cells;
@@ -234,7 +235,7 @@ class ManagerTable extends Component {
 
 			cells = [];
 			for(i in n) {
-				if(i !== 'props' && i !== 'childs') {
+				if(i !== 'props' && i !== 'childs' && except.indexOf(i) === -1) {
 					cells.push(<TableCell key={k}>{n[i]}</TableCell>);
 					k++;
 				}
