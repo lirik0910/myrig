@@ -13,7 +13,7 @@
 use Illuminate\Http\Request;
 
 
-
+//var_dump($_SESSION); die;
 //var_dump($request->getQueryString()); die;
 foreach (\App\Model\Base\Page::all() as $page) {
     Route::get($page->link, 'PageController@view');
