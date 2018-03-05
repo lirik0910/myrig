@@ -7,12 +7,21 @@ use App\Model\Base\Page;
 
 class PageController extends Controller
 {
+	/**
+	 * Get page
+	 * @param Request $request
+	 */
+	public function view(Request $request)
+	{
+		$link = $request->decodedPath();
+		$link = $link === '/' ?
+			$link :
+			rtrim(ltrim($request->decodedPath(), '/\\'), '/\\');
+		
+		if ($page = Page::where('link', $link)->first()) {
+			return view($page->view->path, ['page' => $page]);
+		}
 
-    public function view(Request $request){
-        var_dump($request->session()); die;
-        $page = new Page;
-        $output = $page->getContent($request);
-//var_dump($output['data']['products']); die;
-        return view($output['viewName'], $output['data']);
-    }
+		else abort(404);
+	}
 }

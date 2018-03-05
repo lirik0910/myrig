@@ -12,20 +12,14 @@
 */
 use Illuminate\Http\Request;
 
-
-//var_dump($_SESSION); die;
-//var_dump($request->getQueryString()); die;
 foreach (\App\Model\Base\Page::all() as $page) {
-    Route::get($page->link, 'PageController@view');
+	Route::get($page->link, 'PageController@view');
 }
 
-Route::get('/shop/{id}', 'ProductController@getContent');
+/*Route::get('/shop/{id}', 'ProductController@getContent');
 Route::post('/create_ticket', 'ZendeskController@createTicket');
 Route::post('/calc', 'CalculateController@checkMethod');
 
 Route::post('/back_call', function (Request $request){
-    var_dump($request->post()); die;
-});
-
-
-
+	var_dump($request->post()); die;
+});*/
