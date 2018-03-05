@@ -39,7 +39,7 @@ Route::prefix('products')
 });
 
 Route::prefix('api')
-	->middleware('auth')
+	//->middleware('auth')
 	->group(function() {
 		Route::prefix('component')->group(function() {
 			Route::get('/', 'Manager\Base\ComponentController@all');
@@ -113,6 +113,7 @@ Route::prefix('api')
 			Route::get('/{id}', 'Manager\Shop\OrderController@one');
 			Route::post('/', 'Manager\Shop\OrderController@create');
 			Route::put('/{id}', 'Manager\Shop\OrderController@update');
+			Route::get('/log/{id}', 'Manager\Shop\OrderController@log');
 			Route::delete('/{id}', 'Manager\Shop\OrderController@delete');
 		});
 });

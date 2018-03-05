@@ -61,4 +61,27 @@ class Order extends Model
 	{
 		return $this->hasMany(Cart::class);
 	}
+
+	/**
+	 * Count order cost
+	 * @return float
+	 */
+	public function countCost()
+	{
+
+	}
+
+	/**
+	 * Change order status
+	 * @return boolean
+	 */
+	public function changeStatus()
+	{
+
+	}
+
+	public function addProduct()
+	{
+		
+	}
 }

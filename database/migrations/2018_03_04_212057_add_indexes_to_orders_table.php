@@ -15,7 +15,7 @@ class AddIndexesToOrdersTable extends Migration
 	{
 		Schema::table('orders', function (Blueprint $table) {
 			$table->index('number');
-			$table->index(' created_at ');
+			$table->index('created_at');
 		});
 	}
 
