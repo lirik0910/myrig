@@ -14,10 +14,8 @@ class ProductCategoriesTableSeeder extends Seeder
 		/** Add base product category
 		 */
 		App\Model\Shop\ProductCategory::create([
-			'parent_id' => 0,
 			'title' => 'Base',
 			'description' => 'Base category',
-			'icon' => '',
 			'active' => 1
 		]);
 	}

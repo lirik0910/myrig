@@ -19,9 +19,14 @@ class ProductsTableSeeder extends Seeder
 		 */
 		$category = App\Model\Shop\ProductCategory::where('title', 'Base')->firstOrFail();
 
+		/** Get default vendor
+		 */
+		$vendor = App\Model\Shop\Vendor::where('title', 'Base')->firstOrFail();
+
 		App\Model\Shop\Product::create([
-			'category_id' => $category->id,
 			'context_id' => $context->id,
+			'category_id' => $category->id,
+			'vendor_id' => $vendor->id,
 			'title' => 'DRAGONMINT T1 16TH/s',
 			'description' => '<p><b>DragonMint 16TH/s</b> – последняя новинка на рынке оборудования для добычи Bitcoin, созданная компанией Halong Mining. Исходя из заявленных характеристик, более эффективного майнера SHA-256 на сегодняшний день не существует.</p>
 
@@ -34,8 +39,9 @@ class ProductsTableSeeder extends Seeder
 		]);
 
 		App\Model\Shop\Product::create([
-			'category_id' => $category->id,
 			'context_id' => $context->id,
+			'category_id' => $category->id,
+			'vendor_id' => $vendor->id,
 			'title' => 'ANTMINER D3 19.3GH/s',
 			'description' => '<p><b>Antminer D3</b> – оборудование для майнинга, разработанное специалистами BITMAIN.  Устройство создано специально под алгоритм Х11, следовательно, на нем можно добывать одну из самых востребованных криптовалют – DASH. Кроме того, на таком алгоритме можно получить и другую цифровую валюту, например, QRK и CANN.</p>
 

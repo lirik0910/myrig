@@ -20,10 +20,6 @@ class CreateCategoryTable extends Migration
 			
 			$table->increments('id');
 			
-			$table->integer('parent_id', false, true)
-				->default(0)
-				->comment('Parent category ID');
-			
 			$table->string('title', 255)
 				->nullable(false)
 				->comment('Category name');
