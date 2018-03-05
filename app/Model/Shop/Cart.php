@@ -8,12 +8,12 @@ use Illuminate\Database\Eloquent\Collection;
 class Cart extends Model
 {
 	/**
-	 * Get product model
+	 * Bind product model
 	 * @return boolean
 	 */
 	public function product()
 	{
-		return $this->hasOne('App\Model\Shop\Product');
+		return $this->belongsTo(Product::class);
 	}
 
 	/**
@@ -22,7 +22,7 @@ class Cart extends Model
 	 */
 	public function order()
 	{
-		return $this->hasOne('App\Model\Shop\Order');
+		return $this->hasOne(Order::class);
 	}
 
 	/**
@@ -30,6 +30,14 @@ class Cart extends Model
 	 * @return \Illuminate\Database\Eloquent\Collection
 	 */
 	public function getCartProducts() : Collection
+	{
+
+	}
+
+	/**
+	 *
+	 */
+	public function calculateCartCost()
 	{
 
 	}

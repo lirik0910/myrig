@@ -130,11 +130,15 @@ class OrderController extends Controller
 			return response()->json(['message' => $e->getMessage()], 422);
 		}
 
-		foreach ($all as $item) {
-			$item->status;
-			$item->context;
-			$item->paymentType;
-			$item->orderDeliveries->delivery;
+		foreach ($all as $order) {
+			$order->status;
+			$order->context;
+			$order->paymentType;
+			$order->orderDeliveries->delivery;
+
+			foreach ($order->carts as $cart) {
+				$cart->product->images;
+			}
 		}
 
 		return response()->json([
