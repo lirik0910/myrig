@@ -31,7 +31,7 @@ jQuery(document).ready(function ($) {
 		$.ajax({
 			type: 'POST',
 			//dataType: 'json',
-			url: '/vendor/',
+			url: global.url + '/create_ticket',
 			contentType: false,
              processData: false,
 			data: fd,
@@ -294,7 +294,7 @@ jQuery(document).ready(function ($) {
 			var url = global.url + $('#ticketback').attr('action');
 
 			$.ajax({
-				url: ,
+				url: url,
 				data: fd,
 				type: 'POST',
 				//dataType: 'json',

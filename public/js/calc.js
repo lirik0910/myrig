@@ -20,7 +20,11 @@
 		function udate_network(obj) {
 			$('.network-status--inner div:last-child').html('<i class="fa fa-cog fa-spin"></i>')
 			$.ajax({
-					url:global.url,
+					url:global.url + '/calc',
+				    method: 'post',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
 					data: {
 						action:obj.updateAction,
 						currency:obj.currencyType, 
@@ -41,7 +45,11 @@
 				'opacity' : 0.6
 			})
 		 	$.ajax({
-				url:global.url,
+				url:global.url + '/calc',
+                method: 'post',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
 				data: {
 					action:'update_devices',
 					currency:obj.currencyType, 
@@ -100,6 +108,10 @@
 			$('.income-number').html('<i class="fa fa-cog fa-spin"></i>')
 			$.ajax({
 				url:global.url,
+                method: 'post',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
 				data: $('.calculator-form').serialize() + '&calc='+JSON.stringify(calc) + '&network=' + JSON.stringify(calc.network) + '&status=' + JSON.stringify(calc.status)  ,
 			 	dataType: 'json',
 				success: function(data) {
@@ -119,7 +131,20 @@
 						datasets: [{
 							fillColor: "rgba(157,200,241,0.4)",
 							strokeColor: "#72b0ea",
-							pointColor: "#72b0ea",
+							poi
+
+
+
+
+
+
+
+
+
+
+
+
+							ntColor: "#72b0ea",
 							pointStrokeColor: "#72b0ea",
 							data:  data.chart 
 							
@@ -206,9 +231,13 @@
 		
 		
 		function update_rates(obj) {
-			
+			//console.log(obj);
 			$.ajax({
-				url:global.url,
+				url:global.url + '/calc',
+                method: 'post',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
 				data: {
 					action:'parse_btc_courses_calc',
 					src: obj  ? obj  : 'coinbase'
@@ -226,7 +255,11 @@
 		function update_net_status() {
 			
 			$.ajax({
-				url:global.url,
+				url:global.url + '/calc',
+                method: 'post',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
 				data: {
 					action:'parse_btc_network_status',
 					 

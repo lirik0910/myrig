@@ -19,7 +19,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-sm-4">
-                        <a href="https://myrig.com.ua/news/" class="article-link" data-wpel-link="internal"><i class="article-arrow"></i>Назад к списку</a>
+                        <a href="{{asset('/news')}}" class="article-link" data-wpel-link="internal"><i class="article-arrow"></i>Назад к списку</a>
                         <h1>Бутерин планирует запустить шардинг в тестнете Ethereum</h1>
                         <div class="date">24 февраля 2018<i class="fa fa-eye"></i>10</div>
                         <div class="article-social">

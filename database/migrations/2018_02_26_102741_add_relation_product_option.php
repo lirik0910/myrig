@@ -13,7 +13,7 @@ class AddRelationProductOption extends Migration
      */
     public function up()
     {
-        Schema::table('products_options', function (Blueprint $table){
+        Schema::table('product_options', function (Blueprint $table){
             $table->foreign('product_id')
                 ->references('id')
                 ->on('products')

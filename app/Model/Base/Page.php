@@ -31,28 +31,46 @@ class Page extends Model
 	}
 
 	public function variables(){
-	    return $this->belongsToMany(Variable::class, 'variable_contents')->withPivot('content');
+	    return $this->belongsToMany(Variable::class, 'variable_contents')->withPivot('content', 'name');
     }
 
-	public function getContent($link){
-        $page = $this->where(['link' => $link])->with('view', 'variables')->first();
+
+    /*
+     * Bind with Variable and Variable multi content model
+     * return boolean
+     */
+    public function multivariables(){
+        return $this->belongsToMany(Variable::class, 'variable_multi_contents')->withPivot('name', 'content', 'content_id');
+    }
+
+	public function getContent(string $link){
+        $page = $this->where(['link' => $link])->with('view', 'variables', 'multivariables')->first();
 
         if(!$page){
             return view('content/404');
         }
 
-        $data = [];
-        $data['page'] = $page;
-        $data['settings'] = Setting::where(['context_id' => $page->context_id])->get();
+        $output = [];
+
+        $output ['viewName'] = explode('.', $page->view->path)[0];
+        $output['data']['page'] = $page;
+        $output['data']['settings'] = Setting::where(['context_id' => $page->context_id])->get();
+
+        $migx = [];
+        foreach ($page->multivariables as $mv){
+            $migx[$mv->title][$mv->pivot->content_id][$mv->pivot->name] = $mv->pivot->content;
+        }
+        $output['data']['migx'] = $migx;
 
         if($page->link == '/'){
-            $data['products'] = Product::where(['active' => 1])->orderBy('price', 'DESC')->limit(4)->with('images')->get();
+            $output['data']['products'] = Product::where(['active' => 1, 'category_id' => 1])->orderBy('price', 'DESC')->limit(4)->with('options')->get();
         } elseif($page->link == '/news' || $page->link == '/info'){
-            $data['news'] = Page::where(['id' => $page->id])->orderBy('created_at', 'DESC')->paginate(10);
+            $output['data']['news'] = Page::where(['id' => $page->id])->orderBy('created_at', 'DESC')->paginate(10);
         } elseif ($page->link == '/shop'){
-            $data['products'] = Product::where(['active' => 1])->orderBy('price', 'DESC')->with('images', 'options')->get();
+            $output['data']['products'] = Product::where(['active' => 1])->orderBy('price', 'DESC')->with('options')->get();
         }
-        return view(explode('.', $page->view->path)[0], $data);
+
+        return $output;
     }
 	/**
 	 * Build tree pages array with childs
