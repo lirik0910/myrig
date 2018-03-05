@@ -110,8 +110,9 @@ Route::prefix('api')
 
 		Route::prefix('order')->group(function() {
 			Route::get('/', 'Manager\Shop\OrderController@all');
-			Route::put('/', 'Manager\Shop\OrderController@update');
+			Route::get('/{id}', 'Manager\Shop\OrderController@one');
 			Route::post('/', 'Manager\Shop\OrderController@create');
-			Route::delete('/', 'Manager\Shop\OrderController@delete');
+			Route::put('/{id}', 'Manager\Shop\OrderController@update');
+			Route::delete('/{id}', 'Manager\Shop\OrderController@delete');
 		});
 });

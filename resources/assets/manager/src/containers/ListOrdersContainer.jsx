@@ -16,6 +16,8 @@ import Menu from '../components/Menu/Menu.jsx';
 import Header from '../components/Header/Header.jsx';
 import { LinearProgress } from 'material-ui/Progress';
 import PaperTable from '../components/PaperTable/PaperTable.jsx';
+import DialogError from '../components/DialogError/DialogError.jsx';
+import DialogDelete from '../components/DialogDelete/DialogDelete.jsx';
 import PaperToolBar from '../components/PaperToolBar/PaperToolBar.jsx';
 import ControlOptions from '../components/ControlOptions/ControlOptions.jsx';
 
@@ -50,7 +52,12 @@ class ListOrdersContainer extends Component {
 		contextID: 0,
 		deliveryID: 0,
 		searchText: '',
-		completed: 100
+		completed: 100,
+		deleteOrderId: 0,
+		deleteDialog: false,
+		resultDialog: false,
+		resultDialogTitle: '',
+		resultDialogMessage: ''
 	}
 
 	/**
@@ -136,8 +143,49 @@ class ListOrdersContainer extends Component {
 						this.setState({ 
 							data: r.data,
 							total: r.total,
-							completed: 100
+							completed: 100,
+							deleteOrderId: 0
 						}, () => callback(r));
+					}
+				}
+			});
+		});
+	}
+
+	/**
+	 * Delete order
+	 * @param {Function} callback
+	 */
+	ordersDelteRequest(callback = () => {}) {
+		let { deleteOrderId } = this.state;
+
+		this.setState({ completed: 0 }, () => {
+			App.api({
+				name: 'one',
+				type: 'DELETE',
+				model: 'order',
+				resource: deleteOrderId,
+				success: (r) => {
+					r = JSON.parse(r.response);
+					if (r) {
+						this.setState({ 
+							completed: 100,
+							deleteOrderId: 0,
+							deleteDialog: false,
+						}, () => callback(r));
+					}
+				},
+				error: (r) => {
+					r = JSON.parse(r.response);
+					if (r.message) {
+						this.setState({ 
+							completed: 100,
+							deleteOrderId: 0,
+							resultDialog: true,
+							deleteDialog: false,
+							resultDialogTitle: 'Error',
+							resultDialogMessage: r.message
+						});
 					}
 				}
 			});
@@ -215,7 +263,13 @@ class ListOrdersContainer extends Component {
 					</div>,
 				control: <ControlOptions
 							item={item}
-							editButton={true} />
+							editButton={true}
+							onDeleteButtonClicked={item => {
+								this.setState({
+									deleteDialog: true,
+									deleteOrderId: item.id,
+								});
+							}} />
 			};
 		});
 	}
@@ -238,6 +292,10 @@ class ListOrdersContainer extends Component {
 			contextID, 
 			deliveryID,
 			searchText, 
+			deleteDialog,
+			resultDialog,
+			resultDialogTitle,
+			resultDialogMessage,
 			completed } = this.state;
 
 		return <div className="pages-list__container">
@@ -352,6 +410,23 @@ class ListOrdersContainer extends Component {
 							onLimitValueChanged={limit => this.setState({ limit })} /> : null}
 					</Grid>
 				</Grid>
+
+				{resultDialog === true && <DialogError 
+					title={resultDialogTitle}
+					defaultValue={resultDialog}
+					message={resultDialogMessage}
+					onDialogClosed={() => this.setState({
+						resultDialog: false
+					})} />}
+
+				{deleteDialog === true && <DialogDelete
+					defaultValue={deleteDialog}
+					onDialogClosed={() => this.setState({
+						deleteDialog: false
+					})}
+					onDialogConfirmed={() => this.ordersDelteRequest(() => {
+						this.ordersGetDataRequest();
+					})} />}
 			</div>
 	}
 }

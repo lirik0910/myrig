@@ -104,7 +104,16 @@
 	},
 	"order": {
 		"GET": {
-			"all": ""
+			"all": "",
+			"one": "{id}"
+		},
+		"DELETE": {
+			"one": "{id}",
+			"many": ""
+		},
+		"PUT": {
+			"one": "{id}",
+			"many": ""
 		}
 	},
 	"payment": {

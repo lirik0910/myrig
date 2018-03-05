@@ -142,4 +142,36 @@ class OrderController extends Controller
 			'data' => $all
 		], 200);
 	}
+
+	/**
+	 * Delete order
+	 * @param int $id
+	 * @return \Illuminate\Http\JsonResponse
+	 */
+	public function delete(int $id) : JsonResponse
+	{
+		/** Try get model
+		 */
+		try {
+			$model = Order::find($id);
+		}
+		catch(\Exception $e) {
+			logger($e->getMessage());
+			return response()->json(['message' => $e->getMessage()], 422);
+		}
+
+		/** Try delete model
+		 */
+		try {
+			$model->delete();
+		}
+		catch(\Exception $e) {
+			logger($e->getMessage());
+			return response()->json(['message' => $e->getMessage()], 422);
+		}
+
+		return response()->json([
+			'message' => true
+		], 200);
+	}
 }
