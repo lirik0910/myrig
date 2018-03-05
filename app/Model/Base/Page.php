@@ -30,14 +30,68 @@ class Page extends Model
 		return $this->belongsTo(View::class);
 	}
 
+	public function variables(){
+	    return $this->belongsToMany(Variable::class, 'variable_contents')->withPivot('content', 'name');
+    }
+
+
+    /*
+     * Bind with Variable and Variable multi content model
+     * return boolean
+     */
+    public function multivariables(){
+        return $this->belongsToMany(Variable::class, 'variable_multi_contents')->withPivot('name', 'content', 'content_id');
+    }
+
+	public function getContent(string $link){
+        $page = $this->where(['link' => $link])->with('view', 'variables', 'multivariables')->first();
+
+        if(!$page){
+            return view('content/404');
+        }
+
+        $output = [];
+
+        $output ['viewName'] = explode('.', $page->view->path)[0];
+        $output['data']['page'] = $page;
+        $output['data']['settings'] = Setting::where(['context_id' => $page->context_id])->get();
+
+        $migx = [];
+        foreach ($page->multivariables as $mv){
+            $migx[$mv->title][$mv->pivot->content_id][$mv->pivot->name] = $mv->pivot->content;
+        }
+        $output['data']['migx'] = $migx;
+
+        if($page->link == '/'){
+            $output['data']['products'] = Product::where(['active' => 1, 'category_id' => 1])->orderBy('price', 'DESC')->limit(4)->with('options')->get();
+        } elseif($page->link == '/news' || $page->link == '/info'){
+            $output['data']['news'] = Page::where(['id' => $page->id])->orderBy('created_at', 'DESC')->paginate(10);
+        } elseif ($page->link == '/shop'){
+            $output['data']['products'] = Product::where(['active' => 1])->orderBy('price', 'DESC')->with('options')->get();
+        }
+
+        return $output;
+    }
 	/**
-	 * Bind with variable model
-	 * @return boolean
+	 * Build tree pages array with childs
+	 * @return array
 	 */
-	public function variables()
+	public static function getPagesTree() : array
 	{
-		return $this->belongsToMany(Variable::class, 'view_variables', 'view_id');
+		$pages = Page::all()->keyBy('id');
+		$a = [];
+
+		foreach ($pages as $key => $page) {
+			$a[$key] = $page->toArray();
+			$a[$key]['childs'] = Page::findPageChildsByArray($key, $pages);
+
+			if ($page->parent_id !== 0) {
+				unset($a[$key]);
+			}
+		}
+		return $a;
 	}
+
 
 	/**
 	 * Remove all childs of certain page
@@ -62,26 +116,5 @@ class Page extends Model
 		}
 
 		return true;
-	}
-
-	public function getContent($link){
-		$page = $this->where(['link' => $link])->with('view', 'variables')->first();
-
-		if(!$page){
-			return view('content/404');
-		}
-
-		$data = [];
-		$data['page'] = $page;
-		$data['settings'] = Setting::where(['context_id' => $page->context_id])->get();
-
-		if($page->link == '/'){
-			$data['products'] = Product::where(['active' => 1])->orderBy('price', 'DESC')->limit(4)->with('images')->get();
-		} elseif($page->link == '/news' || $page->link == '/info'){
-			$data['news'] = Page::where(['id' => $page->id])->orderBy('created_at', 'DESC')->paginate(10);
-		} elseif ($page->link == '/shop'){
-			$data['products'] = Product::where(['active' => 1])->orderBy('price', 'DESC')->with('images', 'options')->get();
-		}
-		return view(explode('.', $page->view->path)[0], $data);
 	}
 }

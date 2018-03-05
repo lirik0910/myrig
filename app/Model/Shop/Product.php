@@ -37,6 +37,26 @@ class Product extends Model
 		return $this->hasMany(ProductImage::class);
 	}
 
+    /*
+ * Convert product options to array
+ * @param (Object) $options Current product options
+ * return array
+ */
+    public static function convertOptions($options)
+    {
+        $output = [];
+        foreach($options as $option){
+            if($option->name == 'image'){
+                $output['images'][] = $option;
+            }elseif (preg_match('/[а-яё]/iu', $option->name)){
+                $output['characteristics'][] = $option;
+            } else{
+                $output[$option->name] = $option;
+            }
+        }
+        return $output;
+    }
+
 	/**
 	 * Set images to product
 	 * @param string|array $images

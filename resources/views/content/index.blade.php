@@ -26,10 +26,10 @@
                             <div class="container">
                                 <div class="slide-text">
                                     <div class="title"><!--:ru-->{{ $product->title }}<!--:--></div>
-                                    <div class="subtitle"><!--:ru-->{{ $product->description }}<!--:--></div>
+                                    <div class="subtitle"><!--:ru-->{{ $product->options[0]->value }}<!--:--></div>
                                     <a href="{{url('/shop')}}" class="btn-default" data-wpel-link="internal">Подробнее</a>
                                 </div>
-                                <div class="slide-img" style="background-image: url({{asset($product->images[0]->url)}})"></div>
+                                <div class="slide-img" style="background-image: url({{asset($product->icon)}})"></div>
                             </div>
                         </div>
                     @endforeach
@@ -47,7 +47,7 @@ display: none; justify-content: center; align-content: center; top: 0; position:
         <div class="contain" style="width: 310px; height: 395px; display: flex; flex-direction: column; border-bottom: 4px solid #60a645; background: #fff;">
             <header style="height: 55px; display: flex; justify-content: space-between; border-bottom: 2px solid #f2f2f2; align-items: center;">
                 <h2 style="width: 80%; margin: 0; padding-left: 20px; font-size: 20px; color: #000; font-weight: bold;">Единые номера</h2>
-                <span class="close_pop" style="width: 20%; height: 100%; background: #60a645; color: #fff; background-image: url({{URL::asset('image/close_popup.png')}}); background-repeat: no-repeat; background-position: center center;"></span>
+                <span class="close_pop" style="width: 20%; height: 100%; background: #60a645; color: #fff; background-image: url({{URL::asset('images/close_popup.png')}}); background-repeat: no-repeat; background-position: center center;"></span>
             </header>
 
             <section style="display: flex; flex-direction: column; align-content: center; padding-left: 20px; margin-top: 20px;">
