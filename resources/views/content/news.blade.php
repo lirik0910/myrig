@@ -17,21 +17,22 @@
     </script>
     <section class="content list">
         <div class="container">
-
-            <div class="article-row row">
-                <div class="col-sm-4">
-                    <h2><a href="https://myrig.com.ua/2018/02/20/kraken-dostupno-10-novyih-torgovyih-par-i-2-predvaritelnyih-ordena/" data-wpel-link="internal">Kraken: доступно 10 новых торговых пар и 2 предварительных ордена</a></h2>
-                    <div class="date">20 февраля 2018<i class="fa fa-eye"></i>0</div>
-                </div>
-                <div class="article-content col-sm-8">
-                    <div class="article-text">
-                        <p>Криптобиржа Kraken подготовила для пользователей приятный сюрприз: она добавила 2 предварительных ордена и 10 торговых пар (ранее 9 из них были выключены, поскольку система данной платформы не выдерживала повышенной нагрузки). Специалисты сделали апгрейд системы 13 января, отчего повысилась стабильность инфраструктуры криптобиржи, поэтому отключенные опции были возвращены. Теперь трейдеры могут использовать 2 предварительных ордера – стоп-лосс&#8230;</p>
-                        <a href="https://myrig.com.ua/2018/02/20/kraken-dostupno-10-novyih-torgovyih-par-i-2-predvaritelnyih-ordena/" class="article-link" data-wpel-link="internal"><i class="article-arrow article-arrow-right"></i>Читать</a>
+            @foreach($news as $article)
+                <div class="article-row row">
+                    <div class="col-sm-4">
+                        <h2><a href="{{url($article->link)}}" data-wpel-link="internal">{{$article->title}}</a></h2>
+                        <div class="date">@php echo date('d F', strtotime($article->created_at)) @endphp<i class="fa fa-eye"></i>0</div>
+                    </div>
+                    <div class="article-content col-sm-8">
+                        <div class="article-text">
+                            <p>{{$article->description}}</p>
+                            <a href="{{url($article->link)}}" class="article-link" data-wpel-link="internal"><i class="article-arrow article-arrow-right"></i>Читать</a>
+                        </div>
                     </div>
                 </div>
-            </div>
+            @endforeach
 
-            <div class="article-row row">
+            <!--<div class="article-row row">
                 <div class="col-sm-4">
                     <h2><a href="https://myrig.com.ua/2018/02/20/spros-na-btc-na-yuzhnokoreyskom-ryinke-uverenno-rastet/" data-wpel-link="internal">Спрос на BTC на южнокорейском рынке уверенно растет</a></h2>
                     <div class="date">20 февраля 2018<i class="fa fa-eye"></i>1</div>
@@ -146,8 +147,10 @@
                         <a href="https://myrig.com.ua/2018/02/16/bitmain-razrabatyivaet-asic-mayner-dlya-dobyichi-eth/" class="article-link" data-wpel-link="internal"><i class="article-arrow article-arrow-right"></i>Читать</a>
                     </div>
                 </div>
-            </div>
-            <div class="  text-center"><ul class="pagination text-center"><li ><span aria-current='page' class='page-numbers current'>1</span></li><li ><a class="page-numbers" href="https://myrig.com.ua/news/page/2/" data-wpel-link="internal">2</a></li><li ><span class="page-numbers dots">&hellip;</span></li><li ><a class="page-numbers" href="https://myrig.com.ua/news/page/29/" data-wpel-link="internal">29</a></li><li ><a class="next page-numbers" href="https://myrig.com.ua/news/page/2/" data-wpel-link="internal"><i class="article-arrow article-arrow-right"></i></a></li></ul></div>        </div>
+            </div>-->
+            {{$news->links()}}
+        </div>
+            <!--<div class="  text-center"><ul class="pagination text-center"><li ><span aria-current='page' class='page-numbers current'>1</span></li><li ><a class="page-numbers" href="https://myrig.com.ua/news/page/2/" data-wpel-link="internal">2</a></li><li ><span class="page-numbers dots">&hellip;</span></li><li ><a class="page-numbers" href="https://myrig.com.ua/news/page/29/" data-wpel-link="internal">29</a></li><li ><a class="next page-numbers" href="https://myrig.com.ua/news/page/2/" data-wpel-link="internal"><i class="article-arrow article-arrow-right"></i></a></li></ul></div>        </div>-->
     </section>
 </main>
 @endsection

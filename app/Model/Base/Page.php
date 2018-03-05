@@ -43,7 +43,13 @@ class Page extends Model
         return $this->belongsToMany(Variable::class, 'variable_multi_contents')->withPivot('name', 'content', 'content_id');
     }
 
-	public function getContent(string $link){
+	public function getContent($request){
+        if($request->getRequestUri() !== '/'){
+            $link = explode('?', $request->getRequestUri())[0];
+        } else{
+            $link = $request->getRequestUri();
+        }
+
         $page = $this->where(['link' => $link])->with('view', 'variables', 'multivariables')->first();
 
         if(!$page){
@@ -56,16 +62,24 @@ class Page extends Model
         $output['data']['page'] = $page;
         $output['data']['settings'] = Setting::where(['context_id' => $page->context_id])->get();
 
-        $migx = [];
-        foreach ($page->multivariables as $mv){
-            $migx[$mv->title][$mv->pivot->content_id][$mv->pivot->name] = $mv->pivot->content;
+        if(isset($page->multivariables) && !empty($page->multivariables)){
+            $migx = [];
+            foreach ($page->multivariables as $mv){
+                $migx[$mv->title][$mv->pivot->content_id][$mv->pivot->name] = $mv->pivot->content;
+            }
+            $output['data']['migx'] = $migx;
         }
-        $output['data']['migx'] = $migx;
 
         if($page->link == '/'){
             $output['data']['products'] = Product::where(['active' => 1, 'category_id' => 1])->orderBy('price', 'DESC')->limit(4)->with('options')->get();
         } elseif($page->link == '/news' || $page->link == '/info'){
-            $output['data']['news'] = Page::where(['id' => $page->id])->orderBy('created_at', 'DESC')->paginate(10);
+            $page_limit = 2;
+            $page_no = $request->get('page');
+            if(isset($page_no)){
+                $output['data']['news'] = Page::where(['parent_id' => $page->id])->offset($page_limit * ($page_no - 1))->orderBy('created_at', 'DESC')->paginate($page_limit);
+            } else{
+                $output['data']['news'] = Page::where(['parent_id' => $page->id])->orderBy('created_at', 'DESC')->paginate($page_limit);
+            }
         } elseif ($page->link == '/shop'){
             $output['data']['products'] = Product::where(['active' => 1])->orderBy('price', 'DESC')->with('options')->get();
         }
