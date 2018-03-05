@@ -249,28 +249,28 @@ padding-right: 12px;
 }
 
 .label-1:before {
-	background: url(../img/bitcoin.svg) no-repeat center center;
+	background: url(/images/bitcoin.svg) no-repeat center center;
 	background-size: cover;
 }
 .label-11:before {
-	background: url(../img/bitcoin_cash.svg) no-repeat center center;
+	background: url(/images/bitcoin_cash.svg) no-repeat center center;
     background-size: cover;
 }
 
 .label-2:before {
-	background: url(../img/litecoin.svg) no-repeat center center;
+	background: url(/images/litecoin.svg) no-repeat center center;
 	-webkit-background-size: cover;
 	background-size: cover;
 }
 
 .label-3:before {
-	background: url(../img/dash-3.svg) no-repeat center center;
+	background: url(/images/dash-3.svg) no-repeat center center;
 	-webkit-background-size: cover;
 	background-size: cover;
 }
 
 .label-4:before {
-	background: url(../img/ethereum.svg) no-repeat top center;
+	background: url(/images/ethereum.svg) no-repeat top center;
     background-size: 239%;
 }
 

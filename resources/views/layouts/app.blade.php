@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{app()->getLocale()}}">
 <head>
     <meta charset="UTF-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel='dns-prefetch' href='//ajax.googleapis.com' />
     <link rel='dns-prefetch' href='//maxcdn.bootstrapcdn.com' />
     <link rel='dns-prefetch' href='//s.w.org' />
@@ -15,10 +16,8 @@
     <link rel="stylesheet" href="{{URL::asset('css/intlTelInput.css')}}"></link>
     <link rel="stylesheet" href="{{URL::asset('css/calc.css')}}"></link>
     <link rel='stylesheet' id='font-awesome-css'  href='https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css?ver=2.2.0' type='text/css' media='all' />
-    <link rel="stylesheet" href="{{URL::asset('css/style.css')}}"></link>
+    <link rel="stylesheet" href="{{URL::asset('css/style.css?ver=1.55')}}"></link>
     <link rel='stylesheet' id='dashicons-css'  href="{{URL::asset('css/dashicons.min.css?ver=4.9.4')}}" type='text/css' media='all' />
-    <!--<link rel="stylesheet" href="{{URL::asset('css/magnific-popup.css')}}"></link>
-    <link rel="stylesheet" href="{{URL::asset('css/owl.theme.css')}}"></link>-->
 
     <script type='text/javascript' src='//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js'></script>
     <script type="text/javascript">
@@ -75,7 +74,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="https://myrig.com.ua" data-wpel-link="internal"><img src="https://myrig.com.ua/wp-content/themes/bitmain/img/l.png" alt=""/></a>
+                    <a class="navbar-brand" href="{{env('APP_URL')}}" data-wpel-link="internal"><img src="{{asset('images/l.png')}}" alt=""/></a>
                 </div>
                 <div class="collapse navbar-collapse" id="myNavbar">
                     <ul id="menu-main-menu-1" class="nav navbar-nav"><li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-31"><a href="{{url('/shop')}}" data-wpel-link="internal">Товары</a></li>
@@ -156,26 +155,16 @@
                 <div class="col-sm-12 col-md-3 col-lg-3">
                     <div class="contacts">
                         <ul>
-                            <li class="">USA
-                                <div class="phone-area">
-                                    +1 844 248-6246                                </div>
-                            </li>
-                            <li class="">RUS
-                                <div class="phone-area">
-                                    +7 499 918-73-89                                 </div>
-                            </li>
-                            <li class="active">UKR
-                                <div class="phone-area">
-                                    +38 044 360-79-58                            </div>
-                            </li>
-                            <li class="">VEN
-                                <div class="phone-area">
-                                    +58 0212 720-21-27                                </div>
-                            </li>
-                            <li class="">JAP
-                                <div class="phone-area">
-                                    support@myrig.com                                </div>
-                            </li>
+                            @isset($page)
+                                @foreach($page->variables as $variable)
+                                    @if($variable->title == 'contactPhone')
+                                        <li class="@if($variable->pivot->name == 'USA') active @endif">{{$variable->pivot->name}}
+                                            <div class="phone-area">
+                                                {{$variable->pivot->content}}                                </div>
+                                        </li>
+                                    @endif
+                                @endforeach
+                            @endisset
                         </ul>
 
                     </div>
@@ -350,13 +339,16 @@
     </div>
 
 </div>
-<script>/*<![CDATA[*/window.zEmbed||function(e,t){var n,o,d,i,s,a=[],r=document.createElement("iframe");window.zEmbed=function(){a.push(arguments)},window.zE=window.zE||window.zEmbed,r.src="javascript:false",r.title="",r.role="presentation",(r.frameElement||r).style.cssText="display: none",d=document.getElementsByTagName("script"),d=d[d.length-1],d.parentNode.insertBefore(r,d),i=r.contentWindow,s=i.document;try{o=s}catch(c){n=document.domain,r.src='javascript:var d=document.open();d.domain="'+n+'";void(0);',o=s}o.open()._l=function(){var o=this.createElement("script");n&&(this.domain=n),o.id="js-iframe-async",o.src=e,this.t=+new Date,this.zendeskHost=t,this.zEQueue=a,this.body.appendChild(o)},o.write('<body onload="document._l();">'),o.close()}("https://assets.zendesk.com/embeddable_framework/main.js","bitmain.zendesk.com");/*]]>*/</script>
+<script>
+    /*<![CDATA[*/
+    window.zEmbed||function(e,t){var n,o,d,i,s,a=[],r=document.createElement("iframe");window.zEmbed=function(){a.push(arguments)},window.zE=window.zE||window.zEmbed,r.src="javascript:false",r.title="",r.role="presentation",(r.frameElement||r).style.cssText="display: none",d=document.getElementsByTagName("script"),d=d[d.length-1],d.parentNode.insertBefore(r,d),i=r.contentWindow,s=i.document;try{o=s}catch(c){n=document.domain,r.src='javascript:var d=document.open();d.domain="'+n+'";void(0);',o=s}o.open()._l=function(){var o=this.createElement("script");n&&(this.domain=n),o.id="js-iframe-async",o.src=e,this.t=+new Date,this.zendeskHost=t,this.zEQueue=a,this.body.appendChild(o)},o.write('<body onload="document._l();">'),o.close()}("https://assets.zendesk.com/embeddable_framework/main.js","bitmain.zendesk.com");/*]]>*/
+</script>
 <!-- End of Zendesk Widget script -->
-<!--<script type='text/javascript'>
+<script type='text/javascript'>
     /* <![CDATA[ */
     var wpcf7 = {"apiSettings":{"root":"https:\/\/myrig.com.ua\/wp-json\/contact-form-7\/v1","namespace":"contact-form-7\/v1"},"recaptcha":{"messages":{"empty":"\u041f\u043e\u0436\u0430\u043b\u0443\u0439\u0441\u0442\u0430, \u043f\u043e\u0434\u0442\u0432\u0435\u0440\u0434\u0438\u0442\u0435, \u0447\u0442\u043e \u0432\u044b \u043d\u0435 \u0440\u043e\u0431\u043e\u0442."}}};
     /* ]]> */
-</script>-->
+</script>
 <script type='text/javascript' src='https://myrig.com.ua/wp-content/plugins/contact-form-7/includes/js/scripts.js?ver=5.0'></script>
 <script type='text/javascript' src='https://myrig.com.ua/wp-content/plugins/woocommerce/assets/js/jquery-blockui/jquery.blockUI.min.js?ver=2.70'></script>
 <script type='text/javascript' src='https://myrig.com.ua/wp-content/plugins/woocommerce/assets/js/js-cookie/js.cookie.min.js?ver=2.1.4'></script>
@@ -378,8 +370,8 @@
 <script type='text/javascript' src="{{URL::asset('js/bootstrapValidator.js?ver=1.12')}}"></script>
 <script type='text/javascript' src="{{URL::asset('js/script.js?ver=1.12')}}"></script>
 <script type='text/javascript' src="{{URL::asset('js/Chart.min.js?ver=1.12')}}"></script>
-<!--<script type='text/javascript' src="{{URL::asset('js/select-styles.js?ver=1.12')}}"></script>-->
 <script type='text/javascript' src="{{URL::asset('js/actions.js?ver=1.12')}}"></script>
+<script type='text/javascript' src="{{URL::asset('js/calc.js?ver=1.12')}}"></script>
 <script type='text/javascript'>
     /* <![CDATA[ */
             var global = {"url":"{{env('APP_URL')}}"};

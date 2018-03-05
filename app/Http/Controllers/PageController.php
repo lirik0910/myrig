@@ -10,7 +10,8 @@ class PageController extends Controller
 
     public function view(Request $request){
         $page = new Page;
-        //var_dump($request->path()); die;
-        return $page->getContent($request->getRequestUri());//view($view->title);
+        $output = $page->getContent($request->getRequestUri());
+
+        return view($output['viewName'], $output['data']);
     }
 }

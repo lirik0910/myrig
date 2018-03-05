@@ -27,9 +27,7 @@
 
                         <!--CALCULATOR BEGIN-->
                         <div class="section-tab">
-                            <h1 class="calc_title">
-                                Калькулятор доходности						</h1>
-
+                            <h1 class="calc_title">Калькулятор доходности</h1>
                             <div class="korpus">
                                 <input data-index="1" data-currencyType="BTC" data-updateAction="parse_btc_network_status" type="radio" name="odin" checked="checked" id="vkl1" />
                                 <label for="vkl1" class="tab-label label-1 fixborder">BTC</label>
@@ -41,7 +39,6 @@
                                 <label for="vkl3" class="tab-label label-3">DASH</label>
                                 <input type="radio" name="odin" id="vkl4" disabled="disabled"  />
                                 <label for="vkl4" class="tab-label label-4 disabled">ETH</label>
-
                                 <!--tabs_item begin-->
                                 <div class="tabs_item tab-1">
 

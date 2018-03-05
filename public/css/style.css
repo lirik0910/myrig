@@ -1854,33 +1854,33 @@ font-size: 14px;
 	min-width: 168px;
 }
 .tag-info{
-    background-image: url('/image/info.png');
+    background-image: url('/images/info.png');
     color: rgb(153, 153, 153);
 }
 .tag-check{
-    background-image: url('/image/available.svg');
+    background-image: url('/images/available.svg');
     color:#60a645;
 }
 .tag-order{
-    background-image: url('/image/order.svg');
+    background-image: url('/images/order.svg');
     color: rgb(153, 153, 153);
 }
 .tag-low{
   color: rgb(0, 0, 0);
- background-image: url('/image/finish.svg');
+ background-image: url('/images/finish.svg');
 }
 .tag-waranty{
   color: #ff8400;
- background-image: url('/image/warranty.svg');
+ background-image: url('/images/warranty.svg');
 }
 .tag-no{
 	color:#ff0000;
-	 background-image: url('/image/close_label.svg');
+	 background-image: url('/images/close_label.svg');
 }
 
 .tag-payback{
   color: #60a645;
-  background-image: url('/image/money.svg');
+  background-image: url('/images/money.svg');
   -webkit-background-size: 7%;
   background-size: 7%;
   display: block !important;
