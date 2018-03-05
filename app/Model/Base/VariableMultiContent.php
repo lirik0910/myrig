@@ -10,7 +10,8 @@ class VariableMultiContent extends Model
      * Bind with Page model
      * return boolean
      */
-    public function page(){
+    public function page()
+    {
         return $this->belongsTo(Page::class);
     }
 
