@@ -2,22 +2,54 @@
 
 namespace App\Model\Shop;
 
+use App\Model\Base\User;
+use App\Model\Base\Context;
 use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
-    public function status()
-    {
-        return $this->belongsTo('App\Model\Shop\OrderStatus');
-    }
+	/**
+	 * Get order status
+	 * @return boolean
+	 */
+	public function user()
+	{
+		return $this->belongsTo(User::class);
+	}
 
-    public function paymentType()
-    {
-        return $this->belongsTo('App\Model\Shop\PaymentType');
-    }
+	/**
+	 * Get order context
+	 * @return boolean
+	 */
+	public function context()
+	{
+		return $this->belongsTo(Context::class);
+	}
 
-    public function orderDeliveries()
-    {
-        return $this->hasOne('App\Model\Shop\OrderDelivery');
-    }
+	/**
+	 * Get order status
+	 * @return boolean
+	 */
+	public function status()
+	{
+		return $this->belongsTo(OrderStatus::class);
+	}
+
+	/**
+	 * Get order payment type
+	 * @return boolean
+	 */
+	public function paymentType()
+	{
+		return $this->belongsTo(PaymentType::class);
+	}
+
+	/**
+	 * Get order delivery
+	 * @return boolean
+	 */
+	public function orderDeliveries()
+	{
+		return $this->hasOne(OrderDelivery::class);
+	}
 }

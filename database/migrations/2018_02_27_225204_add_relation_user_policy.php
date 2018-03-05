@@ -13,14 +13,7 @@ class AddRelationUserPolicy extends Migration
 	 */
 	public function up()
 	{
-		Schema::table('user_policies', function (Blueprint $table) {
-			$table->foreign('user_id')
-				->references('id')
-				->on('users')
-				->onDelete('cascade');
-		});
-		
-		Schema::table('user_policies', function (Blueprint $table) {
+		Schema::table('users', function (Blueprint $table) {
 			$table->foreign('policy_id')
 				->references('id')
 				->on('policies')

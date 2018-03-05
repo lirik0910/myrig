@@ -20,9 +20,21 @@ class CreateProductTable extends Migration
 			
 			$table->increments('id');
 
-			$table->integer('category_id', false, true)
+			$table->integer('context_id', false, true)
 				->default(0)
+				->comment('Context ID');
+
+			$table->integer('category_id', false, true)
+				->default(1)
 				->comment('Product category ID');
+
+			$table->integer('vendor_id', false, true)
+				->default(1)
+				->comment('Vendor ID');
+
+			$table->integer('page_id', false, true)
+				->default(0)
+				->comment('Page ID');
 			
 			$table->string('title', 255)
 				->nullable(false)
@@ -43,6 +55,10 @@ class CreateProductTable extends Migration
 			$table->float('price', 8,2)
 				->default('0.00')
 				->comment('Product price');
+
+			$table->float('compare_price', 8,2)
+				->default('0.00')
+				->comment('Compare price');
 
 			$table->timestamps();
 		});

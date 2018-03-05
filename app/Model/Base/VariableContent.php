@@ -31,9 +31,12 @@ class VariableContent extends Model
 		}
 
 		foreach (json_decode($fields, true) as $data) {
-			foreach ($data as $item) {
+			foreach ($data['variable_content'] as $item) {
 				$model = new VariableContent;
-				$model->fill($item);
+
+				$model->page_id = $id;
+				$model->variable_id = $data['pivot']['variable_id'];
+				$model->content = $item['content'];
 
 				/** Try safe new model
 				 */

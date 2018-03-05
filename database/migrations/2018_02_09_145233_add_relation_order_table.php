@@ -26,6 +26,13 @@ class AddRelationOrderTable extends Migration
 				->on('payment_types')
 				->onDelete('cascade');
 		});
+
+		Schema::table('orders', function (Blueprint $table) {
+			$table->foreign('context_id')
+				->references('id')
+				->on('contexts')
+				->onDelete('cascade');
+		});
 	}
 
 	/**

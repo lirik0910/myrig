@@ -8,20 +8,25 @@
  * @requires react-redux#connect
  */
 
+import App from '../../App.js';
 import React, { Component } from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 
-import Manager from '../../Manager.js';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as StateElementAction from '../../actions/StateElementAction.js';
+
+import { Link } from 'react-router-dom';
+import Drawer from 'material-ui/Drawer';
+import List, { 
+	ListItem, 
+	ListItemIcon, 
+	ListItemText 
+} from 'material-ui/List';
+import * as MaterialIcons from 'material-ui-icons';
+
 import styles from './styles.js';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
-import Drawer from 'material-ui/Drawer';
-import Divider from 'material-ui/Divider';
-import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
-import * as StateElementAction from '../../actions/StateElementAction.js';
-import * as MaterialIcons from 'material-ui-icons';
 
 /**
  * Menu aside block
@@ -33,10 +38,10 @@ class Menu extends Component {
 	 * State object of component
 	 * @type {Object} 
 	 * @inner
-	 * @property {Array} components Array of app components
+	 * @property {Array} data Array of app components
 	 */
 	state = {
-		components: []
+		data: []
 	}
 
 	/**
@@ -46,15 +51,10 @@ class Menu extends Component {
 	 * @property {Object} classes Material defult classes collection 
 	 */
 	static defaultProps = {
+		onMenuClosed: () => {},
+		onDataLoaded: () => {},
+		onItemClicked: () => {},
 		classes: PropTypes.object.isRequired,
-	}
-
-	/**
-	 * Close aside menu container
-	 * @fires click
-	 */
-	asideMenuClose = () => {
-		this.props.StateElementAction.show(this.props.elements, 'aside_menu');
 	}
 
 	/**
@@ -62,29 +62,36 @@ class Menu extends Component {
 	 * @fires componentWillMount
 	 */
 	componentWillMount() {
-		this.getComponentsData();
+		this.componentsDataGetRequest(data => this.props.onDataLoaded(data));
 	}
 
 	/**
 	 * Query for getting components date
+	 * @param {Function} callback
 	 */
-	getComponentsData() {
-		let xhr = Manager.xhr();
-
-		xhr.open('GET', Manager.url +'/api/components/', true);
-		xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-		xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-		xhr.setRequestHeader('X-CSRF-Token', Manager.csrf);
-		xhr.send();
-
-		xhr.onreadystatechange = () => {
-			if((xhr.status === 200 || xhr.status === 201) && xhr.readyState === 4) {
-				var r = JSON.parse(xhr.response);
-				if(r) {
-					this.setState({ components: r });
+	componentsDataGetRequest(callback = () => {}) {
+		App.api({
+			type: 'GET',
+			name: 'all',
+			model: 'component',
+			success: (r) => {
+				r = JSON.parse(r.response);
+				if (r) {
+					this.setState({ data: r }, () => callback(r));
 				}
 			}
-		}
+		});
+	}
+
+	/**
+	 * Close aside menu container
+	 * @fires click
+	 * @param {Obkect} e
+	 */
+	asideMenuClose = e => {
+		this.props.StateElementAction.show(this.props.elements, 'aside_menu', () => {
+			this.props.onMenuClosed();
+		});
 	}
 
 	/**
@@ -92,10 +99,10 @@ class Menu extends Component {
 	 * @return {Object} jsx object
 	 */
 	render() {
+		let { data } = this.state;
 		let { elements, classes } = this.props;
-		let { components } = this.state;
 
-		if(!components.length) {
+		if(!data.length) {
 			return <div></div>
 		}
 
@@ -103,22 +110,25 @@ class Menu extends Component {
 		return <Drawer anchor="left" 
 					open={elements.aside_menu} 
 					onBackdropClick={this.asideMenuClose}>
-						<div tabIndex={0} role="button" onClick={this.asideMenuClose}>
-							<List className={classes.list}>
-							{components.map((item, i) => {
-								Icon = MaterialIcons[item.icon];
-								return <Link to={Manager.url + item.link}>
-									<ListItem button>
-										<ListItemIcon>
-											{Icon ? <Icon /> : ''}
-										</ListItemIcon>
-										<ListItemText primary={item.name} />
-									</ListItem>
-								</Link>
-							})}
-							</List>
-						</div>
-				</Drawer>
+					
+				<div tabIndex={0} role="button" onClick={this.asideMenuClose}>
+					<List className={classes.list}>
+						{data.map((item, i) => {
+							Icon = MaterialIcons[item.icon];
+							return <Link key={i}
+										to={App.name() + item.link}
+										onClick={this.props.onItemClicked(item.link)}>
+								<ListItem button>
+									<ListItemIcon>
+										{Icon ? <Icon /> : ''}
+									</ListItemIcon>
+									<ListItemText primary={item.name} />
+								</ListItem>
+							</Link>
+						})}
+					</List>
+				</div>
+			</Drawer>
 	}
 }
 

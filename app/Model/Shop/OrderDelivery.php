@@ -6,13 +6,21 @@ use Illuminate\Database\Eloquent\Model;
 
 class OrderDelivery extends Model
 {
-    public function order()
-    {
-        return $this->hasOne('App\Model\Shop\Order');
-    }
+	/**
+	 * Bind with order
+	 * @return boolean
+	 */
+	public function order()
+	{
+		return $this->hasOne(Order::class);
+	}
 
-    public function delivery()
-    {
-        return $this->belongsTo('App\Model\Shop\Delivery');
-    }
+	/**
+	 * Bind with delivery
+	 * @return boolean
+	 */
+	public function delivery()
+	{
+		return $this->belongsTo(Delivery::class);
+	}
 }

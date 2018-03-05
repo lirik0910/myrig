@@ -2,30 +2,46 @@
 
 namespace App\Model\Shop;
 
+use App\Model\Shop\ProductImage;
+use App\Model\Shop\ProductOption;
 use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
-    //protected $options_arr = [];
+	protected $guarded = [];
 
-    public function category()
-    {
-        return $this->hasOne('App\Model\Shop\Category');
-    }
+	/**
+	 * Get product category
+	 * @return boolean
+	 */
+	public function category()
+	{
+		return $this->belongsTo(ProductCategory::class);
+	}
 
-    public function images(){
-        return $this->hasMany(Image::class);
-    }
+	/**
+	 * Get the options for the product
+	 * @return boolean
+	 */
+	public function options()
+	{
+		return $this->hasMany(ProductOption::class);
+	}
 
-    public function options(){
-        return $this->hasMany(ProductOption::class);
-    }
+	/**
+	 * Get the omages for the product
+	 * @return boolean
+	 */
+	public function images()
+	{
+		return $this->hasMany(ProductImage::class);
+	}
 
     /*
-     * Convert product options to array
-     * @param (Object) $options Current product options
-     * return array
-     */
+ * Convert product options to array
+ * @param (Object) $options Current product options
+ * return array
+ */
     public static function convertOptions($options)
     {
         $output = [];
@@ -40,4 +56,107 @@ class Product extends Model
         }
         return $output;
     }
+
+	/**
+	 * Set images to product
+	 * @param string|array $images
+	 * @return boolean
+	 */
+	public function setImages($images = '')
+	{
+		$data = $images;
+		if (gettype($images) === 'string') {
+			try {
+				$data = json_decode($images, true);
+			}
+			catch (\Exception $e) {
+				logger($e->getMessage());
+				throw new Exception($e->getMessage(), 1);
+				
+				return false;
+			}
+		}
+
+		/** Remove all images before insert
+		 */
+		try {
+			ProductImage::where('product_id', $this->id)->truncate();
+		}
+		catch (\Exception $e) {
+			logger($e->getMessage());
+			throw new Exception($e->getMessage(), 1);
+				
+			return false;
+		}
+
+		foreach ($data as $field) {
+			$model = new ProductImage;
+
+			$model->product_id = $this->id;
+			$model->name = $field['name'];
+
+			try {
+				$model->save();
+			}
+			catch (\Exception $e) {
+				logger($e->getMessage());
+				throw new Exception($e->getMessage(), 1);
+				
+				return false;
+			}
+		}
+		return true;
+	}
+
+	/**
+	 * Set options to product
+	 * @param string|array $images
+	 * @return boolean
+	 */
+	public function setOptions($options = '')
+	{
+		$data = $options;
+		if (gettype($options) === 'string') {
+			try {
+				$data = json_decode($options, true);
+			}
+			catch (\Exception $e) {
+				logger($e->getMessage());
+				throw new Exception($e->getMessage(), 1);
+				
+				return false;
+			}
+		}
+
+		/** Remove all options before insert
+		 */
+		try {
+			ProductOption::where('product_id', $this->id)->truncate();
+		}
+		catch (\Exception $e) {
+			logger($e->getMessage());
+			throw new Exception($e->getMessage(), 1);
+				
+			return false;
+		}
+
+		foreach ($data as $field) {
+			$model = new ProductOption;
+
+			$model->product_id = $this->id;
+			$model->name = $field['name'];
+			$model->value = $field['value'];
+
+			try {
+				$model->save();
+			}
+			catch (\Exception $e) {
+				logger($e->getMessage());
+				throw new Exception($e->getMessage(), 1);
+				
+				return false;
+			}
+		}
+		return true;
+	}
 }

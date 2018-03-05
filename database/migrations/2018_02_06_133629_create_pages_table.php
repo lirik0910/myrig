@@ -38,15 +38,15 @@ class CreatePagesTable extends Migration
 
 			$table->string('title', 255)
 				->nullable(false)
-				->comment('Title page');
+				->comment('Page title');
 
 			$table->string('description', 255)
 				->nullable(false)
-				->comment('Description page');
+				->comment('Page description');
 
 			$table->text('introtext')
 				->nullable(true)
-				->comment('Description page');
+				->comment('Page short content');
 
 			$table->text('content')
 				->nullable(true)

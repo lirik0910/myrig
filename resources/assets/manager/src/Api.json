@@ -1,0 +1,129 @@
+{
+	"component": {
+		"GET": {
+			"all": "",
+			"one": "{id}"
+		}
+	},
+	"context": {
+		"GET": {
+			"all": "",
+			"one": "{id}"
+		}
+	},
+	"view": {
+		"GET": {
+			"all": "",
+			"one": "{id}"
+		}
+	},
+	"page": {
+		"GET": {
+			"all": "",
+			"one": "{id}",
+			"tree": "tree",
+			"context": "{id}",
+			"childs": "childs/{id}"
+		},
+		"POST": {
+			"create": ""
+		},
+		"PUT": {
+			"update": "{id}"
+		},
+		"DELETE": {
+			"one": "{id}"
+		}
+	},
+	"user": {
+		"GET": {
+			"all": ""
+		},
+		"DELETE": {
+			"many": "",
+			"one": "{id}"
+		},
+		"PUT": {
+			"one": "{id}"
+		}
+	},
+	"policy": {
+		"GET": {
+			"all": ""
+		}
+	},
+	"folder": {
+		"GET": {
+			"path": ""
+		},
+		"PUT": {
+			"path": ""
+		},
+		"DELETE": {
+			"path": ""
+		},
+		"POST": {
+			"path": ""
+		}
+	},
+	"file": {
+		"GET": {
+			"path": ""
+		},
+		"PUT": {
+			"path": ""
+		},
+		"DELETE": {
+			"path": ""
+		},
+		"POST": {
+			"path": ""
+		}
+	},
+	"product": {
+		"GET": {
+			"all": "",
+			"one": "{id}"
+		},
+		"POST": {
+			"create": "",
+			"duplicate": "duplicate"
+		},
+		"PUT": {
+			"update": "{id}"
+		},
+		"DELETE": {
+			"many": "",
+			"one": "{id}"
+		}
+	},
+	"status": {
+		"GET": {
+			"all": ""
+		}
+	},
+	"order": {
+		"GET": {
+			"all": "",
+			"one": "{id}"
+		},
+		"DELETE": {
+			"one": "{id}",
+			"many": ""
+		},
+		"PUT": {
+			"one": "{id}",
+			"many": ""
+		}
+	},
+	"payment": {
+		"GET": {
+			"all": ""
+		}
+	},
+	"delivery": {
+		"GET": {
+			"all": ""
+		}
+	}
+}

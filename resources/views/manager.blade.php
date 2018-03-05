@@ -7,6 +7,17 @@
 	<meta name="csrf-token" id="csrf_token" content="{{ csrf_token() }}">
 	<link rel="stylesheet" href="{{URL::asset('static/css/' . $css)}}" />
 	<title>Manager</title>
+
+	<script type="text/javascript">
+		var global = {
+			app: {
+				baseUrl: "{{URL::asset('/')}}",
+				uploadsUrl: "{{URL::asset('uploads/')}}",
+				managerUrl: "{{URL::asset('/manager')}}",
+				managerApiUrl: "{{URL::asset('/manager/api')}}",
+			}
+		}
+	</script>
 </head>
 
 <body>

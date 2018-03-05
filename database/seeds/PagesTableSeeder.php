@@ -29,7 +29,7 @@ class PagesTableSeeder extends Seeder
 
 		/** Get default user
 		 */
-		$user = App\User::where('name', 'admin')->firstOrFail();
+		$user = App\Model\Base\User::where('name', 'admin')->firstOrFail();
 
 		/** Add index page
 		 */

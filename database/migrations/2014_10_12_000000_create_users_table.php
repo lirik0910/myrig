@@ -19,10 +19,21 @@ class CreateUsersTable extends Migration
 			$table->collation = 'utf8_general_ci';
 
 			$table->increments('id');
-			$table->string('name');
-			$table->string('email')->unique();
+
+			$table->integer('policy_id', false, true)
+				->nullable(false)
+				->comment('Access policy ID');
+
+			$table->string('name')
+				->comment('User name');
+
+			$table->string('email')
+				->unique()
+				->unique()->comment('Email');
+
 			$table->string('password');
 			$table->rememberToken();
+			
 			$table->timestamps();
 		});
 	}

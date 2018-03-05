@@ -6,7 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class ProductOption extends Model
 {
-    public function product(){
-        return $this->belongsTo(Product::class);
-    }
+	protected $guarded = [];
+	
+	/**
+	 * Bind with product
+	 * @return boolean
+	 */
+	public function product()
+	{
+		return $this->belongsTo(Product::class);
+	}
 }
