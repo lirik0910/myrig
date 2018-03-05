@@ -21,18 +21,20 @@
             <div class="row">
 
                 <div class="main-slider owl-carousel owl-theme" id="mainSlider">
-                    @foreach($products as $product)
-                        <div class="main-slide" data-dot="<span><p class='dashnav-progress'></p></span>">
-                            <div class="container">
-                                <div class="slide-text">
-                                    <div class="title"><!--:ru-->{{ $product->title }}<!--:--></div>
-                                    <div class="subtitle"><!--:ru-->{{ $product->options[0]->value }}<!--:--></div>
-                                    <a href="{{url('/shop')}}" class="btn-default" data-wpel-link="internal">Подробнее</a>
+                    @if(isset($products))
+                        @foreach($products as $product)
+                            <div class="main-slide" data-dot="<span><p class='dashnav-progress'></p></span>">
+                                <div class="container">
+                                    <div class="slide-text">
+                                        <div class="title"><!--:ru-->{{ $product->title }}<!--:--></div>
+                                        <div class="subtitle"><!--:ru-->@foreach($product->options as $option) @if($option->name == 'introtext') {{$option->value}} @endif @endforeach<!--:--></div>
+                                        <a href="{{url('/shop')}}" class="btn-default" data-wpel-link="internal">Подробнее</a>
+                                    </div>
+                                    <div class="slide-img" style="background-image: url({{asset($product->icon)}})"></div>
                                 </div>
-                                <div class="slide-img" style="background-image: url({{asset($product->icon)}})"></div>
                             </div>
-                        </div>
-                    @endforeach
+                        @endforeach
+                    @endisset
                 </div>
             </div>
         </div>

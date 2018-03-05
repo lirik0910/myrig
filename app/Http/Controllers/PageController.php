@@ -10,8 +10,8 @@ class PageController extends Controller
 
     public function view(Request $request){
         $page = new Page;
-        $output = $page->getContent($request->getRequestUri());
-
+        $output = $page->getContent($request);
+//var_dump($output['data']['products']); die;
         return view($output['viewName'], $output['data']);
     }
 }

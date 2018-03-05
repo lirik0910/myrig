@@ -52,4 +52,13 @@ class Order extends Model
 	{
 		return $this->hasOne(OrderDelivery::class);
 	}
+
+	/**
+	 * Get order products
+	 * @return boolean
+	 */
+	public function carts()
+	{
+		return $this->hasMany(Cart::class);
+	}
 }

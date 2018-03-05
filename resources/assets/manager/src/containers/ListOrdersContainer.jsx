@@ -16,6 +16,7 @@ import Menu from '../components/Menu/Menu.jsx';
 import Header from '../components/Header/Header.jsx';
 import { LinearProgress } from 'material-ui/Progress';
 import PaperTable from '../components/PaperTable/PaperTable.jsx';
+import DialogOrder from '../components/DialogOrder/DialogOrder.jsx';
 import DialogError from '../components/DialogError/DialogError.jsx';
 import DialogDelete from '../components/DialogDelete/DialogDelete.jsx';
 import PaperToolBar from '../components/PaperToolBar/PaperToolBar.jsx';
@@ -54,6 +55,8 @@ class ListOrdersContainer extends Component {
 		searchText: '',
 		completed: 100,
 		deleteOrderId: 0,
+		editOrder: {},
+		editDialog: false,
 		deleteDialog: false,
 		resultDialog: false,
 		resultDialogTitle: '',
@@ -264,6 +267,12 @@ class ListOrdersContainer extends Component {
 				control: <ControlOptions
 							item={item}
 							editButton={true}
+							onEditButtonClicked={item => {
+								this.setState({
+									editOrder: item,
+									editDialog: true
+								})
+							}}
 							onDeleteButtonClicked={item => {
 								this.setState({
 									deleteDialog: true,
@@ -288,10 +297,12 @@ class ListOrdersContainer extends Component {
 			dateTo,
 			dateFrom,
 			statusID,
+			editOrder,
 			paymentID,
 			contextID, 
 			deliveryID,
 			searchText, 
+			editDialog,
 			deleteDialog,
 			resultDialog,
 			resultDialogTitle,
@@ -427,6 +438,10 @@ class ListOrdersContainer extends Component {
 					onDialogConfirmed={() => this.ordersDelteRequest(() => {
 						this.ordersGetDataRequest();
 					})} />}
+
+				{editDialog === true && <DialogOrder
+					order={editOrder}
+					defaultValue={editDialog} />}
 			</div>
 	}
 }
