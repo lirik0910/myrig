@@ -12,6 +12,11 @@ $menu = $select('App\Model\Base\Page')
 $cart = $select('App\Model\Base\Page')
 	->where('view_id', 8)
 	->first();
+
+$count = 0;
+foreach ($inCart as $i) {
+	$count += $i;
+}
 @endphp
 
 <header class="header">
@@ -47,7 +52,7 @@ $cart = $select('App\Model\Base\Page')
 
 					<a href="{{ url($cart->link) }}" data-wpel-link="internal">
 						<img src="{{ asset('design/images/icons-02.svg') }}" alt="cart"/>
-						<div class="label" id="cart-count-label">0</div>
+						<div class="label" id="cart-count-label">{{ $count }}</div>
 					</a>
 				</div>
 			</div>

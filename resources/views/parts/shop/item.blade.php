@@ -81,7 +81,8 @@
 
 			<form class="related-form ">
 				<span class="input-number ">
-					<input id="{{ 'count-products-' . $item->id }}" type="text" name="count" value="1" class="form-control form-number count add-to-cart-count"/>
+					<input id="{{ 'count-products-' . $item->id }}" type="text" name="count" class="form-control form-number count add-to-cart-count"
+					value="{{ isset($inCart[$item->id]) ? $inCart[$item->id] : 1 }}" />
 					
 					<div class="btn-count btn-count-plus" data-id="{{ $item->id }}">
 						<i class="fa fa-plus"></i>

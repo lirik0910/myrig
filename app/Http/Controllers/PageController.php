@@ -23,6 +23,7 @@ class PageController extends Controller
 				'it' => $page,
 				'get' => $this->get(),
 				'select' => $this->select(),
+				'inCart' => $this->getInSessionCart()
 			]);
 		}
 
@@ -49,5 +50,15 @@ class PageController extends Controller
 		return function($class) {
 			return $class::select();
 		};
+	}
+
+	/**
+	 * Get pproducts in cart from session
+	 * @return array
+	 */
+	public function getInSessionCart() : array
+	{
+		$a = json_decode(session('cart'), true);
+		return $a ? $a : [];
 	}
 }

@@ -44,9 +44,16 @@ new (class Shop extends App {
 	}
 
 	createOrGetSession() {
-		if (typeof $.session.get('cart') === 'undefined' || !$.session.get('cart')) {
-			$.session.set('cart', JSON.stringify([]));
-		}
+		$.get(window.global.app.connector +'/cart', (data) => {
+			let i, 
+				s = [],
+				r = JSON.parse(data);
+
+			for (i = 0 in r) {
+				s.push({id: i, count: r[i]});
+			}
+			$.session.set('cart', JSON.stringify(s));
+		});
 	}
 
 	/**

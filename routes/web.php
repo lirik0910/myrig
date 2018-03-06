@@ -18,5 +18,6 @@ foreach (\App\Model\Base\Page::all() as $page) {
 
 Route::prefix('connector')
 	->group(function () {
-		Route::post('cart', 'SessionController@cart');
+		Route::get('cart', 'SessionController@get');
+		Route::post('cart', 'SessionController@add');
 });
