@@ -2,22 +2,27 @@
 
 namespace App\Http\Controllers;
 
-use Zendesk\API\HttpClient as ZendeskAPI;
+use GuzzleHttp\Exception\RequestException;
+use Huddle\Zendesk\Facades\Zendesk;
 use Illuminate\Http\Request;
 
 class ZendeskController
 {
-    private $subdomain = "bitmain";
-    private $username = "k.tymofieiev@myrig.com";
-    private $token = "wpAaZZV7N2MqeM85FtelNiwgllxwBpmfYATjHl2Z";
-
     public function createTicket(Request $request){
-        $client = new ZendeskAPI($this->subdomain);
-        //var_dump($client); die;
-        $client->setAuth('basic', ['username' => $this->username, 'token' => $this->token]);
-
         $data = $request->post();
-        var_dump($data); die;
+
+        try{
+            Zendesk::tickets()->create([
+                'subject' => $data['subject'],
+                'priority' =>'normal',
+                'email' => $data['email'],
+                'topic' => $data['topic'],
+                'description' => $data['message'],
+            ]);
+        } catch (RequestException $e){
+            $requestException = RequestException::create($e->getRequest(), $e->getResponse(), $e);
+            return $requestException;
+        }
     }
 
 

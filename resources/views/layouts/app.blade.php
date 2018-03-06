@@ -85,7 +85,7 @@
                     </ul>
                 </div>
                 <div class="user-panel">
-                    <a href="https://myrig.com.ua/sso-login/" class="reg-f0" data-wpel-link="internal"><img src="https://myrig.com.ua/wp-content/themes/bitmain/img/icons-07.svg" alt=""/></a>
+                    <a href="{{url('/sso-login')}}" class="reg-f0" data-wpel-link="internal"><img src="https://myrig.com.ua/wp-content/themes/bitmain/img/icons-07.svg" alt=""/></a>
 
                     <!-- <a href="#reg" class="reg-f" data-wpel-link="internal"><img src="https://myrig.com.ua/wp-content/themes/bitmain/img/icons-07.svg" alt=""/></a>  -->
                     <a href="{{url('/cart')}}" data-wpel-link="internal"><img src="https://myrig.com.ua/wp-content/themes/bitmain/img/icons-02.svg" alt=""/><div class="label">0</div></a>
@@ -306,28 +306,28 @@
             </ul>
         </div>
         <div class="modal-body">
+            <form id="ticketback">
+                {{csrf_field()}}
+                <div class="form-group">
+                    <input type="email" name="email" class="form-control" placeholder="Электронная почта" required="required" data-bv-message=" " data-bv-remote-message="Email уже занят"/></div>
+                <div class="form-group">
+                    <input type="text" name="topic" class="form-control" required="required" data-bv-message=" " placeholder="Тема"/></div>
+
+                <div class="form-group">
+                    <textarea name="message" class="form-control" placeholder="Описание" required="required" data-bv-message=" "></textarea></div>
+                <div class="form-group">
+                    <span class="filename"></span>
+                    <label for="fileName"><i class="fa fa-paperclip"></i> Прикрепить файл</label>
+                    <input id="fileName" type="file" name="file" class="form-control" data-bv-message=" "></div>
+
+                <input type="hidden" name="action" value="ticket_ajax_request">
+                <input type="hidden" name="subject" value="Тикет - Bitmain">
+                <div class="form-group">
+                    <input type="submit" name="submit" value="Отправить" class="btn-default btn-subscribe"/>
+                </div>
+
+            </form>
             <div id="ticket-field">
-                <form id="ticketback" action="/service_ticket">
-                    {{csrf_field()}}
-                    <div class="form-group">
-                        <input type="email" name="email" class="form-control" placeholder="Электронная почта" required="required" data-bv-message=" " data-bv-remote-message="Email уже занят"/></div>
-                    <div class="form-group">
-                        <input type="text" name="topic" class="form-control" required="required" data-bv-message=" " placeholder="Тема"/></div>
-
-                    <div class="form-group">
-                        <textarea name="message" class="form-control" placeholder="Описание" required="required" data-bv-message=" "></textarea></div>
-                    <div class="form-group">
-                        <span class="filename"></span>
-                        <label for="fileName"><i class="fa fa-paperclip"></i> Прикрепить файл</label>
-                        <input id="fileName" type="file" name="file" class="form-control" data-bv-message=" "></div>
-
-                    <input type="hidden" name="action" value="ticket_ajax_request">
-                    <input type="hidden" name="subject" value="Тикет - Bitmain">
-                    <div class="form-group">
-                        <input type="submit" name="submit" value="Отправить" class="btn-default btn-subscribe"/>
-                    </div>
-
-                </form>
                 <div class="result">
                     <div class="success-header">СПАСИБО<br/> ЗА ЗАЯВКУ</div>
                     <div class="result-body">Мененджер свяжется с вами в ближайшее время.</div>
@@ -375,6 +375,7 @@
 <script type='text/javascript'>
     /* <![CDATA[ */
             var global = {"url":"{{env('APP_URL')}}"};
+            var calc = {};
     /* ]]> */
 </script>
 <script type='text/javascript' src='https://myrig.com.ua/wp-includes/js/wp-embed.min.js?ver=4.9.4'></script>

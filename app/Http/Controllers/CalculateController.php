@@ -17,14 +17,18 @@ class CalculateController
                 return $this->parse_btc_network_status($request);
             case 'parse_btc_courses_calc':
                 return $this->parse_btc_courses_calc($request);
-
+            case 'parse_others_network_status':
+                return $this->parse_others_network_status(0, $request->post('currencyType'), $request);
+            case 'update_devices':
+                return $this->update_devices($request);
+            case 'calc_btc_profit':
+                return $this->calc_btc_profit($request);
         }
-        //return $this->$action;
-
+        return $this->calc_btc_profit($request);
     }
 
-    public function parse_btc_courses_calc(Request $request, $die = 0){
-        $source = $request->post('src');// $_GET['src'];
+    public function parse_btc_courses_calc(Request $request, $die = 1){
+        $source = '';//$request->post('src');// $_GET['src'];
         //var_dump($source); die;
         //$CryptoTickerWidget = new CryptoTickerWidget();
 
@@ -51,11 +55,11 @@ class CalculateController
 
 
         $calc = $this->parse_btc_course_calculated();
-
-        $calcBCH = json_decode(Setting::where('title', 'others_crypth')->first()['value'])['BCH'];
-        $calcLTC = json_decode(Setting::where('title', 'others_crypth')->first()['value'])['LTC'];
-        $calcDASH = json_decode(Setting::where('title', 'others_crypth')->first()['value'])['DASH'];
-        //var_dump($calc, $euruah, $uah); die;
+        $other_crypth = json_decode(Setting::where('title', 'other_crypth')->first()->value);
+        $calcBCH = $other_crypth->BCH;
+        $calcLTC = $other_crypth->LTC;
+        $calcDASH = $other_crypth->DASH;
+        //var_dump(Setting::where('title', 'other_crypth')->first()->value, $euruah, $uah); die;
         $data['base']['BTC / USD'] = $calc;
         $data['base']['BTC / EUR'] = $calc / ($euruah / $uah) ;
         $data['base']['BTC / UAH'] = $calc * $uah;
@@ -103,7 +107,7 @@ class CalculateController
 
     }
 
-    public function parse_others_network_status($die,$currency='BCH', Request $request) {
+    public function parse_others_network_status($die,$currency='BCH', $request) {
 
         $html = new simple_html_dom('');
 
@@ -182,20 +186,20 @@ class CalculateController
 
 
             ?>
-            <div class="network-status--title "><?php _e('Статус сети', 'al') ?></div>
+            <div class="network-status--title ">Статус сети</div>
             <div class="network-status--parent">
                 <div class="network-status--inner">
-                    <div><?php _e('Хэшрейт', 'al') ?></div>
-                    <div><?php echo ($data['hashrate'])  ?> <?php //echo $THT ?>/s</div>
+                    <div>Хэшрейт</div>
+                    <div class="hashrate"><?php echo ($data['hashrate'])  ?> <?php //echo $THT ?>/s</div>
                 </div>
 
                 <div class="network-status--inner">
-                    <div><?php _e('Сложность', 'al') ?></div>
-                    <div><?php echo $data['difficulty'] ?></div>
+                    <div>Сложность</div>
+                    <div class="difficulty"><?php echo $data['difficulty'] ?></div>
                 </div>
 
                 <div class="network-status--inner network-delimiter">
-                    <div><?php _e('Добыча', 'al') ?></div>
+                    <div>Добыча</div>
                     <div>1<?php echo $TH ?> * 24H = <?php echo $P ?> <?php echo $currency ?></div>
                 </div>
 
@@ -210,37 +214,63 @@ class CalculateController
 
     }
 
-    public function update_devices(Request $request) {
+    public function update_devices($request) {
         $cur='';
         if ($request->post('currency')) {
             $cur = $request->post('currency');
         }
-
+        //var_dump($cur); die;
         ?>
 
         <div class="calculator-form--item ">
             <div class="width-60">
                 <select id="device" name="device">
-                    <option value="hide" ><?php _e('Устройство', 'al') ?></option>
-                    <option value="" data-hr="0"><?php _e('Ручной ввод', 'al') ?></option>
+                    <option value="hide" >Устройство</option>
+                    <option value="" data-hr="0">Ручной ввод</option>
                     <?php
-                    while (have_rows('устройства', 2319)) {
+                    $devices = [
+                        ['currency' => 'BTC,BCH', 'name' => 'ANTMINER S7 4.7Th/s', 'hr' => 4.73, 'en' => 1.43],
+                        ['currency' => 'BTC,BCH', 'name' => 'ANTMINER R4 8.6Th/s', 'hr' => 8.6, 'en' => 0.93],
+                        ['currency' => 'BTC,BCH', 'name' => 'ANTMINER T9 12.5Th/s', 'hr' => 12.5, 'en' => 1.73],
+                        ['currency' => 'BTC,BCH', 'name' => 'ANTMINER S9 11.5Th/s', 'hr' => 11.5, 'en' => 1.24],
+                        ['currency' => 'BTC,BCH', 'name' => 'ANTMINER S9 12.5Th/s', 'hr' => 12.5, 'en' => 1.34],
+                        ['currency' => 'BTC,BCH', 'name' => 'ANTMINER S9 13Th/s', 'hr' => 13, 'en' => 1.4],
+                        ['currency' => 'BTC,BCH', 'name' => 'ANTMINER S9 13.5Th/s', 'hr' => 13.5, 'en' => 1.45],
+                        ['currency' => 'BTC,BCH', 'name' => 'ANTMINER S9 14Th/s', 'hr' => 14, 'en' => 1.5],
+                        ['currency' => 'BTC,BCH', 'name' => 'DRAGONMINT T1', 'hr' => 16, 'en' => 1.47],
+                        ['currency' => 'LTC', 'name' => 'L3+ 504 Mh', 'hr' => 504, 'en' => 0.8],
+                        ['currency' => 'DASH', 'name' => 'D3 15 GH/s', 'hr' => 15, 'en' => 1.2],
+                        ['currency' => 'DASH', 'name' => 'D3 17 GH/s', 'hr' => 17, 'en' => 1.2],
+                        ['currency' => 'DASH', 'name' => 'D3 19.3 GH/s', 'hr' => 19.3, 'en' => 1.2],
+
+                    ];
+                    foreach ($devices as $device){
+                        $allowed = explode(',', $device['currency']);
+                        if(!in_array($cur, $allowed)){
+                            continue;
+                        }
+                        //var_dump($device); die;
+                        ?>
+
+                        <option data-currency="<?php echo $device['currency'] ?>" data-hr="<?php echo $device['hr'] ?>" data-en="<?php echo $device['en'] ?>" value="<?php echo $device['name'] ?>"><?php echo $device['name'] ?></option>
+                    <?php } ?>
+<!--                    while (have_rows('устройства', 2319)) {
                         the_row();
                         $allowed = explode(',', get_sub_field('валюта'));
                         if (!in_array($cur, $allowed) )
                             continue;
                         ?>
-                        <option data-currency="<?php the_sub_field('валюта') ?>" data-hr="<?php the_sub_field('хешрейт') ?>" data-en="<?php the_sub_field('энергопотребление') ?>" value="<?php the_sub_field('название') ?>"><?php the_sub_field('название') ?></option>
-                    <?php } ?>
+                        <option data-currency="<?php /*the_sub_field('валюта') */?>" data-hr="<?php /*the_sub_field('хешрейт') */?>" data-en="<?php /*the_sub_field('энергопотребление') */?>" value="<?php /*the_sub_field('название') */?>"><?php /*the_sub_field('название') */?></option>
+                    --><?php /*} */?>
 
                 </select>
             </div>
 
-            <input type="number"  step="1" class="quantity width-33 quantity-center" id="quantity" name="qty" placeholder="1 <?php _e('шт', 'al') ?>" min="1" readonly>
+            <input type="number"  step="1" class="quantity width-33 quantity-center" id="quantity" name="qty" placeholder="1 шт" min="1" readonly>
         </div>
 
         <div class="calculator-form--item cur-LTC">
-            <input type="number" step="0.01" class="quantity width-60 hash" name="hash" placeholder="<?php _e('Введите хешрейт', 'al') ?>"  >
+            <input type="number" step="0.01" class="quantity width-60 hash" name="hash" placeholder="Введите хешрейт"  >
 
             <div class="width-33 cur-LTC-ul">
                 <select id="ghs" name="powers">
@@ -269,7 +299,7 @@ class CalculateController
 
         $html = new simple_html_dom('');
         $html = $html->file_get_html( 'https://btc.com/'  );
-var_dump($html); die;
+//var_dump($html); die;
         foreach($html->find('.indexNetworkStats dt') as $element) {
             if ($element->innertext == 'Hashrate')
                 $data['hashrate'] = $element->parent()->find('dd', 0)->innertext;
@@ -305,31 +335,31 @@ var_dump($html); die;
 
 
             ?>
-            <div class="network-status--title "><?php _e('Статус сети', 'al') ?></div>
+            <div class="network-status--title ">Статус сети</div>
             <div class="network-status--parent">
                 <div class="network-status--inner">
-                    <div><?php _e('Хэшрейт', 'al') ?></div>
-                    <div><?php echo $data['hashrate'] ?></div>
+                    <div>Хэшрейт</div>
+                    <div class="hashrate"><?php echo $data['hashrate'] ?></div>
                 </div>
 
                 <div class="network-status--inner">
-                    <div><?php _e('Сложность', 'al') ?></div>
-                    <div><?php echo $network['difficulty'] ?></div>
+                    <div>Сложность</div>
+                    <div class="difficulty"><?php echo $network['difficulty'] ?></div>
                 </div>
 
                 <div class="network-status--inner network-delimiter">
-                    <div><?php _e('Добыча', 'al') ?></div>
+                    <div>Добыча</div>
                     <div>1T * 24H = <?php echo $P ?> BTC</div>
                 </div>
 
                 <div class="network-status--inner">
-                    <div><?php _e('Ожидаемая следующая сложность', 'al') ?></div>
-                    <div><?php echo $data['expected_difficulty_raw'] ?></div>
+                    <div>Ожидаемая следующая сложность</div>
+                    <div class="expected_diff"><?php echo $data['expected_difficulty_raw'] ?></div>
                 </div>
 
                 <div class="network-status--inner">
-                    <div><?php _e('Дата следующей сложности', 'al') ?></div>
-                    <div><?php echo $data['expected_difficulty_date'] ?></div>
+                    <div>Дата следующей сложности</div>
+                    <div class="diff_date"><?php echo $data['expected_difficulty_date'] ?></div>
                 </div>
 
             </div>
@@ -342,22 +372,20 @@ var_dump($html); die;
 
     }
 
-    public function calc_btc_profit(Request $request) {
-
+    public function calc_btc_profit($request) {
         //profit data
-
         //$network = parse_btc_network();
-        $network = json_decode(stripslashes( $request->post('network')), 1);
+        $network = json_decode(stripslashes( $request->get('network')), 1);
         //$network_status =  parse_btc_network_status();
-        $network_status =  json_decode(stripslashes( $request->post('status')), 1);
+        $network_status =  json_decode(stripslashes( $request->get('status')), 1);
         //$coursers = parse_btc_courses_calc();
-        $coursers =  json_decode(stripslashes( $request->post('calc')), 1);
+        $coursers =  json_decode(stripslashes( $request->get('calc')), 1);
         $source = 'base';
-        $days = $request->post('days') ? $request->post('days') : 1;
+        $days = $request->get('days') ? $request->get('days') : 1;
         $expected_difficulty = $network_status['expected_difficulty']/100+1;
 
-        $powers = $request->post('powers');
-        $placements = $request->post('radio');
+        $powers = $request->get('powers');
+        $placements = $request->get('radio');
 
 
 
@@ -365,9 +393,9 @@ var_dump($html); die;
         $t = 86400;
         $R = $network['reward_block']/1000000000;
         $D = $network['difficulty']/10000000000 ;
-        $H = $_GET['hash'] / $powers;
+        $H = $request->get('hash') / $powers;
 
-        $currency = $_GET['currency'];
+        $currency = $request->get('currency');
         if ($currency === 'BCH') {
             $network = $this->parse_others_network_status($currency, $request);
             $R = $network['reward_block'] ;
@@ -375,7 +403,7 @@ var_dump($html); die;
 
         }
 
-
+//var_dump($D); die;
         $P =  number_format(($t*$R*$H)/($D*(2**32)), 7) * $days;
 
         if ($currency === 'LTC') {
@@ -383,7 +411,7 @@ var_dump($html); die;
             $calcLTC = $this->parse_btc_courses_others($currency);
             $P = $network['p'] ;
             $TH = 'MH';
-            $P =  number_format( $P*$_GET['hash'] , 6) * $days;
+            $P =  number_format( $P*$request->get('hash') , 6) * $days;
         }
 
         if ($currency === 'DASH') {
@@ -391,28 +419,28 @@ var_dump($html); die;
             $calcLTC = $this->parse_btc_courses_others($currency);
             $P = $network['p'] ;
             $TH = 'GH';
-            $P =  number_format( $P*$_GET['hash'] , 6) * $days;
+            $P =  number_format( $P*$request->get('hash') , 6) * $days;
         }
 
 
         //costs data
 
         if ($placements == 2) {
-            $energy = $request->post('energy');
-            $energy_costs = $request->post('costs');
+            $energy = $request->get('energy');
+            $energy_costs = $request->get('costs');
             $energy_costs = $energy_costs * 24;
 
         } else {
-            $qty = $request->post('qty') ? $request->post('qty') : 1;
-            $hosting =  get_field('стоимость_хостинга_usd_в_месяц', 2319);
+            $qty = $request->get('qty') ? $request->get('qty') : 1;
+            $hosting =  5.2;//get_field('стоимость_хостинга_usd_в_месяц', 2319);
             $energy_costs = $hosting * $qty;
             $energy = 1;
         }
 
-        $costs['BTC'] = $energy * $energy_costs   * $days / $coursers['data']['base']["$currency / USD"] ;
+        $costs['BTC'] = $energy * $energy_costs   * $days / $coursers['base']["$currency / USD"] ;
         $costs['USD'] = $energy * $energy_costs   * $days;
-        $costs['RUR'] = $energy * $energy_costs   * $coursers['data']['USD / RUR'] * $days;
-        $costs['UAH'] = $energy * $energy_costs   * $coursers['data']['USD / UAH'] * $days;
+        $costs['RUR'] = $energy * $energy_costs   * $coursers['USD / RUR'] * $days;
+        $costs['UAH'] = $energy * $energy_costs   * $coursers['USD / UAH'] * $days;
 
 
         ob_start();
@@ -420,12 +448,12 @@ var_dump($html); die;
         ?>
 
         <div class="income-table__inner">
-            <div class="income-days-title "><?php _e('Расчет', 'al') ?></div>
+            <div class="income-days-title ">Расчет</div>
         </div>
 
         <div class="income-table__title">
             <div class="income-table__title--item">
-                <div class="income-icon income-icon-<?php echo $request->post('currency') == 'BTC' || $request->post('currency') == 'BCH' ? 1 : ''  ?>"><?php echo $request->post('currency') ?></div>
+                <div class="income-icon income-icon-<?php echo $request->get('currency') == 'BTC' || $request->get('currency') == 'BCH' ? 1 : ''  ?>"><?php echo $request->get('currency') ?></div>
                 <div class="income-icon income-icon-2">USD</div>
                 <div class="income-icon income-icon-3">RUB</div>
                 <div class="income-icon income-icon-4">UAH &#8372;</div>
@@ -433,21 +461,21 @@ var_dump($html); die;
         </div>
 
         <div class="income-table__inner">
-            <div class="income-table__inner-title"><?php _e('Доход', 'al') ?></div>
+            <div class="income-table__inner-title">Доход</div>
             <div class="income-table__item">
                 <div class="income-icon income-icon-1">BTC</div>
                 <div class="income-number"><?php echo number_format($P,6) ?></div>
                 <div class="income-icon income-icon-2">USD</div>
-                <div class="income-number"><?php echo  number_format($P*$coursers['data']['base']["$currency / USD"] , 2) ?></div>
+                <div class="income-number"><?php echo  number_format($P*$coursers['base']["$currency / USD"] , 2) ?></div>
                 <div class="income-icon income-icon-3">RUB</div>
-                <div class="income-number"><?php echo number_format($P*$coursers['data']['base']["$currency / RUR"], 2) ?></div>
+                <div class="income-number"><?php echo number_format($P*$coursers['base']["$currency / RUR"], 2) ?></div>
                 <div class="income-icon income-icon-4">UAH</div>
-                <div class="income-number"><?php echo number_format($P*$coursers['data']['base']["$currency / UAH"] , 2)?></div>
+                <div class="income-number"><?php echo number_format($P*$coursers['base']["$currency / UAH"] , 2)?></div>
             </div>
         </div>
 
         <div class="income-table__inner">
-            <div class="income-table__inner-title"><?php _e('Затраты', 'al') ?></div>
+            <div class="income-table__inner-title">Затраты</div>
             <div class="income-table__item">
                 <div class="income-icon income-icon-1">BTC</div>
                 <div class="income-number"><?php echo number_format($costs['BTC'], 6) ?></div>
@@ -461,16 +489,16 @@ var_dump($html); die;
         </div>
 
         <div class="income-table__inner">
-            <div class="income-table__inner-title"><?php _e('Прибыль', 'al') ?></div>
+            <div class="income-table__inner-title">Прибыль</div>
             <div class="income-table__item">
                 <div class="income-icon income-icon-1">BTC</div>
                 <div class="income-number"><?php echo number_format($P - $costs['BTC'] ,6) ?></div>
                 <div class="income-icon income-icon-2">USD</div>
-                <div class="income-number"><?php echo  number_format($P*$coursers['data']['base']["$currency / USD"] - $costs['USD']  , 2) ?></div>
+                <div class="income-number"><?php echo  number_format($P*$coursers['base']["$currency / USD"] - $costs['USD']  , 2) ?></div>
                 <div class="income-icon income-icon-3">RUB</div>
-                <div class="income-number"><?php echo number_format($P*$coursers['data']['base']["$currency / RUR"] - $costs['RUR'] , 2) ?></div>
+                <div class="income-number"><?php echo number_format($P*$coursers['base']["$currency / RUR"] - $costs['RUR'] , 2) ?></div>
                 <div class="income-icon income-icon-4">UAH</div>
-                <div class="income-number"><?php echo number_format($P*$coursers['data']['base']["$currency / UAH"]  - $costs['UAH'], 2) ?></div>
+                <div class="income-number"><?php echo number_format($P*$coursers['base']["$currency / UAH"]  - $costs['UAH'], 2) ?></div>
             </div>
         </div>
 
@@ -482,7 +510,7 @@ var_dump($html); die;
 
         $P = $labels = array();
 
-        $date = new DateTime();
+        $date = new \DateTime();
         foreach (range(0,20) as $key=>$day) {
             $D = $D * $expected_difficulty;
             $P[$key] =  number_format(($t*$R*$H)/($D*(2**32) ) - $costs['BTC']/$days, 7) * 1;
@@ -495,7 +523,7 @@ var_dump($html); die;
         }
 
 
-        if (!$request->post('hash'))  {
+        if (!$request->get('hash'))  {
             $result = 0 ;
 
         }
@@ -529,7 +557,7 @@ var_dump($html); die;
     public function parse_btc_course_calculated() {
 
         $usdpercent = Setting::where('title', 'usdpercent')->first()['value'];
-        //$minmax = Setting::where('title', 'minmax')->first()->value;
+        $minmax = Setting::where('title', 'minmax')->first()->value;
         $valuechange = Setting::where('title', 'valuechange')->first()['value'];
 
         //$CryptoTickerWidget = new CryptoTickerWidget();
@@ -549,8 +577,8 @@ var_dump($html); die;
 
         $calc['min'] = min($result);
         $calc['max'] = max($result);
-        $calc = ($calc['min'] + $calc['max']) / 2;
-        //$calc = $calc[$minmax];
+        //$calc = ($calc['min'] + $calc['max']) / 2;
+        $calc = $calc[$minmax];
 
         if ($valuechange != 0)
             if ($usdpercent === 'usd') {
@@ -589,7 +617,7 @@ var_dump($html); die;
         }
 
 
-        Setting::where('title', 'other_crypth')->update(['value' > json_encode($result)]);
+        Setting::where('title', 'other_crypth')->update(['value' => json_encode($result)]);
 
         //update_option('others_crypth', $result);
         if ($cur)

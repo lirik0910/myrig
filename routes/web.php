@@ -13,7 +13,7 @@
 use Illuminate\Http\Request;
 
 
-//var_dump($_SESSION); die;
+//var_dump($_SERVER); die;
 //var_dump($request->getQueryString()); die;
 foreach (\App\Model\Base\Page::all() as $page) {
     Route::get($page->link, 'PageController@view');
@@ -22,9 +22,25 @@ foreach (\App\Model\Base\Page::all() as $page) {
 Route::get('/shop/{id}', 'ProductController@getContent');
 Route::post('/create_ticket', 'ZendeskController@createTicket');
 Route::post('/calc', 'CalculateController@checkMethod');
+Route::get('/calc_btn', 'CalculateController@checkMethod');
 
+Route::get('/sso-login/{ssotoken?}', 'ClientAuthController@login');
 Route::post('/back_call', function (Request $request){
-    var_dump($request->post()); die;
+    $data = $request->post();
+
+    try{
+        Zendesk::tickets()->create([
+            'subject' => $data['subject'],
+            'description' => 'Заказ обратного звонка',
+            'name' => $data['name'],
+            'tel' => $data['tel']
+        ]);
+    } catch (\GuzzleHttp\Exception\RequestException $e){
+        $requestException = RequestException::create($e->getRequest(), $e->getResponse(), $e);
+        return $requestException;
+    }
+
+    //var_dump($request->post()); die;
 });
 
 

@@ -1,12 +1,14 @@
 	jQuery(document).ready(function($) {
  
 		$('.korpus > input').change(function(){
+		    console.log($(this));
 			$('.income-number').html('-');
 			var index = $(this).attr('data-index');
 			var currencyType = $(this).attr('data-currencyType');
 			var updateAction = $(this).attr('data-updateAction');
 			$('.calculator-form').appendTo(".tab-" + index);
 			$('.currencyType').val(currencyType);
+			console.log(currencyType, updateAction);
 			var obj = {
 				currencyType : currencyType,
 				updateAction : updateAction
@@ -100,19 +102,19 @@
 		$('.calculator-form').submit(function(e){
 			e.preventDefault();
 			calc_btc(1);
-		})
+		});
 
 		function calc_btc(val) {
-			 
-			
-			$('.income-number').html('<i class="fa fa-cog fa-spin"></i>')
+			$('.income-number').html('<i class="fa fa-cog fa-spin"></i>');
+			var network = {difficulty: parseInt($('.difficulty').text()), reward_block: 1250000000};
+			var status = {hashrate: $('.hashrate').text(), expected_difficulty_raw: $('.expected_diff').text(), expected_difficulty_date: $('.diff_date').text(), expected_difficulty: 8.52};
 			$.ajax({
-				url:global.url,
-                method: 'post',
+				url:global.url + '/calc_btn',
+                method: 'get',
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-				data: $('.calculator-form').serialize() + '&calc='+JSON.stringify(calc) + '&network=' + JSON.stringify(calc.network) + '&status=' + JSON.stringify(calc.status)  ,
+				data: $('.calculator-form').serialize() + '&calc='+JSON.stringify(calc) + '&network=' + JSON.stringify(network) + '&status=' + JSON.stringify(status)  ,
 			 	dataType: 'json',
 				success: function(data) {
 					if (data.result === 0) {
@@ -132,18 +134,6 @@
 							fillColor: "rgba(157,200,241,0.4)",
 							strokeColor: "#72b0ea",
 							poi
-
-
-
-
-
-
-
-
-
-
-
-
 							ntColor: "#72b0ea",
 							pointStrokeColor: "#72b0ea",
 							data:  data.chart 
@@ -159,7 +149,6 @@
 		/**
 		change form inputs on change usrt
 		*/
-		
 		var hr = parseFloat($('.hash').val());
 		var en = parseFloat($('.energy').val());
 		function changeSelect(obj) {
@@ -229,7 +218,6 @@
 		update_rates
 		*/
 		
-		
 		function update_rates(obj) {
 			//console.log(obj);
 			$.ajax({
@@ -243,7 +231,8 @@
 					src: obj  ? obj  : 'coinbase'
 				},
 				success: function(data) {
-					$('.btc-courses').html(data)
+					$('.btc-courses').html(data);
+                    calc = data;
 				}
 			})
 		}
