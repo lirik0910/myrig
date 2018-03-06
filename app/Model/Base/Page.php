@@ -31,12 +31,17 @@ class Page extends Model
 	}
 
 	/** 
-	 * Get varuables
+	 * Get variables
 	 * @return boolean
 	 */
-	public function variables()
+	/*public function variables()
 	{
 		return $this->belongsToMany(Variable::class, 'variable_contents')->withPivot('content', 'name');
+	}*/
+
+	public function variables()
+	{
+		return $this->belongsToMany(Variable::class, 'view_variables', 'view_id', 'variable_id');
 	}
 
 	/**
