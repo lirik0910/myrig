@@ -18,10 +18,12 @@ class PageController extends Controller
 			$link :
 			rtrim(ltrim($link, '/\\'), '/\\');
 
-		if ($page = Page::where('link', $link)->first()) {
+		if ($page = Page::where('link', $link)->with('multivariables')->first()) {
 			return view($page->view->path, [
 				'it' => $page,
 				'get' => $this->get(),
+				'request' => $request,
+				'migx' => Page::convertMVs($page->multivariables),
 				'select' => $this->select(),
 				'inCart' => $this->getInSessionCart()
 			]);
