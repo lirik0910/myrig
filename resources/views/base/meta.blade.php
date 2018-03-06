@@ -14,3 +14,19 @@
 <link rel='dns-prefetch' href='//s.w.org' />
 
 <meta name="google-site-verification" content="YroKW8N1nmTvNHctf_WMuPtVYhPqE4bklPM-o6buvrc" />
+
+<style type="text/css">
+	.item-cost__container {
+		min-width: 224px;
+		line-height: 40px;
+		vertical-align: top;
+		margin: 12px 35px 0 0;
+		display: inline-block;
+	}
+
+	.item-count__container {
+		margin: 12px 0 0 0;
+		vertical-align: top;
+		display: inline-block;
+	}
+</style>
