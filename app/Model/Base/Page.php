@@ -32,10 +32,11 @@ class Page extends Model
 
     /*
      * Convert multivariables collection object to array
-     * @param (Object) $mvs Multivariables object
+     * @param object $mvs Multivariables object
      * @return array
      */
-    public function convertMVs($mvs){
+    public function convertMVs($mvs) : array
+    {
         $migx = [];
         foreach ($mvs as $mv){
             $migx[$mv->title][$mv->pivot->content_id][$mv->pivot->name] = $mv->pivot->content;

@@ -40,7 +40,8 @@ class User extends Authenticatable
 	 * Bind with user attributes model
 	 * @return boolean
 	 */
-	public function attributes(){
-	    return $this->hasOne(UserAttribute::class);
-    }
+	public function attributes()
+	{
+		return $this->hasOne(UserAttribute::class);
+	}
 }

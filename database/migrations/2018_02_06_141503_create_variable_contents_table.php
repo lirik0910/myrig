@@ -28,10 +28,6 @@ class CreateVariableContentsTable extends Migration
 				->default(0)
 				->comment('Variable ID');
 			
-			$table->string('name', 255)
-				->nullable(true)
-				->comment('Name for multiple variable part');
-			
 			$table->text('content')
 				->nullable(true)
 				->comment('Variable content');
