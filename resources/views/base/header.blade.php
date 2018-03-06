@@ -15,7 +15,7 @@ $cart = $select('App\Model\Base\Page')
 
 $count = 0;
 foreach ($inCart as $i) {
-	$count += $i;
+	$count += (int) $i;
 }
 @endphp
 

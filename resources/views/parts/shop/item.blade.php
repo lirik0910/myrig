@@ -68,7 +68,7 @@
 				@endif
 			@endif
 
-			<div class="single-product-price">
+			<div class="single-product-price item-cost__container">
 				<span class="woocommerce-Price-amount amount">
 					<span class="woocommerce-Price-currencySymbol">&#36;</span>
 					{{ number_format($item->price, 2, '.', '') }}
@@ -79,7 +79,7 @@
 				</span>
 			</div>
 
-			<form class="related-form ">
+			<form class="related-form item-count__container">
 				<span class="input-number ">
 					<input id="{{ 'count-products-' . $item->id }}" type="text" name="count" class="form-control form-number count add-to-cart-count"
 					value="{{ isset($inCart[$item->id]) ? $inCart[$item->id] : 1 }}" />

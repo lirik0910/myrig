@@ -10,7 +10,7 @@ class SessionController extends Controller
 	 * @param Request $request
 	 * @return \Illuminate\Http\JsonResponse
 	 */
-	public function add(Request $request) : JsonResponse
+	public function add(Request $request)
 	{
 		$cart = json_decode(session('cart'), true);
 		$cart[$request->input('id')] = $request->input('count');

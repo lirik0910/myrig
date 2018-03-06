@@ -17,6 +17,9 @@
     </script>
     <section class="content list">
         <div class="container">
+            @php
+                $news = App\Model\Base\Page::where('parent_id', 4)->limit(10)->get();
+            @endphp
             @foreach($news as $article)
                 <div class="article-row row">
                     <div class="col-sm-4">
@@ -148,7 +151,7 @@
                     </div>
                 </div>
             </div>-->
-            {{$news->links()}}
+
         </div>
             <!--<div class="  text-center"><ul class="pagination text-center"><li ><span aria-current='page' class='page-numbers current'>1</span></li><li ><a class="page-numbers" href="https://myrig.com.ua/news/page/2/" data-wpel-link="internal">2</a></li><li ><span class="page-numbers dots">&hellip;</span></li><li ><a class="page-numbers" href="https://myrig.com.ua/news/page/29/" data-wpel-link="internal">29</a></li><li ><a class="next page-numbers" href="https://myrig.com.ua/news/page/2/" data-wpel-link="internal"><i class="article-arrow article-arrow-right"></i></a></li></ul></div>        </div>-->
     </section>

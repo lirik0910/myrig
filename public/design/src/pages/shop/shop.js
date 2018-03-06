@@ -135,7 +135,7 @@ new (class Shop extends App {
 
 		console.log(session)
 		for (i = 0; i < session.length; i++) {
-			count += session[i].count;
+			count += Number(session[i].count);
 		}
 
 		$('#cart-count-label').html(count);
