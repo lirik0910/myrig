@@ -13,7 +13,7 @@ class AddRelationVariableMultiContents extends Migration
      */
     public function up()
     {
-        Schema::table('variable_multi_contents', function (Blueprint $table) {
+        /*Schema::table('variable_multi_contents', function (Blueprint $table) {
             $table->foreign('page_id')
                 ->references('id')
                 ->on('pages')
@@ -25,7 +25,7 @@ class AddRelationVariableMultiContents extends Migration
                 ->references('id')
                 ->on('variables')
                 ->onDelete('cascade');
-        });
+        });*/
     }
 
     /**

@@ -41,7 +41,7 @@ class Page extends Model
 
 	public function variables()
 	{
-		return $this->belongsToMany(Variable::class, 'view_variables', 'view_id', 'variable_id');
+		return $this->belongsToMany(Variable::class, 'view_variables', 'view_id');
 	}
 
 	/**
