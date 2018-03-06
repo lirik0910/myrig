@@ -145,7 +145,7 @@ class App {
 
 		else {
 			for (i in opt.headers) {
-				xhr.setRequestHeader(i, opt.headers[i].value);
+				xhr.setRequestHeader(i, opt.headers[i]);
 			}
 		}
 

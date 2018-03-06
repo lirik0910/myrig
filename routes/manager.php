@@ -40,7 +40,7 @@ Route::prefix('products')
 });
 
 Route::prefix('api')
-	//->middleware('auth')
+	->middleware('auth')
 	->group(function() {
 		Route::prefix('component')->group(function() {
 			Route::get('/', 'Manager\Base\ComponentController@all');
