@@ -47,15 +47,20 @@ new (class Shop extends App {
 		$.get(window.global.app.connector +'/cart', (data) => {
 			let i, 
 				s = [],
-				r = JSON.parse(data);
+				r;
 
-			for (i = 0 in r) {
-				s.push({id: i, count: r[i]});
+			if (data === '' || data === null) {
+				$.session.set('cart', JSON.stringify(s));
 			}
 
-			if (r === '' || r === null)
-				$.session.set('cart', JSON.stringify([]));
-			else $.session.set('cart', JSON.stringify(s));
+			else {
+				r = JSON.parse(data);
+				
+				for (i = 0 in r) {
+					s.push({id: i, count: r[i]});
+				}
+				$.session.set('cart', JSON.stringify(s));
+			}
 		});
 	}
 
