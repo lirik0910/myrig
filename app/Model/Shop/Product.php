@@ -90,7 +90,10 @@ class Product extends Model
 		/** Remove all images before insert
 		 */
 		try {
-			ProductImage::where('product_id', $this->id)->truncate();
+			$collection = ProductImage::where('product_id', $this->id)->get();
+			foreach ($collection as $item) {
+				$item->delete();
+			}
 		}
 		catch (\Exception $e) {
 			logger($e->getMessage());
@@ -141,7 +144,10 @@ class Product extends Model
 		/** Remove all options before insert
 		 */
 		try {
-			ProductOption::where('product_id', $this->id)->truncate();
+			$collection = ProductOption::where('product_id', $this->id)->get();
+			foreach ($collection as $item) {
+				$item->delete();
+			}
 		}
 		catch (\Exception $e) {
 			logger($e->getMessage());
