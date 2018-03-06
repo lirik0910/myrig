@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Model\Base\Page;
+use Illuminate\Http\Request;
 
 class PageController extends Controller
 {
@@ -16,12 +16,38 @@ class PageController extends Controller
 		$link = $request->decodedPath();
 		$link = $link === '/' ?
 			$link :
-			rtrim(ltrim($request->decodedPath(), '/\\'), '/\\');
+			rtrim(ltrim($link, '/\\'), '/\\');
 		
 		if ($page = Page::where('link', $link)->first()) {
-			return view($page->view->path, ['page' => $page]);
+			return view($page->view->path, [
+				'it' => $page,
+				'get' => $this->get(),
+				'select' => $this->select(),
+			]);
 		}
 
 		else abort(404);
+	}
+
+	/** 
+	 * Get getting page function
+	 * @return function
+	 */
+	public function get()
+	{
+		return function(int $id) {
+			return Page::find($id);
+		};
+	}
+
+	/** 
+	 * Get model select query function
+	 * @param function
+	 */
+	public function select()
+	{
+		return function($class) {
+			return $class::select();
+		};
 	}
 }

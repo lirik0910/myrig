@@ -36,7 +36,7 @@ class Page extends Model
 	 */
 	public function variables()
 	{
-		return $this->belongsToMany(Variable::class, 'variable_contents')->withPivot('content', 'name');
+		return $this->belongsToMany(Variable::class, 'variable_contents');
 	}
 
 	/**

@@ -35,6 +35,7 @@ Route::prefix('products')
 	->middleware('auth')
 	->group(function () {
 		Route::get('/', 'Manager\Base\ViewController@index');
+		Route::get('/{id}', 'Manager\Base\ViewController@index');
 		Route::get('/create', 'Manager\Base\ViewController@index');
 });
 
