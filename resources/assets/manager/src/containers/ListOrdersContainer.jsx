@@ -441,7 +441,10 @@ class ListOrdersContainer extends Component {
 
 				{editDialog === true && <DialogOrder
 					order={editOrder}
-					defaultValue={editDialog} />}
+					defaultValue={editDialog}
+					onDialogClosed={() => {
+						this.setState({ editDialog: false })
+					}} />}
 			</div>
 	}
 }

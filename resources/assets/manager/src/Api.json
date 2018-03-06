@@ -105,7 +105,8 @@
 	"order": {
 		"GET": {
 			"all": "",
-			"one": "{id}"
+			"one": "{id}",
+			"log": "{id}/log"
 		},
 		"DELETE": {
 			"one": "{id}",

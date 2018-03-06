@@ -123,7 +123,7 @@ class PageController extends Controller
 		try {
 			$page = Page::find($id);
 
-			foreach ($page->variables as $item) {
+			foreach ($page->view->variables as $item) {
 				$item->variableContent;
 			}
 		}

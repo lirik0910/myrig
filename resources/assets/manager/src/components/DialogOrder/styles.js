@@ -11,5 +11,13 @@ let styles = theme => ({
 		width: '100%',
 		padding: 0,
 		margin: '12px 0'
+	},
+	formControl: {
+		margin: '12px 0'
+	},
+	textArea: {
+		width: '100%'
 	}
 });
+
+export default styles;

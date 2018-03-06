@@ -2,17 +2,64 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Model\Base\Page;
+use Illuminate\Http\Request;
 
 class PageController extends Controller
 {
+	/**
+	 * Get page
+	 * @param Request $request
+	 */
+	public function view(Request $request)
+	{
+		$link = $request->decodedPath();
+		$link = $link === '/' ?
+			$link :
+			rtrim(ltrim($link, '/\\'), '/\\');
 
-    public function view(Request $request){
-        //var_dump($request->session()); die;
-        $page = new Page;
-        $output = $page->getContent($request);
-//var_dump($output['data']['products']); die;
-        return view($output['viewName'], $output['data']);
-    }
+		if ($page = Page::where('link', $link)->first()) {
+			return view($page->view->path, [
+				'it' => $page,
+				'get' => $this->get(),
+				'select' => $this->select(),
+				'inCart' => $this->getInSessionCart()
+			]);
+		}
+
+		else abort(404);
+	}
+
+	/** 
+	 * Get getting page function
+	 * @return function
+	 */
+	public function get()
+	{
+		return function(int $id) {
+			return Page::find($id);
+		};
+	}
+
+	/** 
+	 * Get model select query function
+	 * @param function
+	 */
+	public function select()
+	{
+		return function($class) {
+			return $class::select();
+		};
+	}
+
+	/**
+	 * Get products in cart from session
+	 * @return array
+	 */
+	public function getInSessionCart() : array
+	{
+		$a = json_decode(session('cart'), true);
+		return $a ? $a : [];
+	}
 }
+

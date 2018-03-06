@@ -102,7 +102,7 @@ class EditPageContainer extends Component {
 		this.setState({ 
 			completed: 0 
 		});
-		data['fields'] = JSON.stringify(data.variables);
+		data['fields'] = JSON.stringify(data.view.variables);
 
 		App.api({
 			type: 'PUT',
@@ -300,7 +300,7 @@ class EditPageContainer extends Component {
 					style={{display: tab === 1 ? 
 						'flex' : 
 						'none'}}>
-					{data.variables && data.variables.map((item, i) => {
+					{completed === 100 && data.view.variables.map((item, i) => {
 						return <Grid item xs={12} key={i}>
 							{item.type === 'input' &&
 								<PaperInputVariable
@@ -322,7 +322,7 @@ class EditPageContainer extends Component {
 										for (var a in fields) {
 											fields[a].content = fields[a].name;
 										}
-										data.variables[i].variable_content = fields;
+										data.view.variables[i].variable_content = fields;
 
 										this.setState({ data });
 									}}
@@ -330,7 +330,7 @@ class EditPageContainer extends Component {
 										for (var a in fields) {
 											fields[a].content = fields[a].name;
 										}
-										data.variables[i].variable_content = fields;
+										data.view.variables[i].variable_content = fields;
 
 										this.setState({ data });
 									}}
@@ -338,7 +338,7 @@ class EditPageContainer extends Component {
 										for (var a in fields) {
 											fields[a].content = fields[a].name;
 										}
-										data.variables[i].variable_content = fields;
+										data.view.variables[i].variable_content = fields;
 
 										this.setState({ data });
 									}} />}

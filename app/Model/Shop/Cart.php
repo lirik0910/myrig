@@ -26,16 +26,8 @@ class Cart extends Model
 	}
 
 	/**
-	 * Get current cart content
-	 * @return \Illuminate\Database\Eloquent\Collection
-	 */
-	public function getCartProducts() : Collection
-	{
-
-	}
-
-	/**
-	 *
+	 * Calculate products cost of current cart
+	 * @return float
 	 */
 	public function calculateCartCost()
 	{

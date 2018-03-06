@@ -56,8 +56,8 @@ class ClientAuthController
      * Login in panel.myrig
      * @return boolean
      */
-    public function login(Request $request){
-       // var_dump($this->generatePassword(10)); die;
+    public function login(Request $request)
+    {
         $sso_token = $request->get('ssotoken');
         $action = $request->get('action');
 
@@ -152,7 +152,8 @@ class ClientAuthController
      * @param (Boolean) $extra_special_chars Extra special chars in pass
      * @return string
      */
-    public function generatePassword($length, $special_chars = false, $extra_special_chars = false){
+    public function generatePassword($length, $special_chars = false, $extra_special_chars = false)
+    {
         $chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
         if ( $special_chars ){
             $chars .= '!@#$%^&*()';

@@ -2,8 +2,8 @@
 
 namespace App\Model\Base;
 
-use App\Model\Shop\Product;
 use http\Env\Request;
+use App\Model\Shop\Product;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Collection;
@@ -18,7 +18,7 @@ class Page extends Model
 	 */
 	public function context()
 	{
-		return $this->belongsTo(View::class);
+		return $this->belongsTo(Context::class);
 	}
 
 	/**
@@ -30,6 +30,7 @@ class Page extends Model
 		return $this->belongsTo(View::class);
 	}
 
+<<<<<<< HEAD
 	public function variables(){
 	    return $this->belongsToMany(Variable::class, 'variable_contents')->withPivot('content', 'name');
     }
@@ -99,26 +100,16 @@ class Page extends Model
         return $migx;
     }
 
+=======
+>>>>>>> befa162a1115654b00a00035e77947ffb676775a
 	/**
-	 * Build tree pages array with childs
-	 * @return array
+	 * Bind with Variable and Variable multi content model
+	 * @return boolean
 	 */
-	public static function getPagesTree() : array
+	public function multivariables()
 	{
-		$pages = Page::all()->keyBy('id');
-		$a = [];
-
-		foreach ($pages as $key => $page) {
-			$a[$key] = $page->toArray();
-			$a[$key]['childs'] = Page::findPageChildsByArray($key, $pages);
-
-			if ($page->parent_id !== 0) {
-				unset($a[$key]);
-			}
-		}
-		return $a;
+		return $this->belongsToMany(Variable::class, 'variable_multi_contents')->withPivot('name', 'content', 'content_id');
 	}
-
 
 	/**
 	 * Remove all childs of certain page

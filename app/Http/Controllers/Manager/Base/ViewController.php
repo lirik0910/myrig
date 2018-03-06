@@ -36,7 +36,7 @@ class ViewController extends Controller
 	 */
 	public function index()
 	{
-		return view('manager', $this->bandle());
+		return view('content.manager', $this->bandle());
 	}
 
 	public function bandle() : array
