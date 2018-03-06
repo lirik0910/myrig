@@ -14,7 +14,9 @@ $products = $select('\App\Model\Shop\Product')->get();
 		<div class="clearfix" style="clear: both"></div>
 
 		@foreach($products as $item)
-			@include('parts.shop.item', $item);
+			@if (isset($item->page))
+				@include('parts.shop.item', $item);
+			@endif
 		@endforeach
 	</div>
 </section>

@@ -1,0 +1,11 @@
+﻿## [1.0.1] - 09.01.2018
+### Added
+- Add jsdoc to devDependencies
+- Create documentation via jsdoc 
+
+## [1.0.0] - 27.11.2017
+### Added
+- Init project
+- Install modules and make configs
+- Create webapack.config
+- Create Base class

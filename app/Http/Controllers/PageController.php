@@ -17,7 +17,7 @@ class PageController extends Controller
 		$link = $link === '/' ?
 			$link :
 			rtrim(ltrim($link, '/\\'), '/\\');
-		
+
 		if ($page = Page::where('link', $link)->first()) {
 			return view($page->view->path, [
 				'it' => $page,

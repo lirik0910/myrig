@@ -13,7 +13,7 @@ class CreateVariableMultiContentsTable extends Migration
      */
     public function up()
     {
-        /*Schema::create('variable_multi_contents', function (Blueprint $table) {
+        Schema::create('variable_multi_contents', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->charset = 'utf8';
             $table->collation = 'utf8_general_ci';
@@ -38,7 +38,7 @@ class CreateVariableMultiContentsTable extends Migration
                 ->comment('Variable content');
 
             $table->timestamps();
-        });*/
+        });
     }
 
     /**

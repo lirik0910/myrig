@@ -22,6 +22,20 @@ new (class Shop extends App {
 	 * @param {Object} e
 	 */
 	onReady(e) {
+		this.countWidth();
+
+		/**
+		 * 
+		 */
+		$('.btn-count.btn-count-plus').on('click', (el) => {
+			console.log(el)
+		});
+	}
+
+	/**
+	 * Define mobile size
+	 */
+	countWidth() {
 		var width = this.dom.width(),
 			cont = $('.container').outerWidth();
 
@@ -33,7 +47,13 @@ new (class Shop extends App {
 		}
 
 		else $('.main-back').css('left', '0px');
-			
-		//new Component()
+	}
+
+	/**
+	 * Add product to cart
+	 * @fires click
+	 */
+	addToCart() {
+
 	}
 })();

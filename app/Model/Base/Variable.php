@@ -10,9 +10,4 @@ class Variable extends Model
 	{
 		return $this->hasMany(VariableContent::class);
 	}
-
-	public function pages()
-	{
-		return $this->belongsToMany(Page::class, 'view_variables');
-	}
 }

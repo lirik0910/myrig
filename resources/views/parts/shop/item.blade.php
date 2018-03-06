@@ -44,7 +44,7 @@
 	<div class="col-sm-8">
 		<div class="article-text">
 			<h2>
-				<a href="{{ $item->page ? asset($item->page->link) : '' }}" data-wpel-link="internal">
+				<a href="{{ asset($item->page->link) }}" data-wpel-link="internal">
 					{{ $item->title }}
 				</a>
 			</h2>
@@ -52,20 +52,26 @@
 			<div class="tag tag-order">Предзаказ</div>
 			<div class="tag tag-waranty" >Расширенная гарантия 180 дней</div>
 
-			<div>
-				<ul>
-					<li>Количество ограничено!</li>
-					<li>Отгрузка с завода в Китае 20 апреля &#8212; 10 мая.</li>
-					<li>100% предоплата в BTC!</li>
-					<li>Окончательную стоимость уточняйте у менеджера!</li>
-					<li>Гарантийное обслуживание: 1-5 дня</li>
-					<li>Локальная доставка по Украине</li>
-				</ul>
-			</div>
+			@if (isset($item->page->view->variables))
+				@if (isset($item->page->view->variables))
+				<div>
+					<ul>
+					@foreach ($item->page->view->variables as $field)
+						@foreach ($field->variableContent as $var)
+							@if ($var->page_id == $item->page->id)
+							<li>{{ $var->content }}</li>
+							@endif
+						@endforeach
+					@endforeach
+					</ul>
+				</div>
+				@endif
+			@endif
 
 			<div class="single-product-price">
 				<span class="woocommerce-Price-amount amount">
-					<span class="woocommerce-Price-currencySymbol">&#36;</span>2810.00
+					<span class="woocommerce-Price-currencySymbol">&#36;</span>
+					{{ number_format($item->price, 2, '.', '') }}
 				</span>
 
 				<span class="table-bitcoin">0.2485
@@ -75,18 +81,18 @@
 
 			<form class="related-form ">
 				<span class="input-number ">
-					<input type="text" name="count" value="1" class="form-control form-number count"/>
+					<input id="{{ 'count-products-' . $item->id }}" type="text" name="count" value="1" class="form-control form-number count add-to-cart-count"/>
 					
-					<div class="btn-count btn-count-plus">
+					<div class="btn-count btn-count-plus" data-id="{{ $item->id }}">
 						<i class="fa fa-plus"></i>
 					</div>
 
-					<div class="btn-count btn-count-minus">
+					<div class="btn-count btn-count-minus" data-id="{{ $item->id }}">
 						<i class="fa fa-minus"></i>
 					</div>
 				</span>
 
-				<a data-success="Добавлено!" rel="nofollow" href="#" data-quantity="1" data-product_id="4652" data-product_sku="DM_16ua" class="btn-default addtocarts ">В корзину <i class="fa fa-spin fa-refresh"></i></a>
+				<a data-success="Добавлено!" rel="nofollow" href="#" data-id="{{ $item->id }}" class="btn-default addtocarts">{{ __('shop.to_cart') }}</a>
 			</form>
 			
 			<div class='tag tag-payback'>Окупаемость 201 день</div>

@@ -1,5 +1,5 @@
 <?php
 
 return [
-	'extended_warranty' => 'Extended warranty'
+	'to_cart' => 'Add to cart'
 ];

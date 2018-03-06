@@ -30,20 +30,6 @@ class Page extends Model
 		return $this->belongsTo(View::class);
 	}
 
-	/** 
-	 * Get variables
-	 * @return boolean
-	 */
-	/*public function variables()
-	{
-		return $this->belongsToMany(Variable::class, 'variable_contents')->withPivot('content', 'name');
-	}*/
-
-	public function variables()
-	{
-		return $this->belongsToMany(Variable::class, 'view_variables', 'view_id');
-	}
-
 	/**
 	 * Bind with Variable and Variable multi content model
 	 * @return boolean
