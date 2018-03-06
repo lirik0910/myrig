@@ -22,7 +22,7 @@ $products = $select('\App\Model\Shop\Product')
 				<form class="cart-field cart-form woocommerce" action="https://myrig.com.ua/cart/" method="post" data-url="https://myrig.com.ua/cart/">
 					<div class="table-like">
 						@foreach ($products as $item)
-							@include('parts.cart.item', $item);
+							@include('parts.cart.item', $item)
 						@endforeach
 					</div>
 

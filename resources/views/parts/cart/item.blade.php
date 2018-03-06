@@ -1,13 +1,11 @@
-{{ $item->images->first() }}
-
 @php
-
-@phpinfo
+$icon = $item->images->first();
+@endphp
 
 <div class="table-row">
 	<div class="table-cell table-product-photo">
-		<a href="https://myrig.com.ua/product/dragonmint-16-th-s-2/" data-wpel-link="internal">
-			<img width="100" height="100" src="//myrig.com.ua/wp-content/uploads/2018/01/dragonmint-1-100x100.png" class="attachment-shop_thumbnail size-shop_thumbnail wp-post-image" alt="" srcset="//myrig.com.ua/wp-content/uploads/2018/01/dragonmint-1-100x100.png 100w, //myrig.com.ua/wp-content/uploads/2018/01/dragonmint-1-150x150.png 150w, //myrig.com.ua/wp-content/uploads/2018/01/dragonmint-1-300x300.png 300w, //myrig.com.ua/wp-content/uploads/2018/01/dragonmint-1-768x768.png 768w, //myrig.com.ua/wp-content/uploads/2018/01/dragonmint-1-1024x1024.png 1024w, //myrig.com.ua/wp-content/uploads/2018/01/dragonmint-1-47x47.png 47w, //myrig.com.ua/wp-content/uploads/2018/01/dragonmint-1-140x140.png 140w, //myrig.com.ua/wp-content/uploads/2018/01/dragonmint-1-600x600.png 600w, //myrig.com.ua/wp-content/uploads/2018/01/dragonmint-1.png 1280w" sizes="(max-width: 100px) 100vw, 100px" />
+		<a href="{{ asset($it->l) }}" data-wpel-link="internal">
+			<img width="100" height="100" src="{{ asset('uploads/' . $icon['name']) }}" class="attachment-shop_thumbnail size-shop_thumbnail wp-post-image" alt="" />
 		</a>
 	</div>
 							
