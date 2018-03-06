@@ -52,7 +52,10 @@ new (class Shop extends App {
 			for (i = 0 in r) {
 				s.push({id: i, count: r[i]});
 			}
-			$.session.set('cart', JSON.stringify(s));
+
+			if (r === '' || r === null)
+				$.session.set('cart', JSON.stringify([]));
+			else $.session.set('cart', JSON.stringify(s));
 		});
 	}
 

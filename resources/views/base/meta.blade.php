@@ -14,6 +14,7 @@
 <link rel='dns-prefetch' href='//s.w.org' />
 
 <meta name="google-site-verification" content="YroKW8N1nmTvNHctf_WMuPtVYhPqE4bklPM-o6buvrc" />
+<script type='text/javascript' src='//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js'></script>
 
 <style type="text/css">
 	.item-cost__container {

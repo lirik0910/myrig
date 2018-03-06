@@ -1,4 +1,8 @@
-{{ $item->images }}
+{{ $item->images->first() }}
+
+@php
+
+@phpinfo
 
 <div class="table-row">
 	<div class="table-cell table-product-photo">
