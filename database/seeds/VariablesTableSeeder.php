@@ -13,7 +13,7 @@ class VariablesTableSeeder extends Seeder
 	{
 		/** Add products inforamation text
 		 */
-		App\Model\Base\Veriable::create([
+		App\Model\Base\Variable::create([
 			'type' => 'input',
 			'title' => 'Product information items',
 			'description' => '',
