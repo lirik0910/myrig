@@ -30,6 +30,19 @@ class Page extends Model
 		return $this->belongsTo(View::class);
 	}
 
+    /*
+     * Convert multivariables collection object to array
+     * @param (Object) $mvs Multivariables object
+     * @return array
+     */
+    public function convertMVs($mvs){
+        $migx = [];
+        foreach ($mvs as $mv){
+            $migx[$mv->title][$mv->pivot->content_id][$mv->pivot->name] = $mv->pivot->content;
+        }
+        return $migx;
+    }
+
 	/**
 	 * Bind with Variable and Variable multi content model
 	 * @return boolean

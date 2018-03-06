@@ -35,4 +35,12 @@ class User extends Authenticatable
 	{
 		return $this->belongsTo(Policy::class);
 	}
+
+	/*
+	 * Bind with user attributes model
+	 * @return boolean
+	 */
+	public function attributes(){
+	    return $this->hasOne(UserAttribute::class);
+    }
 }

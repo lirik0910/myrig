@@ -143,6 +143,27 @@ $menu = $select('App\Model\Base\Page')
 <link rel="stylesheet" href="{{URL::asset('css/style.css?ver=1.55')}}">
 <link rel='stylesheet' id='font-awesome-css'  href='https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css?ver=2.2.0' type='text/css' media='all' />
 
+<script type='text/javascript' src='https://myrig.com.ua/wp-content/plugins/woocommerce/assets/js/frontend/cart-fragments.min.js?ver=3.2.6'></script>
+<script type='text/javascript' src="{{URL::asset('js/owl.carousel2.min.js?ver=1.12')}}"></script>
+<script type='text/javascript' src="{{URL::asset('js/intlTelInput.min.js?ver=1.12')}}"></script>
+<script type='text/javascript' src="{{URL::asset('js/jquery.fancybox.min.js?ver=1.12')}}"></script>
+<script type='text/javascript' src="{{URL::asset('js/bootstrapValidator.js?ver=1.12')}}"></script>
+<script type='text/javascript' src="{{URL::asset('js/script.js?ver=1.12')}}"></script>
+<script type='text/javascript' src="{{URL::asset('js/Chart.min.js?ver=1.12')}}"></script>
+<script type='text/javascript' src="{{URL::asset('js/actions.js?ver=1.12')}}"></script>
+<script type='text/javascript' src="{{URL::asset('js/calc.js?ver=1.12')}}"></script>
+<script type='text/javascript'>
+    /* <![CDATA[ */
+    var global = {
+        url: '{{env('APP_URL')}}',
+        app: {
+            connector: "{{ asset('connector') }}",
+            csrf: "{{ csrf_token() }}"
+        }
+    };
+    var calc = {};
+    /* ]]> */
+</script>
 <script type="text/javascript" src="{{ asset('design/build/js/common.js') }}"></script>
 <script type="text/javascript" src="{{ asset('design/build/js/shop.js') }}"></script>
 

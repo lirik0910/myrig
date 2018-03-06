@@ -19,7 +19,9 @@
     <section class="slider">
         <div class="container-fluid">
             <div class="row">
-
+                @php
+                    $products = App\Model\Shop\Product::where('category_id', 1)->where('active', 1)->orderBy('price', 'DESC')->with('options')->limit(4)->get();
+                @endphp
                 <div class="main-slider owl-carousel owl-theme" id="mainSlider">
                     @if(isset($products))
                         @foreach($products as $product)

@@ -53,7 +53,7 @@ class PageController extends Controller
 	}
 
 	/**
-	 * Get pproducts in cart from session
+	 * Get products in cart from session
 	 * @return array
 	 */
 	public function getInSessionCart() : array
@@ -62,3 +62,4 @@ class PageController extends Controller
 		return $a ? $a : [];
 	}
 }
+

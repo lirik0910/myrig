@@ -146,7 +146,17 @@ class SimpleHtmlDom
         // We DO force the tags to be terminated.
         $dom = new simple_html_dom(null, $lowercase, $forceTagsClosed, $target_charset, $stripRN, $defaultBRText, $defaultSpanText);
         // For sourceforge users: uncomment the next line and comment the retreive_url_contents line 2 lines down if it is not already done.
-        $contents = file_get_contents($url, $use_include_path, $context, $offset);
+
+
+        $c = curl_init($url);
+        curl_setopt($c, CURLOPT_RETURNTRANSFER, true);
+        $contents = curl_exec($c);
+        if (curl_error($c))
+            die(curl_error($c));
+
+        curl_close($c);
+        //var_dump($html); die;
+        //$contents = File::sharedGet($url);
         // Paperg - use our own mechanism for getting the contents as we want to control the timeout.
         //$contents = retrieve_url_contents($url);
         if (empty($contents) || strlen($contents) > MAX_FILE_SIZE)
@@ -1176,7 +1186,7 @@ class simple_html_dom
         $this->lowercase = $lowercase;
         $this->default_br_text = $defaultBRText;
         $this->default_span_text = $defaultSpanText;
-        $this->root = new simple_html_dom_node($this);
+        $this->root = new SimpleHtmlDom($this);
         $this->root->tag = 'root';
         $this->root->_[HDOM_INFO_BEGIN] = -1;
         $this->root->nodetype = HDOM_TYPE_ROOT;
@@ -1193,7 +1203,7 @@ class simple_html_dom
         }
 
         // text
-        $node = new simple_html_dom_node($this);
+        $node = new SimpleHtmlDom($this);
         ++$this->cursor;
         $node->_[HDOM_INFO_TEXT] = $s;
         $this->link_nodes($node, false);
@@ -1353,7 +1363,7 @@ class simple_html_dom
             return true;
         }
 
-        $node = new simple_html_dom_node($this);
+        $node = new SimpleHtmlDom($this);
         $node->_[HDOM_INFO_BEGIN] = $this->cursor;
         ++$this->cursor;
         $tag = $this->copy_until($this->token_slash);
@@ -1554,7 +1564,7 @@ class simple_html_dom
     // as a text node
     protected function as_text_node($tag)
     {
-        $node = new simple_html_dom_node($this);
+        $node = new SimpleHtmlDom($this);
         ++$this->cursor;
         $node->_[HDOM_INFO_TEXT] = '</' . $tag . '>';
         $this->link_nodes($node, false);

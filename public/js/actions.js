@@ -1,6 +1,6 @@
 jQuery(document).ready(function ($) {
 	
-	sessionStorage['govno'] = 'cdcdc';
+	//sessionStorage['govno'] = 'cdcdc';
 
 
 	$('#ticketback input[type=file]').change(function(){
@@ -50,14 +50,6 @@ jQuery(document).ready(function ($) {
 			} 
 		});     
 	})
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	
