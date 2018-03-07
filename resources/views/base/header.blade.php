@@ -46,7 +46,7 @@ foreach ($inCart as $i) {
 				</div>
 
 				<div class="user-panel">
-					<a href="https://myrig.com.ua/sso-login/" class="reg-f0" data-wpel-link="internal">
+					<a href="{{url(env('APP_URL') . 'sso-login')}}" class="reg-f0" data-wpel-link="internal">
 						<img src="{{ asset('design/images/icons-97.svg') }}" alt="login"/>
 					</a>
 
