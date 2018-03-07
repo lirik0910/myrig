@@ -73,20 +73,6 @@ $menu = $select('App\Model\Base\Page')
 						</li>
 						@endforeach
 					</ul>
-
-					<ul id="menu-footer-menu-2" class="">
-						<li id="menu-item-820" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-820">
-							<a href="https://myrig.com.ua/dostavka-otgruzka/" data-wpel-link="internal">Доставка и отгрузка</a>
-						</li>
-						
-						<li id="menu-item-730" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-730">
-							<a href="https://myrig.com.ua/wrnt/" data-wpel-link="internal">Расширенная гарантия</a>
-						</li>
-						
-						<li id="menu-item-4714" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-4714">
-							<a href="https://myrig.com.ua/how-to-repair/" data-wpel-link="internal">Упаковка отправлений</a>
-						</li>
-					</ul>
 				</div>
 				
 				<div class="col-sm-12 col-md-3 col-lg-3">
