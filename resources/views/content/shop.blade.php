@@ -7,7 +7,6 @@ $products = $select('\App\Model\Shop\Product')->with('page', 'options', 'images'
 
 @section('content')
 <main>
-
 <div class="main-back"></div>
 	
 <section class="content item">
@@ -20,7 +19,5 @@ $products = $select('\App\Model\Shop\Product')->with('page', 'options', 'images'
 		@endforeach
 	</div>
 </section>
-
-
 </main>
 @endsection
