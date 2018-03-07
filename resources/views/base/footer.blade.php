@@ -137,8 +137,6 @@ $menu = $select('App\Model\Base\Page')
 	}
 </script>
 
-<link rel="stylesheet" href="{{URL::asset('css/owl.carousel.min.css')}}">
-<link rel="stylesheet" href="{{URL::asset('css/owl.theme.default.min.css')}}">
 <link rel="stylesheet" href="{{URL::asset('css/bootstrapvalidator.css')}}">
 <link rel="stylesheet" href="{{URL::asset('css/intlTelInput.css')}}">
 <link rel="stylesheet" href="{{URL::asset('css/calc.css')}}">
