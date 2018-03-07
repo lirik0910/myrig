@@ -92,16 +92,18 @@ $menu = $select('App\Model\Base\Page')
 				<div class="col-sm-12 col-md-3 col-lg-3">
 					<div class="contacts">
 						<ul>
-						@isset($page)
-						@foreach($page->variables as $variable)
-							@if($variable->title == 'contactPhone')
-								<li class="@if($variable->pivot->name == 'USA') active @endif">{{$variable->pivot->name}}
-									<div class="phone-area">
-										{{$variable->pivot->content}}
-									</div>
-								</li>
-							@endif
-						@endforeach
+                            @php
+                                $contactItems = App\Model\Base\VariableMultiContent::where('variable_id', 2)->where('name', 'country')->orWhere('name', 'phone')->get()->groupBy('content_id');
+                                //var_dump($contactItems); die;
+                            @endphp
+						@isset($contactItems)
+                                @foreach($contactItems as $item)
+                                    <li class="@if($item[0]->content == 'USA') active @endif">{{$item[0]->content}}
+                                        <div class="phone-area">
+                                            @if(isset($item[1])) {{$item[1]->content}} @else support@myrig.com @endif
+                                        </div>
+                                    </li>
+                                @endforeach
 						@endisset
 						</ul>
 					</div>

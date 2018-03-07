@@ -25,5 +25,6 @@ class DatabaseSeeder extends Seeder
 		$this->call(DeliveriesTableSeeder::class);
 		$this->call(VariablesTableSeeder::class);
 		$this->call(VariableContentsTableSeeder::class);
+        $this->call(VariableMultiContentsTableSeeder::class);
 	}
 }

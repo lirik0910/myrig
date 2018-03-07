@@ -35,7 +35,7 @@ class Page extends Model
      * @param object $mvs Multivariables object
      * @return array
      */
-    public function convertMVs($mvs) : array
+    public static function convertMVs($mvs) : array
     {
         $migx = [];
         foreach ($mvs as $mv){

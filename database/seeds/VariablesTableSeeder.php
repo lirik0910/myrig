@@ -18,5 +18,21 @@ class VariablesTableSeeder extends Seeder
 			'title' => 'Product information items',
 			'description' => '',
 		]);
+
+        /** Add products inforamation text
+         */
+        App\Model\Base\Variable::create([
+            'type' => 'migx',
+            'title' => 'contactItem',
+            'description' => 'Item for contacts page',
+        ]);
+
+        /** Add products inforamation text
+         */
+        App\Model\Base\Variable::create([
+            'type' => 'migx',
+            'title' => 'footerPhoneItem',
+            'description' => 'Contacts phone item at footer',
+        ]);
 	}
 }
