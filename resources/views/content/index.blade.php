@@ -30,7 +30,7 @@
                                     <div class="slide-text">
                                         <div class="title"><!--:ru-->{{ $product->title }}<!--:--></div>
                                         <div class="subtitle"><!--:ru-->@foreach($product->options as $option) @if($option->name == 'introtext') {{$option->value}} @endif @endforeach<!--:--></div>
-                                        <a href="{{url('/shop')}}" class="btn-default" data-wpel-link="internal">Подробнее</a>
+                                        <a href="{{url('/shop')}}" class="btn-default" data-wpel-link="internal">More info</a>
                                     </div>
                                     <div class="slide-img" style="background-image: url({{asset($product->icon)}})"></div>
                                 </div>

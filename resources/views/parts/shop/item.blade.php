@@ -1,3 +1,6 @@
+@php
+    $options = $item->options->groupBy('name')->toArray();
+@endphp
 <div class="article-row row">
     <div class="col-sm-4">
         <div class="slider-tag"></div>
@@ -25,8 +28,8 @@
 				</a>
 			</h2>
 			
-			<div class="tag tag-order">Предзаказ</div>
-			<div class="tag tag-waranty" >Расширенная гарантия 180 дней</div>
+			<div class="tag tag-order">{{$options['status'][0]['value']}}</div>
+			<div class="tag tag-waranty" >{{$options['warranty'][0]['value']}}</div>
 
 			@if (isset($item->page->view->variables))
 				@if (isset($item->page->view->variables))
@@ -72,7 +75,7 @@
 				<a data-success="Добавлено!" rel="nofollow" href="#" data-id="{{ $item->id }}" class="btn-default addtocarts">{{ __('shop.to_cart') }}</a>
 			</form>
 			
-			<div class='tag tag-payback'>Окупаемость 201 день</div>
+			<div class='tag tag-payback'>{{$options['recoupment'][0]['value']}}</div>
 		</div>
 	</div>
 </div>

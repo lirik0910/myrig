@@ -24,7 +24,7 @@
                 @endphp
                 <div class="row">
                     <div class="col-sm-4">
-                        <a href="{{url($parent_link->link)}}" class="article-link" data-wpel-link="internal"><i class="article-arrow"></i>Назад к списку</a>
+                        <a href="{{url($parent_link->link)}}" class="article-link" data-wpel-link="internal"><i class="article-arrow"></i>Back to list</a>
                         <h1>{{$it->title}}</h1>
                         <div class="date">@php echo date('d F', strtotime($it->created_at)) @endphp<i class="fa fa-eye"></i>10</div>
                         <div class="article-social">
@@ -52,7 +52,7 @@
                             {{!! $it->content !!}}
                         </div>
                         <div class="links">
-                            @isset($prev_link)<a href="{{url($prev_link->link)}}" class="article-link" data-wpel-link="internal"><i class="article-arrow"></i>Предыдущая статья</a>@endisset @isset($next_link)<a href="{{url($next_link->link)}}" class="article-link next-link" data-wpel-link="internal"><i class="article-arrow article-arrow-right"></i>Следующая статья</a>@endisset
+                            @isset($prev_link)<a href="{{url($prev_link->link)}}" class="article-link" data-wpel-link="internal"><i class="article-arrow"></i>Previous article</a>@endisset @isset($next_link)<a href="{{url($next_link->link)}}" class="article-link next-link" data-wpel-link="internal"><i class="article-arrow article-arrow-right"></i>Next article</a>@endisset
                         </div>
                     </div>
                 </div>
