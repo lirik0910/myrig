@@ -93,13 +93,16 @@ $menu = $select('App\Model\Base\Page')
 					<div class="contacts">
 						<ul>
                             @php
-                                $contactItems = App\Model\Base\VariableMultiContent::where('variable_id', 2)->where('name', 'country')->orWhere('name', 'phone')->get()->groupBy('content_id');
+                                $contactItems = App\Model\Base\VariableMultiContent::where('variable_id', 2)->orWhere('name', 'country')->orWhere('name', 'phone')->get()->groupBy('content_id');
                             @endphp
 							@isset($contactItems)
 								@foreach($contactItems as $item)
+
+                                    {{ $item[0] }}
+
 									<li class="@if($item[0]->content == 'USA') active @endif">{{$item[0]->content}}
 										<div class="phone-area">
-											@if(isset($item[1])) {{$item[1]->content}} @else support@myrig.com @endif
+											@if(isset($item[1])) {{ _('shop.cont_' . $item[1]->content)}} @else support@myrig.com @endif
 										</div>
 									</li>
 								@endforeach
