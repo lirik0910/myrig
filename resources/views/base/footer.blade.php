@@ -114,6 +114,165 @@ $menu = $select('App\Model\Base\Page')
 	</div>
 </footer>
 
+<div style="display:none">
+    <div id="reg">
+        <div class="modal-header">
+            <ul class="reg-links">
+                <li class="active" data-target="#enter-field"><a href="" data-wpel-link="internal">Вход</a></li>
+                <li data-target="#reg-field"><a href="" data-wpel-link="internal">Регистрация</a></li>
+            </ul>
+        </div>
+        <div class="modal-body">
+            <div id="reg-field">
+                <form id="registration" action="#">
+                    <div class="form-group">
+                        <input id="user_email" type="email" name="user_email" class="form-control" placeholder="Эл. почта" required="required" data-bv-message=" " data-bv-remote-message="Email уже занят"/></div>
+                    <div class="form-group">
+                        <input type="tel" name="billing_phone" class="form-control billing_phone-reg" required="required"  data-bv-digits="true"   data-bv-message=" " placeholder="Телефон"/></div>
+
+                    <div class="form-group">
+                        <input type="submit" name="submit" value="Зарегистрироваться" class="btn-default btn-subscribe"/>
+                    </div>
+                    <input type="hidden" name="action" value="bitmain_account_register">
+                    <input type="hidden" name="register" value="1">
+                    <input type="hidden" name="subject" value="Регистрация пользователя - Bitmain">
+                </form>
+                <p class="result" data-text="Регистрация успешная! Пароль отправлен вам на email"></p>
+            </div>
+            <div id="enter-field">
+
+                <div class="woocommerce">
+
+
+
+
+
+                    <form  id="enter" class="woocomerce-form woocommerce-form-login login " method="post">
+
+
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="username" id="username" placeholder="Логин" value="" />
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" type="password" name="password" id="password" placeholder="Пароль"/>
+                        </div>
+
+
+
+
+                        <p class="form-row">
+                            <input type="hidden" id="woocommerce-login-nonce" name="woocommerce-login-nonce" value="c6b529870e" /><input type="hidden" name="_wp_http_referer" value="/" />				<input type="submit" class="btn-default btn-subscribe" name="login" value="Авторизация" />
+
+                        </p>
+
+                        <div class="more-wrapper"><a href="/wp-login.php?action=lostpassword" class="btn-recover" data-wpel-link="internal">Напомнить</a></div>
+
+
+
+
+                    </form>
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <a class="regsuccess" href="#regsuccess" data-wpel-link="internal"></a>
+    <div id="regsuccess" class="popup-success">
+        <div class="modal-header success-header">
+            СПАСИБО<br/> ЗА РЕГИСТРАЦИЮ
+        </div>
+        <div class="modal-body">
+            Пароль отправлен на указанную вами электронную почту!
+        </div>
+        <div class="modal-footer">
+            <button data-fancybox-close>Закрыть</button>
+        </div>
+    </div>
+    <a class="callsuccess" href="#callsuccess" data-wpel-link="internal"></a>
+    <div id="callsuccess" class="popup-success">
+        <div class="modal-header success-header">
+            СПАСИБО<br/> ЗА ЗАЯВКУ        </div>
+        <div class="modal-body">
+            Мененджер свяжется с вами в ближайшее время.        </div>
+        <div class="modal-footer">
+            <button data-fancybox-close>Закрыть</button>
+        </div>
+    </div>
+    <div id="call">
+        <div class="modal-header">
+            <ul class="reg-links">
+                <li class="active" data-target="#enter-field"><a href="" data-wpel-link="internal">Обратный звонок</a></li>
+
+            </ul>
+        </div>
+        <div class="modal-body">
+            <div id="call-field">
+                <form id="callback" action="/back_call">
+                    {{csrf_field()}}
+                    <div class="form-group">
+                        <input id="name" type="text" name="name" class="form-control" placeholder="Имя" required="required" data-bv-message=" " data-bv-remote-message="Email уже занят"/></div>
+                    <div class="form-group">
+                        <input type="tel" name="tel" class="form-control" required="required" data-bv-message=" " placeholder="Телефон"/></div>
+                    <div class="form-group">
+                        <input type="submit" name="submit" value="Заказать звонок" class="btn-default btn-subscribe"/>
+                    </div>
+                    <input type="hidden" name="action" value="formcall_ajax_request">
+                    <input type="hidden" name="subject" value="Заказать звонок - Bitmain">
+                </form>
+                <div class="result">
+                    <div class="success-header">СПАСИБО<br/> ЗА ЗАЯВКУ</div>
+                    <div class="result-body">Мененджер свяжется с вами в ближайшее время.</div>
+                    <button data-fancybox-close>Закрыть</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="ticket">
+        <div class="modal-header">
+            <ul class="reg-links">
+                <li data-target="#enter-field"><a href="" data-wpel-link="internal">Новый тикет</a></li>
+            </ul>
+        </div>
+        <div class="modal-body">
+            <div id="ticket-field">
+                <form id="ticketback" action="/service_ticket">
+                    {{csrf_field()}}
+                    <div class="form-group">
+                        <input type="email" name="email" class="form-control" placeholder="Электронная почта" required="required" data-bv-message=" " data-bv-remote-message="Email уже занят"/></div>
+                    <div class="form-group">
+                        <input type="text" name="topic" class="form-control" required="required" data-bv-message=" " placeholder="Тема"/></div>
+
+                    <div class="form-group">
+                        <textarea name="message" class="form-control" placeholder="Описание" required="required" data-bv-message=" "></textarea></div>
+                    <div class="form-group">
+                        <span class="filename"></span>
+                        <label for="fileName"><i class="fa fa-paperclip"></i> Прикрепить файл</label>
+                        <input id="fileName" type="file" name="file" class="form-control" data-bv-message=" "></div>
+
+                    <input type="hidden" name="action" value="ticket_ajax_request">
+                    <input type="hidden" name="subject" value="Тикет - Bitmain">
+                    <div class="form-group">
+                        <input type="submit" name="submit" value="Отправить" class="btn-default btn-subscribe"/>
+                    </div>
+
+                </form>
+                <div class="result">
+                    <div class="success-header">СПАСИБО<br/> ЗА ЗАЯВКУ</div>
+                    <div class="result-body">Мененджер свяжется с вами в ближайшее время.</div>
+                    <button data-fancybox-close>Закрыть</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
 <script type="text/javascript">
 	var global = {
 		app: {
