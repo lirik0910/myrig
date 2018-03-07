@@ -37,5 +37,9 @@
 		vertical-align: top;
 		display: inline-block;
 	}
+
+	.container_black.animated.fadeIn {
+		display: none !important;
+	}
 </style>
 
