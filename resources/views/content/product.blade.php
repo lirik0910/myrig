@@ -62,7 +62,7 @@
                             </div>
                             <div class="tabs-field">
                                 <div id="description">
-                                    {{$product->description}}
+                                    {!! $product->description !!}
                                 </div>
                                 <div id="details"><table class="shop_attributes">
                                         @foreach($options['charact'] as $charact)

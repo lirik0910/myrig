@@ -282,8 +282,8 @@ $menu = $select('App\Model\Base\Page')
     var calc = {};
     /* ]]> */
 </script>
-<script type="text/javascript" src="{{ asset('design/build/js/common.js') }}"></script>
-<script type="text/javascript" src="{{ asset('design/build/js/shop.js') }}"></script>
+<!-- <script type="text/javascript" src="{{ asset('design/build/js/common.js') }}"></script>
+<script type="text/javascript" src="{{ asset('design/build/js/shop.js') }}"></script> -->
 
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-103386645-1"></script>
 <script>
