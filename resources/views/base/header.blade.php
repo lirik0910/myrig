@@ -31,7 +31,7 @@ foreach ($inCart as $i) {
 					</button>
 					
 					<a class="navbar-brand" href="{{ asset('/') }}" data-wpel-link="internal">
-						<img src="{{ asset('design/images/logo.png')}}" alt="{{ env('APP_NAME') }}"/>
+						<img src="{{ asset('design/images/logo.png')}}" alt="{{ env('APP_NAME') }}" style="width: 162px"/>
 					</a>
 				</div>
 				

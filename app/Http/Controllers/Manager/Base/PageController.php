@@ -122,9 +122,14 @@ class PageController extends Controller
 		 */
 		try {
 			$page = Page::find($id);
+			$page->view;
 
 			foreach ($page->view->variables as $item) {
-				$item->variableContent;
+				$item->variable_content = [];
+				$variableContent = VariableContent::where('page_id', $id)->get();
+				if ($variableContent) {
+					$item->variable_content = $variableContent;
+				}
 			}
 		}
 		catch(\Exception $e) {

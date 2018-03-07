@@ -194,7 +194,6 @@ $menu = $select('App\Model\Base\Page')
 					<div class="form-group">
 						<input type="submit" name="submit" value="Send" class="btn-default btn-subscribe"/>
 					</div>
-
 				</form>
 				<div class="result">
 					<div class="success-header">Thank you<br/> for request!</div>
@@ -205,6 +204,50 @@ $menu = $select('App\Model\Base\Page')
 
 		</div>
 	</div>
+    <div id="reg">
+        <div class="modal-header">
+            <ul class="reg-links">
+                <li class="active" data-target="#enter-field"><a href="" data-wpel-link="internal">Вход</a></li>
+                <li data-target="#reg-field"><a href="" data-wpel-link="internal">Регистрация</a></li>
+            </ul>
+        </div>
+        <div class="modal-body">
+            <div id="reg-field">
+                <form id="registration" action="#">
+                    <div class="form-group">
+                        <input id="user_email" type="email" name="user_email" class="form-control" placeholder="Эл. почта" required="required" data-bv-message=" " data-bv-remote-message="Email уже занят"/></div>
+                    <div class="form-group">
+                        <input type="tel" name="billing_phone" class="form-control billing_phone-reg" required="required"  data-bv-digits="true"   data-bv-message=" " placeholder="Телефон"/></div>
+
+                    <div class="form-group">
+                        <input type="submit" name="submit" value="Зарегистрироваться" class="btn-default btn-subscribe"/>
+                    </div>
+                    <input type="hidden" name="action" value="bitmain_account_register">
+                    <input type="hidden" name="register" value="1">
+                    <input type="hidden" name="subject" value="Регистрация пользователя - Bitmain">
+                </form>
+                <p class="result" data-text="Регистрация успешная! Пароль отправлен вам на email"></p>
+            </div>
+            <div id="enter-field">
+
+                <div class="woocommerce">
+                    <form  id="enter" class="woocomerce-form woocommerce-form-login login " method="post">
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="username" id="username" placeholder="Логин" value="" />
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" type="password" name="password" id="password" placeholder="Пароль"/>
+                        </div>
+                        <p class="form-row">
+                            <input type="hidden" id="woocommerce-login-nonce" name="woocommerce-login-nonce" value="c6b529870e" /><input type="hidden" name="_wp_http_referer" value="/" />				<input type="submit" class="btn-default btn-subscribe" name="login" value="Авторизация" />
+
+                        </p>
+                        <div class="more-wrapper"><a href="/wp-login.php?action=lostpassword" class="btn-recover" data-wpel-link="internal">Напомнить</a></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script type="text/javascript">
@@ -221,7 +264,6 @@ $menu = $select('App\Model\Base\Page')
 <link rel="stylesheet" href="{{URL::asset('css/bootstrapvalidator.css')}}">
 <link rel="stylesheet" href="{{URL::asset('css/intlTelInput.css')}}">
 <link rel="stylesheet" href="{{URL::asset('css/calc.css')}}">
-<link rel="stylesheet" href="{{URL::asset('css/style.css?ver=1.55')}}">
 <link rel='stylesheet' id='font-awesome-css'  href='https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css?ver=2.2.0' type='text/css' media='all' />
 
 <script type='text/javascript' src='https://myrig.com.ua/wp-content/plugins/woocommerce/assets/js/frontend/cart-fragments.min.js?ver=3.2.6'></script>
