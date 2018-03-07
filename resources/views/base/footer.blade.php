@@ -97,9 +97,6 @@ $menu = $select('App\Model\Base\Page')
                             @endphp
 							@isset($contactItems)
 								@foreach($contactItems as $item)
-
-                                    {{ $item[0] }}
-
 									<li class="@if($item[0]->content == 'USA') active @endif">{{$item[0]->content}}
 										<div class="phone-area">
 											@if(isset($item[1])) {{ _('shop.cont_' . $item[1]->content)}} @else support@myrig.com @endif
