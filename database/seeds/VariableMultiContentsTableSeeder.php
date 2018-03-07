@@ -13,7 +13,7 @@ class VariableMultiContentsTableSeeder extends Seeder
     {
         App\Model\Base\VariableMultiContent::create([
             'page_id' => 7,
-            'variable_id' => 2,
+            'variable_id' => 6,
             'content_id' => 1,
             'name' => 'country',
             'content' => 'USA'
@@ -21,7 +21,7 @@ class VariableMultiContentsTableSeeder extends Seeder
 
         App\Model\Base\VariableMultiContent::create([
             'page_id' => 7,
-            'variable_id' => 2,
+            'variable_id' => 6,
             'content_id' => 1,
             'name' => 'serviceType',
             'content' => 'Full service'
@@ -29,7 +29,7 @@ class VariableMultiContentsTableSeeder extends Seeder
 
         App\Model\Base\VariableMultiContent::create([
             'page_id' => 7,
-            'variable_id' => 2,
+            'variable_id' => 6,
             'content_id' => 1,
             'name' => 'address',
             'content' => '3700 Quebec Street, Unit 100-239 Denver, Colorado 80207'
@@ -37,7 +37,7 @@ class VariableMultiContentsTableSeeder extends Seeder
 
         App\Model\Base\VariableMultiContent::create([
             'page_id' => 7,
-            'variable_id' => 2,
+            'variable_id' => 6,
             'content_id' => 1,
             'name' => 'phone',
             'content' => '+1-844-248-62-46'
@@ -45,7 +45,7 @@ class VariableMultiContentsTableSeeder extends Seeder
 
         App\Model\Base\VariableMultiContent::create([
             'page_id' => 7,
-            'variable_id' => 2,
+            'variable_id' => 6,
             'content_id' => 1,
             'name' => 'lat',
             'content' => '39.768294'
@@ -54,7 +54,7 @@ class VariableMultiContentsTableSeeder extends Seeder
 
         App\Model\Base\VariableMultiContent::create([
             'page_id' => 7,
-            'variable_id' => 2,
+            'variable_id' => 6,
             'content_id' => 1,
             'name' => 'lng',
             'content' => '-104.90209679999998'
@@ -62,7 +62,7 @@ class VariableMultiContentsTableSeeder extends Seeder
 
         App\Model\Base\VariableMultiContent::create([
             'page_id' => 7,
-            'variable_id' => 2,
+            'variable_id' => 6,
             'content_id' => 2,
             'name' => 'country',
             'content' => 'RUSSIA'
@@ -70,7 +70,7 @@ class VariableMultiContentsTableSeeder extends Seeder
 
         App\Model\Base\VariableMultiContent::create([
             'page_id' => 7,
-            'variable_id' => 2,
+            'variable_id' => 6,
             'content_id' => 2,
             'name' => 'serviceType',
             'content' => 'Limited service'
@@ -78,7 +78,7 @@ class VariableMultiContentsTableSeeder extends Seeder
 
         App\Model\Base\VariableMultiContent::create([
             'page_id' => 7,
-            'variable_id' => 2,
+            'variable_id' => 6,
             'content_id' => 2,
             'name' => 'phone',
             'content' => '+7 499 918-73-89'
@@ -86,7 +86,7 @@ class VariableMultiContentsTableSeeder extends Seeder
 
         App\Model\Base\VariableMultiContent::create([
             'page_id' => 7,
-            'variable_id' => 2,
+            'variable_id' => 6,
             'content_id' => 2,
             'name' => 'telegram',
             'content' => '@myrigsales'
@@ -94,7 +94,7 @@ class VariableMultiContentsTableSeeder extends Seeder
 
         App\Model\Base\VariableMultiContent::create([
             'page_id' => 7,
-            'variable_id' => 2,
+            'variable_id' => 6,
             'content_id' => 2,
             'name' => 'lat',
             'content' => '55.755826'
@@ -103,7 +103,7 @@ class VariableMultiContentsTableSeeder extends Seeder
 
         App\Model\Base\VariableMultiContent::create([
             'page_id' => 7,
-            'variable_id' => 2,
+            'variable_id' => 6,
             'content_id' => 2,
             'name' => 'lng',
             'content' => '37.617299900000035'
@@ -111,7 +111,7 @@ class VariableMultiContentsTableSeeder extends Seeder
 
         App\Model\Base\VariableMultiContent::create([
             'page_id' => 7,
-            'variable_id' => 2,
+            'variable_id' => 6,
             'content_id' => 3,
             'name' => 'country',
             'content' => 'UKRAINE'
@@ -119,7 +119,7 @@ class VariableMultiContentsTableSeeder extends Seeder
 
         App\Model\Base\VariableMultiContent::create([
             'page_id' => 7,
-            'variable_id' => 2,
+            'variable_id' => 6,
             'content_id' => 3,
             'name' => 'serviceType',
             'content' => 'Limited service'
@@ -127,7 +127,7 @@ class VariableMultiContentsTableSeeder extends Seeder
 
         App\Model\Base\VariableMultiContent::create([
             'page_id' => 7,
-            'variable_id' => 2,
+            'variable_id' => 6,
             'content_id' => 3,
             'name' => 'phone',
             'content' => '+38 044 360-7958'
@@ -135,7 +135,7 @@ class VariableMultiContentsTableSeeder extends Seeder
 
         App\Model\Base\VariableMultiContent::create([
             'page_id' => 7,
-            'variable_id' => 2,
+            'variable_id' => 6,
             'content_id' => 3,
             'name' => 'telegram',
             'content' => '@myrigsales'
@@ -143,7 +143,7 @@ class VariableMultiContentsTableSeeder extends Seeder
 
         App\Model\Base\VariableMultiContent::create([
             'page_id' => 7,
-            'variable_id' => 2,
+            'variable_id' => 6,
             'content_id' => 3,
             'name' => 'lat',
             'content' => '50.4501'
@@ -152,7 +152,7 @@ class VariableMultiContentsTableSeeder extends Seeder
 
         App\Model\Base\VariableMultiContent::create([
             'page_id' => 7,
-            'variable_id' => 2,
+            'variable_id' => 6,
             'content_id' => 3,
             'name' => 'lng',
             'content' => '30.523400000000038'
@@ -160,7 +160,7 @@ class VariableMultiContentsTableSeeder extends Seeder
 
         App\Model\Base\VariableMultiContent::create([
             'page_id' => 7,
-            'variable_id' => 2,
+            'variable_id' => 6,
             'content_id' => 4,
             'name' => 'country',
             'content' => 'JAPAN'
@@ -168,7 +168,7 @@ class VariableMultiContentsTableSeeder extends Seeder
 
         App\Model\Base\VariableMultiContent::create([
             'page_id' => 7,
-            'variable_id' => 2,
+            'variable_id' => 6,
             'content_id' => 4,
             'name' => 'serviceType',
             'content' => 'Limited service'
@@ -176,7 +176,7 @@ class VariableMultiContentsTableSeeder extends Seeder
 
         App\Model\Base\VariableMultiContent::create([
             'page_id' => 7,
-            'variable_id' => 2,
+            'variable_id' => 6,
             'content_id' => 4,
             'name' => 'address',
             'content' => 'Minami 9 Jo Dori 26 chome 589-57 Asahikawa, Hokkaido 078-8339 Japan'
@@ -184,7 +184,7 @@ class VariableMultiContentsTableSeeder extends Seeder
 
         App\Model\Base\VariableMultiContent::create([
             'page_id' => 7,
-            'variable_id' => 2,
+            'variable_id' => 6,
             'content_id' => 4,
             'name' => 'lat',
             'content' => '43.745711849705884'
@@ -192,7 +192,7 @@ class VariableMultiContentsTableSeeder extends Seeder
 
         App\Model\Base\VariableMultiContent::create([
             'page_id' => 7,
-            'variable_id' => 2,
+            'variable_id' => 6,
             'content_id' => 4,
             'name' => 'lng',
             'content' => '142.38409996032715'
@@ -200,7 +200,7 @@ class VariableMultiContentsTableSeeder extends Seeder
 
         App\Model\Base\VariableMultiContent::create([
             'page_id' => 7,
-            'variable_id' => 2,
+            'variable_id' => 6,
             'content_id' => 5,
             'name' => 'country',
             'content' => 'VENEZUELA'
@@ -208,7 +208,7 @@ class VariableMultiContentsTableSeeder extends Seeder
 
         App\Model\Base\VariableMultiContent::create([
             'page_id' => 7,
-            'variable_id' => 2,
+            'variable_id' => 6,
             'content_id' => 5,
             'name' => 'serviceType',
             'content' => 'Very limited service'
@@ -216,7 +216,7 @@ class VariableMultiContentsTableSeeder extends Seeder
 
         App\Model\Base\VariableMultiContent::create([
             'page_id' => 7,
-            'variable_id' => 2,
+            'variable_id' => 6,
             'content_id' => 5,
             'name' => 'phone',
             'content' => '+58 0212 720-21-27'
@@ -224,7 +224,7 @@ class VariableMultiContentsTableSeeder extends Seeder
 
         App\Model\Base\VariableMultiContent::create([
             'page_id' => 7,
-            'variable_id' => 2,
+            'variable_id' => 6,
             'content_id' => 5,
             'name' => 'lat',
             'content' => '10.5072463'
@@ -232,7 +232,7 @@ class VariableMultiContentsTableSeeder extends Seeder
 
         App\Model\Base\VariableMultiContent::create([
             'page_id' => 7,
-            'variable_id' => 2,
+            'variable_id' => 6,
             'content_id' => 5,
             'name' => 'lng',
             'content' => '-66.87855919999998'
