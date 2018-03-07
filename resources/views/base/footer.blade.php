@@ -73,6 +73,20 @@ $menu = $select('App\Model\Base\Page')
 						</li>
 						@endforeach
 					</ul>
+
+					<ul id="menu-footer-menu-2" class="">
+						<li id="menu-item-820" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-820">
+							<a href="https://myrig.com.ua/dostavka-otgruzka/" data-wpel-link="internal">Shipping and shipment</a>
+						</li>
+						
+						<li id="menu-item-730" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-730">
+							<a href="https://myrig.com.ua/wrnt/" data-wpel-link="internal">Extended warranty</a>
+						</li>
+						
+						<li id="menu-item-4714" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-4714">
+							<a href="https://myrig.com.ua/how-to-repair/" data-wpel-link="internal">Packing of items</a>
+						</li>
+					</ul>
 				</div>
 				
 				<div class="col-sm-12 col-md-3 col-lg-3">
@@ -80,21 +94,19 @@ $menu = $select('App\Model\Base\Page')
 						<ul>
                             @php
                                 $contactItems = App\Model\Base\VariableMultiContent::where('variable_id', 2)->where('name', 'country')->orWhere('name', 'phone')->get()->groupBy('content_id');
-                                //var_dump($contactItems); die;
                             @endphp
-						@isset($contactItems)
-                                @foreach($contactItems as $item)
-                                    <li class="@if($item[0]->content == 'USA') active @endif">{{$item[0]->content}}
-                                        <div class="phone-area">
-                                            @if(isset($item[1])) {{$item[1]->content}} @else support@myrig.com @endif
-                                        </div>
-                                    </li>
-                                @endforeach
-						@endisset
+							@isset($contactItems)
+								@foreach($contactItems as $item)
+									<li class="@if($item[0]->content == 'USA') active @endif">{{$item[0]->content}}
+										<div class="phone-area">
+											@if(isset($item[1])) {{$item[1]->content}} @else support@myrig.com @endif
+										</div>
+									</li>
+								@endforeach
+							@endisset
 						</ul>
 					</div>
-
-					<a href="#call" class="btn-default reg-c" data-wpel-link="internal">Обратный звонок</a>
+					<a href="#call" class="btn-default reg-c" data-wpel-link="internal">Contact us</a>
 					<div class="locale-switcher">
 						<a title="USA" href="{{ url('/') }}" data-wpel-link="external" rel="nofollow external noopener noreferrer">
 							<img src="{{ asset('design/images/us.png') }}" alt="">
@@ -115,6 +127,83 @@ $menu = $select('App\Model\Base\Page')
 </footer>
 
 <div style="display:none">
+	<div id="callsuccess" class="popup-success">
+		<div class="modal-header success-header">
+			Thank you<br/> for request!        </div>
+		<div class="modal-body">
+			Manager contact with you.        </div>
+		<div class="modal-footer">
+			<button data-fancybox-close>Close</button>
+		</div>
+	</div>
+	<div id="call">
+		<div class="modal-header">
+			<ul class="reg-links">
+				<li class="active" data-target="#enter-field"><a href="" data-wpel-link="internal">Contact us</a></li>
+
+			</ul>
+		</div>
+		<div class="modal-body">
+			<div id="call-field">
+				<form id="callback" action="/back_call">
+					{{csrf_field()}}
+					<div class="form-group">
+						<input id="name" type="text" name="name" class="form-control" placeholder="Name" required="required" data-bv-message=" " data-bv-remote-message="Email уже занят"/></div>
+					<div class="form-group">
+						<input type="tel" name="tel" class="form-control" required="required" data-bv-message=" " placeholder="Phone"/></div>
+					<div class="form-group">
+						<input type="submit" name="submit" value="Request a call" class="btn-default btn-subscribe"/>
+					</div>
+					<input type="hidden" name="action" value="formcall_ajax_request">
+					<input type="hidden" name="subject" value="Заказать звонок - Bitmain">
+				</form>
+				<div class="result">
+					<div class="success-header">Thank you<br/> for request!</div>
+					<div class="result-body">Manager contact with you.</div>
+					<button data-fancybox-close>Close</button>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	<div id="ticket">
+		<div class="modal-header">
+			<ul class="reg-links">
+				<li data-target="#enter-field"><a href="" data-wpel-link="internal">Create ticket</a></li>
+			</ul>
+		</div>
+		<div class="modal-body">
+			<div id="ticket-field">
+				<form id="ticketback" action="/service_ticket">
+					{{csrf_field()}}
+					<div class="form-group">
+						<input type="email" name="email" class="form-control" placeholder="E-mail" required="required" data-bv-message=" " data-bv-remote-message="Email уже занят"/></div>
+					<div class="form-group">
+						<input type="text" name="topic" class="form-control" required="required" data-bv-message=" " placeholder="Topic"/></div>
+
+					<div class="form-group">
+						<textarea name="message" class="form-control" placeholder="Description" required="required" data-bv-message=" "></textarea></div>
+					<div class="form-group">
+						<span class="filename"></span>
+						<label for="fileName"><i class="fa fa-paperclip"></i> Attach file</label>
+						<input id="fileName" type="file" name="file" class="form-control" data-bv-message=" "></div>
+
+					<input type="hidden" name="action" value="ticket_ajax_request">
+					<input type="hidden" name="subject" value="Тикет - Bitmain">
+					<div class="form-group">
+						<input type="submit" name="submit" value="Send" class="btn-default btn-subscribe"/>
+					</div>
+				</form>
+				<div class="result">
+					<div class="success-header">Thank you<br/> for request!</div>
+					<div class="result-body">Manager contact with you.</div>
+					<button data-fancybox-close>Close</button>
+				</div>
+			</div>
+
+		</div>
+	</div>
     <div id="reg">
         <div class="modal-header">
             <ul class="reg-links">
@@ -142,135 +231,23 @@ $menu = $select('App\Model\Base\Page')
             <div id="enter-field">
 
                 <div class="woocommerce">
-
-
-
-
-
                     <form  id="enter" class="woocomerce-form woocommerce-form-login login " method="post">
-
-
                         <div class="form-group">
                             <input type="text" class="form-control" name="username" id="username" placeholder="Логин" value="" />
                         </div>
                         <div class="form-group">
                             <input class="form-control" type="password" name="password" id="password" placeholder="Пароль"/>
                         </div>
-
-
-
-
                         <p class="form-row">
                             <input type="hidden" id="woocommerce-login-nonce" name="woocommerce-login-nonce" value="c6b529870e" /><input type="hidden" name="_wp_http_referer" value="/" />				<input type="submit" class="btn-default btn-subscribe" name="login" value="Авторизация" />
 
                         </p>
-
                         <div class="more-wrapper"><a href="/wp-login.php?action=lostpassword" class="btn-recover" data-wpel-link="internal">Напомнить</a></div>
-
-
-
-
                     </form>
-
-
-                </div>
-
-            </div>
-        </div>
-    </div>
-
-    <a class="regsuccess" href="#regsuccess" data-wpel-link="internal"></a>
-    <div id="regsuccess" class="popup-success">
-        <div class="modal-header success-header">
-            СПАСИБО<br/> ЗА РЕГИСТРАЦИЮ
-        </div>
-        <div class="modal-body">
-            Пароль отправлен на указанную вами электронную почту!
-        </div>
-        <div class="modal-footer">
-            <button data-fancybox-close>Закрыть</button>
-        </div>
-    </div>
-    <a class="callsuccess" href="#callsuccess" data-wpel-link="internal"></a>
-    <div id="callsuccess" class="popup-success">
-        <div class="modal-header success-header">
-            СПАСИБО<br/> ЗА ЗАЯВКУ        </div>
-        <div class="modal-body">
-            Мененджер свяжется с вами в ближайшее время.        </div>
-        <div class="modal-footer">
-            <button data-fancybox-close>Закрыть</button>
-        </div>
-    </div>
-    <div id="call">
-        <div class="modal-header">
-            <ul class="reg-links">
-                <li class="active" data-target="#enter-field"><a href="" data-wpel-link="internal">Обратный звонок</a></li>
-
-            </ul>
-        </div>
-        <div class="modal-body">
-            <div id="call-field">
-                <form id="callback" action="/back_call">
-                    {{csrf_field()}}
-                    <div class="form-group">
-                        <input id="name" type="text" name="name" class="form-control" placeholder="Имя" required="required" data-bv-message=" " data-bv-remote-message="Email уже занят"/></div>
-                    <div class="form-group">
-                        <input type="tel" name="tel" class="form-control" required="required" data-bv-message=" " placeholder="Телефон"/></div>
-                    <div class="form-group">
-                        <input type="submit" name="submit" value="Заказать звонок" class="btn-default btn-subscribe"/>
-                    </div>
-                    <input type="hidden" name="action" value="formcall_ajax_request">
-                    <input type="hidden" name="subject" value="Заказать звонок - Bitmain">
-                </form>
-                <div class="result">
-                    <div class="success-header">СПАСИБО<br/> ЗА ЗАЯВКУ</div>
-                    <div class="result-body">Мененджер свяжется с вами в ближайшее время.</div>
-                    <button data-fancybox-close>Закрыть</button>
                 </div>
             </div>
-
         </div>
     </div>
-
-    <div id="ticket">
-        <div class="modal-header">
-            <ul class="reg-links">
-                <li data-target="#enter-field"><a href="" data-wpel-link="internal">Новый тикет</a></li>
-            </ul>
-        </div>
-        <div class="modal-body">
-            <div id="ticket-field">
-                <form id="ticketback" action="/service_ticket">
-                    {{csrf_field()}}
-                    <div class="form-group">
-                        <input type="email" name="email" class="form-control" placeholder="Электронная почта" required="required" data-bv-message=" " data-bv-remote-message="Email уже занят"/></div>
-                    <div class="form-group">
-                        <input type="text" name="topic" class="form-control" required="required" data-bv-message=" " placeholder="Тема"/></div>
-
-                    <div class="form-group">
-                        <textarea name="message" class="form-control" placeholder="Описание" required="required" data-bv-message=" "></textarea></div>
-                    <div class="form-group">
-                        <span class="filename"></span>
-                        <label for="fileName"><i class="fa fa-paperclip"></i> Прикрепить файл</label>
-                        <input id="fileName" type="file" name="file" class="form-control" data-bv-message=" "></div>
-
-                    <input type="hidden" name="action" value="ticket_ajax_request">
-                    <input type="hidden" name="subject" value="Тикет - Bitmain">
-                    <div class="form-group">
-                        <input type="submit" name="submit" value="Отправить" class="btn-default btn-subscribe"/>
-                    </div>
-
-                </form>
-                <div class="result">
-                    <div class="success-header">СПАСИБО<br/> ЗА ЗАЯВКУ</div>
-                    <div class="result-body">Мененджер свяжется с вами в ближайшее время.</div>
-                    <button data-fancybox-close>Закрыть</button>
-                </div>
-            </div>
-
-        </div>
-    </div>
-
 </div>
 
 <script type="text/javascript">
@@ -282,13 +259,8 @@ $menu = $select('App\Model\Base\Page')
 	}
 </script>
 
-<link rel="stylesheet" href="{{URL::asset('css/owl.carousel.min.css')}}">
-<link rel="stylesheet" href="{{URL::asset('css/owl.theme.default.min.css')}}">
-<link rel="stylesheet" href="{{URL::asset('css/bootstrapvalidator.css')}}">
-<link rel="stylesheet" href="{{URL::asset('css/intlTelInput.css')}}">
-<link rel="stylesheet" href="{{URL::asset('css/calc.css')}}">
-<link rel='stylesheet' id='font-awesome-css'  href='https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css?ver=2.2.0' type='text/css' media='all' />
 
+<link rel='stylesheet' id='font-awesome-css'  href='https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css?ver=2.2.0' type='text/css' media='all' />
 <script type='text/javascript' src='https://myrig.com.ua/wp-content/plugins/woocommerce/assets/js/frontend/cart-fragments.min.js?ver=3.2.6'></script>
 <script type='text/javascript' src="{{URL::asset('js/owl.carousel2.min.js?ver=1.12')}}"></script>
 <script type='text/javascript' src="{{URL::asset('js/intlTelInput.min.js?ver=1.12')}}"></script>

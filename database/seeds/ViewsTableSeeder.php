@@ -90,5 +90,13 @@ class ViewsTableSeeder extends Seeder
 			'description' => 'Template for article page',
 			'path' => 'content/article'
 		]);
+
+        /** Add Article view
+         */
+        App\Model\Base\View::create([
+            'title' => 'Profile',
+            'description' => 'Template for article page',
+            'path' => 'content/profile'
+        ]);
 	}
 }

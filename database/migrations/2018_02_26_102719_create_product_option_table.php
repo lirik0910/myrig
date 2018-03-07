@@ -28,6 +28,10 @@ class CreateProductOptionTable extends Migration
 				->nullable(false)
 				->comment('Option name');
 
+            $table->string('title', 255)
+                ->nullable(true)
+                ->comment('Option title');
+
 			$table->string('value', 255)
 				->nullable(true)
 				->comment('Option value');
