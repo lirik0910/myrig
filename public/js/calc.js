@@ -22,7 +22,7 @@
 		function udate_network(obj) {
 			$('.network-status--inner div:last-child').html('<i class="fa fa-cog fa-spin"></i>')
 			$.ajax({
-					url:global.url + '/calc',
+					url:global.url + 'calc',
 				    method: 'post',
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -47,7 +47,7 @@
 				'opacity' : 0.6
 			})
 		 	$.ajax({
-				url:global.url + '/calc',
+				url:global.url + 'calc',
                 method: 'post',
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -109,7 +109,7 @@
 			var network = {difficulty: parseInt($('.difficulty').text()), reward_block: 1250000000};
 			var status = {hashrate: $('.hashrate').text(), expected_difficulty_raw: $('.expected_diff').text(), expected_difficulty_date: $('.diff_date').text(), expected_difficulty: 8.52};
 			$.ajax({
-				url:global.url + '/calc_btn',
+				url:global.url + 'calc_btn',
                 method: 'get',
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -221,7 +221,7 @@
 		function update_rates(obj) {
 			//console.log(obj);
 			$.ajax({
-				url:global.url + '/calc',
+				url:global.url + 'calc',
                 method: 'post',
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -244,7 +244,7 @@
 		function update_net_status() {
 			
 			$.ajax({
-				url:global.url + '/calc',
+				url:global.url + 'calc',
                 method: 'post',
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

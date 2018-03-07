@@ -76,15 +76,15 @@ $menu = $select('App\Model\Base\Page')
 
 					<ul id="menu-footer-menu-2" class="">
 						<li id="menu-item-820" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-820">
-							<a href="https://myrig.com.ua/dostavka-otgruzka/" data-wpel-link="internal">Доставка и отгрузка</a>
+							<a href="https://myrig.com.ua/dostavka-otgruzka/" data-wpel-link="internal">Shipping and shipment</a>
 						</li>
 						
 						<li id="menu-item-730" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-730">
-							<a href="https://myrig.com.ua/wrnt/" data-wpel-link="internal">Расширенная гарантия</a>
+							<a href="https://myrig.com.ua/wrnt/" data-wpel-link="internal">Extended warranty</a>
 						</li>
 						
 						<li id="menu-item-4714" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-4714">
-							<a href="https://myrig.com.ua/how-to-repair/" data-wpel-link="internal">Упаковка отправлений</a>
+							<a href="https://myrig.com.ua/how-to-repair/" data-wpel-link="internal">Packing of items</a>
 						</li>
 					</ul>
 				</div>
@@ -94,21 +94,19 @@ $menu = $select('App\Model\Base\Page')
 						<ul>
                             @php
                                 $contactItems = App\Model\Base\VariableMultiContent::where('variable_id', 2)->where('name', 'country')->orWhere('name', 'phone')->get()->groupBy('content_id');
-                                //var_dump($contactItems); die;
                             @endphp
-						@isset($contactItems)
-                                @foreach($contactItems as $item)
-                                    <li class="@if($item[0]->content == 'USA') active @endif">{{$item[0]->content}}
-                                        <div class="phone-area">
-                                            @if(isset($item[1])) {{$item[1]->content}} @else support@myrig.com @endif
-                                        </div>
-                                    </li>
-                                @endforeach
-						@endisset
+							@isset($contactItems)
+								@foreach($contactItems as $item)
+									<li class="@if($item[0]->content == 'USA') active @endif">{{$item[0]->content}}
+										<div class="phone-area">
+											@if(isset($item[1])) {{$item[1]->content}} @else support@myrig.com @endif
+										</div>
+									</li>
+								@endforeach
+							@endisset
 						</ul>
 					</div>
-
-					<a href="#call" class="btn-default reg-c" data-wpel-link="internal">Обратный звонок</a>
+					<a href="#call" class="btn-default reg-c" data-wpel-link="internal">Contact us</a>
 					<div class="locale-switcher">
 						<a title="USA" href="{{ url('/') }}" data-wpel-link="external" rel="nofollow external noopener noreferrer">
 							<img src="{{ asset('design/images/us.png') }}" alt="">
@@ -127,6 +125,87 @@ $menu = $select('App\Model\Base\Page')
 		</div>
 	</div>
 </footer>
+
+<div style="display:none">
+	<div id="callsuccess" class="popup-success">
+		<div class="modal-header success-header">
+			Thank you<br/> for request!        </div>
+		<div class="modal-body">
+			Manager contact with you.        </div>
+		<div class="modal-footer">
+			<button data-fancybox-close>Close</button>
+		</div>
+	</div>
+	<div id="call">
+		<div class="modal-header">
+			<ul class="reg-links">
+				<li class="active" data-target="#enter-field"><a href="" data-wpel-link="internal">Contact us</a></li>
+
+			</ul>
+		</div>
+		<div class="modal-body">
+			<div id="call-field">
+				<form id="callback" action="/back_call">
+					{{csrf_field()}}
+					<div class="form-group">
+						<input id="name" type="text" name="name" class="form-control" placeholder="Name" required="required" data-bv-message=" " data-bv-remote-message="Email уже занят"/></div>
+					<div class="form-group">
+						<input type="tel" name="tel" class="form-control" required="required" data-bv-message=" " placeholder="Phone"/></div>
+					<div class="form-group">
+						<input type="submit" name="submit" value="Request a call" class="btn-default btn-subscribe"/>
+					</div>
+					<input type="hidden" name="action" value="formcall_ajax_request">
+					<input type="hidden" name="subject" value="Заказать звонок - Bitmain">
+				</form>
+				<div class="result">
+					<div class="success-header">Thank you<br/> for request!</div>
+					<div class="result-body">Manager contact with you.</div>
+					<button data-fancybox-close>Close</button>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	<div id="ticket">
+		<div class="modal-header">
+			<ul class="reg-links">
+				<li data-target="#enter-field"><a href="" data-wpel-link="internal">Create ticket</a></li>
+			</ul>
+		</div>
+		<div class="modal-body">
+			<div id="ticket-field">
+				<form id="ticketback" action="/service_ticket">
+					{{csrf_field()}}
+					<div class="form-group">
+						<input type="email" name="email" class="form-control" placeholder="E-mail" required="required" data-bv-message=" " data-bv-remote-message="Email уже занят"/></div>
+					<div class="form-group">
+						<input type="text" name="topic" class="form-control" required="required" data-bv-message=" " placeholder="Topic"/></div>
+
+					<div class="form-group">
+						<textarea name="message" class="form-control" placeholder="Description" required="required" data-bv-message=" "></textarea></div>
+					<div class="form-group">
+						<span class="filename"></span>
+						<label for="fileName"><i class="fa fa-paperclip"></i> Attach file</label>
+						<input id="fileName" type="file" name="file" class="form-control" data-bv-message=" "></div>
+
+					<input type="hidden" name="action" value="ticket_ajax_request">
+					<input type="hidden" name="subject" value="Тикет - Bitmain">
+					<div class="form-group">
+						<input type="submit" name="submit" value="Send" class="btn-default btn-subscribe"/>
+					</div>
+
+				</form>
+				<div class="result">
+					<div class="success-header">Thank you<br/> for request!</div>
+					<div class="result-body">Manager contact with you.</div>
+					<button data-fancybox-close>Close</button>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>
 
 <script type="text/javascript">
 	var global = {

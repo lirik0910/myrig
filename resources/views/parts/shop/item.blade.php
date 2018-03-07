@@ -1,7 +1,6 @@
 <div class="article-row row">
 	<div class="col-sm-4">
 		<div class="slider-tag"></div>
-
 		<!-- Slider for mobile version -->
 		<div class="itemSlider owl-carousel owl-theme">
 			<div class="product-item active">

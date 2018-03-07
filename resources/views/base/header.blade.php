@@ -50,10 +50,10 @@ foreach ($inCart as $i) {
 						<img src="{{ asset('design/images/icons-97.svg') }}" alt="login"/>
 					</a>
 
-					<a href="{{ url($cart->link) }}" data-wpel-link="internal">
+					<!--<a href="{{ url($cart->link) }}" data-wpel-link="internal">
 						<img src="{{ asset('design/images/icons-02.svg') }}" alt="cart"/>
 						<div class="label" id="cart-count-label">{{ $count }}</div>
-					</a>
+					</a>-->
 				</div>
 			</div>
 		</div>
