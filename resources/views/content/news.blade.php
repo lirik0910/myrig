@@ -36,7 +36,7 @@
                     <div class="article-content col-sm-8">
                         <div class="article-text">
                             <p>{{$article->introtext}}</p>
-                            <a href="{{url($article->link)}}" class="article-link" data-wpel-link="internal"><i class="article-arrow article-arrow-right"></i>Читать</a>
+                            <a href="{{url($article->link)}}" class="article-link" data-wpel-link="internal"><i class="article-arrow article-arrow-right"></i>Read</a>
                         </div>
                     </div>
                 </div>
