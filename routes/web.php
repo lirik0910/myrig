@@ -20,8 +20,8 @@ foreach (\App\Model\Base\Page::all() as $page) {
 
 Route::get('/shop/{id}', 'ProductController@getContent');
 Route::post('/create_ticket', 'ZendeskController@createTicket');
-Route::post('/calc', 'CalculateController@checkMethod');
-Route::get('/calc_btn', 'CalculateController@checkMethod');
+Route::post('calc', 'CalculateController@checkMethod');
+Route::get('calc_btn', 'CalculateController@checkMethod');
 Route::get('/sso-login/{ssotoken?}', 'ClientAuthController@login');
 Route::post('/back_call', function (Request $request){
     $data = $request->post();
