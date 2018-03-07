@@ -20,30 +20,30 @@
                 <div class="row">
                     <div class="col-sm-4">
 
-                        <h1>Локальное сервисное обслуживание</h1>
+                        <h1>Local service</h1>
 
                     </div>
                     <div class="article-content col-sm-8">
                         <div class="article-text">
-                            <p>Компания MYRIG является единственным официальным представителем от завода по предоставлению услуг послегарантийного обслуживания оборудования Bitmain. Наша компания предоставляет услуги поддержки и ремонта майнеров и комплектующих по всей территории Украины и России.</p>
-                            <p><span style="color: #60a644;"><strong>Наш сервисный центр готов вам помочь в следующих вопросах:</strong></span></p>
+                            <p>MYRIG is the only official representative from the plant to provide post-warranty services for Bitmain equipment. Our company provides support and repair services for miners and components throughout Ukraine and Russia.</p>
+                            <p><span style="color: #60a644;"><strong>Our service center is ready to help you with the following questions:</strong></span></p>
                             <ul>
-                                <li>Поддержка по программе <strong><a href="https://myrig.ru/wrnt/" data-wpel-link="external" rel="nofollow external noopener noreferrer">расширенной гарантии</a> </strong>от MyRig;</li>
-                                <li>Ремонт майнеров Antminer всех моделей и любой сложности;</li>
-                                <li>Восстановление блоков питания Bitmain всех моделей;</li>
-                                <li>Программное и аппаратное восстановление хешплат и запчастей для Antminer;</li>
-                                <li>Техническая консультация.</li>
+                                <li>Support for the extended warranty program from MyRig;</li>
+                                <li>Repair of Antminer miners of all models and any complexity;</li>
+                                <li>Restore all Bitmain power supplies;</li>
+                                <li>Software and hardware recovery of hashtas and spare parts for Antminer;</li>
+                                <li>Technical consultation.</li>
                             </ul>
-                            <p>Получить информацию от нашей службы поддержки очень легко. Для этого пройдите по ссылке ниже и заполните необходимые поля, через короткое время с вами свяжутся наши специалисты.</p>
-                            <p>Логистическая поддержка осуществляется нашими партнерами Нова Пошта, СДЭК и Деловые Линии.</p>
-                            <p><a class="btn-default reg-c" href="#ticket" data-wpel-link="internal">Создать тикет</a></p>
-                            <p> <strong><span style="color: #60a600;">Контакты для связи</span></strong><br />
-                                +38 (044) 360-79-58 Украина</p>
-                            <p>+7 (499) 918-73-89 Россия</p>
+                            <p>Get information from our support team very easily. To do this, follow the link below and fill in the required fields, in a short time our specialists will contact you.</p>
+                            <p><a class="btn-default reg-c" href="#ticket" data-wpel-link="internal">Create ticket</a></p>
+                            <p> <strong><span style="color: #60a600;">Contacts for communication</span></strong><br />
+                                +38 (044) 360-79-58 Ukraine</p>
+                            <p>+7 (499) 918-73-89 Russia</p>
+                            <p>+1-844-248-62-46 USA</p>
                             <p>Telegram &#8212; <span style="color: #2ba1df;"><a style="color: #2ba1df;" href="http://t.me/myrigservice" data-wpel-link="external" rel="nofollow external noopener noreferrer">@myrigservice</a></span><br />
                                 support@myrig.com  </p>
-                            <p><strong><span style="color: #60a600;">График работы</span></strong><br />
-                                понедельник &#8212; пятница<br />
+                            <p><strong><span style="color: #60a600;">Schedule</span></strong><br />
+                                Monday &#8212; Friday<br />
                                 10:00 &#8212; 19:00</p>
                         </div>
 
