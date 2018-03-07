@@ -53,7 +53,7 @@
                     <div class="banner-back" style="background-image: url({{URL::asset('images/icon_Anton-02.svg')}})  ;    top: 37px ; width: 80px;
     right: 54px; left: 300px;"></div>
                 </a>
-                <a href="{{url('/calculator')}}" class="banner col-sm-4" data-wpel-link="internal">
+                <a class="banner col-sm-4" data-wpel-link="internal">
                     <div class="banner-text">
                         <div class="title"><!--:ru-->Calculator<!--:--></div>
                         <div class="subtitle"><!--:ru-->Correct calculation of profit from mining<!--:--></div>

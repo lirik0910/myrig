@@ -1,44 +1,21 @@
 <div class="article-row row">
-	<div class="col-sm-4">
-		<div class="slider-tag"></div>
-		<!-- Slider for mobile version -->
-		<div class="itemSlider owl-carousel owl-theme">
-			<div class="product-item active">
-				<img width="300" height="300" src="https://myrig.com.ua/wp-content/uploads/2018/01/dragonmint-1-300x300.png" class="attachment-medium size-medium" alt="" title="" />
-			</div>
-
-			<div class="product-item ">
-				<img width="300" height="300" src="https://myrig.com.ua/wp-content/uploads/2018/01/dm_2-1-300x300.jpg" class="attachment-medium size-medium" alt="" title="" />
-			</div>
-
-			<div class="product-item ">
-				<img width="300" height="300" src="https://myrig.com.ua/wp-content/uploads/2018/01/dm_4-1-300x300.jpg" class="attachment-medium size-medium" alt="" title="" />
-			</div>
-
-			<div class="product-item ">
-				<img width="300" height="300" src="https://myrig.com.ua/wp-content/uploads/2018/01/dm_1-1-300x300.jpg" class="attachment-medium size-medium" alt="" title="" />
-			</div> 
-		</div>
-
-		<!-- Slider for desctop version -->
-		<div class="itemSliderVer visible-md">
-			<div class="product-item active">
-				<img width="47" height="47" src="https://myrig.com.ua/wp-content/uploads/2018/01/dragonmint-1-47x47.png" class="attachment-i47 size-i47" alt="" title="" />
-			</div>
-
-			<div class="product-item ">
-				<img width="47" height="47" src="https://myrig.com.ua/wp-content/uploads/2018/01/dm_2-1-47x47.jpg" class="attachment-i47 size-i47" alt="" title="" />
-			</div>
-
-			<div class="product-item ">
-				<img width="47" height="47" src="https://myrig.com.ua/wp-content/uploads/2018/01/dm_4-1-47x47.jpg" class="attachment-i47 size-i47" alt="" title="" />
-			</div>
-
-			<div class="product-item ">
-				<img width="47" height="47" src="https://myrig.com.ua/wp-content/uploads/2018/01/dm_1-1-47x47.jpg" class="attachment-i47 size-i47" alt="" title="" />
-			</div>
-		</div>
-	</div>
+    <div class="col-sm-4">
+        <div class="slider-tag"></div>
+        <div class="itemSlider owl-carousel owl-theme">
+            @foreach($item->images as $image)
+                <div class="product-item @if($loop->first) active @endif">
+                    <img width="300" height="300" src="https://myrig.com.ua/wp-content/uploads/2018/01/dragonmint-1.png" class="attachment-medium size-medium" alt="" title="" data-src="https://myrig.com.ua/wp-content/uploads/2018/01/dragonmint-1.png" data-large_image="https://myrig.com.ua/wp-content/uploads/2018/01/dragonmint-1.png" data-large_image_width="1280" data-large_image_height="1280" sizes="(max-width: 300px) 100vw, 300px" />
+                </div>
+            @endforeach
+        </div>
+        <div class="itemSliderVer visible-md">
+            @foreach($item->images as $image)
+                <div class="product-item @if($loop->first) active @endif">
+                    <img width="47" height="47" src="https://myrig.com.ua/wp-content/uploads/2018/01/dm_2-1-47x47.jpg" class="attachment-i47 size-i47" alt="" title="" data-src="https://myrig.com.ua/wp-content/uploads/2018/01/dm_2-1-47x47.jpg" data-large_image="https://myrig.com.ua/wp-content/uploads/2018/01/dm_2-1-47x47.jpg" data-large_image_width="1280" data-large_image_height="1280" sizes="(max-width: 47px) 100vw, 47px" />
+                </div>
+            @endforeach
+        </div>
+    </div>
 
 	<div class="col-sm-8">
 		<div class="article-text">

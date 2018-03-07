@@ -15,7 +15,7 @@ $products = $select('\App\Model\Shop\Product')->with('page', 'options', 'images'
 		<div class="clearfix" style="clear: both"></div>
 		@foreach($products as $item)
 			@if (isset($item->page))
-				@include('parts.shop.item', $item);
+				@include('parts.shop.item', $item)
 			@endif
 		@endforeach
 	</div>
