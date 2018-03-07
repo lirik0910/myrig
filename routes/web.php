@@ -11,7 +11,7 @@
 |
 */
 use Illuminate\Http\Request;
-
+//var_dump($request->session()); die;
 foreach (\App\Model\Base\Page::all() as $page) {
 	Route::get($page->link, 'PageController@view');
 }

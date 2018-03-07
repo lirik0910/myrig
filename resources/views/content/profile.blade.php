@@ -29,7 +29,7 @@
                             <a href="" class="history" data-target="#historyField" data-wpel-link="internal">История заказов</a>
                         </div>
                         <div>
-                            <a href="{{url(env('APP_URL') . '/sso-login?action=logout')}}" class="exit" data-wpel-link="internal">Выйти</a>
+                            <a href="{{url(env('APP_URL') . 'sso-login?action=logout')}}" class="exit" data-wpel-link="internal">Выйти</a>
                         </div>
                     </div>
                     <div class="article-content col-sm-8">
