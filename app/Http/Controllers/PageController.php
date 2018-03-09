@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Model\Base\Page;
+use App\Model\Base\Setting;
 use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\Collection;
 
 class PageController extends Controller
 {
@@ -23,9 +25,10 @@ class PageController extends Controller
 				'it' => $page,
 				'get' => $this->get(),
 				'request' => $request,
-				'migx' => Page::convertMVs($page->multivariables),
 				'select' => $this->select(),
-				'inCart' => $this->getInSessionCart()
+				'settings' => $this->settings(),
+				'inCart' => $this->getInSessionCart(),
+				'migx' => Page::convertMVs($page->multivariables),
 			]);
 		}
 
@@ -62,6 +65,28 @@ class PageController extends Controller
 	{
 		$a = json_decode(session('cart'), true);
 		return $a ? $a : [];
+	}
+
+	/**
+	 * Get settings collection of current context
+	 * @return array
+	 */
+	public function settings() : array
+	{
+		try {
+			$all = Setting::where('context_id', 1)->get();
+		}
+		catch (\Exception $e) {
+			logger($e->getMessage());
+
+			return [];
+		}
+
+		$a = [];
+		foreach ($all as $item) {
+			$a[$item->title] = $item->value;
+		}
+		return $a;
 	}
 }
 

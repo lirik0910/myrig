@@ -11,76 +11,48 @@ class VariableContentsTableSeeder extends Seeder
 	 */
 	public function run()
 	{
-		App\Model\Base\VariableContent::create([
-			'page_id' => 10,
-			'variable_id' => 1,
-			'content' => 'The quantity is limited!'
-		]);
+		$variable = App\Model\Base\Variable::where('title', 'Product information items')->first();
 
-		App\Model\Base\VariableContent::create([
-			'page_id' => 10,
-			'variable_id' => 1,
-			'content' => 'Shipment from the factory in China April 20 - May 10.'
-		]);
+		$pages = App\Model\Base\Page::whereHas('view', function ($q) {
+			$q->where('title', 'Product');
+		})->get();
 
-		App\Model\Base\VariableContent::create([
-			'page_id' => 10,
-			'variable_id' => 1,
-			'content' => '100% advance payment in BTC!'
-		]);
+		foreach ($pages as $item) {
+			App\Model\Base\VariableContent::create([
+				'page_id' => $item->id,
+				'variable_id' => $variable->id,
+				'content' => 'The quantity is limited!'
+			]);
 
-		App\Model\Base\VariableContent::create([
-			'page_id' => 10,
-			'variable_id' => 1,
-			'content' => 'Final price check with the manager!'
-		]);
+			App\Model\Base\VariableContent::create([
+				'page_id' => $item->id,
+				'variable_id' => $variable->id,
+				'content' => 'Shipment from the factory in China April 20 - May 10.'
+			]);
 
-		App\Model\Base\VariableContent::create([
-			'page_id' => 10,
-			'variable_id' => 1,
-			'content' => 'Warranty service: 1-5 days'
-		]);
+			App\Model\Base\VariableContent::create([
+				'page_id' => $item->id,
+				'variable_id' => $variable->id,
+				'content' => '100% advance payment in BTC!'
+			]);
 
-		App\Model\Base\VariableContent::create([
-			'page_id' => 10,
-			'variable_id' => 1,
-			'content' => 'Local delivery in Ukraine'
-		]);
+			App\Model\Base\VariableContent::create([
+				'page_id' => $item->id,
+				'variable_id' => $variable->id,
+				'content' => 'Final price check with the manager!'
+			]);
 
-		App\Model\Base\VariableContent::create([
-			'page_id' => 11,
-			'variable_id' => 1,
-			'content' => 'The quantity is limited!'
-		]);
+			App\Model\Base\VariableContent::create([
+				'page_id' => $item->id,
+				'variable_id' => $variable->id,
+				'content' => 'Warranty service: 1-5 days'
+			]);
 
-		App\Model\Base\VariableContent::create([
-			'page_id' => 11,
-			'variable_id' => 1,
-			'content' => 'Shipment from the factory in China April 20 - May 10.'
-		]);
-
-		App\Model\Base\VariableContent::create([
-			'page_id' => 11,
-			'variable_id' => 1,
-			'content' => '100% advance payment in BTC!'
-		]);
-
-		App\Model\Base\VariableContent::create([
-			'page_id' => 11,
-			'variable_id' => 1,
-			'content' => 'Final price check with the manager!'
-		]);
-
-		App\Model\Base\VariableContent::create([
-			'page_id' => 11,
-			'variable_id' => 1,
-			'content' => 'Warranty service: 1-5 days'
-		]);
-
-		App\Model\Base\VariableContent::create([
-			'page_id' => 11,
-			'variable_id' => 1,
-			'content' => 'Local delivery in Ukraine'
-		]);
+			App\Model\Base\VariableContent::create([
+				'page_id' => $item->id,
+				'variable_id' => $variable->id,
+				'content' => 'Local delivery in Ukraine'
+			]);
+		}
 	}
 }

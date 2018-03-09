@@ -23,7 +23,7 @@ class VariablesTableSeeder extends Seeder
          */
         App\Model\Base\Variable::create([
             'type' => 'migx',
-            'title' => 'contactItem',
+            'title' => 'Contact items',
             'description' => 'Item for contacts page',
         ]);
 

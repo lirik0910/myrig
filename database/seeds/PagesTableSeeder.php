@@ -20,12 +20,13 @@ class PagesTableSeeder extends Seeder
 		$viewIndex = App\Model\Base\View::where('title', 'Index')->firstOrFail();
 		$view404 = App\Model\Base\View::where('title', '404')->firstOrFail();
 		$viewShop = App\Model\Base\View::where('title', 'Shop')->firstorFail();
-        $viewArticleList = App\Model\Base\View::where('title', 'ArticleList')->firstOrFail();
-        $viewService = App\Model\Base\View::where('title', 'Service')->firstorFail();
-        $viewContacts = App\Model\Base\View::where('title', 'Contacts')->firstOrFail();
-        $viewCart = App\Model\Base\View::where('title', 'Cart')->firstorFail();
-       // $viewProfile = App\Model\Base\View::where('title', 'Profile')->firstOrFail();
-        $viewCalc = App\Model\Base\View::where('title', 'Calculator')->firstOrFail();
+		$viewArticleList = App\Model\Base\View::where('title', 'ArticleList')->firstOrFail();
+		$viewService = App\Model\Base\View::where('title', 'Service')->firstorFail();
+		$viewContacts = App\Model\Base\View::where('title', 'Contacts')->firstOrFail();
+		$viewCart = App\Model\Base\View::where('title', 'Cart')->firstorFail();
+		$viewProfile = App\Model\Base\View::where('title', 'Profile')->firstOrFail();
+		$viewCalc = App\Model\Base\View::where('title', 'Calculator')->firstOrFail();
+		$viewProduct = App\Model\Base\View::where('title', 'Product')->firstOrFail();
 
 		/** Get default user
 		 */
@@ -46,14 +47,9 @@ class PagesTableSeeder extends Seeder
 			'updatedby_id' => $user->id
 		]);
 
-		/** Relations
-		 */
-		$index->context()->associate($context);
-		$index->view()->associate($viewIndex);
-
 		/** Add 404 page
 		 */
-		$index = App\Model\Base\Page::create([
+		$error404 = App\Model\Base\Page::create([
 			'parent_id' => 0,
 			'context_id' => $context->id,
 			'view_id' => $view404->id,
@@ -66,153 +62,134 @@ class PagesTableSeeder extends Seeder
 			'updatedby_id' => $user->id
 		]);
 
-		/** Relations
-		 */
-		$index->context()->associate($context);
-		$index->view()->associate($view404);
+		$products = App\Model\Base\Page::create([
+			'parent_id' => 0,
+			'context_id' => $context->id,
+			'view_id' => $viewShop->id,
+			'link' => 'shop',
+			'title' => 'Products',
+			'description' => 'Products page',
+			'introtext' => '',
+			'content' => '',
+			'createdby_id' => $user->id,
+			'updatedby_id' => $user->id
+		]);
 
-        $index = App\Model\Base\Page::create([
-            'parent_id' => 0,
-            'context_id' => $context->id,
-            'view_id' => $viewShop->id,
-            'link' => 'shop',
-            'title' => 'Products',
-            'description' => 'Products page',
-            'introtext' => '',
-            'content' => '',
-            'createdby_id' => $user->id,
-            'updatedby_id' => $user->id
-        ]);
+		App\Model\Base\Page::create([
+			'parent_id' => $products->id,
+			'context_id' => $context->id,
+			'view_id' => $viewProduct->id,
+			'link' => 'product/dragonmint-16-th-s-2',
+			'title' => 'DragonMint 16TH/s',
+			'description' => 'DragonMint 16TH/s - the latest innovation on the Bitcoin mining market, created by Halong Mining',
+			'introtext' => '',
+			'content' => '',
+			'createdby_id' => $user->id,
+			'updatedby_id' => $user->id
+		]);
 
-        /** Relations
-         */
-        $index->context()->associate($context);
-        $index->view()->associate($viewShop);
+		App\Model\Base\Page::create([
+			'parent_id' => $products->id,
+			'context_id' => $context->id,
+			'view_id' => $viewProduct->id,
+			'link' => 'product/dragonmint-16-th-s-2',
+			'title' => 'ANTMINER D3 19.3GH/s',
+			'description' => 'Antminer D3 - equipment for mining, developed by specialists BITMAIN.',
+			'introtext' => '',
+			'content' => '',
+			'createdby_id' => $user->id,
+			'updatedby_id' => $user->id
+		]);
 
-        $index = App\Model\Base\Page::create([
-            'parent_id' => 0,
-            'context_id' => $context->id,
-            'view_id' => $viewArticleList->id,
-            'link' => 'news',
-            'title' => 'News',
-            'description' => 'News page',
-            'introtext' => '',
-            'content' => '',
-            'createdby_id' => $user->id,
-            'updatedby_id' => $user->id
-        ]);
+		$news = App\Model\Base\Page::create([
+			'parent_id' => 0,
+			'context_id' => $context->id,
+			'view_id' => $viewArticleList->id,
+			'link' => 'news',
+			'title' => 'News',
+			'description' => 'News page',
+			'introtext' => '',
+			'content' => '',
+			'createdby_id' => $user->id,
+			'updatedby_id' => $user->id
+		]);
 
-        /** Relations
-         */
-        $index->context()->associate($context);
-        $index->view()->associate($viewArticleList);
+		$article = App\Model\Base\Page::create([
+			'parent_id' => 0,
+			'context_id' => $context->id,
+			'view_id' => $viewArticleList->id,
+			'link' => 'info',
+			'title' => 'Articles',
+			'description' => 'Articles page',
+			'introtext' => '',
+			'content' => '',
+			'createdby_id' => $user->id,
+			'updatedby_id' => $user->id
+		]);
 
-        $index = App\Model\Base\Page::create([
-            'parent_id' => 0,
-            'context_id' => $context->id,
-            'view_id' => $viewArticleList->id,
-            'link' => 'info',
-            'title' => 'Articles',
-            'description' => 'Articles page',
-            'introtext' => '',
-            'content' => '',
-            'createdby_id' => $user->id,
-            'updatedby_id' => $user->id
-        ]);
+		$service = App\Model\Base\Page::create([
+			'parent_id' => 0,
+			'context_id' => $context->id,
+			'view_id' => $viewService->id,
+			'link' => 'service',
+			'title' => 'Service',
+			'description' => 'Service page',
+			'introtext' => '',
+			'content' => '',
+			'createdby_id' => $user->id,
+			'updatedby_id' => $user->id
+		]);
 
-        /** Relations
-         */
-        $index->context()->associate($context);
-        $index->view()->associate($viewArticleList);
+		$contacts = App\Model\Base\Page::create([
+			'parent_id' => 0,
+			'context_id' => $context->id,
+			'view_id' => $viewContacts->id,
+			'link' => 'contacts',
+			'title' => 'Contacts',
+			'description' => 'Contacts page',
+			'introtext' => '',
+			'content' => '',
+			'createdby_id' => $user->id,
+			'updatedby_id' => $user->id
+		]);
 
-        $index = App\Model\Base\Page::create([
-            'parent_id' => 0,
-            'context_id' => $context->id,
-            'view_id' => $viewService->id,
-            'link' => 'service',
-            'title' => 'Service',
-            'description' => 'Service page',
-            'introtext' => '',
-            'content' => '',
-            'createdby_id' => $user->id,
-            'updatedby_id' => $user->id
-        ]);
+		$cart = App\Model\Base\Page::create([
+			'parent_id' => 0,
+			'context_id' => $context->id,
+			'view_id' => $viewCart->id,
+			'link' => 'cart',
+			'title' => 'Cart',
+			'description' => 'Client cart page',
+			'introtext' => '',
+			'content' => '',
+			'createdby_id' => $user->id,
+			'updatedby_id' => $user->id
+		]);
 
-        /** Relations
-         */
-        $index->context()->associate($context);
-        $index->view()->associate($viewService);
+		$profile = App\Model\Base\Page::create([
+			'parent_id' => 0,
+			'context_id' => $context->id,
+			'view_id' => $viewProfile->id,
+			'link' => '/profile',
+			'title' => 'Profile',
+			'description' => 'Client profile page',
+			'introtext' => '',
+			'content' => '',
+			'createdby_id' => $user->id,
+			'updatedby_id' => $user->id
+		]);
 
-        $index = App\Model\Base\Page::create([
-            'parent_id' => 0,
-            'context_id' => $context->id,
-            'view_id' => $viewContacts->id,
-            'link' => 'contacts',
-            'title' => 'Contacts',
-            'description' => 'Contacts page',
-            'introtext' => '',
-            'content' => '',
-            'createdby_id' => $user->id,
-            'updatedby_id' => $user->id
-        ]);
-
-        /** Relations
-         */
-        $index->context()->associate($context);
-        $index->view()->associate($viewContacts);
-
-        $index = App\Model\Base\Page::create([
-            'parent_id' => 0,
-            'context_id' => $context->id,
-            'view_id' => $viewCart->id,
-            'link' => 'cart',
-            'title' => 'Cart',
-            'description' => 'Client cart page',
-            'introtext' => '',
-            'content' => '',
-            'createdby_id' => $user->id,
-            'updatedby_id' => $user->id
-        ]);
-
-        /** Relations
-         */
-        $index->context()->associate($context);
-        $index->view()->associate($viewCart);
-
-        /*$index = App\Model\Base\Page::create([
-            'parent_id' => 0,
-            'context_id' => $context->id,
-            'view_id' => $viewProfile->id,
-            'link' => '/profile',
-            'title' => 'Profile',
-            'description' => 'Client profile page',
-            'introtext' => '',
-            'content' => '',
-            'createdby_id' => $user->id,
-            'updatedby_id' => $user->id
-        ]);
-
-        /** Relations
-         */
-        /*$index->context()->associate($context);
-        $index->view()->associate($viewProfile);*/
-
-        $index = App\Model\Base\Page::create([
-            'parent_id' => 0,
-            'context_id' => $context->id,
-            'view_id' => $viewCalc->id,
-            'link' => 'calculator',
-            'title' => 'Calculator',
-            'description' => 'Calculator page',
-            'introtext' => '',
-            'content' => '',
-            'createdby_id' => $user->id,
-            'updatedby_id' => $user->id
-        ]);
-
-        /** Relations
-         */
-        $index->context()->associate($context);
-        $index->view()->associate($viewCalc);
+		$calculator = App\Model\Base\Page::create([
+			'parent_id' => 0,
+			'context_id' => $context->id,
+			'view_id' => $viewCalc->id,
+			'link' => 'calculator',
+			'title' => 'Calculator',
+			'description' => 'Calculator page',
+			'introtext' => '',
+			'content' => '',
+			'createdby_id' => $user->id,
+			'updatedby_id' => $user->id
+		]);
 	}
 }

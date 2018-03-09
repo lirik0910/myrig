@@ -6,5 +6,6 @@ return [
 	'cont_RUSSIA' => 'RU',
 	'cont_UKRAINE' => 'UA',
 	'cont_JAPAN' => 'JAP',
-	'cont_VENEZUELA' => 'VE'
+	'cont_VENEZUELA' => 'VE',
+	'added' => 'Added!'
 ];

@@ -54,12 +54,12 @@ $menu = $select('App\Model\Base\Page')
             <div class="row">
                 <div class="col-sm-2 col-md-2 col-lg-2 logo">
                     <a href="{{ asset('/') }}" data-wpel-link="internal">
-                        <img src="{{ asset('design/images/logo.png') }}" alt="logo"/>
+                        <img src="{{ asset('iploads/design/logo.png') }}" alt="logo"/>
                     </a>
                     
                     <div class="payment">
-                        <img src="{{ asset('design/images/bitcoin.png') }}" alt="bitcoin"/>
-                        <img src="{{ asset('design/images/paypal.png') }}" alt="paypal"/>
+                        <img src="{{ asset('uploads/design/bitcoin.png') }}" alt="bitcoin"/>
+                        <img src="{{ asset('uploads/design/paypal.png') }}" alt="paypal"/>
                     </div>
                 </div>
                 
@@ -109,15 +109,15 @@ $menu = $select('App\Model\Base\Page')
                     <a href="#call" class="btn-default reg-c" data-wpel-link="internal">Contact us</a>
                     <div class="locale-switcher">
                         <a title="USA" href="{{ url('/') }}" data-wpel-link="external" rel="nofollow external noopener noreferrer">
-                            <img src="{{ asset('design/images/us.png') }}" alt="">
+                            <img src="{{ asset('uploads/design/us.png') }}" alt="">
                         </a>
                         
                         <a title="UKR" href="{{ url('/') }}" data-wpel-link="internal">
-                            <img src="{{ asset('design/images/ua.png') }}" alt="">
+                            <img src="{{ asset('uploads/design/ua.png') }}" alt="">
                         </a>
                         
                         <a title="RUS" href="{{ url('/') }}" data-wpel-link="external" rel="nofollow external noopener noreferrer">
-                            <img src="{{ asset('design/images/ru.png') }}" alt="ru">
+                            <img src="{{ asset('uploads/design/ru.png') }}" alt="ru">
                         </a>
                     </div>
                 </div>
@@ -262,14 +262,14 @@ $menu = $select('App\Model\Base\Page')
 
 <link rel='stylesheet' id='font-awesome-css'  href='https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css?ver=2.2.0' type='text/css' media='all' />
 <script type='text/javascript' src='https://myrig.com.ua/wp-content/plugins/woocommerce/assets/js/frontend/cart-fragments.min.js?ver=3.2.6'></script>
-<script type='text/javascript' src="{{URL::asset('js/owl.carousel2.min.js?ver=1.12')}}"></script>
-<script type='text/javascript' src="{{URL::asset('js/intlTelInput.min.js?ver=1.12')}}"></script>
-<script type='text/javascript' src="{{URL::asset('js/jquery.fancybox.min.js?ver=1.12')}}"></script>
-<script type='text/javascript' src="{{URL::asset('js/bootstrapValidator.js?ver=1.12')}}"></script>
-<script type='text/javascript' src="{{URL::asset('js/script.js?ver=1.12')}}"></script>
-<script type='text/javascript' src="{{URL::asset('js/Chart.min.js?ver=1.12')}}"></script>
-<script type='text/javascript' src="{{URL::asset('js/actions.js?ver=1.12')}}"></script>
-<script type='text/javascript' src="{{URL::asset('js/calc.js?ver=1.12')}}"></script>
+<script type='text/javascript' src="{{ asset('js/owl.carousel2.min.js?ver=1.12') }}"></script>
+<script type='text/javascript' src="{{ asset('js/intlTelInput.min.js?ver=1.12') }}"></script>
+<script type='text/javascript' src="{{ asset('js/jquery.fancybox.min.js?ver=1.12') }}"></script>
+<script type='text/javascript' src="{{ asset('js/bootstrapValidator.js?ver=1.12') }}"></script>
+<script type='text/javascript' src="{{ asset('js/script.js?ver=1.12') }}"></script>
+<script type='text/javascript' src="{{ asset('js/Chart.min.js?ver=1.12') }}"></script>
+<script type='text/javascript' src="{{ asset('js/actions.js?ver=1.12') }}"></script>
+<script type='text/javascript' src="{{ asset('js/calc.js?ver=1.12') }}"></script>
 <script type='text/javascript'>
     /* <![CDATA[ */
     var global = {

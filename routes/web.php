@@ -11,7 +11,7 @@
 |
 */
 use Illuminate\Http\Request;
-//var_dump($request->session()); die;
+
 foreach (\App\Model\Base\Page::all() as $page) {
 	Route::get($page->link, 'PageController@view');
 }
@@ -42,5 +42,11 @@ Route::prefix('connector')
 	->group(function () {
 		Route::get('cart', 'SessionController@get');
 		Route::post('cart', 'SessionController@add');
+        Route::delete('cart', 'SessionController@delete');
 });
 
+Route::get('test', function() {
+    //session()->forget('cart');
+    $cart = json_decode(session('cart'), true);
+    print_r($cart);
+});

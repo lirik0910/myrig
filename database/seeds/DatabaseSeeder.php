@@ -20,11 +20,13 @@ class DatabaseSeeder extends Seeder
 		$this->call(ProductCategoriesTableSeeder::class);
 		$this->call(VendorsTableSeeder::class);
 		$this->call(ProductsTableSeeder::class);
+		$this->call(ProductOptionsTableSeeder::class);
 		$this->call(OrderStatusesTableSeeder::class);
 		$this->call(PaymentTypesTableSeeder::class);
 		$this->call(DeliveriesTableSeeder::class);
 		$this->call(VariablesTableSeeder::class);
 		$this->call(VariableContentsTableSeeder::class);
-        $this->call(VariableMultiContentsTableSeeder::class);
+		$this->call(VariableMultiContentsTableSeeder::class);
+		$this->call(SettingsTableSeeder::class);
 	}
 }
