@@ -42,7 +42,7 @@ $options = $item->options->groupBy('name')->toArray();
 		</span>
 	</div>
 
-	@if isset($options['status'])
+	@if (isset($options['status']))
 	<div class="table-cell table-tag">
 		<div class="tag tag-order">{{ $options['status'][0]['value'] }}</div>
 	</div>

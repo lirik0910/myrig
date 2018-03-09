@@ -28,7 +28,7 @@
 				</a>
 			</h2>
 			
-			@if isset($options['status'])
+			@if (isset($options['status']))
 			<div class="tag tag-order">{{$options['status'][0]['value']}}</div>
 			<div class="tag tag-waranty" >{{$options['warranty'][0]['value']}}</div>
 			@endif
@@ -87,7 +87,7 @@
 				@endif
 			</form>
 			
-			@if isset($options['recoupment'])
+			@if (isset($options['recoupment']))
 			<div class='tag tag-payback'>{{$options['recoupment'][0]['value']}}</div>
 			@endif
 		</div>
