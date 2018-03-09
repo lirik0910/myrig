@@ -28,8 +28,10 @@
 				</a>
 			</h2>
 			
+			@if isset($options['status'])
 			<div class="tag tag-order">{{$options['status'][0]['value']}}</div>
 			<div class="tag tag-waranty" >{{$options['warranty'][0]['value']}}</div>
+			@endif
 
 			@if (isset($item->page->view->variables))
 				@if (isset($item->page->view->variables))
@@ -85,7 +87,9 @@
 				@endif
 			</form>
 			
+			@if isset($options['recoupment'])
 			<div class='tag tag-payback'>{{$options['recoupment'][0]['value']}}</div>
+			@endif
 		</div>
 	</div>
 </div>

@@ -42,9 +42,11 @@ $options = $item->options->groupBy('name')->toArray();
 		</span>
 	</div>
 
+	@if isset($options['status'])
 	<div class="table-cell table-tag">
-		<div class="tag tag-order">{{$options['status'][0]['value']}}</div>
+		<div class="tag tag-order">{{ $options['status'][0]['value'] }}</div>
 	</div>
+	@endif
 
 	<div class="table-cell table-close">
 		<a href="#" class="remove" aria-label="{{ __('cart.remove_product') }}" data-id="{{ $item->id }}" data-wpel-link="internal">
