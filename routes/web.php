@@ -12,9 +12,9 @@
 */
 use Illuminate\Http\Request;
 
-/*foreach (\App\Model\Base\Page::all() as $page) {
+foreach (\App\Model\Base\Page::all() as $page) {
 	Route::get($page->link, 'PageController@view');
-}*/
+}
 
 //Route::redirect('/profile', 'PageController@view');
 

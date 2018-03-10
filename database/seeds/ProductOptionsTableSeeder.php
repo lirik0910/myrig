@@ -18,7 +18,9 @@ class ProductOptionsTableSeeder extends Seeder
 		$recoupment = App\Model\Shop\ProductOptionType::where('title', 'recoupment')->first();
 		$characteristic = App\Model\Shop\ProductOptionType::where('title', 'characteristic')->first();
 
-		$product = App\Model\Base\Page::where('link', 'product/dragonmint-16-th-s-2')->first();
+		$product = App\Model\Shop\Product::whereHas('page', function ($q) {
+			$q->where('link', 'product/dragonmint-16-th-s-2');
+		})->first();
 		App\Model\Shop\ProductOption::create([
 			'product_id' => $product->id,
 			'type_id' => $characteristic->id,
@@ -96,7 +98,9 @@ class ProductOptionsTableSeeder extends Seeder
 			'value' => 'Pre-order',
 		]);
 
-		$product = App\Model\Base\Page::where('link', 'product/antminer-s9-13-5th-s')->first();
+		$product = App\Model\Shop\Product::whereHas('page', function ($q) {
+			$q->where('link', 'product/antminer-s9-13-5th-s');
+		})->first();
 		App\Model\Shop\ProductOption::create([
 			'product_id' => $product->id,
 			'type_id' => $characteristic->id,
@@ -181,7 +185,9 @@ class ProductOptionsTableSeeder extends Seeder
 			'value' => '<iframe width="560" height="315" src="https://www.youtube.com/embed/-yfUQsg9ntQ" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>',
 		]);
 
-		$product = App\Model\Base\Page::where('link', 'product/antminer-d3-19-3gh-s')->first();
+		$product = App\Model\Shop\Product::whereHas('page', function ($q) {
+			$q->where('link', 'product/antminer-d3-19-3gh-s');
+		})->first();
 		App\Model\Shop\ProductOption::create([
 			'product_id' => $product->id,
 			'type_id' => $characteristic->id,
@@ -245,7 +251,9 @@ class ProductOptionsTableSeeder extends Seeder
 			'value' => 'In stock',
 		]);
 
-		$product = App\Model\Base\Page::where('link', 'product/myrig1660')->first();
+		$product = App\Model\Shop\Product::whereHas('page', function ($q) {
+			$q->where('link', 'product/myrig1660');
+		})->first();
 		App\Model\Shop\ProductOption::create([
 			'product_id' => $product->id,
 			'type_id' => $characteristic->id,
@@ -295,7 +303,9 @@ class ProductOptionsTableSeeder extends Seeder
 			'value' => '',
 		]);
 
-		$product = App\Model\Base\Page::where('link', 'product/antrouter-r1')->first();
+		$product = App\Model\Shop\Product::whereHas('page', function ($q) {
+			$q->where('link', 'product/antrouter-r1');
+		})->first();
 		App\Model\Shop\ProductOption::create([
 			'product_id' => $product->id,
 			'type_id' => $characteristic->id,
@@ -408,7 +418,9 @@ class ProductOptionsTableSeeder extends Seeder
 			'value' => '',
 		]);
 
-		$product = App\Model\Base\Page::where('link', 'product/plata-upravlenia-d3-l3')->first();
+		$product = App\Model\Shop\Product::whereHas('page', function ($q) {
+			$q->where('link', 'product/plata-upravlenia-d3-l3');
+		})->first();
 		App\Model\Shop\ProductOption::create([
 			'product_id' => $product->id,
 			'type_id' => $warranty->id,
@@ -430,7 +442,9 @@ class ProductOptionsTableSeeder extends Seeder
 			'value' => '',
 		]);
 
-		$product = App\Model\Base\Page::where('link', 'product/fan_6000rpm')->first();
+		$product = App\Model\Shop\Product::whereHas('page', function ($q) {
+			$q->where('link', 'product/fan_6000rpm');
+		})->first();
 		App\Model\Shop\ProductOption::create([
 			'product_id' => $product->id,
 			'type_id' => $characteristic->id,
@@ -459,7 +473,9 @@ class ProductOptionsTableSeeder extends Seeder
 			'value' => '',
 		]);
 
-		$product = App\Model\Base\Page::where('link', 'product/fan_6000rpm')->first();
+		$product = App\Model\Shop\Product::whereHas('page', function ($q) {
+			$q->where('link', 'product/beagle-bone-s9-t9-r4');
+		})->first();
 		App\Model\Shop\ProductOption::create([
 			'product_id' => $product->id,
 			'type_id' => $warranty->id,
@@ -481,7 +497,9 @@ class ProductOptionsTableSeeder extends Seeder
 			'value' => '',
 		]);
 
-		$product = App\Model\Base\Page::where('link', 'product/data_18pin')->first();
+		$product = App\Model\Shop\Product::whereHas('page', function ($q) {
+			$q->where('link', 'product/data_18pin');
+		})->first();
 		App\Model\Shop\ProductOption::create([
 			'product_id' => $product->id,
 			'type_id' => $warranty->id,
@@ -503,7 +521,9 @@ class ProductOptionsTableSeeder extends Seeder
 			'value' => '',
 		]);
 
-		$product = App\Model\Base\Page::where('link', 'product/plata-upravleniya-s5-s7')->first();
+		$product = App\Model\Shop\Product::whereHas('page', function ($q) {
+			$q->where('link', 'product/plata-upravleniya-s5-s7');
+		})->first();
 		App\Model\Shop\ProductOption::create([
 			'product_id' => $product->id,
 			'type_id' => $warranty->id,
@@ -525,7 +545,9 @@ class ProductOptionsTableSeeder extends Seeder
 			'value' => '',
 		]);
 
-		$product = App\Model\Base\Page::where('link', 'product/plata-upravleniya-s9-t9-r4')->first();
+		$product = App\Model\Shop\Product::whereHas('page', function ($q) {
+			$q->where('link', 'product/plata-upravleniya-s9-t9-r4');
+		})->first();
 		App\Model\Shop\ProductOption::create([
 			'product_id' => $product->id,
 			'type_id' => $warranty->id,
@@ -547,7 +569,9 @@ class ProductOptionsTableSeeder extends Seeder
 			'value' => '',
 		]);
 
-		$product = App\Model\Base\Page::where('link', 'product/beagle-s5-s7')->first();
+		$product = App\Model\Shop\Product::whereHas('page', function ($q) {
+			$q->where('link', 'product/beagle-s5-s7');
+		})->first();
 		App\Model\Shop\ProductOption::create([
 			'product_id' => $product->id,
 			'type_id' => $warranty->id,
