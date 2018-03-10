@@ -7,5 +7,8 @@ return [
 	'cont_UKRAINE' => 'UA',
 	'cont_JAPAN' => 'JAP',
 	'cont_VENEZUELA' => 'VE',
-	'added' => 'Added!'
+	'added' => 'Added!',
+	'description' => 'Description',
+	'characteristics' => 'Characteristics',
+	'payback' => 'Payback'
 ];

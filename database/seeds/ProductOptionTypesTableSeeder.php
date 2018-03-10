@@ -16,7 +16,7 @@ class ProductOptionTypesTableSeeder extends Seeder
 			'description' => 'Product characteristic item'
 		]);
 
-		App\Model\Shop\ProductOptionType::create([
+		/*App\Model\Shop\ProductOptionType::create([
 			'title' => 'warranty',
 			'description' => 'Product warranty'
 		]);
@@ -29,16 +29,16 @@ class ProductOptionTypesTableSeeder extends Seeder
 		App\Model\Shop\ProductOptionType::create([
 			'title' => 'status',
 			'description' => 'Product status item'
-		]);
+		]);*/
 
 		App\Model\Shop\ProductOptionType::create([
 			'title' => 'video',
 			'description' => 'Product video'
 		]);
 
-		App\Model\Shop\ProductOptionType::create([
+		/*App\Model\Shop\ProductOptionType::create([
 			'title' => 'secondary',
 			'description' => 'If product is secondary'
-		]);
+		]);*/
 	}
 }
