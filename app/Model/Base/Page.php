@@ -30,27 +30,27 @@ class Page extends Model
 		return $this->belongsTo(View::class);
 	}
 
-    /*
-     * Convert multivariables collection object to array
-     * @param object $mvs Multivariables object
-     * @return array
-     */
-    public static function convertMVs($mvs) : array
-    {
-        $migx = [];
-        foreach ($mvs as $mv){
-            $migx[$mv->title][$mv->pivot->content_id][$mv->pivot->name] = $mv->pivot->content;
-        }
-        return $migx;
-    }
+	/*
+	 * Convert multivariables collection object to array
+	 * @param object $mvs Multivariables object
+	 * @return array
+	 */
+	public static function convertMVs($mvs) : array
+	{
+		$migx = [];
+		foreach ($mvs as $mv){
+			$migx[$mv->title][$mv->pivot->content_id][$mv->pivot->name] = $mv->pivot->content;
+		}
+		return $migx;
+	}
 
 	/**
 	 * Bind with Variable and Variable multi content model
 	 * @return boolean
 	 */
-	public function multivariables()
+	public function multiVariableLines()
 	{
-		return $this->belongsToMany(Variable::class, 'variable_multi_contents')->withPivot('name', 'content', 'content_id');
+		return $this->hasMany(MultiVariableLine::class);
 	}
 
 	/**

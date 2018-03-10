@@ -24,13 +24,13 @@ class CreateProductOptionTable extends Migration
 				->nullable(false)
 				->comment('Product ID');
 
+			$table->integer('type_id', false, true)
+				->nullable(false)
+				->comment('Type field ID');
+
 			$table->string('name', 255)
 				->nullable(false)
 				->comment('Option name');
-
-            $table->string('title', 255)
-                ->nullable(true)
-                ->comment('Option title');
 
 			$table->string('value', 255)
 				->nullable(true)

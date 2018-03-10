@@ -83,7 +83,8 @@
 	"product": {
 		"GET": {
 			"all": "",
-			"one": "{id}"
+			"one": "{id}",
+			"options": "option/type"
 		},
 		"POST": {
 			"create": "",

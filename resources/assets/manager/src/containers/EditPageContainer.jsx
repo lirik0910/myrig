@@ -22,6 +22,7 @@ import DialogError from '../components/DialogError/DialogError.jsx';
 import DialogDelete from '../components/DialogDelete/DialogDelete.jsx';
 import PaperPageForm from '../components/PaperPageForm/PaperPageForm.jsx';
 import PaperContentForm from '../components/PaperContentForm/PaperContentForm.jsx';
+import PaperMultiVariable from '../components/PaperMultiVariable/PaperMultiVariable.jsx';
 import PaperInputVariable from '../components/PaperInputVariable/PaperInputVariable.jsx';
 import PaperImageVariable from '../components/PaperImageVariable/PaperImageVariable.jsx';
 import PaperRichtextVariable from '../components/PaperRichtextVariable/PaperRichtextVariable.jsx';
@@ -305,16 +306,25 @@ class EditPageContainer extends Component {
 							{item.type === 'input' &&
 								<PaperInputVariable
 									key={i}
-									title={item.title}
+									title={item.description}
 									data={item.variable_content}
 									onAddedField={fields => {
 										this.setState({ data });
 									}} />}
 
+							{item.type === 'multi' && 
+								<PaperMultiVariable
+									key={i}
+									pageId={data.id}
+									variableId={item.id}
+									title={item.description}
+									data={item.multi_variable_lines}
+									columns={item.columns} />}
+
 							{item.type === 'image' &&
 								<PaperImageVariable
 									key={i}
-									title={item.title}
+									title={item.description}
 									data={item.variable_content.map((field, a) => {
 										return {...field, name: field.content}
 									})}
@@ -346,7 +356,7 @@ class EditPageContainer extends Component {
 							{item.type === 'richtext' &&
 								<PaperRichtextVariable
 									key={i}
-									title={item.title}
+									title={item.description}
 									onAddedField={fields => {
 										this.setState({ data });
 									}}

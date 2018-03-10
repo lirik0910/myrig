@@ -12,9 +12,9 @@
 */
 use Illuminate\Http\Request;
 
-foreach (\App\Model\Base\Page::all() as $page) {
+/*foreach (\App\Model\Base\Page::all() as $page) {
 	Route::get($page->link, 'PageController@view');
-}
+}*/
 
 //Route::redirect('/profile', 'PageController@view');
 
@@ -43,10 +43,4 @@ Route::prefix('connector')
 		Route::get('cart', 'SessionController@get');
 		Route::post('cart', 'SessionController@add');
         Route::delete('cart', 'SessionController@delete');
-});
-
-Route::get('test', function() {
-    //session()->forget('cart');
-    $cart = json_decode(session('cart'), true);
-    print_r($cart);
 });

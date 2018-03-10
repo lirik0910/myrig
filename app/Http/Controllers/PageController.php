@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Model\Base\Page;
 use App\Model\Base\Setting;
+use App\Model\Base\MultiVariableContent;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -20,7 +21,7 @@ class PageController extends Controller
 			$link :
 			rtrim(ltrim($link, '/\\'), '/\\');
 
-		if ($page = Page::where('link', $link)->with('multivariables')->first()) {
+		if ($page = Page::where('link', $link)->with('view')->first()) {
 			return view($page->view->path, [
 				'it' => $page,
 				'get' => $this->get(),
@@ -28,7 +29,7 @@ class PageController extends Controller
 				'select' => $this->select(),
 				'settings' => $this->settings(),
 				'inCart' => $this->getInSessionCart(),
-				'migx' => Page::convertMVs($page->multivariables),
+				'multi' => MultiVariableContent::multiConvert($page->view->variables),
 			]);
 		}
 

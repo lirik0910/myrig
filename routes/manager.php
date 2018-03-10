@@ -87,6 +87,8 @@ Route::prefix('api')
 			Route::put('/{id}', 'Manager\Shop\ProductController@update');
 			Route::delete('/', 'Manager\Shop\ProductController@deleteMany');
 			Route::delete('/{id}', 'Manager\Shop\ProductController@delete');
+
+			Route::get('/option/type', 'Manager\Shop\ProductOptionTypeController@all');
 		});
 
 		Route::prefix('context')->group(function() {

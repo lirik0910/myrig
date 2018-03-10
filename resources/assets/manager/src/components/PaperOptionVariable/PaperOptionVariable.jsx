@@ -5,6 +5,7 @@
  * @requires react
  */
 
+import App from '../../App.js';
 import React, { Component } from 'react';
 
 import Paper from 'material-ui/Paper';
@@ -44,7 +45,42 @@ class PaperOptionVariable extends Component {
 	 * @inner
 	 */
 	state = {
+		options: [],
 		completed: true,
+	}
+
+	/**
+	 * Invoked just before mounting occurs
+	 * @fires componentWillMount
+	 */
+	componentWillMount() {
+		this.setState({ 
+			completed: false,
+		}, () => {
+			this.optionsDataGetRequest(data => {
+				this.setState({
+					completed: true
+				});
+			});
+		});
+	}
+
+	/**
+	 * Get policy array from server
+	 * @param {Function} callback
+	 */
+	optionsDataGetRequest(callback = () => {}) {
+		App.api({
+			type: 'GET',
+			name: 'options',
+			model: 'product',
+			success: (r) => {
+				r = JSON.parse(r.response);
+				if (r) {
+					this.setState({ options: r }, () => callback(r));
+				}
+			}
+		});
 	}
 
 	/**
@@ -128,7 +164,7 @@ class PaperOptionVariable extends Component {
 	 */
 	render() {
 		let { classes, title, data } = this.props;
-		let { completed } = this.state;
+		let { completed, options } = this.state;
 
 		return <Paper className={classes.paper}>
 				<Typography className={classes.title}>
@@ -140,13 +176,18 @@ class PaperOptionVariable extends Component {
 						return <OptionFieldItem 
 							key={i}
 							data={item}
+							options={options}
 							onDeletedField={(field) => this.handleDeleteField(field)}
 							onFieldNameInputed={(value, field) => {
 								this.handleNameFieldValue(value, field)
 							}}
 							onFieldValueInputed={(value, field) => {
 								this.handleValueFieldValue(value, field)}
-							} />
+							}
+							onFieldTypeSelected={value => {
+								data[i].type_id = value;
+								this.setState({ data }, () => this.props.onVariableUpdated(data));
+							}} />
 					})}
 
 					<FormHelperText>

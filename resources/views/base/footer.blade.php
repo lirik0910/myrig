@@ -93,13 +93,21 @@ $menu = $select('App\Model\Base\Page')
 					<div class="contacts">
 						<ul>
 							@php
-								$contactItems = App\Model\Base\VariableMultiContent::where('variable_id', 2)->orWhere('name', 'country')->orWhere('name', 'phone')->get()->groupBy('content_id');
+								$contacts = App\Model\Base\Page::whereHas('view', function ($q) {
+									$q->where('title', 'Contacts');
+								})->first();
+								
+								$contactsMulti = [];
+								if (isset($contacts)) {
+									$contactsMulti = App\Model\Base\MultiVariableContent::multiConvert($contacts->view->variables);
+								}
 							@endphp
-							@isset($contactItems)
-								@foreach($contactItems as $item)
-									<li class="@if($item[0]->content == 'USA') active @endif">{{ __('shop.cont_' . $item[0]->content ) }}
+							
+							@isset($contactsMulti['contactItems'])
+								@foreach ($contactsMulti['contactItems'] as $line)
+									<li class="@if($line['country'] == 'USA') active @endif">{{ __('shop.cont_' . $line['country'] ) }}
 										<div class="phone-area">
-											@if(isset($item[1])) {{ $item[1]->content }} @else support@myrig.com @endif
+											@if(isset($line['phone'])) {{ $line['phone'] }} @else support@myrig.com @endif
 										</div>
 									</li>
 								@endforeach

@@ -13,98 +13,98 @@ class ViewsTableSeeder extends Seeder
 	{
 		/** Add index view
 		 */
-		// App\Model\Base\View::create([
-		// 	'title' => 'Index',
-		// 	'description' => 'Template for index page',
-		// 	'path' => 'content/index'
-		// ]);
+		App\Model\Base\View::create([
+			'title' => 'Index',
+			'description' => 'Template for index page',
+			'path' => 'content/index'
+		]);
 
-		// /** Add 404 view
-		//  */
-		// App\Model\Base\View::create([
-		// 	'title' => '404',
-		// 	'description' => 'Template for 404 page',
-		// 	'path' => 'content/404'
-		// ]);
+		/** Add 404 view
+		 */
+		App\Model\Base\View::create([
+			'title' => '404',
+			'description' => 'Template for 404 page',
+			'path' => 'content/404'
+		]);
 
-		// /** Add Shop view
-		//  */
-		// App\Model\Base\View::create([
-		// 	'title' => 'Shop',
-		// 	'description' => 'Template for shop page',
-		// 	'path' => 'content/shop'
-		// ]);
+		/** Add Shop view
+		 */
+		App\Model\Base\View::create([
+			'title' => 'Shop',
+			'description' => 'Template for shop page',
+			'path' => 'content/shop'
+		]);
 
-		// /** Add Service view
-		//  */
-		// App\Model\Base\View::create([
-		// 	'title' => 'Service',
-		// 	'description' => 'Template for service page',
-		// 	'path' => 'content/service'
-		// ]);
+		/** Add Service view
+		 */
+		App\Model\Base\View::create([
+			'title' => 'Service',
+			'description' => 'Template for service page',
+			'path' => 'content/service'
+		]);
 
-		// /** Add Product view
-		//  */
-		// App\Model\Base\View::create([
-		// 	'title' => 'Product',
-		// 	'description' => 'Template for product page',
-		// 	'path' => 'content/product'
-		// ]);
+		/** Add Product view
+		 */
+		App\Model\Base\View::create([
+			'title' => 'Product',
+			'description' => 'Template for product page',
+			'path' => 'content/product'
+		]);
 
-		// /** Add ArticleList view
-		//  */
-		// App\Model\Base\View::create([
-		// 	'title' => 'ArticleList',
-		// 	'description' => 'Template for news/info page',
-		// 	'path' => 'content/news'
-		// ]);
+		/** Add ArticleList view
+		 */
+		App\Model\Base\View::create([
+			'title' => 'ArticleList',
+			'description' => 'Template for news/info page',
+			'path' => 'content/news'
+		]);
 
-		// /** Add Contacts view
-		//  */
-		// App\Model\Base\View::create([
-		// 	'title' => 'Contacts',
-		// 	'description' => 'Template for contacts page',
-		// 	'path' => 'content/contacts'
-		// ]);
+		/** Add Contacts view
+		 */
+		App\Model\Base\View::create([
+			'title' => 'Contacts',
+			'description' => 'Template for contacts page',
+			'path' => 'content/contacts'
+		]);
 
-		// /** Add Cart view
-		//  */
-		// App\Model\Base\View::create([
-		// 	'title' => 'Cart',
-		// 	'description' => 'Template for cart page',
-		// 	'path' => 'content/cart'
-		// ]);
+		/** Add Cart view
+		 */
+		App\Model\Base\View::create([
+			'title' => 'Cart',
+			'description' => 'Template for cart page',
+			'path' => 'content/cart'
+		]);
 
-		// /** Add Calculator view
-		//  */
-		// App\Model\Base\View::create([
-		// 	'title' => 'Calculator',
-		// 	'description' => 'Template for calculator page',
-		// 	'path' => 'content/calc'
-		// ]);
+		/** Add Calculator view
+		 */
+		App\Model\Base\View::create([
+			'title' => 'Calculator',
+			'description' => 'Template for calculator page',
+			'path' => 'content/calc'
+		]);
 
-		// /** Add Article view
-		//  */
-		// App\Model\Base\View::create([
-		// 	'title' => 'Article',
-		// 	'description' => 'Template for article page',
-		// 	'path' => 'content/article'
-		// ]);
+		/** Add Article view
+		 */
+		App\Model\Base\View::create([
+			'title' => 'Article',
+			'description' => 'Template for article page',
+			'path' => 'content/article'
+		]);
 
-  //       /** Add Article view
-  //        */
-  //       App\Model\Base\View::create([
-  //           'title' => 'Profile',
-  //           'description' => 'Template for article page',
-  //           'path' => 'content/profile'
-  //       ]);
+		/** Add Article view
+		 */
+		App\Model\Base\View::create([
+			'title' => 'Profile',
+			'description' => 'Template for article page',
+			'path' => 'content/profile'
+		]);
 
-        /** Add Checkout view
-         */
-        App\Model\Base\View::create([
-            'title' => 'Checkout',
-            'description' => 'Template for checkout page',
-            'path' => 'content/checkout'
-        ]);
+		/** Add Checkout view
+		 */
+		App\Model\Base\View::create([
+			'title' => 'Checkout',
+			'description' => 'Template for checkout page',
+			'path' => 'content/checkout'
+		]);
 	}
 }
