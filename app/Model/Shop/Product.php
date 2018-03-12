@@ -62,7 +62,7 @@ class Product extends Model
 	 */
 	public function productAutoPrices()
 	{
-		return $this->hasOne(productAutoPrice::class);
+		return $this->hasOne(ProductAutoPrice::class);
 	}
 
    /**
