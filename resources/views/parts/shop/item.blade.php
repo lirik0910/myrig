@@ -36,7 +36,7 @@
 				<div class="tag tag-no">{{ $item->productStatus->description }}</div>
 			@endif
 
-			<div class="tag tag tag-waranty">{{ __('shop.warranty') }} {{ $item->warranty }}</div>
+			<div class="tag tag tag-waranty">{{ __('default.warranty') }} {{ $item->warranty }}</div>
 
 			@if (isset($item->page->view->variables))
 				@if (isset($item->page->view->variables))
@@ -80,19 +80,19 @@
 				</span>
 
 				@if (isset($inCart[$item->id]))
-					<a data-success="{{ __('shop.added') }}" data-add="{{ __('shop.to_cart') }}" rel="nofollow" href="#" data-id="{{ $item->id }}" class="btn-default intocarts">
-						<span>{{ __('shop.added') }}</span>
+					<a data-success="{{ __('default.added') }}" data-add="{{ __('default.to_cart') }}" rel="nofollow" href="#" data-id="{{ $item->id }}" class="btn-default intocarts">
+						<span>{{ __('default.added') }}</span>
 						<i class="fa fa-spin fa-refresh" style="display: none"></i>
 					</a>
 				@else
-					<a data-success="{{ __('shop.added') }}" data-add="{{ __('shop.to_cart') }}" rel="nofollow" href="#" data-id="{{ $item->id }}" class="btn-default addtocarts">
-						<span>{{ __('shop.to_cart') }}</span>
+					<a data-success="{{ __('default.added') }}" data-add="{{ __('default.to_cart') }}" rel="nofollow" href="#" data-id="{{ $item->id }}" class="btn-default addtocarts">
+						<span>{{ __('default.to_cart') }}</span>
 						<i class="fa fa-spin fa-refresh" style="display: none"></i>
 					</a>
 				@endif
 			</form>
 			
-			<div class='tag tag-payback'>{{ __('shop.payback') }}</div>
+			<div class='tag tag-payback'>{{ __('default.payback') }}</div>
 		</div>
 	</div>
 </div>

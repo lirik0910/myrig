@@ -118,11 +118,5 @@ class ProductCategoriesTableSeeder extends Seeder
 			'product_id' => $product->id,
 			'category_id' => $secondary->id,
 		]);
-
-        App\Model\Shop\ProductCategory::create([
-            'title' => 'Additional',
-            'description' => 'Additional category',
-            'active' => 1
-        ]);
 	}
 }
