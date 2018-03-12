@@ -22,15 +22,15 @@ class VariablesTableSeeder extends Seeder
         /** Add products inforamation text
          */
         App\Model\Base\Variable::create([
-            'type' => 'migx',
-            'title' => 'contactItem',
+            'type' => 'multi',
+            'title' => 'Contact items',
             'description' => 'Item for contacts page',
         ]);
 
         /** Add products inforamation text
          */
         App\Model\Base\Variable::create([
-            'type' => 'migx',
+            'type' => 'multi',
             'title' => 'footerPhoneItem',
             'description' => 'Contacts phone item at footer',
         ]);

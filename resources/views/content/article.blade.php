@@ -49,7 +49,7 @@
                     </div>
                     <div class="article-content col-sm-8">
                         <div class="article-text">
-                            {{$it->content}}
+                            {!! $it->content !!}
                         </div>
                         <div class="links">
                             @isset($prev_link)<a href="{{url($prev_link->link)}}" class="article-link" data-wpel-link="internal"><i class="article-arrow"></i>Previous article</a>@endisset @isset($next_link)<a href="{{url($next_link->link)}}" class="article-link next-link" data-wpel-link="internal"><i class="article-arrow article-arrow-right"></i>Next article</a>@endisset

@@ -11,9 +11,20 @@ class ViewVariablesTableSeeder extends Seeder
 	 */
 	public function run()
 	{
+		$view = App\Model\Base\View::where('title', 'Product')->first();
+		$variable = App\Model\Base\Variable::where('title', 'Product information items')->first();
+
 		App\Model\Base\ViewVariable::create([
-			'view_id' => 5,
-			'variable_id' => 1,
+			'view_id' => $view->id,
+			'variable_id' => $variable->id,
+		]);
+
+		$view = App\Model\Base\View::where('title', 'Contacts')->first();
+		$variable = App\Model\Base\Variable::where('title', 'Contact items')->first();
+
+		App\Model\Base\ViewVariable::create([
+			'view_id' => $view->id,
+			'variable_id' => $variable->id,
 		]);
 	}
 }

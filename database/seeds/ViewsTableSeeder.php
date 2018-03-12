@@ -91,12 +91,20 @@ class ViewsTableSeeder extends Seeder
 			'path' => 'content/article'
 		]);
 
-        /** Add Article view
-         */
-        App\Model\Base\View::create([
-            'title' => 'Profile',
-            'description' => 'Template for article page',
-            'path' => 'content/profile'
-        ]);
+		/** Add Article view
+		 */
+		App\Model\Base\View::create([
+			'title' => 'Profile',
+			'description' => 'Template for article page',
+			'path' => 'content/profile'
+		]);
+
+		/** Add Checkout view
+		 */
+		App\Model\Base\View::create([
+			'title' => 'Checkout',
+			'description' => 'Template for checkout page',
+			'path' => 'content/checkout'
+		]);
 	}
 }

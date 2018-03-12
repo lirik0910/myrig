@@ -18,5 +18,11 @@ class ProductCategoriesTableSeeder extends Seeder
 			'description' => 'Base category',
 			'active' => 1
 		]);
+
+        App\Model\Shop\ProductCategory::create([
+            'title' => 'Additional',
+            'description' => 'Additional category',
+            'active' => 1
+        ]);
 	}
 }

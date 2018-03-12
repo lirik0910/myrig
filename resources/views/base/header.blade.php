@@ -31,7 +31,7 @@ foreach ($inCart as $i) {
 					</button>
 					
 					<a class="navbar-brand" href="{{ asset('/') }}" data-wpel-link="internal">
-						<img src="{{ asset('design/images/logo.png')}}" alt="{{ env('APP_NAME') }}" style="width: 162px"/>
+						<img src="{{ asset('uploads/design/logo.png')}}" alt="{{ env('APP_NAME') }}" style="width: 162px"/>
 					</a>
 				</div>
 				
@@ -47,13 +47,13 @@ foreach ($inCart as $i) {
 
 				<div class="user-panel">
 					<a href="{{url(env('APP_URL') . 'sso-login')}}" class="reg-f0" data-wpel-link="internal">
-						<img src="{{ asset('design/images/icons-97.svg') }}" alt="login"/>
+						<img src="{{ asset('uploads/design/icons-97.svg') }}" alt="login"/>
 					</a>
 
-					<!--<a href="{{ url($cart->link) }}" data-wpel-link="internal">
-						<img src="{{ asset('design/images/icons-02.svg') }}" alt="cart"/>
+					<a href="{{ url($cart->link) }}" data-wpel-link="internal">
+						<img src="{{ asset('uploads/design/icons-02.svg') }}" alt="cart"/>
 						<div class="label" id="cart-count-label">{{ $count }}</div>
-					</a>-->
+					</a>
 				</div>
 			</div>
 		</div>

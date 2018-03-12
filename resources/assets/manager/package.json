@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "@tinymce/tinymce-react": "^2.2.0",
+    "clone-deep": "^3.0.1",
     "draft-js": "^0.10.5",
     "draftjs-to-html": "^0.8.3",
     "fine-uploader": "^5.15.6",

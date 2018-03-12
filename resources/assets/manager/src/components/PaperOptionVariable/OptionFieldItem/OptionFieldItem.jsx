@@ -9,6 +9,7 @@ import React, { Component } from 'react';
 
 import Button from 'material-ui/Button';
 import TextField from 'material-ui/TextField';
+import SelectProductOption from '../../FormControl/SelectProductOption/SelectProductOption.jsx';
 
 import Delete from 'material-ui-icons/Delete';
 
@@ -30,6 +31,7 @@ class OptionFieldItem extends Component {
 	 */
 	static defaultProps = {
 		data: {},
+		options: [],
 		nameLabel: 'Name',
 		valueLabel: 'Value',
 		namePlaceholder: 'Input name',
@@ -38,6 +40,7 @@ class OptionFieldItem extends Component {
 		onDeletedField: () => {},
 		onFieldNameInputed: () => {},
 		onFieldValueInputed: () => {},
+		onFieldTypeSelected: () => {},
 		classes: PropTypes.object.isRequired,
 	}
 
@@ -48,6 +51,7 @@ class OptionFieldItem extends Component {
 	render() {
 		let { 
 			data,
+			options,
 			classes, 
 			nameLabel, 
 			valueLabel, 
@@ -55,7 +59,17 @@ class OptionFieldItem extends Component {
 			valuePlaceholder 
 		} = this.props;
 
+		/*console.log(data)*/
+
 		return <div>
+				<SelectProductOption
+					data={options}
+					defaultValue={data.type_id}
+					title={'Select option type'}
+					onItemSelected={value => {
+						this.props.onFieldTypeSelected(value)
+					}} />
+
 				<TextField
 					type="text"
 					label={nameLabel}

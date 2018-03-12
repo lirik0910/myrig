@@ -2,14 +2,13 @@
 
 @php 
 $products = $select('\App\Model\Shop\Product')->with('page', 'options', 'images')->get();
-//var_dump($products); die;
 @endphp
 
 @section('content')
 <main>
 <div class="main-back"></div>
 	
-<section class="content item">
+<section class="content item items">
 	<div class="container">
 		<div class="clearfix" style="clear: both"></div>
 		@foreach($products as $item)

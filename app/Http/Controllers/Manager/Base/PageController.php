@@ -124,11 +124,25 @@ class PageController extends Controller
 			$page = Page::find($id);
 			$page->view;
 
+			$a = [];
 			foreach ($page->view->variables as $item) {
-				$item->variable_content = [];
-				$variableContent = VariableContent::where('page_id', $id)->get();
-				if ($variableContent) {
-					$item->variable_content = $variableContent;
+				if ($item->type === 'multi') {
+					foreach ($item->multiVariableLines as $line) {
+						$c = [];
+						foreach ($line->content as $value) {
+							$c[$value->multiVariable->title] = $value->content;
+						}
+						$a[$item->title][] = $c;
+					}
+					$item->columns;
+				}
+
+				else {
+					$item->variable_content = [];
+					$variableContent = VariableContent::where('page_id', $id)->get();
+					if ($variableContent) {
+						$item->variable_content = $variableContent;
+					}
 				}
 			}
 		}
@@ -196,6 +210,10 @@ class PageController extends Controller
 			$data['updatedby_id'] = Auth::user()->id;
 		}
 
+		/** Delete slashes from start and end of the link line
+		 */
+		$data['link'] = rtrim(ltrim($data['link'], '/\\'), '/\\');
+
 		/** Create new model
 		 */
 		$model = new Page;
@@ -251,6 +269,10 @@ class PageController extends Controller
 			$data['createdby_id'] = Auth::user()->id;
 			$data['updatedby_id'] = Auth::user()->id;
 		}
+
+		/** Delete slashes from start and end of the link line
+		 */
+		$data['link'] = rtrim(ltrim($data['link'], '/\\'), '/\\');
 
 		/** Try get page model
 		 */

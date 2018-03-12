@@ -54,12 +54,12 @@ $menu = $select('App\Model\Base\Page')
 			<div class="row">
 				<div class="col-sm-2 col-md-2 col-lg-2 logo">
 					<a href="{{ asset('/') }}" data-wpel-link="internal">
-						<img src="{{ asset('design/images/logo.png') }}" alt="logo"/>
+						<img src="{{ asset('uploads/design/logo.png') }}" alt="logo"/>
 					</a>
 					
 					<div class="payment">
-						<img src="{{ asset('design/images/bitcoin.png') }}" alt="bitcoin"/>
-						<img src="{{ asset('design/images/paypal.png') }}" alt="paypal"/>
+						<img src="{{ asset('uploads/design/bitcoin.png') }}" alt="bitcoin"/>
+						<img src="{{ asset('uploads/design/paypal.png') }}" alt="paypal"/>
 					</div>
 				</div>
 				
@@ -92,14 +92,22 @@ $menu = $select('App\Model\Base\Page')
 				<div class="col-sm-12 col-md-3 col-lg-3">
 					<div class="contacts">
 						<ul>
-                            @php
-                                $contactItems = App\Model\Base\VariableMultiContent::where('variable_id', 2)->orWhere('name', 'country')->orWhere('name', 'phone')->get()->groupBy('content_id');
-                            @endphp
-							@isset($contactItems)
-								@foreach($contactItems as $item)
-									<li class="@if($item[0]->content == 'USA') active @endif">{{$item[0]->content}}
+							@php
+								$contacts = App\Model\Base\Page::whereHas('view', function ($q) {
+									$q->where('title', 'Contacts');
+								})->first();
+								
+								$contactsMulti = [];
+								if (isset($contacts)) {
+									$contactsMulti = App\Model\Base\MultiVariableContent::multiConvert($contacts->view->variables);
+								}
+							@endphp
+							
+							@isset($contactsMulti['contactItems'])
+								@foreach ($contactsMulti['contactItems'] as $line)
+									<li class="@if($line['country'] == 'USA') active @endif">{{ __('shop.cont_' . $line['country'] ) }}
 										<div class="phone-area">
-											@if(isset($item[1])) {{ _('shop.cont_' . $item[1]->content)}} @else support@myrig.com @endif
+											@if(isset($line['phone'])) {{ $line['phone'] }} @else support@myrig.com @endif
 										</div>
 									</li>
 								@endforeach
@@ -109,15 +117,15 @@ $menu = $select('App\Model\Base\Page')
 					<a href="#call" class="btn-default reg-c" data-wpel-link="internal">Contact us</a>
 					<div class="locale-switcher">
 						<a title="USA" href="{{ url('/') }}" data-wpel-link="external" rel="nofollow external noopener noreferrer">
-							<img src="{{ asset('design/images/us.png') }}" alt="">
+							<img src="{{ asset('uploads/design/us.png') }}" alt="">
 						</a>
 						
 						<a title="UKR" href="{{ url('/') }}" data-wpel-link="internal">
-							<img src="{{ asset('design/images/ua.png') }}" alt="">
+							<img src="{{ asset('uploads/design/ua.png') }}" alt="">
 						</a>
 						
 						<a title="RUS" href="{{ url('/') }}" data-wpel-link="external" rel="nofollow external noopener noreferrer">
-							<img src="{{ asset('design/images/ru.png') }}" alt="ru">
+							<img src="{{ asset('uploads/design/ru.png') }}" alt="ru">
 						</a>
 					</div>
 				</div>
@@ -204,50 +212,50 @@ $menu = $select('App\Model\Base\Page')
 
 		</div>
 	</div>
-    <div id="reg">
-        <div class="modal-header">
-            <ul class="reg-links">
-                <li class="active" data-target="#enter-field"><a href="" data-wpel-link="internal">Вход</a></li>
-                <li data-target="#reg-field"><a href="" data-wpel-link="internal">Регистрация</a></li>
-            </ul>
-        </div>
-        <div class="modal-body">
-            <div id="reg-field">
-                <form id="registration" action="#">
-                    <div class="form-group">
-                        <input id="user_email" type="email" name="user_email" class="form-control" placeholder="Эл. почта" required="required" data-bv-message=" " data-bv-remote-message="Email уже занят"/></div>
-                    <div class="form-group">
-                        <input type="tel" name="billing_phone" class="form-control billing_phone-reg" required="required"  data-bv-digits="true"   data-bv-message=" " placeholder="Телефон"/></div>
+	<div id="reg">
+		<div class="modal-header">
+			<ul class="reg-links">
+				<li class="active" data-target="#enter-field"><a href="" data-wpel-link="internal">Вход</a></li>
+				<li data-target="#reg-field"><a href="" data-wpel-link="internal">Регистрация</a></li>
+			</ul>
+		</div>
+		<div class="modal-body">
+			<div id="reg-field">
+				<form id="registration" action="#">
+					<div class="form-group">
+						<input id="user_email" type="email" name="user_email" class="form-control" placeholder="Эл. почта" required="required" data-bv-message=" " data-bv-remote-message="Email уже занят"/></div>
+					<div class="form-group">
+						<input type="tel" name="billing_phone" class="form-control billing_phone-reg" required="required"  data-bv-digits="true"   data-bv-message=" " placeholder="Телефон"/></div>
 
-                    <div class="form-group">
-                        <input type="submit" name="submit" value="Зарегистрироваться" class="btn-default btn-subscribe"/>
-                    </div>
-                    <input type="hidden" name="action" value="bitmain_account_register">
-                    <input type="hidden" name="register" value="1">
-                    <input type="hidden" name="subject" value="Регистрация пользователя - Bitmain">
-                </form>
-                <p class="result" data-text="Регистрация успешная! Пароль отправлен вам на email"></p>
-            </div>
-            <div id="enter-field">
+					<div class="form-group">
+						<input type="submit" name="submit" value="Зарегистрироваться" class="btn-default btn-subscribe"/>
+					</div>
+					<input type="hidden" name="action" value="bitmain_account_register">
+					<input type="hidden" name="register" value="1">
+					<input type="hidden" name="subject" value="Регистрация пользователя - Bitmain">
+				</form>
+				<p class="result" data-text="Регистрация успешная! Пароль отправлен вам на email"></p>
+			</div>
+			<div id="enter-field">
 
-                <div class="woocommerce">
-                    <form  id="enter" class="woocomerce-form woocommerce-form-login login " method="post">
-                        <div class="form-group">
-                            <input type="text" class="form-control" name="username" id="username" placeholder="Логин" value="" />
-                        </div>
-                        <div class="form-group">
-                            <input class="form-control" type="password" name="password" id="password" placeholder="Пароль"/>
-                        </div>
-                        <p class="form-row">
-                            <input type="hidden" id="woocommerce-login-nonce" name="woocommerce-login-nonce" value="c6b529870e" /><input type="hidden" name="_wp_http_referer" value="/" />				<input type="submit" class="btn-default btn-subscribe" name="login" value="Авторизация" />
+				<div class="woocommerce">
+					<form  id="enter" class="woocomerce-form woocommerce-form-login login " method="post">
+						<div class="form-group">
+							<input type="text" class="form-control" name="username" id="username" placeholder="Логин" value="" />
+						</div>
+						<div class="form-group">
+							<input class="form-control" type="password" name="password" id="password" placeholder="Пароль"/>
+						</div>
+						<p class="form-row">
+							<input type="hidden" id="woocommerce-login-nonce" name="woocommerce-login-nonce" value="c6b529870e" /><input type="hidden" name="_wp_http_referer" value="/" />             <input type="submit" class="btn-default btn-subscribe" name="login" value="Авторизация" />
 
-                        </p>
-                        <div class="more-wrapper"><a href="/wp-login.php?action=lostpassword" class="btn-recover" data-wpel-link="internal">Напомнить</a></div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+						</p>
+						<div class="more-wrapper"><a href="/wp-login.php?action=lostpassword" class="btn-recover" data-wpel-link="internal">Напомнить</a></div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 
 <script type="text/javascript">
@@ -262,28 +270,28 @@ $menu = $select('App\Model\Base\Page')
 
 <link rel='stylesheet' id='font-awesome-css'  href='https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css?ver=2.2.0' type='text/css' media='all' />
 <script type='text/javascript' src='https://myrig.com.ua/wp-content/plugins/woocommerce/assets/js/frontend/cart-fragments.min.js?ver=3.2.6'></script>
-<script type='text/javascript' src="{{URL::asset('js/owl.carousel2.min.js?ver=1.12')}}"></script>
-<script type='text/javascript' src="{{URL::asset('js/intlTelInput.min.js?ver=1.12')}}"></script>
-<script type='text/javascript' src="{{URL::asset('js/jquery.fancybox.min.js?ver=1.12')}}"></script>
-<script type='text/javascript' src="{{URL::asset('js/bootstrapValidator.js?ver=1.12')}}"></script>
-<script type='text/javascript' src="{{URL::asset('js/script.js?ver=1.12')}}"></script>
-<script type='text/javascript' src="{{URL::asset('js/Chart.min.js?ver=1.12')}}"></script>
-<script type='text/javascript' src="{{URL::asset('js/actions.js?ver=1.12')}}"></script>
-<script type='text/javascript' src="{{URL::asset('js/calc.js?ver=1.12')}}"></script>
+<script type='text/javascript' src="{{ asset('js/owl.carousel2.min.js?ver=1.12') }}"></script>
+<script type='text/javascript' src="{{ asset('js/intlTelInput.min.js?ver=1.12') }}"></script>
+<script type='text/javascript' src="{{ asset('js/jquery.fancybox.min.js?ver=1.12') }}"></script>
+<script type='text/javascript' src="{{ asset('js/bootstrapValidator.js?ver=1.12') }}"></script>
+<script type='text/javascript' src="{{ asset('js/script.js?ver=1.12') }}"></script>
+<script type='text/javascript' src="{{ asset('js/Chart.min.js?ver=1.12') }}"></script>
+<script type='text/javascript' src="{{ asset('js/actions.js?ver=1.12') }}"></script>
+<script type='text/javascript' src="{{ asset('js/calc.js?ver=1.12') }}"></script>
 <script type='text/javascript'>
-    /* <![CDATA[ */
-    var global = {
-        url: '{{env('APP_URL')}}',
-        app: {
-            connector: "{{ asset('connector') }}",
-            csrf: "{{ csrf_token() }}"
-        }
-    };
-    var calc = {};
-    /* ]]> */
+	/* <![CDATA[ */
+	var global = {
+		url: '{{env('APP_URL')}}',
+		app: {
+			connector: "{{ asset('connector') }}",
+			csrf: "{{ csrf_token() }}"
+		}
+	};
+	var calc = {};
+	/* ]]> */
 </script>
-<script type="text/javascript" src="{{ asset('design/build/js/common.js') }}"></script>
-<script type="text/javascript" src="{{ asset('design/build/js/shop.js') }}"></script>
+<!-- <script type="text/javascript" src="{{ asset('design/build/js/common.js') }}"></script>
+<script type="text/javascript" src="{{ asset('design/build/js/shop.js') }}"></script> -->
 
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-103386645-1"></script>
 <script>
