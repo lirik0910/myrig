@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Model\Base\User;
 use App\Model\Base\UserAttribute;
+use Illuminate\Routing\RedirectController;
 use Illuminate\Support\Facades\Cookie;
-use Illuminate\Contracts\Routing\ResponseFactory;
+use Illuminate\Routing\Redirector ;
 
 class ClientAuthController
 {
@@ -140,6 +141,7 @@ class ClientAuthController
         } else {
             $ssohomeappurl = urlencode($this->homeappurl);
             if (!$this->notvalid){
+                Redirector::away('https://panel.myrig.com/ssoappurl/'.$ssohomeappurl);
                 echo "Logged out, sign in <a href='https://panel.myrig.com/ssoappurl/$ssohomeappurl'>here</a>";
             }
         }
