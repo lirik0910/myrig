@@ -27,11 +27,16 @@
 					{{ $item->title }}
 				</a>
 			</h2>
-			
-			@if (isset($options['status']))
-			<div class="tag tag-order">{{$options['status'][0]['value']}}</div>
-			<div class="tag tag-waranty" >{{$options['warranty'][0]['value']}}</div>
+
+			@if ($item->productStatus->title === 'in-stock')
+				<div class="tag tag-check">{{ $item->productStatus->description }}</div>
+			@elseif ($item->productStatus->title === 'pre-order')
+				<div class="tag tag-order">{{ $item->productStatus->description }}</div>
+			@elseif ($item->productStatus->title === 'not-available')
+				<div class="tag tag-no">{{ $item->productStatus->description }}</div>
 			@endif
+
+			<div class="tag tag tag-waranty">{{ __('shop.warranty') }} {{ $item->warranty }}</div>
 
 			@if (isset($item->page->view->variables))
 				@if (isset($item->page->view->variables))
@@ -87,9 +92,7 @@
 				@endif
 			</form>
 			
-			@if (isset($options['recoupment']))
-			<div class='tag tag-payback'>{{$options['recoupment'][0]['value']}}</div>
-			@endif
+			<div class='tag tag-payback'>{{ __('shop.payback') }}</div>
 		</div>
 	</div>
 </div>

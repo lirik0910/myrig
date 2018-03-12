@@ -17,9 +17,11 @@ class DatabaseSeeder extends Seeder
 		$this->call(ContextsTableSeeder::class);
 		$this->call(ViewsTableSeeder::class);
 		$this->call(PagesTableSeeder::class);
-		$this->call(ProductCategoriesTableSeeder::class);
+		$this->call(CategoriesTableSeeder::class);
 		$this->call(VendorsTableSeeder::class);
+		$this->call(ProductStatusesTableSeeder::class);
 		$this->call(ProductsTableSeeder::class);
+		$this->call(ProductCategoriesTableSeeder::class);
 		$this->call(OrderStatusesTableSeeder::class);
 		$this->call(PaymentTypesTableSeeder::class);
 		$this->call(DeliveriesTableSeeder::class);
@@ -32,5 +34,6 @@ class DatabaseSeeder extends Seeder
 		$this->call(MultiVariableLinesTableSeeder::class);
 		$this->call(MultiVariableContentsTableSeeder::class);
 		$this->call(ViewVariablesTableSeeder::class);
+		$this->call(CurrenciesTableSeeder::class);
 	}
 }

@@ -84,7 +84,8 @@
 		"GET": {
 			"all": "",
 			"one": "{id}",
-			"options": "option/type"
+			"options": "option/type",
+			"statuses": "statuses"
 		},
 		"POST": {
 			"create": "",
@@ -96,6 +97,16 @@
 		"DELETE": {
 			"many": "",
 			"one": "{id}"
+		}
+	},
+	"category": {
+		"GET": {
+			"all": ""
+		}
+	},
+	"currency": {
+		"GET": {
+			"all": ""
 		}
 	},
 	"status": {

@@ -21,12 +21,12 @@ class Product extends Model
 	}
 
 	/**
-	 * Get product category
+	 * Get category model
 	 * @return boolean
 	 */
-	public function category()
+	public function categories()
 	{
-		return $this->belongsTo(ProductCategory::class);
+		return $this->belongsToMany(Category::class, 'product_categories');
 	}
 
 	/**
@@ -47,20 +47,42 @@ class Product extends Model
 		return $this->hasMany(ProductImage::class);
 	}
 
-    /*
- * Convert product options to array
- * @param (Object) $options Current product options
- * return array
- */
+	/**
+	 * Get product status
+	 * @return boolean
+	 */
+	public function productStatus()
+	{
+		return $this->belongsTo(ProductStatus::class);
+	}
+
+	/**
+	 * Get auto prices settings
+	 * @return boolean
+	 */
+	public function productAutoPrices()
+	{
+		return $this->hasOne(productAutoPrice::class);
+	}
+
+   /**
+    * Convert product options to array
+    * @param object $options Current product options
+    * @return array
+    */
     public static function convertOptions($options)
     {
         $output = [];
-        foreach($options as $option){
-            if($option->name == 'image'){
+        foreach ($options as $option) {
+            if ($option->name == 'image') {
                 $output['images'][] = $option;
-            }elseif (preg_match('/[а-яё]/iu', $option->name)){
+            }
+
+            elseif (preg_match('/[а-яё]/iu', $option->name)) {
                 $output['characteristics'][] = $option;
-            } else{
+            }
+
+            else {
                 $output[$option->name] = $option;
             }
         }
@@ -173,6 +195,97 @@ class Product extends Model
 				
 				return false;
 			}
+		}
+		return true;
+	}
+
+	/**
+	 * Add categories to current product model
+	 * @param string
+	 * @return boolean
+	 */
+	public function setCategories($line = '')
+	{
+		$explode = explode(',', $line);
+
+		/** Remove all categories before insert
+		 */
+		try {
+			$collection = ProductCategory::where('product_id', $this->id)->get();
+			foreach ($collection as $item) {
+				$item->delete();
+			}
+		}
+		catch (\Exception $e) {
+			logger($e->getMessage());
+			throw new Exception($e->getMessage(), 1);
+				
+			return false;
+		}
+
+		if ($line !== '0') {
+			foreach ($explode as $id) {
+				$model = new ProductCategory;
+
+				$model->product_id = $this->id;
+				$model->category_id = $id;
+
+				try {
+					$model->save();
+				}
+				catch (\Exception $e) {
+					logger($e->getMessage());
+					throw new \Exception($e->getMessage(), 1);
+					
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+
+	/**
+	 * Add or update auto price settings of current products.
+	 * It needs for auto count product price
+	 * @param string|array $settings
+	 * @return boolean
+	 */
+	public function setAutoPrices($settings = '')
+	{
+		$data = $settings;
+		if (gettype($settings) === 'string') {
+			try {
+				$data = json_decode($settings, true);
+			}
+			catch (\Exception $e) {
+				logger($e->getMessage());
+				throw new Exception($e->getMessage(), 1);
+				
+				return false;
+			}
+		}
+
+		if (!isset($data['id'])) {
+			$model = new ProductAutoPrice;
+		}
+
+		else {
+			$model = ProductAutoPrice::findOrFail($data['id']);
+		}
+
+		$model->fill($data);
+		$model->product_id = $this->id;
+
+		/** Try to save model
+		 */
+		try {
+			$model->save();
+		}
+		catch (\Exception $e) {
+			logger($e->getMessage());
+			throw new Exception($e->getMessage(), 1);
+				
+			return false;
 		}
 		return true;
 	}

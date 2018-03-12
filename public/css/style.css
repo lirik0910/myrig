@@ -1396,7 +1396,7 @@ h2{
     margin-left: 15px;
 }
 .products .article-arrow{
-   background-image: url("/image/arrow_down.png");
+   background-image: url("../uploads/design/arrow_down.png");
     height: 115px;
     width: 22px;
     margin-right: 12px;

@@ -7,6 +7,7 @@
 
 import React, { Component } from 'react';
 import { FormControl } from 'material-ui/Form';
+import Menu, { MenuItem } from 'material-ui/Menu';
 import Input, { InputLabel, InputAdornment } from 'material-ui/Input';
 
 import styles from './styles.js';
@@ -27,12 +28,14 @@ class InputPrice extends Component {
 	 */
 	static defaultProps = {
 		name: 'price',
-		currency: '$',
+		currencyID: 0,
+		currencies: [],
 		title: 'Price',
 		defaultValue: '',
 		inputID: 'price-field',
 		onDataLoaded: () => {},
 		onFieldInputed: () => {},
+		onCurencySelected: () => {},
 		classes: PropTypes.object.isRequired,
 	}
 
@@ -44,7 +47,12 @@ class InputPrice extends Component {
 	 * @property {Number} defaultValue Component data
 	 */
 	state = {
-		value: 0
+		value: 0,
+		anchorEl: null,
+		currency: this.props.currencies.length > 0 ? this.props.currencies[0] : {
+			name: 'USD',
+			symbol: '$'
+		}
 	}
 
 	/**
@@ -52,9 +60,17 @@ class InputPrice extends Component {
 	 * @fires componentWillMount
 	 */
 	componentWillMount() {
-		let { defaultValue } = this.props;
+		let { defaultValue, currencies, currencyID } = this.props;
+		var i,
+			current = this.state.currency;
 
-		this.setState({ value: defaultValue }, () => {
+		for (i in currencies) {
+			if (currencies[i].id === currencyID) {
+				current = currencies[i];
+			}
+		}
+
+		this.setState({ value: defaultValue, currency: current }, () => {
 			this.props.onDataLoaded(defaultValue)
 		});
 	}
@@ -74,17 +90,35 @@ class InputPrice extends Component {
 	}
 
 	/**
+	 * Open currency menu
+	 * @param {Object} event
+	 */
+	handleCurrenyClick = event => {
+		this.setState({ anchorEl: event.currentTarget });
+	}
+
+	/**
+	 * Close currency menu
+	 * @param {Object} event
+	 */
+	handleCurrenyClose = (event, item) => {
+		this.setState({ anchorEl: null, currency: item }, () => {
+			this.props.onCurencySelected(item);
+		});
+	}
+
+	/**
 	 * Render component
 	 * @return {Object} jsx object
 	 */
 	render() {
-		let { value } = this.state;
+		let { value, anchorEl, currency } = this.state;
 		let { 
 			name, 
 			title,
 			classes, 
-			inputID, 
-			currency,
+			inputID,
+			currencies,
 			placeholder
 		} = this.props;
 
@@ -94,12 +128,37 @@ class InputPrice extends Component {
 				</InputLabel>
 				
 				<Input
+					disabled={typeof this.props.disabled === 'undefined' ? false : !this.props.disabled}
 					name={name}
 					id={inputID}
 					value={value}
 					placeholder={placeholder}
 					onChange={this.handleInputField}
-					startAdornment={<InputAdornment position="start">{currency}</InputAdornment>} />
+					startAdornment={
+						<InputAdornment 
+							aria-owns={anchorEl ? 
+								'simple-menu' : 
+								null}
+							aria-haspopup="true"
+							onClick={this.handleCurrenyClick}
+							position="start">
+								{currency.symbol}
+						</InputAdornment>
+					} />
+
+				{(this.props.disabled && currencies.length) > 0 && <Menu
+					anchorEl={anchorEl}
+					open={Boolean(anchorEl)}
+					onClose={e => this.setState({ anchorEl: null })}>
+
+					{currencies.map((item, i) => {
+						return <MenuItem 
+									key={i}
+									onClick={e => this.handleCurrenyClose(e, item)}>
+										{item.symbol}
+								</MenuItem>
+					})}
+				</Menu>}
         	</FormControl>
 	}
 }

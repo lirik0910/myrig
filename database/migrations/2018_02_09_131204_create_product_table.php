@@ -24,9 +24,9 @@ class CreateProductTable extends Migration
 				->default(0)
 				->comment('Context ID');
 
-			$table->integer('category_id', false, true)
+			/*$table->integer('category_id', false, true)
 				->default(1)
-				->comment('Product category ID');
+				->comment('Product category ID');*/
 
 			$table->integer('vendor_id', false, true)
 				->default(1)
@@ -35,6 +35,10 @@ class CreateProductTable extends Migration
 			$table->integer('page_id', false, true)
 				->default(0)
 				->comment('Page ID');
+
+			$table->integer('product_status_id', false, true)
+				->default(0)
+				->comment('Product status ID');
 			
 			$table->string('title', 255)
 				->nullable(false)
@@ -44,19 +48,23 @@ class CreateProductTable extends Migration
 				->nullable(true)
 				->comment('Product description');
 
-			$table->string('icon', 255)
+			$table->string('warranty', 255)
 				->nullable(true)
-				->comment('Product preview image');
+				->comment('Product warranty');
 
 			$table->tinyInteger('active')
 				->default(1)
 				->comment('Product active status');
 
-			$table->float('price', 8,2)
+			$table->tinyInteger('auto_price')
+				->default(0)
+				->comment('Auto price regime');
+
+			$table->float('price', 12,2)
 				->default('0.00')
 				->comment('Product price');
 
-			$table->float('compare_price', 8,2)
+			$table->float('compare_price', 12,2)
 				->default('0.00')
 				->comment('Compare price');
 

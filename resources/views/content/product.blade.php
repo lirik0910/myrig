@@ -6,6 +6,12 @@
 <div class="main-back"></div>
 @php
 $product = App\Model\Shop\Product::where('page_id', $it->id)->with('images', 'options')->first();
+foreach ($product->options as $item) {
+	if ($item->type->title === 'video') {
+		$video = $item;
+		break;
+	}
+}
 @endphp
 <section class="content item">
 <div class="container">
@@ -32,10 +38,10 @@ $product = App\Model\Shop\Product::where('page_id', $it->id)->with('images', 'op
 
 	<div class="col-sm-8">
 		<div class="article-text">
-			<h1>{{$product->title}}</h1>
+			<h1>{{ $product->title }}</h1>
 
-			<div class="tag tag-order">Pre-order</div>
-			<div class="tag tag-waranty">Waranty 180</div>
+			<div class="tag tag-order">{{ $product->productStatus->description }}</div>
+			<div class="tag tag-waranty">{{ __('default.warranty') }} {{ $product->warranty }}</div>
 	
 			<div class="single-product-price">
 				<span class="woocommerce-Price-amount amount">
@@ -58,27 +64,33 @@ $product = App\Model\Shop\Product::where('page_id', $it->id)->with('images', 'op
 				</span>
 
 				@if (isset($inCart[$product->id]))
-					<a data-success="{{ __('shop.added') }}" data-add="{{ __('shop.to_cart') }}" rel="nofollow" href="#" data-id="{{ $product->id }}" class="btn-default intocarts">
-						<span>{{ __('shop.added') }}</span>
+					<a data-success="{{ __('default.added') }}" data-add="{{ __('default.to_cart') }}" rel="nofollow" href="#" data-id="{{ $product->id }}" class="btn-default intocarts">
+						<span>{{ __('default.added') }}</span>
 						<i class="fa fa-spin fa-refresh" style="display: none"></i>
 					</a>
 				@else
-					<a data-success="{{ __('shop.added') }}" data-add="{{ __('shop.to_cart') }}" rel="nofollow" href="#" data-id="{{ $product->id }}" class="btn-default addtocarts">
-						<span>{{ __('shop.to_cart') }}</span>
+					<a data-success="{{ __('default.added') }}" data-add="{{ __('default.to_cart') }}" rel="nofollow" href="#" data-id="{{ $product->id }}" class="btn-default addtocarts">
+						<span>{{ __('default.to_cart') }}</span>
 							<i class="fa fa-spin fa-refresh" style="display: none"></i>
 					</a>
 				@endif
 			</form>
-			<div class="tag tag-payback">{{ __('shop.payback') }}</div>
+			<div class="tag tag-payback">{{ __('default.payback') }}</div>
 			
 			<div class="single-product-tabs">
 				<div class="product-tab-links">
-					<a href="" class="active" data-target="#description" data-wpel-link="internal">{{ __('shop.description') }}</a>
+					<a href="" class="active" data-target="#description" data-wpel-link="internal">{{ __('default.description') }}</a>
 
 					<a href="" class="" data-target="#details">
-						<span class="hidden-xxs">{{ __('shop.characteristics') }}</span>
-						<span class="visible-xxs">{{ __('shop.characteristics') }}</span>
+						<span class="hidden-xxs">{{ __('default.characteristics') }}</span>
+						<span class="visible-xxs">{{ __('default.characteristics') }}</span>
 					</a>
+
+					@if (isset($video))
+					<a href="" class="" data-target="#video">
+						{{ __('default.video') }}
+					</a>
+					@endif
 				</div>
 				
 				<div class="tabs-field">
@@ -103,7 +115,11 @@ $product = App\Model\Shop\Product::where('page_id', $it->id)->with('images', 'op
 						</table>
 					</div>
 					
-					<div id="video"></div>
+					@if (isset($video))
+					<div id="video" style="display: block;">
+						{!! $video->value !!}
+					</div>
+					@endif
 				</div>
 			</div>
 		</div>

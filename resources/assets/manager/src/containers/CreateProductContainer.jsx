@@ -23,6 +23,7 @@ import PaperContentForm from '../components/PaperContentForm/PaperContentForm.js
 import PaperProductForm from '../components/PaperProductForm/PaperProductForm.jsx';
 import PaperImageVariable from '../components/PaperImageVariable/PaperImageVariable.jsx';
 import PaperOptionVariable from '../components/PaperOptionVariable/PaperOptionVariable.jsx';
+import PaperAutoProductForm from '../components/PaperAutoProductForm/PaperAutoProductForm.jsx';
 
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
@@ -48,9 +49,20 @@ class CreateProductContainers extends Component {
 		data: {},
 		productID: 0,
 		completed: 100,
+		currencies: [],
 		resultDialog: false,
 		resultDialogTitle: '',
 		resultDialogMessage: ''
+	}
+
+	/**
+	 * Invoked just before mounting occurs
+	 * @fires componentWillMount
+	 */
+	componentWillMount() {
+		this.currenciesDataGetRequest(() => {
+			this.setState({ completed: 100 });
+		});
 	}
 
 	/**
@@ -63,6 +75,14 @@ class CreateProductContainers extends Component {
 		this.setState({ 
 			completed: 0 
 		});
+
+		if (typeof data['categories_line'] === 'undefined' || !data['categories_line']) {
+			data['categories_line'] = '0';
+		}
+
+		if (typeof data['product_auto_prices'] !== 'undefined' && data['product_auto_prices']) {
+			data['product_auto_prices'] = JSON.stringify(data['product_auto_prices']);
+		}
 
 		App.api({
 			type: 'POST',
@@ -103,6 +123,30 @@ class CreateProductContainers extends Component {
 	}
 
 	/**
+	 * Get currencies data from server
+	 * @param {Function} callback
+	 */
+	currenciesDataGetRequest(callback = () => {}) {
+		this.setState({ 
+			completed: 0 
+		});
+
+		App.api({
+			type: 'GET',
+			name: 'all',
+			model: 'currency',
+			success: (r) => {
+				r = JSON.parse(r.response);
+				if (r) {
+					this.setState({ 
+						currencies: r,
+					}, () => callback());
+				}
+			}
+		})
+	}
+
+	/**
 	 * Render component
 	 * @return {Object} jsx object
 	 */
@@ -113,6 +157,7 @@ class CreateProductContainers extends Component {
 			data, 
 			completed,
 			productID,
+			currencies,
 			resultDialog, 
 			resultDialogTitle, 
 			resultDialogMessage
@@ -174,12 +219,29 @@ class CreateProductContainers extends Component {
 
 					<Grid item xs={3}>
 						<PaperProductForm
+							activePriceField={Boolean(data.auto_price)}
 							onPageSelected={value => {
 								data['page_id'] = value;
 								this.setState({ data });
 							}}
 							onContextSelected={value => {
 								data['context_id'] = value;
+								this.setState({ data });
+							}}
+							onStatusSelected={value => {
+								data['product_status_id'] = value;
+								this.setState({ data });
+							}}
+							onWarrantyInputed={value => {
+								data['warranty'] = value;
+								this.setState({ data });
+							}}
+							onCategoryInputed={value => {
+								if (value) {
+									data['categories_line'] = value;
+								}
+								else data['categories_line'] = '0';
+								
 								this.setState({ data });
 							}}
 							onPriceInputed={value => {
@@ -197,6 +259,28 @@ class CreateProductContainers extends Component {
 								data['active'] = Number(value);
 								this.setState({ data });
 							}} />
+
+						{completed === 100 && <PaperAutoProductForm
+							currencies={currencies}
+							data={data.product_auto_prices}
+							activeDefaultValue={Boolean(data.auto_price)}
+							onActiveChanged={value => {
+								data['auto_price'] = Number(value);
+								this.setState({ data });
+							}}
+							onDataUpdated={value => {
+								data.product_auto_prices = Object.assign({
+									fes_price: 0,
+									prime_price: 0,
+									profit_price: 0,
+									delivery_price: 0,
+									fes_price_currency: currencies[0].id,
+									prime_price_currency: currencies[0].id,
+									profit_price_currency: currencies[0].id,
+									delivery_price_currency: currencies[0].id,
+								}, value);
+								this.setState({ data });
+							}} />}
 					</Grid>
 				</Grid>
 

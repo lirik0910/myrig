@@ -43,7 +43,7 @@ foreach ($products as $item) {
 							<div class="table-cell table-product"></div>
 							
 							<div class="table-cell table-middle">
-								{{ __('cart.total') }}
+								{{ __('default.total') }}
 							</div>
 							
 							<div class="table-cell total-price">
@@ -51,7 +51,9 @@ foreach ($products as $item) {
 									<strong>
 										<span class="woocommerce-Price-amount amount">
 											<span class="woocommerce-Price-currencySymbol">&#36;</span>
-											<span id="total-default-cost">{{ number_format($total, 2, '.', '') }}</span>
+											<span id="total-default-cost">
+												{{ number_format($total, 2, '.', '') }}
+											</span>
 										</span>
 									</strong>
 								</span>
@@ -63,7 +65,7 @@ foreach ($products as $item) {
 							</div>
 
 							<div class="table-cell table-submit">
-								<a href="{{ url($get($settings['site.checkout_page'])->link) }}" class="btn-default" data-wpel-link="internal">{{ __('cart.make_order') }}</a>
+								<a href="{{ url($get($settings['site.checkout_page'])->link) }}" class="btn-default" data-wpel-link="internal">{{ __('default.make_order') }}</a>
 							</div>
 							
 							<div class="table-cell table-close"></div>

@@ -272,7 +272,9 @@ class PageController extends Controller
 
 		/** Delete slashes from start and end of the link line
 		 */
-		$data['link'] = rtrim(ltrim($data['link'], '/\\'), '/\\');
+		if ($data['link'] !== '/') {
+			$data['link'] = rtrim(ltrim($data['link'], '/\\'), '/\\');
+		}
 
 		/** Try get page model
 		 */

@@ -8,9 +8,9 @@
 import App from '../../../App.js';
 import React, { Component } from 'react';
 
+import Input from 'material-ui/Input';
 import { FormControl } from 'material-ui/Form';
 import Typography from 'material-ui/Typography';
-import Input from 'material-ui/Input';
 import SelectContainer from './SelectContainer/SelectContainer.jsx';
 
 import styles from './styles.js';
