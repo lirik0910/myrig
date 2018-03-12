@@ -75,8 +75,8 @@ class ProductController extends Controller
 			$all = Product::select();
 			$all = $this->setParamsBeforeQuery($all, $request->all());
 			$all->with('images')
-				->with('options')
-				->with('category');
+				//->with('category')
+				->with('options');
 		}
 		catch (\Exception $e) {
 			logger($e->getMessage());
@@ -173,6 +173,30 @@ class ProductController extends Controller
 			}
 		}
 
+		/** Add product with categories
+		 */
+		if ($request->input('categories_line') !== null) {
+			try {
+				$model->setCategories($request->input('categories_line'));
+			}
+			catch (\Exception $e) {
+				logger($e->getMessage());
+				return response()->json(['message' => $e->getMessage()], 422);
+			}
+		}
+
+		/** Add or update auto price settings
+		 */
+		if ($request->input('product_auto_prices')) {
+			try {
+				$model->setAutoPrices($request->input('product_auto_prices'));
+			}
+			catch (\Exception $e) {
+				logger($e->getMessage());
+				return response()->json(['message' => $e->getMessage()], 422);
+			}
+		}
+
 		return response()->json($model, 200);
 	}
 
@@ -187,7 +211,8 @@ class ProductController extends Controller
 		 */
 		try {
 			$model = Product::with('options')
-				->with('category')
+				->with('categories')
+				->with('productAutoPrices')
 				->with('images')
 				->find($id);
 		}
@@ -260,11 +285,35 @@ class ProductController extends Controller
 			}
 		}
 
+		/** Add product with categories
+		 */
+		if ($request->input('categories_line') !== null) {
+			try {
+				$model->setCategories($request->input('categories_line'));
+			}
+			catch (\Exception $e) {
+				logger($e->getMessage());
+				return response()->json(['message' => $e->getMessage()], 422);
+			}
+		}
+
 		/** Add custom options to product
 		 */
 		if ($request->input('options')) {
 			try {
 				$model->setOptions($request->input('options'));
+			}
+			catch (\Exception $e) {
+				logger($e->getMessage());
+				return response()->json(['message' => $e->getMessage()], 422);
+			}
+		}
+
+		/** Add or update auto price settings
+		 */
+		if ($request->input('product_auto_prices')) {
+			try {
+				$model->setAutoPrices($request->input('product_auto_prices'));
 			}
 			catch (\Exception $e) {
 				logger($e->getMessage());

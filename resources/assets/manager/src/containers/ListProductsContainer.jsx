@@ -283,6 +283,9 @@ class ListProductsContainer extends Component {
 								'images',
 								'options',
 								'category',
+								'product_status_id',
+								'auto_price',
+								'warranty'
 							]}
 							columns={[{
 								id: 'id', 

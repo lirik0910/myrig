@@ -56,6 +56,10 @@ class CreateOrderDeliveryTable extends Migration
 				->nullable(true)
 				->comment('Customer country');
 
+			$table->string('state', 255)
+				->nullable(true)
+				->comment('Customer region');
+
 			$table->string('address', 255)
 				->nullable(true)
 				->comment('Customer address');

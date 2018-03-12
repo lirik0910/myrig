@@ -3,23 +3,6 @@
 @section('content')
     <main>
         <div class="main-back"></div>
-        <script>
-            var width = $(window).width();
-            var cont = $('.container').outerWidth();
-            var margin = (width - cont) / 2;
-            var wM = cont * 33.333333 / 100 + margin;
-            if (width > 767) {
-                $('.main-back').css('left', wM + 'px');
-            } else {
-                $('.main-back').css('left', '0px');
-            }
-
-
-
-
-        </script>
-
-
         <div class="content single-article">
             <div class="container">
                 <div class="row">
@@ -46,7 +29,7 @@
                                         <div class="miners">
                                             <div class="calculator-form--item">
                                                 <div class="width-60">
-                                                    <select id="device" name="device">
+                                                    <select id="device" name="device" class="calc-select">
                                                         <option value="hide" >Устройство</option>
                                                         <option value="" data-hr="0">Ручной ввод</option>
                                                         <option  data-currency="BTC,BCH" data-hr="4.73" data-en="1.43" value="ANTMINER S7 4.7Th/s">ANTMINER S7 4.7Th/s</option>
@@ -75,7 +58,7 @@
                                                 <input type="number" step="0.01" class="quantity width-60 hash" name="hash" placeholder="Введите хешрейт"  >
 
                                                 <div class="width-33 cur-LTC-ul">
-                                                    <select id="ghs" name="powers">
+                                                    <select id="ghs" name="powers" class="calc-select">
 
                                                         <option  value="0.001" selected >TH/s</option>
 
@@ -88,7 +71,7 @@
                                         <div class="calculator-form--item kvtch">
                                             <input type="number"  step="0.01" class="quantity width-60 energy" name="energy" placeholder="Энергопотребление"   >
                                             <div class="width-33">
-                                                <select  disabled >
+                                                <select  disabled class="calc-select">
                                                     <option value="hide" >кВт/ч</option>
 
                                                 </select>
@@ -111,7 +94,7 @@
                                         <div class="calculator-form--item">
 
                                             <div class="">
-                                                <select id="rialto" name="days">
+                                                <select id="rialto" name="days" class="calc-select">
                                                     <option value="hide">Расчетный период</option>
                                                     <option value="1" selected>1 день</option>
                                                     <option value="31" >1 месяц</option>

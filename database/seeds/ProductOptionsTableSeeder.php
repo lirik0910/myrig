@@ -12,7 +12,6 @@ class ProductOptionsTableSeeder extends Seeder
 	public function run()
 	{
 		$video = App\Model\Shop\ProductOptionType::where('title', 'video')->first();
-		$status = App\Model\Shop\ProductOptionType::where('title', 'status')->first();
 		$warranty = App\Model\Shop\ProductOptionType::where('title', 'warranty')->first();
 		$secondary = App\Model\Shop\ProductOptionType::where('title', 'secondary')->first();
 		$recoupment = App\Model\Shop\ProductOptionType::where('title', 'recoupment')->first();
@@ -77,27 +76,6 @@ class ProductOptionsTableSeeder extends Seeder
 			'value' => '6 kg',
 		]);
 
-		App\Model\Shop\ProductOption::create([
-			'product_id' => $product->id,
-			'type_id' => $warranty->id,
-			'name' => 'Warranty',
-			'value' => 'Extended warranty 180 days',
-		]);
-
-		App\Model\Shop\ProductOption::create([
-			'product_id' => $product->id,
-			'type_id' => $recoupment->id,
-			'name' => 'Recoupment',
-			'value' => 'Recoupment 264 days',
-		]);
-
-		App\Model\Shop\ProductOption::create([
-			'product_id' => $product->id,
-			'type_id' => $status->id,
-			'name' => 'Status',
-			'value' => 'Pre-order',
-		]);
-
 		$product = App\Model\Shop\Product::whereHas('page', function ($q) {
 			$q->where('link', 'product/antminer-s9-13-5th-s');
 		})->first();
@@ -159,27 +137,6 @@ class ProductOptionsTableSeeder extends Seeder
 
 		App\Model\Shop\ProductOption::create([
 			'product_id' => $product->id,
-			'type_id' => $warranty->id,
-			'name' => 'Warranty',
-			'value' => 'Extended warranty 180 days',
-		]);
-
-		App\Model\Shop\ProductOption::create([
-			'product_id' => $product->id,
-			'type_id' => $recoupment->id,
-			'name' => 'Recoupment',
-			'value' => 'Recoupment 334 days',
-		]);
-
-		App\Model\Shop\ProductOption::create([
-			'product_id' => $product->id,
-			'type_id' => $status->id,
-			'name' => 'Status',
-			'value' => 'In stock',
-		]);
-
-		App\Model\Shop\ProductOption::create([
-			'product_id' => $product->id,
 			'type_id' => $video->id,
 			'name' => 'Video',
 			'value' => '<iframe width="560" height="315" src="https://www.youtube.com/embed/-yfUQsg9ntQ" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>',
@@ -230,27 +187,6 @@ class ProductOptionsTableSeeder extends Seeder
 			'value' => 'from 0 ° C to 40 ° C',
 		]);
 
-		App\Model\Shop\ProductOption::create([
-			'product_id' => $product->id,
-			'type_id' => $warranty->id,
-			'name' => 'Warranty',
-			'value' => 'Extended warranty 180 days',
-		]);
-
-		App\Model\Shop\ProductOption::create([
-			'product_id' => $product->id,
-			'type_id' => $recoupment->id,
-			'name' => 'Recoupment',
-			'value' => 'Recoupment 387 days',
-		]);
-
-		App\Model\Shop\ProductOption::create([
-			'product_id' => $product->id,
-			'type_id' => $status->id,
-			'name' => 'Status',
-			'value' => 'In stock',
-		]);
-
 		$product = App\Model\Shop\Product::whereHas('page', function ($q) {
 			$q->where('link', 'product/myrig1660');
 		})->first();
@@ -280,27 +216,6 @@ class ProductOptionsTableSeeder extends Seeder
 			'type_id' => $characteristic->id,
 			'name' => 'Dimensions',
 			'value' => '40mm x 107mm x 280mm',
-		]);
-
-		App\Model\Shop\ProductOption::create([
-			'product_id' => $product->id,
-			'type_id' => $warranty->id,
-			'name' => 'Warranty',
-			'value' => 'Extended warranty 365 days',
-		]);
-
-		App\Model\Shop\ProductOption::create([
-			'product_id' => $product->id,
-			'type_id' => $status->id,
-			'name' => 'Status',
-			'value' => 'In stock',
-		]);
-
-		App\Model\Shop\ProductOption::create([
-			'product_id' => $product->id,
-			'type_id' => $secondary->id,
-			'name' => '',
-			'value' => '',
 		]);
 
 		$product = App\Model\Shop\Product::whereHas('page', function ($q) {
@@ -395,202 +310,6 @@ class ProductOptionsTableSeeder extends Seeder
 			'type_id' => $characteristic->id,
 			'name' => 'Weight',
 			'value' => '148 grams',
-		]);
-
-		App\Model\Shop\ProductOption::create([
-			'product_id' => $product->id,
-			'type_id' => $warranty->id,
-			'name' => 'Warranty',
-			'value' => 'Extended warranty 365 days',
-		]);
-
-		App\Model\Shop\ProductOption::create([
-			'product_id' => $product->id,
-			'type_id' => $status->id,
-			'name' => 'Status',
-			'value' => 'In stock',
-		]);
-
-		App\Model\Shop\ProductOption::create([
-			'product_id' => $product->id,
-			'type_id' => $secondary->id,
-			'name' => '',
-			'value' => '',
-		]);
-
-		$product = App\Model\Shop\Product::whereHas('page', function ($q) {
-			$q->where('link', 'product/plata-upravlenia-d3-l3');
-		})->first();
-		App\Model\Shop\ProductOption::create([
-			'product_id' => $product->id,
-			'type_id' => $warranty->id,
-			'name' => 'Warranty',
-			'value' => 'Extended warranty 90 days',
-		]);
-
-		App\Model\Shop\ProductOption::create([
-			'product_id' => $product->id,
-			'type_id' => $status->id,
-			'name' => 'Status',
-			'value' => 'In stock',
-		]);
-
-		App\Model\Shop\ProductOption::create([
-			'product_id' => $product->id,
-			'type_id' => $secondary->id,
-			'name' => '',
-			'value' => '',
-		]);
-
-		$product = App\Model\Shop\Product::whereHas('page', function ($q) {
-			$q->where('link', 'product/fan_6000rpm');
-		})->first();
-		App\Model\Shop\ProductOption::create([
-			'product_id' => $product->id,
-			'type_id' => $characteristic->id,
-			'name' => 'Revolutions',
-			'value' => '6000 Rpm',
-		]);
-
-		App\Model\Shop\ProductOption::create([
-			'product_id' => $product->id,
-			'type_id' => $warranty->id,
-			'name' => 'Warranty',
-			'value' => 'Extended warranty 90 days',
-		]);
-
-		App\Model\Shop\ProductOption::create([
-			'product_id' => $product->id,
-			'type_id' => $status->id,
-			'name' => 'Status',
-			'value' => 'Not available',
-		]);
-
-		App\Model\Shop\ProductOption::create([
-			'product_id' => $product->id,
-			'type_id' => $secondary->id,
-			'name' => '',
-			'value' => '',
-		]);
-
-		$product = App\Model\Shop\Product::whereHas('page', function ($q) {
-			$q->where('link', 'product/beagle-bone-s9-t9-r4');
-		})->first();
-		App\Model\Shop\ProductOption::create([
-			'product_id' => $product->id,
-			'type_id' => $warranty->id,
-			'name' => 'Warranty',
-			'value' => 'Extended warranty 90 days',
-		]);
-
-		App\Model\Shop\ProductOption::create([
-			'product_id' => $product->id,
-			'type_id' => $status->id,
-			'name' => 'Status',
-			'value' => 'In stock',
-		]);
-
-		App\Model\Shop\ProductOption::create([
-			'product_id' => $product->id,
-			'type_id' => $secondary->id,
-			'name' => '',
-			'value' => '',
-		]);
-
-		$product = App\Model\Shop\Product::whereHas('page', function ($q) {
-			$q->where('link', 'product/data_18pin');
-		})->first();
-		App\Model\Shop\ProductOption::create([
-			'product_id' => $product->id,
-			'type_id' => $warranty->id,
-			'name' => 'Warranty',
-			'value' => 'Extended warranty 90 days',
-		]);
-
-		App\Model\Shop\ProductOption::create([
-			'product_id' => $product->id,
-			'type_id' => $status->id,
-			'name' => 'Status',
-			'value' => 'In stock',
-		]);
-
-		App\Model\Shop\ProductOption::create([
-			'product_id' => $product->id,
-			'type_id' => $secondary->id,
-			'name' => '',
-			'value' => '',
-		]);
-
-		$product = App\Model\Shop\Product::whereHas('page', function ($q) {
-			$q->where('link', 'product/plata-upravleniya-s5-s7');
-		})->first();
-		App\Model\Shop\ProductOption::create([
-			'product_id' => $product->id,
-			'type_id' => $warranty->id,
-			'name' => 'Warranty',
-			'value' => 'Extended warranty 90 days',
-		]);
-
-		App\Model\Shop\ProductOption::create([
-			'product_id' => $product->id,
-			'type_id' => $status->id,
-			'name' => 'Status',
-			'value' => 'In stock',
-		]);
-
-		App\Model\Shop\ProductOption::create([
-			'product_id' => $product->id,
-			'type_id' => $secondary->id,
-			'name' => '',
-			'value' => '',
-		]);
-
-		$product = App\Model\Shop\Product::whereHas('page', function ($q) {
-			$q->where('link', 'product/plata-upravleniya-s9-t9-r4');
-		})->first();
-		App\Model\Shop\ProductOption::create([
-			'product_id' => $product->id,
-			'type_id' => $warranty->id,
-			'name' => 'Warranty',
-			'value' => 'Extended warranty 90 days',
-		]);
-
-		App\Model\Shop\ProductOption::create([
-			'product_id' => $product->id,
-			'type_id' => $status->id,
-			'name' => 'Status',
-			'value' => 'In stock',
-		]);
-
-		App\Model\Shop\ProductOption::create([
-			'product_id' => $product->id,
-			'type_id' => $secondary->id,
-			'name' => '',
-			'value' => '',
-		]);
-
-		$product = App\Model\Shop\Product::whereHas('page', function ($q) {
-			$q->where('link', 'product/beagle-s5-s7');
-		})->first();
-		App\Model\Shop\ProductOption::create([
-			'product_id' => $product->id,
-			'type_id' => $warranty->id,
-			'name' => 'Warranty',
-			'value' => 'Extended warranty 90 days',
-		]);
-
-		App\Model\Shop\ProductOption::create([
-			'product_id' => $product->id,
-			'type_id' => $status->id,
-			'name' => 'Status',
-			'value' => 'Not available',
-		]);
-
-		App\Model\Shop\ProductOption::create([
-			'product_id' => $product->id,
-			'type_id' => $secondary->id,
-			'name' => '',
-			'value' => '',
 		]);
 	}
 }

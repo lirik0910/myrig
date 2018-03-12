@@ -14,12 +14,13 @@
 <link rel='dns-prefetch' href='//s.w.org' />
 <link rel="stylesheet" href="{{ URL::asset('css/jquery.fancybox.min.css') }}">
 <link rel="stylesheet" href="{{ URL::asset('css/animate.css') }}">
+<link rel="stylesheet" href="{{ URL::asset('css/select2.css?ver=3.2.6') }}">
 <link rel="stylesheet" href="{{ URL::asset('css/owl.carousel.min.css') }}">
 <link rel="stylesheet" href="{{ URL::asset('css/owl.theme.default.min.css') }}">
 <link rel="stylesheet" href="{{ URL::asset('css/bootstrapvalidator.css') }}">
 <link rel="stylesheet" href="{{ URL::asset('css/intlTelInput.css') }}">
 <link rel="stylesheet" href="{{ URL::asset('css/calc.css') }}">
-<link rel="stylesheet" id="font-awesome-css"  href="{{ asset('css/fontawesome-free-5.0.8/web-fonts-with-css/css/fontawesome-all.min.css') }}" type="text/css" media="all" />
+<link rel="stylesheet" id="font-awesome-css"  href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css?ver=2.2.0" type="text/css" media="all" />
 <link rel="stylesheet" href="{{ URL::asset('css/style.css?ver=1.55') }}">
 <link rel="stylesheet" href="{{ URL::asset('css/bitmain.css?ver=1.55') }}">
 <link rel="stylesheet" id="dashicons-css"  href="{{ URL::asset('css/dashicons.min.css?ver=4.9.4') }}" type="text/css" media="all" />

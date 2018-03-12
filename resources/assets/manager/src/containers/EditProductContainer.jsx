@@ -24,6 +24,7 @@ import PaperContentForm from '../components/PaperContentForm/PaperContentForm.js
 import PaperProductForm from '../components/PaperProductForm/PaperProductForm.jsx';
 import PaperImageVariable from '../components/PaperImageVariable/PaperImageVariable.jsx';
 import PaperOptionVariable from '../components/PaperOptionVariable/PaperOptionVariable.jsx';
+import PaperAutoProductForm from '../components/PaperAutoProductForm/PaperAutoProductForm.jsx';
 
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
@@ -49,6 +50,7 @@ class EditProductContainer extends Component {
 		data: {},
 		images: [],
 		options: [],
+		currencies: [],
 		completed: 100,
 		deleteDialog: false,
 		resultDialog: false,
@@ -61,7 +63,9 @@ class EditProductContainer extends Component {
 	 * @fires componentWillMount
 	 */
 	componentWillMount() {
-		this.productDataGetRequest();
+		this.currenciesDataGetRequest(() => {
+			this.productDataGetRequest();
+		});
 	}
 
 	/**
@@ -87,8 +91,33 @@ class EditProductContainer extends Component {
 						data: r,
 						completed: 100,
 						images: r.images,
-						options: r.options
+						options: r.options,
+						categories_line: '0'
 					});
+				}
+			}
+		})
+	}
+
+	/**
+	 * Get currencies data from server
+	 * @param {Function} callback
+	 */
+	currenciesDataGetRequest(callback = () => {}) {
+		this.setState({ 
+			completed: 0 
+		});
+
+		App.api({
+			type: 'GET',
+			name: 'all',
+			model: 'currency',
+			success: (r) => {
+				r = JSON.parse(r.response);
+				if (r) {
+					this.setState({ 
+						currencies: r,
+					}, () => callback());
 				}
 			}
 		})
@@ -104,6 +133,10 @@ class EditProductContainer extends Component {
 		this.setState({ 
 			completed: 0 
 		});
+
+		if (typeof data['product_auto_prices'] !== 'undefined' && data['product_auto_prices']) {
+			data['product_auto_prices'] = JSON.stringify(data['product_auto_prices']);
+		}
 
 		App.api({
 			type: 'PUT',
@@ -196,6 +229,7 @@ class EditProductContainer extends Component {
 			images,
 			options,
 			completed,
+			currencies,
 			deleteDialog,
 			resultDialog, 
 			resultDialogTitle, 
@@ -268,15 +302,35 @@ class EditProductContainer extends Component {
 						{completed === 100 && <PaperProductForm
 							priceDefaultValue={data.price}
 							pageDefaultValue={data.page_id}
+							statusDefaultValue={data.product_status_id}
 							contextDefaultValue={data.context_id}
+							warrantyDefaultValue={data.warranty}
+							activePriceField={Boolean(data.auto_price)}
 							activeDefaultValue={Boolean(data.active)}
 							createDefaultValue={new Date(data.created_at)}
+							categoriesDefaultValue={data.categories}
 							onPageSelected={value => {
 								data['page_id'] = value;
 								this.setState({ data });
 							}}
 							onContextSelected={value => {
 								data['context_id'] = value;
+								this.setState({ data });
+							}}
+							onStatusSelected={value => {
+								data['product_status_id'] = value;
+								this.setState({ data });
+							}}
+							onWarrantyInputed={value => {
+								data['warranty'] = value;
+								this.setState({ data });
+							}}
+							onCategoryInputed={value => {
+								if (value) {
+									data['categories_line'] = value;
+								}
+								else data['categories_line'] = '0';
+
 								this.setState({ data });
 							}}
 							onPriceInputed={value => {
@@ -292,6 +346,19 @@ class EditProductContainer extends Component {
 							}}
 							onActiveChanged={value => {
 								data['active'] = Number(value);
+								this.setState({ data });
+							}} />}
+
+						{completed === 100 && <PaperAutoProductForm
+							currencies={currencies}
+							data={data.product_auto_prices}
+							activeDefaultValue={Boolean(data.auto_price)}
+							onActiveChanged={value => {
+								data['auto_price'] = Number(value);
+								this.setState({ data });
+							}}
+							onDataUpdated={value => {
+								data.product_auto_prices = value;
 								this.setState({ data });
 							}} />}
 					</Grid>

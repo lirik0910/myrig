@@ -9,10 +9,13 @@ import React, { Component } from 'react';
 
 import Paper from 'material-ui/Paper';
 import InputPrice from '../FormControl/InputPrice/InputPrice.jsx';
+import InputWarranty from '../FormControl/InputWarranty/InputWarranty.jsx';
 import SelectContext from '../FormControl/SelectContext/SelectContext.jsx';
 import CheckboxActive from '../FormControl/CheckboxActive/CheckboxActive.jsx';
 import InputSelectPage from '../FormControl/InputSelectPage/InputSelectPage.jsx';
 import InputDatePicker from '../FormControl/InputDatePicker/InputDatePicker.jsx';
+import SelectProductStatus from '../FormControl/SelectProductStatus/SelectProductStatus.jsx';
+import InputProductCategory from '../FormControl/InputProductCategory/InputProductCategory.jsx';
 
 import styles from './styles.js';
 import PropTypes from 'prop-types';
@@ -34,14 +37,41 @@ class PaperProductForm extends Component {
 		priceDefaultValue: '',
 		pageDefaultValue: null,
 		contextDefaultValue: 0,
+		statusDefaultValue: 0,
+		warrantyDefaultValue: null,
+		categoriesDefaultValue: null,
 		createDefaultValue: new Date(),
 		activeDefaultValue: true,
 		onPageSelected: () => {},
 		onPriceInputed: () => {},
 		onDateSelected: () => {},
 		onActiveChanged: () => {},
+		onStatusSelected: () => {},
 		onContextSelected: () => {},
+		onWarrantyInputed: () => {},
+		onCategoryInputed: () => {},
 		classes: PropTypes.object.isRequired,
+	}
+
+	/**
+	 * Get categories
+	 * @param {Array} data
+	 * @return {String}
+	 */
+	getCategoriesLine(data = []) {
+		var i,
+			line = '';
+
+		if (data) {
+			for (i = 0; i < data.length; i++) {
+				line += data[i].id +',';
+			}
+
+			if (line !== '') {
+				line = line.substring(0, line.length - 1);
+			}
+		}
+		return line;
 	}
 
 	/**
@@ -55,13 +85,20 @@ class PaperProductForm extends Component {
 			priceDefaultValue,
 			createDefaultValue,
 			activeDefaultValue,
-			contextDefaultValue
+			contextDefaultValue,
+			statusDefaultValue,
+			warrantyDefaultValue,
+			categoriesDefaultValue,
 		} = this.props;
 
 		return <Paper className={classes.paper}>
 				<SelectContext
 					defaultValue={contextDefaultValue}
 					onItemSelected={value => this.props.onContextSelected(value)} />
+
+				<SelectProductStatus
+					defaultValue={statusDefaultValue}
+					onItemSelected={value => this.props.onStatusSelected(value)} />
 
 				<InputSelectPage
 					title={'Page select'}
@@ -70,8 +107,19 @@ class PaperProductForm extends Component {
 					onItemSelected={value => this.props.onPageSelected(value)} />
 
 				<InputPrice
+					disabled={typeof this.props.activePriceField === 'undefined' ? 
+						false : 
+						!this.props.activePriceField}
 					defaultValue={priceDefaultValue}
 					onFieldInputed={value => this.props.onPriceInputed(value)} />
+
+				<InputWarranty
+					defaultValue={warrantyDefaultValue}
+					onFieldInputed={value => this.props.onWarrantyInputed(value)} />
+
+				<InputProductCategory
+					defaultValue={this.getCategoriesLine(categoriesDefaultValue)}
+					onItemSelected={value => this.props.onCategoryInputed(value)} />
 
 				<InputDatePicker
 					defaultValue={createDefaultValue}

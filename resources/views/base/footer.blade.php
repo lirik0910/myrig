@@ -105,7 +105,7 @@ $menu = $select('App\Model\Base\Page')
 							
 							@isset($contactsMulti['contactItems'])
 								@foreach ($contactsMulti['contactItems'] as $line)
-									<li class="@if($line['country'] == 'USA') active @endif">{{ __('shop.cont_' . $line['country'] ) }}
+									<li class="@if($line['country'] == 'USA') active @endif">{{ __('common.cont_' . $line['country'] ) }}
 										<div class="phone-area">
 											@if(isset($line['phone'])) {{ $line['phone'] }} @else support@myrig.com @endif
 										</div>
@@ -260,38 +260,44 @@ $menu = $select('App\Model\Base\Page')
 
 <script type="text/javascript">
 	var global = {
+		url: "{{env('APP_URL')}}",
 		app: {
 			connector: "{{ asset('connector') }}",
 			csrf: "{{ csrf_token() }}"
 		}
 	}
-</script>
-
-
-<link rel='stylesheet' id='font-awesome-css'  href='https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css?ver=2.2.0' type='text/css' media='all' />
-<script type='text/javascript' src='https://myrig.com.ua/wp-content/plugins/woocommerce/assets/js/frontend/cart-fragments.min.js?ver=3.2.6'></script>
-<script type='text/javascript' src="{{ asset('js/owl.carousel2.min.js?ver=1.12') }}"></script>
-<script type='text/javascript' src="{{ asset('js/intlTelInput.min.js?ver=1.12') }}"></script>
-<script type='text/javascript' src="{{ asset('js/jquery.fancybox.min.js?ver=1.12') }}"></script>
-<script type='text/javascript' src="{{ asset('js/bootstrapValidator.js?ver=1.12') }}"></script>
-<script type='text/javascript' src="{{ asset('js/script.js?ver=1.12') }}"></script>
-<script type='text/javascript' src="{{ asset('js/Chart.min.js?ver=1.12') }}"></script>
-<script type='text/javascript' src="{{ asset('js/actions.js?ver=1.12') }}"></script>
-<script type='text/javascript' src="{{ asset('js/calc.js?ver=1.12') }}"></script>
-<script type='text/javascript'>
-	/* <![CDATA[ */
-	var global = {
-		url: '{{env('APP_URL')}}',
-		app: {
-			connector: "{{ asset('connector') }}",
-			csrf: "{{ csrf_token() }}"
-		}
-	};
 	var calc = {};
-	/* ]]> */
 </script>
-<!-- <script type="text/javascript" src="{{ asset('design/build/js/common.js') }}"></script>
-<script type="text/javascript" src="{{ asset('design/build/js/shop.js') }}"></script> -->
+
+
+<!-- <script type="text/javascript" src='https://myrig.com.ua/wp-content/plugins/woocommerce/assets/js/frontend/cart-fragments.min.js?ver=3.2.6'></script> -->
+<script type="text/javascript" src="{{ asset('js/owl.carousel2.min.js?ver=1.12') }}"></script>
+<script type="text/javascript" src="{{ asset('js/intlTelInput.min.js?ver=1.12') }}"></script>
+<script type="text/javascript" src="{{ asset('js/jquery.fancybox.min.js?ver=1.12') }}"></script>
+<script type="text/javascript" src="{{ asset('js/bootstrapValidator.js?ver=1.12') }}"></script>
+<script type="text/javascript" src="{{ asset('js/script.js?ver=1.12') }}"></script>
+<script type="text/javascript" src="{{ asset('js/Chart.min.js?ver=1.12') }}"></script>
+<script type="text/javascript" src="{{ asset('js/actions.js?ver=1.12') }}"></script>
+<script type="text/javascript" src="{{ asset('js/calc.js?ver=1.12') }}"></script>
+
+<script type="text/javascript" src="{{ asset('js/selectWoo.full.min.js?ver=1.0.1') }}"></script>
+<script type="text/javascript" src="{{ asset('js/country-select.min.js?ver=3.2.6') }}"></script>
+<script type="text/javascript">
+var wc_country_select_params = {
+	"countries": "[]",
+	"i18n_select_state_text": "",
+	"i18n_no_matches": "{{ __('default.no_matches') }}",
+	"i18n_ajax_error": "",
+	"i18n_input_too_short_1": "",
+	"i18n_input_too_short_n": "",
+	"i18n_input_too_long_1": "",
+	"i18n_input_too_long_n": "",
+	"i18n_selection_too_long_1": "",
+	"i18n_selection_too_long_n": "",
+	"i18n_load_more": "",
+	"i18n_searching": ""
+};
+</script>
 
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-103386645-1"></script>
 <script>

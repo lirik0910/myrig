@@ -81,14 +81,15 @@ Route::prefix('api')
 		});
 
 		Route::prefix('product')->group(function() {
+			Route::get('/statuses', 'Manager\Shop\ProductStatusController@all');
+			Route::get('/option/type', 'Manager\Shop\ProductOptionTypeController@all');
+
 			Route::get('/', 'Manager\Shop\ProductController@all');
 			Route::get('/{id}', 'Manager\Shop\ProductController@one');
 			Route::post('/', 'Manager\Shop\ProductController@create');
 			Route::put('/{id}', 'Manager\Shop\ProductController@update');
 			Route::delete('/', 'Manager\Shop\ProductController@deleteMany');
 			Route::delete('/{id}', 'Manager\Shop\ProductController@delete');
-
-			Route::get('/option/type', 'Manager\Shop\ProductOptionTypeController@all');
 		});
 
 		Route::prefix('context')->group(function() {
@@ -101,6 +102,14 @@ Route::prefix('api')
 
 		Route::prefix('status')->group(function() {
 			Route::get('/', 'Manager\Shop\OrderStatusController@all');
+		});
+
+		Route::prefix('category')->group(function() {
+			Route::get('/', 'Manager\Shop\CategoryController@all');
+		});
+
+		Route::prefix('currency')->group(function() {
+			Route::get('/', 'Manager\Shop\CurrencyController@all');
 		});
 
 		Route::prefix('delivery')->group(function() {

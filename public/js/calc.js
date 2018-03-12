@@ -282,7 +282,7 @@
 
 			select();
 		 	function select() {
-				$('select').each(function() {
+				$('select.calc-select').each(function() {
 				var $this = $(this),
 					numberOfOptions = $(this).children('option').length;
 					
