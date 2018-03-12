@@ -8,13 +8,15 @@
 <div class="main-back">
 	<div id="mapField" data-img="https://myrig.com.ua/wp-content/themes/bitmain/img/contact_logo.png?v=1" data-lat="39.768294" data-lng="-104.90209679999998"></div>
 </div>
-
+@php
+//var_dump($multi['Contact items'])
+@endphp
 <section class="content contact">
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-4">
-				@isset($multi['contactItems'])
-					@foreach($multi['contactItems'] as $var)
+				@isset($multi['Contact items'])
+					@foreach($multi['Contact items'] as $var)
 						<div class="contact-item @if($loop->first)head-contact-item @endif" data-lat="{{$var['lat']}}" data-lng="{{$var['lng']}}">
 							<p><!--:ru--></p>
 							<div class="country">{{$var['country']}}</div>

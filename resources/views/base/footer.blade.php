@@ -101,13 +101,14 @@ $menu = $select('App\Model\Base\Page')
 								if (isset($contacts)) {
 									$contactsMulti = App\Model\Base\MultiVariableContent::multiConvert($contacts->view->variables);
 								}
+							//var_dump($contactsMulti)
 							@endphp
 							
-							@isset($contactsMulti['contactItems'])
-								@foreach ($contactsMulti['contactItems'] as $line)
+							@isset($contactsMulti['Contact items'])
+								@foreach ($contactsMulti['Contact items'] as $line)
 									<li class="@if($line['country'] == 'USA') active @endif">{{ __('shop.cont_' . $line['country'] ) }}
 										<div class="phone-area">
-											@if(isset($line['phone'])) {{ $line['phone'] }} @else support@myrig.com @endif
+											@if(isset($line['phone']) && $line['phone']) {{ $line['phone'] }} @else support@myrig.com @endif
 										</div>
 									</li>
 								@endforeach

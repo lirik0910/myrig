@@ -116,9 +116,9 @@ class ClientAuthController
             } else {
                 echo "notvalid";
 
-                echo("<pre>");
+                /*echo("<pre>");
                 print_r($reply);
-                echo("</pre>");
+                echo("</pre>");*/
 
                 $this->notvalid = 1;
             }
@@ -141,8 +141,8 @@ class ClientAuthController
         } else {
             $ssohomeappurl = urlencode($this->homeappurl);
             if (!$this->notvalid){
-                Redirector::away('https://panel.myrig.com/ssoappurl/'.$ssohomeappurl);
-                echo "Logged out, sign in <a href='https://panel.myrig.com/ssoappurl/$ssohomeappurl'>here</a>";
+                return redirect()->away('https://panel.myrig.com/ssoappurl/'.$ssohomeappurl);
+                //echo "Logged out, sign in <a href='https://panel.myrig.com/ssoappurl/$ssohomeappurl'>here</a>";
             }
         }
     }

@@ -2,6 +2,8 @@
 
 @php 
 $products = $select('\App\Model\Shop\Product')->with('page', 'options', 'images')->get();
+//$products = $products->groupBy('category_id');
+//var_dump($products); die;
 @endphp
 
 @section('content')
