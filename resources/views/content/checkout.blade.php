@@ -210,22 +210,22 @@ foreach ($products as $item) {
 				<div class="col-sm-8">
 					<div class="article-text">
 						<div class="widget wDelivery">
-							<h3 id="order_review_heading">Ваш заказ</h3>
+							<h3 id="order_review_heading">Your order</h3>
 
 							<div id="product-checkout" class="shop_table woocommerce-checkout-review-order-table">
 								<div class="table-like">
 									<div class="table-row table-header">
-										<div class="table-cell table-cell-title">Фото</div>
-										<div class="table-cell">Название</div>
-										<div class="table-cell">Кол-во</div>
-										<div class="table-cell table-cell-status">Стоимость</div>
+										<div class="table-cell table-cell-title">Photo</div>
+										<div class="table-cell">Name</div>
+										<div class="table-cell">Count</div>
+										<div class="table-cell table-cell-status">Cost</div>
 									</div>
                                     @foreach($products as $item)
                                         @include('parts.checkout.item_products_list', ['item' => $item, 'cart' => $inCart])
                                     @endforeach
 									<div class="table-row delivery-wrap">
 										<div class="table-cell">
-											<span class="delivery">Доставка</span>
+											<span class="delivery">Delivery</span>
 										</div>
 
 										<div class="table-cell">
@@ -243,7 +243,7 @@ foreach ($products as $item) {
 															<li>
 																<input type="radio" name="delivery" data-index="0"  value="Самовывоз" class="shipping_method"  />
 
-																<label for="shipping_method_0_local_pickup15">Самовывоз</label>
+																<label for="shipping_method_0_local_pickup15">Self shipment</label>
 															</li>
 														</ul>
 													</td>
