@@ -18,7 +18,7 @@ class OrderController extends Controller
      */
     public function create(Request $request){
         if (!session()->get('client')){
-            $ssohomeappurl = urlencode($_SERVER['APP_URL'].'/sso-login');
+            $ssohomeappurl = urlencode($_SERVER['APP_URL'].'/checkout');
             return redirect()->away('https://panel.myrig.com/ssoappurl/'.$ssohomeappurl);
             //return response()->json(['success' => false, 'message' => 'Please login for continue']);
         }
