@@ -15,8 +15,8 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-4">
-				@isset($multi['Contact items'])
-					@foreach($multi['Contact items'] as $var)
+				@isset($multi['contactItems'])
+					@foreach($multi['contactItems'] as $var)
 						<div class="contact-item @if($loop->first)head-contact-item @endif" data-lat="{{$var['lat']}}" data-lng="{{$var['lng']}}">
 							<p><!--:ru--></p>
 							<div class="country">{{$var['country']}}</div>

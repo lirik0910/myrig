@@ -408,7 +408,7 @@ class CalculateController
 
         $calc['min'] = min($result);
         $calc['max'] = max($result);
-        //$calc = ($calc['min'] + $calc['max']) / 2;
+        $calc = ($calc['min'] + $calc['max']) / 2;
         $calc = $calc[$minmax];
 
         if ($valuechange != 0)

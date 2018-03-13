@@ -98,7 +98,7 @@ foreach ($product->options as $item) {
 						{!! $product->description !!}
 					</div>
 				
-					<div id="details" style="display: block;">
+					<div id="details" style="">
 						<table class="shop_attributes">
 							<tbody>
 							@foreach ($product->options as $item)

@@ -313,4 +313,46 @@ jQuery(document).ready(function ($) {
 			});
 		})
 	});
-})
+
+	$('#checkout_form').on('submit', function (e) {
+        e.preventDefault();
+        $(this).bootstrapValidator({
+/*            preventSubmit: true,
+            message: 'This value is not valid',
+            feedbackIcons: {
+                valid: 'dashicons dashicons-yes',
+                invalid: 'dashicons dashicons-no',
+                validating: 'dashicon dashicon-refresh'
+            },
+            fields: {
+
+
+            }*/
+        });
+        var data = {};
+        $(this).find('input').each(function () {
+            var elm = $(this);
+            if(elm.attr('type') == 'radio' && !elm.attr('checked')){
+                return;
+            }
+            data[elm.attr('name')] = elm.val();
+        });
+        data[$(this).find('select').attr('name')] = $(this).find('select').val();
+        data[$(this).find('textarea').attr('name')] = $(this).find('textarea').val();
+        //console.log(data);
+        $.ajax({
+            url: $(this).attr('action'),
+            data: data,
+            type: 'POST',
+            success: function (response) {
+                if(response.success){
+                    window.location = global.url + 'shop';
+                }
+            }
+        });
+    });
+
+	$('#order_success_close').on('click', function () {
+        window.location = global.url + 'shop'
+    });
+});

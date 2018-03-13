@@ -1,6 +1,10 @@
 @extends('layouts.app')
 
-@php 
+@php
+$deliveries = $select('App\Model\Shop\Delivery')->where('active', 1)->get();
+$paymentTypes = $select('App\Model\Shop\PaymentType')->get();
+$user = $select('App\Model\Base\User')->where('email', session()->get('client'))->with('attributes')->first();
+//var_dump($user->attributes);
 $count = 0;
 foreach ($inCart as $i) {
 	$count += (int) $i;
@@ -26,6 +30,8 @@ foreach ($products as $item) {
 		$total += $inCart[$item->id] * $item->price;
 	}
 }
+
+
 @endphp
 
 @section('content')
@@ -68,8 +74,9 @@ foreach ($products as $item) {
 
 	<div class="row widgets">
 		<div class="woocommerce">
-			<form name="checkout" method="post" class="checkout woocommerce-checkout" action="{{ url($it->link) }}" enctype="multipart/form-data">
-				<div class="col-sm-4" id="customer_details">
+			<form id="checkout_form" name="checkout" method="post" class="checkout woocommerce-checkout" action="{{ url($it->link) }}" enctype="multipart/form-data">
+                {{csrf_field()}}
+                <div class="col-sm-4" id="customer_details">
 					<div class="widget wPay">
 						<div class="woocommerce-billing-fields">
 							<h3>{{ __('default.checkout_title') }}</h3>
@@ -81,7 +88,7 @@ foreach ($products as $item) {
 										<abbr class="required" title="{{ __('default.required') }}">*</abbr>
 									</label>
 
-									<input type="text" class="input-text form-control" name="first_name" id="billing_first_name" placeholder="{{ __('default.first_name_label') }}" autocomplete="given-name" autofocus="autofocus" />
+									<input type="text" class="input-text form-control" name="first_name" id="billing_first_name" placeholder="{{ __('default.first_name_label') }}" value="@isset($user->attributes->fname) {{$user->attributes->fname}} @endisset" autocomplete="given-name" autofocus="autofocus" />
 								</p>
 
 								<p class="form-row form-row-last form-group validate-required" id="billing_last_name_field" data-priority="20">
@@ -90,7 +97,7 @@ foreach ($products as $item) {
 										<abbr class="required" title="{{ __('default.required') }}">*</abbr>
 									</label>
 
-									<input type="text" class="input-text form-control" name="last_name" id="billing_last_name" placeholder="{{ __('default.last_name_label') }}" autocomplete="family-name" />
+									<input type="text" class="input-text form-control" name="last_name" id="billing_last_name" placeholder="{{ __('default.last_name_label') }}" value="@isset($user->attributes->lname) {{$user->attributes->lname}} @endisset" autocomplete="family-name" />
 								</p>
 
 								<p class="form-row form-row-full validate-required woocommerce-validated" id="billing_country_field" data-priority="40">
@@ -122,7 +129,7 @@ foreach ($products as $item) {
 										{{ __('default.address_label') }}
 										<abbr class="required" title="{{ __('default.required') }}">*</abbr></label>
 
-									<input type="text" class="input-text form-control" name="address" placeholder="{{ __('default.address_label') }}" autocomplete="address-line1" />
+									<input type="text" class="input-text form-control" name="address" placeholder="{{ __('default.address_label') }}" value="@isset($user->attributes->address) {{$user->attributes->address}} @endisset" autocomplete="address-line1" />
 								</p>
 
 								<p class="form-row form-row-wide address-field form-group validate-required" data-priority="70">
@@ -146,7 +153,7 @@ foreach ($products as $item) {
 										{{ __('default.phone_label') }}
 										<abbr class="required" title="{{ __('default.required') }}">*</abbr></label>
 
-									<input type="tel" class="input-text form-control" name="phone" id="billing_phone" placeholder="{{ __('default.phone_input') }}" autocomplete="tel" />
+									<input type="tel" class="input-text form-control" name="phone" id="billing_phone" placeholder="Phone {{ __('default.phone_input') }}" value="@isset($user->attributes->phone) {{$user->attributes->phone}} @endisset" autocomplete="tel" />
 								</p>
 
 								<p class="form-row form-row-last form-group validate-required validate-email" id="billing_email_field" data-priority="110">
@@ -154,7 +161,7 @@ foreach ($products as $item) {
 										{{ __('default.email_label') }}
 										<abbr class="required" title="{{ __('default.required') }}">*</abbr></label>
 
-									<input type="email" class="input-text form-control" name="email" id="billing_email" placeholder="{{ __('default.email_label') }}" autocomplete="email username" />
+									<input type="email" class="input-text form-control" name="email" id="billing_email" placeholder="{{ __('default.email_label') }}" value="@isset($user->email) {{$user->email}} @endisset" autocomplete="email username" />
 								</p>
 							</div>
 						</div>
@@ -164,25 +171,17 @@ foreach ($products as $item) {
 
 							<div id="payment" class="woocommerce-checkout-payment">
 								<ul class="wc_payment_methods payment_methods methods">
-									<li class="wc_payment_method payment_method_cheque">
-										<input id="payment_type" type="radio" class="input-radio" name="payment_method" value="cheque"  checked='checked' data-order_button_text="" />
+                                    @foreach($paymentTypes as $type)
+                                        <li class="payment_method">
+                                            <input type="radio" class="payment-type" id="payment_method_{{$loop->iteration}}" name="payment_method" data-id="{{$type->id}}" value="{{$type->id}}"  @if($loop->first) checked='checked' @endif data-order_button_text="" style="display: inline" />
 
-										<label for="payment_method_cheque">Bitcoin</label>
+                                            <label for="payment_method_cheque">{{$type->title}}</label>
 
-										<div class="payment_box payment_method_cheque">
-											<p>{{ __('default.payment_methods_description') }}</p>
-										</div>
-									</li>
-
-									<li class="wc_payment_method payment_method_cod">
-										<input id="payment_method_cod" type="radio" class="input-radio" name="payment_method" value="cod"  data-order_button_text="" />
-
-										<label for="payment_method_cod">Оплата наличными </label>
-
-										<div class="payment_box payment_method_cod" style="display:none;">
-											<p>С вами свяжется наш менеджер для уточнения деталей</p>
-										</div>
-									</li>
+                                            <div class="payment_box" style="display:none;">
+                                                <p>{{ __('default.payment_methods_description') }}</p>
+                                            </div>
+                                        </li>
+                                    @endforeach
 								</ul>
 
 								<div class="form-row place-order">
@@ -197,11 +196,11 @@ foreach ($products as $item) {
 
 						<div class="woocommerce-shipping-fields"></div>
 						<div class="woocommerce-additional-fields">
-							<h3>Доп. информация</h3>
+							<h3>Additional info</h3>
 
 							<div class="woocommerce-additional-fields__field-wrapper">
 								<p class="form-row form-row-full" id="order_comments_field" data-priority="">
-									<textarea name="order_comments" class="input-text form-control" id="order_comments" placeholder="В примечании указывайте номер отделения (Для Новой Почты)"  rows="2" cols="5"></textarea>
+									<textarea name="comment" class="input-text form-control" id="order_comments" placeholder="Post office number etc"  rows="2" cols="5"></textarea>
 								</p>
 							</div>
 						</div>
@@ -221,88 +220,9 @@ foreach ($products as $item) {
 										<div class="table-cell">Кол-во</div>
 										<div class="table-cell table-cell-status">Стоимость</div>
 									</div>
-
-									<div class="table-row">
-										<div class="table-cell foto">
-											<img src="https://myrig.com.ua/wp-content/uploads/2018/01/dragonmint-1-100x100.png" title="">
-										</div>
-
-										<div class="table-cell product">
-											<a href="https://myrig.com.ua/product/dragonmint-16-th-s-2/" data-wpel-link="internal">DRAGONMINT T1 16TH/s</a>
-
-											<span class="hidden-md">Цена товара</span>
-											<span class="table-price">$2810</span>
-
-											<span class="table-bitcoin">0.3248
-												<i class="fa fa-bitcoin"></i>
-											</span>
-										</div>
-
-										<div class="table-cell number">
-											<span class="hidden-md">Количество</span>
-											<span> 17 шт.</span>
-										</div>
-
-										<div class="table-cell number-price">
-											<span class="hidden-md">Стоимость</span>
-											<span class="table-price">$47770</span>
-											<span class="table-bitcoin">5.5222
-												<i class="fa fa-bitcoin"></i>
-											</span>
-										</div>
-									</div>
-
-									<div class="table-row">
-										<div class="table-cell foto">
-											<img src="https://myrig.com.ua/wp-content/uploads/2018/01/D3-100x100.png" title="">
-										</div>
-
-										<div class="table-cell product">
-											<a href="https://myrig.com.ua/product/antminer-d3-19-3gh-s/" data-wpel-link="internal">ANTMINER D3 19.3GH/s</a>
-											<span class="hidden-md">Цена товара</span>
-											<span class="table-price">$1500</span>
-											<span class="table-bitcoin">0.1734<i class="fa fa-bitcoin"></i></span>
-										</div>
-
-										<div class="table-cell number">
-											<span class="hidden-md">Количество</span>
-											<span> 2 шт.</span>
-										</div>
-
-										<div class="table-cell number-price">
-											<span class="hidden-md">Стоимость</span>
-											<span class="table-price">$3000</span>
-											<span class="table-bitcoin">0.3468<i class="fa fa-bitcoin"></i></span>
-										</div>
-									</div>
-
-									<div class="table-row">
-										<div class="table-cell foto">
-											<img src="https://myrig.com.ua/wp-content/uploads/2018/01/S9-100x100.png" title="">
-										</div>
-
-										<div class="table-cell product">
-											<a href="https://myrig.com.ua/product/antminer-s9-13-5th-s/" data-wpel-link="internal">ANTMINER S9 13.5TH/s</a>
-
-											<span class="hidden-md">Цена товара</span>
-											<span class="table-price">$3000</span>
-											<span class="table-bitcoin">0.3468<i class="fa fa-bitcoin"></i></span>
-										</div>
-
-										<div class="table-cell number">
-											<span class="hidden-md">Количество</span>
-											<span>2 шт.</span>
-										</div>
-
-										<div class="table-cell number-price">
-											<span class="hidden-md">Стоимость</span>
-											<span class="table-price">$6000</span>
-											<span class="table-bitcoin">0.6936
-												<i class="fa fa-bitcoin"></i>
-											</span>
-										</div>
-									</div>
-
+                                    @foreach($products as $item)
+                                        @include('parts.checkout.item_products_list', ['item' => $item, 'cart' => $inCart])
+                                    @endforeach
 									<div class="table-row delivery-wrap">
 										<div class="table-cell">
 											<span class="delivery">Доставка</span>
@@ -313,14 +233,15 @@ foreach ($products as $item) {
 												<tr class="shipping">
 													<td data-title="Доставка">
 														<ul id="shipping_method">
-															<li>
-																<input type="radio" name="shipping_method[0]" data-index="0" id="shipping_method_0_booster_custom_shipping_w_zones16" value="booster_custom_shipping_w_zones:16" class="shipping_method"  checked='checked' />
+                                                            @foreach($deliveries as $delivery)
+                                                                <li>
+																<input type="radio" name="delivery" id="shipping_method_{{$loop->iteration}}" data-index="{{$delivery->id}}" value="{{$delivery->id}}" class="shipping_method"  @if($loop->first) checked='checked' @endif/>
 
-																<label for="shipping_method_0_booster_custom_shipping_w_zones16">Новая Почта</label>
+																<label for id="shipping_method_{{$loop->iteration}}">{{$delivery->title}}</label>
 															</li>
-
+                                                            @endforeach
 															<li>
-																<input type="radio" name="shipping_method[0]" data-index="0" id="shipping_method_0_local_pickup15" value="local_pickup:15" class="shipping_method"  />
+																<input type="radio" name="delivery" data-index="0"  value="Самовывоз" class="shipping_method"  />
 
 																<label for="shipping_method_0_local_pickup15">Самовывоз</label>
 															</li>
@@ -345,7 +266,7 @@ foreach ($products as $item) {
 											<span class="table-price">
 											 	<strong>
 											 		<span class="woocommerce-Price-amount amount">
-											 			<span class="woocommerce-Price-currencySymbol">&#36;</span>56770.00
+											 			<span class="woocommerce-Price-currencySymbol">&#36;</span>{{ number_format($total, 2, '.', '') }}
 											 		</span>
 											 	</strong>
 											 </span>
@@ -355,13 +276,14 @@ foreach ($products as $item) {
 								</div>
 							</div>
 
-							<input type="submit" class="button alt" name="woocommerce_checkout_place_order" id="place_order" value="Подтверждаю заказ" data-value="Подтверждаю заказ" />
+							<input type="submit" class="button alt" name="woocommerce_checkout_place_order" id="place_order" value="Approve order" data-value="Approve order" />
 						</div>
 					</div>
 				</div>
 			</form>
 		</div>
 	</div>
+    <div class="output-message" style="display: none"></div>
 
 </div>
 </section>

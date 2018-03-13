@@ -30,6 +30,7 @@ Route::post('/create_ticket', 'ZendeskController@createTicket');
 Route::post('/calc', 'CalculateController@checkMethod');
 Route::get('/calc_btn', 'CalculateController@checkMethod');
 Route::get('/sso-login/{ssotoken?}', 'ClientAuthController@login');
+Route::post('/checkout', 'OrderController@create');
 Route::post('/back_call', function (Request $request){
 	$data = $request->post();
 	try{

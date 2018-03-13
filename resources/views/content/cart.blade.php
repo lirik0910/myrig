@@ -2,7 +2,7 @@
 
 @if (count($inCart) === 0)
 	<script type="text/javascript">
-		window.location = "{{ url($get($settings['site.shop_page'])->link) }}";
+		window.location = "{{ url('shop')/*$get($settings['site.shop_page'])->link)*/ }}";
 	</script>
 
 @else

@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
+    protected $guarded = [];
 	/**
 	 * Get order status
 	 * @return boolean
