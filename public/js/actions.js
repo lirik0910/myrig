@@ -189,14 +189,14 @@ jQuery(document).ready(function ($) {
 				var fd = new FormData($(this)[0]);
 				 
 				$.ajax({
-					url: global.url,
+					url: global.url + 'profile',
 					data: fd,
 					type: 'POST',
 					//dataType: 'json',
 					contentType: false,
 					processData: false,
 					success: function(data) {
-	 				  
+
 						that.next('.result').text(that.next('.result').attr('data-text'));
 						$('body').animate({
 							'opacity': 1
@@ -313,4 +313,45 @@ jQuery(document).ready(function ($) {
 			});
 		})
 	});
-})
+
+	$('#checkout_form').on('submit', function (e) {
+        e.preventDefault();
+        $(this).bootstrapValidator({
+            preventSubmit: true,
+            message: 'This value is not valid',
+            feedbackIcons: {
+                valid: 'dashicons dashicons-yes',
+                invalid: 'dashicons dashicons-no',
+                validating: 'dashicon dashicon-refresh'
+            },
+            fields: {
+
+            }
+        });
+        var data = {};
+        $(this).find('input').each(function () {
+            var elm = $(this);
+            if(elm.attr('type') == 'radio' && !elm.attr('checked')){
+                return;
+            }
+            data[elm.attr('name')] = elm.val();
+        });
+        data[$(this).find('select').attr('name')] = $(this).find('select').val();
+        data[$(this).find('textarea').attr('name')] = $(this).find('textarea').val();
+
+        $.ajax({
+            url: $(this).attr('action'),
+            data: data,
+            type: 'POST',
+            success: function (response) {
+                if(response.success){
+                    window.location = global.url + 'checkout/order_success/' + response.order.number;
+                } else{
+                    if(!response.session){
+                        window.location = global.url + 'sso-login';
+                    }
+                }
+            }
+        });
+    });
+});

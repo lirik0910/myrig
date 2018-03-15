@@ -74,7 +74,7 @@ $menu = $select('App\Model\Base\Page')
 						@endforeach
 					</ul>
 
-					<ul id="menu-footer-menu-2" class="">
+					<!--<ul id="menu-footer-menu-2" class="">
 						<li id="menu-item-820" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-820">
 							<a href="https://myrig.com.ua/dostavka-otgruzka/" data-wpel-link="internal">Shipping and shipment</a>
 						</li>
@@ -86,7 +86,7 @@ $menu = $select('App\Model\Base\Page')
 						<li id="menu-item-4714" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-4714">
 							<a href="https://myrig.com.ua/how-to-repair/" data-wpel-link="internal">Packing of items</a>
 						</li>
-					</ul>
+					</ul>-->
 				</div>
 				
 				<div class="col-sm-12 col-md-3 col-lg-3">
@@ -101,13 +101,14 @@ $menu = $select('App\Model\Base\Page')
 								if (isset($contacts)) {
 									$contactsMulti = App\Model\Base\MultiVariableContent::multiConvert($contacts->view->variables);
 								}
+							//var_dump($contactsMulti)
 							@endphp
-							
-							@isset($contactsMulti['contactItems'])
-								@foreach ($contactsMulti['contactItems'] as $line)
+
+							@isset($contactsMulti['Contact items'])
+								@foreach ($contactsMulti['Contact items'] as $line)
 									<li class="@if($line['country'] == 'USA') active @endif">{{ __('common.cont_' . $line['country'] ) }}
 										<div class="phone-area">
-											@if(isset($line['phone'])) {{ $line['phone'] }} @else support@myrig.com @endif
+											@if(isset($line['phone']) && $line['phone']) {{ $line['phone'] }} @else support@myrig.com @endif
 										</div>
 									</li>
 								@endforeach
@@ -256,6 +257,12 @@ $menu = $select('App\Model\Base\Page')
 			</div>
 		</div>
 	</div>
+</div>
+
+<div id="response-message" class="modal-body result" style="display: none">
+    <div class="success-header">Order was successfully create!</div>
+    <div class="result-body">Manager contact with you.</div>
+    <button id="order_success_close" data-fancybox-close>Okay</button>
 </div>
 
 <script type="text/javascript">

@@ -30,7 +30,7 @@
             @foreach($news as $article)
                 <div class="article-row row">
                     <div class="col-sm-4">
-                        <h2><a href="{{url($article->link)}}" data-wpel-link="internal">{{$article->title}}</a></h2>
+                        <h2 style="word-wrap: break-word"><a href="{{url($article->link)}}" data-wpel-link="internal">{{$article->title}}</a></h2>
                         <div class="date">@php echo date('d F', strtotime($article->created_at)) @endphp<i class="fa fa-eye"></i>0</div>
                     </div>
                     <div class="article-content col-sm-8">

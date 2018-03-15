@@ -8,7 +8,9 @@
 <div class="main-back">
 	<div id="mapField" data-img="https://myrig.com.ua/wp-content/themes/bitmain/img/contact_logo.png?v=1" data-lat="39.768294" data-lng="-104.90209679999998"></div>
 </div>
-
+@php
+//var_dump($multi['Contact items'])
+@endphp
 <section class="content contact">
 	<div class="container">
 		<div class="row">

@@ -21,13 +21,14 @@ class PagesTableSeeder extends Seeder
 		$view404 = App\Model\Base\View::where('title', '404')->firstOrFail();
 		$viewShop = App\Model\Base\View::where('title', 'Shop')->firstorFail();
 		$viewArticleList = App\Model\Base\View::where('title', 'ArticleList')->firstOrFail();
-		$viewService = App\Model\Base\View::where('title', 'Service')->firstorFail();
+		$viewService = App\Model\Base\View::where('title', 'Service')->firstOrFail();
 		$viewContacts = App\Model\Base\View::where('title', 'Contacts')->firstOrFail();
-		$viewCart = App\Model\Base\View::where('title', 'Cart')->firstorFail();
+		$viewCart = App\Model\Base\View::where('title', 'Cart')->firstOrFail();
 		$viewProfile = App\Model\Base\View::where('title', 'Profile')->firstOrFail();
 		$viewCalc = App\Model\Base\View::where('title', 'Calculator')->firstOrFail();
 		$viewProduct = App\Model\Base\View::where('title', 'Product')->firstOrFail();
 		$viewCheckout = App\Model\Base\View::where('title', 'Checkout')->firstOrFail();
+		$viewCheckoutSuccess = App\Model\Base\View::where('title', 'Checkout success')->firstOrFail();
 
 		/** Get default user
 		 */
@@ -335,5 +336,18 @@ class PagesTableSeeder extends Seeder
 			'createdby_id' => $user->id,
 			'updatedby_id' => $user->id
 		]);
+
+        $checkout_success = App\Model\Base\Page::create([
+            'parent_id' => 0,
+            'context_id' => $context->id,
+            'view_id' => $viewCheckoutSuccess->id,
+            'link' => 'checkout/order_success',
+            'title' => 'Checkout success',
+            'description' => 'Checkout success page',
+            'introtext' => '',
+            'content' => '',
+            'createdby_id' => $user->id,
+            'updatedby_id' => $user->id
+        ]);
 	}
 }

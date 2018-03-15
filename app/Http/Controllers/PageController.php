@@ -13,14 +13,17 @@ class PageController extends Controller
 	/**
 	 * Get page
 	 * @param Request $request
+     * @param (Integer) $number Number of order for success page
 	 */
-	public function view(Request $request)
+	public function view(Request $request, $number = null)
 	{
 		$link = $request->decodedPath();
 		$link = $link === '/' ?
 			$link :
 			rtrim(ltrim($link, '/\\'), '/\\');
-
+        if($number){
+            $link = explode('/'. $number, $link)[0];
+        }
 		if ($page = Page::where('link', $link)->with('view')->first()) {
 			return view($page->view->path, [
 				'it' => $page,
@@ -30,6 +33,7 @@ class PageController extends Controller
 				'settings' => $this->settings(),
 				'inCart' => $this->getInSessionCart(),
 				'multi' => MultiVariableContent::multiConvert($page->view->variables),
+                'number' => $number
 			]);
 		}
 

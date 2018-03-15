@@ -25,7 +25,7 @@
                 <div class="row">
                     <div class="col-sm-4">
                         <a href="{{url($parent_link->link)}}" class="article-link" data-wpel-link="internal"><i class="article-arrow"></i>Back to list</a>
-                        <h1>{{$it->title}}</h1>
+                        <h1 style="word-wrap: break-word">{{$it->title}}</h1>
                         <div class="date">@php echo date('d F', strtotime($it->created_at)) @endphp<i class="fa fa-eye"></i>10</div>
                         <div class="article-social">
                             <div class="a2a_kit">

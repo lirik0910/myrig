@@ -39,6 +39,12 @@ class MultiVariablesTableSeeder extends Seeder
 			'variable_id' => $variable->id
 		]);
 
+        App\Model\Base\MultiVariable::create([
+            'title' => 'telegram',
+            'description' => 'Telegram',
+            'variable_id' => $variable->id
+        ]);
+
 		App\Model\Base\MultiVariable::create([
 			'title' => 'lat',
 			'description' => 'Lat',

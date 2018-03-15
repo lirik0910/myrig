@@ -15,6 +15,11 @@ class ProductsTableSeeder extends Seeder
 		 */
 		$context = App\Model\Base\Context::where('title', 'Base')->firstOrFail();
 
+		/** Get default category
+		 */
+/*		$mainCategory = App\Model\Shop\ProductCategory::where('title', 'Base')->firstOrFail();
+		$subCategory = App\Model\Shop\ProductCategory::where('title', 'Additional')->firstOrFail();*/
+
 		/** Get default vendor
 		 */
 		$vendor = App\Model\Shop\Vendor::where('title', 'Base')->firstOrFail();
@@ -26,6 +31,7 @@ class ProductsTableSeeder extends Seeder
 		$page = App\Model\Base\Page::where('link', 'product/dragonmint-16-th-s-2')->first();
 		App\Model\Shop\Product::create([
 			'context_id' => $context->id,
+			//'category_id' => $mainCategory->id,
 			'vendor_id' => $vendor->id,
 			'page_id' => $page->id,
 			'warranty' => '180 days',
@@ -43,6 +49,7 @@ class ProductsTableSeeder extends Seeder
 		$page = App\Model\Base\Page::where('link', 'product/antminer-s9-13-5th-s')->first();
 		App\Model\Shop\Product::create([
 			'context_id' => $context->id,
+			//'category_id' => $mainCategory->id,
 			'vendor_id' => $vendor->id,
 			'page_id' => $page->id,
 			'product_status_id' => $inStockStatus->id,
@@ -62,6 +69,7 @@ class ProductsTableSeeder extends Seeder
 		$page = App\Model\Base\Page::where('link', 'product/antminer-d3-19-3gh-s')->first();
 		App\Model\Shop\Product::create([
 			'context_id' => $context->id,
+			//'category_id' => $mainCategory->id,
 			'vendor_id' => $vendor->id,
 			'page_id' => $page->id,
 			'product_status_id' => $inStockStatus->id,
@@ -87,6 +95,7 @@ class ProductsTableSeeder extends Seeder
 		$page = App\Model\Base\Page::where('link', 'product/myrig1660')->first();
 		App\Model\Shop\Product::create([
 			'context_id' => $context->id,
+			//'category_id' => $subCategory->id,
 			'vendor_id' => $vendor->id,
 			'page_id' => $page->id,
 			'warranty' => '365 days',
@@ -102,6 +111,7 @@ class ProductsTableSeeder extends Seeder
 		$page = App\Model\Base\Page::where('link', 'product/antrouter-r1')->first();
 		App\Model\Shop\Product::create([
 			'context_id' => $context->id,
+			//'category_id' => $subCategory->id,
 			'vendor_id' => $vendor->id,
 			'page_id' => $page->id,
 			'warranty' => '365 days',
@@ -117,6 +127,7 @@ class ProductsTableSeeder extends Seeder
 		$page = App\Model\Base\Page::where('link', 'product/plata-upravlenia-d3-l3')->first();
 		App\Model\Shop\Product::create([
 			'context_id' => $context->id,
+			//'category_id' => $subCategory->id,
 			'vendor_id' => $vendor->id,
 			'page_id' => $page->id,
 			'warranty' => '90 days',
@@ -130,6 +141,7 @@ class ProductsTableSeeder extends Seeder
 		$page = App\Model\Base\Page::where('link', 'product/fan_6000rpm')->first();
 		App\Model\Shop\Product::create([
 			'context_id' => $context->id,
+			//'category_id' => $subCategory->id,
 			'vendor_id' => $vendor->id,
 			'page_id' => $page->id,
 			'warranty' => '90 days',
@@ -148,6 +160,7 @@ class ProductsTableSeeder extends Seeder
 		$page = App\Model\Base\Page::where('link', 'product/beagle-bone-s9-t9-r4')->first();
 		App\Model\Shop\Product::create([
 			'context_id' => $context->id,
+			//'category_id' => $subCategory->id,
 			'vendor_id' => $vendor->id,
 			'page_id' => $page->id,
 			'warranty' => '90 days',
@@ -165,6 +178,7 @@ class ProductsTableSeeder extends Seeder
 		$page = App\Model\Base\Page::where('link', 'product/data_18pin')->first();
 		App\Model\Shop\Product::create([
 			'context_id' => $context->id,
+			//'category_id' => $subCategory->id,
 			'vendor_id' => $vendor->id,
 			'page_id' => $page->id,
 			'warranty' => '90 days',
@@ -185,6 +199,7 @@ class ProductsTableSeeder extends Seeder
 		$page = App\Model\Base\Page::where('link', 'product/plata-upravleniya-s5-s7')->first();
 		App\Model\Shop\Product::create([
 			'context_id' => $context->id,
+			//'category_id' => $subCategory->id,
 			'vendor_id' => $vendor->id,
 			'page_id' => $page->id,
 			'warranty' => '90 days',
@@ -201,6 +216,7 @@ class ProductsTableSeeder extends Seeder
 		$page = App\Model\Base\Page::where('link', 'product/plata-upravleniya-s9-t9-r4')->first();
 		App\Model\Shop\Product::create([
 			'context_id' => $context->id,
+			//'category_id' => $subCategory->id,
 			'vendor_id' => $vendor->id,
 			'page_id' => $page->id,
 			'warranty' => '90 days',
@@ -218,6 +234,7 @@ class ProductsTableSeeder extends Seeder
 		$page = App\Model\Base\Page::where('link', 'product/beagle-s5-s7')->first();
 		App\Model\Shop\Product::create([
 			'context_id' => $context->id,
+			//'category_id' => $subCategory->id,
 			'vendor_id' => $vendor->id,
 			'page_id' => $page->id,
 			'warranty' => '90 days',

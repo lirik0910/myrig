@@ -22,14 +22,14 @@ Route::prefix('connector')
 		Route::post('cart', 'SessionController@add');
 		Route::delete('cart', 'SessionController@delete');
 });
-
-//Route::redirect('/profile', 'PageController@view');
-
+Route::post('profile', 'ClientAuthController@updateClientAttributes');
+Route::get('checkout/order_success/{number}', 'PageController@view');
 Route::get('/shop/{id}', 'ProductController@getContent');
 Route::post('/create_ticket', 'ZendeskController@createTicket');
 Route::post('/calc', 'CalculateController@checkMethod');
 Route::get('/calc_btn', 'CalculateController@checkMethod');
 Route::get('/sso-login/{ssotoken?}', 'ClientAuthController@login');
+Route::post('/checkout', 'OrderController@create');
 Route::post('/back_call', function (Request $request){
 	$data = $request->post();
 	try{

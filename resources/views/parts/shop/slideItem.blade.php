@@ -15,7 +15,7 @@
 		<div class="tag tag-no">{{ $item->productStatus->description }}</div>
 	@endif
 
-	<div class="tag tag tag-waranty">{{ __('shop.warranty') }} {{ $item->warranty }}</div>
+	<div class="tag tag tag-waranty">{{ __('default.warranty') }} {{ $item->warranty }}</div>
 
 	<div class="related-price">
 		<div>
@@ -47,18 +47,18 @@
 		</span>
 
 		@if (isset($inCart[$item->id]))
-			<p data-success="{{ __('shop.added') }}" data-add="{{ __('shop.to_cart') }}" data-id="{{ $item->id }}" class="btn-default intocarts">
-				<span>{{ __('shop.added') }}</span>
+			<p data-success="{{ __('shop.added') }}" data-add="{{ __('default.to_cart') }}" data-id="{{ $item->id }}" class="btn-default intocarts">
+				<span>{{ __('default.added') }}</span>
 				<i class="fa fa-spin fa-refresh" style="display: none"></i>
 			</p>
 		@elseif ($item->productStatus->title === 'not-available')
 			<p class="btn-default disabled">
-				<span>{{ __('shop.added') }}</span>
+				<span>{{ __('default.added') }}</span>
 				<i class="fa fa-spin fa-refresh" style="display: none"></i>
 			</p>
 		@else
-			<p data-success="{{ __('shop.added') }}" data-add="{{ __('shop.to_cart') }}" data-id="{{ $item->id }}" class="btn-default addtocarts">
-				<span>{{ __('shop.to_cart') }}</span>
+			<p data-success="{{ __('default.added') }}" data-add="{{ __('default.to_cart') }}" data-id="{{ $item->id }}" class="btn-default addtocarts">
+				<span>{{ __('default.to_cart') }}</span>
 				<i class="fa fa-spin fa-refresh" style="display: none"></i>
 			</p>
 		@endif
