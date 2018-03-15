@@ -136,7 +136,7 @@ class Header extends Component {
 					</Toolbar>
 				</AppBar>
 				
-				<form action={App.url +'/logout'} 
+				<form action={App.name() +'/logout'} 
 					method="POST" 
 					id="logour-form"
 					style={{display: 'none'}}>
