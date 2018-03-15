@@ -171,4 +171,11 @@ class ClientAuthController
         $password = bcrypt($password);
         return $password;
     }
+
+    /*
+     * Update client user attributes
+     */
+    public function updateClientAttributes(Request $request){
+        var_dump($request); die;
+    }
 }

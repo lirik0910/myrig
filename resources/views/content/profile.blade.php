@@ -41,6 +41,7 @@
                         <div class="article-text">
                             <div id="personalF">
                                 <form id="personalForm" action="#">
+                                    {{csrf_field()}}
                                     <div class="form-group">
 
                                         <input type="text" value="{{$user->attributes->fname}}" name="first_name" placeholder="Имя" class="form-control full-width" required="required" data-bv-message=" "/>

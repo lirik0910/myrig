@@ -189,14 +189,14 @@ jQuery(document).ready(function ($) {
 				var fd = new FormData($(this)[0]);
 				 
 				$.ajax({
-					url: global.url,
+					url: global.url + 'profile',
 					data: fd,
 					type: 'POST',
 					//dataType: 'json',
 					contentType: false,
 					processData: false,
 					success: function(data) {
-	 				  
+
 						that.next('.result').text(that.next('.result').attr('data-text'));
 						$('body').animate({
 							'opacity': 1
@@ -346,10 +346,11 @@ jQuery(document).ready(function ($) {
             success: function (response) {
                 if(response.success){
                     window.location = global.url + 'checkout/order_success/' + response.order.number;
+                } else{
+                    if(!response.session){
+                        window.location = global.url + 'sso-login';
+                    }
                 }
-                if(!response.session){
-                    window.location = global.url + 'sso-login';
-				}
             }
         });
     });

@@ -22,7 +22,7 @@ Route::prefix('connector')
 		Route::post('cart', 'SessionController@add');
 		Route::delete('cart', 'SessionController@delete');
 });
-
+Route::post('profile', 'ClientAuthController@updateClientAttributes');
 Route::get('checkout/order_success/{number}', 'PageController@view');
 Route::get('/shop/{id}', 'ProductController@getContent');
 Route::post('/create_ticket', 'ZendeskController@createTicket');

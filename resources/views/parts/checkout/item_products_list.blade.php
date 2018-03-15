@@ -17,7 +17,7 @@
         <a href="https://myrig.com.ua/product/dragonmint-16-th-s-2/" data-wpel-link="internal">{{$item->title}}</a>
 
         <span class="hidden-md">Цена товара</span>
-        <span class="table-price">{{$item->price}}</span>
+        <span class="table-price">${{$item->price}}</span>
 
         <span class="table-bitcoin">0.3248<i class="fa fa-bitcoin"></i></span>
     </div>
