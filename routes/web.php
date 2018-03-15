@@ -23,8 +23,7 @@ Route::prefix('connector')
 		Route::delete('cart', 'SessionController@delete');
 });
 
-//Route::redirect('/profile', 'PageController@view');
-
+Route::get('checkout/order_success/{number}', 'PageController@view');
 Route::get('/shop/{id}', 'ProductController@getContent');
 Route::post('/create_ticket', 'ZendeskController@createTicket');
 Route::post('/calc', 'CalculateController@checkMethod');

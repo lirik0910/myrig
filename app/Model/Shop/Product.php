@@ -56,6 +56,15 @@ class Product extends Model
 		return $this->belongsTo(ProductStatus::class);
 	}
 
+    /**
+     * Get orders items with this product
+     * @return boolean
+     */
+    public function orderItems()
+    {
+        return $this->hasMany(OrderItem::class);
+    }
+
 	/**
 	 * Get auto prices settings
 	 * @return boolean

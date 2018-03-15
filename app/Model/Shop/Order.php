@@ -54,6 +54,24 @@ class Order extends Model
 		return $this->hasOne(OrderDelivery::class);
 	}
 
+    /**
+     * Get order items
+     * @return boolean
+     */
+    public function orderItems()
+    {
+        return $this->hasMany(OrderItem::class);
+    }
+
+    /**
+     * Get order products
+     * @return boolean
+     */
+    public function products()
+    {
+        return $this->belongsToMany(Product::class, 'order_items', 'order_id', 'product_id')->withPivot('count');
+    }
+
 	/**
 	 * Get order products
 	 * @return boolean

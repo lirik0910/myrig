@@ -2,6 +2,7 @@
 
 namespace App\Model\Base;
 
+use App\Model\Shop\Order;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -44,4 +45,13 @@ class User extends Authenticatable
 	{
 		return $this->hasOne(UserAttribute::class);
 	}
+
+    /*
+    * Get user orders
+    * @return boolean
+    */
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
 }

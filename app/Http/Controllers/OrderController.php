@@ -18,13 +18,10 @@ class OrderController extends Controller
      */
     public function create(Request $request){
         if (!session()->get('client')){
-            $ssohomeappurl = urlencode($_SERVER['APP_URL'].'/sso-login');
-            return redirect()->away('https://panel.myrig.com/ssoappurl/'.$ssohomeappurl);
-            //return response()->json(['success' => false, 'message' => 'Please login for continue']);
+            return response()->json(['success' => false, 'session' => false]);//redirect()->to('sso-login');
         }
 
         $data = $request->post();
-        //var_dump($data); die;
         $user = User::where('email', session()->get('client'))->first();
         $context = Context::where('title', 'Base')->first();
 
@@ -43,8 +40,6 @@ class OrderController extends Controller
         if(!$paymentType){
             return response()->json(['success' => false, 'message' => 'Payment type with this ID is not exist']);
         }
-
-        //var_dump(Cart::calculateCartCost()); die;
 
         $order = new Order();
         $order->fill([
@@ -65,7 +60,7 @@ class OrderController extends Controller
             logger($e->getMessage());
             return response()->json(['success' => false, 'message' => $e->getMessage()], 422);
         }
-//var_dump($order); die;
+
         $order->orderDeliveries()->create([
             'order_id' => $order->id,
             'delivery_id' => $delivery->id,
@@ -81,11 +76,16 @@ class OrderController extends Controller
             'comment' => $data['comment']
         ]);
 
+        $cart = json_decode(session()->get('cart'), true);
+        foreach ($cart as $product => $count){
+            $order->orderItems()->create([
+                'order_id' => $order->id,
+                'product_id' => $product,
+                'count' => $count
+            ]);
+        }
+
         session()->forget('cart');
         return response()->json(['success' => true, 'order' => $order], 200);
-        //var_dump($order->orderDeliveries()); die;
-        //var_dump($request->post()); die;
     }
-
-
 }

@@ -317,7 +317,7 @@ jQuery(document).ready(function ($) {
 	$('#checkout_form').on('submit', function (e) {
         e.preventDefault();
         $(this).bootstrapValidator({
-/*            preventSubmit: true,
+            preventSubmit: true,
             message: 'This value is not valid',
             feedbackIcons: {
                 valid: 'dashicons dashicons-yes',
@@ -326,8 +326,7 @@ jQuery(document).ready(function ($) {
             },
             fields: {
 
-
-            }*/
+            }
         });
         var data = {};
         $(this).find('input').each(function () {
@@ -339,20 +338,19 @@ jQuery(document).ready(function ($) {
         });
         data[$(this).find('select').attr('name')] = $(this).find('select').val();
         data[$(this).find('textarea').attr('name')] = $(this).find('textarea').val();
-        //console.log(data);
+
         $.ajax({
             url: $(this).attr('action'),
             data: data,
             type: 'POST',
             success: function (response) {
                 if(response.success){
-                    window.location = global.url + 'shop';
+                    window.location = global.url + 'checkout/order_success/' + response.order.number;
                 }
+                if(!response.session){
+                    window.location = global.url + 'sso-login';
+				}
             }
         });
-    });
-
-	$('#order_success_close').on('click', function () {
-        window.location = global.url + 'shop'
     });
 });

@@ -88,7 +88,7 @@ foreach ($products as $item) {
 										<abbr class="required" title="{{ __('default.required') }}">*</abbr>
 									</label>
 
-									<input type="text" class="input-text form-control" name="first_name" id="billing_first_name" placeholder="{{ __('default.first_name_label') }}" value="@isset($user->attributes->fname) {{$user->attributes->fname}} @endisset" autocomplete="given-name" autofocus="autofocus" />
+									<input type="text" class="input-text form-control" name="first_name" id="billing_first_name" placeholder="{{ __('default.first_name_label') }}" value="@isset($user->attributes->fname) {{$user->attributes->fname}} @endisset" autocomplete="given-name" autofocus="autofocus" required />
 								</p>
 
 								<p class="form-row form-row-last form-group validate-required" id="billing_last_name_field" data-priority="20">
@@ -97,7 +97,7 @@ foreach ($products as $item) {
 										<abbr class="required" title="{{ __('default.required') }}">*</abbr>
 									</label>
 
-									<input type="text" class="input-text form-control" name="last_name" id="billing_last_name" placeholder="{{ __('default.last_name_label') }}" value="@isset($user->attributes->lname) {{$user->attributes->lname}} @endisset" autocomplete="family-name" />
+									<input type="text" class="input-text form-control" name="last_name" id="billing_last_name" placeholder="{{ __('default.last_name_label') }}" value="@isset($user->attributes->lname) {{$user->attributes->lname}} @endisset" autocomplete="family-name" required />
 								</p>
 
 								<p class="form-row form-row-full validate-required woocommerce-validated" id="billing_country_field" data-priority="40">
@@ -105,7 +105,7 @@ foreach ($products as $item) {
 										{{ __('default.country_label') }}
 										<abbr class="required" title="{{ __('default.required') }}">*</abbr></label>
 
-									<select name="country" id="billing_country" class="country_to_state country_select form-control select2-hidden-accessible" autocomplete="country">
+									<select name="country" id="billing_country" class="country_to_state country_select form-control select2-hidden-accessible" autocomplete="country" required>
 										<option value="">{{ __('default.select_country') }}</option>
 										<option value="AZ">{{ __('common.country_AZ') }}</option>
 										<option value="AM">{{ __('common.country_AM') }}</option>
@@ -129,7 +129,7 @@ foreach ($products as $item) {
 										{{ __('default.address_label') }}
 										<abbr class="required" title="{{ __('default.required') }}">*</abbr></label>
 
-									<input type="text" class="input-text form-control" name="address" placeholder="{{ __('default.address_label') }}" value="@isset($user->attributes->address) {{$user->attributes->address}} @endisset" autocomplete="address-line1" />
+									<input type="text" class="input-text form-control" name="address" placeholder="{{ __('default.address_label') }}" value="@isset($user->attributes->address) {{$user->attributes->address}} @endisset" autocomplete="address-line1" required />
 								</p>
 
 								<p class="form-row form-row-wide address-field form-group validate-required" data-priority="70">
@@ -137,7 +137,7 @@ foreach ($products as $item) {
 										{{ __('default.city_label') }}
 										<abbr class="required" title="{{ __('default.required') }}">*</abbr></label>
 
-									<input type="text" class="input-text form-control" name="city" placeholder="{{ __('default.city_label') }}" autocomplete="address-level2" />
+									<input type="text" class="input-text form-control" name="city" placeholder="{{ __('default.city_label') }}" autocomplete="address-level2" required />
 								</p>
 
 								<p class="form-row form-row-full validate-required validate-state" data-priority="80">
@@ -145,7 +145,7 @@ foreach ($products as $item) {
 										{{ __('default.region_label') }}
 										<abbr class="required" title="{{ __('default.required') }}">*</abbr></label>
 
-									<input type="text" class="input-text form-control" placeholder="{{ __('default.region_label') }}" name="state" autocomplete="address-level1" />
+									<input type="text" class="input-text form-control" placeholder="{{ __('default.region_label') }}" name="state" autocomplete="address-level1" required />
 								</p>
 
 								<p class="form-row form-row-first form-group validate-required validate-phone" id="billing_phone_field" data-priority="100" style="width: 100%; overflow: hidden;">
@@ -153,7 +153,7 @@ foreach ($products as $item) {
 										{{ __('default.phone_label') }}
 										<abbr class="required" title="{{ __('default.required') }}">*</abbr></label>
 
-									<input type="tel" class="input-text form-control" name="phone" id="billing_phone" placeholder="Phone {{ __('default.phone_input') }}" value="@isset($user->attributes->phone) {{$user->attributes->phone}} @endisset" autocomplete="tel" />
+									<input type="tel" class="input-text form-control" name="phone" id="billing_phone" placeholder="Phone {{ __('default.phone_input') }}" value="@isset($user->attributes->phone) {{$user->attributes->phone}} @endisset" autocomplete="tel" required />
 								</p>
 
 								<p class="form-row form-row-last form-group validate-required validate-email" id="billing_email_field" data-priority="110">
@@ -161,7 +161,7 @@ foreach ($products as $item) {
 										{{ __('default.email_label') }}
 										<abbr class="required" title="{{ __('default.required') }}">*</abbr></label>
 
-									<input type="email" class="input-text form-control" name="email" id="billing_email" placeholder="{{ __('default.email_label') }}" value="@isset($user->email) {{$user->email}} @endisset" autocomplete="email username" />
+									<input type="email" class="input-text form-control" name="email" id="billing_email" placeholder="{{ __('default.email_label') }}" value="@isset($user->email) {{$user->email}} @endisset" autocomplete="email username" required />
 								</p>
 							</div>
 						</div>
