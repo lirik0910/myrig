@@ -9,6 +9,7 @@ import React, { Component } from 'react';
 
 import Button from 'material-ui/Button';
 
+import Image from './Image.jsx';
 import draftToHtml from 'draftjs-to-html';
 import { Editor } from 'react-draft-wysiwyg';
 import { EditorState, convertToRaw, ContentState, convertFromHTML } from 'draft-js';
@@ -34,6 +35,7 @@ class EditorFieldItem extends Component {
 	 */
 	static defaultProps = {
 		data: {},
+		remove: true,
 		onImageSet: () => {},
 		onDeletedField: () => {},
 		onFieldInputed: () => {},
@@ -57,9 +59,9 @@ class EditorFieldItem extends Component {
 	 */
 	editorSetDefaultValue() {
 		let { data } = this.props;
+		let blocksFromHTML = convertFromHTML(data.content);
 
-		if (data.content) {
-			let blocksFromHTML = convertFromHTML(data.content);
+		if (data.content && blocksFromHTML.contentBlocks !== null) {
 			let state = ContentState.createFromBlockArray(
 				blocksFromHTML.contentBlocks,
 				blocksFromHTML.entityMap
@@ -88,22 +90,35 @@ class EditorFieldItem extends Component {
 	 */
 	render() {
 		let { editorState } = this.state;
-		let { classes, data } = this.props;
+		let { classes, data, remove } = this.props;
 
 		return <div>
 				<Editor 
 					editorState={editorState}
 					editorClassName={classes.contentEditor}
 					toolbarClassName={classes.toolbarEditor}
-					onEditorStateChange={this.onEditorStateChange} />
+					onEditorStateChange={this.onEditorStateChange}
+					toolbar={{
+						image: {
+							component: Image,
+						}
+					}} />
+
+				<textarea
+					disabled
+					style={{
+						display: 'none'
+					}}
+					name={typeof this.props.name !== 'undefined' && this.props.name}
+					value={draftToHtml(convertToRaw(editorState.getCurrentContent()))} />
 			
-				<Button 
+				{remove === true && <Button 
 					className={classes.button} 
 					variant="raised" 
 					color="secondary"
 					onClick={e => this.props.onDeletedField(data)}>
 						<Delete />{'Remove field'}
-				</Button>
+				</Button>}
 			</div>
 	}
 }

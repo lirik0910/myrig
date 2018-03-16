@@ -6,12 +6,6 @@
 <div class="main-back"></div>
 
 @php
-$mainProducts = $select('App\Model\Shop\Product')
-	->whereHas('categories', function ($q) {
-		$q->where('title', 'Base');
-	})
-	->with('page', 'options', 'images')
-	->get();
 $shop = $select('App\Model\Base\Page')
 	->whereHas('view', function ($q) {
 		$q->where('title', 'Shop');
@@ -23,33 +17,29 @@ $shop = $select('App\Model\Base\Page')
 	<div class="container-fluid">
 		<div class="row">
 			<div class="main-slider owl-carousel owl-theme" id="mainSlider">
-				@foreach ($mainProducts as $product)
+			@if (isset($multi['indexSlider']))
+				@foreach ($multi['indexSlider'] as $slide)
 				<div class="main-slide" data-dot="<span><p class='dashnav-progress'></p></span>">
 					<div class="container">
 						<div class="slide-text">
 							<div class="title">
-							{{ $product->title }}
+							{{ $slide['header'] }}
 							</div>
 								
 							<div class="subtitle">
-							@foreach ($product->options as $option)
-								@if ($option->name == 'introtext')
-									{{ $option->value }}
-								@endif
-							@endforeach
+							{!! $slide['content'] !!}
 							</div>
 							
 							@if ($shop)
-							<a href="{{ url( $shop->link ) }}" class="btn-default" data-wpel-link="internal">{{ __('default.more_info') }}</a>
+							<a href="{{ url( $slide['link'] ) }}" class="btn-default" data-wpel-link="internal">{{ __('default.more_info') }}</a>
 							@endif
 						</div>
 						
-						@if (isset($product->images[0]))
-						<div class="slide-img" style="background-image: url('{{ asset($product->images[0]->name ) }}')"></div>
-						@endif
+						<div class="slide-img" style="background-image: url('{{ asset('uploads/' . $slide['icon'])  }}')"></div>
 					</div>
 				</div>
 				@endforeach
+			@endif
 			</div>
 		</div>
 	</div>
@@ -60,19 +50,16 @@ $shop = $select('App\Model\Base\Page')
 		<div class="row">
 		@if (isset($multi['indexLinks']))
 			@foreach ($multi['indexLinks'] as $var)
-			@php
-				$page = $get($var['page_id']);
-			@endphp
 			
-			<a href="{{ url($page->link) }}" class="banner col-sm-4" data-wpel-link="internal">
+			<a href="{{ url($var['link']) }}" class="banner col-sm-4" data-wpel-link="internal">
 			
 				<div class="banner-text">
 					<div class="title">
-						{{ $page->title }}
+						{{ $var['header'] }}
 					</div>
 					
 					<div class="subtitle">
-						{{ $page->introtext }}
+						{{ $var['content'] }}
 					</div>
 				</div>
 				

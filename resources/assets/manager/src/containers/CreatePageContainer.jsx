@@ -79,6 +79,10 @@ class CreatePageContainer extends Component {
 			data['link'] = url.link;
 		}
 
+		if (typeof url.view_id !== 'undefined') {
+			data['view_id'] = url.view_id;
+		}
+
 		this.setState({ data }, () => callback());
 	}
 
@@ -200,6 +204,7 @@ class CreatePageContainer extends Component {
 					<Grid item xs={3}>
 						<PaperPageForm
 							linkDefaultValue={data.link}
+							viewDefaultValue={data.view_id}
 							contextDefaultValue={data.context_id}
 							parentDefaultValue={data.parent_id}
 							onParentSelected={value => {

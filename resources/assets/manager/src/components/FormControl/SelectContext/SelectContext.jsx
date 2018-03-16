@@ -31,6 +31,7 @@ class SelectContext extends Component {
 	 */
 	static defaultProps = {
 		defaultValue: 0,
+		required: false,
 		title: 'Select context',
 		inputID: 'select-context',
 		onDataLoaded: () => {},
@@ -98,7 +99,7 @@ class SelectContext extends Component {
 	 */
 	render() {
 		let { data, value } = this.state;
-		let { classes, inputID, title } = this.props;
+		let { classes, inputID, title, required } = this.props;
 
 		return <FormControl className={classes.formControl}>
 			<InputLabel htmlFor={inputID}>
@@ -106,6 +107,7 @@ class SelectContext extends Component {
 			</InputLabel>
 			
 			<Select
+				required={required}
 				value={value}
 				onChange={this.handleChangeSelect}
 				input={<Input name="context_id" id={inputID} />}>

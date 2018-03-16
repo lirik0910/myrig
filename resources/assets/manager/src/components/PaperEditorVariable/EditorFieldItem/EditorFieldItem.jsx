@@ -37,6 +37,25 @@ class EditorFieldItem extends Component {
 		classes: PropTypes.object.isRequired,
 	}
 
+	/** 
+	 *
+	 */
+	componentDidMount() {
+		let img = document.getElementsByClassName('rdw-image-wrapper');
+		console.log(img)
+		if (img[0]) {
+			console.log(img)
+		}
+		this.openImageField();
+	}
+
+	/**
+	 * Open select image paper
+	 */
+	openImageField() {
+
+	}
+
 	/**
 	 * Render component
 	 * @return {Object} jsx object

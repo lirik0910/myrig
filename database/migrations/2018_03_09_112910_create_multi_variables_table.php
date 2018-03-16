@@ -24,6 +24,10 @@ class CreateMultiVariablesTable extends Migration
 				->default(0)
 				->comment('Variable ID');
 
+			$table->string('type', 255)
+				->default('input')
+				->comment('Variable type');
+
 			$table->string('title', 255)
 				->nullable(false)
 				->comment('Variable name');

@@ -17,6 +17,7 @@ import {
 	ContentState, 
 	convertFromHTML 
 } from 'draft-js';
+import Image from './Image.jsx';
 
 import styles from './styles.js';
 import PropTypes from 'prop-types';
@@ -53,11 +54,19 @@ class PaperContentForm extends Component {
 		descrShow: false,
 		introShow: false,
 		editorShow: true,
+
+		articulID: 'articul',
+		articulShow: false,
+		articulName: 'articul',
+		articulTitle: 'Articul',
+		articulDefaultValue: '',
+
 		classes: PropTypes.object.isRequired,
 		onTitleFieldInputed: () => {},
 		onDescrFieldInputed: () => {},
 		onIntroFieldInputed: () => {},
-		onEditorAreaInputed: () => {}
+		onEditorAreaInputed: () => {},
+		onArticulFieldInputed: () => {}
 	}
 
 	/**
@@ -66,6 +75,7 @@ class PaperContentForm extends Component {
 	 * @inner
 	 */
 	state = {
+		open: false,
 		editorState: EditorState.createEmpty(),
 	}
 
@@ -119,7 +129,7 @@ class PaperContentForm extends Component {
 	 * @return {Object} jsx object
 	 */
 	render() {
-		let { editorState } = this.state;
+		let { open, editorState } = this.state;
 		let { 
 			classes, 
 			inputID,
@@ -138,16 +148,41 @@ class PaperContentForm extends Component {
 			descrDefaultValue,
 			introDefaultValue,
 			inputDefaultValue,
+
+			articulID,
+			articulShow,
+			articulName,
+			articulTitle,
+			articulDefaultValue
 		} = this.props;
 
 		return <Paper className={classes.paper}>
 			{inputShow && <TextField
+				required
 				id={inputID}
 				label={inputTitle}
 				type="text"
 				name={inputName}
 				onChange={this.handleInputField}
 				defaultValue={inputDefaultValue}
+				className={classes.textField}
+				InputLabelProps={{
+					shrink: true
+				}} />}
+
+			{articulShow && <TextField
+				required
+				id={articulID}
+				label={articulTitle}
+				type="text"
+				name={articulName}
+				defaultValue={articulDefaultValue}
+				onChange={e => {
+					var target = e.target;
+					this.setState({ articulDefaultValue: target.value }, () => {
+						this.props.onArticulFieldInputed(target.value);
+					});
+				}}
 				className={classes.textField}
 				InputLabelProps={{
 					shrink: true
@@ -193,7 +228,12 @@ class PaperContentForm extends Component {
 					editorState={editorState}
 					editorClassName={classes.contentEditor}
 					toolbarClassName={classes.toolbarEditor}
-					onEditorStateChange={this.onEditorStateChange} />
+					onEditorStateChange={this.onEditorStateChange}
+					toolbar={{
+						image: {
+							component: Image,
+						}
+					}} />
 			</div>}
 		</Paper>
 	}

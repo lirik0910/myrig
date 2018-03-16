@@ -31,6 +31,7 @@ class SelectProductStatus extends Component {
 	 */
 	static defaultProps = {
 		defaultValue: 0,
+		required: false,
 		title: 'Select product status',
 		inputID: 'select-product-status',
 		onDataLoaded: () => {},
@@ -98,7 +99,7 @@ class SelectProductStatus extends Component {
 	 */
 	render() {
 		let { data, value } = this.state;
-		let { classes, inputID, title } = this.props;
+		let { classes, inputID, title, required } = this.props;
 
 		return <FormControl className={classes.formControl}>
 			<InputLabel htmlFor={inputID}>
@@ -107,6 +108,7 @@ class SelectProductStatus extends Component {
 			
 			<Select
 				value={value}
+				required={required}
 				onChange={this.handleChangeSelect}
 				input={<Input name="product_status_id" id={inputID} />}>
 

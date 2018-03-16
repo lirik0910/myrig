@@ -20,11 +20,15 @@ import TopTitle from '../components/TopTitle/TopTitle.jsx';
 import TabOptions from '../components/TabOptions/TabOptions.jsx';
 import DialogError from '../components/DialogError/DialogError.jsx';
 import DialogDelete from '../components/DialogDelete/DialogDelete.jsx';
+import PaperPageForm from '../components/PaperPageForm/PaperPageForm.jsx';
 import PaperContentForm from '../components/PaperContentForm/PaperContentForm.jsx';
 import PaperProductForm from '../components/PaperProductForm/PaperProductForm.jsx';
 import PaperImageVariable from '../components/PaperImageVariable/PaperImageVariable.jsx';
+import PaperInputVariable from '../components/PaperInputVariable/PaperInputVariable.jsx';
+import PaperMultiVariable from '../components/PaperMultiVariable/PaperMultiVariable.jsx';
 import PaperOptionVariable from '../components/PaperOptionVariable/PaperOptionVariable.jsx';
 import PaperAutoProductForm from '../components/PaperAutoProductForm/PaperAutoProductForm.jsx';
+import PaperRichtextVariable from '../components/PaperRichtextVariable/PaperRichtextVariable.jsx';
 
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
@@ -48,6 +52,7 @@ class EditProductContainer extends Component {
 	state = {
 		tab: 0,
 		data: {},
+		page: {},
 		images: [],
 		options: [],
 		currencies: [],
@@ -66,6 +71,34 @@ class EditProductContainer extends Component {
 		this.currenciesDataGetRequest(() => {
 			this.productDataGetRequest();
 		});
+	}
+
+	/**
+	 * Get page data from server
+	 * @param {Function} callback
+	 */
+	pageDataGetRequest(pageID) {
+		this.setState({ 
+			completed: 0 
+		});
+
+		let resource = App.defineResourceProps();
+
+		App.api({
+			type: 'GET',
+			name: 'one',
+			model: 'page',
+			resource: pageID,
+			success: (r) => {
+				r = JSON.parse(r.response);
+				if (r) {
+					this.setState({ 
+						page: r,
+						completed: 100,
+					});
+				}
+			}
+		})
 	}
 
 	/**
@@ -89,14 +122,51 @@ class EditProductContainer extends Component {
 				if (r) {
 					this.setState({ 
 						data: r,
-						completed: 100,
 						images: r.images,
 						options: r.options,
 						categories_line: '0'
+					}, () => {
+						if (r.page_id > 0 && r.page_id !== '') {
+							this.pageDataGetRequest(r.page_id)
+						}
+
+						else this.setState({ completed: 100 });
 					});
 				}
 			}
 		})
+	}
+
+	/**
+	 * Request for adding new page
+	 * @param {Object} e
+	 */
+	pagePutRequest = e => {
+		let { page } = this.state;
+
+		this.setState({ 
+			completed: 0 
+		});
+		page['fields'] = JSON.stringify(page.view.variables);
+
+		App.api({
+			type: 'PUT',
+			model: 'page',
+			name: 'update',
+			data: page,
+			resource: page.id,
+			error: (r) => {
+				r = JSON.parse(r.response);
+				if (r.message) {
+					this.setState({ 
+						completed: 100,
+						resultDialog: true,
+						resultDialogTitle: 'Error',
+						resultDialogMessage: r.message
+					});
+				}
+			}
+		});
 	}
 
 	/**
@@ -157,10 +227,23 @@ class EditProductContainer extends Component {
 			error: (r) => {
 				r = JSON.parse(r.response);
 				if (r.message) {
+					if (r.message === 'The given data was invalid.') {
+						var l = [],
+							n,
+							k;
+						
+						k = 0;
+						for (n in r.errors) {
+							l.push(<p key={k}>{r.errors[n][0]}</p>);
+							k++;
+						}
+					}
+
 					this.setState({ 
+						completed: 100,
 						resultDialog: true,
 						resultDialogTitle: 'Error',
-						resultDialogMessage: r.message
+						resultDialogMessage: <div><b>{r.message}</b> {l}</div>
 					});
 				}
 			}
@@ -226,6 +309,7 @@ class EditProductContainer extends Component {
 		let { 
 			tab, 
 			data, 
+			page,
 			images,
 			options,
 			completed,
@@ -236,18 +320,31 @@ class EditProductContainer extends Component {
 			resultDialogMessage
 		} = this.state;
 
+		var tabs = ['Product', 'Options'];
+
+		if (data.page_id > 0 && data.page_id !== '' && App.isEmpty(page) === false) {
+			tabs.push('Page');
+			tabs.push('Additional fields');
+		}
+
 		return <div className="products__container">
 				{completed === 0 && 
 					<LinearProgress color="secondary" variant="determinate" value={completed} />}
 				
 				<Header
-					title={'Create new product'} />
+					title={'Edit product'} />
 				<Menu />
 					
 				{completed === 100 && <TopTitle
 					title={data.title}
 					deleteButtonDisplay={true}
-					onSaveButtonClicked={() => this.productPutRequest()}
+					onSaveButtonClicked={() => {
+						this.productPutRequest();
+
+						if (App.isEmpty(page) === false) {
+							this.pagePutRequest();
+						}
+					}}
 					onDeleteButtonClicked={() => this.setState({
 						deleteDialog: true
 					})} />}
@@ -255,12 +352,7 @@ class EditProductContainer extends Component {
 				<TabOptions
 					defaultValue={tab}
 					onTabButtonClicked={tab => this.setState({ tab })}
-					data={[
-						'Product',
-						'Options',
-						//'Page',
-						//'Additional fields'
-					]} />
+					data={tabs} />
 
 				<Grid container 
 					spacing={24} 
@@ -271,6 +363,8 @@ class EditProductContainer extends Component {
 				
 					<Grid item xs={9}>
 						{completed === 100 && <PaperContentForm
+							articulShow
+							articulDefaultValue={data.articul}
 							inputDefaultValue={data.title}
 							editorDefaultValue={data.description}
 							onEditorAreaInputed={value => {
@@ -279,6 +373,10 @@ class EditProductContainer extends Component {
 							}}
 							onTitleFieldInputed={value => {
 								data['title'] = value;
+								this.setState({ data });
+							}}
+							onArticulFieldInputed={value => {
+								data['articul'] = value;
 								this.setState({ data });
 							}} />}
 
@@ -380,6 +478,142 @@ class EditProductContainer extends Component {
 							}} />
 					</Grid>
 				</Grid>
+
+				{App.isEmpty(page) === false && <Grid container 
+					spacing={24} 
+					className={classes.root}
+					style={{display: tab === 2 ? 
+						'flex' : 
+						'none'}}>
+				
+					<Grid item xs={9}>
+						{completed === 100 && <PaperContentForm
+							descrShow
+							introShow
+							inputDefaultValue={page.title}
+							descrDefaultValue={page.description}
+							introDefaultValue={page.introtext}
+							editorDefaultValue={page.content}
+							onEditorAreaInputed={value => {
+								page['content'] = value;
+								this.setState({ page });
+							}}
+							onTitleFieldInputed={value => {
+								page['title'] = value;
+								this.setState({ page });
+							}}
+							onDescrFieldInputed={value => {
+								page['description'] = value;
+								this.setState({ page });
+							}}
+							onIntroFieldInputed={value => {
+								page['introtext'] = value;
+								this.setState({ page });
+							}} />}
+					</Grid>
+
+					<Grid item xs={3}>
+						{completed === 100 && <PaperPageForm
+							linkDefaultValue={page.link}
+							contextDefaultValue={page.context_id}
+							parentDefaultValue={page.parent_id}
+							createDefaultValue={new Date(page.created_at)}
+							viewDefaultValue={page.view_id}
+							onParentSelected={value => {
+								page['parent_id'] = value;
+								this.setState({ page });
+							}}
+							onContextSelected={value => {
+								page['context_id'] = value;
+								this.setState({ page });
+							}}
+							onViewSelected={value => {
+								page['view_id'] = value;
+								this.setState({ page });
+							}}
+							onDateSelected={value => {
+								var date = value._d.toISOString().split('T')[0],
+									time = value._d.toLocaleTimeString();
+				
+								page['created_at'] = date +' '+ time;
+								this.setState({ page });
+							}}
+							onLinkInputed={value => {
+								page['link'] = value;
+								this.setState({ page });
+							}} />}
+					</Grid>
+				</Grid>}
+
+				{App.isEmpty(page) === false && <Grid container 
+					spacing={24} 
+					className={classes.root}
+					style={{display: tab === 3 ? 
+						'flex' : 
+						'none'}}>
+					{completed === 100 && page.view.variables.map((item, i) => {
+						return <Grid item xs={12} key={i}>
+							{item.type === 'input' &&
+								<PaperInputVariable
+									key={i}
+									title={item.description}
+									data={item.variable_content}
+									onAddedField={fields => {
+										this.setState({ page });
+									}} />}
+
+							{item.type === 'multi' && 
+								<PaperMultiVariable
+									key={i}
+									pageId={page.id}
+									variableId={item.id}
+									title={item.description}
+									data={item.multi_variable_lines}
+									columns={item.columns} />}
+
+							{item.type === 'image' &&
+								<PaperImageVariable
+									key={i}
+									title={item.description}
+									data={item.variable_content.map((field, a) => {
+										return {...field, name: field.content}
+									})}
+									onImageSet={fields => {
+										for (var a in fields) {
+											fields[a].content = fields[a].name;
+										}
+										page.view.variables[i].variable_content = fields;
+
+										this.setState({ page });
+									}}
+									onDeletedField={fields => {
+										for (var a in fields) {
+											fields[a].content = fields[a].name;
+										}
+										page.view.variables[i].variable_content = fields;
+
+										this.setState({ page });
+									}}
+									onAddedField={fields => {
+										for (var a in fields) {
+											fields[a].content = fields[a].name;
+										}
+										page.view.variables[i].variable_content = fields;
+
+										this.setState({ page });
+									}} />}
+
+							{item.type === 'richtext' &&
+								<PaperRichtextVariable
+									key={i}
+									title={item.description}
+									onAddedField={fields => {
+										this.setState({ page });
+									}}
+									data={item.variable_content} />}
+						</Grid>
+					})}
+				</Grid>}
 
 				{resultDialog === true && <DialogError 
 					title={resultDialogTitle}

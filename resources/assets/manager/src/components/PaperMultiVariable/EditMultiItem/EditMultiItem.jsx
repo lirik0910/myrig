@@ -16,6 +16,8 @@ import Button from 'material-ui/Button';
 import TextField from 'material-ui/TextField';
 import { FormControl } from 'material-ui/Form';
 import Slide from 'material-ui/transitions/Slide';
+import ImageFieldItem from '../../PaperImageVariable/ImageFieldItem/ImageFieldItem.jsx';
+import EditorFieldItem from '../../PaperRichtextVariable/EditorFieldItem/EditorFieldItem.jsx';
 
 import styles from './styles.js';
 import PropTypes from 'prop-types';
@@ -87,17 +89,37 @@ class EditMultiItem extends Component {
 				}}>	
 					<DialogContent>
 					{data.content.map((item, i) => {
-						return <FormControl key={i} className={classes.formControl}>
-							<TextField
-								type="text"
+						if (item.multi_variable.type === 'input') {
+							return <FormControl key={i} className={classes.formControl}>
+								<TextField
+									type="text"
+									name={columns[i].title}
+									label={columns[i].description}
+									defaultValue={item.content}
+									className={classes.textField}
+									InputLabelProps={{
+										shrink: true
+									}} />
+							</FormControl>
+						}
+
+						if (item.multi_variable.type === 'richtext') {
+							return <EditorFieldItem
 								name={columns[i].title}
-								label={columns[i].description}
-								defaultValue={item.content}
-								className={classes.textField}
-								InputLabelProps={{
-									shrink: true
+								remove={false}
+								data={{
+									content: item.content
 								}} />
-						</FormControl>
+						}
+
+						if (item.multi_variable.type === 'image') {
+							return <ImageFieldItem
+								data={{
+									name: item.content
+								}}
+								name={columns[i].title}
+								remove={false} />
+						}
 					})}
 					</DialogContent>
 

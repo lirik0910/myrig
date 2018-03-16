@@ -64,7 +64,7 @@ class PaperPageForm extends Component {
 					onItemSelected={value => this.props.onContextSelected(value)} />
 
 				<SelectView
-					defaultValue={viewDefaultValue}
+					defaultValue={Number(viewDefaultValue)}
 					onItemSelected={value => this.props.onViewSelected(value)} />
 
 				<InputSelectPage

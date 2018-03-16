@@ -42,6 +42,7 @@ class ImageFieldItem extends Component {
 	state = {
 		open: false,
 		ready: true,
+		remove: true,
 		value: this.props.data
 	}
 
@@ -51,7 +52,7 @@ class ImageFieldItem extends Component {
 	 */
 	render() {
 		let { open, value, ready } = this.state;
-		let { classes, data, placeholder } = this.props;
+		let { classes, data, placeholder, remove } = this.props;
 
 		return <div>
 				{ready === true && <TextField
@@ -67,20 +68,21 @@ class ImageFieldItem extends Component {
 					}}
 					style={{
 						width: '100%'
-					}} />}
+					}}
+					{...this.props} />}
 
 				{value.name && 
 					<img src={App.uploads() +'/'+ value.name} 
 						alt="img"
 						className={classes.img} />}
 			
-				<Button 
+				{remove === true && <Button 
 					className={classes.button} 
 					variant="raised" 
 					color="secondary"
 					onClick={e => this.props.onDeletedField(data)}>
 						<Delete />{'Remove field'}
-				</Button>
+				</Button>}
 
 				<DialogFileManager
 					open={open}

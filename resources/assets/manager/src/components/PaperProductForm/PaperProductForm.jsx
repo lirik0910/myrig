@@ -93,10 +93,12 @@ class PaperProductForm extends Component {
 
 		return <Paper className={classes.paper}>
 				<SelectContext
+					required
 					defaultValue={contextDefaultValue}
 					onItemSelected={value => this.props.onContextSelected(value)} />
 
 				<SelectProductStatus
+					required
 					defaultValue={statusDefaultValue}
 					onItemSelected={value => this.props.onStatusSelected(value)} />
 
