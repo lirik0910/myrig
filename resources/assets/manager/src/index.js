@@ -39,6 +39,7 @@ const store = configureStore();
 render (<BrowserRouter>
 			<Provider store={store}>
 				<Switch>
+					<Route exact path={App.name() +'/'} component={ListPagesContainer} />
 					<Route exact path={App.name() +'/pages'} component={ListPagesContainer} />
 					<Route exact path={App.name() +'/pages/create'} component={CreatePageContainer} />
 					<Route exact path={App.name() +'/pages/:number'} component={EditPageContainer} />
