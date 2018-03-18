@@ -298,6 +298,11 @@ class ListProductsContainer extends Component {
 								disablePadding: true, 
 								label: 'Name'
 							}, {
+								id: 'articul', 
+								numeric: false, 
+								disablePadding: true, 
+								label: 'Articul'
+							}, {
 								id: 'price', 
 								numeric: false, 
 								disablePadding: true, 

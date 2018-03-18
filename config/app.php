@@ -151,7 +151,8 @@ return [
         /*
          * Package Service Providers...
          */
-        Folklore\Image\ImageServiceProvider::class,
+        //Folklore\Image\ImageServiceProvider::class,
+        Intervention\Image\ImageServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -210,8 +211,9 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-        'Image' => Folklore\Image\Facades\Image::class,
-        'Zendesk' => Huddle\Zendesk\Facades\Zendesk::class
+        //'Image' => Folklore\Image\Facades\Image::class,
+        'Zendesk' => Huddle\Zendesk\Facades\Zendesk::class,
+        'Image' => Intervention\Image\Facades\Image::class,
 
     ],
 

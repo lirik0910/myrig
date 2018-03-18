@@ -69,6 +69,7 @@ class PaperTable extends Component {
 		order: 'asc',
 		footer: true,
 		orderBy: 'id',
+		buildByData: false,
 		selecting: true,
 		defaultSort: true,
 		onRowsSelected: () => {},
@@ -200,9 +201,10 @@ class PaperTable extends Component {
 	 * @return Array
 	 */
 	createRows(data, pagePaginStart, pagePaginFinish, k = 0) {
-		const { classes, selecting, except } = this.props;
+		const { classes, selecting, except, columns } = this.props;
 
 		var i,
+			a,
 			cells;
 
 		return data.map(n => {
@@ -215,6 +217,9 @@ class PaperTable extends Component {
 					k++;
 				}
 			}
+
+			/*console.log(s)
+			console.log(n)*/
 
 			return <TableRow
 					hover
@@ -234,12 +239,35 @@ class PaperTable extends Component {
 		});
 	}
 
+	buildColumns(columns, data) {
+		var cols,
+			i,
+			n,
+			k,
+			a;
+
+		cols = [];
+		for (k = 0; k < data.length; k++) {
+			for(i in data[k]) {
+				for (a = 0; a < columns.length; a++) {
+					if (columns[a].name === i) {
+						cols.push(columns[a]);
+						break;
+					}
+				}
+			}
+			break;
+		}
+
+		return cols;
+	}
+
 	/**
 	 * Render component
 	 * @return {Object} jsx object
 	 */
 	render() {
-		const { classes, columns, selecting, footer, defaultSort } = this.props;
+		const { classes, columns, selecting, footer, defaultSort, buildByData } = this.props;
 		const { 
 			data, 
 			order, 
@@ -253,11 +281,15 @@ class PaperTable extends Component {
 		let pagePaginStart = page * rowsPerPage;
 		let pagePaginFinish = page * rowsPerPage + rowsPerPage;
 
+		console.log(columns)
+
 		return <Paper className={classes.paper}>
 				<div className={classes.tableWrapper}>
 					<Table className={classes.table}>
 						<EnhancedTableHead
-							columns={columns}
+							columns={buildByData === true ? 
+								this.buildColumns(columns, data) :
+								columns}
 							numSelected={selected.length}
 							order={order}
 							orderBy={orderBy}

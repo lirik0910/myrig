@@ -27,5 +27,53 @@ class MultiVariableLinesTableSeeder extends Seeder
 				'page_id' => $contact->id,
 			]);
 		}
+
+		/** Get page
+		 */
+		$index = App\Model\Base\Page::whereHas('view', function ($q) {
+			$q->where('title', 'Index');
+		})->first();
+
+		/** Get variables
+		 */
+		$variable = App\Model\Base\Variable::where('title', 'indexLinks')->first();
+
+		App\Model\Base\MultiVariableLine::create([
+			'variable_id' => $variable->id,
+			'page_id' => $index->id,
+		]);
+
+		App\Model\Base\MultiVariableLine::create([
+			'variable_id' => $variable->id,
+			'page_id' => $index->id,
+		]);
+
+		App\Model\Base\MultiVariableLine::create([
+			'variable_id' => $variable->id,
+			'page_id' => $index->id,
+		]);
+
+		/** Get variables
+		 */
+		$variable = App\Model\Base\Variable::where('title', 'indexSlider')->first();
+		App\Model\Base\MultiVariableLine::create([
+			'variable_id' => $variable->id,
+			'page_id' => $index->id,
+		]);
+
+		App\Model\Base\MultiVariableLine::create([
+			'variable_id' => $variable->id,
+			'page_id' => $index->id,
+		]);
+
+		App\Model\Base\MultiVariableLine::create([
+			'variable_id' => $variable->id,
+			'page_id' => $index->id,
+		]);
+
+		App\Model\Base\MultiVariableLine::create([
+			'variable_id' => $variable->id,
+			'page_id' => $index->id,
+		]);
 	}
 }

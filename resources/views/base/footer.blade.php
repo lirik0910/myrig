@@ -54,7 +54,7 @@ $menu = $select('App\Model\Base\Page')
 			<div class="row">
 				<div class="col-sm-2 col-md-2 col-lg-2 logo">
 					<a href="{{ asset('/') }}" data-wpel-link="internal">
-						<img src="{{ asset('uploads/design/logo.png') }}" alt="logo"/>
+						<img src="{{ $preview(asset('uploads/design/logo.png'), 162, 35) }}" alt="logo"/>
 					</a>
 					
 					<div class="payment">

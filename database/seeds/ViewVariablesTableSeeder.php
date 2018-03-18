@@ -26,5 +26,26 @@ class ViewVariablesTableSeeder extends Seeder
 			'view_id' => $view->id,
 			'variable_id' => $variable->id,
 		]);
+
+		$view = App\Model\Base\View::where('title', 'Index')->first();
+		$variable = App\Model\Base\Variable::where('title', 'indexLinks')->first();
+
+		App\Model\Base\ViewVariable::create([
+			'view_id' => $view->id,
+			'variable_id' => $variable->id,
+		]);
+
+		$variable = App\Model\Base\Variable::where('title', 'indexSlider')->first();
+		App\Model\Base\ViewVariable::create([
+			'view_id' => $view->id,
+			'variable_id' => $variable->id,
+		]);
+
+		$view = App\Model\Base\View::where('title', 'Calculator')->first();
+		$variable = App\Model\Base\Variable::where('title', 'calculatorDevices')->first();
+		App\Model\Base\ViewVariable::create([
+			'view_id' => $view->id,
+			'variable_id' => $variable->id,
+		]);
 	}
 }

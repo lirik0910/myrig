@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+<<<<<<< HEAD
     <main>
         <div class="main-back"></div>
         <script>
@@ -50,21 +51,20 @@
                                     <i class="fa fa-send"></i>
                                 </a>
                             </div>
-
-                            <!--<script async src="https://static.addtoany.com/menu/page.js"></script>-->
-                            <!-- AddToAny END -->
-                        </div>
-                    </div>
-                    <div class="article-content col-sm-8">
-                        <div class="article-text">
-                            {!! $it->content !!}
-                        </div>
-                        <div class="links">
-                            @isset($prev_link)<a href="{{url($prev_link->link)}}" class="article-link" data-wpel-link="internal"><i class="article-arrow"></i>Previous article</a>@endisset @isset($next_link)<a href="{{url($next_link->link)}}" class="article-link next-link" data-wpel-link="internal"><i class="article-arrow article-arrow-right"></i>Next article</a>@endisset
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
+							<!--<script async src="https://static.addtoany.com/menu/page.js"></script>-->
+							<!-- AddToAny END -->
+						</div>
+					</div>
+					<div class="article-content col-sm-8">
+						<div class="article-text">
+							{!! $it->content !!}
+						</div>
+						<div class="links">
+							@isset($prev_link)<a href="{{url($prev_link->link)}}" class="article-link" data-wpel-link="internal"><i class="article-arrow"></i>Previous article</a>@endisset @isset($next_link)<a href="{{url($next_link->link)}}" class="article-link next-link" data-wpel-link="internal"><i class="article-arrow article-arrow-right"></i>Next article</a>@endisset
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	</main>
 @endsection

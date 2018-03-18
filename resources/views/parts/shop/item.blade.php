@@ -7,14 +7,14 @@
 		<div class="itemSlider owl-carousel owl-theme">
 			@foreach($item->images as $image)
 				<div class="product-item @if($loop->first) active @endif">
-					<img width="300" height="300" src="{{ asset('uploads/' . $image->name) }}" class="attachment-medium size-medium" alt="" title="" data-src="{{ asset('uploads/' . $image->name) }}" data-large_image="{{ asset('uploads/' . $image->name) }}" data-large_image_width="1280" data-large_image_height="1280" sizes="(max-width: 300px) 100vw, 300px" />
+					<img width="300" height="300" src="{{ $preview(asset('uploads/' . $image->name), 300, 300) }}" class="attachment-medium size-medium" alt="" title="" data-src="{{ $preview(asset('uploads/' . $image->name), 300, 300) }}" data-large_image="{{ asset('uploads/' . $image->name) }}" data-large_image_width="1280" data-large_image_height="1280" sizes="(max-width: 300px) 100vw, 300px" />
 				</div>
 			@endforeach
 		</div>
 		<div class="itemSliderVer visible-md">
 			@foreach($item->images as $image)
 				<div class="product-item @if($loop->first) active @endif">
-					<img width="47" height="47" src="{{ asset('uploads/' . $image->name) }}" class="attachment-i47 size-i47" alt="" title="" data-src="{{ asset('uploads/' . $image->name) }}" data-large_image="{{ asset('uploads/' . $image->name) }}" data-large_image_width="1280" data-large_image_height="1280" sizes="(max-width: 47px) 100vw, 47px" />
+					<img width="47" height="47" src="{{ $preview(asset('uploads/' . $image->name), 47, 47) }}" class="attachment-i47 size-i47" alt="" title="" data-src="{{ $preview(asset('uploads/' . $image->name), 47, 47) }}" data-large_image="{{ asset('uploads/' . $image->name) }}" data-large_image_width="1280" data-large_image_height="1280" sizes="(max-width: 47px) 100vw, 47px" />
 				</div>
 			@endforeach
 		</div>

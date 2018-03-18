@@ -5,6 +5,7 @@
  * @requires react
  */
 
+import App from '../../App.js';
 import React, { Component } from 'react';
 
 import Paper from 'material-ui/Paper';
@@ -84,7 +85,18 @@ class PaperMultiVariable extends Component {
 		for (i in data) {
 			l = {};
 			for (k = 0; k < data[i].content.length; k++) {
-				l['item-'+ k] = data[i].content[k].content;
+
+				if (data[i].content[k].multi_variable.type === 'image') {
+					l[data[i].content[k].multi_variable.title] = <img 
+						style={{
+							//width: '128px',
+							display: 'block',
+							maxHeight: '72px'
+						}}
+						src={App.uploads() + data[i].content[k].content} 
+						alt="img" />					
+				}
+				else l[data[i].content[k].multi_variable.title] = data[i].content[k].content;
 			}
 
 			l['control'] = <ControlOptions
@@ -120,6 +132,7 @@ class PaperMultiVariable extends Component {
 
 		for (i in columns) {
 			a.push({
+				name: columns[i].title,
 				id: columns[i].id,
 				numeric: false, 
 				disablePadding: true, 
@@ -128,6 +141,7 @@ class PaperMultiVariable extends Component {
 		}
 
 		a.push({
+			name: 'control',
 			id: 'control',
 			numeric: false, 
 			disablePadding: true, 
@@ -175,7 +189,7 @@ class PaperMultiVariable extends Component {
 	 * @return {Object} jsx object
 	 */
 	render() {
-		let { classes, title } = this.props;
+		let { classes, title, } = this.props;
 		let { 
 			data,
 			columns,
@@ -194,7 +208,7 @@ class PaperMultiVariable extends Component {
 					{completed === true && <PaperTable 
 						data={data}
 						columns={columns}
-
+						buildByData={true}
 						limit={100}
 						footer={false}
 						selecting={false}

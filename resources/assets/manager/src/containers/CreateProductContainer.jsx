@@ -111,11 +111,23 @@ class CreateProductContainers extends Component {
 			error: (r) => {
 				r = JSON.parse(r.response);
 				if (r.message) {
+					if (r.message === 'The given data was invalid.') {
+						var l = [],
+							n,
+							k;
+						
+						k = 0;
+						for (n in r.errors) {
+							l.push(<p key={k}>{r.errors[n][0]}</p>);
+							k++;
+						}
+					}
+
 					this.setState({ 
 						completed: 100,
 						resultDialog: true,
 						resultDialogTitle: 'Error',
-						resultDialogMessage: r.message
+						resultDialogMessage: <div><b>{r.message}</b> {l}</div>
 					});
 				}
 			}
@@ -193,12 +205,17 @@ class CreateProductContainers extends Component {
 					
 					<Grid item xs={9}>
 						<PaperContentForm
+							articulShow
 							onEditorAreaInputed={value => {
 								data['description'] = value;
 								this.setState({ data });
 							}}
 							onTitleFieldInputed={value => {
 								data['title'] = value;
+								this.setState({ data });
+							}}
+							onArticulFieldInputed={value => {
+								data['articul'] = value;
 								this.setState({ data });
 							}} />
 

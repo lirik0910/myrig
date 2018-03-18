@@ -22,6 +22,7 @@ Route::prefix('connector')
 		Route::post('cart', 'SessionController@add');
 		Route::delete('cart', 'SessionController@delete');
 });
+
 Route::post('profile', 'ClientAuthController@updateClient');
 Route::get('checkout/order_success/{number}', 'PageController@view');
 Route::get('/shop/{id}', 'ProductController@getContent');

@@ -44,6 +44,10 @@ class CreateProductTable extends Migration
 				->nullable(false)
 				->comment('Product name');
 
+			$table->string('articul', 255)
+				->nullable(false)
+				->comment('Product articul');
+
 			$table->text('description')
 				->nullable(true)
 				->comment('Product description');

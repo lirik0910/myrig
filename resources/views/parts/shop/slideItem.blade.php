@@ -3,7 +3,7 @@
 	
 	<div class="related-img">
 		@if (isset($item->images[0]))
-		<img width="1000" height="1000" src="{{ asset('uploads/' . $item->images[0]->name) }}" class="attachment-post-thumbnail size-post-thumbnail wp-post-image" alt="previw" />
+		<img width="1000" height="1000" src="{{ $preview(asset('uploads/' . $item->images[0]->name), 215, 215) }}" class="attachment-post-thumbnail size-post-thumbnail wp-post-image" alt="previw" />
 		@endif
 	</div>
 

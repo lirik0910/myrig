@@ -27,14 +27,12 @@ class MultiVariableContent extends Model
 	{
 		$a = [];
 		foreach ($collection as $var) {
-		    //var_dump($var->multiVariableLines); die;
 			foreach ($var->multiVariableLines as $line) {
 				$c = [];
 				foreach ($line->content as $item) {
-				    //var_dump($line->content); die;
-                    if($item){
-                        $c[$item->multiVariable->title] = $item->content;
-                    }
+					if($item){
+						$c[$item->multiVariable->title] = $item->content;
+					}
 				}
 				$a[$var->title][] = $c;
 			}

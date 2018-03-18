@@ -34,5 +34,43 @@ class SettingsTableSeeder extends Seeder
 			'title' => 'site.shop_page',
 			'value' => $cartPage->id
 		]);
+
+		$productstPage = App\Model\Base\Page::whereHas('view', function ($q) {
+			$q->where('title', 'Shop');
+		})->first();
+
+		App\Model\Base\Setting::create([
+			'context_id' => $context->id,
+			'title' => 'site.products_page',
+			'value' => $productstPage->id
+		]);
+
+		$servicePage = App\Model\Base\Page::whereHas('view', function ($q) {
+			$q->where('title', 'Service');
+		})->first();
+
+		App\Model\Base\Setting::create([
+			'context_id' => $context->id,
+			'title' => 'site.service_page',
+			'value' => $servicePage->id
+		]);
+
+		$newsPage = App\Model\Base\Page::where('link', 'news')->first();
+
+		App\Model\Base\Setting::create([
+			'context_id' => $context->id,
+			'title' => 'site.news_page',
+			'value' => $newsPage->id
+		]);
+
+		$contactsPage = App\Model\Base\Page::whereHas('view', function ($q) {
+			$q->where('title', 'Contacts');
+		})->first();
+
+		App\Model\Base\Setting::create([
+			'context_id' => $context->id,
+			'title' => 'site.contacts_page',
+			'value' => $contactsPage->id
+		]);
 	}
 }

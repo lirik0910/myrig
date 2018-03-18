@@ -6,6 +6,8 @@ use App\Model\Base\Page;
 use App\Model\Base\Setting;
 use App\Model\Base\MultiVariableContent;
 use Illuminate\Http\Request;
+use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Collection;
 
 class PageController extends Controller
@@ -13,7 +15,7 @@ class PageController extends Controller
 	/**
 	 * Get page
 	 * @param Request $request
-     * @param (Integer) $number Number of order for success page
+	 * @param (Integer) $number Number of order for success page
 	 */
 	public function view(Request $request, $number = null)
 	{
@@ -21,9 +23,11 @@ class PageController extends Controller
 		$link = $link === '/' ?
 			$link :
 			rtrim(ltrim($link, '/\\'), '/\\');
-        if($number){
-            $link = explode('/'. $number, $link)[0];
-        }
+		
+		if ($number) {
+			$link = explode('/' . $number, $link)[0];
+		}
+		
 		if ($page = Page::where('link', $link)->with('view')->first()) {
 			return view($page->view->path, [
 				'it' => $page,
@@ -33,7 +37,8 @@ class PageController extends Controller
 				'settings' => $this->settings(),
 				'inCart' => $this->getInSessionCart(),
 				'multi' => MultiVariableContent::multiConvert($page->view->variables),
-                'number' => $number
+				'number' => $number,
+				'preview' => $this->preview()
 			]);
 		}
 
@@ -92,6 +97,41 @@ class PageController extends Controller
 			$a[$item->title] = $item->value;
 		}
 		return $a;
+	}
+
+	/**
+	 * Create preview image
+	 * @return function
+	 */
+	public function preview()
+	{
+		return function($name = '', $width = 50, $height = 50) {
+			$explode = explode('/', $name);
+			$file = array_pop($explode);
+
+			$explode = explode('.', $file);
+			$extension = array_pop($explode);
+
+			if ($extension === 'svg') {
+				return $name;
+			}
+
+			$folder = 'preview/'. $width .'x'. $height;
+			try {
+				Storage::disk('public')->makeDirectory($folder);
+			}
+			catch (\Exception $e) {
+				logger($e->getMessage());
+				return '';
+			}
+
+			$dest = 'storage/' . $folder .'/'. md5($name) .'.' .$extension;
+			Image::cache(function($image) use ($name, $width, $height, $dest) {
+				$image->make($name)->fit($width, $height)->save(public_path($dest));
+			});
+
+			return $dest;
+		};
 	}
 }
 

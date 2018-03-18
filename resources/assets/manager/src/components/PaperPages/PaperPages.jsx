@@ -135,8 +135,27 @@ class PaperPages extends Component {
 						deleteDialog: true
 					})}
 					onCreateChildPageClicked={page => {
+						var a = App.name();
+						a += '/pages/create?parent_id='+ page.id;
+						a += '&context_id='+ page.context_id;
+						a += '&link='+ page.link;
+
+						/** TODO: Very bad
+						 */
+						if (page.link === 'news') {
+							a += '&view_id=10';
+						}
+
+						if (page.link === 'info') {
+							a += '&view_id=10';
+						}
+
+						if (page.link === 'shop') {
+							a += '&view_id=5';
+						}
+
 						this.setState({
-							a: App.name() +'/pages/create?parent_id='+ page.id +'&context_id='+ page.context_id +'&link='+ page.link
+							a: a
 						}, () => {
 							var el = document.getElementById('change-page');
 							if (el) {

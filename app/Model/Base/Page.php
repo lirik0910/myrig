@@ -83,7 +83,6 @@ class Page extends Model
 			}
 			Page::removeChilds($page->id);
 		}
-
 		return true;
 	}
 }

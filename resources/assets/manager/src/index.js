@@ -23,6 +23,7 @@ import FileManagerContainer from './containers/FileManagerContainer.jsx';
 import EditProductContainer from './containers/EditProductContainer.jsx';
 import ListProductsContainer from './containers/ListProductsContainer.jsx';
 import CreateProductContainer from './containers/CreateProductContainer.jsx';
+import ListVocabularyContainer from './containers/ListVocabularyContainer.jsx';
 
 import './index.css';
 
@@ -39,6 +40,7 @@ const store = configureStore();
 render (<BrowserRouter>
 			<Provider store={store}>
 				<Switch>
+					<Route exact path={App.name() +'/'} component={ListPagesContainer} />
 					<Route exact path={App.name() +'/pages'} component={ListPagesContainer} />
 					<Route exact path={App.name() +'/pages/create'} component={CreatePageContainer} />
 					<Route exact path={App.name() +'/pages/:number'} component={EditPageContainer} />
@@ -48,6 +50,7 @@ render (<BrowserRouter>
 					<Route exact path={App.name() +'/products'} component={ListProductsContainer} />
 					<Route exact path={App.name() +'/products/create'} component={CreateProductContainer} />
 					<Route exact path={App.name() +'/products/:number'} component={EditProductContainer} />
+					<Route exact path={App.name() +'/vocabulary'} component={ListVocabularyContainer} />
 				</Switch>
 			</Provider>
 		</BrowserRouter>, document.getElementById('root'));

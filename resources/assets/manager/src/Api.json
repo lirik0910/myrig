@@ -1,4 +1,10 @@
 {
+	"lang": {
+		"GET": {
+			"all": "",
+			"file": "{id}"
+		}
+	},
 	"component": {
 		"GET": {
 			"all": "",
@@ -33,6 +39,11 @@
 		},
 		"DELETE": {
 			"one": "{id}"
+		}
+	},
+	"cache": {
+		"DELETE": {
+			"clear": ""
 		}
 	},
 	"user": {

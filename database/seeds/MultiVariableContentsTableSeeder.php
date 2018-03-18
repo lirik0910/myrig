@@ -123,5 +123,164 @@ class MultiVariableContentsTableSeeder extends Seeder
 
 			$key++;
 		}
+
+		/** Get lines
+		 */
+		$lines = App\Model\Base\MultiVariableLine::whereHas('variable', function ($q) {
+			$q->where('title', 'indexLinks');
+		})->get();
+
+		$multiIcon = App\Model\Base\MultiVariable::where('title', 'icon')
+			->whereHas('variable', function ($q) {
+				$q->where('title', 'indexLinks');
+			})->first();
+
+		$multiLink = App\Model\Base\MultiVariable::where('title', 'link')
+			->whereHas('variable', function ($q) {
+				$q->where('title', 'indexLinks');
+			})->first();
+
+		$multiHeader = App\Model\Base\MultiVariable::where('title', 'header')
+			->whereHas('variable', function ($q) {
+				$q->where('title', 'indexLinks');
+			})->first();
+
+		$multiContent = App\Model\Base\MultiVariable::where('title', 'content')
+			->whereHas('variable', function ($q) {
+				$q->where('title', 'indexLinks');
+			})->first();
+
+		$key = 0;
+		foreach ($lines as $item) {
+			if ($key === 0) {
+				$link = 'news';
+				$icon = 'design/news.svg';
+				$header = 'News';
+				$content = 'Actual information about the world of cryptocurrency';
+			}
+
+			if ($key === 1) {
+				$link = 'calculator';
+				$icon = 'design/calc.svg';
+				$header = 'Calculator';
+				$content = 'Correct calculation of profit from mining';
+			}
+
+			if ($key === 2) {
+				$link = 'info';
+				$icon = 'design/articles.svg';
+				$header = 'Articles';
+				$content = 'Analytics, equipment reviews';
+			}
+
+			App\Model\Base\MultiVariableContent::create([
+				'multi_variable_id' => $multiHeader->id,
+				'multi_variable_line_id' => $item->id,
+				'content' => $header
+			]);
+
+			App\Model\Base\MultiVariableContent::create([
+				'multi_variable_id' => $multiContent->id,
+				'multi_variable_line_id' => $item->id,
+				'content' => $content
+			]);
+
+			App\Model\Base\MultiVariableContent::create([
+				'multi_variable_id' => $multiLink->id,
+				'multi_variable_line_id' => $item->id,
+				'content' => $link
+			]);
+
+			App\Model\Base\MultiVariableContent::create([
+				'multi_variable_id' => $multiIcon->id,
+				'multi_variable_line_id' => $item->id,
+				'content' => $icon
+			]);
+			$key++;
+		}
+
+		/** Get lines
+		 */
+		$lines = App\Model\Base\MultiVariableLine::whereHas('variable', function ($q) {
+			$q->where('title', 'indexSlider');
+		})->get();
+
+		$multiHeader = App\Model\Base\MultiVariable::where('title', 'header')
+			->whereHas('variable', function ($q) {
+				$q->where('title', 'indexSlider');
+			})->first();
+
+		$multiContent = App\Model\Base\MultiVariable::where('title', 'content')
+			->whereHas('variable', function ($q) {
+				$q->where('title', 'indexSlider');
+			})->first();
+
+		$multiLink = App\Model\Base\MultiVariable::where('title', 'link')
+			->whereHas('variable', function ($q) {
+				$q->where('title', 'indexSlider');
+			})->first();
+
+		$multiIcon = App\Model\Base\MultiVariable::where('title', 'icon')
+			->whereHas('variable', function ($q) {
+				$q->where('title', 'indexSlider');
+			})->first();
+
+		$key = 0;
+		foreach ($lines as $item) {
+			if ($key === 0) {
+				$header = 'DRAGONMINT';
+				$content = 'a new level of bitcoin mining';
+				$link = '/products';
+				$icon = 'slider/dragonmint-1.png';
+			}
+
+			if ($key === 1) {
+				$header = 'ANTMINER S9';
+				$content = 'The most energy efficient miner in the world';
+				$link = '/products';
+				$icon = 'slider/antminer-s9.png';
+			}
+
+			if ($key === 2) {
+				$header = 'ANTMINER L3+';
+				$content = 'The best solution for litecoin mining';
+				$link = '/products';
+				$icon = 'slider/antminer-l3.png';
+			}
+
+			if ($key === 3) {
+				$header = 'ANTMINER D3';
+				$content = 'DASH mining at maximum power';
+				$link = '/products';
+				$icon = 'slider/antminer-d3.png';
+
+			}
+
+			App\Model\Base\MultiVariableContent::create([
+				'multi_variable_id' => $multiHeader->id,
+				'multi_variable_line_id' => $item->id,
+				'content' => $header
+			]);
+
+			App\Model\Base\MultiVariableContent::create([
+				'multi_variable_id' => $multiContent->id,
+				'multi_variable_line_id' => $item->id,
+				'content' => $content
+			]);
+
+			App\Model\Base\MultiVariableContent::create([
+				'multi_variable_id' => $multiLink->id,
+				'multi_variable_line_id' => $item->id,
+				'content' => $link
+			]);
+
+			App\Model\Base\MultiVariableContent::create([
+				'multi_variable_id' => $multiIcon->id,
+				'multi_variable_line_id' => $item->id,
+				'content' => $icon
+			]);
+
+			$key++;
+		}
 	}
 }

@@ -37,6 +37,7 @@ class ProductsTableSeeder extends Seeder
 			'warranty' => '180 days',
 			'product_status_id' => $preOrderStatus->id,
 			'title' => 'DRAGONMINT T1 16TH/s',
+			'articul' => 'dragonmint-t1-16th-s',
 			'description' => '<p><b>DragonMint 16TH/s</b> – The latest innovation on the Bitcoin mining market, created by Halong Mining. Based on the declared characteristics, there is no more effective SHA-256 miner to date.</p>
 
 			<p>The main "highlight" of the design of the miner is the DM8575 chips. It is they that provide a high hashed and energy efficiency device, which is equal to 0,075J / GH. DragonMint is equipped with two fans, which ensure normal operation at temperatures from 0 to +25.</p>
@@ -55,6 +56,7 @@ class ProductsTableSeeder extends Seeder
 			'product_status_id' => $inStockStatus->id,
 			'warranty' => '180 days',
 			'title' => 'ANTMINER S9 13.5TH/s',
+			'articul' => 'antminer-s9-13.5th-s',
 			'description' => '<p><b>Antminer S9</b> – One of the latest innovations in the line of miners produced by Bitmain. This model has many competitive advantages. The device perfectly combines the two main characteristics, performance and energy efficiency. Moreover, it differs compactness (dimensions of the case 30.1 × 12.3 × 15.5 cm) and excellent cooling.</p>
 
 			<p>Simplicity of operation is another significant advantage of the presented device, because its introduction does not require special knowledge. Miner functions autonomously and has an easy setup.</p>
@@ -75,6 +77,7 @@ class ProductsTableSeeder extends Seeder
 			'product_status_id' => $inStockStatus->id,
 			'warranty' => '180 days',
 			'title' => 'ANTMINER D3 19.3GH/s',
+			'articul' => 'antminer-d3-19.3gh-s',
 			'description' => '<p><b>Antminer D3</b> – equipment for mining, developed by specialists BITMAIN. The device was created specifically for the algorithm X11, therefore, it can produce one of the most popular crypto-currencies - DASH. In addition, on such an algorithm, you can get another digital currency, for example, QRK and CANN.</p>
 
 			<p>All the components of the antmayner are reliably fixed. The boards in the case of the equipment are almost end-to-end relative to each other. The minimum distance between them is provided for effective cooling by the fan.</p>
@@ -101,6 +104,7 @@ class ProductsTableSeeder extends Seeder
 			'warranty' => '365 days',
 			'product_status_id' => $inStockStatus->id,
 			'title' => 'BP MYRIG 12V 1680W',
+			'articul' => 'bp-myrig-12v-1680w',
 			'description' => '<p>The MYRIG power supplies provide a maximum power of 1240 watts if it is connected to a 110 volt power supply. To obtain a nominal power of 1680 watts, it must be connected to a 220 V power supply. Before ordering, check the power supply that is standard in your area.</p>
 
 			<p>The MYRIG is supplied with only 10 PCIe slots, so they can not be used with more than one Antminer S9 / T9 / D3 / L3 + scanner.</p>',
@@ -117,6 +121,7 @@ class ProductsTableSeeder extends Seeder
 			'warranty' => '365 days',
 			'product_status_id' => $inStockStatus->id,
 			'title' => 'AntRouter R1',
+			'articul' => 'antrouter-r1',
 			'description' => '<p>The MYRIG power supplies provide a maximum power of 1240 watts if it is connected to a 110 volt power supply. To obtain a nominal power of 1680 watts, it must be connected to a 220 V power supply. Before ordering, check the power supply that is standard in your area.</p>
 
 			<p>The MYRIG is supplied with only 10 PCIe slots, so they can not be used with more than one Antminer S9 / T9 / D3 / L3 + scanner.</p>',
@@ -133,6 +138,7 @@ class ProductsTableSeeder extends Seeder
 			'warranty' => '90 days',
 			'product_status_id' => $inStockStatus->id,
 			'title' => 'Control board D3 / L3',
+			'articul' => 'control-board-d3-l3',
 			'description' => '',
 			'active' => 1,
 			'price' => '130.00',
@@ -147,6 +153,7 @@ class ProductsTableSeeder extends Seeder
 			'warranty' => '90 days',
 			'product_status_id' => $notAvailableStatus->id,
 			'title' => '6000RPM Fan',
+			'articul' => '6000rpm-fan',
 			'description' => '<p>Compatible with: <ul>
 				<li>Antminer S9 (Fore)</li>
 				<li>Antminer T9 (Fore)</li>
@@ -166,6 +173,7 @@ class ProductsTableSeeder extends Seeder
 			'warranty' => '90 days',
 			'product_status_id' => $inStockStatus->id,
 			'title' => 'Beagle Bone S9/T9/R4',
+			'articul' => 'beagle-bone-s9-t9-r4',
 			'description' => '<p>Compatible with: <ul>
 				<li>Antminer S9</li>
 				<li>Antminer T9</li>
@@ -184,6 +192,7 @@ class ProductsTableSeeder extends Seeder
 			'warranty' => '90 days',
 			'product_status_id' => $inStockStatus->id,
 			'title' => 'Data 18 pin cable',
+			'articul' => 'data-18-pin-cable',
 			'description' => '<p>Compatible with: <ul>
 				<li>Antminer S9 (18cm)</li>
 				<li>Antminer S7 (14cm)</li>
@@ -205,6 +214,7 @@ class ProductsTableSeeder extends Seeder
 			'warranty' => '90 days',
 			'product_status_id' => $inStockStatus->id,
 			'title' => 'Control board S5 / S7',
+			'articul' => 'control-board-s5-s7',
 			'description' => '<p>Compatible with: <ul>
 				<li>Antminer S5</li>
 				<li>Antminer S7</li>
@@ -222,6 +232,7 @@ class ProductsTableSeeder extends Seeder
 			'warranty' => '90 days',
 			'product_status_id' => $inStockStatus->id,
 			'title' => 'Control board S9 / T9 / R4',
+			'articul' => 'control-board-s9-t9-r4',
 			'description' => '<p>Compatible with: <ul>
 				<li>Antminer S9</li>
 				<li>Antminer R4</li>
@@ -240,6 +251,7 @@ class ProductsTableSeeder extends Seeder
 			'warranty' => '90 days',
 			'product_status_id' => $notAvailableStatus->id,
 			'title' => 'Beagle Bone S5/S7',
+			'articul' => 'beagle-bone-s5-s7',
 			'description' => '<p>Compatible with: <ul>
 				<li>Antminer S5</li>
 				<li>Antminer S7</li>

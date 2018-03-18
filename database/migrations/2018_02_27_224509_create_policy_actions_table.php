@@ -18,6 +18,8 @@ class CreatePolicyActionsTable extends Migration
 			$table->charset = 'utf8';
 			$table->collation = 'utf8_general_ci';
 
+			$table->increments('id');
+
 			$table->integer('policy_id', false, true)
 				->default(0)
 				->comment('Policy ID');
@@ -26,7 +28,6 @@ class CreatePolicyActionsTable extends Migration
 				->default(0)
 				->comment('Action ID');
 
-			$table->increments('id');
 			$table->timestamps();
 		});
 	}

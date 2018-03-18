@@ -32,5 +32,6 @@ return [
 	'in_the_cart' => 'Products in the cart',
 	'remove_product' => 'Delete this position',
 	'optional_equipment' => 'Optional equipment',
-	'payment_methods_description' => 'Our manager will contact you to clarify details'
+	'payment_methods_description' => 'Our manager will contact you to clarify details',
+	'hosting_title' => 'Hosting'
 ];
