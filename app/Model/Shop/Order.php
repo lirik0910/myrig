@@ -74,6 +74,23 @@ class Order extends Model
 	}
 
 	/**
+	 * Generate and set number to order model
+	 * @return int
+	 */
+	public function setNumber()
+	{
+		$time = time();
+
+		$number = 0;
+		foreach (str_split($time) as $int) {
+			$number += (int) $int;
+		}
+		$this->number = $number;
+		
+		return $number;
+	}
+
+	/**
 	 * Count order cost
 	 * @return float
 	 */
