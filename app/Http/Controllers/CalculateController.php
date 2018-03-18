@@ -1,9 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Model\Base\VariableContent;
 use Illuminate\Http\Request;
 use App\Model\Base\Setting;
 use App\SimpleHtmlDom as simple_html_dom;
+use App\Model\Base\Page;
 
 
 class CalculateController
@@ -22,7 +24,7 @@ class CalculateController
             case 'update_devices':
                 return $this->update_devices($request);
             case 'calc_btc_profit':
-                return $this->calc_btc_profit($request);
+               // return $this->calc_btc_profit($request);
         }
         return $this->calc_btc_profit($request);
     }
@@ -56,6 +58,7 @@ class CalculateController
 
 
         $calc = $this->parse_btc_course_calculated();
+        //$other_crypth =
         $other_crypth = json_decode(Setting::where('title', 'other_crypth')->first()->value);
         $calcBCH = $other_crypth->BCH;
         $calcLTC = $other_crypth->LTC;
@@ -84,7 +87,7 @@ class CalculateController
         if($source){
             $output = '';
             foreach ($data['base'] as $key => $value) {
-                $output .= view('parts.calculator.btc_table_currency_item', ['key' => $key, 'value' => round($value,2)]);
+                $output .= view('parts/calculator/btc_table_currency_item', ['key' => $key, 'value' => round($value,2)]);
             }
             return $output;
         }
@@ -180,7 +183,7 @@ class CalculateController
         }
 
         if ($request->post('action') != 'calc_btc_profit' && $die != 1) {
-            return view('parts.calculator.network_status', ['data' => $data, 'TH' => $TH, 'P' => $P, 'currency' => $currency]);
+            return view('parts/calculator/network_status', ['data' => $data, 'TH' => $TH, 'P' => $P, 'currency' => $currency]);
         }  else
             return $network;
 
@@ -218,7 +221,7 @@ class CalculateController
             $allowedDevices[] = $device;
         }
 
-        return view('parts.calculator.calculator_form_item', ['devices' => $allowedDevices, 'cur' => $cur]);
+        return view('parts/calculator/calculator_form_item', ['devices' => $allowedDevices, 'cur' => $cur]);
     }
 
     public function parse_btc_network_status(Request $request, $die = 0) {
@@ -387,9 +390,13 @@ class CalculateController
 
     public function parse_btc_course_calculated() {
 
+        $page = Page::where('title', 'Calculator')->first();
+        $options = $page->view->variables->where('title', 'USD/Percent')->orWhere('title', 'Min/Max')->orWhere('title', 'Value/Change')->get();
+        var_dump($options); die;
+
         $usdpercent = Setting::where('title', 'usdpercent')->first()['value'];
         $minmax = Setting::where('title', 'minmax')->first()->value;
-        $valuechange = Setting::where('title', 'valuechange')->first()['value'];
+        $valuechange =  Setting::where('title', 'valuechange')->first()['value'];
 
         //$CryptoTickerWidget = new CryptoTickerWidget();
 
@@ -408,7 +415,7 @@ class CalculateController
 
         $calc['min'] = min($result);
         $calc['max'] = max($result);
-        $calc = ($calc['min'] + $calc['max']) / 2;
+        //$calc = ($calc['min'] + $calc['max']) / 2;
         $calc = $calc[$minmax];
 
         if ($valuechange != 0)

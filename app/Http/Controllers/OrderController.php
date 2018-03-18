@@ -42,8 +42,15 @@ class OrderController extends Controller
         }
 
         $order = new Order();
+
+        $numbersArray = str_split((string)time() - 2000000, 3);
+        $order_number = 0;
+        foreach($numbersArray as $number){
+            $order_number += (int)$number;
+        }
+
         $order->fill([
-            'number' => time() - 2000000,
+            'number' => $order_number,
             'user_id' => $user->id,
             'cost' => Cart::calculateCartCost(),
             'prepayment' => 0,
@@ -78,7 +85,7 @@ class OrderController extends Controller
 
         $cart = json_decode(session()->get('cart'), true);
         foreach ($cart as $product => $count){
-            $order->orderItems()->create([
+            $order->carts()->create([
                 'order_id' => $order->id,
                 'product_id' => $product,
                 'count' => $count

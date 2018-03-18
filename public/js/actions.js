@@ -147,8 +147,58 @@ jQuery(document).ready(function ($) {
 			})
 		});
 		
-		
-				//registration
+	    $('#personalForm').on('submit', function (e) {
+			e.preventDefault();
+			var form = $(this);
+            $(form).bootstrapValidator({
+                preventSubmit: true,
+                message: 'This value is not valid',
+                feedbackIcons: {
+                    valid: 'dashicons dashicons-yes',
+                    invalid: 'dashicons dashicons-no',
+                    validating: 'dashicon dashicon-refresh'
+                },
+                fields: {
+
+                    user_pass_confirm: {
+                        validators: {
+                            identical: {
+                                field: 'user_pass',
+                                message: $('#user_pass_confirm').attr('data-bv-identical-message')
+                            }
+                        }
+                    },
+                    user_pass: {
+                        validators: {
+                            identical: {
+                                field: 'user_pass_confirm',
+                                message: $('#user_pass').attr('data-bv-identical-message')
+                            }
+                        }
+                    }
+                }
+            });
+
+            var dat = {};
+            form.find('input').each(function () {
+				dat[$(this).attr('name')] = $(this).val();
+            });
+			//console.log(dat);
+			$.ajax({
+                url: global.url + 'profile',
+				data: dat,
+                method: 'post',
+                //dataType: 'json',
+                //data: $('.auth_form').serialize(),
+                success: function(response){
+                    if (response.success == true){
+                        window.location.reload()
+                    }
+                }
+            });
+        });
+
+	/*			//registration
 		$('#personalForm ').each(function() {
 			var that = $(this);
 			$(this).bootstrapValidator({
@@ -177,8 +227,8 @@ jQuery(document).ready(function ($) {
 							}
 						}
 					},
-	 
-	  
+
+
 				}
 			})
 			$(this).on('success.form.bv', function(e) {
@@ -209,7 +259,7 @@ jQuery(document).ready(function ($) {
 					}
 				});
 			})
-		});
+		});*/
 	
 	$('div.result').hide()
 	$('#callback ').each(function() {

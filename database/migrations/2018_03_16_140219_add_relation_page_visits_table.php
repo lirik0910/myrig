@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddRelationOrderItemsTable extends Migration
+class AddRelationPageVisitsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,10 @@ class AddRelationOrderItemsTable extends Migration
      */
     public function up()
     {
-        Schema::table('order_items', function (Blueprint $table) {
-            $table->foreign('order_id')
+        Schema::table('page_visits', function (Blueprint $table) {
+            $table->foreign('page_id')
                 ->references('id')
-                ->on('orders')
-                ->onDelete('cascade');
-        });
-
-        Schema::table('order_items', function (Blueprint $table) {
-            $table->foreign('product_id')
-                ->references('id')
-                ->on('products')
+                ->on('pages')
                 ->onDelete('cascade');
         });
     }

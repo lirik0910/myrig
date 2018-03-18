@@ -24,7 +24,7 @@ class Cart extends Model
 	 */
 	public function order()
 	{
-		return $this->hasOne(Order::class);
+		return $this->belongsTo(Order::class);
 	}
 
 	/**
@@ -33,16 +33,16 @@ class Cart extends Model
 	 */
 	public static function calculateCartCost()
 	{
-        $sessionCart = json_decode(session('cart'), true);
-        $products = Product::all();
+		$sessionCart = json_decode(session('cart'), true);
+		$products = Product::all();
 
-        $total = 0;
-        foreach ($products as $item) {
-            if (isset($sessionCart[$item->id])) {
-                $total += $sessionCart[$item->id] * $item->price;
-            }
-        }
+		$total = 0;
+		foreach ($products as $item) {
+			if (isset($sessionCart[$item->id])) {
+				$total += $sessionCart[$item->id] * $item->price;
+			}
+		}
 
-        return $total;
+		return $total;
 	}
 }

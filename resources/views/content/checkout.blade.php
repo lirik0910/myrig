@@ -229,7 +229,7 @@ foreach ($products as $item) {
 										</div>
 
 										<div class="table-cell">
-											<span class="delivery-status">
+											<span class="delivery-status" style="word-wrap: break-word">
 												<tr class="shipping">
 													<td data-title="Доставка">
 														<ul id="shipping_method">
@@ -241,7 +241,7 @@ foreach ($products as $item) {
 															</li>
                                                             @endforeach
 															<li>
-																<input type="radio" name="delivery" data-index="0"  value="Самовывоз" class="shipping_method"  />
+																<input type="radio" name="delivery" data-index="0"  value="0" class="shipping_method"  />
 
 																<label for="shipping_method_0_local_pickup15">Self shipment</label>
 															</li>

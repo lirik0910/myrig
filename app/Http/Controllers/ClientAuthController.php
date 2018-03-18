@@ -4,9 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Model\Base\User;
 use App\Model\Base\UserAttribute;
-use Illuminate\Routing\RedirectController;
-use Illuminate\Support\Facades\Cookie;
-use Illuminate\Routing\Redirector ;
+use Illuminate\Support\Facades\Validator;
 
 class ClientAuthController
 {
@@ -175,7 +173,29 @@ class ClientAuthController
     /*
      * Update client user attributes
      */
-    public function updateClientAttributes(Request $request){
-        var_dump($request); die;
+    public function updateClient(Request $request){
+        $post = $request->post();
+
+        $validator = Validator::make($post, [
+            'first_name' => 'required|max:255',
+            'last_name' => 'required|max:255',
+            'phone' => 'numeric',
+            'email' => 'required|email',
+            'address' => 'max:255',
+        ]);
+
+        if ($validator->fails())
+        {
+            return response()->json(['success' => false, 'messages' => json_encode($validator->errors()->messages())]);
+        }
+
+        $user = User::where('email', session()->get('client'))->first();
+        $update = UserAttribute::where('user_id', $user->id)->update(['fname' => $post['first_name'], 'lname' => $post['last_name'], 'phone' => $post['phone'], 'address' => $post['address']]);
+
+        if($update){
+            return response()->json(['success' => true]);
+        }
+
+        return response()->json(['success' => false]);
     }
 }
