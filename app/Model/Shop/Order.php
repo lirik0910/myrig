@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
-    protected $guarded = [];
+	protected $guarded = [];
 	/**
 	 * Get order status
 	 * @return boolean
@@ -55,14 +55,14 @@ class Order extends Model
 	}
 
 
-    /**
-     * Get order products
-     * @return boolean
-     */
-    public function products()
-    {
-        return $this->belongsToMany(Product::class, 'carts', 'order_id', 'product_id')->withPivot('count');
-    }
+	/**
+	 * Get order products
+	 * @return boolean
+	 */
+	public function products()
+	{
+		return $this->belongsToMany(Product::class, 'carts', 'order_id', 'product_id')->withPivot('count');
+	}
 
 	/**
 	 * Get order products
@@ -96,8 +96,20 @@ class Order extends Model
 	 */
 	public function countCost()
 	{
+		$cart = Cart::where('order_id', $this->id)->get();
+		
+		$cost = 0;
+		foreach ($cart as $item) {
+			$price = $item->product->price;
+			$count = $item->count;
 
+			$cost += ($count * $price);
+		}
+		$this->cost = $cost;
+
+		return $cost;
 	}
+
 
 	/**
 	 * Change order status

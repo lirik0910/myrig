@@ -26,23 +26,4 @@ class Cart extends Model
 	{
 		return $this->belongsTo(Order::class);
 	}
-
-	/**
-	 * Calculate products cost of current cart
-	 * @return float
-	 */
-	public static function calculateCartCost()
-	{
-		$sessionCart = json_decode(session('cart'), true);
-		$products = Product::all();
-
-		$total = 0;
-		foreach ($products as $item) {
-			if (isset($sessionCart[$item->id])) {
-				$total += $sessionCart[$item->id] * $item->price;
-			}
-		}
-
-		return $total;
-	}
 }

@@ -7,7 +7,7 @@
 
     <div class="network-status--inner">
         <div>Сложность</div>
-        <div class="difficulty">{{$data['difficulty']}}</div>
+        <div class="difficulty">{{$D}}</div>
     </div>
 
     <div class="network-status--inner network-delimiter">

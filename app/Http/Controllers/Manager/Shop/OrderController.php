@@ -257,8 +257,23 @@ class OrderController extends Controller
 			'status_id'
 		]);
 
+		/** Fill order data
+		 */
 		$model->fill($orderData);
-		$model->save();
+
+		/** Count order cost
+		 */
+		$model->countCost();
+
+		/** Try save order model
+		 */
+		try {
+			$model->save();
+		}
+		catch (\Exception $e) {
+			logger($e->getMessage());
+			return response()->json(['message' => $e->getMessage()], 422);
+		}
 
 		return response()->json(['message' => true], 200);
 	}
