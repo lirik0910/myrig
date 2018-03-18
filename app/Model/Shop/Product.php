@@ -60,9 +60,9 @@ class Product extends Model
      * Get orders items with this product
      * @return boolean
      */
-    public function orderItems()
+    public function carts()
     {
-        return $this->hasMany(OrderItem::class);
+        return $this->hasMany(Cart::class);
     }
 
 	/**

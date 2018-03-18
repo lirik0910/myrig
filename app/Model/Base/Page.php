@@ -31,6 +31,15 @@ class Page extends Model
 	}
 
 	/*
+	 * Bind with PageVisits model
+	 * @return boolean
+	 */
+	public function visits()
+    {
+	    return $this->hasOne(PageVisits::class);
+    }
+
+	/*
 	 * Convert multivariables collection object to array
 	 * @param object $mvs Multivariables object
 	 * @return array

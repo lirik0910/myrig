@@ -7,7 +7,6 @@
             <div class="container">
                 <div class="row">
                     <div class="col-sm-4">
-
                         <!--CALCULATOR BEGIN-->
                         <div class="section-tab">
                             <h1 class="calc_title">Калькулятор доходности</h1>

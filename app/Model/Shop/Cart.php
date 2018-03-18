@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Collection;
 
 class Cart extends Model
 {
+    protected $guarded = [];
 	/**
 	 * Bind product model
 	 * @return boolean
@@ -22,7 +23,7 @@ class Cart extends Model
 	 */
 	public function order()
 	{
-		return $this->hasOne(Order::class);
+		return $this->belongsTo(Order::class);
 	}
 
 	/**

@@ -17,9 +17,18 @@
         </script>
         @php
             $user = App\Model\Base\User::where('email', session()->get('client'))->with('attributes', 'orders')->first();
+            if(!$user){
+                redirect('sso-login');
+            }
+            //var_dump(App\Model\Shop\ProductImage::all()); die;
             $orders = App\Model\Shop\Order::where('user_id', $user->id)->with('products')->get();
-            foreach ($orders as $gt){
-                //var_dump($gt); die;
+            //var_dump($orders); die;
+            foreach ($orders as $order){
+                foreach($order->products as $product){
+                  //$product->images;
+                  //var_dump(App\Model\Shop\ProductImage::where('product_id', $product->id)->get()); die;
+                  //var_dump($product->id); die;
+                }
             }
 
         @endphp
@@ -40,60 +49,55 @@
                     <div class="article-content col-sm-8">
                         <div class="article-text">
                             <div id="personalF">
-                                <form id="personalForm" action="#">
+                                <form id="personalForm">
                                     {{csrf_field()}}
                                     <div class="form-group">
-
-                                        <input type="text" value="{{$user->attributes->fname}}" name="first_name" placeholder="Имя" class="form-control full-width" required="required" data-bv-message=" "/>
+                                        <input type="text" value="{{$user->attributes->fname}}" name="first_name" placeholder="First Name" class="form-control full-width" required="required" data-bv-message=" "/>
                                     </div>
                                     <div class="form-group">
-
-                                        <input type="text" value="{{$user->attributes->lname}}" name="last_name" placeholder="Фамилия" class="form-control full-width" required="required" data-bv-message=" "/>
+                                        <input type="text" value="{{$user->attributes->lname}}" name="last_name" placeholder="Last Name" class="form-control full-width" required="required" data-bv-message=" "/>
                                     </div>
-                                    <div class="form-group">
-                                        <input type="password" name="password" class="form-control" placeholder="Пароль" data-bv-identical-field="password_confirm" data-bv-message="Пароли не совпадают"/>
+                                    <!--<div class="form-group">
+                                        <input type="password" name="password" class="form-control" placeholder="Passsword" data-bv-identical-field="password_confirm" data-bv-message="Пароли не совпадают"/>
                                         <div class="checkbox-wrapper">
                                             <input type="checkbox" name="tfa" class="form-control tfa-check" />
                                             <label class="form-label">двуфакторная авторизация</label>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <input type="password" name="password" class="form-control" placeholder="Повторите пароль" data-bv-identical-field="password_confirm" data-bv-message="Пароли не совпадают"/>
-
-                                    </div>
-                                    <div class="form-group tfa hidden">
-                                        [twofactor_user_settings]	                    </div>
+                                        <input type="password" name="re-password" class="form-control" placeholder="Repeat password" data-bv-identical-field="password_confirm" data-bv-message="Пароли не совпадают"/>
+                                    </div>-->
+                                    <!--<div class="form-group tfa hidden">
+                                        [twofactor_user_settings]
+                                    </div>-->
                                     <div class="form-group">
-                                        <input type="email" name="user_email"  value="{{$user->email}}" disabled class="form-control" placeholder="Эл. почта" />
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="tel" name="billing_phone" value="{{$user->attributes->phone}}" class="form-control" placeholder="Телефон" required="required" data-bv-message=" "/>
-
+                                        <input type="email" name="email"  value="{{$user->email}}" disabled class="form-control" placeholder="E-mail" required/>
                                     </div>
                                     <div class="form-group">
-                                        <input type="text" name="billing_address_1" value="{{$user->attributes->address}}" class="form-control full-width" placeholder="Адрес доставки" value=""/>
+                                        <input type="tel" name="phone" value="{{$user->attributes->phone}}" class="form-control" placeholder="Phone" required="required" data-bv-message=""/>
                                     </div>
                                     <div class="form-group">
-                                        <input type="submit" name="submit" class="btn-default" value="Сохранить"/>
+                                        <input type="text" name="address" value="{{$user->attributes->address}}" class="form-control full-width" placeholder="Delivery address" />
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="submit" name="submit" class="btn-default" value="Save"/>
                                     </div>
                                     <input type="hidden" name="action" value="bitmain_account_register">
-                                    <input type="hidden" name="user" value="3018">
+                                    <input type="hidden" name="user" value="{{$user->id}}">
                                 </form>
-                                <p class="result" data-text="Профиль обновлен!"></p>
+                                <p class="result" data-text="Profile updated!"></p>
+
                             </div>
                             <div id="historyField">
-                                <div class="table-like table-expanded">
+                                <div class="table-like">
                                     <div class="table-row table-header">
-                                        <div class="table-cell  ">Номер и дата</div>
-                                        <div class="table-cell ">Товар и его цена</div>
-                                        <div class="table-cell table-cell-title">Кол-во</div>
-                                        <div class="table-cell">Стоимость</div>
-
-
-                                        <div class="table-cell table-cell-status">Статус</div>
+                                        <div class="table-cell  ">Number and date</div>
+                                        <div class="table-cell ">Product and price</div>
+                                        <div class="table-cell table-cell-title">Count</div>
+                                        <div class="table-cell">Cost</div>
+                                        <div class="table-cell table-cell-status">Status</div>
                                         <div class="table-cell"></div>
                                     </div>
-                                    @isset($govno)
                                     @foreach($orders as $order)
                                         <div class="table-row  table-row-border table-row-top-several">
                                             <div class="table-cell table-cell-border">
@@ -113,21 +117,24 @@
                                                     </div>
                                                 </div>
                                             @else
+                                                @foreach($order->products as $product)
                                                 <div class="table-cell table-product-cell">
                                                     <div class="order_thumbs">
-                                                        <img src="{{asset('uploads/' . $order->products[0]->images[0]->name)}}" title="{{$order->products[0]->title}}">
+                                                        <img src="@if(count($product->images)){{asset('uploads/' . App\Model\Shop\ProductImage::where('product_id', $product->id)->first()->name)}}@endif" title="{{$product->title}}">
                                                         <div class="cost">
-                                                            <a href="{{$order->products[0]->page->link}}" data-wpel-link="internal">{{$order->products[0]->title}}</a>
+                                                            <a href="{{$product->page->link}}" data-wpel-link="internal">{{$product->title}}</a>
                                                             <span class="hidden-md">Item cost</span>
-                                                            <span class="table-price">${{$order->products[0]->price}}</span>
+                                                            <span class="table-price">${{$product->price}}</span>
                                                             <span class="table-bitcoin">0.3464<i class="fa fa-bitcoin"></i></span>
                                                         </div>
                                                     </div>
                                                 </div>
+                                                @endforeach
+
                                             @endif
                                             <div class="table-cell number">
                                                 <span class="hidden-md">Count</span>
-                                                <span> @php $count = 0; foreach($order->orderItems as $orderItem){ $count += $orderItem->count; } echo $count @endphp шт </span>
+                                                <span> @php $count = 0; foreach($order->carts as $cart){ $count += $cart->count; } echo $count @endphp шт </span>
                                             </div>
                                             <div class="table-cell number number-price">
                                                 <span class="hidden-md">Total</span>
@@ -158,12 +165,12 @@
                                         </div>
                                         @if(count($order->products) > 1)
                                             @foreach($order->products as $product)
-                                                <div class="table-row table-row-several order-{{$order->number}} hidden-block">
+                                                <div class="table-row hidden-block table-row-several order-{{$order->number}}">
                                                     <div class="table-cell table-cell-border table-cell-border-none">
                                                     </div>
                                                     <div class="table-cell table-product-cell">
                                                         <div class="order_thumbs">
-                                                            <img src="{{asset('uploads/' . $product->images[0]->name)}}" title="{{$product->title}}">
+                                                            <img src="@if(count($product->images)){{asset('uploads/' . $product->images[0]->name)}}@endif" title="{{$product->title}}">
                                                             <div class="cost">
                                                                 <a href="{{$product->page->link}}" data-wpel-link="internal">{{$product->title}}</a>
                                                                 <span class="hidden-md">Cost</span>
@@ -174,11 +181,11 @@
                                                     </div>
                                                     <div class="table-cell number">
                                                         <span class="hidden-md">Count</span>
-                                                        <span> {{$product->pivot->count}} шт.</span>
+                                                        <span> {{$product->pivot->count}} </span>
                                                     </div>
                                                     <div class="table-cell number number-price">
                                                         <span class="hidden-md">Item cost</span>
-                                                        <span class="table-price">$@php echo $product->cost * $product->pivot->count; @endphp</span>
+                                                        <span class="table-price">$@php echo $product->price * $product->pivot->count; @endphp</span>
                                                         <span class="table-bitcoin">1.0392<i class="fa fa-bitcoin"></i></span>
                                                     </div>
                                                     <div class="table-cell status">
@@ -188,7 +195,6 @@
                                             @endforeach
                                         @endif
                                     @endforeach
-                                    @endisset
                                 </div>
                             </div>
                         </div>

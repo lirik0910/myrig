@@ -54,14 +54,6 @@ class Order extends Model
 		return $this->hasOne(OrderDelivery::class);
 	}
 
-    /**
-     * Get order items
-     * @return boolean
-     */
-    public function orderItems()
-    {
-        return $this->hasMany(OrderItem::class);
-    }
 
     /**
      * Get order products
@@ -69,7 +61,7 @@ class Order extends Model
      */
     public function products()
     {
-        return $this->belongsToMany(Product::class, 'order_items', 'order_id', 'product_id')->withPivot('count');
+        return $this->belongsToMany(Product::class, 'carts', 'order_id', 'product_id')->withPivot('count');
     }
 
 	/**

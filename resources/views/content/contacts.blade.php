@@ -10,13 +10,14 @@
 </div>
 @php
 //var_dump($multi['Contact items'])
+
 @endphp
 <section class="content contact">
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-4">
-				@isset($multi['contactItems'])
-					@foreach($multi['contactItems'] as $var)
+				@isset($multi['Contact items'])
+					@foreach($multi['Contact items'] as $var)
 						<div class="contact-item @if($loop->first)head-contact-item @endif" data-lat="{{$var['lat']}}" data-lng="{{$var['lng']}}">
 							<p><!--:ru--></p>
 							<div class="country">{{$var['country']}}</div>

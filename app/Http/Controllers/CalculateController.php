@@ -22,7 +22,7 @@ class CalculateController
             case 'update_devices':
                 return $this->update_devices($request);
             case 'calc_btc_profit':
-                return $this->calc_btc_profit($request);
+               // return $this->calc_btc_profit($request);
         }
         return $this->calc_btc_profit($request);
     }

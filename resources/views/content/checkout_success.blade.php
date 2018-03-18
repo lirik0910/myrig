@@ -136,7 +136,7 @@
                                                     </tr>
                                                 </table>
                                                 <h3 class="woocommerce-column__title">Address info</h3>
-                                                <address>{{$order->orderDeliveries->first_name}} {{$order->orderDeliveries->last_name}}<br/>{{$order->orderDeliveries->country}}, {{$order->orderDeliveries->city}}<br/>{{$order->orderDeliveries->address}}</address>
+                                                <address>{{$order->orderDeliveries->first_name}} {{$order->orderDeliveries->last_name}}<br/>{{ __('common.country_' . $order->orderDeliveries->country) }}, {{$order->orderDeliveries->city}}<br/>{{$order->orderDeliveries->address}}</address>
                                             </section>
                                         </section>
                                     </div>
