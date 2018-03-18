@@ -23,6 +23,7 @@ import FileManagerContainer from './containers/FileManagerContainer.jsx';
 import EditProductContainer from './containers/EditProductContainer.jsx';
 import ListProductsContainer from './containers/ListProductsContainer.jsx';
 import CreateProductContainer from './containers/CreateProductContainer.jsx';
+import ListVocabularyContainer from './containers/ListVocabularyContainer.jsx';
 
 import './index.css';
 
@@ -49,6 +50,7 @@ render (<BrowserRouter>
 					<Route exact path={App.name() +'/products'} component={ListProductsContainer} />
 					<Route exact path={App.name() +'/products/create'} component={CreateProductContainer} />
 					<Route exact path={App.name() +'/products/:number'} component={EditProductContainer} />
+					<Route exact path={App.name() +'/vocabulary'} component={ListVocabularyContainer} />
 				</Switch>
 			</Provider>
 		</BrowserRouter>, document.getElementById('root'));

@@ -15,6 +15,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as StateElementAction from '../../actions/StateElementAction.js';
 
+//import { Link } from 'react-router-dom';
+
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
 import Divider from 'material-ui/Divider';
@@ -23,6 +25,8 @@ import Typography from 'material-ui/Typography';
 import IconButton from 'material-ui/IconButton';
 import Menu, { MenuItem } from 'material-ui/Menu';
 import MoreVertIcon from 'material-ui-icons/MoreVert';
+import { LinearProgress } from 'material-ui/Progress';
+import DialogError from '../DialogError/DialogError.jsx';
 
 import styles from './styles.js';
 import PropTypes from 'prop-types';
@@ -54,7 +58,11 @@ class Header extends Component {
 	 * @property {Object} anchorEl The DOM element used to set the position of the menu.
 	 */
 	state = {
-		anchorEl: null
+		anchorEl: null,
+		completed: 100,
+		resultDialog: '', 
+		resultDialogTitle: '', 
+		resultDialogMessage: ''
 	}
 
 	/**
@@ -87,63 +95,120 @@ class Header extends Component {
 	}
 
 	/**
+	 * Request for delete product
+	 * @param {Object} e
+	 */
+	cacheClearRequest(callback = () => {}) {
+		if (this.state.completed === 100) {
+			this.setState({ 
+				completed: 0 
+			}, () => {
+				App.api({
+					name: 'clear',
+					type: 'DELETE',
+					model: 'cache',
+					success: (r) => {
+						r = JSON.parse(r.response);
+						if (r) {
+							this.setState({ 
+								completed: 100,
+								resultDialog: true,
+								resultDialogTitle: 'Success',
+								resultDialogMessage: 'The request was successful'
+							}, () => callback());
+						}
+					},
+					error: (r) => {
+						r = JSON.parse(r.response);
+						if (r.message) {
+							this.setState({ 
+								completed: 100,
+								resultDialog: true,
+								resultDialogTitle: 'Error',
+								resultDialogMessage: r.message
+							}, () => callback());
+						}
+					}
+				});
+			});
+		}
+	}
+
+	/**
 	 * Render component
 	 * @return {Object} jsx object
 	 */
 	render() {
-		let { anchorEl } = this.state;
+		let { anchorEl, completed, resultDialog, resultDialogTitle, resultDialogMessage } = this.state;
 		let { title, classes } = this.props;
 
 		return <div className={classes.root}>
-				<AppBar position="static">
-					<Toolbar>
-						<IconButton className={classes.menuButton} 
-							color="inherit" 
-							aria-label="Menu"
-							onClick={this.asideMenuOpen}>
-								<MenuIcon />
-						</IconButton>
+			{completed === 0 && 
+				<LinearProgress color="secondary" variant="determinate" value={completed} />}
+			
+			<AppBar position="static" style={{ backgroundColor: '#60A645' }}>
+				<Toolbar>
+					<IconButton className={classes.menuButton} 
+						color="inherit" 
+						aria-label="Menu"
+						onClick={this.asideMenuOpen}>
+							<MenuIcon />
+					</IconButton>
 
-						<Typography type="title" 
-							color="inherit" 
-							className={classes.flex}>
-								{title}
-						</Typography>
+					<Typography type="title" 
+						color="inherit" 
+						className={classes.flex}>
+							{title}
+					</Typography>
 
-						<IconButton
-							color="inherit"
-							onClick={this.handleClick}>
-								<MoreVertIcon />
-						</IconButton>
+					<IconButton
+						color="inherit"
+						onClick={this.handleClick}>
+							<MoreVertIcon />
+					</IconButton>
 
-						<Menu
-							id="simple-menu"
-							anchorEl={anchorEl}
-							open={Boolean(anchorEl)}
-							onClose={this.handleClose}>
-								<MenuItem onClick={this.handleClose}>Vocabulary</MenuItem>
-					
-								<MenuItem onClick={this.handleClose}>Clear cache</MenuItem>
-								<Divider />
-					
-								<MenuItem onClick={() => {
-									var form = document.getElementById('logour-form');
-										if (form) {
-											form.submit();
-										}
-								}}>Exit</MenuItem>
-						</Menu>
-					</Toolbar>
-				</AppBar>
+					<Menu
+						id="simple-menu"
+						anchorEl={anchorEl}
+						open={Boolean(anchorEl)}
+						onClose={this.handleClose}>
+							{/*<Link to="vocabulary">
+								<MenuItem>Vocabulary</MenuItem>
+							</Link>*/}
 				
-				<form action={App.name() +'/logout'} 
-					method="POST" 
-					id="logour-form"
-					style={{display: 'none'}}>
+							<MenuItem onClick={e => this.cacheClearRequest(() => {
+								this.handleClose
+							})}>
+								Clear cache
+							</MenuItem>
+							<Divider />
+				
+							<MenuItem onClick={() => {
+								var form = document.getElementById('logour-form');
+									if (form) {
+										form.submit();
+									}
+							}}>Exit</MenuItem>
+					</Menu>
+				</Toolbar>
+			</AppBar>
+				
+			<form action={App.name() +'/logout'} 
+				method="POST" 
+				id="logour-form"
+				style={{display: 'none'}}>
 
-					<input type="hiddent" name="_token" defaultValue={App.csrf()} />
-				</form>
-			</div>
+				<input type="hiddent" name="_token" defaultValue={App.csrf()} />
+			</form>
+
+			{resultDialog === true && <DialogError 
+				title={resultDialogTitle}
+				defaultValue={resultDialog}
+				message={resultDialogMessage}
+				onDialogClosed={() => this.setState({
+					resultDialog: false
+				})} />}
+		</div>
 	}
 }
 

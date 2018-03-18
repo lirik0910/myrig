@@ -19,6 +19,7 @@ $shop = $select('App\Model\Base\Page')
 			<div class="main-slider owl-carousel owl-theme" id="mainSlider">
 			@if (isset($multi['indexSlider']))
 				@foreach ($multi['indexSlider'] as $slide)
+
 				<div class="main-slide" data-dot="<span><p class='dashnav-progress'></p></span>">
 					<div class="container">
 						<div class="slide-text">
@@ -35,7 +36,7 @@ $shop = $select('App\Model\Base\Page')
 							@endif
 						</div>
 						
-						<div class="slide-img" style="background-image: url('{{ asset('uploads/' . $slide['icon'])  }}')"></div>
+						<div class="slide-img" style="background-image: url('{{ $preview(asset('uploads/' . $slide['icon']), 518, 462) }}')"></div>
 					</div>
 				</div>
 				@endforeach
@@ -62,8 +63,8 @@ $shop = $select('App\Model\Base\Page')
 						{{ $var['content'] }}
 					</div>
 				</div>
-				
-				<div class="banner-back" style="background-image: url('{{ asset('uploads/' . $var['icon']) }}'); top: 37px; width: 80px; right: 54px; left: 300px;"></div>
+
+				<div class="banner-back" style="background-image: url('{{ $preview(asset('uploads/' . $var['icon']), 80, 100) }}'); top: 37px; width: 80px; right: 54px; left: 300px;"></div>
 			</a>
 			@endforeach
 		@endif

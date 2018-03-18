@@ -11,6 +11,7 @@
 |
 */
 use Illuminate\Http\Request;
+use App\ThumbOf;
 
 foreach (\App\Model\Base\Page::all() as $page) {
 	Route::get($page->link, 'PageController@view');
@@ -22,6 +23,7 @@ Route::prefix('connector')
 		Route::post('cart', 'SessionController@add');
 		Route::delete('cart', 'SessionController@delete');
 });
+
 Route::post('profile', 'ClientAuthController@updateClientAttributes');
 Route::get('checkout/order_success/{number}', 'PageController@view');
 Route::get('/shop/{id}', 'ProductController@getContent');
