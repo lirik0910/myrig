@@ -19,6 +19,9 @@ class CreateExchangeRatesTable extends Migration
             $table->collation = 'utf8_general_ci';
             
             $table->increments('id');
+
+            $table->string('title');
+            $table->float('value', 2);
             $table->timestamps();
         });
     }

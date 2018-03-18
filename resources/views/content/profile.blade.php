@@ -20,16 +20,8 @@
             if(!$user){
                 redirect('sso-login');
             }
-            //var_dump(App\Model\Shop\ProductImage::all()); die;
             $orders = App\Model\Shop\Order::where('user_id', $user->id)->with('products')->get();
-            //var_dump($orders); die;
-            foreach ($orders as $order){
-                foreach($order->products as $product){
-                  //$product->images;
-                  //var_dump(App\Model\Shop\ProductImage::where('product_id', $product->id)->get()); die;
-                  //var_dump($product->id); die;
-                }
-            }
+
 
         @endphp
         <section class="content profile">
@@ -134,7 +126,7 @@
                                             @endif
                                             <div class="table-cell number">
                                                 <span class="hidden-md">Count</span>
-                                                <span> @php $count = 0; foreach($order->carts as $cart){ $count += $cart->count; } echo $count @endphp шт </span>
+                                                <span> @php $count = 0; foreach($order->carts as $cart){ $count += $cart->count; } echo $count @endphp</span>
                                             </div>
                                             <div class="table-cell number number-price">
                                                 <span class="hidden-md">Total</span>
@@ -144,8 +136,8 @@
                                             <div class="table-cell status">
                                                 <span class="">
                                                     <p class="hidden-md">Status</p>
-                                                    <span class="mark cancelled">Отменен</span><br>
-                                                    <a class="order-history" data-wpel-link="internal">История
+                                                    <span class="mark cancelled" style="color: {{$order->status->color}}">{{$order->status->title}}</span><br>
+                                                    <!--<a class="order-history" data-wpel-link="internal">История
                                                         <div class="history-dd" style="height: auto !important">
                                                             <div class="modal-body">
                                                                 <h3>14 марта 2018 в 13:07</h3>
@@ -158,10 +150,10 @@
 															    </div>
                                                             </div>
                                                         </div>
-                                                    </a>
+                                                    -->
                                                 </span>
                                             </div>
-                                            <div class="table-cell"></div>
+                                            <div class="table-cell" style="width: 10px"></div>
                                         </div>
                                         @if(count($order->products) > 1)
                                             @foreach($order->products as $product)
