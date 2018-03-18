@@ -63,7 +63,7 @@
                                         [twofactor_user_settings]
                                     </div>-->
                                     <div class="form-group">
-                                        <input type="email" name="email"  value="{{$user->email}}" disabled class="form-control" placeholder="E-mail" required/>
+                                        <input type="email" name="email"  value="{{$user->email}}" disabled class="form-control" placeholder="E-mail"/>
                                     </div>
                                     <div class="form-group">
                                         <input type="tel" name="phone" value="{{$user->attributes->phone}}" class="form-control" placeholder="Phone" required="required" data-bv-message=""/>
