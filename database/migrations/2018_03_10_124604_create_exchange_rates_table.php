@@ -21,7 +21,7 @@ class CreateExchangeRatesTable extends Migration
             $table->increments('id');
 
             $table->string('title');
-            $table->float('value', 2);
+            $table->float('value', 12,2);
             $table->timestamps();
         });
     }

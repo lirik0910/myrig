@@ -52,7 +52,7 @@ class OrderController extends Controller
         $order->fill([
             'number' => $order_number,
             'user_id' => $user->id,
-            'cost' => Cart::calculateCartCost(),
+            'cost' => Order::countCost(),
             'prepayment' => 0,
             'status_id' => 1,
             'paid' => 0,

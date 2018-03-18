@@ -77,10 +77,21 @@ class Order extends Model
 	 * Count order cost
 	 * @return float
 	 */
-	public function countCost()
+	public static function countCost()
 	{
+        $sessionCart = json_decode(session('cart'), true);
+        $products = Product::all();
 
+        $total = 0;
+        foreach ($products as $item) {
+            if (isset($sessionCart[$item->id])) {
+                $total += $sessionCart[$item->id] * $item->price;
+            }
+        }
+
+        return $total;
 	}
+
 
 	/**
 	 * Change order status

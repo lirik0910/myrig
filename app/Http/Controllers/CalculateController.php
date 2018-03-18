@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Model\Base\VariableContent;
 use Illuminate\Http\Request;
 use App\Model\Base\Setting;
+use App\Model\Shop\ExchangeRate;
 use App\SimpleHtmlDom as simple_html_dom;
 use App\Model\Base\Page;
 
@@ -58,11 +59,12 @@ class CalculateController
 
 
         $calc = $this->parse_btc_course_calculated();
-        //$other_crypth =
-        $other_crypth = json_decode(Setting::where('title', 'other_crypth')->first()->value);
-        $calcBCH = $other_crypth->BCH;
-        $calcLTC = $other_crypth->LTC;
-        $calcDASH = $other_crypth->DASH;
+        $other_crypth = ExchangeRate::whereIn('title', ['BCH', 'LTC', 'DASH'])->get()->groupBy('title');
+        //var_dump($other_crypth); die;
+        //$other_crypth = json_decode(Setting::where('title', 'other_crypth')->first()->value);
+        $calcBCH = $other_crypth['BCH'][0]->value;
+        $calcLTC = $other_crypth['LTC'][0]->value;
+        $calcDASH = $other_crypth['DASH'][0]->value;
         //var_dump(Setting::where('title', 'other_crypth')->first()->value, $euruah, $uah); die;
         $data['base']['BTC / USD'] = $calc;
         $data['base']['BTC / EUR'] = $calc / ($euruah / $uah) ;
@@ -261,7 +263,7 @@ class CalculateController
         $P =  number_format(($t*$R*$H)/($D*(2**32)), 8)  ;
 
         if ($request->post('action') != 'calc_btc_profit' && $die != 1) {
-            return view('parts.calculator.network_status', ['btc' => 1, 'data' => $data, 'TH' => 'T', 'P' => $P, 'currency' => 'BTC']);
+            return view('parts/calculator/network_status', ['btc' => 1, 'data' => $data, 'TH' => 'T', 'P' => $P, 'D' => $D, 'currency' => 'BTC']);
         }  else
             return    $data;
 
@@ -337,7 +339,7 @@ class CalculateController
 
         ob_start();
         //print_r($network);
-        view('parts.calculator.result', ['request' => $request, 'P' => $P, 'coursers' => $coursers, 'currency' => $currency, 'costs' => $costs]);
+        view('parts/calculator/result', ['request' => $request, 'P' => $P, 'coursers' => $coursers, 'currency' => $currency, 'costs' => $costs]);
 
         $result = ob_get_contents();
         ob_clean();
@@ -391,12 +393,16 @@ class CalculateController
     public function parse_btc_course_calculated() {
 
         $page = Page::where('title', 'Calculator')->first();
-        $options = $page->view->variables->where('title', 'USD/Percent')->orWhere('title', 'Min/Max')->orWhere('title', 'Value/Change')->get();
-        var_dump($options); die;
+        $options = [];
+        foreach ($page->view->variables->whereIn('title', ['USD/Percent', 'Min/Max', 'Value/Change']) as $option){
+            $options[$option->title] = $option->variableContent->first()->content;
+        }
+        //die;
+        //var_dump($options); die;
 
-        $usdpercent = Setting::where('title', 'usdpercent')->first()['value'];
-        $minmax = Setting::where('title', 'minmax')->first()->value;
-        $valuechange =  Setting::where('title', 'valuechange')->first()['value'];
+        $usdpercent = $options['USD/Percent'];
+        $minmax = $options['Min/Max'];
+        $valuechange =  $options['Value/Change'];
 
         //$CryptoTickerWidget = new CryptoTickerWidget();
 
@@ -448,6 +454,7 @@ class CalculateController
 
 
 
+
         foreach ($url as $key => $val) {
             $coinbase_json = $this->get_data($val);
             $coinbase_decoded = json_decode($coinbase_json, true);
@@ -455,6 +462,7 @@ class CalculateController
         }
 
 
+        var_dump($result); die;
         Setting::where('title', 'other_crypth')->update(['value' => json_encode($result)]);
 
         //update_option('others_crypth', $result);
