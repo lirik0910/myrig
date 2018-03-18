@@ -15,7 +15,7 @@ class PageController extends Controller
 	/**
 	 * Get page
 	 * @param Request $request
-     * @param (Integer) $number Number of order for success page
+	 * @param (Integer) $number Number of order for success page
 	 */
 	public function view(Request $request, $number = null)
 	{
@@ -23,10 +23,10 @@ class PageController extends Controller
 		$link = $link === '/' ?
 			$link :
 			rtrim(ltrim($link, '/\\'), '/\\');
-        
-        if ($number) {
-            $link = explode('/' . $number, $link)[0];
-        }
+		
+		if ($number) {
+			$link = explode('/' . $number, $link)[0];
+		}
 		
 		if ($page = Page::where('link', $link)->with('view')->first()) {
 			return view($page->view->path, [
@@ -37,8 +37,8 @@ class PageController extends Controller
 				'settings' => $this->settings(),
 				'inCart' => $this->getInSessionCart(),
 				'multi' => MultiVariableContent::multiConvert($page->view->variables),
-                'number' => $number,
-                'preview' => $this->preview()
+				'number' => $number,
+				'preview' => $this->preview()
 			]);
 		}
 

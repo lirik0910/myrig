@@ -35,7 +35,17 @@
                     </div>
                     <div class="article-content col-sm-8">
                         <div class="article-text">
-                            <p>{{$article->introtext}}</p>
+                            @if (empty($article->introtext))
+                                @php
+                                    $introtext = substr(strip_tags($article->content), 0, 400);
+                                    $introtext = rtrim($introtext, '!,.-');
+                                    $introtext = substr($introtext, 0, strrpos($introtext, ' '));
+                                @endphp
+
+                                {{ $introtext . '...' }}
+                            @else
+                                <p>{!! $article->introtext !!}</p>
+                            @endif
                             <a href="{{url($article->link)}}" class="article-link" data-wpel-link="internal"><i class="article-arrow article-arrow-right"></i>Read</a>
                         </div>
                     </div>

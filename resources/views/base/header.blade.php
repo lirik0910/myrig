@@ -1,13 +1,8 @@
 @php 
-$menu = $select('App\Model\Base\Page')
-	->where('parent_id', 0)
-	->where(function ($q) {
-		return $q
-			->where('view_id', 3)
-			->orWhere('view_id', 6)
-			->orWhere('view_id', 7)
-			->orWhere('view_id', 4);
-	})->get();
+$products = $get($settings['site.products_page']);
+$service = $get($settings['site.service_page']);
+$news = $get($settings['site.news_page']);
+$contacts = $get($settings['site.contacts_page']);
 
 $cart = $select('App\Model\Base\Page')
 	->where('view_id', 8)
@@ -18,6 +13,40 @@ foreach ($inCart as $i) {
 	$count += (int) $i;
 }
 @endphp
+
+<div id="canvas">
+	<nav id="myNavmenu" class="navmenu navmenu-default" role="navigation">
+		<ul id="menu-main-menu" class="nav">
+			@if ($products)
+			<li id="menu-item-31" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-31">
+				<a href="{{ asset($products->link) }}" data-wpel-link="internal">{{ $products->title }}</a>
+			</li>
+			@endif
+
+			<li id="menu-item-26" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-26">
+				<a href="https://host.myrig.com/" data-wpel-link="internal">{{ __('default.hosting_title') }}</a>
+			</li>
+
+			@if ($service)
+			<li id="menu-item-29" class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-11 current_page_item menu-item-29">
+				<a href="{{ asset($service->link) }}" data-wpel-link="internal">{{ $service->title }}</a>
+			</li>
+			@endif
+
+			@if ($news)
+			<li id="menu-item-27" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-27">
+				<a href="{{ asset($news->link) }}" data-wpel-link="internal">{{ $news->title }}</a>
+			</li>
+			@endif
+
+			@if ($contacts)
+			<li id="menu-item-30" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-30">
+				<a href="{{ asset($contacts->link) }}" data-wpel-link="internal">{{ $contacts->title }}</a>
+			</li>
+			@endif
+		</ul>
+	</nav>
+</div>
 
 <header class="header">
 	<nav class="navbar">
@@ -37,11 +66,33 @@ foreach ($inCart as $i) {
 				
 				<div class="collapse navbar-collapse" id="myNavbar">
 					<ul id="menu-main-menu-1" class="nav navbar-nav">
-					@foreach($menu as $item)
+						@if ($products)
 						<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-26">
-							<a href="{{ asset($item->link) }}" data-wpel-link="internal">{{ $item->title }}</a>
+							<a href="{{ asset($products->link) }}" data-wpel-link="internal">{{ $products->title }}</a>
 						</li>
-					@endforeach
+						@endif
+
+						<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-26">
+							<a href="https://host.myrig.com/" data-wpel-link="internal">{{ __('default.hosting_title') }}</a>
+						</li>
+
+						@if ($service)
+						<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-26">
+							<a href="{{ asset($service->link) }}" data-wpel-link="internal">{{ $service->title }}</a>
+						</li>
+						@endif
+
+						@if ($news)
+						<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-26">
+							<a href="{{ asset($news->link) }}" data-wpel-link="internal">{{ $news->title }}</a>
+						</li>
+						@endif
+
+						@if ($contacts)
+						<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-26">
+							<a href="{{ asset($contacts->link) }}" data-wpel-link="internal">{{ $contacts->title }}</a>
+						</li>
+						@endif
 					</ul>
 				</div>
 

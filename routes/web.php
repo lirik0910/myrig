@@ -11,7 +11,6 @@
 |
 */
 use Illuminate\Http\Request;
-use App\ThumbOf;
 
 foreach (\App\Model\Base\Page::all() as $page) {
 	Route::get($page->link, 'PageController@view');
