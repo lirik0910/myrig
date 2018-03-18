@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Manager\Shop;
 
+use App\Model\Shop\Cart;
 use App\Model\Shop\Order;
+use App\Model\Shop\OrderDelivery;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
@@ -177,5 +179,87 @@ class OrderController extends Controller
 		return response()->json([
 			'message' => true
 		], 200);
+	}
+
+	/**
+	 * Update order
+	 * @param int $id
+	 * @param Illuminate\Http\Request
+	 * @return \Illuminate\Http\JsonResponse
+	 */
+	public function update(int $id, Request $request) : JsonResponse
+	{
+		$count = $request->input('count');
+
+		/** Get current order model
+		 */
+		try {
+			$model = Order::find($id);
+		}
+		catch (\Exception $e) {
+			logger($e->getMessage());
+			return response()->json(['message' => $e->getMessage()], 422);
+		}
+
+		/** Set products to cart
+		 */
+		if (isset($count) && is_array($count)) {
+			Cart::where('order_id', $id)->truncate();
+
+			foreach ($count as $key => $item) {
+				$cart = new Cart;
+
+				$cart->order_id = $id;
+				$cart->product_id = $key;
+				$cart->count = $item;
+
+				/** Try save product
+				 */
+				try {
+					$cart->save();
+				}
+				catch (\Exseption $e) {
+					logger($e->getMessage());
+					return response()->json(['message' => $e->getMessage()], 422);
+				}
+			}
+		}
+
+		/** Get delivery model
+		 */
+		try {
+			$delivery = OrderDelivery::where('order_id', $id)->first();
+		}
+		catch (\Exception $e) {
+			logger($e->getMessage());
+			return response()->json(['message' => $e->getMessage()], 422);
+		}
+
+		$deliveryData = $request->only([
+			'delivery_id',
+			'first_name',
+			'last_name',
+			'phone',
+			'email',
+			'city',
+			'country',
+			'state',
+			'address',
+			'comment'
+		]);
+
+		$delivery->fill($deliveryData);
+		$delivery->save();
+
+		$orderData = $request->only([
+			'payment_type_id',
+			'context_id',
+			'status_id'
+		]);
+
+		$model->fill($orderData);
+		$model->save();
+
+		return response()->json(['message' => true], 200);
 	}
 }

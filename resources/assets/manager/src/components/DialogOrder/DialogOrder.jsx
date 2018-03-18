@@ -8,6 +8,7 @@
 import App from '../../App.js';
 import React, { Component } from 'react';
 
+import CloneDeep from 'clone-deep';
 import Grid from 'material-ui/Grid';
 import Button from 'material-ui/Button';
 import TextField from 'material-ui/TextField';
@@ -56,10 +57,12 @@ class DialogOrder extends Component {
 	 * @property {Object} classes Material defult classes collection 
 	 */
 	static defaultProps = {
+		order: {},
 		defaultValue: false,
 		classes: PropTypes.object.isRequired,
 		onDialogSaved: () => {},
-		onDialogClosed: () => {}
+		onDialogClosed: () => {},
+		onDeleteItemCart: () => {}
 	}
 
 	/**
@@ -69,7 +72,14 @@ class DialogOrder extends Component {
 	 */
 	state = {
 		tab: 0,
+		completed: 100,
+		order: {},
 		open: this.props.defaultValue,
+	}
+
+	componentWillMount() {
+		let { order } = this.props;
+		this.setState({ order: CloneDeep(order) });
 	}
 
 	/**
@@ -77,8 +87,8 @@ class DialogOrder extends Component {
 	 * @return {Object} jsx object
 	 */
 	render() {
-		let { tab, open } = this.state;
-		let { classes, order } = this.props;
+		let { order, tab, open, completed } = this.state;
+		let { classes } = this.props;
 
 		return <Dialog
 				open={open}
@@ -116,6 +126,7 @@ class DialogOrder extends Component {
 						</Grid>
 					</Grid>}
 
+					<form id="order-form">
 					<Grid container spacing={24}
 						style={{
 							display: tab === 0 ?
@@ -123,8 +134,8 @@ class DialogOrder extends Component {
 								'none'
 						}}>
 						<Grid item xs={7}>
-
-							{order.carts && order.carts.map((item, i) => {
+						{completed === 100 ?
+							order.carts && order.carts.map((item, i) => {
 							return <Grid key={i} container spacing={24}>
 								<Grid item xs={3}>
 									{typeof item.product.images[0] !== 'undefined' ?
@@ -144,18 +155,32 @@ class DialogOrder extends Component {
 
 									<div style={{maxWidth: '124px'}}>
 										<InputNumber 
-											name={'count'}
-											inputID={'count'}
+											name={'count['+ item.product.id +']'}
+											inputID={'count-'+ item.product.id}
 											title={'Items count:'}
 											defaultValue={item.count} />
 									</div>
 
-									<Button size="small" color="secondary" className={classes.button}>
+									<Button 
+										size="small"
+										color="secondary"
+										className={classes.button}
+										onClick={e => {
+											//this.props.onDeleteItemCart(item);
+											this.setState({ completed: 0 }, () => {
+												order.carts.splice(i, 1);
+												this.setState({ order }, () => {
+													this.setState({
+														completed: 100
+													});
+												});
+											});
+										}}>
 										Delete
 									</Button>
 								</Grid>
 							</Grid>
-							})}
+							}) : null}
 						</Grid>
 
 						<Grid item xs={5}>
@@ -282,6 +307,7 @@ class DialogOrder extends Component {
 								}} />
 						</Grid>
 					</Grid>
+					</form>
 				</DialogContent>
 
 				<DialogActions>
@@ -290,7 +316,12 @@ class DialogOrder extends Component {
 						Cancel
 					</Button>
 					<Button color="primary"
-						onClick={e => this.props.onDialogSaved()}>
+						onClick={e => {
+							let el = document.getElementById('order-form');
+							if (el) {
+								this.props.onDialogSaved(el.elements);
+							}
+						}}>
 						Save
 					</Button>
 				</DialogActions>
