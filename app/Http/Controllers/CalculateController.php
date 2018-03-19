@@ -211,6 +211,14 @@ class CalculateController
             $cur = $request->post('currency');
         }
 
+/*        $page = Page::where('title', 'Calculator')->first();
+        $devices = $page->view->variables->where('title', 'calculatorDevices');
+
+        foreach ($devices as $device){
+            var_dump($device->multiVariableLines->); die;
+        }*/
+
+
         $devices = [
             ['currency' => 'BTC,BCH', 'name' => 'ANTMINER S7 4.7Th/s', 'hr' => 4.73, 'en' => 1.43],
             ['currency' => 'BTC,BCH', 'name' => 'ANTMINER R4 8.6Th/s', 'hr' => 8.6, 'en' => 0.93],
@@ -225,7 +233,6 @@ class CalculateController
             ['currency' => 'DASH', 'name' => 'D3 15 GH/s', 'hr' => 15, 'en' => 1.2],
             ['currency' => 'DASH', 'name' => 'D3 17 GH/s', 'hr' => 17, 'en' => 1.2],
             ['currency' => 'DASH', 'name' => 'D3 19.3 GH/s', 'hr' => 19.3, 'en' => 1.2],
-
         ];
         $allowedDevices = [];
         foreach ($devices as $device){
@@ -305,6 +312,7 @@ class CalculateController
 
         $t = 86400;
         $R = $network['reward_block']/1000000000;
+        var_dump($network['difficulty']); die;
         $D = trim($network['difficulty'])/10000000000 ;
         $H = $request->get('hash') / $powers;
 //var_dump($D); die;
@@ -368,7 +376,7 @@ class CalculateController
             $D = $D * $expected_difficulty;
             $P[$key] =  number_format(($t*$R*$H)/($D*(2**32) ) - $costs['BTC']/$days, 7) * 1;
 
-            var_dump($network_status['expected_difficulty_date']); die;
+            //var_dump($network_status['expected_difficulty_date']); die;
             $date = $date->modify('+'.$network_status['expected_difficulty_date']);
             $labels[] = $date->format('d.m.y');
         }
@@ -479,7 +487,6 @@ class CalculateController
         $url['DASH']  = 'https://api.coinmarketcap.com/v1/ticker/dash/';
         $url['ETH']  = 'https://api.coinmarketcap.com/v1/ticker/ethereum/';
 
-
         if($cur){
             $coinbase_json = $this->get_data($url[$cur]);
             $coinbase_decoded = json_decode($coinbase_json, true);
@@ -525,7 +532,6 @@ class CalculateController
      */
     public function get_data($url)
     {
-        //var_dump($url); die;
         $ch = curl_init();
         $timeout = 5;
         curl_setopt($ch, CURLOPT_URL, $url);

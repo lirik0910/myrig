@@ -52,7 +52,7 @@ class OrderController extends Controller
         $order->fill([
             'number' => $order_number,
             'user_id' => $user->id,
-            'cost' => Order::countCost(),
+            'cost' => 0,
             'prepayment' => 0,
             'status_id' => 1,
             'paid' => 0,
@@ -91,6 +91,9 @@ class OrderController extends Controller
                 'count' => $count
             ]);
         }
+
+        $order->cost = $order->countCost();
+        $order->save();
 
         session()->forget('cart');
         return response()->json(['success' => true, 'order' => $order], 200);
