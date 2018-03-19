@@ -7,7 +7,8 @@ use Illuminate\Database\Eloquent\Collection;
 
 class Cart extends Model
 {
-    protected $guarded = [];
+	protected $guarded = [];
+	
 	/**
 	 * Bind product model
 	 * @return boolean

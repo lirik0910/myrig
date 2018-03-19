@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
-    protected $guarded = [];
+	protected $guarded = [];
 	/**
 	 * Get order status
 	 * @return boolean
@@ -55,14 +55,14 @@ class Order extends Model
 	}
 
 
-    /**
-     * Get order products
-     * @return boolean
-     */
-    public function products()
-    {
-        return $this->belongsToMany(Product::class, 'carts', 'order_id', 'product_id')->withPivot('count');
-    }
+	/**
+	 * Get order products
+	 * @return boolean
+	 */
+	public function products()
+	{
+		return $this->belongsToMany(Product::class, 'carts', 'order_id', 'product_id')->withPivot('count');
+	}
 
 	/**
 	 * Get order products
@@ -74,22 +74,40 @@ class Order extends Model
 	}
 
 	/**
+	 * Generate and set number to order model
+	 * @return int
+	 */
+	public function setNumber()
+	{
+		$time = time();
+
+		$number = 0;
+		foreach (str_split($time) as $int) {
+			$number += (int) $int;
+		}
+		$this->number = $number;
+		
+		return $number;
+	}
+
+	/**
 	 * Count order cost
 	 * @return float
 	 */
-	public static function countCost()
+	public function countCost()
 	{
-        $sessionCart = json_decode(session('cart'), true);
-        $products = Product::all();
+		$cart = Cart::where('order_id', $this->id)->get();
+		
+		$cost = 0;
+		foreach ($cart as $item) {
+			$price = $item->product->price;
+			$count = $item->count;
 
-        $total = 0;
-        foreach ($products as $item) {
-            if (isset($sessionCart[$item->id])) {
-                $total += $sessionCart[$item->id] * $item->price;
-            }
-        }
+			$cost += ($count * $price);
+		}
+		$this->cost = $cost;
 
-        return $total;
+		return $cost;
 	}
 
 

@@ -156,6 +156,48 @@ class ListOrdersContainer extends Component {
 	}
 
 	/**
+	 * Get orders from server
+	 * @param {Function} callback
+	 */
+	orderPutDataRequest(data, callback = () => {}) {
+		this.setState({
+			completed: 0
+		}, () => {
+			let { editOrder } = this.state;
+
+			App.api({
+				type: 'PUT',
+				name: 'one',
+				model: 'order',
+				data,
+				resource: editOrder.id,
+				success: (r) => {
+					r = JSON.parse(r.response);
+					if (r) {
+						this.setState({ 
+							completed: 100,
+							resultDialog: true,
+							resultDialogTitle: 'Success',
+							resultDialogMessage: 'The request was successful',
+						}, () => callback());
+					}
+				},
+				error: (r) => {
+					r = JSON.parse(r.response);
+					if (r.message) {
+						this.setState({ 
+							completed: 100,
+							resultDialog: true,
+							resultDialogTitle: 'Error',
+							resultDialogMessage: r.message,
+						}, () => callback());
+					}
+				}
+			});
+		});
+	}
+
+	/**
 	 * Delete order
 	 * @param {Function} callback
 	 */
@@ -444,6 +486,17 @@ class ListOrdersContainer extends Component {
 					defaultValue={editDialog}
 					onDialogClosed={() => {
 						this.setState({ editDialog: false })
+					}}
+					onDialogSaved={form => {
+						var i,
+							data = {};
+
+						for (i = 0; i < form.length; i++) {
+							if (form[i].name) {
+								data[form[i].name] = form[i].value;
+							}
+						}
+						this.orderPutDataRequest(data, () => this.ordersGetDataRequest());
 					}} />}
 			</div>
 	}

@@ -281,7 +281,7 @@ class PaperTable extends Component {
 		let pagePaginStart = page * rowsPerPage;
 		let pagePaginFinish = page * rowsPerPage + rowsPerPage;
 
-		console.log(columns)
+		//console.log(columns)
 
 		return <Paper className={classes.paper}>
 				<div className={classes.tableWrapper}>
