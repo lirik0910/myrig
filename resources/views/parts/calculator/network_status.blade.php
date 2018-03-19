@@ -1,13 +1,16 @@
+@php
+//var_dump($data['hashrate']); die;
+@endphp
 <div class="network-status--title ">Статус сети</div>
 <div class="network-status--parent">
     <div class="network-status--inner">
         <div>Хэшрейт</div>
-        <div class="hashrate">{{$data['hashrate']}}</div>
+        <div class="hashrate">@php echo $data['hashrate'] @endphp</div>
     </div>
 
     <div class="network-status--inner">
         <div>Сложность</div>
-        <div class="difficulty">{{$D}}</div>
+        <div class="difficulty">@if(isset($btc)) {{$D}} @else {{$data['difficulty']}} @endif</div>
     </div>
 
     <div class="network-status--inner network-delimiter">

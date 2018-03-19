@@ -1,6 +1,6 @@
 <div class="calculator-form--item ">
     <div class="width-60">
-        <select id="device" name="device">
+        <select id="device" name="device" class="calc-select">
             <option value="hide" >Устройство</option>
             <option value="" data-hr="0">Ручной ввод</option>
             @foreach ($devices as $device)
@@ -16,7 +16,7 @@
     <input type="number" step="0.01" class="quantity width-60 hash" name="hash" placeholder="Введите хешрейт">
 
     <div class="width-33 cur-LTC-ul">
-        <select id="ghs" name="powers">
+        <select id="ghs" name="powers" class="calc-select">
             @if($cur == 'LTC')
                 <option value="1" selected>MH/s</option>
             @elseif($cur == 'DASH')

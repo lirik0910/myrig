@@ -72,5 +72,11 @@ class VariablesTableSeeder extends Seeder
             'title' => 'Value/Change',
             'description' => 'Value or Change for calculate  BTC',
         ]);
+
+        App\Model\Base\Variable::create([
+            'type' => 'input',
+            'title' => 'Hosting',
+            'description' => 'Hosting for calculate crypto',
+        ]);
 	}
 }
