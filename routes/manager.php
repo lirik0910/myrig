@@ -171,6 +171,11 @@ Route::prefix('api')
 			Route::delete('/{id}', 'Manager\Shop\OrderController@delete')->middleware(OrderDeleteMiddleware::class);
 		});
 
+		Route::prefix('rate')->group(function() {
+			Route::get('/', 'Manager\Shop\ExchangeRateController@one');
+			Route::put('/', 'Manager\Shop\ExchangeRateController@update');
+		});
+
 		Route::prefix('cache')->group(function() {
 			Route::delete('/', 'Manager\Base\CacheController@delete')->middleware(CacheDeleteMiddleware::class);
 		});
