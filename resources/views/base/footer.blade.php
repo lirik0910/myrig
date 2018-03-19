@@ -8,6 +8,9 @@ $menu = $select('App\Model\Base\Page')
 			->orWhere('view_id', 7)
 			->orWhere('view_id', 4);
 	})->get();
+
+$courses = $select('App\Model\Shop\ExchangeRate')->get()->groupBy('title');
+//var_dump($courses); die;
 @endphp
 
 <footer class="footer">
@@ -39,11 +42,11 @@ $menu = $select('App\Model\Base\Page')
 				</div>
 				
 				<div class="exchange col-sm-8 col-md-10 col-lg-8">
-					<span class="current">BTC <span class="h-m">=</span>$11535.02</span>
-					<span class="current">BCH <span class="h-m">=</span> $1565.11</span>
-					<span class="current">LTC <span class="h-m">=</span> $247.98</span>
-					<span class="current">DASH <span class="h-m">=</span> $733.01</span>
-					<span class="current">ETH <span class="h-m">=</span> $960.25</span>
+					<span class="current">BTC <span class="h-m">=</span>${{number_format($courses['BTC/USD'][0]->value, 2)}}</span>
+					<span class="current">BCH <span class="h-m">=</span> ${{number_format($courses['BCH/USD'][0]->value, 2)}}</span>
+					<span class="current">LTC <span class="h-m">=</span> ${{number_format($courses['LTC/USD'][0]->value, 2)}}</span>
+					<span class="current">DASH <span class="h-m">=</span> ${{number_format($courses['DASH/USD'][0]->value, 2)}}</span>
+					<span class="current">ETH <span class="h-m">=</span> ${{number_format($courses['ETH/USD'][0]->value, 2)}}</span>
 				</div>
 			</div>
 		</div>

@@ -13,7 +13,7 @@ class CalculateController
 {
     public function checkMethod(Request $request)
     {
-
+        //return $this->parse_btc_courses_calc($request);
         $action = $request->post('action');
         switch ($action){
             case 'parse_btc_network_status':
@@ -25,18 +25,16 @@ class CalculateController
             case 'update_devices':
                 return $this->update_devices($request);
             case 'calc_btc_profit':
-               // return $this->calc_btc_profit($request);
         }
         return $this->calc_btc_profit($request);
     }
 
+    /*
+     * Parse other crypth courses
+     */
     public function parse_btc_courses_calc(Request $request, $die = 1)
     {
         $source = '';//$request->post('src');// $_GET['src'];
-        //var_dump($source); die;
-        //$CryptoTickerWidget = new CryptoTickerWidget();
-
-        // $uah $rur
         //------------
         $url['USD / UAH'] = 'https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?valcode=USD&date='.date('Ymd').'&json';
         $json = $this->get_data($url['USD / UAH']);
@@ -59,13 +57,19 @@ class CalculateController
 
 
         $calc = $this->parse_btc_course_calculated();
-        $other_crypth = ExchangeRate::whereIn('title', ['BCH', 'LTC', 'DASH'])->get()->groupBy('title');
-        //var_dump($other_crypth); die;
-        //$other_crypth = json_decode(Setting::where('title', 'other_crypth')->first()->value);
-        $calcBCH = $other_crypth['BCH'][0]->value;
-        $calcLTC = $other_crypth['LTC'][0]->value;
-        $calcDASH = $other_crypth['DASH'][0]->value;
-        //var_dump(Setting::where('title', 'other_crypth')->first()->value, $euruah, $uah); die;
+        $other_crypth = ExchangeRate::whereIn('title', ['BCH/USD', 'LTC/USD', 'DASH/USD'])->get()->groupBy('title');
+        if($other_crypth){
+            $calcBCH = $other_crypth['BCH/USD'][0]->value;
+            $calcLTC = $other_crypth['LTC/USD'][0]->value;
+            $calcDASH = $other_crypth['DASH/USD'][0]->value;
+        } else{
+            $other_crypth = $this->parse_btc_courses_others();
+
+            $calcBCH = $other_crypth['BCH'];
+            $calcLTC = $other_crypth['LTC'];
+            $calcDASH = $other_crypth['DASH'];
+        }
+
         $data['base']['BTC / USD'] = $calc;
         $data['base']['BTC / EUR'] = $calc / ($euruah / $uah) ;
         $data['base']['BTC / UAH'] = $calc * $uah;
@@ -94,11 +98,16 @@ class CalculateController
             return $output;
         }
 
-        if ($request->post('action') != 'calc_btc_profit' && $die != 1)
+        if ($request->post('action') != 'calc_btc_profit' && $die != 1){
             die();
-        else return  $data;
+        } else{
+        return $data;
+        }
     }
 
+    /*
+     * Parse bitcoin network status
+     */
     public function parse_btc_network()
     {
         $url  = 'https://chain.api.btc.com/v3/block/latest?_ga=2.243435013.1001709445.1506057444-713996762.1506057444';
@@ -112,7 +121,10 @@ class CalculateController
 
     }
 
-    public function parse_others_network_status($die,$currency='BCH', $request)
+    /*
+     * Parse network status for other crypths
+     */
+    public function parse_others_network_status($die, $currency='BCH', $request)
     {
         $html = new simple_html_dom('');
 
@@ -188,9 +200,11 @@ class CalculateController
             return view('parts/calculator/network_status', ['data' => $data, 'TH' => $TH, 'P' => $P, 'currency' => $currency]);
         }  else
             return $network;
-
     }
 
+    /*
+     * Update devices for client calculator
+     */
     public function update_devices($request) {
         $cur='';
         if ($request->post('currency')) {
@@ -219,13 +233,16 @@ class CalculateController
             if(!in_array($cur, $allowed)){
                 continue;
             }
-
             $allowedDevices[] = $device;
         }
 
         return view('parts/calculator/calculator_form_item', ['devices' => $allowedDevices, 'cur' => $cur]);
     }
 
+    /*
+     * Parse bitcoin network status
+     * @param (integer) $die
+     */
     public function parse_btc_network_status(Request $request, $die = 0) {
 
         $html = new simple_html_dom('');
@@ -250,8 +267,6 @@ class CalculateController
                 $data['expected_difficulty_date'] = $element->parent()->find('dd', 0)->innertext;
 
             }
-
-
         }
         $network = $this->parse_btc_network();
 
@@ -265,11 +280,15 @@ class CalculateController
         if ($request->post('action') != 'calc_btc_profit' && $die != 1) {
             return view('parts/calculator/network_status', ['btc' => 1, 'data' => $data, 'TH' => 'T', 'P' => $P, 'D' => $D, 'currency' => 'BTC']);
         }  else
-            return    $data;
-
-
+            return $data;
     }
 
+
+    /*
+     * Calculate profit for client
+     * @param (object) $request
+     * @return
+     */
     public function calc_btc_profit($request) {
         //$network = parse_btc_network();
         $network = json_decode(stripslashes( $request->get('network')), 1);
@@ -280,31 +299,26 @@ class CalculateController
         $source = 'base';
         $days = $request->get('days') ? $request->get('days') : 1;
         $expected_difficulty = $network_status['expected_difficulty']/100+1;
-
+//var_dump($network, $network_status); die;
         $powers = $request->get('powers');
         $placements = $request->get('radio');
 
-
-
-
         $t = 86400;
         $R = $network['reward_block']/1000000000;
-        $D = $network['difficulty']/10000000000 ;
+        $D = trim($network['difficulty'])/10000000000 ;
         $H = $request->get('hash') / $powers;
-
+//var_dump($D); die;
         $currency = $request->get('currency');
         if ($currency === 'BCH') {
-            $network = $this->parse_others_network_status($currency, $request);
+            $network = $this->parse_others_network_status(1, $currency, $request);
             $R = $network['reward_block'] ;
-            $D = $network['difficulty']*1000 ;
-
+            $D = $network['difficulty']*1000;
         }
-
-//var_dump($D); die;
-        $P =  number_format(($t*$R*$H)/($D*(2**32)), 7) * $days;
+       // var_dump(($D)); die;
+        $P = ($t*$R*$H)/($D*(2**32)) * $days;
 
         if ($currency === 'LTC') {
-            $network = $this->parse_others_network_status($currency, $request);
+            $network = $this->parse_others_network_status(1, $currency, $request);
             $calcLTC = $this->parse_btc_courses_others($currency);
             $P = $network['p'] ;
             $TH = 'MH';
@@ -312,7 +326,7 @@ class CalculateController
         }
 
         if ($currency === 'DASH') {
-            $network = $this->parse_others_network_status($currency, $request);
+            $network = $this->parse_others_network_status(1, $currency, $request);
             $calcLTC = $this->parse_btc_courses_others($currency);
             $P = $network['p'] ;
             $TH = 'GH';
@@ -326,7 +340,11 @@ class CalculateController
 
         } else {
             $qty = $request->get('qty') ? $request->get('qty') : 1;
-            $hosting =  5.2;//get_field('стоимость_хостинга_usd_в_месяц', 2319);
+
+            $page = Page::where('title', 'Calculator')->first();
+            $hosting = $page->view->variables->where('title', 'Hosting')->first()->content;
+
+            //$hosting =  5.2;//get_field('стоимость_хостинга_usd_в_месяц', 2319);
             $energy_costs = $hosting * $qty;
             $energy = 1;
         }
@@ -338,7 +356,6 @@ class CalculateController
 
 
         ob_start();
-        //print_r($network);
         view('parts/calculator/result', ['request' => $request, 'P' => $P, 'coursers' => $coursers, 'currency' => $currency, 'costs' => $costs]);
 
         $result = ob_get_contents();
@@ -351,17 +368,13 @@ class CalculateController
             $D = $D * $expected_difficulty;
             $P[$key] =  number_format(($t*$R*$H)/($D*(2**32) ) - $costs['BTC']/$days, 7) * 1;
 
-
-            //$date = $date->modify('+'.$network_status['expected_difficulty_date']);
+            var_dump($network_status['expected_difficulty_date']); die;
             $date = $date->modify('+'.$network_status['expected_difficulty_date']);
             $labels[] = $date->format('d.m.y');
-
         }
-
 
         if (!$request->get('hash'))  {
             $result = 0 ;
-
         }
 
         echo json_encode(
@@ -374,8 +387,6 @@ class CalculateController
     }
 
     public function parse_btc_courses($source='coinbase') {
-        //$CryptoTickerWidget = new CryptoTickerWidget();
-
         $url['coinbase'] = 'https://api.coinbase.com/v2/prices/BTC-USD/spot';
         $url['blockchain'] = 'https://blockchain.info/ru/ticker';
         $url['bitstamp'] = 'https://www.bitstamp.net/api/ticker';
@@ -390,21 +401,20 @@ class CalculateController
             return $coinbase_decoded['last'];
     }
 
+    /*
+     * Parse bitcoin course with calculator changes
+     * @return string
+     */
     public function parse_btc_course_calculated() {
-
         $page = Page::where('title', 'Calculator')->first();
         $options = [];
         foreach ($page->view->variables->whereIn('title', ['USD/Percent', 'Min/Max', 'Value/Change']) as $option){
             $options[$option->title] = $option->variableContent->first()->content;
         }
-        //die;
-        //var_dump($options); die;
 
         $usdpercent = $options['USD/Percent'];
         $minmax = $options['Min/Max'];
         $valuechange =  $options['Value/Change'];
-
-        //$CryptoTickerWidget = new CryptoTickerWidget();
 
         $url['coinbase'] = 'https://api.coinbase.com/v2/prices/BTC-USD/spot';
         $url['blockchain'] = 'https://blockchain.info/ru/ticker';
@@ -412,16 +422,28 @@ class CalculateController
 
         $result_parsing['coinbase'] = json_decode($this->get_data($url['coinbase']), true);
         $result_parsing['blockchain'] = json_decode($this->get_data($url['blockchain']), true);
-        //$result_parsing['bitstamp'] = json_decode($CryptoTickerWidget->get_data($url['bitstamp']), true);
+        $result_parsing['bitstamp'] = json_decode($this->get_data($url['bitstamp']), true);
 
-        $result[] = $result_parsing['coinbase']['data']['amount'];
-        $result[] = $result_parsing['blockchain']['USD']['last'];
-        //$result[] = $result_parsing['bitstamp']['last'];
+        $result['coinbase'] = $result_parsing['coinbase']['data']['amount'];
+        $result['blockchain'] = $result_parsing['blockchain']['USD']['last'];
+        $result['bitstamp'] = $result_parsing['bitstamp']['last'];
 
+        foreach ($result as $key => $value){
+            $item = ExchangeRate::where('title', $key)->first();
+
+            if(!$item){
+                ExchangeRate::create([
+                    'title' => $key,
+                    'value' => $value
+                ]);
+            } else{
+                $item->value = $value;
+                $item->save();
+            }
+        }
 
         $calc['min'] = min($result);
         $calc['max'] = max($result);
-        //$calc = ($calc['min'] + $calc['max']) / 2;
         $calc = $calc[$minmax];
 
         if ($valuechange != 0)
@@ -431,48 +453,76 @@ class CalculateController
                 $calc = $calc + $calc *  $valuechange/100;
             }
 
+        $rate = ExchangeRate::where('title', 'BTC/USD')->first();
+        if(!$rate){
+            ExchangeRate::create([
+                'title' => 'BTC/USD',
+                'value' => $calc
+            ]);
+        } else{
+            $rate->value = $calc;
+            $rate->save();
+        }
 
         return $calc;
-
     }
 
 
     /**
-     * others crypt
+     * Parse other crypths from external sources
+     * @param (String) $cur Currency for parse
+     * @return array|string
      */
-
-
     public function parse_btc_courses_others($cur='') {
-        //$CryptoTickerWidget = new CryptoTickerWidget();
-
-
         $url['BCH']  = 'https://api.coinmarketcap.com/v1/ticker/bitcoin-cash/';
         $url['LTC']  = 'https://api.coinmarketcap.com/v1/ticker/litecoin/';
         $url['DASH']  = 'https://api.coinmarketcap.com/v1/ticker/dash/';
         $url['ETH']  = 'https://api.coinmarketcap.com/v1/ticker/ethereum/';
 
 
-
-
-
-        foreach ($url as $key => $val) {
-            $coinbase_json = $this->get_data($val);
+        if($cur){
+            $coinbase_json = $this->get_data($url[$cur]);
             $coinbase_decoded = json_decode($coinbase_json, true);
-            $result[$key] = $coinbase_decoded[0]['price_usd'];
+            $result = $coinbase_decoded[0]['price_usd'];
+
+            $rate = ExchangeRate::where('title', $cur . '/USD')->first();
+
+            if(!$rate){
+                ExchangeRate::create([
+                    'title' => $cur . '/USD',
+                    'value' => $result
+                ]);
+            } else{
+                $rate->value = $result;
+                $rate->save();
+            }
+        } else{
+            foreach ($url as $key => $val) {
+                $coinbase_json = $this->get_data($val);
+                $coinbase_decoded = json_decode($coinbase_json, true);
+                $result[$key] = $coinbase_decoded[0]['price_usd'];
+
+                $rate = ExchangeRate::where('title', $key . '/USD')->first();
+                if(!$rate){
+                    ExchangeRate::create([
+                        'title' => $key . '/USD',
+                        'value' => $result[$key]
+                    ]);
+                } else{
+                    $rate->value = $result[$key];
+                    $rate->save();
+                }
+            }
         }
 
-
-        var_dump($result); die;
-        Setting::where('title', 'other_crypth')->update(['value' => json_encode($result)]);
-
-        //update_option('others_crypth', $result);
-        if ($cur)
-            return $result[$cur];
-        else
-            return $result;
+        return $result;
     }
 
 
+    /*
+     * Getting data from external sources with cURL
+     * @param (string) $url Sources url
+     */
     public function get_data($url)
     {
         //var_dump($url); die;

@@ -113,7 +113,7 @@ class VariableContentsTableSeeder extends Seeder
 		]);
 
         $variable = App\Model\Base\Variable::where('title', 'Min/Max')->first();
-        $page = App\Model\Base\Page::where('link', 'cart')->first();
+        $page = App\Model\Base\Page::where('link', 'calculator')->first();
 
         App\Model\Base\VariableContent::create([
             'page_id' => $page->id,
@@ -122,7 +122,7 @@ class VariableContentsTableSeeder extends Seeder
         ]);
 
         $variable = App\Model\Base\Variable::where('title', 'USD/Percent')->first();
-        $page = App\Model\Base\Page::where('link', 'cart')->first();
+        $page = App\Model\Base\Page::where('link', 'calculator')->first();
 
         App\Model\Base\VariableContent::create([
             'page_id' => $page->id,
@@ -131,12 +131,21 @@ class VariableContentsTableSeeder extends Seeder
         ]);
 
         $variable = App\Model\Base\Variable::where('title', 'Value/Change')->first();
-        $page = App\Model\Base\Page::where('link', 'cart')->first();
+        $page = App\Model\Base\Page::where('link', 'calculator')->first();
 
         App\Model\Base\VariableContent::create([
             'page_id' => $page->id,
             'variable_id' => $variable->id,
             'content' => ''
+        ]);
+
+        $variable = App\Model\Base\Variable::where('title', 'Hosting')->first();
+        $page = App\Model\Base\Page::where('link', 'calculator')->first();
+
+        App\Model\Base\VariableContent::create([
+            'page_id' => $page->id,
+            'variable_id' => $variable->id,
+            'content' => '5.2'
         ]);
 	}
 }

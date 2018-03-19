@@ -23,7 +23,6 @@
                                 <label for="vkl4" class="tab-label label-4 disabled">ETH</label>
                                 <!--tabs_item begin-->
                                 <div class="tabs_item tab-1">
-
                                     <form class="calculator-form" action="#" method="post">
                                         <div class="miners">
                                             <div class="calculator-form--item">
@@ -40,29 +39,20 @@
                                                         <option  data-currency="BTC,BCH" data-hr="13.5" data-en="1.45" value="ANTMINER S9 13.5Th/s">ANTMINER S9 13.5Th/s</option>
                                                         <option  data-currency="BTC,BCH" data-hr="14" data-en="1.50" value="ANTMINER S9 14Th/s">ANTMINER S9 14Th/s</option>
                                                         <option  data-currency="BTC,BCH" data-hr="16" data-en="1.47" value="DRAGONMINT T1">DRAGONMINT T1</option>
-
                                                     </select>
                                                 </div>
-
                                                 <!--<span class="input-number  width-33  quantity-center">
                                                     <input placeholder="1 шт" min="1" step="1" type="text" name="qty" value="1" class="form-control form-number count" readonly/>
                                                     <div class="btn-count btn-count-plus"><i class="fa fa-plus"></i></div>
                                                     <div class="btn-count btn-count-minus"><i class="fa fa-minus"></i></div>
                                                 </span>-->
-
                                                 <input type="number"  step="1" class="quantity width-33 quantity-center" id="quantity" name="qty" placeholder="1 шт" min="1" readonly>
                                             </div>
-
                                             <div class="calculator-form--item cur-LTC">
                                                 <input type="number" step="0.01" class="quantity width-60 hash" name="hash" placeholder="Введите хешрейт"  >
-
                                                 <div class="width-33 cur-LTC-ul">
                                                     <select id="ghs" name="powers" class="calc-select">
-
                                                         <option  value="0.001" selected >TH/s</option>
-
-
-
                                                     </select>
                                                 </div>
                                             </div>
@@ -72,11 +62,9 @@
                                             <div class="width-33">
                                                 <select  disabled class="calc-select">
                                                     <option value="hide" >кВт/ч</option>
-
                                                 </select>
                                             </div>
                                         </div>
-
                                         <div class="radio-buttons calculator-form--item">
                                             <input type="radio" name="radio" class="radio" id="radio1"   value="1">
                                             <label for="radio1" class="hosting-label">Хостинг	<b class="tooltip">i<span class="tooltiptext">Размещение оборудования в дата центре MyRig</span></b></label>
@@ -84,27 +72,19 @@
                                             <input type="radio" name="radio" class="radio" id="radio2" value="2" checked>
                                             <label for="radio2">Локальное размещение	<b class="tooltip">i<span class="tooltiptext">Локальное размещение устройств</span></b></label>
                                         </div>
-
                                         <div class="calculator-form--item">
-
                                             <input type="number" step="0.01" class="quantity width-60 quantity-center qw costs" name="costs"  placeholder="0.1 $"   >
                                         </div>
-
                                         <div class="calculator-form--item">
-
                                             <div class="">
                                                 <select id="rialto" name="days" class="calc-select">
                                                     <option value="hide">Расчетный период</option>
                                                     <option value="1" selected>1 день</option>
                                                     <option value="31" >1 месяц</option>
                                                     <option value="365" >1 год</option>
-
-
-
                                                 </select>
                                             </div>
                                         </div>
-
                                         <input type="submit" class="button-green" value="Рассчитать">
                                         <input type="hidden" value="calc_btc_profit" name="action">
                                         <input type="hidden" value="BTC" class="currencyType" name="currency">
@@ -118,7 +98,6 @@
 
                         </div>
                         <!--CALCULATOR END-->
-
                     </div>
 
                     <div class="article-content col-sm-8">
@@ -127,9 +106,7 @@
                             <!--NETWORK STATUS BEGIN-->
                             <div class="">
                                 <div class="network-status bg-white">
-
                                     <div class="network-status--title ">Статус сети</div>
-
                                     <div class="network-status--parent">
                                         <div class="network-status--inner">
                                             <div>Хэшрейт</div>
