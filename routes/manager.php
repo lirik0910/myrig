@@ -103,6 +103,12 @@ Route::prefix('products')
 		Route::get('/create', 'Manager\Base\ViewController@index');
 });
 
+Route::prefix('rates')
+	->middleware('auth')
+	->group(function () {
+		Route::get('/', 'Manager\Base\ViewController@index');
+});
+
 Route::prefix('api')
 	->middleware('auth')
 	->group(function() {

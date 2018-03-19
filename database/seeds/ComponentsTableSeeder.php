@@ -91,5 +91,12 @@ class ComponentsTableSeeder extends Seeder
 			'link' => '/files',
 			'icon' => 'Photo'
 		]);
+
+		App\Model\Base\Component::create([
+			'name' => 'BTC Rates',
+			'description' => 'BTC Rates',
+			'link' => '/rates',
+			'icon' => 'Timeline'
+		]);
 	}
 }

@@ -14,6 +14,7 @@ import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import configureStore from './store/configureStore.js';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import EditRateContainer from './containers/EditRateContainer.jsx';
 import EditPageContainer from './containers/EditPageContainer.jsx';
 import ListUsersContainer from './containers/ListUsersContainer.jsx';
 import ListPagesContainer from './containers/ListPagesContainer.jsx';
@@ -51,6 +52,7 @@ render (<BrowserRouter>
 					<Route exact path={App.name() +'/products/create'} component={CreateProductContainer} />
 					<Route exact path={App.name() +'/products/:number'} component={EditProductContainer} />
 					<Route exact path={App.name() +'/vocabulary'} component={ListVocabularyContainer} />
+					<Route exact path={App.name() +'/rates'} component={EditRateContainer} />
 				</Switch>
 			</Provider>
 		</BrowserRouter>, document.getElementById('root'));
