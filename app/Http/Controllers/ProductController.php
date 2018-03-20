@@ -80,6 +80,7 @@ class ProductController extends Controller
             logger($hashrate);
             logger($D);
             logger($course);
+            
 
             try{
                 $P = $price / (number_format(($t * $R * $hashrate) / ($D * (2 ** 32)), 7) * $course);
