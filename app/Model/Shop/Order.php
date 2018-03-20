@@ -79,13 +79,13 @@ class Order extends Model
 	 */
 	public function setNumber()
 	{
-		$time = time();
+		/*$time = time();
 
 		$number = 0;
 		foreach (str_split($time) as $int) {
 			$number += (int) $int;
-		}
-		$this->number = $number;
+		}*/
+		$this->number = $this->id + 17;
 		
 		return $number;
 	}
