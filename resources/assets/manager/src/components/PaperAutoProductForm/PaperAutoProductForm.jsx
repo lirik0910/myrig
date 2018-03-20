@@ -53,13 +53,13 @@ class PaperAutoProductForm extends Component {
 		if (data === null) {
 			data = {
 				fes_price: '',
-				fes_price_currency: '',
+				fes_price_currency: 1,
 				prime_price: '',
-				prime_price_currency: '',
+				prime_price_currency: 1,
 				delivery_price: '',
-				delivery_price_currency: '',
+				delivery_price_currency: 1,
 				profit_price: '',
-				profit_price_currency: ''
+				profit_price_currency: 1
 			};
 		}
 
