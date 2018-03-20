@@ -66,7 +66,7 @@ class ProductController extends Controller
             $t = 86400;
             $R = $network['reward_block'];
             if(!$network['difficulty']){
-                $D = Setting::whete('title', 'calculator.btc.difficulty')->first()->value;
+                $D = Setting::where('title', 'calculator.btc.difficulty')->first()->value;
             } else{
                 $D = $network['difficulty'] / 10000;
 
