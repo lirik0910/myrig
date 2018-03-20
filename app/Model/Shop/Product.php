@@ -7,6 +7,7 @@ use App\Model\Shop\ProductImage;
 use App\Model\Shop\ProductOption;
 use Illuminate\Database\Eloquent\Model;
 
+
 class Product extends Model
 {
 	protected $guarded = [];
@@ -292,10 +293,81 @@ class Product extends Model
 		}
 		catch (\Exception $e) {
 			logger($e->getMessage());
-			throw new Exception($e->getMessage(), 1);
+			throw new \Exception($e->getMessage(), 1);
 				
 			return false;
 		}
 		return true;
 	}
+
+	/*
+	 * Calculate auto-price
+	 */
+	public function calcAutoPrice()
+    {
+	    $params = $this->productAutoPrices()->first();
+
+        $btc = ExchangeRate::where('title', 'BTC/USD')->first()->value;
+
+        if ($params->prime_price_currency == 2){
+            $prime_price = $params->prime_price * (float)$btc;
+        } else {
+            $prime_price = $params->prime_price;
+        }
+
+        if ($params->delivery_price_currency == 2){
+            $delivery_price = $params->delivery_price * (float)$btc;
+        } else {
+            $delivery_price = $params->delivery_price;
+        }
+
+        if ($params->fes_price_currency == 2){
+            $fes_price = $params->fes_price * (float)$btc;
+        } elseif ($params->fes_price_currency == 3){
+            $fes_price = $prime_price * $params->fes_price / 100;
+        } else{
+            $fes_price = $params->fes_price;
+        }
+
+        if ($params->profit_price_currency == 2){
+            $profit_price = $params->profit_price * (float)$btc;
+        } elseif ($params->profit_price_currency == 3){
+            $profit_price = $prime_price * $params->profit_price / 100;
+        } else{
+            $profit_price = $params->profit_price;
+        }
+
+        $total = $prime_price + $delivery_price + $fes_price + $profit_price;
+
+        return $total;
+    }
+
+    /*
+     * Calculate price in Bitcoin
+     */
+    public function calcBtcPrice()
+    {
+        $btc = ExchangeRate::where('title', 'BTC/USD')->first()->value;
+
+        $price = $this->price / (float)$btc;
+
+        return $price;
+    }
+
+    /*
+     * Calculate Payback
+     */
+    public function calcPayback()
+    {
+        $url  = 'https://chain.api.btc.com/v3/block/latest?_ga=2.243435013.1001709445.1506057444-713996762.1506057444';
+        $json = $this->get_data($url );
+        $decoded  = json_decode($json, true);
+
+        $time = 86400;
+        $difficulty = $decoded['data']['difficulty'];
+        $reward_block = $decoded['data']['reward_block'];
+
+
+
+    }
 }

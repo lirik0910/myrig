@@ -12,6 +12,13 @@ foreach ($product->options as $item) {
 		break;
 	}
 }
+
+if($product->auto_price){
+    $price = number_format($product->calcAutoPrice(), 2, '.', '');
+} else{
+    $price = number_format($product->price, 2, '.', '');
+}
+
 @endphp
 <section class="content item">
 <div class="container">
@@ -46,7 +53,7 @@ foreach ($product->options as $item) {
 			<div class="single-product-price">
 				<span class="woocommerce-Price-amount amount">
 					<span class="woocommerce-Price-currencySymbol">&#36;</span>
-					{{ number_format($product->price, 2, '.', '') }}
+					{{ $price }}
 				</span>
 			</div>
 							

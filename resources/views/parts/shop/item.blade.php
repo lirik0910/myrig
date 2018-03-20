@@ -1,5 +1,13 @@
 @php
 	$options = $item->options->groupBy('name')->toArray();
+
+    if($item->auto_price){
+        $price = number_format($item->calcAutoPrice(), 2, '.', '');
+    } else{
+        $price = number_format($item->price, 2, '.', '');
+    }
+
+    $btcPrice = number_format($item->calcBtcPrice(), 4, '.', '');
 @endphp
 <div class="article-row row">
 	<div class="col-sm-4">
@@ -57,10 +65,10 @@
 			<div class="single-product-price item-cost__container">
 				<span class="woocommerce-Price-amount amount">
 					<span class="woocommerce-Price-currencySymbol">&#36;</span>
-					{{ number_format($item->price, 2, '.', '') }}
+					{{ $price }}
 				</span>
 
-				<span class="table-bitcoin">0.2485
+				<span class="table-bitcoin">{{ $btcPrice }}
 					<i class="fa fa-bitcoin"></i>
 				</span>
 			</div>

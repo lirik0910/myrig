@@ -79,13 +79,13 @@ class Order extends Model
 	 */
 	public function setNumber()
 	{
-		$time = time();
+		/*$time = time();
 
 		$number = 0;
 		foreach (str_split($time) as $int) {
 			$number += (int) $int;
-		}
-		$this->number = $number;
+		}*/
+		$this->number = $this->id + 17;
 		
 		return $number;
 	}
@@ -100,7 +100,13 @@ class Order extends Model
 		
 		$cost = 0;
 		foreach ($cart as $item) {
-			$price = $item->product->price;
+
+            if($item->product->auto_price){
+                $price = number_format($item->product->calcAutoPrice(), 2, '.', '');
+            } else{
+                $price = number_format($item->product->price, 2, '.', '');
+            }
+			//$price = $item->product->price;
 			$count = $item->count;
 
 			$cost += ($count * $price);
@@ -109,7 +115,6 @@ class Order extends Model
 
 		return $cost;
 	}
-
 
 	/**
 	 * Change order status

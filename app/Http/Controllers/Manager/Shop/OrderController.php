@@ -125,7 +125,7 @@ class OrderController extends Controller
 		 */
 		try {
 			$all = $this->setPaginationQuery($all, $request->all());
-			$all = $all->get();
+			$all = $all->orderBy('id', 'desc')->get();
 		}
 		catch(\Exception $e) {
 			logger($e->getMessage());

@@ -89,11 +89,18 @@
                                                 </thead>
                                                 <tbody>
                                                     @foreach($order->products as $product)
+                                                        @php
+                                                            if($product->auto_price){
+                                                                $price = number_format($product->calcAutoPrice(), 2, '.', '');
+                                                            } else{
+                                                                $price = number_format($product->price, 2, '.', '');
+                                                            }
+                                                        @endphp
                                                         <tr class="woocommerce-table__line-item order_item">
                                                             <td class="woocommerce-table__product-name product-name">
                                                                 <a href="{{$product->page->link}}" data-wpel-link="internal">{{$product->title}}</a> <strong class="product-quantity">&times; {{$product->pivot->count}}</strong>	</td>
                                                             <td class="woocommerce-table__product-total product-total">
-                                                                <span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#36;</span>{{ number_format($product->price * $product->pivot->count, 2, '.', '') }}</span>	</td>
+                                                                <span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#36;</span>{{ number_format($price * $product->pivot->count, 2, '.', '') }}</span>	</td>
                                                         </tr>
                                                     @endforeach
                                                 </tbody>

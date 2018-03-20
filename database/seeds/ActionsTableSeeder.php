@@ -122,6 +122,11 @@ class ActionsTableSeeder extends Seeder
 		]);
 
 		App\Model\Base\Action::create([
+			'name' => 'rates_list',
+			'description' => 'Allow see rate list',
+		]);
+
+		App\Model\Base\Action::create([
 			'name' => 'file_list',
 			'description' => 'Allow see file list',
 		]);

@@ -103,6 +103,12 @@ Route::prefix('products')
 		Route::get('/create', 'Manager\Base\ViewController@index');
 });
 
+Route::prefix('rates')
+	->middleware('auth')
+	->group(function () {
+		Route::get('/', 'Manager\Base\ViewController@index');
+});
+
 Route::prefix('api')
 	->middleware('auth')
 	->group(function() {
@@ -163,6 +169,11 @@ Route::prefix('api')
 			Route::put('/{id}', 'Manager\Shop\OrderController@update')->middleware(OrderEditMiddleware::class);
 			Route::get('/log/{id}', 'Manager\Shop\OrderController@log');
 			Route::delete('/{id}', 'Manager\Shop\OrderController@delete')->middleware(OrderDeleteMiddleware::class);
+		});
+
+		Route::prefix('rate')->group(function() {
+			Route::get('/', 'Manager\Shop\ExchangeRateController@one');
+			Route::put('/', 'Manager\Shop\ExchangeRateController@update');
 		});
 
 		Route::prefix('cache')->group(function() {

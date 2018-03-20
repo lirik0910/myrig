@@ -118,7 +118,6 @@ class CalculateController
         $network['reward_block'] = $decoded['data']['reward_block']  ;
 
         return $network;
-
     }
 
     /*
@@ -306,7 +305,7 @@ class CalculateController
         $source = 'base';
         $days = $request->get('days') ? $request->get('days') : 1;
         $expected_difficulty = $network_status['expected_difficulty']/100+1;
-//var_dump($network, $network_status); die;
+var_dump($network, $network_status); die;
         $powers = $request->get('powers');
         $placements = $request->get('radio');
 
@@ -350,8 +349,7 @@ class CalculateController
         } else {
             $qty = $request->get('qty') ? $request->get('qty') : 1;
 
-            $page = Page::where('title', 'Calculator')->first();
-            $hosting = $page->view->variables->where('title', 'Hosting')->first()->content;
+            $hosting = Setting::where('title', 'Hosting')->first()->content;
 
             //$hosting =  5.2;//get_field('стоимость_хостинга_usd_в_месяц', 2319);
             $energy_costs = $hosting * $qty;
@@ -415,16 +413,6 @@ class CalculateController
      * @return string
      */
     public function parse_btc_course_calculated() {
-        $page = Page::where('title', 'Calculator')->first();
-        $options = [];
-        foreach ($page->view->variables->whereIn('title', ['USD/Percent', 'Min/Max', 'Value/Change']) as $option){
-            $options[$option->title] = $option->variableContent->first()->content;
-        }
-
-        $usdpercent = $options['USD/Percent'];
-        $minmax = $options['Min/Max'];
-        $valuechange =  $options['Value/Change'];
-
         $url['coinbase'] = 'https://api.coinbase.com/v2/prices/BTC-USD/spot';
         $url['blockchain'] = 'https://blockchain.info/ru/ticker';
         $url['bitstamp'] = 'https://www.bitstamp.net/api/ticker';
@@ -451,29 +439,16 @@ class CalculateController
             }
         }
 
-        $calc['min'] = min($result);
-        $calc['max'] = max($result);
-        $calc = $calc[$minmax];
-
-        if ($valuechange != 0)
-            if ($usdpercent === 'usd') {
-                $calc = $calc + $valuechange;
-            } elseif ($usdpercent === 'percent') {
-                $calc = $calc + $calc *  $valuechange/100;
-            }
-
-        $rate = ExchangeRate::where('title', 'BTC/USD')->first();
-        if(!$rate){
-            ExchangeRate::create([
-                'title' => 'BTC/USD',
-                'value' => $calc
-            ]);
-        } else{
-            $rate->value = $calc;
-            $rate->save();
+        $btc = ExchangeRate::where('title', 'BTC/USD')->first();
+        if(!$btc){
+            $btc = new ExchangeRate();
+            $btc->title = 'BTC/USD';
         }
 
-        return $calc;
+        $btc->value = $btc->countCustomRate();
+        $btc->save();
+
+        return true;
     }
 
 

@@ -54,29 +54,5 @@ class VariablesTableSeeder extends Seeder
 			'title' => 'calculatorDevices',
 			'description' => 'Calculator devices',
 		]);
-
-        App\Model\Base\Variable::create([
-            'type' => 'input',
-            'title' => 'USD/Percent',
-            'description' => 'USD or Percent for Calculate BTC',
-        ]);
-
-        App\Model\Base\Variable::create([
-            'type' => 'input',
-            'title' => 'Min/Max',
-            'description' => 'MIN or MAX value for calculate  BTC',
-        ]);
-
-        App\Model\Base\Variable::create([
-            'type' => 'input',
-            'title' => 'Value/Change',
-            'description' => 'Value or Change for calculate  BTC',
-        ]);
-
-        App\Model\Base\Variable::create([
-            'type' => 'input',
-            'title' => 'Hosting',
-            'description' => 'Hosting for calculate crypto',
-        ]);
 	}
 }
