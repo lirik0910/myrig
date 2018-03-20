@@ -73,22 +73,14 @@ class ProductController extends Controller
                 Setting::where('title', 'calculator.btc.difficulty')->update(['value' => $D]);
             }
 
-
             logger($price);
             logger($t);
             logger($R);
             logger($hashrate);
             logger($D);
             logger($course);
-            
 
-            try{
-                $P = $price / (number_format(($t * $R * $hashrate) / ($D * (2 ** 32)), 7) * $course);
-                return (int)$P;
-            } catch (\Exception $e){
-                logger($e->getMessage());
-                return true;
-            }
+            $P = $price / (number_format(($t * $R * $hashrate) / ($D * (2 ** 32)), 7) * $course);
         }
 
         return (int)$P;
