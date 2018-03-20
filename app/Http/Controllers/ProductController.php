@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Model\Base\Setting;
 use Illuminate\Http\Request;
 use App\Http\Controllers\CalculateController as Calculator;
 use App\Model\Shop\Product;
@@ -40,7 +41,7 @@ class ProductController extends Controller
             if($option->name == 'Hashrate'){
                 $hashrate = (float)$option->value;
             } elseif ($option->name == 'Currency'){
-                $currency = (string)$option->value;
+                $currency = explode(',', $option->value)[0];
             }
         }
 
@@ -64,7 +65,22 @@ class ProductController extends Controller
         } else {
             $t = 86400;
             $R = $network['reward_block'];
-            $D = $network['difficulty'] / 10000;
+            if(!$network['difficulty']){
+                $D = Setting::whete('title', 'calculator.btc.difficulty')->first()->value;
+            } else{
+                $D = $network['difficulty'] / 10000;
+
+                Setting::where('title', 'calculator.btc.difficulty')->update(['value' => $D]);
+            }
+
+
+            logger($price);
+            logger($t);
+            logger($R);
+            logger($hashrate);
+            logger($D);
+            logger($course);
+
             $P = $price / (number_format(($t * $R * $hashrate) / ($D * (2 ** 32)), 7) * $course);
         }
 
