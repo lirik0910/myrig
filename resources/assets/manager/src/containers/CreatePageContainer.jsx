@@ -45,6 +45,7 @@ class CreatePageContainer extends Component {
 		a: '',
 		tab: 0,
 		data: {},
+		flag: true,
 		completed: 100,
 		resultDialog: false,
 		resultDialogTitle: '',
@@ -135,6 +136,68 @@ class CreatePageContainer extends Component {
 		});
 	}
 
+	transliterate(str) {
+		/*var ru = ['щ', 'ш', 'ч', 'ц', 'ю', 'я', 'ё', 'ж', 'ъ', 'э', 'а', 'б', 'в', 'г', 'д', 'е', 'з', 'и', 'й', 'к', 'л', 'м', 'н', 'о', 'п', 'р', 'с', 'т', 'у', 'ф', 'х', 'ь'],
+			en = ['shh', 'sh', 'ch', 'cz', 'yu', 'ya', 'yo', 'zh', '', 'y', 'e', 'a', 'b', 'v', 'g', 'd', 'e', 'z', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'r', 's', 't', 'u', 'f', 'x', '']*/
+
+		str = str.toLowerCase();
+		var cyr2latChars = new Array(
+			['а', 'a'], ['б', 'b'], ['в', 'v'], ['г', 'g'],
+			['д', 'd'],  ['е', 'e'], ['ё', 'yo'], ['ж', 'zh'], ['з', 'z'],
+			['и', 'i'], ['й', 'y'], ['к', 'k'], ['л', 'l'],
+			['м', 'm'],  ['н', 'n'], ['о', 'o'], ['п', 'p'],  ['р', 'r'],
+			['с', 's'], ['т', 't'], ['у', 'u'], ['ф', 'f'],
+			['х', 'h'],  ['ц', 'c'], ['ч', 'ch'],['ш', 'sh'], ['щ', 'shch'],
+			['ъ', ''],  ['ы', 'y'], ['ь', ''],  ['э', 'e'], ['ю', 'yu'], ['я', 'ya'],
+				
+			['А', 'A'], ['Б', 'B'],  ['В', 'V'], ['Г', 'G'],
+			['Д', 'D'], ['Е', 'E'], ['Ё', 'YO'],  ['Ж', 'ZH'], ['З', 'Z'],
+			['И', 'I'], ['Й', 'Y'],  ['К', 'K'], ['Л', 'L'],
+			['М', 'M'], ['Н', 'N'], ['О', 'O'],  ['П', 'P'],  ['Р', 'R'],
+			['С', 'S'], ['Т', 'T'],  ['У', 'U'], ['Ф', 'F'],
+			['Х', 'H'], ['Ц', 'C'], ['Ч', 'CH'], ['Ш', 'SH'], ['Щ', 'SHCH'],
+			['Ъ', ''],  ['Ы', 'Y'],
+			['Ь', ''],
+			['Э', 'E'],
+			['Ю', 'YU'],
+			['Я', 'YA'],
+			
+			['a', 'a'], ['b', 'b'], ['c', 'c'], ['d', 'd'], ['e', 'e'],
+			['f', 'f'], ['g', 'g'], ['h', 'h'], ['i', 'i'], ['j', 'j'],
+			['k', 'k'], ['l', 'l'], ['m', 'm'], ['n', 'n'], ['o', 'o'],
+			['p', 'p'], ['q', 'q'], ['r', 'r'], ['s', 's'], ['t', 't'],
+			['u', 'u'], ['v', 'v'], ['w', 'w'], ['x', 'x'], ['y', 'y'],
+			['z', 'z'],
+				
+			['A', 'A'], ['B', 'B'], ['C', 'C'], ['D', 'D'],['E', 'E'],
+			['F', 'F'],['G', 'G'],['H', 'H'],['I', 'I'],['J', 'J'],['K', 'K'],
+			['L', 'L'], ['M', 'M'], ['N', 'N'], ['O', 'O'],['P', 'P'],
+			['Q', 'Q'],['R', 'R'],['S', 'S'],['T', 'T'],['U', 'U'],['V', 'V'],
+			['W', 'W'], ['X', 'X'], ['Y', 'Y'], ['Z', 'Z'],
+			
+			[' ', '_'],['0', '0'],['1', '1'],['2', '2'],['3', '3'],
+			['4', '4'],['5', '5'],['6', '6'],['7', '7'],['8', '8'],['9', '9'],
+			['-', '-']
+		);
+		var newStr = new String(),
+			ch;
+		for (var i = 0; i < str.length; i++) {
+
+			ch = str.charAt(i);
+			var newCh = '';
+
+			for (var j = 0; j < cyr2latChars.length; j++) {
+				if (ch == cyr2latChars[j][0]) {
+					newCh = cyr2latChars[j][1];
+
+				}
+			}
+			newStr += newCh;
+
+		}
+		return newStr.replace(/[_]{2,}/gim, '_').replace(/\n/gim, '');
+	}
+
 	/**
 	 * Render component
 	 * @return {Object} jsx object
@@ -145,6 +208,7 @@ class CreatePageContainer extends Component {
 			a, 
 			tab, 
 			data, 
+			flag,
 			completed,
 			resultDialog,
 			resultDialogTitle,
@@ -188,8 +252,23 @@ class CreatePageContainer extends Component {
 								this.setState({ data });
 							}}
 							onTitleFieldInputed={value => {
-								data['title'] = value;
-								this.setState({ data });
+								this.setState({ flag: false }, () => {
+									let url = App.getLocationProps()
+									var link = '';
+									
+									if (typeof url.link !== 'undefined') {
+										link += url.link +'/';
+									}
+
+									link += this.transliterate(value);
+
+									data['title'] = value;
+									data['link'] = link;
+
+									this.setState({ data }, () => {
+										this.setState({ flag: true });
+									});
+								});
 							}}
 							onDescrFieldInputed={value => {
 								data['description'] = value;
@@ -203,6 +282,7 @@ class CreatePageContainer extends Component {
 
 					<Grid item xs={3}>
 						<PaperPageForm
+							flag={flag}
 							linkDefaultValue={data.link}
 							viewDefaultValue={data.view_id}
 							contextDefaultValue={data.context_id}

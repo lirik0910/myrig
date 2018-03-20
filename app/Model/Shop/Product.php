@@ -353,21 +353,4 @@ class Product extends Model
 
         return $price;
     }
-
-    /*
-     * Calculate Payback
-     */
-    public function calcPayback()
-    {
-        $url  = 'https://chain.api.btc.com/v3/block/latest?_ga=2.243435013.1001709445.1506057444-713996762.1506057444';
-        $json = $this->get_data($url );
-        $decoded  = json_decode($json, true);
-
-        $time = 86400;
-        $difficulty = $decoded['data']['difficulty'];
-        $reward_block = $decoded['data']['reward_block'];
-
-
-
-    }
 }

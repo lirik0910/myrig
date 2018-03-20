@@ -17,6 +17,7 @@ import Typography from 'material-ui/Typography';
 import Slide from 'material-ui/transitions/Slide';
 import TabOptions from '../TabOptions/TabOptions.jsx';
 import Input, { InputLabel } from 'material-ui/Input';
+import PaperTable from '../PaperTable/PaperTable.jsx';
 import InputNumber from '../FormControl/InputNumber/InputNumber.jsx';
 import SelectStatus from '../FormControl/SelectStatus/SelectStatus.jsx';
 import SelectPayment from '../FormControl/SelectPayment/SelectPayment.jsx';
@@ -57,6 +58,7 @@ class DialogOrder extends Component {
 	 * @property {Object} classes Material defult classes collection 
 	 */
 	static defaultProps = {
+		logs: [],
 		order: {},
 		defaultValue: false,
 		classes: PropTypes.object.isRequired,
@@ -90,6 +92,8 @@ class DialogOrder extends Component {
 		let { order, tab, open, completed } = this.state;
 		let { classes } = this.props;
 
+		console.log(this.props.order.logs)
+
 		return <Dialog
 				open={open}
 				transition={Transition}
@@ -110,7 +114,7 @@ class DialogOrder extends Component {
 								data={[
 									'Order',
 									'Customer',
-									//'History',
+									'History',
 								]} />
 						</Grid>
 					</Grid>
@@ -308,6 +312,43 @@ class DialogOrder extends Component {
 						</Grid>
 					</Grid>
 					</form>
+
+					{tab === 2 && <Grid container spacing={24} className={classes.root}>
+						<Grid item xs={12}>
+							<PaperTable
+								tableStyle={{
+									minWidth: '468px'
+								}}
+								columns={[{
+									id: 'value', 
+									numeric: false, 
+									disablePadding: true, 
+									label: 'Value'
+								}, {
+									id: 'user', 
+									numeric: false, 
+									disablePadding: true, 
+									label: 'User'
+								}, {
+									id: 'created_at', 
+									numeric: false, 
+									disablePadding: true, 
+									label: 'Date'
+								}]}
+								selecting={false}
+								defaultSort={false}
+								footer={false}
+								limit={10000}
+								data={order.logs.map((item, i) => {
+									return {
+										//type: item.type,
+										value: item.value,
+										user: item.user.name,
+										created_at: item.created_at,
+									}
+								})} />
+						</Grid>
+					</Grid>}
 				</DialogContent>
 
 				<DialogActions>

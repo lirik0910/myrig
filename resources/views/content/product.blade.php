@@ -19,6 +19,9 @@ if($product->auto_price){
     $price = number_format($product->price, 2, '.', '');
 }
 
+$payback = new App\Http\Controllers\ProductController();
+$payback = $payback->calcPayback($product->id);
+//var_dump($payback); die;
 @endphp
 <section class="content item">
 <div class="container">
@@ -82,7 +85,7 @@ if($product->auto_price){
 					</a>
 				@endif
 			</form>
-			<div class="tag tag-payback">{{ __('default.payback') }}</div>
+			<div class="tag tag-payback">{{ __('default.payback') }} {{ $payback }} days</div>
 			
 			<div class="single-product-tabs">
 				<div class="product-tab-links">

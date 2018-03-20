@@ -33,7 +33,7 @@ jQuery(document).ready(function ($) {
 		$.ajax({
 			type: 'POST',
 			//dataType: 'json',
-			url: global.url + '/create_ticket',
+			url: global.url + 'create_ticket',
 			contentType: false,
              processData: false,
 			data: fd,

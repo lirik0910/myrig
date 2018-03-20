@@ -8,6 +8,9 @@
     }
 
     $btcPrice = number_format($item->calcBtcPrice(), 4, '.', '');
+
+    $payback = new App\Http\Controllers\ProductController();
+    $payback = $payback->calcPayback($item->id);
 @endphp
 <div class="article-row row">
 	<div class="col-sm-4">
@@ -100,7 +103,7 @@
 				@endif
 			</form>
 			
-			<div class='tag tag-payback'>{{ __('default.payback') }}</div>
+			<div class='tag tag-payback'>{{ __('default.payback') }} {{ $payback }} days</div>
 		</div>
 	</div>
 </div>

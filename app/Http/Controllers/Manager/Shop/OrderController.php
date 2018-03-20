@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Manager\Shop;
 
 use App\Model\Shop\Cart;
 use App\Model\Shop\Order;
+use App\Model\Shop\ExchangeRate;
 use App\Model\Shop\OrderDelivery;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
@@ -30,8 +31,12 @@ class OrderController extends Controller
 						->orWhere('phone', 'like', '%'. $params['search'] .'%')
 						->orWhere('email', 'like', '%'. $params['search'] .'%')
 						->orWhere('city', 'like', '%'. $params['search'] .'%')
-						->orWhere('address', 'like', '%'. $params['search'] .'%');
-			});
+						->orWhere('address', 'like', '%'. $params['search'] .'%')
+						->orWhere('country', 'like', '%'. $params['search'] .'%');
+				})
+				->orWhereHas('products', function ($q) use ($params) {
+					$q->where('title', 'like', '%'. $params['search'] .'%');
+				});
 		}
 
 		/** Filter by delivery_id
@@ -132,14 +137,25 @@ class OrderController extends Controller
 			return response()->json(['message' => $e->getMessage()], 422);
 		}
 
+		/** Get BTC rate
+		 */
+		$btcRate = ExchangeRate::where('title', 'BTC/USD')->first();
+		$point = 1 / (float) $btcRate->value;
+
 		foreach ($all as $order) {
 			$order->status;
 			$order->context;
 			$order->paymentType;
 			$order->orderDeliveries->delivery;
 
+			$order->btc_price = ($order->cost * $point) / 1;
+
 			foreach ($order->carts as $cart) {
 				$cart->product->images;
+			}
+
+			foreach ($order->logs as $log) {
+				$log->user;
 			}
 		}
 
@@ -251,10 +267,15 @@ class OrderController extends Controller
 		$delivery->fill($deliveryData);
 		$delivery->save();
 
+		/** Change order status
+		 */
+		if ($model->status_id !== $request->input('status_id')) {
+			$model->changeStatus($request->input('status_id'));
+		}
+
 		$orderData = $request->only([
 			'payment_type_id',
 			'context_id',
-			'status_id'
 		]);
 
 		/** Fill order data

@@ -123,12 +123,14 @@ class CalculateController
     /*
      * Parse network status for other crypths
      */
-    public function parse_others_network_status($die, $currency='BCH', $request)
+    public function parse_others_network_status($die, $currency='BCH', $request='')
     {
         $html = new simple_html_dom('');
 
-        if ($request->post('currency'))
-            $currency = $request->post('currency');
+        if($request){
+            if ($request->post('currency'))
+                $currency = $request->post('currency');
+        }
 
         switch ($currency) {
 
@@ -195,7 +197,7 @@ class CalculateController
             $THT = 'TH';
         }
 
-        if ($request->post('action') != 'calc_btc_profit' && $die != 1) {
+        if ($die != 1 && $request->post('action') != 'calc_btc_profit') {
             return view('parts/calculator/network_status', ['data' => $data, 'TH' => $TH, 'P' => $P, 'currency' => $currency]);
         }  else
             return $network;
@@ -209,14 +211,6 @@ class CalculateController
         if ($request->post('currency')) {
             $cur = $request->post('currency');
         }
-
-/*        $page = Page::where('title', 'Calculator')->first();
-        $devices = $page->view->variables->where('title', 'calculatorDevices');
-
-        foreach ($devices as $device){
-            var_dump($device->multiVariableLines->); die;
-        }*/
-
 
         $devices = [
             ['currency' => 'BTC,BCH', 'name' => 'ANTMINER S7 4.7Th/s', 'hr' => 4.73, 'en' => 1.43],

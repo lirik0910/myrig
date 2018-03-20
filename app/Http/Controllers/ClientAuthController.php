@@ -134,7 +134,8 @@ class ClientAuthController
                     break;
             }
         }
-        if(session()->get('client') || $this->loggedin === true){
+        $user = User::where('email', session()->get('client'))->first();
+        if($user || $this->loggedin === true){
             return redirect('/profile');
         } else {
             $ssohomeappurl = urlencode($this->homeappurl);

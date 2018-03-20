@@ -22,7 +22,6 @@
             }
             $orders = App\Model\Shop\Order::where('user_id', $user->id)->with('products')->get();
 
-
         @endphp
         <section class="content profile">
             <div class="container">
@@ -91,6 +90,10 @@
                                         <div class="table-cell"></div>
                                     </div>
                                     @foreach($orders as $order)
+                                        @php
+                                            $status_logs = $order->logs->sortBy('created_at');
+                                            //var_dump($status_logs); die;
+                                        @endphp
                                         <div class="table-row  table-row-border table-row-top-several">
                                             <div class="table-cell table-cell-border">
                                                 <div class="order-number-wrap">
@@ -137,20 +140,23 @@
                                                 <span class="">
                                                     <p class="hidden-md">Status</p>
                                                     <span class="mark cancelled" style="color: {{$order->status->color}}">{{$order->status->title}}</span><br>
-                                                    <!--<a class="order-history" data-wpel-link="internal">История
+                                                    @isset($status_logs)
+                                                        <a class="order-history" data-wpel-link="internal">History
                                                         <div class="history-dd" style="height: auto !important">
                                                             <div class="modal-body">
-                                                                <h3>14 марта 2018 в 13:07</h3>
-                                                                <div class="comment-order">
-																    Статус заказа изменен с Новый заказ на Отменен.
-                                                                </div>
-															    <h3>14 марта 2018 в 08:40</h3>
-                                                                <div class="comment-order">
-																    Статус заказа изменен с trash на Новый заказ.
-															    </div>
+                                                                @foreach($status_logs as $log)
+                                                                    <h3>@php echo date('d F Y ', strtotime($log->created_at)) . ' at ' . date('H:i', strtotime($log->created_at)) @endphp</h3>
+                                                                    <div class="comment-order">
+																        Order status was changed from @if(isset($prev)) {{ $prev }} @else New order @endif to {{ $log->value }}.
+                                                                    </div>
+                                                                    @php
+                                                                        $prev = $log->value;
+                                                                    @endphp
+                                                                @endforeach
                                                             </div>
                                                         </div>
-                                                    -->
+                                                    </a>
+                                                    @endisset
                                                 </span>
                                             </div>
                                             <div class="table-cell" style="width: 10px"></div>

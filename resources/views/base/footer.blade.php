@@ -187,7 +187,7 @@ $courses = $select('App\Model\Shop\ExchangeRate')->get()->groupBy('title');
 		</div>
 		<div class="modal-body">
 			<div id="ticket-field">
-				<form id="ticketback" action="/service_ticket">
+				<form id="ticketback">
 					{{csrf_field()}}
 					<div class="form-group">
 						<input type="email" name="email" class="form-control" placeholder="E-mail" required="required" data-bv-message=" " data-bv-remote-message="Email уже занят"/></div>

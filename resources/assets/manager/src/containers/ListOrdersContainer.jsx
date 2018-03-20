@@ -46,6 +46,7 @@ class ListOrdersContainer extends Component {
 		start: 0, 
 		limit: 10, 
 		total: 0,
+		flag: true,
 		dateTo: '',
 		dateFrom: '',
 		statusID: 0,
@@ -286,12 +287,17 @@ class ListOrdersContainer extends Component {
 				costRow: <div className={classes.costCell}>
 						<div>
 							<span className={classes.fieldItem}>Order cost:</span>
-							<span className={classes.costItem}>{item.cost.toFixed(2)}</span>
+							<span className={classes.costItem}>{item.cost.toFixed(2)} $</span>
 						</div>
 
 						<div>
 							<span className={classes.fieldItem}>Prepayment cost:</span>
-							<span className={classes.costItem}>{item.prepayment.toFixed(2)}</span>
+							<span className={classes.costItem}>{item.prepayment.toFixed(2)} $</span>
+						</div>
+
+						<div>
+							<span className={classes.fieldItem}>BTC cost:</span>
+							<span className={classes.costItem}>{item.btc_price.toFixed(5)}</span>
 						</div>
 
 						{item.payment_type ? 
@@ -333,6 +339,7 @@ class ListOrdersContainer extends Component {
 		let { classes } = this.props;
 		let { 
 			data, 
+			flag,
 			start, 
 			limit, 
 			total, 
@@ -481,7 +488,7 @@ class ListOrdersContainer extends Component {
 						this.ordersGetDataRequest();
 					})} />}
 
-				{editDialog === true && <DialogOrder
+				{(editDialog === true && flag === true) && <DialogOrder
 					order={editOrder}
 					defaultValue={editDialog}
 					onDialogClosed={() => {
@@ -491,12 +498,17 @@ class ListOrdersContainer extends Component {
 						var i,
 							data = {};
 
-						for (i = 0; i < form.length; i++) {
-							if (form[i].name) {
-								data[form[i].name] = form[i].value;
+						this.setState({flag: false}, () => {
+							for (i = 0; i < form.length; i++) {
+								if (form[i].name) {
+									data[form[i].name] = form[i].value;
+								}
 							}
-						}
-						this.orderPutDataRequest(data, () => this.ordersGetDataRequest());
+							this.orderPutDataRequest(data, () => this.ordersGetDataRequest(() => this.setState({ 
+								flag: true,
+								resultDialog: false
+							})));
+						});
 					}} />}
 			</div>
 	}

@@ -32,6 +32,10 @@ class CreateOrderLogsTable extends Migration
 				->default('status')
 				->comment('Log type (status|paid|cost|delivery|payment)');
 
+			$table->string('value', 255)
+				->default('')
+				->comment('Log value');
+
 			$table->timestamps();
 		});
 	}
