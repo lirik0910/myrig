@@ -98,11 +98,5 @@ class SettingsTableSeeder extends Seeder
             'title' => 'calculator.hosting',
             'value' => '5.2'
         ]);
-
-        App\Model\Base\Setting::create([
-            'context_id' => $context->id,
-            'title' => 'calculator.btc.difficulty',
-            'value' => ''
-        ]);
 	}
 }

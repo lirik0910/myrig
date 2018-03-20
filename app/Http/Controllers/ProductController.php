@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Model\Base\Setting;
 use Illuminate\Http\Request;
 use App\Http\Controllers\CalculateController as Calculator;
 use App\Model\Shop\Product;
@@ -65,13 +64,7 @@ class ProductController extends Controller
         } else {
             $t = 86400;
             $R = $network['reward_block'];
-            if(!$network['difficulty']){
-                $D = Setting::where('title', 'calculator.btc.difficulty')->first()->value;
-            } else{
-                $D = $network['difficulty'] / 10000;
-
-                Setting::where('title', 'calculator.btc.difficulty')->update(['value' => $D]);
-            }
+            $D = $network['difficulty'] / 10000;
 
             logger($price);
             logger($t);
