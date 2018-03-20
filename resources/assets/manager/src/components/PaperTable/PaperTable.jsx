@@ -72,6 +72,7 @@ class PaperTable extends Component {
 		buildByData: false,
 		selecting: true,
 		defaultSort: true,
+		tableStyle: {},
 		onRowsSelected: () => {},
 		onStartValueChanged: () => {},
 		onLimitValueChanged: () => {},
@@ -267,7 +268,7 @@ class PaperTable extends Component {
 	 * @return {Object} jsx object
 	 */
 	render() {
-		const { classes, columns, selecting, footer, defaultSort, buildByData } = this.props;
+		const { classes, columns, selecting, footer, defaultSort, buildByData, tableStyle } = this.props;
 		const { 
 			data, 
 			order, 
@@ -285,7 +286,7 @@ class PaperTable extends Component {
 
 		return <Paper className={classes.paper}>
 				<div className={classes.tableWrapper}>
-					<Table className={classes.table}>
+					<Table className={classes.table} style={tableStyle}>
 						<EnhancedTableHead
 							columns={buildByData === true ? 
 								this.buildColumns(columns, data) :

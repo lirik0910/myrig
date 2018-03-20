@@ -21,6 +21,8 @@ class ComponentCollectionMiddleware
 		if (Auth::user()) {
 			if (User::checkPolicy('page_collection') === true) {
 				$allow[] = '/pages';
+				$allow[] = '/pages/create?parent_id=16&context_id=1&link=news&view_id=10';
+				$allow[] = '/pages/create?parent_id=17&context_id=1&link=info&view_id=10';
 			}
 
 			if (User::checkPolicy('user_collection') === true) {

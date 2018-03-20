@@ -4,6 +4,7 @@ namespace App\Model\Shop;
 
 use App\Model\Base\User;
 use App\Model\Base\Context;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
@@ -74,6 +75,15 @@ class Order extends Model
 	}
 
 	/**
+	 * Get order logs
+	 * @return boolean
+	 */
+	public function logs()
+	{
+		return $this->hasMany(OrderLog::class);
+	}
+
+	/**
 	 * Generate and set number to order model
 	 * @return int
 	 */
@@ -113,11 +123,23 @@ class Order extends Model
 
 	/**
 	 * Change order status
+	 * @param int $statusID
 	 * @return boolean
 	 */
-	public function changeStatus()
+	public function changeStatus(int $statusID)
 	{
+		$status = OrderStatus::find($statusID);
 
+		$log = new OrderLog;
+
+		$log->order_id = $this->id;
+		$log->user_id = $this->user_id;
+		$log->type = 'status';
+		$log->value = $status->title;
+		$log->save();
+		
+		$this->status_id = $statusID;
+		$this->save();
 	}
 
 	public function addProduct()

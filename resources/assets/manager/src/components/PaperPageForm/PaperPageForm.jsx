@@ -31,6 +31,7 @@ class PaperPageForm extends Component {
 	 * @property {Object} classes Material defult classes collection 
 	 */
 	static defaultProps = {
+		flag: true,
 		parentDefaultValue: null,
 		viewDefaultValue: 0,
 		linkDefaultValue: '',
@@ -50,6 +51,7 @@ class PaperPageForm extends Component {
 	 */
 	render() {
 		let { 
+			flag,
 			classes,
 			linkDefaultValue,
 			viewDefaultValue,
@@ -73,9 +75,9 @@ class PaperPageForm extends Component {
 					placeholder={'Input parent page'}
 					onItemSelected={value => this.props.onParentSelected(value)} />
 
-				<InputLink
+				{flag === true && <InputLink
 					defaultValue={linkDefaultValue}
-					onFieldInputed={value => this.props.onLinkInputed(value)} />
+					onFieldInputed={value => this.props.onLinkInputed(value)} />}
 
 				<InputDatePicker
 					defaultValue={createDefaultValue}

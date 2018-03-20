@@ -286,12 +286,17 @@ class ListOrdersContainer extends Component {
 				costRow: <div className={classes.costCell}>
 						<div>
 							<span className={classes.fieldItem}>Order cost:</span>
-							<span className={classes.costItem}>{item.cost.toFixed(2)}</span>
+							<span className={classes.costItem}>{item.cost.toFixed(2)} $</span>
 						</div>
 
 						<div>
 							<span className={classes.fieldItem}>Prepayment cost:</span>
-							<span className={classes.costItem}>{item.prepayment.toFixed(2)}</span>
+							<span className={classes.costItem}>{item.prepayment.toFixed(2)} $</span>
+						</div>
+
+						<div>
+							<span className={classes.fieldItem}>BTC cost:</span>
+							<span className={classes.costItem}>{item.btc_price.toFixed(5)}</span>
 						</div>
 
 						{item.payment_type ? 
