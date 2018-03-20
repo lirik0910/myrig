@@ -85,7 +85,7 @@ class ProductController extends Controller
                 $P = $price / (number_format(($t * $R * $hashrate) / ($D * (2 ** 32)), 7) * $course);
             } catch (\Exception $e){
                 logger($e->getMessage());
-                return true;
+                return (int)$P;
             }
         }
 
