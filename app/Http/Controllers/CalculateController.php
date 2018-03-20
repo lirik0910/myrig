@@ -312,7 +312,7 @@ class CalculateController
 
         $t = 86400;
         $R = $network['reward_block']/1000000000;
-        var_dump($network['difficulty']); die;
+        //var_dump($network['difficulty']); die;
         $D = trim($network['difficulty'])/10000000000 ;
         $H = $request->get('hash') / $powers;
 //var_dump($D); die;
@@ -321,8 +321,9 @@ class CalculateController
             $network = $this->parse_others_network_status(1, $currency, $request);
             $R = $network['reward_block'] ;
             $D = $network['difficulty']*1000;
+            //var_dump($D); die;
         }
-       // var_dump(($D)); die;
+        //var_dump($D); die;
         $P = ($t*$R*$H)/($D*(2**32)) * $days;
 
         if ($currency === 'LTC') {
