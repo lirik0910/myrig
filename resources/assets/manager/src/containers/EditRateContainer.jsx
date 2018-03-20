@@ -68,14 +68,16 @@ class EditRateContainer extends Component {
 	}
 
 	updateResultRequest(callback = () => {}) {
-		let { result } = this.state;
+		let { result, type, amount, customValue } = this.state;
 
 		App.api({
 			name: 'one',
 			type: 'PUT',
 			model: 'rate',
 			data: {
-				result
+				type,
+				amount,
+				customValue
 			},
 			success: (r) => {
 				r = JSON.parse(r.response);
@@ -201,8 +203,6 @@ class EditRateContainer extends Component {
 				var x = (parseFloat(customValue) * parseFloat(amountValue)) / 100;
 				a = parseFloat(amountValue) + x;
 			}
-
-			console.log(a)
 
 			this.setState({ 
 				result: a, 

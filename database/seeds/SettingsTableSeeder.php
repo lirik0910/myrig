@@ -72,5 +72,25 @@ class SettingsTableSeeder extends Seeder
 			'title' => 'site.contacts_page',
 			'value' => $contactsPage->id
 		]);
+
+		/** Custom rate settings
+		 */
+		App\Model\Base\Setting::create([
+			'context_id' => $context->id,
+			'title' => 'rate.value_type',
+			'value' => 'usd'
+		]);
+
+		App\Model\Base\Setting::create([
+			'context_id' => $context->id,
+			'title' => 'rate.value_size',
+			'value' => 'max'
+		]);
+
+		App\Model\Base\Setting::create([
+			'context_id' => $context->id,
+			'title' => 'rate.value_custom',
+			'value' => '0'
+		]);
 	}
 }
