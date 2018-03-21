@@ -248,7 +248,7 @@ foreach ($products as $item) {
 																<label for id="shipping_method_{{$loop->iteration}}">{{$delivery->title}}</label>
 															</li>
                                                             @endforeach
-															<li>
+															<li style="display: inline-block">
 																<input type="radio" name="delivery" data-index="0"  value="0" class="shipping_method"  />
 
 																<label for="shipping_method_0_local_pickup15">Self shipment</label>
