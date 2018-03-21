@@ -343,7 +343,7 @@ class CalculateController
         } else {
             $qty = $request->get('qty') ? $request->get('qty') : 1;
 
-            $hosting = Setting::where('title', 'Hosting')->first()->content;
+            $hosting = Setting::where('title', 'calculator.hosting')->first()->value;
 
             //$hosting =  5.2;//get_field('стоимость_хостинга_usd_в_месяц', 2319);
             $energy_costs = $hosting * $qty;

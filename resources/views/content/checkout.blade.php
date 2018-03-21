@@ -242,7 +242,7 @@ foreach ($products as $item) {
 													<td data-title="Доставка">
 														<ul id="shipping_method">
                                                             @foreach($deliveries as $delivery)
-                                                                <li>
+                                                            <li style="display: inline-block">
 																<input type="radio" name="delivery" id="shipping_method_{{$loop->iteration}}" data-index="{{$delivery->id}}" value="{{$delivery->id}}" class="shipping_method"  @if($loop->first) checked='checked' @endif/>
 
 																<label for id="shipping_method_{{$loop->iteration}}">{{$delivery->title}}</label>
