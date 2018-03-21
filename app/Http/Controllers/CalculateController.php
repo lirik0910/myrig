@@ -299,14 +299,13 @@ class CalculateController
         $source = 'base';
         $days = $request->get('days') ? $request->get('days') : 1;
         $expected_difficulty = $network_status['expected_difficulty']/100+1;
-//var_dump($network, $network_status); die;
+
         $powers = $request->get('powers');
         $placements = $request->get('radio');
 
         $t = 86400;
         $R = $network['reward_block']/1000000000;
-        //var_dump($network['difficulty']); die;
-        $D = trim($network['difficulty'])/10000000000 ;
+        $D = round(trim($network['difficulty']), 5)/10000000000 ;
         $H = $request->get('hash') / $powers;
 //var_dump($D); die;
         $currency = $request->get('currency');
@@ -356,18 +355,22 @@ class CalculateController
         $costs['UAH'] = $energy * $energy_costs   * $coursers['USD / UAH'] * $days;
 
 
-        ob_start();
+/*        ob_start();
         view('parts/calculator/result', ['request' => $request, 'P' => $P, 'coursers' => $coursers, 'currency' => $currency, 'costs' => $costs]);
 
         $result = ob_get_contents();
-        ob_clean();
+        ob_clean();*/
 
+        return view('parts/calculator/result', ['request' => $request, 'P' => $P, 'coursers' => $coursers, 'currency' => $currency, 'costs' => $costs]);
+//var_dump($result); die;
         $P = $labels = array();
 
         $date = new \DateTime();
         foreach (range(0,20) as $key=>$day) {
+            //var_dump($D, $expected_difficulty); die;
             $D = $D * $expected_difficulty;
-            $P[$key] =  number_format(($t*$R*$H)/($D*(2**32) ) - $costs['BTC']/$days, 7) * 1;
+
+            $P[$key] =  ($t*$R*$H)/($D*(2**32) ) - $costs['BTC']/$days * 1;
 
             //var_dump($network_status['expected_difficulty_date']); die;
             $date = $date->modify('+'.$network_status['expected_difficulty_date']);
