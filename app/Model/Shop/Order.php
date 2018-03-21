@@ -147,6 +147,19 @@ class Order extends Model
 		$this->save();
 	}
 
+	/*
+	 * Count BTC cost for order
+	 * @param (int) $id Order ID
+	 * @return string|float
+	 */
+	public function countBtcCost()
+    {
+        $btc = ExchangeRate::where('title', 'BTC/USD')->first()->value;
+        $order_cost = $this->cost;
+
+        return number_format($order_cost / $btc, 4, '.', '');
+    }
+
 	public function addProduct()
 	{
 		
