@@ -70,17 +70,19 @@ class ProductController extends Controller
             $P = $price / (number_format($Ps * $hashrate, 6) * $course);
         } else {
             $t = 86400;
-            $R = $network['reward_block'];
-            $D = $network['difficulty'] / 10000;
+            if(!is_array($network)){
+                $R = $network->reward_block;
+                $D = $network->difficulty / 10000;
+            } else{
+                $R = $network['reward_block'];
+                $D = $network['difficulty'] / 10000;
+            }
 
-            logger($price);
-            logger($t);
-            logger($R);
-            logger($hashrate);
-            logger($D);
-            logger($course);
-
-            $P = $price / (number_format(($t * $R * $hashrate) / ($D * (2 ** 32)), 7) * $course);
+            try{
+                $P = $price / (number_format(($t * $R * $hashrate) / ($D * (2 ** 32)), 7) * $course);
+            } catch(\Exception $e){
+                return true;
+            }
         }
 
         return (int)$P;
