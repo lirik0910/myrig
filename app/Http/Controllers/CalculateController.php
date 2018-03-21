@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Model\Base\Variable;
 use App\Model\Base\VariableContent;
 use Illuminate\Http\Request;
 use App\Model\Base\Setting;
@@ -197,6 +198,9 @@ class CalculateController
             $THT = 'TH';
         }
 
+        $hashrate = explode(' ', $data['hashrate']);
+        $data['hashrate'] = $hashrate[0] . $hashrate[1] . ' ' . $hashrate[2];
+
         if ($die != 1 && $request->post('action') != 'calc_btc_profit') {
             return view('parts/calculator/network_status', ['data' => $data, 'TH' => $TH, 'P' => $P, 'currency' => $currency]);
         }  else
@@ -212,7 +216,16 @@ class CalculateController
             $cur = $request->post('currency');
         }
 
-        $devices = [
+        $vars = Variable::where('title', 'calculatorDevices')->first()->multiVariableLines;
+
+        $i = 0;
+        foreach ($vars as $var){
+            foreach ($var->content as $content){
+                $Devices[$i][] = $content->content;
+            }
+            $i++;
+        }
+/*        $devices = [
             ['currency' => 'BTC,BCH', 'name' => 'ANTMINER S7 4.7Th/s', 'hr' => 4.73, 'en' => 1.43],
             ['currency' => 'BTC,BCH', 'name' => 'ANTMINER R4 8.6Th/s', 'hr' => 8.6, 'en' => 0.93],
             ['currency' => 'BTC,BCH', 'name' => 'ANTMINER T9 12.5Th/s', 'hr' => 12.5, 'en' => 1.73],
@@ -226,16 +239,16 @@ class CalculateController
             ['currency' => 'DASH', 'name' => 'D3 15 GH/s', 'hr' => 15, 'en' => 1.2],
             ['currency' => 'DASH', 'name' => 'D3 17 GH/s', 'hr' => 17, 'en' => 1.2],
             ['currency' => 'DASH', 'name' => 'D3 19.3 GH/s', 'hr' => 19.3, 'en' => 1.2],
-        ];
+        ];*/
         $allowedDevices = [];
-        foreach ($devices as $device){
-            $allowed = explode(',', $device['currency']);
+        foreach ($Devices as $device){
+            $allowed = explode(',', $device[3]);
             if(!in_array($cur, $allowed)){
                 continue;
             }
             $allowedDevices[] = $device;
         }
-
+//var_dump($allowedDevices); die;
         return view('parts/calculator/calculator_form_item', ['devices' => $allowedDevices, 'cur' => $cur]);
     }
 
@@ -307,7 +320,7 @@ class CalculateController
         $R = $network['reward_block']/1000000000;
         $D = round(trim($network['difficulty']), 5)/10000000000 ;
         $H = $request->get('hash') / $powers;
-//var_dump($D); die;
+
         $currency = $request->get('currency');
         if ($currency === 'BCH') {
             $network = $this->parse_others_network_status(1, $currency, $request);

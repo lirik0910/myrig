@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Model\Shop\Product;
 use Illuminate\Http\Request;
 use App\Model\Base\User;
 use App\Model\Base\Context;
@@ -84,11 +85,22 @@ class OrderController extends Controller
         ]);
 
         $cart = json_decode(session()->get('cart'), true);
-        foreach ($cart as $product => $count){
+        foreach ($cart as $productId => $count){
+            $product = Product::where('id', $productId)->first();
+            if($product->auto_price){
+                $cost = $product->calcAutoPrice();
+            } else{
+                $cost = $product->price;
+            }
+
+            $btcCost = $product->calcBtcPrice();
+
             $order->carts()->create([
                 'order_id' => $order->id,
-                'product_id' => $product,
-                'count' => $count
+                'product_id' => $productId,
+                'count' => $count,
+                'cost' => $cost,
+                'btcCost' => $btcCost
             ]);
         }
 

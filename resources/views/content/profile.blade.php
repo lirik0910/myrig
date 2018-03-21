@@ -115,13 +115,15 @@
                                             @else
                                                 @foreach($order->products as $product)
                                                 @php
-
-                                                    if($product->auto_price){
+                                                   //  var_dump($product->pivot); die;
+                                                    $price = number_format($product->pivot->cost, 2, '.', '');
+                                                    $btcPrice = number_format($product->pivot->btcCost, 4, '.', '');
+/*                                                    if($product->auto_price){
                                                         $price = number_format($product->calcAutoPrice(), 2, '.', '');
                                                     } else{
                                                         $price = number_format($product->price, 2, '.', '');
                                                     }
-                                                    $btcPrice = number_format($product->calcBtcPrice(), 4, '.', '');
+                                                    $btcPrice = number_format($product->calcBtcPrice(), 4, '.', '');*/
                                                 @endphp
                                                 <div class="table-cell table-product-cell">
                                                     <div class="order_thumbs">
@@ -174,12 +176,14 @@
                                         @if(count($order->products) > 1)
                                             @foreach($order->products as $product)
                                                 @php
-                                                    if($product->auto_price){
+                                                    $price = number_format($product->pivot->cost, 2, '.', '');
+                                                    $btcPrice = number_format($product->pivot->btcCost, 4, '.', '');
+/*                                                    if($product->auto_price){
                                                         $price = number_format($product->calcAutoPrice(), 2, '.', '');
                                                     } else{
                                                         $price = number_format($product->price, 2, '.', '');
                                                     }
-                                                    $btcPrice = number_format($product->calcBtcPrice(), 4, '.', '');
+                                                    $btcPrice = number_format($product->calcBtcPrice(), 4, '.', '');*/
                                                 @endphp
                                                 <div class="table-row hidden-block table-row-several order-{{$order->number}}">
                                                     <div class="table-cell table-cell-border table-cell-border-none">

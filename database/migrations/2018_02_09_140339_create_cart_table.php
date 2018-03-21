@@ -28,6 +28,14 @@ class CreateCartTable extends Migration
 				->nullable(false)
 				->comment('Product ID');
 
+            $table->float('cost', 2, false, true)
+                ->default(0.00)
+                ->comment('Products cost');
+
+            $table->float('btcCost', 4, false, true)
+                ->default(0.0000)
+                ->comment('Products cost in bitcoin');
+
 			$table->integer('count', false, true)
 				->default(1)
 				->comment('Products count');

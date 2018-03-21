@@ -19,8 +19,15 @@ if($product->auto_price){
     $price = number_format($product->price, 2, '.', '');
 }
 
-$payback = new App\Http\Controllers\ProductController();
+//var_dump($product->categories); die;
+//if($product->categories)
+foreach($product->categories as $category){
+    if ($category->title == 'Base'){
+        $payback = new App\Http\Controllers\ProductController();
 $payback = $payback->calcPayback($product->id);
+    }
+}
+
 //var_dump($payback); die;
 @endphp
 <section class="content item">
@@ -85,7 +92,7 @@ $payback = $payback->calcPayback($product->id);
 					</a>
 				@endif
 			</form>
-			<div class="tag tag-payback">{{ __('default.payback') }} {{ $payback }} days</div>
+			@isset($payback)<div class="tag tag-payback">{{ __('default.payback') }} {{ $payback }} days</div>@endisset
 			
 			<div class="single-product-tabs">
 				<div class="product-tab-links">

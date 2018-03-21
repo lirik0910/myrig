@@ -302,6 +302,7 @@ class Product extends Model
 
 	/*
 	 * Calculate auto-price
+	 * @return float|string
 	 */
 	public function calcAutoPrice()
     {
@@ -344,12 +345,13 @@ class Product extends Model
 
     /*
      * Calculate price in Bitcoin
+     * @return float|string
      */
     public function calcBtcPrice()
     {
         $btc = ExchangeRate::where('title', 'BTC/USD')->first()->value;
 
-        $price = $this->price / (float)$btc;
+        $price = number_format($this->price / (float)$btc, 4, '.', '');
 
         return $price;
     }
