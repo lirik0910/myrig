@@ -42,11 +42,11 @@ $courses = $select('App\Model\Shop\ExchangeRate')->get()->groupBy('title');
 				</div>
 				
 				<div class="exchange col-sm-8 col-md-10 col-lg-8">
-					<span class="current">BTC <span class="h-m">=</span> ${{number_format($courses['BTC/USD'][0]->value, 2)}}</span>
-					<span class="current">BCH <span class="h-m">=</span> ${{number_format($courses['BCH/USD'][0]->value, 2)}}</span>
-					<span class="current">LTC <span class="h-m">=</span> ${{number_format($courses['LTC/USD'][0]->value, 2)}}</span>
-					<span class="current">DASH <span class="h-m">=</span> ${{number_format($courses['DASH/USD'][0]->value, 2)}}</span>
-					<span class="current">ETH <span class="h-m">=</span> ${{number_format($courses['ETH/USD'][0]->value, 2)}}</span>
+					<span class="current">BTC <span class="h-m">=</span> ${{number_format($courses['BTC/USD'][0]->value, 2, '.', '')}}</span>
+					<span class="current">BCH <span class="h-m">=</span> ${{number_format($courses['BCH/USD'][0]->value, 2, '.', '')}}</span>
+					<span class="current">LTC <span class="h-m">=</span> ${{number_format($courses['LTC/USD'][0]->value, 2, '.', '')}}</span>
+					<span class="current">DASH <span class="h-m">=</span> ${{number_format($courses['DASH/USD'][0]->value, 2, '.', '')}}</span>
+					<span class="current">ETH <span class="h-m">=</span> ${{number_format($courses['ETH/USD'][0]->value, 2, '.', '')}}</span>
 				</div>
 			</div>
 		</div>
