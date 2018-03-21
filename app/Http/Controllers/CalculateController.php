@@ -299,7 +299,7 @@ class CalculateController
         $source = 'base';
         $days = $request->get('days') ? $request->get('days') : 1;
         $expected_difficulty = $network_status['expected_difficulty']/100+1;
-var_dump($network, $network_status); die;
+//var_dump($network, $network_status); die;
         $powers = $request->get('powers');
         $placements = $request->get('radio');
 

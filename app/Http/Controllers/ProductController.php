@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Model\Base\Setting;
 use Illuminate\Http\Request;
 use App\Http\Controllers\CalculateController as Calculator;
 use App\Model\Shop\Product;
@@ -56,6 +57,12 @@ class ProductController extends Controller
 
         $calculate = new Calculator();
         $network = $calculate->parse_btc_network();
+
+        if($network['difficulty']){
+            Setting::where('title', 'calculator.btc_network')->update(['value' => json_encode($network)]);
+        } else{
+            $network = json_decode(Setting::where('title', 'calculator.btc_network')->first()->value);
+        }
 
         if ($currency == 'LTC' || $currency == 'DASH') {
             $network = $calculate->parse_others_network_status(1, $currency);
