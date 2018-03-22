@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Model\Base\Variable;
 use App\Model\Base\VariableContent;
 use Illuminate\Http\Request;
 use App\Model\Base\Setting;
@@ -118,18 +119,19 @@ class CalculateController
         $network['reward_block'] = $decoded['data']['reward_block']  ;
 
         return $network;
-
     }
 
     /*
      * Parse network status for other crypths
      */
-    public function parse_others_network_status($die, $currency='BCH', $request)
+    public function parse_others_network_status($die, $currency='BCH', $request='')
     {
         $html = new simple_html_dom('');
 
-        if ($request->post('currency'))
-            $currency = $request->post('currency');
+        if($request){
+            if ($request->post('currency'))
+                $currency = $request->post('currency');
+        }
 
         switch ($currency) {
 
@@ -196,7 +198,10 @@ class CalculateController
             $THT = 'TH';
         }
 
-        if ($request->post('action') != 'calc_btc_profit' && $die != 1) {
+        $hashrate = explode(' ', $data['hashrate']);
+        $data['hashrate'] = $hashrate[0] . $hashrate[1] . ' ' . $hashrate[2];
+
+        if ($die != 1 && $request->post('action') != 'calc_btc_profit') {
             return view('parts/calculator/network_status', ['data' => $data, 'TH' => $TH, 'P' => $P, 'currency' => $currency]);
         }  else
             return $network;
@@ -211,15 +216,16 @@ class CalculateController
             $cur = $request->post('currency');
         }
 
-/*        $page = Page::where('title', 'Calculator')->first();
-        $devices = $page->view->variables->where('title', 'calculatorDevices');
+        $vars = Variable::where('title', 'calculatorDevices')->first()->multiVariableLines;
 
-        foreach ($devices as $device){
-            var_dump($device->multiVariableLines->); die;
-        }*/
-
-
-        $devices = [
+        $i = 0;
+        foreach ($vars as $var){
+            foreach ($var->content as $content){
+                $Devices[$i][] = $content->content;
+            }
+            $i++;
+        }
+/*        $devices = [
             ['currency' => 'BTC,BCH', 'name' => 'ANTMINER S7 4.7Th/s', 'hr' => 4.73, 'en' => 1.43],
             ['currency' => 'BTC,BCH', 'name' => 'ANTMINER R4 8.6Th/s', 'hr' => 8.6, 'en' => 0.93],
             ['currency' => 'BTC,BCH', 'name' => 'ANTMINER T9 12.5Th/s', 'hr' => 12.5, 'en' => 1.73],
@@ -233,16 +239,16 @@ class CalculateController
             ['currency' => 'DASH', 'name' => 'D3 15 GH/s', 'hr' => 15, 'en' => 1.2],
             ['currency' => 'DASH', 'name' => 'D3 17 GH/s', 'hr' => 17, 'en' => 1.2],
             ['currency' => 'DASH', 'name' => 'D3 19.3 GH/s', 'hr' => 19.3, 'en' => 1.2],
-        ];
+        ];*/
         $allowedDevices = [];
-        foreach ($devices as $device){
-            $allowed = explode(',', $device['currency']);
+        foreach ($Devices as $device){
+            $allowed = explode(',', $device[3]);
             if(!in_array($cur, $allowed)){
                 continue;
             }
             $allowedDevices[] = $device;
         }
-
+//var_dump($allowedDevices); die;
         return view('parts/calculator/calculator_form_item', ['devices' => $allowedDevices, 'cur' => $cur]);
     }
 
@@ -306,23 +312,23 @@ class CalculateController
         $source = 'base';
         $days = $request->get('days') ? $request->get('days') : 1;
         $expected_difficulty = $network_status['expected_difficulty']/100+1;
-//var_dump($network, $network_status); die;
+
         $powers = $request->get('powers');
         $placements = $request->get('radio');
 
         $t = 86400;
         $R = $network['reward_block']/1000000000;
-        var_dump($network['difficulty']); die;
-        $D = trim($network['difficulty'])/10000000000 ;
+        $D = round(trim($network['difficulty']), 5)/10000000000 ;
         $H = $request->get('hash') / $powers;
-//var_dump($D); die;
+
         $currency = $request->get('currency');
         if ($currency === 'BCH') {
             $network = $this->parse_others_network_status(1, $currency, $request);
             $R = $network['reward_block'] ;
             $D = $network['difficulty']*1000;
+            //var_dump($D); die;
         }
-       // var_dump(($D)); die;
+        //var_dump($D); die;
         $P = ($t*$R*$H)/($D*(2**32)) * $days;
 
         if ($currency === 'LTC') {
@@ -349,8 +355,7 @@ class CalculateController
         } else {
             $qty = $request->get('qty') ? $request->get('qty') : 1;
 
-            $page = Page::where('title', 'Calculator')->first();
-            $hosting = $page->view->variables->where('title', 'Hosting')->first()->content;
+            $hosting = Setting::where('title', 'calculator.hosting')->first()->value;
 
             //$hosting =  5.2;//get_field('стоимость_хостинга_usd_в_месяц', 2319);
             $energy_costs = $hosting * $qty;
@@ -363,18 +368,22 @@ class CalculateController
         $costs['UAH'] = $energy * $energy_costs   * $coursers['USD / UAH'] * $days;
 
 
-        ob_start();
+/*        ob_start();
         view('parts/calculator/result', ['request' => $request, 'P' => $P, 'coursers' => $coursers, 'currency' => $currency, 'costs' => $costs]);
 
         $result = ob_get_contents();
-        ob_clean();
+        ob_clean();*/
 
+        return view('parts/calculator/result', ['request' => $request, 'P' => $P, 'coursers' => $coursers, 'currency' => $currency, 'costs' => $costs]);
+//var_dump($result); die;
         $P = $labels = array();
 
         $date = new \DateTime();
         foreach (range(0,20) as $key=>$day) {
+            //var_dump($D, $expected_difficulty); die;
             $D = $D * $expected_difficulty;
-            $P[$key] =  number_format(($t*$R*$H)/($D*(2**32) ) - $costs['BTC']/$days, 7) * 1;
+
+            $P[$key] =  ($t*$R*$H)/($D*(2**32) ) - $costs['BTC']/$days * 1;
 
             //var_dump($network_status['expected_difficulty_date']); die;
             $date = $date->modify('+'.$network_status['expected_difficulty_date']);
@@ -414,16 +423,6 @@ class CalculateController
      * @return string
      */
     public function parse_btc_course_calculated() {
-        $page = Page::where('title', 'Calculator')->first();
-        $options = [];
-        foreach ($page->view->variables->whereIn('title', ['USD/Percent', 'Min/Max', 'Value/Change']) as $option){
-            $options[$option->title] = $option->variableContent->first()->content;
-        }
-
-        $usdpercent = $options['USD/Percent'];
-        $minmax = $options['Min/Max'];
-        $valuechange =  $options['Value/Change'];
-
         $url['coinbase'] = 'https://api.coinbase.com/v2/prices/BTC-USD/spot';
         $url['blockchain'] = 'https://blockchain.info/ru/ticker';
         $url['bitstamp'] = 'https://www.bitstamp.net/api/ticker';
@@ -450,29 +449,16 @@ class CalculateController
             }
         }
 
-        $calc['min'] = min($result);
-        $calc['max'] = max($result);
-        $calc = $calc[$minmax];
-
-        if ($valuechange != 0)
-            if ($usdpercent === 'usd') {
-                $calc = $calc + $valuechange;
-            } elseif ($usdpercent === 'percent') {
-                $calc = $calc + $calc *  $valuechange/100;
-            }
-
-        $rate = ExchangeRate::where('title', 'BTC/USD')->first();
-        if(!$rate){
-            ExchangeRate::create([
-                'title' => 'BTC/USD',
-                'value' => $calc
-            ]);
-        } else{
-            $rate->value = $calc;
-            $rate->save();
+        $btc = ExchangeRate::where('title', 'BTC/USD')->first();
+        if(!$btc){
+            $btc = new ExchangeRate();
+            $btc->title = 'BTC/USD';
         }
 
-        return $calc;
+        $btc->value = $btc->countCustomRate();
+        $btc->save();
+
+        return true;
     }
 
 

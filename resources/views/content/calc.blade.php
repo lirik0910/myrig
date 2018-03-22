@@ -25,12 +25,36 @@
                                 <div class="tabs_item tab-1">
                                     <form class="calculator-form" action="#" method="post">
                                         <div class="miners">
+                                            @php
+                                                $vars = App\Model\Base\Variable::where('title', 'calculatorDevices')->first()->multiVariableLines;
+
+                                                $i = 0;
+                                                foreach ($vars as $var){
+                                                    foreach ($var->content as $content){
+                                                        $Devices[$i][] = $content->content;
+                                                    }
+                                                    $i++;
+                                                }
+
+                                                $cur = 'BTC';
+                                                $allowedDevices = [];
+                                                foreach ($Devices as $device){
+                                                    $allowed = explode(',', $device[3]);
+                                                    if(!in_array($cur, $allowed)){
+                                                        continue;
+                                                    }
+                                                    $allowedDevices[] = $device;
+                                                }
+                                            @endphp
                                             <div class="calculator-form--item">
                                                 <div class="width-60">
                                                     <select id="device" name="device" class="calc-select">
                                                         <option value="hide" >Устройство</option>
                                                         <option value="" data-hr="0">Ручной ввод</option>
-                                                        <option  data-currency="BTC,BCH" data-hr="4.73" data-en="1.43" value="ANTMINER S7 4.7Th/s">ANTMINER S7 4.7Th/s</option>
+                                                        @foreach($allowedDevices as $device)
+                                                            <option data-currency="{{$device[3]}}" data-hr="{{$device[1]}}" data-en="{{$device[2]}}" value="{{$device[0]}}">{{$device[0]}}</option>
+                                                        @endforeach
+                                                        <!--<option  data-currency="BTC,BCH" data-hr="4.73" data-en="1.43" value="ANTMINER S7 4.7Th/s">ANTMINER S7 4.7Th/s</option>
                                                         <option  data-currency="BTC,BCH" data-hr="8.6" data-en="0.93" value="ANTMINER R4 8.6Th/s">ANTMINER R4 8.6Th/s</option>
                                                         <option  data-currency="BTC,BCH" data-hr="12.5" data-en="1.73" value="ANTMINER T9 12.5Th/s">ANTMINER T9 12.5Th/s</option>
                                                         <option  data-currency="BTC,BCH" data-hr="11.5" data-en="1.24" value="ANTMINER S9 11.5Th/s">ANTMINER S9 11.5Th/s</option>
@@ -38,7 +62,7 @@
                                                         <option  data-currency="BTC,BCH" data-hr="13" data-en="1.4" value="ANTMINER S9 13Th/s">ANTMINER S9 13Th/s</option>
                                                         <option  data-currency="BTC,BCH" data-hr="13.5" data-en="1.45" value="ANTMINER S9 13.5Th/s">ANTMINER S9 13.5Th/s</option>
                                                         <option  data-currency="BTC,BCH" data-hr="14" data-en="1.50" value="ANTMINER S9 14Th/s">ANTMINER S9 14Th/s</option>
-                                                        <option  data-currency="BTC,BCH" data-hr="16" data-en="1.47" value="DRAGONMINT T1">DRAGONMINT T1</option>
+                                                        <option  data-currency="BTC,BCH" data-hr="16" data-en="1.47" value="DRAGONMINT T1">DRAGONMINT T1</option>-->
                                                     </select>
                                                 </div>
                                                 <!--<span class="input-number  width-33  quantity-center">

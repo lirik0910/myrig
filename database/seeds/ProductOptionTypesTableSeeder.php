@@ -40,5 +40,10 @@ class ProductOptionTypesTableSeeder extends Seeder
 			'title' => 'secondary',
 			'description' => 'If product is secondary'
 		]);
+
+        App\Model\Shop\ProductOptionType::create([
+            'title' => 'currency',
+            'description' => 'Currency'
+        ]);
 	}
 }

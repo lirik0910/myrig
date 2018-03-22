@@ -16,9 +16,17 @@ $products = $select('\App\Model\Shop\Product')
 		})->get();
 
 $total = 0;
+$btcTotal = 0;
 foreach ($products as $item) {
 	if (isset($inCart[$item->id])) {
-		$total += $inCart[$item->id] * $item->price;
+	    if($item->auto_price){
+            $price = number_format($item->calcAutoPrice(), 2, '.', '');
+        } else{
+            $price = number_format($item->price, 2, '.', '');
+        }
+        $btcPrice = number_format($item->calcBtcPrice(), 4, '.', '');
+        $btcTotal += $inCart[$item->id] * $btcPrice;
+		$total += $inCart[$item->id] * $price;
 	}
 }
 @endphp
@@ -59,7 +67,7 @@ foreach ($products as $item) {
 								</span>
 
 								<span class="table-bitcoin">
-									<span id="total-bitcon-cost">0.2443</span>
+									<span id="total-bitcon-cost">{{ number_format($btcTotal, 4, '.', '') }}</span>
 									<i class="fa fa-bitcoin"></i>
 								</span>
 							</div>

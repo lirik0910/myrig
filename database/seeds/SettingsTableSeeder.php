@@ -92,5 +92,17 @@ class SettingsTableSeeder extends Seeder
 			'title' => 'rate.value_custom',
 			'value' => '0'
 		]);
+
+        App\Model\Base\Setting::create([
+            'context_id' => $context->id,
+            'title' => 'calculator.hosting',
+            'value' => '5.2'
+        ]);
+
+        App\Model\Base\Setting::create([
+            'context_id' => $context->id,
+            'title' => 'calculator.btc_network',
+            'value' => ''
+        ]);
 	}
 }

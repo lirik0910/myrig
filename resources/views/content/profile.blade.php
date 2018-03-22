@@ -22,7 +22,6 @@
             }
             $orders = App\Model\Shop\Order::where('user_id', $user->id)->with('products')->get();
 
-
         @endphp
         <section class="content profile">
             <div class="container">
@@ -91,6 +90,11 @@
                                         <div class="table-cell"></div>
                                     </div>
                                     @foreach($orders as $order)
+                                        @php
+                                            $btcCost = $order->countBtcCost();
+                                            $status_logs = $order->logs->sortBy('created_at');
+                                            //var_dump($status_logs); die;
+                                        @endphp
                                         <div class="table-row  table-row-border table-row-top-several">
                                             <div class="table-cell table-cell-border">
                                                 <div class="order-number-wrap">
@@ -110,14 +114,25 @@
                                                 </div>
                                             @else
                                                 @foreach($order->products as $product)
+                                                @php
+                                                   //  var_dump($product->pivot); die;
+                                                    $price = number_format($product->pivot->cost, 2, '.', '');
+                                                    $btcPrice = number_format($product->pivot->btcCost, 4, '.', '');
+/*                                                    if($product->auto_price){
+                                                        $price = number_format($product->calcAutoPrice(), 2, '.', '');
+                                                    } else{
+                                                        $price = number_format($product->price, 2, '.', '');
+                                                    }
+                                                    $btcPrice = number_format($product->calcBtcPrice(), 4, '.', '');*/
+                                                @endphp
                                                 <div class="table-cell table-product-cell">
                                                     <div class="order_thumbs">
                                                         <img src="@if(count($product->images)){{asset('uploads/' . App\Model\Shop\ProductImage::where('product_id', $product->id)->first()->name)}}@endif" title="{{$product->title}}">
                                                         <div class="cost">
                                                             <a href="{{$product->page->link}}" data-wpel-link="internal">{{$product->title}}</a>
                                                             <span class="hidden-md">Item cost</span>
-                                                            <span class="table-price">${{$product->price}}</span>
-                                                            <span class="table-bitcoin">0.3464<i class="fa fa-bitcoin"></i></span>
+                                                            <span class="table-price">${{ $price }}</span>
+                                                            <span class="table-bitcoin">{{ $btcPrice }}<i class="fa fa-bitcoin"></i></span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -131,32 +146,45 @@
                                             <div class="table-cell number number-price">
                                                 <span class="hidden-md">Total</span>
                                                 <span class="table-price"><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">$</span>{{ number_format($order->cost, 2, '.', '') }}</span></span>
-                                                <span class="table-bitcoin">0.3464<i class="fa fa-bitcoin"></i></span>
+                                                <span class="table-bitcoin">{{ $btcCost }}<i class="fa fa-bitcoin"></i></span>
                                             </div>
                                             <div class="table-cell status">
                                                 <span class="">
                                                     <p class="hidden-md">Status</p>
                                                     <span class="mark cancelled" style="color: {{$order->status->color}}">{{$order->status->title}}</span><br>
-                                                    <!--<a class="order-history" data-wpel-link="internal">История
+                                                    @if(isset($status_logs) && count($status_logs) > 0)
+                                                        <a class="order-history" data-wpel-link="internal">History
                                                         <div class="history-dd" style="height: auto !important">
                                                             <div class="modal-body">
-                                                                <h3>14 марта 2018 в 13:07</h3>
-                                                                <div class="comment-order">
-																    Статус заказа изменен с Новый заказ на Отменен.
-                                                                </div>
-															    <h3>14 марта 2018 в 08:40</h3>
-                                                                <div class="comment-order">
-																    Статус заказа изменен с trash на Новый заказ.
-															    </div>
+                                                                @foreach($status_logs as $log)
+                                                                    <h3>@php echo date('d F Y ', strtotime($log->created_at)) . ' at ' . date('H:i', strtotime($log->created_at)) @endphp</h3>
+                                                                    <div class="comment-order">
+																        Order status was changed from @if(isset($prev)) {{ $prev }} @else New order @endif to {{ $log->value }}.
+                                                                    </div>
+                                                                    @php
+                                                                        $prev = $log->value;
+                                                                    @endphp
+                                                                @endforeach
                                                             </div>
                                                         </div>
-                                                    -->
+                                                    </a>
+                                                    @endif
                                                 </span>
                                             </div>
                                             <div class="table-cell" style="width: 10px"></div>
                                         </div>
                                         @if(count($order->products) > 1)
                                             @foreach($order->products as $product)
+                                                @php
+                                                    $price = number_format($product->pivot->cost, 2, '.', '');
+                                                    $btcPrice = number_format($product->pivot->btcCost, 4, '.', '');
+/*                                                    if($product->auto_price){
+                                                        $price = number_format($product->calcAutoPrice(), 2, '.', '');
+                                                    } else{
+                                                        $price = number_format($product->price, 2, '.', '');
+                                                    }
+                                                    $btcPrice = number_format($product->calcBtcPrice(), 4, '.', '');*/
+                                                @endphp
                                                 <div class="table-row hidden-block table-row-several order-{{$order->number}}">
                                                     <div class="table-cell table-cell-border table-cell-border-none">
                                                     </div>
@@ -166,8 +194,8 @@
                                                             <div class="cost">
                                                                 <a href="{{$product->page->link}}" data-wpel-link="internal">{{$product->title}}</a>
                                                                 <span class="hidden-md">Cost</span>
-                                                                <span class="table-price">${{$product->price}}</span>
-                                                                <span class="table-bitcoin">0.3464<i class="fa fa-bitcoin"></i></span>
+                                                                <span class="table-price">${{ $price }}</span>
+                                                                <span class="table-bitcoin">{{ $btcPrice }}<i class="fa fa-bitcoin"></i></span>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -177,8 +205,8 @@
                                                     </div>
                                                     <div class="table-cell number number-price">
                                                         <span class="hidden-md">Item cost</span>
-                                                        <span class="table-price">$@php echo $product->price * $product->pivot->count; @endphp</span>
-                                                        <span class="table-bitcoin">1.0392<i class="fa fa-bitcoin"></i></span>
+                                                        <span class="table-price">$@php echo $price * $product->pivot->count; @endphp</span>
+                                                        <span class="table-bitcoin">{{ $btcPrice * $product->pivot->count }}<i class="fa fa-bitcoin"></i></span>
                                                     </div>
                                                     <div class="table-cell status">
                                                     </div>

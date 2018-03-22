@@ -62,6 +62,6 @@ class ExchangeRate extends Model
 		}
 
 		$this->value = $total;
-		return true;
+		return $total;
 	}
 }

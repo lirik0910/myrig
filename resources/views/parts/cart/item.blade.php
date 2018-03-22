@@ -1,6 +1,14 @@
 @php
 $icon = $item->images->first();
 $options = $item->options->groupBy('name')->toArray();
+
+if($item->auto_price){
+    $price = number_format($item->calcAutoPrice(), 2, '.', '');
+} else{
+    $price = number_format($item->price, 2, '.', '');
+}
+
+$btcPrice = number_format($item->calcBtcPrice(), 4, '.', '');
 @endphp
 
 <div class="table-row" id="{{ 'cart-line-item-' . $item->id }}">
@@ -32,12 +40,12 @@ $options = $item->options->groupBy('name')->toArray();
 		<span class="table-price">
 			<span class="woocommerce-Price-amount amount">
 				<span class="woocommerce-Price-currencySymbol">&#36;</span>
-				<span id="{{ 'amount-default-value-' . $item->id }}">{{ number_format($item->price * $inCart[$item->id], 2, '.', '') }}</span>
+				<span id="{{ 'amount-default-value-' . $item->id }}">{{ number_format($price * $inCart[$item->id], 2, '.', '') }}</span>
 			</span>
 		</span>
 
 		<span class="table-bitcoin">
-			<span id="{{ 'amount-bitcoin-value-' . $item->id }}">0.2443</span>
+			<span id="{{ 'amount-bitcoin-value-' . $item->id }}">{{ number_format($btcPrice * $inCart[$item->id], 4, '.', '') }}</span>
 			<i class="fa fa-bitcoin"></i>
 		</span>
 	</div>

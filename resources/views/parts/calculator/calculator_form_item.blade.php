@@ -4,7 +4,7 @@
             <option value="hide" >Устройство</option>
             <option value="" data-hr="0">Ручной ввод</option>
             @foreach ($devices as $device)
-                <option data-currency="{{$device['currency']}}" data-hr="{{$device['hr']}}" data-en="{{$device['en']}}" value="{{$device['name']}}">{{$device['name']}}</option>
+                <option data-currency="{{$device[3]}}" data-hr="{{$device[1]}}" data-en="{{$device[2]}}" value="{{$device[0]}}">{{$device[0]}}</option>
             @endforeach
         </select>
     </div>

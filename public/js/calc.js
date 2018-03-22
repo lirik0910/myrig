@@ -116,15 +116,15 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
 				data: $('.calculator-form').serialize() + '&calc='+JSON.stringify(calc) + '&network=' + JSON.stringify(network) + '&status=' + JSON.stringify(status)  ,
-			 	dataType: 'json',
+			 	//dataType: 'json',
 				success: function(data) {
-					if (data.result === 0) {
+					if (data === 0) {
 						alert ("Введите все данные!");
 						$('.hash').css({'border-color':'red'})
 						return;
 					}
-					 
-					$('.income-table').html(data.result);
+					// console.log(data);
+					$('.income-table').html(data);
 					$('a[href="'+val+'"]').parent().addClass('active');
 					$('#buyers').slideDown();
 					$('.hash').css({'border-color':'#c5c5c5'})

@@ -1,3 +1,7 @@
+@php
+	$btcPrice = number_format($item->calcBtcPrice(), 4, '.', '');
+@endphp
+
 <a href="{{ asset($item->page->link) }}" class="related-item" data-wpel-link="internal">
 	<div class="related-title">{{ $item->title }}</div>
 	
@@ -24,7 +28,7 @@
 				{{ number_format($item->price, 2, '.', '') }}
 			</span>
 		
-			<span class="table-bitcoin">0.0192
+			<span class="table-bitcoin">{{ $btcPrice }}
 				<i class="fa fa-bitcoin"></i>
 			</span>
 		</div>

@@ -62,7 +62,7 @@ class Order extends Model
 	 */
 	public function products()
 	{
-		return $this->belongsToMany(Product::class, 'carts', 'order_id', 'product_id')->withPivot('count');
+		return $this->belongsToMany(Product::class, 'carts', 'order_id', 'product_id')->withPivot('count', 'cost', 'btcCost');
 	}
 
 	/**
@@ -110,7 +110,13 @@ class Order extends Model
 		
 		$cost = 0;
 		foreach ($cart as $item) {
-			$price = $item->product->price;
+
+            if($item->product->auto_price){
+                $price = number_format($item->product->calcAutoPrice(), 2, '.', '');
+            } else{
+                $price = number_format($item->product->price, 2, '.', '');
+            }
+			//$price = $item->product->price;
 			$count = $item->count;
 
 			$cost += ($count * $price);
@@ -119,7 +125,6 @@ class Order extends Model
 
 		return $cost;
 	}
-
 
 	/**
 	 * Change order status
@@ -141,6 +146,19 @@ class Order extends Model
 		$this->status_id = $statusID;
 		$this->save();
 	}
+
+	/*
+	 * Count BTC cost for order
+	 * @param (int) $id Order ID
+	 * @return string|float
+	 */
+	public function countBtcCost()
+    {
+        $btc = ExchangeRate::where('title', 'BTC/USD')->first()->value;
+        $order_cost = $this->cost;
+
+        return number_format($order_cost / $btc, 4, '.', '');
+    }
 
 	public function addProduct()
 	{

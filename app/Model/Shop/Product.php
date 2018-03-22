@@ -7,6 +7,7 @@ use App\Model\Shop\ProductImage;
 use App\Model\Shop\ProductOption;
 use Illuminate\Database\Eloquent\Model;
 
+
 class Product extends Model
 {
 	protected $guarded = [];
@@ -292,10 +293,66 @@ class Product extends Model
 		}
 		catch (\Exception $e) {
 			logger($e->getMessage());
-			throw new Exception($e->getMessage(), 1);
+			throw new \Exception($e->getMessage(), 1);
 				
 			return false;
 		}
 		return true;
 	}
+
+	/*
+	 * Calculate auto-price
+	 * @return float|string
+	 */
+	public function calcAutoPrice()
+    {
+	    $params = $this->productAutoPrices()->first();
+
+        $btc = ExchangeRate::where('title', 'BTC/USD')->first()->value;
+
+        if ($params->prime_price_currency == 2){
+            $prime_price = $params->prime_price * (float)$btc;
+        } else {
+            $prime_price = $params->prime_price;
+        }
+
+        if ($params->delivery_price_currency == 2){
+            $delivery_price = $params->delivery_price * (float)$btc;
+        } else {
+            $delivery_price = $params->delivery_price;
+        }
+
+        if ($params->fes_price_currency == 2){
+            $fes_price = $params->fes_price * (float)$btc;
+        } elseif ($params->fes_price_currency == 3){
+            $fes_price = $prime_price * $params->fes_price / 100;
+        } else{
+            $fes_price = $params->fes_price;
+        }
+
+        if ($params->profit_price_currency == 2){
+            $profit_price = $params->profit_price * (float)$btc;
+        } elseif ($params->profit_price_currency == 3){
+            $profit_price = $prime_price * $params->profit_price / 100;
+        } else{
+            $profit_price = $params->profit_price;
+        }
+
+        $total = $prime_price + $delivery_price + $fes_price + $profit_price;
+
+        return $total;
+    }
+
+    /*
+     * Calculate price in Bitcoin
+     * @return float|string
+     */
+    public function calcBtcPrice()
+    {
+        $btc = ExchangeRate::where('title', 'BTC/USD')->first()->value;
+
+        $price = number_format($this->price / (float)$btc, 4, '.', '');
+
+        return $price;
+    }
 }

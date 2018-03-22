@@ -41,7 +41,6 @@ class PageController extends Controller
 				'preview' => $this->preview()
 			]);
 		}
-
 		else abort(404);
 	}
 

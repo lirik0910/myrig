@@ -16,6 +16,7 @@ class ProductOptionsTableSeeder extends Seeder
 		$secondary = App\Model\Shop\ProductOptionType::where('title', 'secondary')->first();
 		$recoupment = App\Model\Shop\ProductOptionType::where('title', 'recoupment')->first();
 		$characteristic = App\Model\Shop\ProductOptionType::where('title', 'characteristic')->first();
+		$currency = App\Model\Shop\ProductOptionType::where('title', 'currency')->first();
 
 		$product = App\Model\Shop\Product::whereHas('page', function ($q) {
 			$q->where('link', 'product/dragonmint-16-th-s-2');
@@ -75,6 +76,13 @@ class ProductOptionsTableSeeder extends Seeder
 			'name' => 'Weight',
 			'value' => '6 kg',
 		]);
+
+        App\Model\Shop\ProductOption::create([
+            'product_id' => $product->id,
+            'type_id' => $currency->id,
+            'name' => 'Currency',
+            'value' => 'BTC',
+        ]);
 
 		$product = App\Model\Shop\Product::whereHas('page', function ($q) {
 			$q->where('link', 'product/antminer-s9-13-5th-s');
@@ -142,6 +150,13 @@ class ProductOptionsTableSeeder extends Seeder
 			'value' => '<iframe width="560" height="315" src="https://www.youtube.com/embed/-yfUQsg9ntQ" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>',
 		]);
 
+        App\Model\Shop\ProductOption::create([
+            'product_id' => $product->id,
+            'type_id' => $currency->id,
+            'name' => 'Currency',
+            'value' => 'BCH',
+        ]);
+
 		$product = App\Model\Shop\Product::whereHas('page', function ($q) {
 			$q->where('link', 'product/antminer-d3-19-3gh-s');
 		})->first();
@@ -186,6 +201,13 @@ class ProductOptionsTableSeeder extends Seeder
 			'name' => 'Working conditions',
 			'value' => 'from 0 ° C to 40 ° C',
 		]);
+
+        App\Model\Shop\ProductOption::create([
+            'product_id' => $product->id,
+            'type_id' => $currency->id,
+            'name' => 'Currency',
+            'value' => 'DASH',
+        ]);
 
 		$product = App\Model\Shop\Product::whereHas('page', function ($q) {
 			$q->where('link', 'product/myrig1660');

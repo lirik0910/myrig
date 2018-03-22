@@ -25,9 +25,17 @@ $products = $select('\App\Model\Shop\Product')
 		})->get();
 
 $total = 0;
+$btcTotal = 0;
 foreach ($products as $item) {
 	if (isset($inCart[$item->id])) {
-		$total += $inCart[$item->id] * $item->price;
+	    if($item->auto_price){
+            $price = number_format($item->calcAutoPrice(), 2, '.', '');
+        } else{
+            $price = number_format($item->price, 2, '.', '');
+        }
+        $btcPrice = number_format($item->calcBtcPrice(), 4, '.', '');
+        $btcTotal += $inCart[$item->id] * $btcPrice;
+		$total += $inCart[$item->id] * $price;
 	}
 }
 
@@ -64,7 +72,7 @@ foreach ($products as $item) {
 					</span>
 
 					<span class="bitcoin">
-						<span id="total-bitcon-cost">6.5626</span>
+						<span id="total-bitcon-cost">{{ number_format($btcTotal, 4, '.', '') }}</span>
 						<i class="fa fa-bitcoin"></i>
 					</span>
 				</div>
@@ -234,13 +242,13 @@ foreach ($products as $item) {
 													<td data-title="Доставка">
 														<ul id="shipping_method">
                                                             @foreach($deliveries as $delivery)
-                                                                <li>
+                                                            <li style="display: inline-block">
 																<input type="radio" name="delivery" id="shipping_method_{{$loop->iteration}}" data-index="{{$delivery->id}}" value="{{$delivery->id}}" class="shipping_method"  @if($loop->first) checked='checked' @endif/>
 
 																<label for id="shipping_method_{{$loop->iteration}}">{{$delivery->title}}</label>
 															</li>
                                                             @endforeach
-															<li>
+															<li style="display: inline-block">
 																<input type="radio" name="delivery" data-index="0"  value="0" class="shipping_method"  />
 
 																<label for="shipping_method_0_local_pickup15">Self shipment</label>
@@ -270,7 +278,7 @@ foreach ($products as $item) {
 											 		</span>
 											 	</strong>
 											 </span>
-											 <span class="table-bitcoin">6.5626<i class="fa fa-bitcoin"></i></span>
+											 <span class="table-bitcoin">{{ number_format($btcTotal, 4, '.', '') }}<i class="fa fa-bitcoin"></i></span>
 										</div>
 									</div>
 								</div>

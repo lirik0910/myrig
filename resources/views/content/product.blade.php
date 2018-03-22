@@ -12,6 +12,23 @@ foreach ($product->options as $item) {
 		break;
 	}
 }
+
+if($product->auto_price){
+    $price = number_format($product->calcAutoPrice(), 2, '.', '');
+} else{
+    $price = number_format($product->price, 2, '.', '');
+}
+
+//var_dump($product->categories); die;
+//if($product->categories)
+foreach($product->categories as $category){
+    if ($category->title == 'Base'){
+        $payback = new App\Http\Controllers\ProductController();
+$payback = $payback->calcPayback($product->id);
+    }
+}
+
+//var_dump($payback); die;
 @endphp
 <section class="content item">
 <div class="container">
@@ -46,7 +63,7 @@ foreach ($product->options as $item) {
 			<div class="single-product-price">
 				<span class="woocommerce-Price-amount amount">
 					<span class="woocommerce-Price-currencySymbol">&#36;</span>
-					{{ number_format($product->price, 2, '.', '') }}
+					{{ $price }}
 				</span>
 			</div>
 							
@@ -75,7 +92,7 @@ foreach ($product->options as $item) {
 					</a>
 				@endif
 			</form>
-			<div class="tag tag-payback">{{ __('default.payback') }}</div>
+			@isset($payback)<div class="tag tag-payback">{{ __('default.payback') }} {{ $payback }} days</div>@endisset
 			
 			<div class="single-product-tabs">
 				<div class="product-tab-links">
