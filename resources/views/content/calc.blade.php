@@ -184,7 +184,7 @@
                                     </div>
 
                                     <div class="income-table__inner">
-                                        <div class="income-table__inner-title">Доход</div>
+                                        <div class="income-table__inner-title">Income</div>
                                         <div class="income-table__item">
                                             <div class="income-icon income-icon-1">BTC</div>
                                             <div class="income-number">-</div>
@@ -198,7 +198,7 @@
                                     </div>
 
                                     <div class="income-table__inner">
-                                        <div class="income-table__inner-title">Затраты</div>
+                                        <div class="income-table__inner-title">Expenses</div>
                                         <div class="income-table__item">
                                             <div class="income-icon income-icon-1">BTC</div>
                                             <div class="income-number">-</div>
@@ -212,7 +212,7 @@
                                     </div>
 
                                     <div class="income-table__inner">
-                                        <div class="income-table__inner-title">Прибыль</div>
+                                        <div class="income-table__inner-title">Profit</div>
                                         <div class="income-table__item">
                                             <div class="income-icon income-icon-1">BTC</div>
                                             <div class="income-number">-</div>
