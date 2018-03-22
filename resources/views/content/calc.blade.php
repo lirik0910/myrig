@@ -53,9 +53,11 @@
                                                     <select id="device" name="device" class="calc-select">
                                                         <option value="hide" >Device</option>
                                                         <option value="" data-hr="0">Manual input</option>
-                                                        @foreach($allowedDevices as $device)
-                                                            <option data-currency="{{$device[3]}}" data-hr="{{$device[1]}}" data-en="{{$device[2]}}" value="{{$device[0]}}">{{$device[0]}}</option>
-                                                        @endforeach
+                                                        @isset($allowedDevices)
+                                                            @foreach($allowedDevices as $device)
+                                                                <option data-currency="{{$device[3]}}" data-hr="{{$device[1]}}" data-en="{{$device[2]}}" value="{{$device[0]}}">{{$device[0]}}</option>
+                                                            @endforeach
+                                                        @endisset
                                                         <!--<option  data-currency="BTC,BCH" data-hr="4.73" data-en="1.43" value="ANTMINER S7 4.7Th/s">ANTMINER S7 4.7Th/s</option>
                                                         <option  data-currency="BTC,BCH" data-hr="8.6" data-en="0.93" value="ANTMINER R4 8.6Th/s">ANTMINER R4 8.6Th/s</option>
                                                         <option  data-currency="BTC,BCH" data-hr="12.5" data-en="1.73" value="ANTMINER T9 12.5Th/s">ANTMINER T9 12.5Th/s</option>
