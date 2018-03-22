@@ -641,7 +641,7 @@ display: inline-block;
     padding: 58px 60px;
 }
 .fancybox-slide>#regsuccess{
-    background-image:url('/image/popup_back.jpg');
+    background-image:url('../uploads/design/popup_back.jpg');
 }
 .popup-success .modal-body{
     padding: 20px 0 30px;
@@ -661,7 +661,7 @@ display: inline-block;
     text-transform: uppercase;
     line-height: 1.2;
     text-align: left;
-background: url("/image/check2.png") left center no-repeat;
+background: url("../uploads/design/check2.png") left center no-repeat;
     padding-left: 70px;
 }
 .popup-success button:not(.fancybox-close-small){
@@ -1208,11 +1208,11 @@ input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill{
     display: inline-block;
     float: left;
     vertical-align: top;
-    background: url("/image/arrow.png") left center no-repeat;
+    background: url("../uploads/design/arrow.png") left center no-repeat;
 }
 .article-arrow-right{
     float: right;
-    background-image: url("/image/right_arrow.png");
+    background-image: url("../uploads/design/right_arrow.png");
     margin-right: 0;
     margin-left: 18px;
 }
@@ -1641,7 +1641,7 @@ position: relative;
     border: 1px solid rgb(96, 166, 69);
 }
 #personalForm .form-control[type=checkbox]:checked{
-background: url("/image/check.png") 0 0 no-repeat;
+background: url("../uploads/design/check.png") 0 0 no-repeat;
     background-size:cover ;
 
 }
@@ -1867,7 +1867,7 @@ font-size: 14px;
 }
 .tag-low{
   color: rgb(0, 0, 0);
- background-image: url('/images/finish.svg');
+ background-image: url('../uploads/design/finish.svg');
 }
 .tag-waranty{
   color: #ff8400;

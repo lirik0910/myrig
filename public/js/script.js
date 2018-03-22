@@ -629,7 +629,14 @@ $(window).on('load',function(){
 		dots: true,
 		nav: false,
 		margin:20,
-		slideSpeed : 500,
+        slideSpeed : 500,
+        smartSpeed: 200,
+        autoplay:4000,
+        //onInitialized:stopAuto,
+/*        dotsData:true,
+        animateOut: 'fadeOut',
+        animateIn: 'fadeIn',*/
+
 		slideBy: 1, //alternatively you can slide by 1, this way the active slide will stick to the first item in the second carousel
 		responsiveClass:true,
 		responsive:{
@@ -645,7 +652,7 @@ $(window).on('load',function(){
 				items:3
 			}
 		}
-	})
+	});
 /*$('.table-close img').on('click',function () {
 	$(this).parent().parent().remove();
 	var count = $('.table-like div').length;

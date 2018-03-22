@@ -1,5 +1,5 @@
 <div class="income-table__inner">
-    <div class="income-days-title ">Расчет</div>
+    <div class="income-days-title ">Calculation</div>
 </div>
 
 <div class="income-table__title">
@@ -12,10 +12,10 @@
 </div>
 
 <div class="income-table__inner">
-    <div class="income-table__inner-title">Доход</div>
+    <div class="income-table__inner-title">Income</div>
     <div class="income-table__item">
         <div class="income-icon income-icon-1">BTC</div>
-        <div class="income-number"><?php echo number_format($P,6, '.', '') ?></div>
+        <div class="income-number"><?php echo number_format($P, 6, '.', '') ?></div>
         <div class="income-icon income-icon-2">USD</div>
         <div class="income-number"><?php echo  number_format($P*$coursers['base']["$currency / USD"] , 2, '.', '') ?></div>
         <div class="income-icon income-icon-3">RUB</div>
@@ -26,7 +26,7 @@
 </div>
 
 <div class="income-table__inner">
-    <div class="income-table__inner-title">Затраты</div>
+    <div class="income-table__inner-title">Expenses</div>
     <div class="income-table__item">
         <div class="income-icon income-icon-1">BTC</div>
         <div class="income-number"><?php echo number_format($costs['BTC'], 6, '.', '') ?></div>
@@ -40,7 +40,7 @@
 </div>
 
 <div class="income-table__inner">
-    <div class="income-table__inner-title">Прибыль</div>
+    <div class="income-table__inner-title">Profit</div>
     <div class="income-table__item">
         <div class="income-icon income-icon-1">BTC</div>
         <div class="income-number"><?php echo number_format($P - $costs['BTC'] ,6, '.', '') ?></div>

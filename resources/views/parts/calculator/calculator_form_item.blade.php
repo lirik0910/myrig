@@ -1,8 +1,8 @@
 <div class="calculator-form--item ">
     <div class="width-60">
         <select id="device" name="device" class="calc-select">
-            <option value="hide" >Устройство</option>
-            <option value="" data-hr="0">Ручной ввод</option>
+            <option value="hide" >Device</option>
+            <option value="" data-hr="0">Manual input</option>
             @foreach ($devices as $device)
                 <option data-currency="{{$device[3]}}" data-hr="{{$device[1]}}" data-en="{{$device[2]}}" value="{{$device[0]}}">{{$device[0]}}</option>
             @endforeach
@@ -13,7 +13,7 @@
 </div>
 
 <div class="calculator-form--item cur-LTC">
-    <input type="number" step="0.01" class="quantity width-60 hash" name="hash" placeholder="Введите хешрейт">
+    <input type="number" step="0.01" class="quantity width-60 hash" name="hash" placeholder="Input hashrate">
 
     <div class="width-33 cur-LTC-ul">
         <select id="ghs" name="powers" class="calc-select">

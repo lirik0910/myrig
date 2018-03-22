@@ -109,6 +109,7 @@
 			var network = {difficulty: $('.difficulty').text(), reward_block: 1250000000};
 			var status = {hashrate: $('.hashrate').text(), expected_difficulty_raw: $('.expected_diff').text(), expected_difficulty_date: $('.diff_date').text(), expected_difficulty: 8.52};
 			//console.log('network :' + network, 'status' + status);
+			console.log(calc);
 			$.ajax({
 				url:global.url + 'calc_btn',
                 method: 'get',

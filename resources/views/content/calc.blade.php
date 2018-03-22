@@ -9,7 +9,7 @@
                     <div class="col-sm-4">
                         <!--CALCULATOR BEGIN-->
                         <div class="section-tab">
-                            <h1 class="calc_title">Калькулятор доходности</h1>
+                            <h1 class="calc_title">Yield calculator</h1>
                             <div class="korpus">
                                 <input data-index="1" data-currencyType="BTC" data-updateAction="parse_btc_network_status" type="radio" name="odin" checked="checked" id="vkl1" />
                                 <label for="vkl1" class="tab-label label-1 fixborder">BTC</label>
@@ -49,8 +49,8 @@
                                             <div class="calculator-form--item">
                                                 <div class="width-60">
                                                     <select id="device" name="device" class="calc-select">
-                                                        <option value="hide" >Устройство</option>
-                                                        <option value="" data-hr="0">Ручной ввод</option>
+                                                        <option value="hide" >Device</option>
+                                                        <option value="" data-hr="0">Manual input</option>
                                                         @foreach($allowedDevices as $device)
                                                             <option data-currency="{{$device[3]}}" data-hr="{{$device[1]}}" data-en="{{$device[2]}}" value="{{$device[0]}}">{{$device[0]}}</option>
                                                         @endforeach
@@ -73,7 +73,7 @@
                                                 <input type="number"  step="1" class="quantity width-33 quantity-center" id="quantity" name="qty" placeholder="1 шт" min="1" readonly>
                                             </div>
                                             <div class="calculator-form--item cur-LTC">
-                                                <input type="number" step="0.01" class="quantity width-60 hash" name="hash" placeholder="Введите хешрейт"  >
+                                                <input type="number" step="0.01" class="quantity width-60 hash" name="hash" placeholder="Input hashrate"  >
                                                 <div class="width-33 cur-LTC-ul">
                                                     <select id="ghs" name="powers" class="calc-select">
                                                         <option  value="0.001" selected >TH/s</option>
@@ -82,7 +82,7 @@
                                             </div>
                                         </div>
                                         <div class="calculator-form--item kvtch">
-                                            <input type="number"  step="0.01" class="quantity width-60 energy" name="energy" placeholder="Энергопотребление"   >
+                                            <input type="number"  step="0.01" class="quantity width-60 energy" name="energy" placeholder="Energy consumption">
                                             <div class="width-33">
                                                 <select  disabled class="calc-select">
                                                     <option value="hide" >кВт/ч</option>
@@ -91,10 +91,10 @@
                                         </div>
                                         <div class="radio-buttons calculator-form--item">
                                             <input type="radio" name="radio" class="radio" id="radio1"   value="1">
-                                            <label for="radio1" class="hosting-label">Хостинг	<b class="tooltip">i<span class="tooltiptext">Размещение оборудования в дата центре MyRig</span></b></label>
+                                            <label for="radio1" class="hosting-label">Hosting	<b class="tooltip">i<span class="tooltiptext">Equipment placement at MyRig data centre</span></b></label>
 
                                             <input type="radio" name="radio" class="radio" id="radio2" value="2" checked>
-                                            <label for="radio2">Локальное размещение	<b class="tooltip">i<span class="tooltiptext">Локальное размещение устройств</span></b></label>
+                                            <label for="radio2">Local placement	<b class="tooltip">i<span class="tooltiptext">Local device placement</span></b></label>
                                         </div>
                                         <div class="calculator-form--item">
                                             <input type="number" step="0.01" class="quantity width-60 quantity-center qw costs" name="costs"  placeholder="0.1 $"   >
@@ -102,14 +102,14 @@
                                         <div class="calculator-form--item">
                                             <div class="">
                                                 <select id="rialto" name="days" class="calc-select">
-                                                    <option value="hide">Расчетный период</option>
-                                                    <option value="1" selected>1 день</option>
-                                                    <option value="31" >1 месяц</option>
-                                                    <option value="365" >1 год</option>
+                                                    <option value="hide">Billing period</option>
+                                                    <option value="1" selected>1 day</option>
+                                                    <option value="31" >1 month</option>
+                                                    <option value="365" >1 year</option>
                                                 </select>
                                             </div>
                                         </div>
-                                        <input type="submit" class="button-green" value="Рассчитать">
+                                        <input type="submit" class="button-green" value="Calculate">
                                         <input type="hidden" value="calc_btc_profit" name="action">
                                         <input type="hidden" value="BTC" class="currencyType" name="currency">
                                     </form>							</div>
@@ -130,30 +130,30 @@
                             <!--NETWORK STATUS BEGIN-->
                             <div class="">
                                 <div class="network-status bg-white">
-                                    <div class="network-status--title ">Статус сети</div>
+                                    <div class="network-status--title ">Network status</div>
                                     <div class="network-status--parent">
                                         <div class="network-status--inner">
-                                            <div>Хэшрейт</div>
+                                            <div>Hashrate</div>
                                             <div><i class="fa fa-cog fa-spin"></i></div>
                                         </div>
 
                                         <div class="network-status--inner">
-                                            <div>Сложность</div>
+                                            <div>Difficulty</div>
                                             <div><i class="fa fa-cog fa-spin"></i></div>
                                         </div>
 
                                         <div class="network-status--inner network-delimiter">
-                                            <div>Добыча</div>
+                                            <div>Mining</div>
                                             <div><i class="fa fa-cog fa-spin"></i></div>
                                         </div>
 
                                         <div class="network-status--inner">
-                                            <div>Ожидаемая следующая сложность</div>
+                                            <div>Expected next difficulty</div>
                                             <div><i class="fa fa-cog fa-spin"></i></div>
                                         </div>
 
                                         <div class="network-status--inner">
-                                            <div>Дата следующей сложности</div>
+                                            <div>Next difficulty date</div>
                                             <div><i class="fa fa-cog fa-spin"></i></div>
                                         </div>
 
@@ -167,7 +167,7 @@
                                 <div class="table--responsive income-table bg-white">
 
                                     <div class="income-table__inner">
-                                        <div class="income-days-title ">Расчет</div>
+                                        <div class="income-days-title ">Calculation</div>
                                     </div>
 
                                     <div class="income-table__title">
@@ -231,12 +231,7 @@
 
                                 <div class="calculator-text">
 
-                                    <p>Современный мир криптовалют отличается надежностью, защищенностью и перспективностью. Высокий уровень ее защиты обусловлен децентрализацией учетной системы и эмиссии, а также функционированием в распределенной компьютерной сети. Зарабатывать крипту можно посредством специализированных устройств – ASIC-майнеров и GPU-ферм. Их основное назначение – расчет алгоритмов: SHA-256, X11, Scrypt и т. д.</p>
-                                    <p>Приобретение нового оборудования для майнинга выполняется на основе расчетов будущей прибыли и расходов на затрачиваемую электроэнергию. Подобные расчеты считаются довольно трудоемкими, в частности, когда требуется сравнить несколько видов устройств. На сайте каждый пользователь сможет воспользоваться уникальным инструментом для автоматических операций расчета прибыли майнеров и уровнем потребления электроэнергии.</p>
-                                    <h2>Калькулятор криптографических валют: удобство использования</h2>
-                                    <p>Пользоваться калькулятором крипотвалют (Bitcoin, Litecoin, Etherium, Dash) достаточно просто. Для этого из выпадающего меню следует выбрать подходящий ASIC-майнер/ GPU-ферму либо ввести хешрейт оборудования и нажать клавишу «Раccчитать». В результате, калькулятор предоставит полную информацию о потреблении майнера, а также всех сведений о заработке криптовалюты с автоматической ее конвертацией в доллары, рубли, гривны и т.д. При этом данный инструмент не ограничивается общими данными, он предоставляет таблицы, в которых структурирована информация о суточном, недельном, месячном заработке в любой желаемой валюте, а также о расходе электроэнергии в аналогичных временных диапазонах.</p>
-                                    <p>Калькулятор крипловалют способен значительно упростить процессы выбора требуемого оборудования для майнинга за счет экономии времени на подсчетах. Как было отмечено ранее, в калькуляторе присутствует выпадающий список с майнерами. Все они представлены в магазине, следовательно, выполнив быстрый расчет, можно сразу же при обрести оптимальный вариант ASIC-майнера, после чего заняться майнингом криптовалюты.</p>
-                                    <p><span style="color: #999999;"><em>*Абсолютная точность обменных курсов, представленных в криптокалькуляторе, не гарантируется (в этом даже не помогает ежеминутная синхронизация с крупнейшими криптовалютными биржами). Именно поэтому перед совершением определенных транзакций пользователям следует сверить обменный курс во избежание непредвиденных ситуаций. Следует отметить, что курс обмена криптовалюты определяется данными, полученными онлайн из API бирж. Такие обменные курсы несут в себе информационный характер, поэтому они могут изменяться спонтанно, то есть без предварительного уведомления. Кстати, из-за постоянных колебаний курса мы не несет ответственность за транзакции, совершенные по предоставленным данным. Вся отображаемая информация по обменным курсам не предназначена для использования в инвестиционных операциях.</em></span></p>
+                                {{ $it->content }}
 
                                 </div>
                             </div>

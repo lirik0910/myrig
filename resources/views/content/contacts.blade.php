@@ -32,10 +32,10 @@
 										<a href="tel:{{$var['phone']}}" data-wpel-link="internal">{{$var['phone']}}</a>
 									@endisset
 									
-									@isset($var['telegram'])
+									@if(!empty($var['telegram']))
 										<br>Telegram channel<br />
 										<a href="http://http://t.me/myrigservice" style="color: #2ba1df;" data-wpel-link="external" rel="nofollow external noopener noreferrer">{{$var['telegram']}}</a>
-									@endisset
+									@endif
 								</div>
 							@endisset
 							<p><!--:--></p>

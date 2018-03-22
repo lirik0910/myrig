@@ -259,7 +259,7 @@ class CalculateController
     public function parse_btc_network_status(Request $request, $die = 0) {
 
         $html = new simple_html_dom('');
-        $html = $html->file_get_html( 'https://btc.com/'  );
+        $html = $html->file_get_html('https://btc.com/');
 
         foreach($html->find('.indexNetworkStats dt') as $element) {
             if ($element->innertext == 'Hashrate')
@@ -278,7 +278,6 @@ class CalculateController
             if ($element->innertext == 'Date to Next Difficulty') {
                 $text = $element->parent()->find('dd', 0)->innertext;
                 $data['expected_difficulty_date'] = $element->parent()->find('dd', 0)->innertext;
-
             }
         }
         $network = $this->parse_btc_network();
@@ -288,8 +287,9 @@ class CalculateController
         $D = $network['difficulty']/10000000000000 ;
         $H = 1;
 
-        $P =  number_format(($t*$R*$H)/($D*(2**32)), 8)  ;
+        $P =  number_format(($t*$R*$H)/($D*(2**32)), 8);
 
+        //var_dump($D, $data, ); die;
         if ($request->post('action') != 'calc_btc_profit' && $die != 1) {
             return view('parts/calculator/network_status', ['btc' => 1, 'data' => $data, 'TH' => 'T', 'P' => $P, 'D' => $D, 'currency' => 'BTC']);
         }  else
@@ -328,9 +328,11 @@ class CalculateController
             $D = $network['difficulty']*1000;
             //var_dump($D); die;
         }
-        //var_dump($D); die;
-        $P = ($t*$R*$H)/($D*(2**32)) * $days;
 
+        //var_dump($t * $R * $H, ($D * 2^32) * $days; die;
+        //var_dump($t, $R, $H, $D); die;
+        $P = ($t*$R*$H)/(number_format($D, 2)*(2**32)) * $days;
+//var_dump($P); die;
         if ($currency === 'LTC') {
             $network = $this->parse_others_network_status(1, $currency, $request);
             $calcLTC = $this->parse_btc_courses_others($currency);
@@ -357,7 +359,6 @@ class CalculateController
 
             $hosting = Setting::where('title', 'calculator.hosting')->first()->value;
 
-            //$hosting =  5.2;//get_field('стоимость_хостинга_usd_в_месяц', 2319);
             $energy_costs = $hosting * $qty;
             $energy = 1;
         }
@@ -367,16 +368,9 @@ class CalculateController
         $costs['RUR'] = $energy * $energy_costs   * $coursers['USD / RUR'] * $days;
         $costs['UAH'] = $energy * $energy_costs   * $coursers['USD / UAH'] * $days;
 
-
-/*        ob_start();
-        view('parts/calculator/result', ['request' => $request, 'P' => $P, 'coursers' => $coursers, 'currency' => $currency, 'costs' => $costs]);
-
-        $result = ob_get_contents();
-        ob_clean();*/
-
         return view('parts/calculator/result', ['request' => $request, 'P' => $P, 'coursers' => $coursers, 'currency' => $currency, 'costs' => $costs]);
-//var_dump($result); die;
-        $P = $labels = array();
+
+/*        $P = $labels = array();
 
         $date = new \DateTime();
         foreach (range(0,20) as $key=>$day) {
@@ -400,7 +394,7 @@ class CalculateController
                 'chart' =>  $P ,
                 'chartLabels' =>  $labels
             ));
-        die() ;
+        die() ;*/
     }
 
     public function parse_btc_courses($source='coinbase') {
@@ -436,16 +430,18 @@ class CalculateController
         $result['bitstamp'] = $result_parsing['bitstamp']['last'];
 
         foreach ($result as $key => $value){
-            $item = ExchangeRate::where('title', $key)->first();
+            if ($value){
+                $item = ExchangeRate::where('title', $key)->first();
 
-            if(!$item){
-                ExchangeRate::create([
-                    'title' => $key,
-                    'value' => $value
-                ]);
-            } else{
-                $item->value = $value;
-                $item->save();
+                if(!$item){
+                    ExchangeRate::create([
+                        'title' => $key,
+                        'value' => $value
+                    ]);
+                } else{
+                    $item->value = $value;
+                    $item->save();
+                }
             }
         }
 
@@ -455,10 +451,11 @@ class CalculateController
             $btc->title = 'BTC/USD';
         }
 
-        $btc->value = $btc->countCustomRate();
+        $customRate = $btc->countCustomRate();
+        $btc->value = $customRate;
         $btc->save();
 
-        return true;
+        return $customRate;
     }
 
 
@@ -478,16 +475,18 @@ class CalculateController
             $coinbase_decoded = json_decode($coinbase_json, true);
             $result = $coinbase_decoded[0]['price_usd'];
 
-            $rate = ExchangeRate::where('title', $cur . '/USD')->first();
+            if($result){
+                $rate = ExchangeRate::where('title', $cur . '/USD')->first();
 
-            if(!$rate){
-                ExchangeRate::create([
-                    'title' => $cur . '/USD',
-                    'value' => $result
-                ]);
-            } else{
-                $rate->value = $result;
-                $rate->save();
+                if(!$rate){
+                    ExchangeRate::create([
+                        'title' => $cur . '/USD',
+                        'value' => $result
+                    ]);
+                } else{
+                    $rate->value = $result;
+                    $rate->save();
+                }
             }
         } else{
             foreach ($url as $key => $val) {
@@ -495,15 +494,17 @@ class CalculateController
                 $coinbase_decoded = json_decode($coinbase_json, true);
                 $result[$key] = $coinbase_decoded[0]['price_usd'];
 
-                $rate = ExchangeRate::where('title', $key . '/USD')->first();
-                if(!$rate){
-                    ExchangeRate::create([
-                        'title' => $key . '/USD',
-                        'value' => $result[$key]
-                    ]);
-                } else{
-                    $rate->value = $result[$key];
-                    $rate->save();
+                if ($result[$key]){
+                    $rate = ExchangeRate::where('title', $key . '/USD')->first();
+                    if(!$rate){
+                        ExchangeRate::create([
+                            'title' => $key . '/USD',
+                            'value' => $result[$key]
+                        ]);
+                    } else{
+                        $rate->value = $result[$key];
+                        $rate->save();
+                    }
                 }
             }
         }

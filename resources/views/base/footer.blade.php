@@ -275,7 +275,7 @@ $courses = $select('App\Model\Shop\ExchangeRate')->get()->groupBy('title');
 			connector: "{{ asset('connector') }}",
 			csrf: "{{ csrf_token() }}"
 		}
-	}
+	};
 	var calc = {};
 </script>
 
