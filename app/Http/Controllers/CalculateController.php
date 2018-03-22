@@ -217,6 +217,7 @@ class CalculateController
         }
 
         $vars = Variable::where('title', 'calculatorDevices')->first()->multiVariableLines;
+        $Devices = [];
 
         $i = 0;
         foreach ($vars as $var){
@@ -240,13 +241,17 @@ class CalculateController
             ['currency' => 'DASH', 'name' => 'D3 17 GH/s', 'hr' => 17, 'en' => 1.2],
             ['currency' => 'DASH', 'name' => 'D3 19.3 GH/s', 'hr' => 19.3, 'en' => 1.2],
         ];*/
+
         $allowedDevices = [];
-        foreach ($Devices as $device){
-            $allowed = explode(',', $device[3]);
-            if(!in_array($cur, $allowed)){
-                continue;
+        
+        if ($Devices){
+            foreach ($Devices as $device){
+                $allowed = explode(',', $device[3]);
+                if(!in_array($cur, $allowed)){
+                    continue;
+                }
+                $allowedDevices[] = $device;
             }
-            $allowedDevices[] = $device;
         }
 //var_dump($allowedDevices); die;
         return view('parts/calculator/calculator_form_item', ['devices' => $allowedDevices, 'cur' => $cur]);
