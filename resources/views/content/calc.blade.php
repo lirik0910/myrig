@@ -234,9 +234,7 @@
                                 <!-- График -->
 
                                 <div class="calculator-text">
-
-                                {{ $it->content }}
-
+                                {!! $it->content !!}
                                 </div>
                             </div>
                             <!--CALCULATOR TEXT END-->
