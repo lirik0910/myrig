@@ -98,5 +98,19 @@ class ComponentsTableSeeder extends Seeder
 			'link' => '/rates',
 			'icon' => 'Timeline'
 		]);
+
+		App\Model\Base\Component::create([
+			'name' => 'Create news',
+			'description' => 'Create news',
+			'link' => '/pages/create?parent_id=16&context_id=1&link=news&view_id=10',
+			'icon' => 'Textsms'
+		]);
+
+		App\Model\Base\Component::create([
+			'name' => 'Create article',
+			'description' => 'Create article',
+			'link' => '/pages/create?parent_id=17&context_id=1&link=info&view_id=10',
+			'icon' => 'Textsms'
+		]);
 	}
 }
