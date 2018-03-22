@@ -28,22 +28,24 @@
                                             @php
                                                 $vars = App\Model\Base\Variable::where('title', 'calculatorDevices')->first()->multiVariableLines;
 
-                                                $i = 0;
-                                                foreach ($vars as $var){
-                                                    foreach ($var->content as $content){
-                                                        $Devices[$i][] = $content->content;
+                                                if(count($vars) > 1){
+                                                    $i = 0;
+                                                    foreach ($vars as $var){
+                                                        foreach ($var->content as $content){
+                                                            $Devices[$i][] = $content->content;
+                                                        }
+                                                        $i++;
                                                     }
-                                                    $i++;
-                                                }
 
-                                                $cur = 'BTC';
-                                                $allowedDevices = [];
-                                                foreach ($Devices as $device){
-                                                    $allowed = explode(',', $device[3]);
-                                                    if(!in_array($cur, $allowed)){
-                                                        continue;
+                                                    $cur = 'BTC';
+                                                    $allowedDevices = [];
+                                                    foreach ($Devices as $device){
+                                                        $allowed = explode(',', $device[3]);
+                                                        if(!in_array($cur, $allowed)){
+                                                            continue;
+                                                        }
+                                                        $allowedDevices[] = $device;
                                                     }
-                                                    $allowedDevices[] = $device;
                                                 }
                                             @endphp
                                             <div class="calculator-form--item">
