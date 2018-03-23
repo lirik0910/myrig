@@ -27,8 +27,8 @@
                                         <div class="miners">
                                             @php
                                                 $vars = App\Model\Base\Variable::where('title', 'calculatorDevices')->first()->multiVariableLines;
-
-                                                if(count($vars) > 1){
+//var_dump(count($vars)); die;
+                                                if(count($vars) > 0){
                                                     $i = 0;
                                                     foreach ($vars as $var){
                                                         foreach ($var->content as $content){
@@ -47,6 +47,7 @@
                                                         $allowedDevices[] = $device;
                                                     }
                                                 }
+                                            //var_dump($allowedDevices); die;
                                             @endphp
                                             <div class="calculator-form--item">
                                                 <div class="width-60">
@@ -74,7 +75,7 @@
                                                     <div class="btn-count btn-count-plus"><i class="fa fa-plus"></i></div>
                                                     <div class="btn-count btn-count-minus"><i class="fa fa-minus"></i></div>
                                                 </span>-->
-                                                <input type="number"  step="1" class="quantity width-33 quantity-center" id="quantity" name="qty" placeholder="1" min="1" readonly>
+                                                <input type="number"  step="1" class="quantity width-33 quantity-center" id="quantity" name="qty" placeholder="1" min="1" value="1" readonly>
                                             </div>
                                             <div class="calculator-form--item cur-LTC">
                                                 <input type="number" step="0.01" class="quantity width-60 hash" name="hash" placeholder="Input hashrate"  >
@@ -101,7 +102,7 @@
                                             <label for="radio2">Local placement	<b class="tooltip">i<span class="tooltiptext">Local device placement</span></b></label>
                                         </div>
                                         <div class="calculator-form--item">
-                                            <input type="number" step="0.01" class="quantity width-60 quantity-center qw costs" name="costs"  placeholder="0.1 $"   >
+                                            <input type="number" step="0.01" class="quantity width-60 quantity-center qw costs" name="costs"  placeholder="0.1 $"  value="0.1">
                                         </div>
                                         <div class="calculator-form--item">
                                             <div class="">

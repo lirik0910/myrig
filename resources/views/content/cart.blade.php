@@ -1,11 +1,5 @@
 @extends('layouts.app')
 
-@if (count($inCart) === 0)
-	<script type="text/javascript">
-		window.location = "{{ url('shop')/*$get($settings['site.shop_page'])->link)*/ }}";
-	</script>
-
-@else
 @php
 $products = $select('\App\Model\Shop\Product')
 	->where(function ($q) use($inCart) {
@@ -89,4 +83,3 @@ foreach ($products as $item) {
 </main>
 
 @endsection
-@endif

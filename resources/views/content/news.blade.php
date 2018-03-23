@@ -42,7 +42,7 @@
                                     $introtext = substr($introtext, 0, strrpos($introtext, ' '));
                                 @endphp
 
-                                {{ $introtext . '...' }}
+                                {!! $introtext . '...' !!}
                             @else
                                 <p>{!! $article->introtext !!}</p>
                             @endif

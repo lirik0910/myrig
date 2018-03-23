@@ -353,11 +353,14 @@ class CalculateController
             $TH = 'GH';
             $P =  number_format( $P*$request->get('hash') , 6) * $days;
         }
-
+        //var_dump($request->all()); die;
         if ($placements == 2) {
+            $qty = $request->get('qty') ? $request->get('qty') : 1;
             $energy = $request->get('energy');
             $energy_costs = $request->get('costs');
-            $energy_costs = $energy_costs * 24;
+
+            //var_dump($request->get('energy'), $request->get('costs')); die;
+            $energy_costs = $energy_costs * $qty;
 
         } else {
             $qty = $request->get('qty') ? $request->get('qty') : 1;
@@ -369,6 +372,8 @@ class CalculateController
             $energy_costs = $hosting * $qty;
             $energy = 1;
         }
+
+        //var_dump($energy_costs, $energy); die;
 
         $costs['BTC'] = $energy * $energy_costs   * $days / $coursers['base']["$currency / USD"] ;
         $costs['USD'] = $energy * $energy_costs   * $days;

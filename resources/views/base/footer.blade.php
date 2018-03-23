@@ -1,12 +1,12 @@
-@php 
-$menu = $select('App\Model\Base\Page')
+@php
+$productsPage = $select('App\Model\Base\Page')->where('parent_id', 0)->where('view_id', 3)->first();
+
+$otherPages = $select('App\Model\Base\Page')
 	->where('parent_id', 0)
 	->where(function ($q) {
 		return $q
-			->where('view_id', 3)
-			->orWhere('view_id', 6)
-			->orWhere('view_id', 7)
-			->orWhere('view_id', 4);
+			->orWhere('view_id', 4)
+			->orWhere('view_id', 7);
 	})->get();
 
 $courses = $select('App\Model\Shop\ExchangeRate')->get()->groupBy('title');
@@ -68,10 +68,20 @@ $courses = $select('App\Model\Shop\ExchangeRate')->get()->groupBy('title');
 				
 				<div class="col-sm-10 col-md-7 col-lg-7 footer-menu">
 					<ul id="menu-footer-menu-1" class="">
-						@foreach ($menu as $item)
 						<li id="menu-item-144" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-144">
-							<a href="{{ url($item->link) }}" data-wpel-link="internal">
-								{{ $item->title }}
+							<a href="{{ url($productsPage->link) }}" data-wpel-link="internal">
+								{{ $productsPage->title }}
+							</a>
+						</li>
+						<li id="menu-item-144" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-144">
+							<a href="https://host.myrig.com/" data-wpel-link="internal">
+								Hosting
+							</a>
+						</li>
+						@foreach ($otherPages as $page)
+						<li id="menu-item-144" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-144">
+							<a href="{{ url($page->link) }}" data-wpel-link="internal">
+								{{ $page->title }}
 							</a>
 						</li>
 						@endforeach
