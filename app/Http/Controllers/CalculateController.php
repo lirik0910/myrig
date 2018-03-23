@@ -320,7 +320,7 @@ class CalculateController
 
         $powers = $request->get('powers');
         $placements = $request->get('radio');
-
+//var_dump($request->all()); die;
         $t = 86400;
         $R = $network['reward_block']/1000000000;
         $D = round(trim($network['difficulty']), 5)/10000000000 ;
@@ -355,13 +355,12 @@ class CalculateController
         }
         //var_dump($request->all()); die;
         if ($placements == 2) {
-            $qty = $request->get('qty') ? $request->get('qty') : 1;
+            //$qty = $request->get('qty') ? $request->get('qty') : 1;
             $energy = $request->get('energy');
             $energy_costs = $request->get('costs');
 
             //var_dump($request->get('energy'), $request->get('costs')); die;
-            $energy_costs = $energy_costs * $qty;
-
+            $energy_costs = $energy_costs * (24 *$days) * $energy;
         } else {
             $qty = $request->get('qty') ? $request->get('qty') : 1;
 
