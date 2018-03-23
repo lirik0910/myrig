@@ -48,5 +48,11 @@ class ViewVariablesTableSeeder extends Seeder
 			'variable_id' => $variable->id,
 		]);
 
+        $view = App\Model\Base\View::where('title', 'Calculator')->first();
+        $variable = App\Model\Base\Variable::where('title', 'hosting')->first();
+        App\Model\Base\ViewVariable::create([
+            'view_id' => $view->id,
+            'variable_id' => $variable->id,
+        ]);
 	}
 }

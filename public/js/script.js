@@ -631,7 +631,7 @@ $(window).on('load',function(){
 		margin:20,
         slideSpeed : 500,
         smartSpeed: 200,
-        autoplay:4000,
+        autoplay:true,
         //onInitialized:stopAuto,
 /*        dotsData:true,
         animateOut: 'fadeOut',

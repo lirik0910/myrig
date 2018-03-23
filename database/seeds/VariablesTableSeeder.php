@@ -54,5 +54,11 @@ class VariablesTableSeeder extends Seeder
 			'title' => 'calculatorDevices',
 			'description' => 'Calculator devices',
 		]);
+
+        App\Model\Base\Variable::create([
+            'type' => 'input',
+            'title' => 'hosting',
+            'description' => 'Hosting cost',
+        ]);
 	}
 }

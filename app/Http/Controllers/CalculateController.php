@@ -243,7 +243,7 @@ class CalculateController
         ];*/
 
         $allowedDevices = [];
-        
+
         if ($Devices){
             foreach ($Devices as $device){
                 $allowed = explode(',', $device[3]);
@@ -362,7 +362,9 @@ class CalculateController
         } else {
             $qty = $request->get('qty') ? $request->get('qty') : 1;
 
-            $hosting = Setting::where('title', 'calculator.hosting')->first()->value;
+            $page = Page::where('link', 'calculator')->first();
+            $hosting = $page->view->variables->where('title', 'hosting')->first()->variableContent[0]->content;
+            //var_dump($hosting); die;
 
             $energy_costs = $hosting * $qty;
             $energy = 1;

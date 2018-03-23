@@ -74,7 +74,7 @@
                                                     <div class="btn-count btn-count-plus"><i class="fa fa-plus"></i></div>
                                                     <div class="btn-count btn-count-minus"><i class="fa fa-minus"></i></div>
                                                 </span>-->
-                                                <input type="number"  step="1" class="quantity width-33 quantity-center" id="quantity" name="qty" placeholder="1 шт" min="1" readonly>
+                                                <input type="number"  step="1" class="quantity width-33 quantity-center" id="quantity" name="qty" placeholder="1" min="1" readonly>
                                             </div>
                                             <div class="calculator-form--item cur-LTC">
                                                 <input type="number" step="0.01" class="quantity width-60 hash" name="hash" placeholder="Input hashrate"  >
@@ -89,7 +89,7 @@
                                             <input type="number"  step="0.01" class="quantity width-60 energy" name="energy" placeholder="Energy consumption">
                                             <div class="width-33">
                                                 <select  disabled class="calc-select">
-                                                    <option value="hide" >кВт/ч</option>
+                                                    <option value="hide" >kWh</option>
                                                 </select>
                                             </div>
                                         </div>
