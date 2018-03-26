@@ -35,7 +35,7 @@
                         <a href="{{url($parent_link->link)}}" class="article-link" data-wpel-link="internal"><i class="article-arrow"></i>Back to list</a>
                         <h1 style="word-wrap: break-word">{{$it->title}}</h1>
                         <div class="date">@php echo date('d F', strtotime($it->created_at)) @endphp<i class="fa fa-eye"></i>@if($visits){{$visits->count}}@else 1 @endif</div>
-                        <div class="article-social">
+                        <!--<div class="article-social">
                             <div class="a2a_kit">
                                 <a class="a2a_button_facebook" data-wpel-link="internal">
                                     <i class="fa fa-facebook"></i>
@@ -50,9 +50,7 @@
                                     <i class="fa fa-send"></i>
                                 </a>
                             </div>
-							<!--<script async src="https://static.addtoany.com/menu/page.js"></script>-->
-							<!-- AddToAny END -->
-						</div>
+						</div>-->
 					</div>
 					<div class="article-content col-sm-8">
 						<div class="article-text">
