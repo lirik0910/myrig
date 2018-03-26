@@ -25,7 +25,10 @@ class ProductController extends Controller
 		 */
 		if (isset($params['search'])) {
 			$c = $c->where('id', $params['search'])
-					->orWhere('title', 'like', '%'. $params['search'] .'%');
+					->orWhere('title', 'like', '%'. $params['search'] .'%')
+					->orWhereHas('categories', function ($q) use ($params) {
+						$q->where('title', 'like', '%'. $params['search'] .'%');
+					});
 		}
 
 		/** Filter by context_id

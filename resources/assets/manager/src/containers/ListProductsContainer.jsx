@@ -327,7 +327,11 @@ class ListProductsContainer extends Component {
 								}, () => this.productsGetDataRequest());
 							}}
 							onLimitValueChanged={limit => {
-								this.setState({ limit })
+								this.setState({ completed: 0 }, () => {
+									this.setState({ limit }, () => {
+										this.setState({ completed: 100 });
+									});
+								});
 							}} />}
 					</Grid>
 				</Grid>
