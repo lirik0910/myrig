@@ -12,6 +12,12 @@ $count = 0;
 foreach ($inCart as $i) {
 	$count += (int) $i;
 }
+$client_email = session()->get('client');
+if(isset($client_email) && !empty($client_email)){
+    $user = $select('App\Model\Base\User')->where('email', $client_email)->first();
+    $client_name = $user->attributes->fname;
+}
+
 @endphp
 
 <div id="canvas">
@@ -98,6 +104,7 @@ foreach ($inCart as $i) {
 
 				<div class="user-panel">
 					<a href="{{url(env('APP_URL') . 'sso-login')}}" class="reg-f0" data-wpel-link="internal">
+                        <!--<p>@isset($client_name) Welcome, {{ $client_name }}! @endisset</p>-->
 						<img src="{{ $preview(asset('uploads/design/icons-97.svg'), 30, 30) }}" alt="login"/>
 					</a>
 

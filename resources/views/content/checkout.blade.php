@@ -121,7 +121,7 @@ foreach ($products as $item) {
 										<option value="GE">{{ __('common.country_GE') }}</option>
 										<option value="KZ">{{ __('common.country_KZ') }}</option>
 										<option value="KG">{{ __('common.country_KG') }}</option>
-										<option value="RU">{{ __('common.country_RU') }}</option>
+										<!--<option value="RU">{{ __('common.country_RU') }}</option>-->
 										<option value="TM">{{ __('common.country_TM') }}</option>
 										<option value="UZ">{{ __('common.country_UZ') }}</option>
 										<option value="UA">{{ __('common.country_UA') }}</option>
