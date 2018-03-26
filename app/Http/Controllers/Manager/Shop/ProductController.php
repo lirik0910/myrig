@@ -104,6 +104,15 @@ class ProductController extends Controller
 			return response()->json(['message' => $e->getMessage()], 422);
 		}
 
+		foreach ($all as $item) {
+
+			/** If auto price regime
+			 */
+			if ($item->auto_price === 1) {
+				$item->price = $item->calcAutoPrice();
+			}
+		}
+
 		return response()->json(['total' => $total, 'data' => $all], 200);
 	}
 

@@ -57,14 +57,14 @@ class Product extends Model
 		return $this->belongsTo(ProductStatus::class);
 	}
 
-    /**
-     * Get orders items with this product
-     * @return boolean
-     */
-    public function carts()
-    {
-        return $this->hasMany(Cart::class);
-    }
+	/**
+	 * Get orders items with this product
+	 * @return boolean
+	 */
+	public function carts()
+	{
+		return $this->hasMany(Cart::class);
+	}
 
 	/**
 	 * Get auto prices settings
@@ -76,28 +76,28 @@ class Product extends Model
 	}
 
    /**
-    * Convert product options to array
-    * @param object $options Current product options
-    * @return array
-    */
-    public static function convertOptions($options)
-    {
-        $output = [];
-        foreach ($options as $option) {
-            if ($option->name == 'image') {
-                $output['images'][] = $option;
-            }
+	* Convert product options to array
+	* @param object $options Current product options
+	* @return array
+	*/
+	public static function convertOptions($options)
+	{
+		$output = [];
+		foreach ($options as $option) {
+			if ($option->name == 'image') {
+				$output['images'][] = $option;
+			}
 
-            elseif (preg_match('/[а-яё]/iu', $option->name)) {
-                $output['characteristics'][] = $option;
-            }
+			elseif (preg_match('/[а-яё]/iu', $option->name)) {
+				$output['characteristics'][] = $option;
+			}
 
-            else {
-                $output[$option->name] = $option;
-            }
-        }
-        return $output;
-    }
+			else {
+				$output[$option->name] = $option;
+			}
+		}
+		return $output;
+	}
 
 	/**
 	 * Set images to product
@@ -305,54 +305,54 @@ class Product extends Model
 	 * @return float|string
 	 */
 	public function calcAutoPrice()
-    {
-	    $params = $this->productAutoPrices()->first();
+	{
+		$params = $this->productAutoPrices()->first();
 
-        $btc = ExchangeRate::where('title', 'BTC/USD')->first()->value;
+		$btc = ExchangeRate::where('title', 'BTC/USD')->first()->value;
 
-        if ($params->prime_price_currency == 2){
-            $prime_price = $params->prime_price * (float)$btc;
-        } else {
-            $prime_price = $params->prime_price;
-        }
+		if ($params->prime_price_currency == 2){
+			$prime_price = $params->prime_price * (float)$btc;
+		} else {
+			$prime_price = $params->prime_price;
+		}
 
-        if ($params->delivery_price_currency == 2){
-            $delivery_price = $params->delivery_price * (float)$btc;
-        } else {
-            $delivery_price = $params->delivery_price;
-        }
+		if ($params->delivery_price_currency == 2){
+			$delivery_price = $params->delivery_price * (float)$btc;
+		} else {
+			$delivery_price = $params->delivery_price;
+		}
 
-        if ($params->fes_price_currency == 2){
-            $fes_price = $params->fes_price * (float)$btc;
-        } elseif ($params->fes_price_currency == 3){
-            $fes_price = $prime_price * $params->fes_price / 100;
-        } else{
-            $fes_price = $params->fes_price;
-        }
+		if ($params->fes_price_currency == 2){
+			$fes_price = $params->fes_price * (float)$btc;
+		} elseif ($params->fes_price_currency == 3){
+			$fes_price = $prime_price * $params->fes_price / 100;
+		} else{
+			$fes_price = $params->fes_price;
+		}
 
-        if ($params->profit_price_currency == 2){
-            $profit_price = $params->profit_price * (float)$btc;
-        } elseif ($params->profit_price_currency == 3){
-            $profit_price = $prime_price * $params->profit_price / 100;
-        } else{
-            $profit_price = $params->profit_price;
-        }
+		if ($params->profit_price_currency == 2){
+			$profit_price = $params->profit_price * (float)$btc;
+		} elseif ($params->profit_price_currency == 3){
+			$profit_price = $prime_price * $params->profit_price / 100;
+		} else{
+			$profit_price = $params->profit_price;
+		}
 
-        $total = $prime_price + $delivery_price + $fes_price + $profit_price;
+		$total = $prime_price + $delivery_price + $fes_price + $profit_price;
 
-        return $total;
-    }
+		return $total;
+	}
 
-    /*
-     * Calculate price in Bitcoin
-     * @return float|string
-     */
-    public function calcBtcPrice()
-    {
-        $btc = ExchangeRate::where('title', 'BTC/USD')->first()->value;
+	/*
+	 * Calculate price in Bitcoin
+	 * @return float|string
+	 */
+	public function calcBtcPrice()
+	{
+		$btc = ExchangeRate::where('title', 'BTC/USD')->first()->value;
 
-        $price = number_format($this->price / (float)$btc, 4, '.', '');
+		$price = number_format($this->price / (float)$btc, 4, '.', '');
 
-        return $price;
-    }
+		return $price;
+	}
 }
