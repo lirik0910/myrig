@@ -112,7 +112,7 @@ class PaperTable extends Component {
 	 * Change rows limit
 	 * @param {Object} event
 	 */
-	handleChangeRowsPerPage = event => {
+	handleChangeRowsPerPage(event) {
 		this.setState({rowsPerPage: event.target.value}, () => {
 			this.props.onLimitValueChanged(event.target.value);
 		});
@@ -122,10 +122,12 @@ class PaperTable extends Component {
 	 * Change current page value
 	 * @param {Object} event
 	 */
-	handleChangePage = (event, page) => {
-		this.setState({page}, () => {
-			this.props.onStartValueChanged(page);
-		});
+	handleChangePage(event, page) {
+		if (event !== null) {
+			this.setState({ page }, () => {
+				this.props.onStartValueChanged(page);
+			});
+		}
 	}
 
 	/**
@@ -134,7 +136,7 @@ class PaperTable extends Component {
 	 * @param {Number} id
 	 */
 	handleClick = (event, id) => {
-		const { selected } = this.state;
+		const { selected, page, pagePaginStart } = this.state;
 		const selectedIndex = selected.indexOf(id);
 		let newSelected = [];
 
@@ -151,8 +153,8 @@ class PaperTable extends Component {
 			);
 		}
 
-		this.setState({selected: newSelected}, () => {
-			this.props.onRowsSelected(newSelected);
+		this.setState({ selected: newSelected }, () => {
+			this.props.onRowsSelected(newSelected, page, pagePaginStart);
 		});
 	}
 
@@ -219,9 +221,6 @@ class PaperTable extends Component {
 				}
 			}
 
-			/*console.log(s)
-			console.log(n)*/
-
 			return <TableRow
 					hover
 					onClick={event => this.handleClick(event, n.id)}
@@ -282,8 +281,6 @@ class PaperTable extends Component {
 		let pagePaginStart = page * rowsPerPage;
 		let pagePaginFinish = page * rowsPerPage + rowsPerPage;
 
-		//console.log(columns)
-
 		return <Paper className={classes.paper}>
 				<div className={classes.tableWrapper}>
 					<Table className={classes.table} style={tableStyle}>
@@ -317,8 +314,8 @@ class PaperTable extends Component {
 									nextIconButtonProps={{
 										'aria-label': 'Next Page',
 									}}
-									onChangePage={this.handleChangePage}
-									onChangeRowsPerPage={this.handleChangeRowsPerPage}/>
+									onChangePage={this.handleChangePage.bind(this)}
+									onChangeRowsPerPage={this.handleChangeRowsPerPage.bind(this)} />
 							</TableRow>
 						</TableFooter> : null}
 					</Table>

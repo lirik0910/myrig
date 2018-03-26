@@ -318,13 +318,17 @@ class ListProductsContainer extends Component {
 								disablePadding: true, 
 								label: 'Manage'
 							}]}
-							onRowsSelected={selected => this.setState({ selected })}
+							onRowsSelected={(selected, start) => {
+								this.setState({ selected, start })
+							}}
 							onStartValueChanged={start => {
 								this.setState({ 
 									start,
 								}, () => this.productsGetDataRequest());
 							}}
-							onLimitValueChanged={limit => this.setState({ limit })} />}
+							onLimitValueChanged={limit => {
+								this.setState({ limit })
+							}} />}
 					</Grid>
 				</Grid>
 
