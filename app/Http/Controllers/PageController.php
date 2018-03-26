@@ -29,6 +29,12 @@ class PageController extends Controller
 		}
 		
 		if ($page = Page::where('link', $link)->with('view')->first()) {
+		    if ($page->link == 'checkout' || $page->link == 'cart'){
+		        if(count($this->getInSessionCart()) < 1){
+                    return redirect('shop');
+                }
+            }
+
 			return view($page->view->path, [
 				'it' => $page,
 				'get' => $this->get(),

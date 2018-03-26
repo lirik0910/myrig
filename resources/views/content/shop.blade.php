@@ -35,7 +35,7 @@ $secondaryProducts = $select('\App\Model\Shop\Product')
 	<div class="container">
 		<div class="row">
 			<header>{{ __('default.optional_equipment') }}</header>
-			<div id="relatedSlider" class="owl-carousel owl-theme">
+			<div id="relatedSlider" class="related-slider owl-carousel owl-theme">
 				@foreach ($secondaryProducts as $item)
 					@if (isset($item->page))
 						@include('parts.shop.slideItem', $item)
@@ -45,6 +45,5 @@ $secondaryProducts = $select('\App\Model\Shop\Product')
 		</div>
 	</div>
 </section>
-
 </main>
 @endsection

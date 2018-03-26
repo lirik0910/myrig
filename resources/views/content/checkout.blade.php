@@ -259,8 +259,8 @@ foreach ($products as $item) {
 											</span>
 										</div>
 
-										<div class="table-cell"></div>
-										<div class="table-cell"></div>
+										<div class="table-cell" style="z-index: -1"></div>
+										<div class="table-cell" style="z-index: -1"></div>
 									</div>
 
 									<div class="table-row">

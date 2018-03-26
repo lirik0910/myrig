@@ -148,10 +148,12 @@ class OrderController extends Controller
 			$order->paymentType;
 			$order->orderDeliveries->delivery;
 
-			$order->btc_price = ($order->cost * $point) / 1;
+			//$order->btc_price = ($order->cost * $point) / 1;
 
 			foreach ($order->carts as $cart) {
 				$cart->product->images;
+				$order->btc_price += $cart->btcCost;
+
 			}
 
 			foreach ($order->logs as $log) {

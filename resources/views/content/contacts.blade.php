@@ -23,21 +23,18 @@
 							<div class="country">{{$var['country']}}</div>
 							<div class="service">{{$var['serviceType']}}</div>
 							<div class="add-info"></div>
-							@isset($var['address'])
+							@if(!empty($var['address']))
 								<div class="address">{{$var['address']}}</div>
-							@endisset
-							@isset($var['phone'])
-								<div class="phones">
-									@isset($var['phone'])
-										<a href="tel:{{$var['phone']}}" data-wpel-link="internal">{{$var['phone']}}</a>
-									@endisset
-									
-									@isset($var['telegram'])
-										<br>Telegram channel<br />
-										<a href="http://http://t.me/myrigservice" style="color: #2ba1df;" data-wpel-link="external" rel="nofollow external noopener noreferrer">{{$var['telegram']}}</a>
-									@endisset
-								</div>
-							@endisset
+							@endif
+							<div class="phones">
+							    @if(!empty($var['phone']))
+									<a href="tel:{{$var['phone']}}" data-wpel-link="internal">{{$var['phone']}}</a>
+								@endif
+								@if(!empty($var['telegram']))
+									<br>Telegram channel<br />
+									<a href="http://http://t.me/myrigservice" style="color: #2ba1df;" data-wpel-link="external" rel="nofollow external noopener noreferrer">{{$var['telegram']}}</a>
+								@endif
+							</div>
 							<p><!--:--></p>
 						</div>
 					@endforeach

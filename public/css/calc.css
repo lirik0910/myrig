@@ -40,7 +40,7 @@
 	right: 11px;
 	width: 14px;
 	height: 7px;
-	background: url(../img/sprite-calculator.png) no-repeat;
+	background: url(../uploads/design/sprite-calculator.png) no-repeat;
 	background-position: 0px -80px;
 }
 
@@ -249,28 +249,28 @@ padding-right: 12px;
 }
 
 .label-1:before {
-	background: url(/images/bitcoin.svg) no-repeat center center;
+	background: url(../uploads/design/bitcoin.svg) no-repeat center center;
 	background-size: cover;
 }
 .label-11:before {
-	background: url(/images/bitcoin_cash.svg) no-repeat center center;
+	background: url(../uploads/design/bitcoin_cash.svg) no-repeat center center;
     background-size: cover;
 }
 
 .label-2:before {
-	background: url(/images/litecoin.svg) no-repeat center center;
+	background: url(../uploads/design/litecoin.svg) no-repeat center center;
 	-webkit-background-size: cover;
 	background-size: cover;
 }
 
 .label-3:before {
-	background: url(/images/dash-3.svg) no-repeat center center;
+	background: url(../uploads/design/dash-3.svg) no-repeat center center;
 	-webkit-background-size: cover;
 	background-size: cover;
 }
 
 .label-4:before {
-	background: url(/images/ethereum.svg) no-repeat top center;
+	background: url(../uploads/design/ethereum.svg) no-repeat top center;
     background-size: 239%;
 }
 
