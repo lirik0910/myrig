@@ -8,8 +8,11 @@ jQuery(document).ready(function ($) {
 	var width = $(window).width(),
 		cont = $('.container').outerWidth();
 
-	var margin = (width - cont) / 2,
-		wM = cont * 33.333333 / 100 + margin;
+	var margin = (width - cont) / 2;
+    if($('#mapField').attr('data-lat')){
+        margin = margin - 21;
+    }
+	wM = cont * 33.333333 / 100 + margin;
 
 	if (width > 767) {
 		$('.main-back').css('left', wM +'px');
@@ -327,7 +330,8 @@ jQuery(document).ready(function ($) {
 				$('.slider').height(tarh);
 				//$('.main-slide').height(tarh).css('lineHeight', tarh + 'px');
 			}
-			else{              
+			else{
+
 			}
 		}
 		else{
@@ -337,7 +341,7 @@ jQuery(document).ready(function ($) {
 			}
 		}
 
-	})
+	});
 
 		$('.navbar-toggle').on('click', function () {
 			var width=$(window).width();
@@ -788,10 +792,7 @@ $(document).on('change', '.cart-form  input.qty', function(e) {
 		if ($(this).attr('data-lat').length)
 		initialize() 
 	})
-	
-	
-	
-	
+
 	 
 	function initialize() {
 		var map;

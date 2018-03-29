@@ -5,7 +5,7 @@
 
 <main class="contact-map">
 
-<div class="main-back">
+<div class="main-back" style="left: 567px">
 	<div id="mapField" data-img="https://myrig.com.ua/wp-content/themes/bitmain/img/contact_logo.png?v=1" data-lat="39.768294" data-lng="-104.90209679999998"></div>
 </div>
 @php
