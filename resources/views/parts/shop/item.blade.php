@@ -89,12 +89,16 @@
 						<i class="fa fa-minus"></i>
 					</div>
 				</span>
-
 				@if (isset($inCart[$item->id]))
 					<a data-success="{{ __('default.added') }}" data-add="{{ __('default.to_cart') }}" rel="nofollow" href="#" data-id="{{ $item->id }}" class="btn-default intocarts">
 						<span>{{ __('default.added') }}</span>
 						<i class="fa fa-spin fa-refresh" style="display: none"></i>
 					</a>
+				@elseif ($item->productStatus->title === 'not-available')
+					<p class="btn-default report-availability">
+						<span>Report availability</span>
+						<i class="fa fa-spin fa-refresh" style="display: none"></i>
+					</p>
 				@else
 					<a data-success="{{ __('default.added') }}" data-add="{{ __('default.to_cart') }}" rel="nofollow" href="#" data-id="{{ $item->id }}" class="btn-default addtocarts">
 						<span>{{ __('default.to_cart') }}</span>
