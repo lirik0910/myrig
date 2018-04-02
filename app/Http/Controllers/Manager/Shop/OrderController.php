@@ -239,11 +239,11 @@ class OrderController extends Controller
                                 logger($e->getMessage());
                                 return response()->json(['message' => $e->getMessage()], 422);
                             }
-                        } else{
-			                $cart->delete();
-			                //Cart::where('order_id', $id)->where('product_id', $cart->product_id)->delete();
                         }
                     }
+                } else{
+                    $cart->delete();
+                    //Cart::where('order_id', $id)->where('product_id', $cart->product_id)->delete();
                 }
             }
 		}
