@@ -152,7 +152,7 @@ class OrderController extends Controller
 
 			foreach ($order->carts as $cart) {
 				$cart->product->images;
-				$order->btc_price += $cart->btcCost;
+				$order->btc_price += $cart->btcCost * $cart->count;
 			}
 
 			foreach ($order->logs as $log) {
