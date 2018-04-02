@@ -78,9 +78,9 @@ class PaperPages extends Component {
 		let { deleteItem } = this.state;
 
 		App.api({
-			name: 'one',
+			name: 'trash',
 			model: 'page',
-			type: 'DELETE',
+			type: 'PUT',
 			resource: deleteItem.id,
 			success: (r) => {
 				r = JSON.parse(r.response);

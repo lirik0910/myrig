@@ -92,7 +92,7 @@ class DialogOrder extends Component {
 		let { order, tab, open, completed } = this.state;
 		let { classes } = this.props;
 
-		console.log(this.props.order.logs)
+		/*console.log('order.carts', order.carts)*/
 
 		return <Dialog
 				open={open}

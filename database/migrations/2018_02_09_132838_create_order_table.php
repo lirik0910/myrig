@@ -52,6 +52,10 @@ class CreateOrderTable extends Migration
 				->nullable(false)
 				->comment('Order context ID');
 
+			$table->tinyInteger('delete')
+				->default(0)
+				->comment('If order in trash');
+
 			$table->timestamps();
 		});
 	}

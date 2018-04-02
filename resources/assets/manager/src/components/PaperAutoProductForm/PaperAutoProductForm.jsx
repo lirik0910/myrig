@@ -88,6 +88,23 @@ class PaperAutoProductForm extends Component {
 					}} />
 
 				<InputPrice
+					name="warranty"
+					title="Warranty"
+					inputID="warranty-field"
+					currencies={currencies}
+					disabled={activeDefaultValue}
+					defaultValue={data.warranty_price}
+					currencyID={data.warranty_price_currency}
+					onFieldInputed={value => {
+						data.warranty_price = parseFloat(value);
+						this.props.onDataUpdated(data);
+					}}
+					onCurencySelected={value => {
+						data.warranty_price_currency = value.id;
+						this.props.onDataUpdated(data);
+					}} />
+
+				<InputPrice
 					name="prime-cost"
 					title="Prime cost"
 					currencies={currencies}

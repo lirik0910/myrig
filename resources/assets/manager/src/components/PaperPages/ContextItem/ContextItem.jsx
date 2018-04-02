@@ -158,7 +158,10 @@ class ContextItem extends Component {
 								<ListItemIcon>
 									<Description />
 								</ListItemIcon>
-								<ListItemText inset primary={item.title} />
+								<ListItemText 
+									inset 
+									primary={item.title}
+									className={item.delete === 1 && 'in-trash'} />
 							</ListItem>
 						</Link>
 					</Grid>

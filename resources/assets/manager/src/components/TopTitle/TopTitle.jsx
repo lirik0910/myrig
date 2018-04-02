@@ -43,6 +43,8 @@ class TopTitle extends Component {
 		addButtonDisplay: false,
 		saveButtonTitle: 'Save',
 		saveButtonDisplay: true,
+		trashButtonDisplay: false,
+		trashButtonTitle: 'Empty trash',
 		duplicateButtonTitle: 'Duplicate',
 		duplicateButtonDisplay: false,
 		deleteButtonTitle: 'Delete',
@@ -50,6 +52,7 @@ class TopTitle extends Component {
 		classes: PropTypes.object.isRequired,
 		onAddButtonClicked: () => {},
 		onSaveButtonClicked: () => {},
+		onTrashButtonClicked: () => {},
 		onDeleteButtonClicked: () => {},
 		onDuplicateButtonClicked: () => {},
 	}
@@ -69,7 +72,9 @@ class TopTitle extends Component {
 			duplicateButtonTitle,
 			duplicateButtonDisplay,
 			deleteButtonTitle,
-			deleteButtonDisplay
+			deleteButtonDisplay,
+			trashButtonDisplay,
+			trashButtonTitle
 		} = this.props;
 
 		return <Grid container spacing={24} className={classes.root}>
@@ -112,6 +117,15 @@ class TopTitle extends Component {
 						color="secondary">
 							<Delete className={classes.leftIcon} />
 							{deleteButtonTitle}
+					</Button>}
+
+					{trashButtonDisplay && <Button 
+						onClick={e => this.props.onTrashButtonClicked()}
+						className={classes.button} 
+						variant="raised"
+						color="secondary">
+							<Delete className={classes.leftIcon} />
+							{trashButtonTitle}
 					</Button>}
 				</Grid>
 			</Grid>

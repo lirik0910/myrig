@@ -15,7 +15,10 @@ foreach ($inCart as $i) {
 $client_email = session()->get('client');
 if(isset($client_email) && !empty($client_email)){
     $user = $select('App\Model\Base\User')->where('email', $client_email)->first();
-    $client_name = $user->attributes->fname;
+
+    if($user){
+        $client_name = $user->attributes->fname;
+    }
 }
 
 @endphp
@@ -103,9 +106,9 @@ if(isset($client_email) && !empty($client_email)){
 				</div>
 
 				<div class="user-panel">
-					<a href="{{url(env('APP_URL') . 'sso-login')}}" class="reg-f0" data-wpel-link="internal">
-                        <!--<p>@isset($client_name) Welcome, {{ $client_name }}! @endisset</p>-->
-						<img src="{{ $preview(asset('uploads/design/icons-97.svg'), 30, 30) }}" alt="login"/>
+					<a href="{{url(env('APP_URL') . 'sso-login')}}" class="profile-link reg-f0" data-wpel-link="internal">
+                        @isset($client_name)<p class=""> Welcome, {{ $client_name }}! </p>@endisset
+						<img src="{{ $preview(asset('uploads/design/icons-97.svg'), 30, 30) }}" alt="login" style=""/>
 					</a>
 
 					<a href="{{ url($cart->link) }}" data-wpel-link="internal">

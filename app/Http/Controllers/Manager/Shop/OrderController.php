@@ -300,4 +300,55 @@ class OrderController extends Controller
 
 		return response()->json(['message' => true], 200);
 	}
+
+	/**
+	 * Send order to trash
+	 * @param int $id
+	 * @return \Illuminate\Http\JsonResponse
+	 */
+	public function trash(int $id) : JsonResponse
+	{
+		/** Try get model
+		 */
+		try {
+			$model = Order::find($id);
+		}
+		catch (\Exception $e) {
+			logger($e->getMessage());
+			return response()->json(['message' => $e->getMessage()], 422);
+		}
+
+		if ($model->delete === 1) {
+			$model->delete = 0;
+		}
+		else {
+			$model->delete = 1;
+		}
+
+		$model->save();
+		return response()->json(['message' => true], 200);
+	}
+
+	/**
+	 * Empty trash
+	 * @return \Illuminate\Http\JsonResponse
+	 */
+	public function emptyTrash() : JsonResponse
+	{
+		/** Get collection
+		 */
+		try {
+			$all = Order::where('delete', 1)->get();
+		}
+		catch (\Exception $e) {
+			logger($e->getMessage());
+			return response()->json(['message' => $e->getMessage()], 422);
+		}
+
+		foreach ($all as $item) {
+			$item->delete();
+		}
+
+		return response()->json(['message' => true], 200);
+	}
 }

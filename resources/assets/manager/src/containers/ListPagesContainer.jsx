@@ -18,6 +18,7 @@ import Header from '../components/Header/Header.jsx';
 import { LinearProgress } from 'material-ui/Progress';
 import TopTitle from '../components/TopTitle/TopTitle.jsx';
 import PaperPages from '../components/PaperPages/PaperPages.jsx';
+import DialogDelete from '../components/DialogDelete/DialogDelete.jsx';
 
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
@@ -40,7 +41,39 @@ class ListPagesContainer extends Component {
 
 	state = {
 		a: '',
+		click: false,
+		trash: false,
 		completed: 100
+	}
+
+	emptyTrashRequest() {
+		if (this.state.completed === 100) {
+			this.setState({ completed: 0 }, () => {
+				App.api({
+					name: 'trash',
+					model: 'page',
+					type: 'DELETE',
+					success: (r) => {
+						r = JSON.parse(r.response);
+						if (r) {
+							this.setState({ 
+								trash: false,
+								completed: 100,
+							});
+						}
+					},
+					error: (r) => {
+						r = JSON.parse(r.response);
+						if (r.message) {
+							this.setState({ 
+								trash: false,
+								completed: 100,
+							});
+						}
+					}
+				});
+			});
+		}
 	}
 
 	/**
@@ -73,17 +106,27 @@ class ListPagesContainer extends Component {
 								el.click();
 							}
 						});
-					}} />
+					}}
+					trashButtonDisplay={true}
+					onTrashButtonClicked={() => this.setState({ trash: true })} />
 
 				<Grid container spacing={24} className={classes.root}>
 					<Grid item xs={12}>
-						<PaperPages />
+						{this.state.completed === 100 && <PaperPages />}
 					</Grid>
 				</Grid>
 
 				<Link to={a}
 					id="create-page"
 					style={{display: 'none'}}></Link>
+
+				{this.state.trash === true && <DialogDelete
+					defaultValue={this.state.trash}
+					onDialogClosed={() => this.setState({
+						trash: false,
+					})}
+					content="Are you sure to empty trash?"
+					onDialogConfirmed={() => this.emptyTrashRequest()} />}
 			</div>
 	}
 }

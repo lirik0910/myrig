@@ -379,4 +379,82 @@ class ProductController extends Controller
 		
 		return response()->json(['message' => true], 200);
 	}
+
+	/**
+	 * Send product to trash
+	 * @param int $id
+	 * @return \Illuminate\Http\JsonResponse
+	 */
+	public function trash(int $id) : JsonResponse
+	{
+		/** Try get model
+		 */
+		try {
+			$model = Product::find($id);
+		}
+		catch (\Exception $e) {
+			logger($e->getMessage());
+			return response()->json(['message' => $e->getMessage()], 422);
+		}
+
+		if ($model->delete === 1) {
+			$model->delete = 0;
+		}
+		else {
+			$model->delete = 1;	
+		}
+
+		$model->save();
+		return response()->json(['message' => true], 200);
+	}
+
+	/**
+	 * Send many products to trash
+	 * @return \Illuminate\Http\JsonResponse
+	 */
+	public function trashMany(Request $request) : JsonResponse
+	{
+		foreach ($request->input() as $item) {
+			/** Try to get model
+			 */
+			try {
+				$model = Product::find($item);
+			}
+			catch (\Exception $e) {
+				logger($e->getMessage());
+				return response()->json(['message' => $e->getMessage()], 422);
+			}
+
+			if ($model->delete === 1) {
+				$model->delete = 0;
+			}
+			else {
+				$model->delete = 1;
+			}
+			$model->save();
+		}
+		return response()->json(['message' => true], 200);
+	}
+
+	/**
+	 * Empty product trash
+	 * @return \Illuminate\Http\JsonResponse
+	 */
+	public function emptyTrash() : JsonResponse
+	{
+		/** Try get collection
+		 */
+		try {
+			$all = Product::where('delete', 1)->get();
+		}
+		catch (\Exception $e) {
+			logger($e->getMessage());
+			return response()->json(['message' => $e->getMessage()], 422);
+		}
+
+		foreach ($all as $item) {
+			$item->delete();
+		}
+		return response()->json(['message' => true], 200);
+	}
 }

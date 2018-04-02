@@ -140,7 +140,7 @@ foreach ($products as $item) {
 									<input type="text" class="input-text form-control" name="address" placeholder="{{ __('default.address_label') }}" value="@isset($user->attributes->address) {{$user->attributes->address}} @endisset" autocomplete="address-line1" required />
 								</p>
 
-								<p class="form-row form-row-wide address-field form-group validate-required" data-priority="70">
+								<p class="form-row form-row-wide address-field form-group validate-required" data-priority="70" style="width: 47%; float:  left; display:  inline-block;">
 									<label for="billing_city" class="">
 										{{ __('default.city_label') }}
 										<abbr class="required" title="{{ __('default.required') }}">*</abbr></label>
@@ -148,7 +148,7 @@ foreach ($products as $item) {
 									<input type="text" class="input-text form-control" name="city" placeholder="{{ __('default.city_label') }}" autocomplete="address-level2" required />
 								</p>
 
-								<p class="form-row form-row-full validate-required validate-state" data-priority="80">
+								<p class="form-row form-row-full validate-required validate-state" data-priority="80" style="width: 47%; float:  right; display:  inline-block;">
 									<label for="billing_state" class="">
 										{{ __('default.region_label') }}
 										<abbr class="required" title="{{ __('default.required') }}">*</abbr></label>
@@ -156,7 +156,7 @@ foreach ($products as $item) {
 									<input type="text" class="input-text form-control" placeholder="{{ __('default.region_label') }}" name="state" autocomplete="address-level1" required />
 								</p>
 
-								<p class="form-row form-row-first form-group validate-required validate-phone" id="billing_phone_field" data-priority="100" style="width: 100%; overflow: hidden;">
+								<p class="form-row form-row-first form-group validate-required validate-phone" id="billing_phone_field" data-priority="100" style="width: 47%; float:  left; display:  inline-block; overflow: hidden;">
 									<label for="billing_phone" class="">
 										{{ __('default.phone_label') }}
 										<abbr class="required" title="{{ __('default.required') }}">*</abbr></label>
@@ -164,7 +164,7 @@ foreach ($products as $item) {
 									<input type="tel" class="input-text form-control" name="phone" id="billing_phone" placeholder="Phone {{ __('default.phone_input') }}" value="@isset($user->attributes->phone) {{$user->attributes->phone}} @endisset" autocomplete="tel" required />
 								</p>
 
-								<p class="form-row form-row-last form-group validate-required validate-email" id="billing_email_field" data-priority="110">
+								<p class="form-row form-row-last form-group validate-required validate-email" id="billing_email_field" data-priority="110" style="width: 47%; float:  right; display:  inline-block;"">
 									<label for="billing_email" class="">
 										{{ __('default.email_label') }}
 										<abbr class="required" title="{{ __('default.required') }}">*</abbr></label>

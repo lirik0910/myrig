@@ -53,6 +53,7 @@ class ListProductsContainer extends Component {
 		contextID: 0,
 		searchText: '',
 		deleteProductId: 0,
+		trash: false,
 		resultDialog: false,
 		deleteDialog: false,
 		resultDialogTitle: '',
@@ -65,6 +66,44 @@ class ListProductsContainer extends Component {
 	 */
 	componentWillMount() {
 		this.productsGetDataRequest();
+	}
+
+	emptyTrashRequest() {
+		if (this.state.completed === 100) {
+			this.setState({ completed: 0 }, () => {
+				App.api({
+					name: 'trash',
+					model: 'product',
+					type: 'DELETE',
+					success: (r) => {
+						r = JSON.parse(r.response);
+						if (r) {
+							this.setState({ 
+								trash: false,
+								completed: 100,
+								resultDialog: true,
+								deleteDialog: false,
+								resultDialogTitle: 'Success',
+								resultDialogMessage: 'The request was successful'
+							}, () => this.productsGetDataRequest());
+						}
+					},
+					error: (r) => {
+						r = JSON.parse(r.response);
+						if (r.message) {
+							this.setState({ 
+								trash: false,
+								completed: 100,
+								resultDialog: true,
+								deleteDialog: false,
+								resultDialogTitle: 'Error',
+								resultDialogMessage: r.message
+							});
+						}
+					}
+				});
+			});
+		}
 	}
 
 	/**
@@ -102,6 +141,15 @@ class ListProductsContainer extends Component {
 					r = JSON.parse(r.response);
 					if (r) {
 						for (var i in r.data) {
+							r.data[i]['title'] = <span 
+								style={{ 
+									color: r.data[i].delete === 1 ?
+										'red' :
+										'#000000',
+									textDecoration: r.data[i].delete === 1 ?
+										'line-through' :
+										'none'
+								}}>{r.data[i]['title']}</span>;
 							r.data[i]['img'] = typeof r.data[i].images[0] === 'undefined' ?
 								'' :
 								<img src={App.uploads() + r.data[i].images[0].name}
@@ -151,23 +199,21 @@ class ListProductsContainer extends Component {
 		}, () => {
 			App.api({
 				name: selected.length > 0 ? 
-					'many' : 
-					'one',
-				type: 'DELETE',
+					'trashMany' : 
+					'trash',
+				type: 'PUT',
 				model: 'product',
-				resource: selected.length === 0 && deleteProductId,
+				resource: deleteProductId > 0 && deleteProductId,
 				data: selected.length > 0 && selected,
 				success: (r) => {
 					r = JSON.parse(r.response);
 					if (r) {
 						this.setState({ 
+							trash: false,
 							selected: [],
 							completed: 100,
 							deleteProductId: 0,
-							resultDialog: true,
 							deleteDialog: false,
-							resultDialogTitle: 'Success',
-							resultDialogMessage: 'The request was successful'
 						}, () => this.productsGetDataRequest());
 					}
 				},
@@ -175,6 +221,7 @@ class ListProductsContainer extends Component {
 					r = JSON.parse(r.response);
 					if (r.message) {
 						this.setState({ 
+							trash: false,
 							selected: [],
 							completed: 100,
 							deleteProductId: 0,
@@ -242,7 +289,9 @@ class ListProductsContainer extends Component {
 						this.setState({
 							deleteDialog: true
 						});
-					}} />
+					}}
+					trashButtonDisplay={true}
+					onTrashButtonClicked={() => this.setState({ trash: true })} />
 
 				<Grid container spacing={24} className={classes.root}>
 					<Grid item xs={12}>
@@ -270,6 +319,7 @@ class ListProductsContainer extends Component {
 							limit={limit}
 							total={total}
 							except={[
+								'delete',
 								'icon',
 								'active', 
 								'page_id',
@@ -351,6 +401,14 @@ class ListProductsContainer extends Component {
 						deleteProductId: 0
 					})}
 					onDialogConfirmed={() => this.productDeleteRequest()} />}
+
+				{this.state.trash === true && <DialogDelete
+					defaultValue={this.state.trash}
+					onDialogClosed={() => this.setState({
+						trash: false,
+					})}
+					content="Are you sure to empty trash?"
+					onDialogConfirmed={() => this.emptyTrashRequest()} />}
 
 				<Link to={a}
 					id="change-page"

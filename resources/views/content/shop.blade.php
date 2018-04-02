@@ -46,4 +46,5 @@ $secondaryProducts = $select('\App\Model\Shop\Product')
 	</div>
 </section>
 </main>
+@include('parts.shop.report-availability_form')
 @endsection

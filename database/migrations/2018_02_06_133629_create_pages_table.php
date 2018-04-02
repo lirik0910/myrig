@@ -52,6 +52,10 @@ class CreatePagesTable extends Migration
 				->nullable(true)
 				->comment('Page content');
 
+			$table->tinyInteger('delete')
+				->default(0)
+				->comment('If page in trash');
+
 			$table->integer('createdby_id', false, true)
 				->default(0)
 				->comment('User ID who created current page');

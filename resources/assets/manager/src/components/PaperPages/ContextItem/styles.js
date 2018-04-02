@@ -12,6 +12,12 @@ const styles = theme => ({
 		fontSize: theme.typography.pxToRem(20),
 		lineHeight: 2.5,
 	},
+	'@global': {
+		'.in-trash h3': {
+			color: 'red',
+			textDecoration: 'line-through'
+		}
+	}
 });
 
 export default styles;
