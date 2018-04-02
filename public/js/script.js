@@ -643,7 +643,7 @@ $(window).on('load',function(){
         animateOut: 'fadeOut',
         animateIn: 'fadeIn',*/
 
-		slideBy: 1, //alternatively you can slide by 1, this way the active slide will stick to the first item in the second carousel
+		slideBy: 3, //alternatively you can slide by 1, this way the active slide will stick to the first item in the second carousel
 		responsiveClass:true,
 		responsive:{
 			0:{
