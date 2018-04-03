@@ -49,6 +49,7 @@ class ListProductsContainer extends Component {
 		start: 0,
 		total: 0,
 		selected: [],
+		deleteID: null,
 		completed: 100,
 		contextID: 0,
 		searchText: '',
@@ -114,6 +115,7 @@ class ListProductsContainer extends Component {
 		let { 
 			start, 
 			limit, 
+			deleteID,
 			contextID,
 			searchText, 
 		} = this.state;
@@ -130,6 +132,10 @@ class ListProductsContainer extends Component {
 
 			if (contextID && contextID > 0) {
 				data['context_id'] = contextID;
+			}
+
+			if (deleteID !== null) {
+				data['delete_type'] = String(deleteID);
 			}
 
 			App.api({
@@ -296,6 +302,12 @@ class ListProductsContainer extends Component {
 				<Grid container spacing={24} className={classes.root}>
 					<Grid item xs={12}>
 						<PaperToolBar
+							deleteFilterShow
+							onDeleteSelected={deleteID => {
+								this.setState({ deleteID }, () => {
+									this.productsGetDataRequest();
+								});
+							}}
 							contextDefaultValue={contextID}
 							onContextSelected={contextID => {
 								this.setState({ contextID }, () => {

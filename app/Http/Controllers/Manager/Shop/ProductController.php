@@ -43,6 +43,10 @@ class ProductController extends Controller
 			$c = $c->where('category_id', $params['category_id']);
 		}
 
+		if (isset($params['delete_type'])) {
+			$c = $c->where('delete', $params['delete_type']);
+		}
+
 		if (isset($params['start']) && isset($params['limit'])) {
 			$c = $c->forPage($params['start'], $params['limit']);
 		}
