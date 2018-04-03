@@ -66,7 +66,7 @@ class OrderController extends Controller
 		}
 
 		if (isset($params['delete_type'])) {
-			$c = $c->where('delete_type', $params['delete_type']);
+			$c = $c->where('delete', $params['delete_type']);
 		}
 
 		/** Filter by created_at from
