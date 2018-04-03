@@ -65,6 +65,10 @@ class OrderController extends Controller
 			$c = $c->where('payment_type_id', $params['payment_type_id']);
 		}
 
+		if (isset($params['delete_type'])) {
+			$c = $c->where('delete', $params['delete_type']);
+		}
+
 		/** Filter by created_at from
 		 */
 		if (isset($params['created_at_from'])) {

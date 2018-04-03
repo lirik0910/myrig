@@ -60,6 +60,7 @@ class ListOrdersContainer extends Component {
 		deleteOrderId: 0,
 		editOrder: {},
 		trash: false,
+		deleteID: null,
 		editDialog: false,
 		deleteDialog: false,
 		resultDialog: false,
@@ -88,6 +89,7 @@ class ListOrdersContainer extends Component {
 			contextID, 
 			searchText, 
 			statusID, 
+			deleteID,
 			paymentID,
 			deliveryID } = this.state;
 
@@ -137,6 +139,10 @@ class ListOrdersContainer extends Component {
 			 */
 			if (dateTo) {
 				data['created_at_to'] = dateTo;
+			}
+
+			if (deleteID !== null) {
+				data['delete_type'] = String(deleteID);
 			}
 
 			App.api({
@@ -439,6 +445,7 @@ class ListOrdersContainer extends Component {
 							deliveryShow
 							orderActionShow
 							dateCreatedShow
+							deleteFilterShow
 							statusTitle={'Filter by status'}
 							contextTitle={'Filter by context'}
 							paymentTitle={'Filter by payment type'}
@@ -446,6 +453,11 @@ class ListOrdersContainer extends Component {
 							dateFromTitle={'Filter by order create date from'}
 							dateToTitle={'to date'}
 							contextDefaultValue={contextID}
+							onDeleteSelected={deleteID => {
+								this.setState({ deleteID }, () => {
+									this.ordersGetDataRequest();
+								});
+							}}
 							onContextSelected={contextID => {
 								this.setState({ contextID }, () => {
 									this.ordersGetDataRequest();
