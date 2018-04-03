@@ -66,6 +66,15 @@ class Product extends Model
 		return $this->hasMany(Cart::class);
 	}
 
+    /**
+     * Bind with reports model
+     * @return boolean
+     */
+    public function reports()
+    {
+        return $this->belongsToMany(Reports::class, 'report_products');
+    }
+
 	/**
 	 * Get auto prices settings
 	 * @return boolean

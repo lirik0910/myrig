@@ -87,4 +87,28 @@ class ProductController extends Controller
 
         return (int)$P;
     }
+
+    /*
+     * Get all products for report availability
+     * @return string
+     */
+    public function all(){
+        try {
+            $all = Product::where('active', 1)->get();
+        }
+        catch (\Exception $e) {
+            logger($e->getMessage());
+            return response()->json(['message' => $e->getMessage()], 422);
+        }
+
+        $output = [];
+        $i = 0;
+        foreach ($all as $item){
+            $output[$i]['id'] = $item->id;
+            $output[$i]['title'] = $item->title;
+            $i++;
+        }
+
+        return response()->json($output, 200);
+    }
 }

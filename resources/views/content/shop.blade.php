@@ -4,6 +4,7 @@
 $mainProducts = $select('\App\Model\Shop\Product')
 	->whereHas('categories', function ($q) {
 		$q->where('title', 'Base');
+		$q->where('delete', 0);
 	})
 	->with('page', 'options', 'images')
 	->get();
@@ -11,6 +12,7 @@ $mainProducts = $select('\App\Model\Shop\Product')
 $secondaryProducts = $select('\App\Model\Shop\Product')
 	->whereHas('categories', function ($q) {
 		$q->where('title', 'Secondary');
+		$q->where('delete', 0);
 	})
 	->with('page', 'options', 'images')
 	->get();

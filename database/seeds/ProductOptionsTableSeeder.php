@@ -154,7 +154,7 @@ class ProductOptionsTableSeeder extends Seeder
             'product_id' => $product->id,
             'type_id' => $currency->id,
             'name' => 'Currency',
-            'value' => 'BCH',
+            'value' => 'BTC',
         ]);
 
 		$product = App\Model\Shop\Product::whereHas('page', function ($q) {
