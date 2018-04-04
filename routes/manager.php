@@ -147,7 +147,7 @@ Route::prefix('api')
 			Route::get('/{id}', 'Manager\Base\PageController@get')->middleware(PageOneMiddleware::class);
 			Route::post('/', 'Manager\Base\PageController@create')->middleware(PageCreateMiddleware::class);
 			Route::put('/{id}', 'Manager\Base\PageController@update')->middleware(PageEditMiddleware::class);
-			Route::put('/{id}', 'Manager\Base\PageController@trash')->middleware(PageDeleteMiddleware::class);
+			Route::put('/trash/{id}', 'Manager\Base\PageController@trash')->middleware(PageDeleteMiddleware::class);
 			Route::delete('/{id}', 'Manager\Base\PageController@delete')->middleware(PageDeleteMiddleware::class);
 			Route::delete('/', 'Manager\Base\PageController@emptyTrash')->middleware(PageDeleteMiddleware::class);
 		});

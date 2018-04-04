@@ -15,6 +15,7 @@ import Button from 'material-ui/Button';
 import Add from 'material-ui-icons/Add';
 import Edit from 'material-ui-icons/Edit';
 import Delete from 'material-ui-icons/Delete';
+import Replay from 'material-ui-icons/Replay';
 import ExpandLess from 'material-ui-icons/ExpandLess';
 import ExpandMore from 'material-ui-icons/ExpandMore';
 
@@ -84,14 +85,23 @@ class ControlOptions extends Component {
 					<Edit />
 				</Button>}
 				
-				{deleteButton && <Button 
-					size="small"
-					className={classes.control}
-					title={'Delete'}
-					onClick={e => this.props.onDeleteButtonClicked(item)}>
-					
-					<Delete />
-				</Button>}
+				{deleteButton && 
+					(typeof this.props.item !== 'undefined' && this.props.item.delete === 1) ? <Button 
+						size="small"
+						className={classes.control}
+						title={'Delete'}
+						onClick={e => this.props.onDeleteButtonClicked(item)}>
+						
+						<Replay />
+					</Button> :
+					<Button 
+						size="small"
+						className={classes.control}
+						title={'Delete'}
+						onClick={e => this.props.onDeleteButtonClicked(item)}>
+						
+						<Delete />
+					</Button>}
 			</div>
 	}
 }

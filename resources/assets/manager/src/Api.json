@@ -44,7 +44,7 @@
 		},
 		"PUT": {
 			"update": "{id}",
-			"trash": "{id}"
+			"trash": "trash/{id}"
 		},
 		"DELETE": {
 			"one": "{id}",
