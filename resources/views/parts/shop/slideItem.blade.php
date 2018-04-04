@@ -56,8 +56,8 @@
 				<i class="fa fa-spin fa-refresh" style="display: none"></i>
 			</p>
 		@elseif ($item->productStatus->title === 'not-available')
-			<p class="btn-default disabled">
-				<span>{{ __('default.added') }}</span>
+			<p class="btn-default">
+				<a class="btn-default report-availability" href="#report-availability" data-wpel-link="internal">Report availability</a>
 				<i class="fa fa-spin fa-refresh" style="display: none"></i>
 			</p>
 		@else

@@ -397,7 +397,7 @@ console.log(wM);
 	//$('#reg-field .btn-default').on('click',function(){
 	//    setTimeout(function(){$('.regsuccess').click();},300);
    // })
-	$("a.reg-f, a.reg-c, a.regsuccess , a.ticket").fancybox({
+	$("a.reg-f, a.reg-c, a.regsuccess , a.ticket, a.report-availability").fancybox({
 		'transitionIn'	:	'elastic',
 		'transitionOut'	:	'elastic',
 		'showCloseButton':false,
@@ -420,7 +420,7 @@ console.log(wM);
 		 if (window.location.hash.indexOf("#regsuccess") >= 0 )
 		 $("a.regsuccess").click()
 	 
-	})
+	});
 	
 	
 	var flag = false;
@@ -1105,10 +1105,96 @@ $(document).on('change', '.cart-form  input.qty', function(e) {
      */
     $('.report-availability').on('click', function (e) {
         e.preventDefault();
-        //console.log($('#report-availability'));
-        //$('#report-availability').show();
-        //$('html').addClass('fancybox-enabled');
-    })
+		let productId = $(this).data('id');
+
+		if($.isEmptyObject(products)){
+            $.ajax({
+                url:global.url + 'rep-avail',
+                method: 'post',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: {id: productId},
+                success: function (data) {
+                   // console.log('data ' + data);
+                    products = data;
+
+                    let select = $('.selects').find('select')[0];
+                    for(let k in products){
+                        let option = document.createElement('option');
+
+                        $(option).attr('value', products[k].id);
+                        $(option).text(products[k].title);
+                        if(productId == products[k].id){
+                            $(option).attr('selected', 'selected');
+                        }
+                        select.append(option);
+                    }
+                }
+            });
+        }
+    });
+
+    $('.add-report-select').on('click', function (e) {
+		e.preventDefault();
+		var newSelect = $(this).parent('.form-group').prev('.report-form-select').clone();
+        $(this).parent('.form-group').prev('.report-form-select').after(newSelect);
+        newSelect.find('.input').val(1);
+        $('.form-group-btn-remove').show();
+		//console.log('plus select!');
+    });
+
+    $('.remove-report-select').on('click', function (e) {
+        e.preventDefault();
+        $(this).parent('.form-group').prev().prev('.report-form-select').remove();
+        if($('.selects').find('.report-form-select').length < 2){
+            $('.form-group-btn-remove').hide();
+        }
+        //console.log('minus select!');
+    });
+
+    $('#report-availability-form').on('submit', function (e) {
+        e.preventDefault();
+
+        var dat = {
+            products: {}
+        };
+
+        $(this).find('input').each(function () {
+            if($(this).attr('name') != 'submit' && $(this).attr('name').indexOf('count') == -1){
+                dat[$(this).attr('name')] = $(this).val();
+            }
+            //console.log($(this).attr('name') + ' ' + $(this).val());
+        });
+        //console.log($(this).find('select'));
+        let i = 0;
+        $(this).find('.report-form-select').each(function () {
+            dat.products[i] = {};
+            dat.products[i]['id'] = $(this).find('select').val();
+            dat.products[i]['count'] = $(this).find('input').val();
+            i++;
+        });
+        //console.log(dat);
+        $.ajax({
+            url:global.url + 'create_report',
+            method: 'post',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: dat,
+            success: function (data) {
+                $('#report-availability').addClass('popup-success');
+                $('#report-availability-form').hide();
+                $('#report-availability .modal-header').hide();
+                $('#report-availability').find('.result').show();
+                $('body').animate({
+                    'opacity': 1
+                }, 400);
+                // console.log('data ' + data);
+                //console.log(data);
+            }
+        });
+    });
 });
  
  

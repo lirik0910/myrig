@@ -287,6 +287,7 @@ $courses = $select('App\Model\Shop\ExchangeRate')->get()->groupBy('title');
 		}
 	};
 	var calc = {};
+	var products = {};
 </script>
 
 
