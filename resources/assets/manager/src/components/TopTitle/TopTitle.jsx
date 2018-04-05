@@ -18,6 +18,7 @@ import Typography from 'material-ui/Typography';
 import Add from 'material-ui-icons/Add';
 import Save from 'material-ui-icons/Save';
 import Delete from 'material-ui-icons/Delete';
+import Replay from 'material-ui-icons/Replay';
 import ContentCopy from 'material-ui-icons/ContentCopy';
 
 import styles from './styles.js';
@@ -49,6 +50,7 @@ class TopTitle extends Component {
 		duplicateButtonDisplay: false,
 		deleteButtonTitle: 'Delete',
 		deleteButtonDisplay: false,
+		recoveryButtonTitle: 'Recovery',
 		classes: PropTypes.object.isRequired,
 		onAddButtonClicked: () => {},
 		onSaveButtonClicked: () => {},
@@ -74,7 +76,8 @@ class TopTitle extends Component {
 			deleteButtonTitle,
 			deleteButtonDisplay,
 			trashButtonDisplay,
-			trashButtonTitle
+			trashButtonTitle,
+			recoveryButtonTitle
 		} = this.props;
 
 		return <Grid container spacing={24} className={classes.root}>
@@ -110,14 +113,24 @@ class TopTitle extends Component {
 							{duplicateButtonTitle}
 					</Button>}
 
-					{deleteButtonDisplay && <Button 
-						onClick={e => this.props.onDeleteButtonClicked()}
-						className={classes.button} 
-						variant="raised"
-						color="secondary">
-							<Delete className={classes.leftIcon} />
-							{deleteButtonTitle}
-					</Button>}
+					{deleteButtonDisplay && 
+						(typeof this.props.item !== 'undefined' && this.props.item.delete === 1) ?
+							<Button 
+								onClick={e => this.props.onDeleteButtonClicked()}
+								className={classes.button} 
+								variant="raised"
+								color="secondary">
+									<Replay className={classes.leftIcon} />
+									{recoveryButtonTitle}
+							</Button> :
+							<Button 
+								onClick={e => this.props.onDeleteButtonClicked()}
+								className={classes.button} 
+								variant="raised"
+								color="secondary">
+									<Delete className={classes.leftIcon} />
+									{deleteButtonTitle}
+							</Button>}
 
 					{trashButtonDisplay && <Button 
 						onClick={e => this.props.onTrashButtonClicked()}

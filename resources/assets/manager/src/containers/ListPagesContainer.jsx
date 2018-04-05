@@ -87,7 +87,7 @@ class ListPagesContainer extends Component {
 		return <div className="pages-list__container">
 				{completed === 0 && 
 					<LinearProgress color="secondary" variant="determinate" value={completed} />}
-					
+
 				<Header
 					title={'Pages list'} />
 				<Menu />

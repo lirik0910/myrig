@@ -378,6 +378,7 @@ class EditProductContainer extends Component {
 				<Menu />
 					
 				{completed === 100 && <TopTitle
+					item={data}
 					title={<span style={{
 						color: data.delete === 1 ?
 							'red' :
