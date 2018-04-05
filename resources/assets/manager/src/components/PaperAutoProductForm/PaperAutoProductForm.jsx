@@ -59,7 +59,9 @@ class PaperAutoProductForm extends Component {
 				delivery_price: '',
 				delivery_price_currency: 1,
 				profit_price: '',
-				profit_price_currency: 1
+				profit_price_currency: 1,
+				warranty_price: '',
+				warranty_price_currency: 1
 			};
 		}
 

@@ -4,14 +4,14 @@ namespace App\Model\Shop;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ReportProducts extends Model
+class ReportProduct extends Model
 {
     /*
     * Bind with Report model
     */
     public function report()
     {
-        return $this->belongsTo(ReportProducts::class);
+        return $this->belongsTo(Report::class);
     }
 
     /*

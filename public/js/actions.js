@@ -51,8 +51,6 @@ jQuery(document).ready(function ($) {
 		});     
 	})
 	
-	
-	
 	$('.tfa-check').change(function(){
 		$('.tfa').toggleClass('hidden')	
 	})

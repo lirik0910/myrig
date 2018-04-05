@@ -7,6 +7,7 @@
         </div>
         <div class="modal-body">
             <div id="report-availability-field">
+                <p class="report-message">Leave a request to receive an alert</p>
                 <form id="report-availability-form">
                     {{ csrf_field() }}
                     <div class="form-group">

@@ -397,7 +397,8 @@ console.log(wM);
 	//$('#reg-field .btn-default').on('click',function(){
 	//    setTimeout(function(){$('.regsuccess').click();},300);
    // })
-	$("a.reg-f, a.reg-c, a.regsuccess , a.ticket, a.report-availability").fancybox({
+
+	$("a.reg-f, a.reg-c, a.regsuccess , a.ticket, a.report-availability, p.report-availability").fancybox({
 		'transitionIn'	:	'elastic',
 		'transitionOut'	:	'elastic',
 		'showCloseButton':false,
@@ -412,7 +413,7 @@ console.log(wM);
 			window.location.hash = '';
 		}
 	});
-	
+
 	$(window).load(function(){
 		if (window.location.hash == '#reg')	
 		 $("a.reg-f").click()
@@ -643,7 +644,7 @@ $(window).on('load',function(){
         animateOut: 'fadeOut',
         animateIn: 'fadeIn',*/
 
-		slideBy: 3, //alternatively you can slide by 1, this way the active slide will stick to the first item in the second carousel
+		slideBy: 1, //alternatively you can slide by 1, this way the active slide will stick to the first item in the second carousel
 		responsiveClass:true,
 		responsive:{
 			0:{
@@ -1183,13 +1184,20 @@ $(document).on('change', '.cart-form  input.qty', function(e) {
             },
             data: dat,
             success: function (data) {
-                $('#report-availability').addClass('popup-success');
                 $('#report-availability-form').hide();
                 $('#report-availability .modal-header').hide();
-                $('#report-availability').find('.result').show();
-                $('body').animate({
-                    'opacity': 1
-                }, 400);
+                $('#report-availability .report-message').hide();
+                if(data.message){
+
+                } else{
+                    $('#report-availability').addClass('popup-success');
+                    $('#report-availability').find('.result').show();
+                    $('body').animate({
+                        'opacity': 1
+                    }, 400);
+                }
+                //console.log(data);
+
                 // console.log('data ' + data);
                 //console.log(data);
             }

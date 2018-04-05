@@ -1196,6 +1196,10 @@ input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill{
     margin-left: 18px;
 }
 
+.report-message{
+    font: normal 18px 'Roboto', sans-serif;
+}
+
 .Rectangle_4 {
     background-color: rgb(242, 242, 242);
     position: absolute;
@@ -1221,6 +1225,33 @@ input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill{
     top:0;
     left:0;
 }
+
+.styled-select {
+    background: url(http://i62.tinypic.com/15xvbd5.png) no-repeat 96% 0;
+    height: 29px;
+    overflow: hidden;
+    width: 240px;
+}
+
+.styled-select select {
+    background: transparent;
+    border: none;
+    font-size: 14px;
+    height: 29px;
+    padding: 5px; /* If you add too much padding here, the options won't show in IE */
+    width: 268px;
+}
+
+.green select   {
+    color: #fff;
+}
+
+.semi-square {
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+
 .more-wrapper {
     position: absolute;
     top: 87px;

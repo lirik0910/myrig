@@ -16,6 +16,7 @@ $secondaryProducts = $select('\App\Model\Shop\Product')
 	})
 	->with('page', 'options', 'images')
 	->get();
+//var_dump($secondaryProducts); die;
 @endphp
 
 @section('content')

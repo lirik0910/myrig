@@ -14,13 +14,16 @@ foreach ($product->options as $item) {
 }
 
 if($product->auto_price){
-    $price = number_format($product->calcAutoPrice(), 2, '.', '');
+    $autoprice = $product->calcAutoPrice();
+    if(!$autoprice){
+        $price = number_format($product->price, 2, '.', '');
+    } else{
+        $price = number_format($autoprice, 2, '.', '');
+    }
 } else{
     $price = number_format($product->price, 2, '.', '');
 }
 
-//var_dump($product->categories); die;
-//if($product->categories)
 foreach($product->categories as $category){
     if ($category->title == 'Base'){
         $payback = new App\Http\Controllers\ProductController();
@@ -28,7 +31,6 @@ $payback = $payback->calcPayback($product->id);
     }
 }
 
-//var_dump($payback); die;
 @endphp
 <section class="content item">
 <div class="container">
