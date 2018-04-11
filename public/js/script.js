@@ -1144,8 +1144,14 @@ $(document).on('change', '.cart-form  input.qty', function(e) {
 		var newSelect = $(this).parent('.form-group').prev('.report-form-select').clone();
         $(this).parent('.form-group').prev('.report-form-select').after(newSelect);
         newSelect.find('.input').val(1);
+        let defaultOption = document.createElement('option');//'<option selected="selected" value="0">Choose product</option>';
+		$(defaultOption).attr('selected', 'selected');
+		$(defaultOption).attr('disabled', 'disabled');
+		$(defaultOption).text('Choose product');
+		$(defaultOption).val(0);
+		console.log(defaultOption);
+		newSelect.find('option')[0].before(defaultOption);
         $('.form-group-btn-remove').show();
-		//console.log('plus select!');
     });
 
     $('.remove-report-select').on('click', function (e) {
@@ -1199,10 +1205,6 @@ $(document).on('change', '.cart-form  input.qty', function(e) {
                         'opacity': 1
                     }, 400);
                 }
-                //console.log(data);
-
-                // console.log('data ' + data);
-                //console.log(data);
             }
         });
     });

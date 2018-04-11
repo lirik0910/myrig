@@ -33,5 +33,7 @@ return [
 	'remove_product' => 'Delete this position',
 	'optional_equipment' => 'Optional equipment',
 	'payment_methods_description' => 'Our manager will contact you to clarify details',
-	'hosting_title' => 'Hosting'
+	'hosting_title' => 'Hosting',
+
+    'service_title' => 'Local service'
 ];

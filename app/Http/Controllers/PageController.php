@@ -44,7 +44,8 @@ class PageController extends Controller
 				'inCart' => $this->getInSessionCart(),
 				'multi' => MultiVariableContent::multiConvert($page->view->variables),
 				'number' => $number,
-				'preview' => $this->preview()
+				'preview' => $this->preview(),
+                'locale' => json_encode(geoip($request->ip()))
 			]);
 		}
 		else abort(404);

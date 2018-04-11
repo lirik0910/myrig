@@ -20,7 +20,7 @@
                 <div class="row">
                     <div class="col-sm-4">
 
-                        <h1>Local service</h1>
+                        <h1>{{ __('default.service_title') }}</h1>
 
                     </div>
                     <div class="article-content col-sm-8">

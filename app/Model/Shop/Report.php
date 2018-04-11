@@ -52,6 +52,9 @@ class Report extends Model
         }
 
         foreach ($data as $field) {
+            if($field['id'] == 0){
+                continue;
+            }
             $model = new ReportProduct;
 
             $model->report_id = $this->id;

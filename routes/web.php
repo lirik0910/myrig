@@ -12,6 +12,10 @@
 */
 use Illuminate\Http\Request;
 
+/*Route::get('/', function (Request $request){
+    var_dump($request); die;
+    //geoip();
+});*/
 foreach (\App\Model\Base\Page::all() as $page) {
 	Route::get($page->link, 'PageController@view');
 }
