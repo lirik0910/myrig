@@ -4,8 +4,8 @@ const styles = theme => ({
 		textAlign: 'right'
 	},
 	control: {
-		minWidth: '42px'
-	}
+		minWidth: '42px',
+	},
 });
 
 export default styles;

@@ -230,28 +230,28 @@ class MultiVariableContentsTableSeeder extends Seeder
 			if ($key === 0) {
 				$header = 'DRAGONMINT';
 				$content = 'a new level of bitcoin mining';
-				$link = '/products';
+				$link = '/shop';
 				$icon = 'slider/dragonmint-1.png';
 			}
 
 			if ($key === 1) {
 				$header = 'ANTMINER S9';
 				$content = 'The most energy efficient miner in the world';
-				$link = '/products';
+				$link = '/shop';
 				$icon = 'slider/antminer-s9.png';
 			}
 
 			if ($key === 2) {
 				$header = 'ANTMINER L3+';
 				$content = 'The best solution for litecoin mining';
-				$link = '/products';
+				$link = '/shop';
 				$icon = 'slider/antminer-l3.png';
 			}
 
 			if ($key === 3) {
 				$header = 'ANTMINER D3';
 				$content = 'DASH mining at maximum power';
-				$link = '/products';
+				$link = '/shop';
 				$icon = 'slider/antminer-d3.png';
 
 			}

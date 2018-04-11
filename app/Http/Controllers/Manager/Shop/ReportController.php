@@ -18,6 +18,43 @@ use App\Http\Controllers\Controller;
 class ReportController extends Controller
 {
     /**
+     * Add conditions before query
+     * @param object $c
+     * @param array $param
+     * @return object
+     */
+    protected function setParamsBeforeQuery($c, array $params)
+    {
+
+        /** Filter by processed
+         */
+        if (isset($params['status']) && $params['status'] != 0) {
+            $status = 0;
+            if($params['status'] == 2){
+                $status = 1;
+            }
+            $c = $c->where('check', $status);
+        }
+
+        return $c;
+    }
+
+    /**
+     * Pagination query
+     * @param object $c
+     * @param array $param
+     * @return object
+     */
+    protected function setPaginationQuery($c, array $params)
+    {
+        if (isset($params['start']) && isset($params['limit'])) {
+            $c = $c->forPage($params['start'], $params['limit']);
+        }
+
+        return $c;
+    }
+
+    /**
      * Get all reports
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
@@ -56,26 +93,15 @@ class ReportController extends Controller
             return response()->json(['message' => $e->getMessage()], 422);
         }
 
-        /** Get BTC rate
-         */
-        $btcRate = ExchangeRate::where('title', 'BTC/USD')->first();
-        $point = 1 / (float) $btcRate->value;
+        foreach ($all as $report) {
+            $report->name;
+            $report->email;
+            $report->phone;
+            $report->check;
 
-        foreach ($all as $order) {
-            $order->status;
-            $order->context;
-            $order->paymentType;
-            $order->orderDeliveries->delivery;
-
-            //$order->btc_price = ($order->cost * $point) / 1;
-
-            foreach ($order->carts as $cart) {
-                $cart->product->images;
-                $order->btc_price += $cart->btcCost * $cart->count;
-            }
-
-            foreach ($order->logs as $log) {
-                $log->user;
+            foreach ($report->products as $item) {
+                $item->count;
+                $item->product;
             }
         }
 
@@ -83,5 +109,110 @@ class ReportController extends Controller
             'total' => $total,
             'data' => $all
         ], 200);
+    }
+
+    /**
+     * Delete reports
+     * @param int $id
+     * @return JsonResponse
+     */
+    public function delete(int $id) : JsonResponse
+    {
+        /** Try get model
+         */
+        try {
+            $model = Report::find($id);
+        }
+        catch (\Exception $e) {
+            logger($e->getMessage());
+            return response()->json(['message' => $e->getMessage()], 422);
+        }
+
+        /** Try remove model
+         */
+        try {
+            $model->delete();
+        }
+        catch (\Exception $e) {
+            logger($e->getMessage());
+            return response()->json(['message' => $e->getMessage()], 422);
+        }
+
+        return response()->json(['message' => true], 200);
+    }
+
+    /**
+     * Delete many reports
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function deleteMany(Request $request) : JsonResponse
+    {
+        foreach ($request->all() as $id) {
+            $this->delete($id);
+        }
+
+        return response()->json(['message' => true], 200);
+    }
+
+    /**
+     * Get certain report
+     * @param int $id Report ID
+     * @return JsonResponse
+     */
+    public function get(int $id) : JsonResponse
+    {
+        /** Try get model
+         */
+        try {
+            $model = Report::find($id);
+        }
+        catch(\Exception $e) {
+            logger($e->getMessage());
+            return response()->json(['message' => $e->getMessage()], 422);
+        }
+
+        return response()->json($model, 200);
+    }
+
+    /**
+     * Update report data
+     * @param int $id
+     * @param EditReportRequest $request
+     * @return JsonResponse
+     */
+    public function edit(int $id, Request $request) : JsonResponse
+    {
+        /** Try get model
+         */
+        try {
+            $model = Report::find($id);
+        }
+        catch(\Exception $e) {
+            logger($e->getMessage());
+            return response()->json(['message' => $e->getMessage()], 422);
+        }
+//var_dump($model); die;
+        /** Try fill new data
+         */
+        try {
+            $model->fill(['check' => 1]);
+        }
+        catch(\Exception $e) {
+            logger($e->getMessage());
+            return response()->json(['message' => $e->getMessage()], 422);
+        }
+
+        /** Try safe model
+         */
+        try {
+            $model->save();
+        }
+        catch(\Exception $e) {
+            logger($e->getMessage());
+            return response()->json(['message' => $e->getMessage()], 422);
+        }
+
+        return response()->json($model, 200);
     }
 }

@@ -292,7 +292,7 @@ class Product extends Model
 		else {
 			$model = ProductAutoPrice::findOrFail($data['id']);
 		}
-
+//var_dump($data); die;
 		$model->fill($data);
 		$model->product_id = $this->id;
 
@@ -320,7 +320,7 @@ class Product extends Model
 
 		$btc = ExchangeRate::where('title', 'BTC/USD')->first()->value;
 
-		if(count($params->attributes) == 14){
+/*		if(count($params->attributes) == 14){
 		    foreach ($params->attributes as $attribute){
 		        if(!$attribute){
 		            return false;
@@ -328,7 +328,7 @@ class Product extends Model
             }
         } else{
 		    return false;
-        }
+        }*/
 
 		if ($params->prime_price_currency == 2){
 			$prime_price = $params->prime_price * (float)$btc;

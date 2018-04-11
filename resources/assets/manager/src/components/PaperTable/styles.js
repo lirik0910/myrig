@@ -14,6 +14,9 @@ const styles = theme => ({
 	},
 	checkbox: {
 		width: 42
+	},
+	buttonField: {
+		textAlign: 'center'
 	}
 });
 

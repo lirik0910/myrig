@@ -27,6 +27,13 @@ use App\Http\Middleware\Manager\UserOneMiddleware;
 use App\Http\Middleware\Manager\UserEditMiddleware;
 use App\Http\Middleware\Manager\UserDeleteMiddleware;
 
+/** Access policy middleware for report models
+ */
+use App\Http\Middleware\Manager\ReportCollectionMiddleware;
+use App\Http\Middleware\Manager\ReportOneMiddleware;
+use App\Http\Middleware\Manager\ReportEditMiddleware;
+use App\Http\Middleware\Manager\ReportDeleteMiddleware;
+
 /** Access policy middleware for page models
  */
 use App\Http\Middleware\Manager\PageCollectionMiddleware;
@@ -83,6 +90,12 @@ Route::prefix('users')
 		Route::get('/', 'Manager\Base\ViewController@index');
 });
 
+Route::prefix('notifications')
+    ->middleware('auth')
+    ->group(function () {
+        Route::get('/', 'Manager\Base\ViewController@index');
+    });
+
 Route::prefix('orders')
 	->middleware('auth')
 	->group(function () {
@@ -137,6 +150,14 @@ Route::prefix('api')
 			Route::delete('/', 'Manager\Base\UserController@deleteMany')->middleware(UserDeleteMiddleware::class);
 			Route::delete('/{id}', 'Manager\Base\UserController@delete')->middleware(UserDeleteMiddleware::class);
 		});
+
+        Route::prefix('report')->group(function() {
+            Route::get('/', 'Manager\Shop\ReportController@all')->middleware(ReportCollectionMiddleware::class);
+            Route::get('/{id}', 'Manager\Shop\ReportController@get')->middleware(ReportOneMiddleware::class);
+            Route::put('/{id}', 'Manager\Shop\ReportController@edit')->middleware(ReportEditMiddleware::class);
+            Route::delete('/', 'Manager\Shop\ReportController@deleteMany')->middleware(ReportDeleteMiddleware::class);
+            Route::delete('/{id}', 'Manager\Shop\ReportController@delete')->middleware(ReportDeleteMiddleware::class);
+        });
 
 		Route::prefix('policy')->group(function() {
 			Route::get('/', 'Manager\Base\PolicyController@all');

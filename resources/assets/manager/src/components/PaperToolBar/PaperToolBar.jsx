@@ -17,6 +17,7 @@ import Button from 'material-ui/Button';
 import InputSearch from '../FormControl/InputSearch/InputSearch.jsx';
 import SelectDelete from '../FormControl/SelectDelete/SelectDelete.jsx';
 import SelectStatus from '../FormControl/SelectStatus/SelectStatus.jsx';
+import SelectNotificationStatus from '../FormControl/SelectNotificationStatus/SelectNotificationStatus.jsx';
 import SelectPayment from '../FormControl/SelectPayment/SelectPayment.jsx';
 import SelectContext from '../FormControl/SelectContext/SelectContext.jsx';
 import SelectDelivery from '../FormControl/SelectDelivery/SelectDelivery.jsx';
@@ -42,6 +43,7 @@ class PaperToolBar extends Component {
 	static defaultProps = {
 		searchShow: true,
 		statusShow: false,
+		notificationStatusShow: false,
 		contextShow: true,
 		paymentShow: false,
 		deliveryShow: false,
@@ -50,6 +52,7 @@ class PaperToolBar extends Component {
 		dateToDefaultValue: '',
 		orderActionShow: false,
 		dateCreatedShow: false,
+		notificationStatusDefaultValue: 0,
 		statusDefaultValue: 0,
 		actionDefaultValue: 0,
 		contextDefaultValue: 0,
@@ -59,6 +62,7 @@ class PaperToolBar extends Component {
 		onDateToSelected: () => {},
 		onDateFromSelected: () => {},
 		onActionSelected: () => {},
+        onNotificationStatusSelected: () => {},
 		onStatusSelected: () => {},
 		onDeleteSelected: () => {},
 		onContextSelected: () => {},
@@ -78,6 +82,7 @@ class PaperToolBar extends Component {
 		let { 
 			classes, 
 			statusShow,
+            notificationStatusShow,
 			searchShow,
 			contextShow,
 			paymentShow,
@@ -91,6 +96,7 @@ class PaperToolBar extends Component {
 			actionDefaultValue,
 			searchDefaultValue, 
 			statusDefaultValue,
+            notificationStatusDefaultValue,
 			paymentDefaultValue,
 			contextDefaultValue,
 			deliveryDefaultValue,
@@ -110,6 +116,13 @@ class PaperToolBar extends Component {
 							defaultValue={contextDefaultValue}
 							onItemSelected={value => this.props.onContextSelected(value)} />
 					</Grid>}
+
+                    {notificationStatusShow && <Grid item xs={12} sm={2}>
+                        <SelectNotificationStatus
+                            title={this.props.statusTitle}
+                            defaultValue={notificationStatusDefaultValue}
+                            onItemSelected={value => this.props.onNotificationStatusSelected(value)} />
+                    </Grid>}
 
 					{statusShow && <Grid item xs={12} sm={2}>
 						<SelectStatus

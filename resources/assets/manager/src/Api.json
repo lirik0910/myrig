@@ -68,6 +68,18 @@
 			"one": "{id}"
 		}
 	},
+	"report": {
+		"GET": {
+			"all": ""
+		},
+		"DELETE": {
+			"many": "",
+			"one": "{id}"
+		},
+		"PUT": {
+			"one": "{id}"
+		}
+	},
 	"policy": {
 		"GET": {
 			"all": ""

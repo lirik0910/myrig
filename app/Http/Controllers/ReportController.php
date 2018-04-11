@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Schema;
 use App\Model\Shop\Report;
-use App\Model\Shop\ReportProducts;
+use App\Model\Shop\ReportProduct;
 
 class ReportController extends Controller
 {
@@ -23,7 +23,7 @@ class ReportController extends Controller
             logger($e->getMessage());
             return response()->json(['message' => $e->getMessage()], 422);
         }
-//var_dump($columns); die;
+
         /** Try get post data from request object
          */
         try {

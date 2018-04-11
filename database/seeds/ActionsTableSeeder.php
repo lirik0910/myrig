@@ -65,6 +65,25 @@ class ActionsTableSeeder extends Seeder
 			'name' => 'user_delete',
 			'description' => 'Allow delete user model',
 		]);
+        App\Model\Base\Action::create([
+            'name' => 'report_collection',
+            'description' => 'Allow get user collection',
+        ]);
+
+        App\Model\Base\Action::create([
+            'name' => 'report_one',
+            'description' => 'Allow get user model',
+        ]);
+
+        App\Model\Base\Action::create([
+            'name' => 'report_edit',
+            'description' => 'Allow edit user model',
+        ]);
+
+        App\Model\Base\Action::create([
+            'name' => 'report_delete',
+            'description' => 'Allow delete user model',
+        ]);
 
 		// App\Model\Base\Action::create([
 		// 	'name' => 'user_policy',

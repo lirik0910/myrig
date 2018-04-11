@@ -112,5 +112,14 @@ class ComponentsTableSeeder extends Seeder
 			'link' => '/pages/create?parent_id=17&context_id=1&link=info&view_id=10',
 			'icon' => 'Textsms'
 		]);
+
+        /** Add notifications component
+         */
+        App\Model\Base\Component::create([
+            'name' => 'Notifications',
+            'description' => 'Manage notifications',
+            'link' => '/notifications',
+            'icon' => 'Notifications'
+        ]);
 	}
 }

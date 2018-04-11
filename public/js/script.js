@@ -429,7 +429,8 @@ console.log(wM);
 	if($('section').hasClass('items')){
 
 		var owl=$(".itemSlider");
-var f=true;
+        var f=true;
+
 		$(window).on('resize',function(){
 			if($(window).width()<992)
 			{
@@ -644,7 +645,7 @@ $(window).on('load',function(){
         animateOut: 'fadeOut',
         animateIn: 'fadeIn',*/
 
-		slideBy: 1, //alternatively you can slide by 1, this way the active slide will stick to the first item in the second carousel
+		slideBy: 3, //alternatively you can slide by 1, this way the active slide will stick to the first item in the second carousel
 		responsiveClass:true,
 		responsive:{
 			0:{
@@ -1133,6 +1134,8 @@ $(document).on('change', '.cart-form  input.qty', function(e) {
                     }
                 }
             });
+        } else{
+
         }
     });
 
