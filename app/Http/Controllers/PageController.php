@@ -35,7 +35,7 @@ class PageController extends Controller
                 }
             }
             $clientIp = $_SERVER['REMOTE_ADDR'];
-var_dump(geoip($clientIp)); die;
+//var_dump(geoip($clientIp)); die;
 			return view($page->view->path, [
 				'it' => $page,
 				'get' => $this->get(),
