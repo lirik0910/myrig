@@ -116,7 +116,13 @@ class ListAvailabilityNotificationsContainer extends Component
                             marginTop: '0'
                         };
                         const liStyle = {
-                          marginBottom: '5px'
+                          marginBottom: '5px',
+                          fontWeight: 'semi-bold'
+                        };
+                        const li_head = {
+                            marginBottom: '3px',
+                            display: 'inline-block',
+                            fontSize: '0.70rem'
                         };
                         const productTitle = {
                             cssFloat: 'left',
@@ -136,7 +142,6 @@ class ListAvailabilityNotificationsContainer extends Component
                             }
                             r.data[i]['products'] =
                                 <ul style={ulStyle}>
-                                    <li style={li_head}><span style={productTitle}>Title</span><span style={productCount}>Count</span></li>
                                     {r.data[i]['products'].map((item, i) => {
                                         //console.log(item, i);
                                         return <li style={liStyle} key={i}><span style={productTitle}>{item.product.title}</span><span style={productCount}>{item.count}</span></li>
