@@ -45,7 +45,7 @@ class PageController extends Controller
 				'multi' => MultiVariableContent::multiConvert($page->view->variables),
 				'number' => $number,
 				'preview' => $this->preview(),
-                'locale' => json_encode(geoip($_SERVER['REMOTE_ADDR']))
+                'locale' => $_SERVER['REMOTE_ADDR']
 			]);
 		}
 		else abort(404);
