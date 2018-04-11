@@ -34,7 +34,8 @@ class PageController extends Controller
                     return redirect('shop');
                 }
             }
-//var_dump($_SERVER); die;
+            $clientIp = $_SERVER['REMOTE_ADDR'];
+var_dump(geoip($clientIp)); die;
 			return view($page->view->path, [
 				'it' => $page,
 				'get' => $this->get(),
