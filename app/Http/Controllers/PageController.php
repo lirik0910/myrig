@@ -34,7 +34,7 @@ class PageController extends Controller
                     return redirect('shop');
                 }
             }
-
+//var_dump($_SERVER); die;
 			return view($page->view->path, [
 				'it' => $page,
 				'get' => $this->get(),
@@ -45,7 +45,7 @@ class PageController extends Controller
 				'multi' => MultiVariableContent::multiConvert($page->view->variables),
 				'number' => $number,
 				'preview' => $this->preview(),
-                'locale' => json_encode(geoip($request->ip()))
+                'locale' => json_encode(geoip($_SERVER['REMOTE_ADDR']))
 			]);
 		}
 		else abort(404);
