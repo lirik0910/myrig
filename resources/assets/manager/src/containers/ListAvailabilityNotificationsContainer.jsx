@@ -44,6 +44,7 @@ class ListAvailabilityNotificationsContainer extends Component
        // childs: PropTypes.object.products.isRequired,
     };
 
+
     state = {
         data: [],
         start: 0,
@@ -135,8 +136,9 @@ class ListAvailabilityNotificationsContainer extends Component
                             }
                             r.data[i]['products'] =
                                 <ul style={ulStyle}>
+                                    <li style={li_head}><span style={productTitle}>Title</span><span style={productCount}>Count</span></li>
                                     {r.data[i]['products'].map((item, i) => {
-                                        console.log(item, i);
+                                        //console.log(item, i);
                                         return <li style={liStyle} key={i}><span style={productTitle}>{item.product.title}</span><span style={productCount}>{item.count}</span></li>
                                     })}
                                 </ul>;
