@@ -4,7 +4,7 @@ $context = $select('App\Model\Base\Context')->where('title', $locale)->first();
 
 $otherPages = $select('App\Model\Base\Page')
 	->where('parent_id', 0)
-	->where('context_id')
+	->where('context_id', $context->id)
 	->where(function ($q) {
 		return $q
 			->orWhere('view_id', 4)
