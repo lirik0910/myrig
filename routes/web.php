@@ -18,7 +18,6 @@ use Illuminate\Http\Request;
 });*/
 foreach (\App\Model\Base\Page::all() as $page) {
 	Route::get($page->link, 'PageController@view');
-    Route::get($page->link . '/{custom_locale}', 'PageController@view');
 }
 
 Route::prefix('connector')
