@@ -9,11 +9,13 @@ jQuery(document).ready(function ($) {
 		cont = $('.container').outerWidth();
 
 	var margin = (width - cont) / 2;
-    if($('#mapField').attr('data-lat')){
+	console.log(margin);
+	console.log(cont);
+/*    if($('#mapField').attr('data-lat')){
         margin = margin - 21;
-    }
+    }*/
 	wM = cont * 33.333333 / 100 + margin;
-
+console.log(wM);
 	if (width > 767) {
 		$('.main-back').css('left', wM +'px');
 	}
@@ -395,7 +397,8 @@ jQuery(document).ready(function ($) {
 	//$('#reg-field .btn-default').on('click',function(){
 	//    setTimeout(function(){$('.regsuccess').click();},300);
    // })
-	$("a.reg-f, a.reg-c, a.regsuccess , a.ticket").fancybox({
+
+	$("a.reg-f, a.reg-c, a.regsuccess , a.ticket, a.report-availability, p.report-availability").fancybox({
 		'transitionIn'	:	'elastic',
 		'transitionOut'	:	'elastic',
 		'showCloseButton':false,
@@ -410,7 +413,7 @@ jQuery(document).ready(function ($) {
 			window.location.hash = '';
 		}
 	});
-	
+
 	$(window).load(function(){
 		if (window.location.hash == '#reg')	
 		 $("a.reg-f").click()
@@ -418,7 +421,7 @@ jQuery(document).ready(function ($) {
 		 if (window.location.hash.indexOf("#regsuccess") >= 0 )
 		 $("a.regsuccess").click()
 	 
-	})
+	});
 	
 	
 	var flag = false;
@@ -426,7 +429,8 @@ jQuery(document).ready(function ($) {
 	if($('section').hasClass('items')){
 
 		var owl=$(".itemSlider");
-var f=true;
+        var f=true;
+
 		$(window).on('resize',function(){
 			if($(window).width()<992)
 			{
@@ -641,7 +645,7 @@ $(window).on('load',function(){
         animateOut: 'fadeOut',
         animateIn: 'fadeIn',*/
 
-		slideBy: 1, //alternatively you can slide by 1, this way the active slide will stick to the first item in the second carousel
+		slideBy: 3, //alternatively you can slide by 1, this way the active slide will stick to the first item in the second carousel
 		responsiveClass:true,
 		responsive:{
 			0:{
@@ -1111,6 +1115,113 @@ $(document).on('change', '.cart-form  input.qty', function(e) {
 			btn.find('span').text(btn.data('add'));
 		}
 	}));
+
+    /**
+     * Click report availability button
+     */
+    $('.report-availability').on('click', function (e) {
+        e.preventDefault();
+		let productId = $(this).data('id');
+
+		if($.isEmptyObject(products)){
+            $.ajax({
+                url:global.url + 'rep-avail',
+                method: 'post',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: {id: productId},
+                success: function (data) {
+                   // console.log('data ' + data);
+                    products = data;
+
+                    let select = $('.selects').find('select')[0];
+                    for(let k in products){
+                        let option = document.createElement('option');
+
+                        $(option).attr('value', products[k].id);
+                        $(option).text(products[k].title);
+                        if(productId == products[k].id){
+                            $(option).attr('selected', 'selected');
+                        }
+                        select.append(option);
+                    }
+                }
+            });
+        } else{
+
+        }
+    });
+
+    $('.add-report-select').on('click', function (e) {
+		e.preventDefault();
+		var newSelect = $(this).parent('.form-group').prev('.report-form-select').clone();
+        $(this).parent('.form-group').prev('.report-form-select').after(newSelect);
+        newSelect.find('.input').val(1);
+        let defaultOption = document.createElement('option');//'<option selected="selected" value="0">Choose product</option>';
+		$(defaultOption).attr('selected', 'selected');
+		$(defaultOption).attr('disabled', 'disabled');
+		$(defaultOption).text('Choose product');
+		$(defaultOption).val(0);
+		console.log(defaultOption);
+		newSelect.find('option')[0].before(defaultOption);
+        $('.form-group-btn-remove').show();
+    });
+
+    $('.remove-report-select').on('click', function (e) {
+        e.preventDefault();
+        $(this).parent('.form-group').prev().prev('.report-form-select').remove();
+        if($('.selects').find('.report-form-select').length < 2){
+            $('.form-group-btn-remove').hide();
+        }
+        //console.log('minus select!');
+    });
+
+    $('#report-availability-form').on('submit', function (e) {
+        e.preventDefault();
+
+        var dat = {
+            products: {}
+        };
+
+        $(this).find('input').each(function () {
+            if($(this).attr('name') != 'submit' && $(this).attr('name').indexOf('count') == -1){
+                dat[$(this).attr('name')] = $(this).val();
+            }
+            //console.log($(this).attr('name') + ' ' + $(this).val());
+        });
+        //console.log($(this).find('select'));
+        let i = 0;
+        $(this).find('.report-form-select').each(function () {
+            dat.products[i] = {};
+            dat.products[i]['id'] = $(this).find('select').val();
+            dat.products[i]['count'] = $(this).find('input').val();
+            i++;
+        });
+        //console.log(dat);
+        $.ajax({
+            url:global.url + 'create_report',
+            method: 'post',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: dat,
+            success: function (data) {
+                $('#report-availability-form').hide();
+                $('#report-availability .modal-header').hide();
+                $('#report-availability .report-message').hide();
+                if(data.message){
+
+                } else{
+                    $('#report-availability').addClass('popup-success');
+                    $('#report-availability').find('.result').show();
+                    $('body').animate({
+                        'opacity': 1
+                    }, 400);
+                }
+            }
+        });
+    });
 });
  
  

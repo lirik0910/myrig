@@ -112,6 +112,35 @@ class PageController extends Controller
 	}
 
 	/**
+	 * Send page model to trash
+	 * @param int $id
+	 * @return JsonResponse
+	 */
+	public function trash(int $id) : JsonResponse
+	{
+		/** Try get model
+		 */
+		try {
+			$model = Page::find($id);
+		}
+		catch(\Exception $e) {
+			logger($e->getMessage());
+			return response()->json(['message' => $e->getMessage()], 422);
+		}
+
+		if ($model->delete === 1) {
+			$model->delete = 0;
+		}
+		else {
+			$model->delete = 1;
+		}
+
+		$model->save();
+
+		return response()->json(['message' => true], 200);
+	}
+
+	/**
 	 * Get data of certain page
 	 * @param int $id
 	 * @return JsonResponse
@@ -152,6 +181,46 @@ class PageController extends Controller
 		}
 		
 		return response()->json($page, 200);
+	}
+
+	/**
+	 * Empty trash
+	 * @return \Illuminate\Http\JsonResponse
+	 */
+	public function emptyTrash() : JsonResponse
+	{
+		/** Try get collection
+		 */
+		try {
+			$all = Page::where('delete', 1)->get();
+		}
+		catch (\Exception $e) {
+			logger($e->getMessage());
+			return response()->json(['message' => $e->getMessage()], 422);
+		}
+
+		foreach ($all as $item) {
+			/** Try remove all childrean pages
+			 */
+			try {
+				Page::removeChilds($item->id);
+			}
+			catch (\Exception $e) {
+				logger($e->getMessage());
+				return response()->json(['message' => $e->getMessage()], 422);
+			}
+
+			/** Try remove current page model
+			 */
+			try {
+				$item->delete();
+			}
+			catch (\Exception $e) {
+				logger($e->getMessage());
+				return response()->json(['message' => $e->getMessage()], 422);
+			}
+		}
+		return response()->json(['message' => true], 200);
 	}
 
 	/**
@@ -244,7 +313,7 @@ class PageController extends Controller
 		 */
 		try {
 			$request->validate([
-				'link' => [Rule::unique('pages')->ignore($id)]
+				//'link' => [Rule::unique('pages')->ignore($id)]
 			]);
 		}
 		catch (\Exception $e) {

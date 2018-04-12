@@ -299,13 +299,15 @@ class ListUsersContainer extends Component {
 							limit={limit}
 							total={total}
 							except={[
+								'id',
 								'icon',
 								'active', 
 								'page_id',
+								'policy_id',
 								'vendor_id',
 								'context_id',
-								'created_at', 
-								'updated_at', 
+/*								'created_at',
+								'updated_at', */
 								'category_id', 
 								'description',
 								'compare_price',

@@ -13,90 +13,93 @@ class SettingsTableSeeder extends Seeder
 	{
 		/** Get base context
 		 */
-		$context = App\Model\Base\Context::where('title', 'Base')->firstOrFail();
+		$contexts = App\Model\Base\Context::all();
 
-		$checkoutPage = App\Model\Base\Page::whereHas('view', function ($q) {
-			$q->where('title', 'Checkout');
-		})->first();
+		foreach ($contexts as $context){
+            $checkoutPage = App\Model\Base\Page::whereHas('view', function ($q) {
+                $q->where('title', 'Checkout');
+            })->where('context_id', $context->id)->first();
 
-		App\Model\Base\Setting::create([
-			'context_id' => $context->id,
-			'title' => 'site.checkout_page',
-			'value' => $checkoutPage->id
-		]);
+            App\Model\Base\Setting::create([
+                'context_id' => $context->id,
+                'title' => 'site.checkout_page',
+                'value' => $checkoutPage->id
+            ]);
 
-		$cartPage = App\Model\Base\Page::whereHas('view', function ($q) {
-			$q->where('title', 'Cart');
-		})->first();
+            $cartPage = App\Model\Base\Page::whereHas('view', function ($q) {
+                $q->where('title', 'Cart');
+            })->where('context_id', $context->id)->first();
 
-		App\Model\Base\Setting::create([
-			'context_id' => $context->id,
-			'title' => 'site.shop_page',
-			'value' => $cartPage->id
-		]);
+            App\Model\Base\Setting::create([
+                'context_id' => $context->id,
+                'title' => 'site.shop_page',
+                'value' => $cartPage->id
+            ]);
 
-		$productstPage = App\Model\Base\Page::whereHas('view', function ($q) {
-			$q->where('title', 'Shop');
-		})->first();
+            $productstPage = App\Model\Base\Page::whereHas('view', function ($q) {
+                $q->where('title', 'Shop');
+            })->where('context_id', $context->id)->first();
 
-		App\Model\Base\Setting::create([
-			'context_id' => $context->id,
-			'title' => 'site.products_page',
-			'value' => $productstPage->id
-		]);
+            App\Model\Base\Setting::create([
+                'context_id' => $context->id,
+                'title' => 'site.products_page',
+                'value' => $productstPage->id
+            ]);
 
-		$servicePage = App\Model\Base\Page::whereHas('view', function ($q) {
-			$q->where('title', 'Service');
-		})->first();
+            $servicePage = App\Model\Base\Page::whereHas('view', function ($q) {
+                $q->where('title', 'Service');
+            })->where('context_id', $context->id)->first();
 
-		App\Model\Base\Setting::create([
-			'context_id' => $context->id,
-			'title' => 'site.service_page',
-			'value' => $servicePage->id
-		]);
+            App\Model\Base\Setting::create([
+                'context_id' => $context->id,
+                'title' => 'site.service_page',
+                'value' => $servicePage->id
+            ]);
 
-		$newsPage = App\Model\Base\Page::where('link', 'news')->first();
+            $newsPage = App\Model\Base\Page::where('link', 'news')->where('context_id', $context->id)->first();
 
-		App\Model\Base\Setting::create([
-			'context_id' => $context->id,
-			'title' => 'site.news_page',
-			'value' => $newsPage->id
-		]);
+            App\Model\Base\Setting::create([
+                'context_id' => $context->id,
+                'title' => 'site.news_page',
+                'value' => $newsPage->id
+            ]);
 
-		$contactsPage = App\Model\Base\Page::whereHas('view', function ($q) {
-			$q->where('title', 'Contacts');
-		})->first();
+            $contactsPage = App\Model\Base\Page::whereHas('view', function ($q) {
+                $q->where('title', 'Contacts');
+            })->where('context_id', $context->id)->first();
 
-		App\Model\Base\Setting::create([
-			'context_id' => $context->id,
-			'title' => 'site.contacts_page',
-			'value' => $contactsPage->id
-		]);
+            App\Model\Base\Setting::create([
+                'context_id' => $context->id,
+                'title' => 'site.contacts_page',
+                'value' => $contactsPage->id
+            ]);
 
-		/** Custom rate settings
-		 */
-		App\Model\Base\Setting::create([
-			'context_id' => $context->id,
-			'title' => 'rate.value_type',
-			'value' => 'usd'
-		]);
+            /** Custom rate settings
+             */
+            App\Model\Base\Setting::create([
+                'context_id' => $context->id,
+                'title' => 'rate.value_type',
+                'value' => 'usd'
+            ]);
 
-		App\Model\Base\Setting::create([
-			'context_id' => $context->id,
-			'title' => 'rate.value_size',
-			'value' => 'max'
-		]);
+            App\Model\Base\Setting::create([
+                'context_id' => $context->id,
+                'title' => 'rate.value_size',
+                'value' => 'max'
+            ]);
 
-		App\Model\Base\Setting::create([
-			'context_id' => $context->id,
-			'title' => 'rate.value_custom',
-			'value' => '0'
-		]);
+            App\Model\Base\Setting::create([
+                'context_id' => $context->id,
+                'title' => 'rate.value_custom',
+                'value' => '0'
+            ]);
 
-        App\Model\Base\Setting::create([
-            'context_id' => $context->id,
-            'title' => 'calculator.btc_network',
-            'value' => ''
-        ]);
+            App\Model\Base\Setting::create([
+                'context_id' => $context->id,
+                'title' => 'calculator.btc_network',
+                'value' => ''
+            ]);
+        }
+
 	}
 }

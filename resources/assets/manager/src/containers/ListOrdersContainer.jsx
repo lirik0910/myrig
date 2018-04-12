@@ -15,6 +15,7 @@ import Grid from 'material-ui/Grid';
 import Menu from '../components/Menu/Menu.jsx';
 import Header from '../components/Header/Header.jsx';
 import { LinearProgress } from 'material-ui/Progress';
+import TopTitle from '../components/TopTitle/TopTitle.jsx';
 import PaperTable from '../components/PaperTable/PaperTable.jsx';
 import DialogOrder from '../components/DialogOrder/DialogOrder.jsx';
 import DialogError from '../components/DialogError/DialogError.jsx';
@@ -45,6 +46,7 @@ class ListOrdersContainer extends Component {
 		data: [], 
 		start: 0, 
 		limit: 10, 
+		save: false,
 		total: 0,
 		flag: true,
 		dateTo: '',
@@ -57,6 +59,8 @@ class ListOrdersContainer extends Component {
 		completed: 100,
 		deleteOrderId: 0,
 		editOrder: {},
+		trash: false,
+		deleteID: null,
 		editDialog: false,
 		deleteDialog: false,
 		resultDialog: false,
@@ -85,6 +89,7 @@ class ListOrdersContainer extends Component {
 			contextID, 
 			searchText, 
 			statusID, 
+			deleteID,
 			paymentID,
 			deliveryID } = this.state;
 
@@ -134,6 +139,10 @@ class ListOrdersContainer extends Component {
 			 */
 			if (dateTo) {
 				data['created_at_to'] = dateTo;
+			}
+
+			if (deleteID !== null) {
+				data['delete_type'] = String(deleteID);
 			}
 
 			App.api({
@@ -207,8 +216,8 @@ class ListOrdersContainer extends Component {
 
 		this.setState({ completed: 0 }, () => {
 			App.api({
-				name: 'one',
-				type: 'DELETE',
+				name: 'trash',
+				type: 'PUT',
 				model: 'order',
 				resource: deleteOrderId,
 				success: (r) => {
@@ -238,6 +247,44 @@ class ListOrdersContainer extends Component {
 		});
 	}
 
+	emptyTrashRequest() {
+		if (this.state.completed === 100) {
+			this.setState({ completed: 0 }, () => {
+				App.api({
+					name: 'trash',
+					model: 'order',
+					type: 'DELETE',
+					success: (r) => {
+						r = JSON.parse(r.response);
+						if (r) {
+							this.setState({ 
+								trash: false,
+								completed: 100,
+								resultDialog: true,
+								deleteDialog: false,
+								resultDialogTitle: 'Success',
+								resultDialogMessage: 'The request was successful'
+							}, () => this.ordersGetDataRequest());
+						}
+					},
+					error: (r) => {
+						r = JSON.parse(r.response);
+						if (r.message) {
+							this.setState({ 
+								trash: false,
+								completed: 100,
+								resultDialog: true,
+								deleteDialog: false,
+								resultDialogTitle: 'Error',
+								resultDialogMessage: r.message
+							});
+						}
+					}
+				});
+			});
+		}
+	}
+
 	/**
 	 * Stylize table data
 	 */
@@ -245,10 +292,24 @@ class ListOrdersContainer extends Component {
 		let { classes } = this.props
 
 		return data.map((item, i) => {
+			if (this.state.save === true && this.state.editOrder.id === item.id) {
+				this.setState({
+					editOrder: item,
+				})
+			}
+
 			return {
 				id: item.id,
 				numberRow: <div className={classes.numberCell}>
-						<span className={classes.numberItem}># {item.number}</span>
+						<span className={classes.numberItem}
+							style={{
+								color: item.delete === 1 ?
+									'red' :
+									'#000000',
+								textDecoration: item.delete === 1 ?
+									'line-through' :
+									'none'
+							}}># {item.number}</span>
 						<span className={classes.statusItem}
 							style={{color: item.status.color}}>{item.status.title}</span>
 
@@ -368,12 +429,23 @@ class ListOrdersContainer extends Component {
 
 				<Grid container spacing={24} className={classes.root}>
 					<Grid item xs={12}>
+						<TopTitle
+							title={''}
+							addButtonDisplay={false}
+							saveButtonDisplay={false}
+							deleteButtonDisplay={false}
+							addButtonTitle={'Add new product'}
+							deleteButtonTitle={'Delete selected'}
+							trashButtonDisplay={true}
+							onTrashButtonClicked={() => this.setState({ trash: true })} />
+
 						<PaperToolBar
 							statusShow
 							paymentShow
 							deliveryShow
 							orderActionShow
 							dateCreatedShow
+							deleteFilterShow
 							statusTitle={'Filter by status'}
 							contextTitle={'Filter by context'}
 							paymentTitle={'Filter by payment type'}
@@ -381,6 +453,11 @@ class ListOrdersContainer extends Component {
 							dateFromTitle={'Filter by order create date from'}
 							dateToTitle={'to date'}
 							contextDefaultValue={contextID}
+							onDeleteSelected={deleteID => {
+								this.setState({ deleteID }, () => {
+									this.ordersGetDataRequest();
+								});
+							}}
 							onContextSelected={contextID => {
 								this.setState({ contextID }, () => {
 									this.ordersGetDataRequest();
@@ -429,7 +506,7 @@ class ListOrdersContainer extends Component {
 
 				<Grid container spacing={24} className={classes.root}>
 					<Grid item xs={12}>
-						{completed ? <PaperTable
+						{completed === 100 ? <PaperTable
 							data={this.stylizeRows(data)}
 							except={['id']}
 							page={start}
@@ -488,6 +565,14 @@ class ListOrdersContainer extends Component {
 						this.ordersGetDataRequest();
 					})} />}
 
+				{this.state.trash === true && <DialogDelete
+					defaultValue={this.state.trash}
+					onDialogClosed={() => this.setState({
+						trash: false,
+					})}
+					content="Are you sure to empty trash?"
+					onDialogConfirmed={() => this.emptyTrashRequest()} />}
+
 				{(editDialog === true && flag === true) && <DialogOrder
 					order={editOrder}
 					defaultValue={editDialog}
@@ -498,13 +583,15 @@ class ListOrdersContainer extends Component {
 						var i,
 							data = {};
 
-						this.setState({flag: false}, () => {
+						this.setState({ flag: false, save: true }, () => {
 							for (i = 0; i < form.length; i++) {
 								if (form[i].name) {
 									data[form[i].name] = form[i].value;
 								}
 							}
+
 							this.orderPutDataRequest(data, () => this.ordersGetDataRequest(() => this.setState({ 
+								save: false,
 								flag: true,
 								resultDialog: false
 							})));

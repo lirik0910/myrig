@@ -65,6 +65,10 @@ class OrderController extends Controller
 			$c = $c->where('payment_type_id', $params['payment_type_id']);
 		}
 
+		if (isset($params['delete_type'])) {
+			$c = $c->where('delete', $params['delete_type']);
+		}
+
 		/** Filter by created_at from
 		 */
 		if (isset($params['created_at_from'])) {
@@ -152,8 +156,7 @@ class OrderController extends Controller
 
 			foreach ($order->carts as $cart) {
 				$cart->product->images;
-				$order->btc_price += $cart->btcCost;
-
+				$order->btc_price += $cart->btcCost * $cart->count;
 			}
 
 			foreach ($order->logs as $log) {
@@ -222,25 +225,31 @@ class OrderController extends Controller
 		/** Set products to cart
 		 */
 		if (isset($count) && is_array($count)) {
-			Cart::where('order_id', $id)->truncate();
+			$cart_positions = Cart::where('order_id', $id)->get();
 
-			foreach ($count as $key => $item) {
-				$cart = new Cart;
+            $products_update = array_keys($count);
+			foreach ($cart_positions as $cart){
 
-				$cart->order_id = $id;
-				$cart->product_id = $key;
-				$cart->count = $item;
 
-				/** Try save product
-				 */
-				try {
-					$cart->save();
-				}
-				catch (\Exseption $e) {
-					logger($e->getMessage());
-					return response()->json(['message' => $e->getMessage()], 422);
-				}
-			}
+			    if(in_array($cart->product_id, $products_update)){
+			        foreach ($count as $key => $item){
+			            if($cart->product_id == $key){
+                            $cart->count = $item;
+
+                            try {
+                                $cart->save();
+                            }
+                            catch (\Exseption $e) {
+                                logger($e->getMessage());
+                                return response()->json(['message' => $e->getMessage()], 422);
+                            }
+                        }
+                    }
+                } else{
+                    $cart->delete();
+                    //Cart::where('order_id', $id)->where('product_id', $cart->product_id)->delete();
+                }
+            }
 		}
 
 		/** Get delivery model
@@ -271,7 +280,8 @@ class OrderController extends Controller
 
 		/** Change order status
 		 */
-		if ($model->status_id !== $request->input('status_id')) {
+		//var_dump($model->status_id, $request->input('status_id')); die;
+		if ($model->status_id != $request->input('status_id')) {
 			$model->changeStatus($request->input('status_id'));
 		}
 
@@ -296,6 +306,57 @@ class OrderController extends Controller
 		catch (\Exception $e) {
 			logger($e->getMessage());
 			return response()->json(['message' => $e->getMessage()], 422);
+		}
+
+		return response()->json(['message' => true], 200);
+	}
+
+	/**
+	 * Send order to trash
+	 * @param int $id
+	 * @return \Illuminate\Http\JsonResponse
+	 */
+	public function trash(int $id) : JsonResponse
+	{
+		/** Try get model
+		 */
+		try {
+			$model = Order::find($id);
+		}
+		catch (\Exception $e) {
+			logger($e->getMessage());
+			return response()->json(['message' => $e->getMessage()], 422);
+		}
+
+		if ($model->delete === 1) {
+			$model->delete = 0;
+		}
+		else {
+			$model->delete = 1;
+		}
+
+		$model->save();
+		return response()->json(['message' => true], 200);
+	}
+
+	/**
+	 * Empty trash
+	 * @return \Illuminate\Http\JsonResponse
+	 */
+	public function emptyTrash() : JsonResponse
+	{
+		/** Get collection
+		 */
+		try {
+			$all = Order::where('delete', 1)->get();
+		}
+		catch (\Exception $e) {
+			logger($e->getMessage());
+			return response()->json(['message' => $e->getMessage()], 422);
+		}
+
+		foreach ($all as $item) {
+			$item->delete();
 		}
 
 		return response()->json(['message' => true], 200);

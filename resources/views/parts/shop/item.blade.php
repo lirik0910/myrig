@@ -2,7 +2,12 @@
 	$options = $item->options->groupBy('name')->toArray();
 
     if($item->auto_price){
-        $price = number_format($item->calcAutoPrice(), 2, '.', '');
+        $autoprice = $item->calcAutoPrice();
+        if(!$autoprice){
+            $price = number_format($item->price, 2, '.', '');
+        } else{
+            $price = number_format($autoprice, 2, '.', '');
+        }
     } else{
         $price = number_format($item->price, 2, '.', '');
     }
@@ -89,10 +94,14 @@
 						<i class="fa fa-minus"></i>
 					</div>
 				</span>
-
 				@if (isset($inCart[$item->id]))
 					<a data-success="{{ __('default.added') }}" data-add="{{ __('default.to_cart') }}" rel="nofollow" href="#" data-id="{{ $item->id }}" class="btn-default intocarts">
 						<span>{{ __('default.added') }}</span>
+						<i class="fa fa-spin fa-refresh" style="display: none"></i>
+					</a>
+				@elseif ($item->productStatus->title === 'not-available')
+					<a rel="nofollow" href="#report-availability" data-id="{{ $item->id }}" class="btn-default report-availability">
+						<span>Report availability</span>
 						<i class="fa fa-spin fa-refresh" style="display: none"></i>
 					</a>
 				@else
@@ -103,7 +112,7 @@
 				@endif
 			</form>
 			
-			<div class='tag tag-payback'>{{ __('default.payback') }} {{ $payback }} days</div>
+			@if($payback)<div class='tag tag-payback'>{{ __('default.payback') }} {{ $payback }} days</div>@endif
 		</div>
 	</div>
 </div>

@@ -27,6 +27,13 @@ use App\Http\Middleware\Manager\UserOneMiddleware;
 use App\Http\Middleware\Manager\UserEditMiddleware;
 use App\Http\Middleware\Manager\UserDeleteMiddleware;
 
+/** Access policy middleware for report models
+ */
+use App\Http\Middleware\Manager\ReportCollectionMiddleware;
+use App\Http\Middleware\Manager\ReportOneMiddleware;
+use App\Http\Middleware\Manager\ReportEditMiddleware;
+use App\Http\Middleware\Manager\ReportDeleteMiddleware;
+
 /** Access policy middleware for page models
  */
 use App\Http\Middleware\Manager\PageCollectionMiddleware;
@@ -83,6 +90,12 @@ Route::prefix('users')
 		Route::get('/', 'Manager\Base\ViewController@index');
 });
 
+Route::prefix('notifications')
+    ->middleware('auth')
+    ->group(function () {
+        Route::get('/', 'Manager\Base\ViewController@index');
+    });
+
 Route::prefix('orders')
 	->middleware('auth')
 	->group(function () {
@@ -138,6 +151,14 @@ Route::prefix('api')
 			Route::delete('/{id}', 'Manager\Base\UserController@delete')->middleware(UserDeleteMiddleware::class);
 		});
 
+        Route::prefix('report')->group(function() {
+            Route::get('/', 'Manager\Shop\ReportController@all')->middleware(ReportCollectionMiddleware::class);
+            Route::get('/{id}', 'Manager\Shop\ReportController@get')->middleware(ReportOneMiddleware::class);
+            Route::put('/{id}', 'Manager\Shop\ReportController@edit')->middleware(ReportEditMiddleware::class);
+            Route::delete('/', 'Manager\Shop\ReportController@deleteMany')->middleware(ReportDeleteMiddleware::class);
+            Route::delete('/{id}', 'Manager\Shop\ReportController@delete')->middleware(ReportDeleteMiddleware::class);
+        });
+
 		Route::prefix('policy')->group(function() {
 			Route::get('/', 'Manager\Base\PolicyController@all');
 		});
@@ -147,7 +168,9 @@ Route::prefix('api')
 			Route::get('/{id}', 'Manager\Base\PageController@get')->middleware(PageOneMiddleware::class);
 			Route::post('/', 'Manager\Base\PageController@create')->middleware(PageCreateMiddleware::class);
 			Route::put('/{id}', 'Manager\Base\PageController@update')->middleware(PageEditMiddleware::class);
+			Route::put('/trash/{id}', 'Manager\Base\PageController@trash')->middleware(PageDeleteMiddleware::class);
 			Route::delete('/{id}', 'Manager\Base\PageController@delete')->middleware(PageDeleteMiddleware::class);
+			Route::delete('/', 'Manager\Base\PageController@emptyTrash')->middleware(PageDeleteMiddleware::class);
 		});
 
 		Route::prefix('product')->group(function() {
@@ -157,8 +180,10 @@ Route::prefix('api')
 			Route::get('/', 'Manager\Shop\ProductController@all')->middleware(ProductCollectionMiddleware::class);
 			Route::get('/{id}', 'Manager\Shop\ProductController@one')->middleware(ProductOneMiddleware::class);
 			Route::post('/', 'Manager\Shop\ProductController@create')->middleware(ProductCreateMiddleware::class);
+			Route::put('/trash', 'Manager\Shop\ProductController@trashMany')->middleware(ProductDeleteMiddleware::class);
+			Route::put('/trash/{id}', 'Manager\Shop\ProductController@trash')->middleware(ProductDeleteMiddleware::class);
 			Route::put('/{id}', 'Manager\Shop\ProductController@update')->middleware(ProductEditMiddleware::class);
-			Route::delete('/', 'Manager\Shop\ProductController@deleteMany')->middleware(ProductDeleteMiddleware::class);
+			Route::delete('/', 'Manager\Shop\ProductController@emptyTrash')->middleware(ProductDeleteMiddleware::class);
 			Route::delete('/{id}', 'Manager\Shop\ProductController@delete')->middleware(ProductDeleteMiddleware::class);
 		});
 
@@ -166,8 +191,10 @@ Route::prefix('api')
 			Route::get('/', 'Manager\Shop\OrderController@all')->middleware(OrderCollectionMiddleware::class);
 			Route::get('/{id}', 'Manager\Shop\OrderController@one')->middleware(OrderOneMiddleware::class);
 			Route::post('/', 'Manager\Shop\OrderController@create')->middleware(OrderCreateMiddleware::class);
+			Route::put('/trash/{id}', 'Manager\Shop\OrderController@trash')->middleware(OrderEditMiddleware::class);
 			Route::put('/{id}', 'Manager\Shop\OrderController@update')->middleware(OrderEditMiddleware::class);
 			Route::get('/log/{id}', 'Manager\Shop\OrderController@log');
+			Route::delete('/trash', 'Manager\Shop\OrderController@emptyTrash')->middleware(OrderDeleteMiddleware::class);
 			Route::delete('/{id}', 'Manager\Shop\OrderController@delete')->middleware(OrderDeleteMiddleware::class);
 		});
 

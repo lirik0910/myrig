@@ -37,6 +37,10 @@ class ComponentCollectionMiddleware
 				$allow[] = '/products';
 			}
 
+            if (User::checkPolicy('report_collection') === true) {
+                $allow[] = '/notifications';
+            }
+
 			if (User::checkPolicy('rates_list') === true) {
 				$allow[] = '/rates';
 			}

@@ -50,6 +50,7 @@ class EditPageContainer extends Component {
 		a: '',
 		tab: 0,
 		data: {},
+		trash: false,
 		completed: 100,
 		deleteDialog: false,
 		resultDialog: false,
@@ -63,6 +64,39 @@ class EditPageContainer extends Component {
 	 */
 	componentWillMount() {
 		this.pageDataGetRequest();
+	}
+
+	pageDeleteRequest = e => {
+		let { data } = this.state;
+
+		App.api({
+			name: 'trash',
+			model: 'page',
+			type: 'PUT',
+			resource: data.id,
+			success: (r) => {
+				r = JSON.parse(r.response);
+				if (r) {
+					this.setState({ 
+						ready: false,
+						deleteDialog: false,
+					}, () => this.pageDataGetRequest(() => {
+						this.setState({ ready: true })
+					}));
+				}
+			},
+			error: (r) => {
+				r = JSON.parse(r.response);
+				if (r.message) {
+					this.setState({ 
+						deleteDialog: false,
+						resultDialog: true,
+						resultDialogTitle: 'Error',
+						resultDialogMessage: r.message
+					});
+				}
+			}
+		});
 	}
 
 	/**
@@ -140,52 +174,52 @@ class EditPageContainer extends Component {
 	 * Request for delete page
 	 * @param {Object} e
 	 */
-	pageDeleteRequest = e => {
-		let { data } = this.state;
+	// pageDeleteRequest = e => {
+	// 	let { data } = this.state;
 
-		this.setState({ 
-			completed: 0 
-		});
+	// 	this.setState({ 
+	// 		completed: 0 
+	// 	});
 
-		App.api({
-			name: 'one',
-			model: 'page',
-			type: 'DELETE',
-			resource: data.id,
-			success: (r) => {
-				r = JSON.parse(r.response);
-				if (r) {
-					this.setState({ 
-						completed: 100,
-						resultDialog: true,
-						deleteDialog: false,
-						a: App.name() +'/pages',
-						resultDialogTitle: 'Success',
-						resultDialogMessage: 'The request was successful'
-					}, () => {
-						setTimeout(() => {
-							var a = document.getElementById('page-edit');
-							if (a) {
-								a.click();
-							}
-						}, 824);
-					});
-				}
-			},
-			error: (r) => {
-				r = JSON.parse(r.response);
-				if (r.message) {
-					this.setState({ 
-						completed: 100,
-						resultDialog: true,
-						deleteDialog: false,
-						resultDialogTitle: 'Error',
-						resultDialogMessage: r.message
-					});
-				}
-			}
-		});
-	}
+	// 	App.api({
+	// 		name: 'one',
+	// 		model: 'page',
+	// 		type: 'DELETE',
+	// 		resource: data.id,
+	// 		success: (r) => {
+	// 			r = JSON.parse(r.response);
+	// 			if (r) {
+	// 				this.setState({ 
+	// 					completed: 100,
+	// 					resultDialog: true,
+	// 					deleteDialog: false,
+	// 					a: App.name() +'/pages',
+	// 					resultDialogTitle: 'Success',
+	// 					resultDialogMessage: 'The request was successful'
+	// 				}, () => {
+	// 					setTimeout(() => {
+	// 						var a = document.getElementById('page-edit');
+	// 						if (a) {
+	// 							a.click();
+	// 						}
+	// 					}, 824);
+	// 				});
+	// 			}
+	// 		},
+	// 		error: (r) => {
+	// 			r = JSON.parse(r.response);
+	// 			if (r.message) {
+	// 				this.setState({ 
+	// 					completed: 100,
+	// 					resultDialog: true,
+	// 					deleteDialog: false,
+	// 					resultDialogTitle: 'Error',
+	// 					resultDialogMessage: r.message
+	// 				});
+	// 			}
+	// 		}
+	// 	});
+	// }
 
 	/**
 	 * Render component
@@ -213,7 +247,15 @@ class EditPageContainer extends Component {
 				<Menu />
 
 				{completed === 100 && <TopTitle
-					title={data.title}
+					item={data}
+					title={<span style={{
+						color: data.delete === 1 ?
+							'red' :
+							'#000000',
+						textDecoration: data.delete === 1 ?
+							'line-through' :
+							'none'
+					}}>{data.title}</span>}
 					saveButtonDisplay={true}
 					deleteButtonDisplay={true}
 					onSaveButtonClicked={() => this.pagePutRequest()}

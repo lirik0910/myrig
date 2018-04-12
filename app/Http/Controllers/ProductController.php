@@ -25,7 +25,7 @@ class ProductController extends Controller
     /*
      * Calculate payback
      * @param (int) $id Product ID
-     * @return string
+     * @return integer|boolean
      */
     public function calcPayback($id)
     {
@@ -37,20 +37,22 @@ class ProductController extends Controller
             $price = number_format($product->price, 2, '.', '');
         }
 
+        /*
+         * default values
+         */
+        $hashrate = 0;
+        $currency = '';
+
         foreach ($product->options as $option){
-            if($option->name == 'Hashrate'){
+            if(strnatcasecmp(trim($option->name), 'Hashrate') === 0){
                 $hashrate = (float)$option->value;
-            } elseif ($option->name == 'Currency'){
+            } elseif (strnatcasecmp(trim($option->name), 'Currency') === 0){
                 $currency = explode(',', $option->value)[0];
             }
         }
 
-        if(!$hashrate){
-            $hashrate = 15;
-        }
-
-        if(!$currency){
-            $currency = 'BTC';
+        if(!$hashrate || !$currency){
+            return false;
         }
 
         $course = ExchangeRate::where('title', $currency . '/USD')->first()->value;
@@ -86,5 +88,29 @@ class ProductController extends Controller
         }
 
         return (int)$P;
+    }
+
+    /*
+     * Get all products for report availability
+     * @return string
+     */
+    public function all(){
+        try {
+            $all = Product::where('active', 1)->get();
+        }
+        catch (\Exception $e) {
+            logger($e->getMessage());
+            return response()->json(['message' => $e->getMessage()], 422);
+        }
+
+        $output = [];
+        $i = 0;
+        foreach ($all as $item){
+            $output[$i]['id'] = $item->id;
+            $output[$i]['title'] = $item->title;
+            $i++;
+        }
+
+        return response()->json($output, 200);
     }
 }

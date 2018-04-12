@@ -254,7 +254,7 @@ class EditProductContainer extends Component {
 	 * Request for delete product
 	 * @param {Object} e
 	 */
-	productDeleteRequest = e => {
+	/*productDeleteRequest = e => {
 		let { data } = this.state;
 
 		this.setState({ 
@@ -298,6 +298,48 @@ class EditProductContainer extends Component {
 				}
 			}
 		});
+	}*/
+
+	/**
+	 * Request for delete product
+	 * @param {Object} e
+	 */
+	productDeleteRequest = e => {
+		let { data } = this.state;
+
+		this.setState({ 
+			completed: 0 
+		}, () => {
+			App.api({
+				name: 'trash',
+				type: 'PUT',
+				model: 'product',
+				resource: data.id,
+				success: (r) => {
+					r = JSON.parse(r.response);
+					if (r) {
+						this.setState({ 
+							completed: 100,
+							deleteDialog: false,
+							resultDialogTitle: 'Success',
+							resultDialogMessage: 'The request was successful',
+						}, () => this.productDataGetRequest());
+					}
+				},
+				error: (r) => {
+					r = JSON.parse(r.response);
+					if (r.message) {
+						this.setState({ 
+							completed: 100,
+							resultDialog: true,
+							deleteDialog: false,
+							resultDialogTitle: 'Error',
+							resultDialogMessage: r.message
+						});
+					}
+				}
+			});
+		});
 	}
 
 	/**
@@ -336,7 +378,15 @@ class EditProductContainer extends Component {
 				<Menu />
 					
 				{completed === 100 && <TopTitle
-					title={data.title}
+					item={data}
+					title={<span style={{
+						color: data.delete === 1 ?
+							'red' :
+							'#000000',
+						textDecoration: data.delete === 1 ?
+							'line-through' :
+							'none'
+					}}>{data.title}</span>}
 					deleteButtonDisplay={true}
 					onSaveButtonClicked={() => {
 						this.productPutRequest();

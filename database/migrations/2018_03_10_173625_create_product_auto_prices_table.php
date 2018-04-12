@@ -32,6 +32,14 @@ class CreateProductAutoPricesTable extends Migration
 				->default(0)
 				->comment('FES price currency');
 
+            $table->float('warranty_price', 12,2)
+                ->default('0.00')
+                ->comment('Warranty price');
+
+            $table->integer('warranty_price_currency', false, true)
+                ->default(0)
+                ->comment('Warranty price currency');
+
 			$table->float('prime_price', 12,2)
 				->default('0.00')
 				->comment('Prime product price');

@@ -36,17 +36,23 @@
 }
 /*! normalize.css v6.0.0 | MIT License | github.com/necolas/normalize.css */
 
-/*@media only screen and (min-width: 992px) {
-    .user-panel p{
-        display: block;
-    }
+.user-panel p{
+    float: left;
+    margin-bottom: 0px;
+    margin-top: 10px;
+    margin-right: 10px;
+    font-size: 15px;
+    font-family: "Roboto";
 }
 
-@media only screen and (max-width: 991px) {
-    .user-panel p{
-        display: none;
-    }
-}*/
+.user-panel .profile-link{
+    width: max-content;
+}
+
+.user-panel .profile-link img{
+    height: 31px;
+    float: right
+}
 
 /* Document
    ========================================================================== */
@@ -662,9 +668,11 @@ display: inline-block;
 #call.popup-success .modal-body{
     padding: 0;
 }
+
 .result-body{
     padding: 20px 0 30px;
 }
+
 .popup-success .success-header{
     font-size: 24px;
     font-family: "Roboto";
@@ -673,7 +681,7 @@ display: inline-block;
     text-transform: uppercase;
     line-height: 1.2;
     text-align: left;
-background: url("../uploads/design/check2.png") left center no-repeat;
+    background: url("../uploads/design/check2.png") left center no-repeat;
     padding-left: 70px;
 }
 .popup-success button:not(.fancybox-close-small){
@@ -710,7 +718,7 @@ background: url("../uploads/design/check2.png") left center no-repeat;
     position: absolute;
     top:0;
     right: 0;
-    left: 567px;
+    left: 588px;
     height: 100%;
 }
 .banners{
@@ -1100,7 +1108,7 @@ input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill{
 :-moz-placeholder,::-webkit-input-placeholder,:-ms-input-placeholder{
     color: rgb(187, 187, 187);
 }
-#reg .btn-default,#call .btn-default,#ticket .btn-default{
+#reg .btn-default,#call .btn-default,#ticket .btn-default #report-availability .btn-default{
     width: 285px;
     margin-left: -20px;
     /* margin-right: -20px; */
@@ -1125,8 +1133,14 @@ input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill{
 }
 .fancybox-slide>#ticket{
    width: 500px;
-    max-width: 500px;
+   max-width: 500px;
 }
+
+.fancybox-slide>#report-availability{
+    width: 600px;
+    max-width: 600px;
+}
+
 #ticket.popup-success .modal-body {
     padding: 0;
 }
@@ -1134,6 +1148,12 @@ input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill{
     margin-bottom: 25px;
     padding: 0;
 }
+
+#report-availability .form-control{
+    margin-bottom: 25px;
+    padding: 0;
+}
+
 #ticket .btn-default {
     width: 500px;
     margin-left: -30px;
@@ -1141,10 +1161,25 @@ input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill{
     line-height: 60px;
     height: 60px;
 }
+
+#report-availability .btn-default {
+    width: 600px;
+    margin-left: -30px;
+    font-size: 20px;
+    line-height: 60px;
+    height: 60px;
+}
+
 #ticket .modal-body{
     padding: 25px 30px 0;
     width: 100%;
 }
+
+#report-availability .modal-body{
+    padding: 25px 30px 0;
+    width: 100%;
+}
+
 #ticket .reg-links li{
     font-size: 24px;
     color: #000;
@@ -1152,6 +1187,19 @@ input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill{
     border-bottom: none;
     margin-left: 18px;
 }
+
+#report-availability .reg-links li{
+    font-size: 24px;
+    color: #000;
+    line-height: 2.65;
+    border-bottom: none;
+    margin-left: 18px;
+}
+
+.report-message{
+    font: normal 18px 'Roboto', sans-serif;
+}
+
 .Rectangle_4 {
     background-color: rgb(242, 242, 242);
     position: absolute;
@@ -1177,6 +1225,33 @@ input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill{
     top:0;
     left:0;
 }
+
+.styled-select {
+    background: url(http://i62.tinypic.com/15xvbd5.png) no-repeat 96% 0;
+    height: 29px;
+    overflow: hidden;
+    width: 240px;
+}
+
+.styled-select select {
+    background: transparent;
+    border: none;
+    font-size: 14px;
+    height: 29px;
+    padding: 5px; /* If you add too much padding here, the options won't show in IE */
+    width: 268px;
+}
+
+.green select   {
+    color: #fff;
+}
+
+.semi-square {
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+
 .more-wrapper {
     position: absolute;
     top: 87px;
@@ -1629,6 +1704,11 @@ position: relative;
     width: 100%;
     clear: both;
 }
+
+.form-group-btn{
+   width: 40%;
+}
+
 #personalForm .form-control{
     border:1px solid transparent;
     border-bottom-color:rgb(197, 197, 197);
@@ -1653,9 +1733,66 @@ position: relative;
     border: 1px solid rgb(96, 166, 69);
 }
 #personalForm .form-control[type=checkbox]:checked{
-background: url("../uploads/design/check.png") 0 0 no-repeat;
+    background: url("../uploads/design/check.png") 0 0 no-repeat;
     background-size:cover ;
+}
 
+#report-availability label{
+    display: none;
+    font-size: 16px;
+    font-family: "Roboto";
+    color: rgb(96, 166, 69);
+    font-weight: 300;
+    background-color: rgb(242, 242, 242);
+    height: 60px;
+    margin-bottom: 30px;
+    line-height: 60px;
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    cursor: pointer;
+}
+
+.report-form-select select{
+    float: left;
+    width: 57%;
+}
+
+.report-form-select input{
+    height: 40px;
+    border-bottom: solid 1px  rgb(96, 166, 69);
+}
+
+.report-select-btn{
+    height: 40px;
+    display: inline-block;
+    border: solid 1px rgb(96, 166, 69);
+    text-align: center;
+    font-size: 25px !important;
+    color: rgb(0, 0, 0);
+    padding-top: 2px !important;
+}
+
+.report-select-btn:hover{
+    background: rgb(96, 166, 69);
+    color: rgb(255, 255, 255);
+}
+
+.remove-select-btn{
+    float: right;
+}
+
+.form-group-btn-remove{
+    display: none;
+}
+
+.report-form-select option{
+    margin: 0;
+    height: 36px;
+    line-height: 36px;
+    text-indent: 6px;
+    border-top: solid 1px #60a645;
+    transition: all 0.15s ease-in;
 }
 
 #personalForm .form-control:focus{
@@ -1663,6 +1800,7 @@ background: url("../uploads/design/check.png") 0 0 no-repeat;
     border-color: rgb(96, 166, 69);
     color: #000!important;
 }
+
 .form-label{
     width: 159px;
     width: 21.5%;
@@ -1672,6 +1810,7 @@ background: url("../uploads/design/check.png") 0 0 no-repeat;
     vertical-align: top;
     white-space: nowrap;
 }
+
 #personalForm .btn-default{
     outline: none;
     border: none;
@@ -2293,6 +2432,18 @@ form#enter .woocommerce-form__label-for-checkbox{
     #ticket .btn-default {
         width: 285px;
     }
+
+    #report-availability .btn-default {
+        width: 285px;
+    }
+
+    .fancybox-slide>#report-availability{
+        max-width: 285px;
+    }
+    #report-availability .btn-default {
+        width: 285px;
+    }
+
 	.locale-switcher {
     text-align: center;
     margin-top: 15px;
@@ -2342,7 +2493,7 @@ form#enter .woocommerce-form__label-for-checkbox{
         width:100%;
         height: 400px;
         border:none;
-        left: 567px !important;
+        left: 588px !important;
     }
     .contact-item {
         padding: 15px 20px;

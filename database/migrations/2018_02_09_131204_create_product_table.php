@@ -72,6 +72,10 @@ class CreateProductTable extends Migration
 				->default('0.00')
 				->comment('Compare price');
 
+			$table->tinyInteger('delete')
+				->default(0)
+				->comment('If product in trash');
+
 			$table->timestamps();
 		});
 	}

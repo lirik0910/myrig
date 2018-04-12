@@ -59,7 +59,9 @@ class PaperAutoProductForm extends Component {
 				delivery_price: '',
 				delivery_price_currency: 1,
 				profit_price: '',
-				profit_price_currency: 1
+				profit_price_currency: 1,
+				warranty_price: '',
+				warranty_price_currency: 1
 			};
 		}
 
@@ -84,6 +86,23 @@ class PaperAutoProductForm extends Component {
 					}}
 					onCurencySelected={value => {
 						data.fes_price_currency = value.id;
+						this.props.onDataUpdated(data);
+					}} />
+
+				<InputPrice
+					name="warranty"
+					title="Warranty"
+					inputID="warranty-field"
+					currencies={currencies}
+					disabled={activeDefaultValue}
+					defaultValue={data.warranty_price}
+					currencyID={data.warranty_price_currency}
+					onFieldInputed={value => {
+						data.warranty_price = parseFloat(value);
+						this.props.onDataUpdated(data);
+					}}
+					onCurencySelected={value => {
+						data.warranty_price_currency = value.id;
 						this.props.onDataUpdated(data);
 					}} />
 

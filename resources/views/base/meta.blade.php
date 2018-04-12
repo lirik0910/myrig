@@ -1,5 +1,6 @@
 <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta lang="{{ $locale }}" />
 
 <title>@if(isset($it)){{ htmlentities($it->title) }}@endif</title>
 @if(isset($it))
@@ -9,7 +10,6 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <meta name="format-detection" content="telephone=no" />
-
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <link rel='dns-prefetch' href='//ajax.googleapis.com' />
 <link rel='dns-prefetch' href='//maxcdn.bootstrapcdn.com' />

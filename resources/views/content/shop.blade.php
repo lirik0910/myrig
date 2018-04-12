@@ -4,6 +4,8 @@
 $mainProducts = $select('\App\Model\Shop\Product')
 	->whereHas('categories', function ($q) {
 		$q->where('title', 'Base');
+		$q->where('delete', 0);
+		$q->where('context_id', $it->context_id);
 	})
 	->with('page', 'options', 'images')
 	->get();
@@ -11,9 +13,12 @@ $mainProducts = $select('\App\Model\Shop\Product')
 $secondaryProducts = $select('\App\Model\Shop\Product')
 	->whereHas('categories', function ($q) {
 		$q->where('title', 'Secondary');
+		$q->where('delete', 0);
+		$q->where('context_id', $it->context_id);
 	})
 	->with('page', 'options', 'images')
 	->get();
+//var_dump($secondaryProducts); die;
 @endphp
 
 @section('content')
@@ -46,4 +51,5 @@ $secondaryProducts = $select('\App\Model\Shop\Product')
 	</div>
 </section>
 </main>
+@include('parts.shop.report-availability_form')
 @endsection

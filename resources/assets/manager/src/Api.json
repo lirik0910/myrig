@@ -43,10 +43,12 @@
 			"create": ""
 		},
 		"PUT": {
-			"update": "{id}"
+			"update": "{id}",
+			"trash": "trash/{id}"
 		},
 		"DELETE": {
-			"one": "{id}"
+			"one": "{id}",
+			"trash": ""
 		}
 	},
 	"cache": {
@@ -55,6 +57,18 @@
 		}
 	},
 	"user": {
+		"GET": {
+			"all": ""
+		},
+		"DELETE": {
+			"many": "",
+			"one": "{id}"
+		},
+		"PUT": {
+			"one": "{id}"
+		}
+	},
+	"report": {
 		"GET": {
 			"all": ""
 		},
@@ -111,11 +125,14 @@
 			"duplicate": "duplicate"
 		},
 		"PUT": {
-			"update": "{id}"
+			"update": "{id}",
+			"trashMany": "trash",
+			"trash": "trash/{id}"
 		},
 		"DELETE": {
 			"many": "",
-			"one": "{id}"
+			"one": "{id}",
+			"trash": ""
 		}
 	},
 	"category": {
@@ -141,11 +158,13 @@
 		},
 		"DELETE": {
 			"one": "{id}",
-			"many": ""
+			"many": "",
+			"trash": "trash"
 		},
 		"PUT": {
 			"one": "{id}",
-			"many": ""
+			"many": "",
+			"trash": "trash/{id}"
 		}
 	},
 	"payment": {

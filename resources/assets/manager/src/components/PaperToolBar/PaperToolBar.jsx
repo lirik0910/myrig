@@ -15,7 +15,9 @@ import Grid from 'material-ui/Grid';
 import Paper from 'material-ui/Paper';
 import Button from 'material-ui/Button';
 import InputSearch from '../FormControl/InputSearch/InputSearch.jsx';
+import SelectDelete from '../FormControl/SelectDelete/SelectDelete.jsx';
 import SelectStatus from '../FormControl/SelectStatus/SelectStatus.jsx';
+import SelectNotificationStatus from '../FormControl/SelectNotificationStatus/SelectNotificationStatus.jsx';
 import SelectPayment from '../FormControl/SelectPayment/SelectPayment.jsx';
 import SelectContext from '../FormControl/SelectContext/SelectContext.jsx';
 import SelectDelivery from '../FormControl/SelectDelivery/SelectDelivery.jsx';
@@ -41,13 +43,16 @@ class PaperToolBar extends Component {
 	static defaultProps = {
 		searchShow: true,
 		statusShow: false,
+		notificationStatusShow: false,
 		contextShow: true,
 		paymentShow: false,
 		deliveryShow: false,
+		deleteFilterShow: false,
 		dateFromDefaultValue: '',
 		dateToDefaultValue: '',
 		orderActionShow: false,
 		dateCreatedShow: false,
+		notificationStatusDefaultValue: 0,
 		statusDefaultValue: 0,
 		actionDefaultValue: 0,
 		contextDefaultValue: 0,
@@ -57,7 +62,9 @@ class PaperToolBar extends Component {
 		onDateToSelected: () => {},
 		onDateFromSelected: () => {},
 		onActionSelected: () => {},
+        onNotificationStatusSelected: () => {},
 		onStatusSelected: () => {},
+		onDeleteSelected: () => {},
 		onContextSelected: () => {},
 		onPaymentSelected: () => {},
 		dateFieldsCleared: () => {},
@@ -75,6 +82,7 @@ class PaperToolBar extends Component {
 		let { 
 			classes, 
 			statusShow,
+            notificationStatusShow,
 			searchShow,
 			contextShow,
 			paymentShow,
@@ -82,11 +90,13 @@ class PaperToolBar extends Component {
 			actionsData,
 			orderActionShow,
 			dateCreatedShow,
+			deleteFilterShow,
 			dateFromDefaultValue,
 			dateToDefaultValue,
 			actionDefaultValue,
 			searchDefaultValue, 
 			statusDefaultValue,
+            notificationStatusDefaultValue,
 			paymentDefaultValue,
 			contextDefaultValue,
 			deliveryDefaultValue,
@@ -106,6 +116,13 @@ class PaperToolBar extends Component {
 							defaultValue={contextDefaultValue}
 							onItemSelected={value => this.props.onContextSelected(value)} />
 					</Grid>}
+
+                    {notificationStatusShow && <Grid item xs={12} sm={2}>
+                        <SelectNotificationStatus
+                            title={this.props.statusTitle}
+                            defaultValue={notificationStatusDefaultValue}
+                            onItemSelected={value => this.props.onNotificationStatusSelected(value)} />
+                    </Grid>}
 
 					{statusShow && <Grid item xs={12} sm={2}>
 						<SelectStatus
@@ -133,6 +150,19 @@ class PaperToolBar extends Component {
 							actionsData={actionsData}
 							defaultValue={actionDefaultValue}
 							onItemSelected={value => this.props.onActionSelected(value)} />
+					</Grid>}
+
+					{deleteFilterShow && <Grid item xs={12} sm={2}>
+						<SelectDelete
+							data={[{
+								name: 'Not in the trash',
+								value: 0
+							}, {
+								name: 'In trash',
+								value: 1
+							}]}
+							defaultValue={0}
+							onItemSelected={value => this.props.onDeleteSelected(value)} />
 					</Grid>}
 
 					{dateCreatedShow && <Grid item xs={12} sm={2}>

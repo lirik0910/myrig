@@ -66,6 +66,15 @@ class Product extends Model
 		return $this->hasMany(Cart::class);
 	}
 
+    /**
+     * Bind with reports model
+     * @return boolean
+     */
+    public function reports()
+    {
+        return $this->belongsToMany(Reports::class, 'report_products');
+    }
+
 	/**
 	 * Get auto prices settings
 	 * @return boolean
@@ -263,6 +272,7 @@ class Product extends Model
 	public function setAutoPrices($settings = '')
 	{
 		$data = $settings;
+		//var_dump($data); die;
 		if (gettype($settings) === 'string') {
 			try {
 				$data = json_decode($settings, true);
@@ -282,7 +292,7 @@ class Product extends Model
 		else {
 			$model = ProductAutoPrice::findOrFail($data['id']);
 		}
-
+//var_dump($data); die;
 		$model->fill($data);
 		$model->product_id = $this->id;
 
@@ -302,13 +312,23 @@ class Product extends Model
 
 	/*
 	 * Calculate auto-price
-	 * @return float|string
+	 * @return float|string|boolean
 	 */
 	public function calcAutoPrice()
 	{
 		$params = $this->productAutoPrices()->first();
 
 		$btc = ExchangeRate::where('title', 'BTC/USD')->first()->value;
+
+/*		if(count($params->attributes) == 14){
+		    foreach ($params->attributes as $attribute){
+		        if(!$attribute){
+		            return false;
+                }
+            }
+        } else{
+		    return false;
+        }*/
 
 		if ($params->prime_price_currency == 2){
 			$prime_price = $params->prime_price * (float)$btc;
@@ -338,7 +358,15 @@ class Product extends Model
 			$profit_price = $params->profit_price;
 		}
 
-		$total = $prime_price + $delivery_price + $fes_price + $profit_price;
+        if ($params->warranty_price_currency == 2){
+            $warranty_price = $params->warranty_price * (float)$btc;
+        } elseif ($params->warranty_price_currency == 3){
+            $warranty_price = $prime_price * $params->warranty_price / 100;
+        } else{
+            $warranty_price = $params->warranty_price;
+        }
+
+		$total = $prime_price + $delivery_price + $fes_price + $profit_price + $warranty_price;
 
 		return $total;
 	}

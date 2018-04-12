@@ -25,3 +25,7 @@ a {
 .files__container {
 	height: calc(100% - 74px);
 }
+
+.buttonsField{
+	text-align: center;
+}
