@@ -14,8 +14,8 @@ class ContextsTableSeeder extends Seeder
 		/** Add base context
 		 */
 		App\Model\Base\Context::create([
-			'title' => 'Base',
-			'description' => 'Base context'
+			'title' => 'EN',
+			'description' => 'USA context'
 		]);
 
 		/** Add ua context

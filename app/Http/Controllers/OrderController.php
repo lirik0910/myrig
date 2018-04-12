@@ -8,6 +8,7 @@ use App\Model\Base\Context;
 use App\Model\Shop\Order;
 use App\Model\Shop\Delivery;
 use App\Model\Shop\PaymentType;
+use Illuminate\Support\Facades\App;
 use App\Model\Shop\OrderDelivery;
 use App\Model\Shop\Cart;
 
@@ -24,7 +25,16 @@ class OrderController extends Controller
 
         $data = $request->post();
         $user = User::where('email', session()->get('client'))->first();
-        $context = Context::where('title', 'Base')->first();
+
+        $locale = App::getLocale();
+        $contexts = Context::all();
+
+        $locale_context_id = 1;
+        foreach ($contexts as $context){
+            if(trim(strtolower($context->title)) == $locale){
+                $locale_context_id = $context->id;
+            }
+        }
 
         if(!$user){
             return response()->json(['success' => false, 'message' => 'User is not exist']);
@@ -58,7 +68,7 @@ class OrderController extends Controller
             'status_id' => 1,
             'paid' => 0,
             'payment_type_id' => $paymentType->id,
-            'context_id' => $context->id
+            'context_id' => $locale_context_id
         ]);
 
         try {

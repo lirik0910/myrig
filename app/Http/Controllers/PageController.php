@@ -2,13 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Model\Base\Context;
 use App\Model\Base\Page;
 use App\Model\Base\Setting;
 use App\Model\Base\MultiVariableContent;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Cache;
 
 class PageController extends Controller
 {
@@ -19,6 +22,12 @@ class PageController extends Controller
 	 */
 	public function view(Request $request, $number = null)
 	{
+	    //var_dump($custom_locale); die;
+/*	    if($custom_locale){
+	        App::setLocale($custom_locale);
+        }*/
+        $locale = App::getLocale();
+//var_dump($locale); die;
 		$link = $request->decodedPath();
 		$link = $link === '/' ?
 			$link :
@@ -27,15 +36,25 @@ class PageController extends Controller
 		if ($number) {
 			$link = explode('/' . $number, $link)[0];
 		}
-		
-		if ($page = Page::where('link', $link)->with('view')->first()) {
+
+		//var_dump($link); die;
+
+		$contexts = Context::all();
+		$locale_context_id = 1;
+
+		foreach ($contexts as $context){
+		    if(trim(strtolower($context->title)) == $locale){
+                $locale_context_id = $context->id;
+            }
+        }
+//var_dump($locale); die;
+		if ($page = Page::where('link', $link)->where('context_id', $locale_context_id)->with('view')->first()) {
 		    if ($page->link == 'checkout' || $page->link == 'cart'){
 		        if(count($this->getInSessionCart()) < 1){
                     return redirect('shop');
                 }
             }
-            $clientIp = $_SERVER['REMOTE_ADDR'];
-//var_dump(geoip($clientIp)); die;
+//var_dump($page); die;
 			return view($page->view->path, [
 				'it' => $page,
 				'get' => $this->get(),
@@ -46,10 +65,10 @@ class PageController extends Controller
 				'multi' => MultiVariableContent::multiConvert($page->view->variables),
 				'number' => $number,
 				'preview' => $this->preview(),
-                'locale' => $_SERVER['REMOTE_ADDR']
+                'locale' => $locale
 			]);
 		}
-		else abort(404);
+		else  abort(404);
 	}
 
 	/** 

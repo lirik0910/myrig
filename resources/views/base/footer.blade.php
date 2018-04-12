@@ -1,8 +1,10 @@
 @php
 $productsPage = $select('App\Model\Base\Page')->where('parent_id', 0)->where('view_id', 3)->first();
-
+$context = $select('App\Model\Base\Context')->where('title', $locale)->first();
+//var_dump($context); die;
 $otherPages = $select('App\Model\Base\Page')
 	->where('parent_id', 0)
+	->where('context_id')
 	->where(function ($q) {
 		return $q
 			->orWhere('view_id', 4)
@@ -130,15 +132,15 @@ $courses = $select('App\Model\Shop\ExchangeRate')->get()->groupBy('title');
 					</div>
 					<a href="#call" class="btn-default reg-c" data-wpel-link="internal">Contact us</a>
 					<div class="locale-switcher">
-						<a title="USA" href="{{ url('/') }}" data-wpel-link="external" rel="nofollow external noopener noreferrer">
+						<a title="USA" href="{{ $it->link . 'en' }}" data-wpel-link="external" rel="nofollow external noopener noreferrer">
 							<img src="{{ asset('uploads/design/us.png') }}" alt="">
 						</a>
 						
-						<a title="UKR" href="{{ url('/') }}" data-wpel-link="internal">
+						<a title="UKR" href="{{ $it->link . 'ua' }}" data-wpel-link="internal">
 							<img src="{{ asset('uploads/design/ua.png') }}" alt="">
 						</a>
 						
-						<a title="RUS" href="{{ url('/') }}" data-wpel-link="external" rel="nofollow external noopener noreferrer">
+						<a title="RUS" href="{{ $it->link . 'ru' }}" data-wpel-link="external" rel="nofollow external noopener noreferrer">
 							<img src="{{ asset('uploads/design/ru.png') }}" alt="ru">
 						</a>
 					</div>

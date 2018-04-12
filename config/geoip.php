@@ -126,7 +126,7 @@ return [
 
     'default_location' => [
         'ip' => '127.0.0.0',
-        'iso_code' => 'US',
+        'iso_code' => 'UA',
         'country' => 'Ukraine',
         'city' => 'Mariupol',
         'state' => '',
