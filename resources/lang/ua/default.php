@@ -39,10 +39,12 @@ return [
     'footer_hosting' => 'Хостинг',
     'contact_us_button' => 'Связаться с нами',
     'thank_you' => 'Спасибо за оставленный запрос!',
-    'manager_contanct' => 'Менеджер с вами свяжется.',
+    'manager_contact' => 'Менеджер с вами свяжется.',
     'create_ticket_button' => 'Создать тикет',
     'attach_file' => 'Прикрепить файл',
     'order_create' => 'Заказ был успешно создан!',
+    'close' => 'Закрыть',
+    'okay' => 'Хорошо',
 
     //base.header
     'welcome_title' => 'Добро пожаловать',
