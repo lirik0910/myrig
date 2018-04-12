@@ -8,12 +8,10 @@
         "php": ">=7.1.3",
 
         "barryvdh/laravel-dompdf": "^0.8.2",
-        "barryvdh/laravel-snappy": "^0.4.1",
         "dompdf/dompdf": "^0.8.2",
         "fideloper/proxy": "~4.0",
         "folklore/image": "0.3.*",
         "h4cc/wkhtmltopdf-amd64": "0.12.x",
-
         "buzz/laravel-google-captcha": "^2.1",
         
         
