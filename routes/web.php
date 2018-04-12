@@ -11,11 +11,9 @@
 |
 */
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
-/*Route::get('/', function (Request $request){
-    var_dump($request); die;
-    //geoip();
-});*/
+
 foreach (\App\Model\Base\Page::all() as $page) {
 	Route::get($page->link, 'PageController@view');
 }
@@ -27,6 +25,15 @@ Route::prefix('connector')
 		Route::delete('cart', 'SessionController@delete');
 });
 
+Route::post('switch-locale', function (Request $request){
+    $locale = $request->post('locale');
+
+    if($locale){
+        Cache::put('locale', $locale, 86400);
+        App::setLocale($locale);
+    }
+    //var_dump(App::getLocale()); die;
+});
 Route::post('create_report', 'ReportController@create');
 Route::post('rep-avail', 'ProductController@all');
 Route::post('profile', 'ClientAuthController@updateClient');

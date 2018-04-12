@@ -1,4 +1,4 @@
-@php 
+@php
 $products = $get($settings['site.products_page']);
 $service = $get($settings['site.service_page']);
 $news = $get($settings['site.news_page']);

@@ -313,7 +313,7 @@ class PageController extends Controller
 		 */
 		try {
 			$request->validate([
-				'link' => [Rule::unique('pages')->ignore($id)]
+				//'link' => [Rule::unique('pages')->ignore($id)]
 			]);
 		}
 		catch (\Exception $e) {

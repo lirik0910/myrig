@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Cache;
 
+
 class PageController extends Controller
 {
 	/**
@@ -22,12 +23,13 @@ class PageController extends Controller
 	 */
 	public function view(Request $request, $number = null)
 	{
-	    //var_dump($custom_locale); die;
-/*	    if($custom_locale){
-	        App::setLocale($custom_locale);
-        }*/
+        $custom_locale = $request->get('locale');
+        if($custom_locale){
+            Cache::put('locale', $custom_locale, 86400);
+            App::setLocale($custom_locale);
+        }
         $locale = App::getLocale();
-//var_dump($locale); die;
+
 		$link = $request->decodedPath();
 		$link = $link === '/' ?
 			$link :
@@ -37,8 +39,6 @@ class PageController extends Controller
 			$link = explode('/' . $number, $link)[0];
 		}
 
-		//var_dump($link); die;
-
 		$contexts = Context::all();
 		$locale_context_id = 1;
 
@@ -47,20 +47,20 @@ class PageController extends Controller
                 $locale_context_id = $context->id;
             }
         }
-//var_dump($locale); die;
+
 		if ($page = Page::where('link', $link)->where('context_id', $locale_context_id)->with('view')->first()) {
 		    if ($page->link == 'checkout' || $page->link == 'cart'){
 		        if(count($this->getInSessionCart()) < 1){
                     return redirect('shop');
                 }
             }
-//var_dump($page); die;
+
 			return view($page->view->path, [
 				'it' => $page,
 				'get' => $this->get(),
 				'request' => $request,
 				'select' => $this->select(),
-				'settings' => $this->settings(),
+				'settings' => $this->settings($locale_context_id),
 				'inCart' => $this->getInSessionCart(),
 				'multi' => MultiVariableContent::multiConvert($page->view->variables),
 				'number' => $number,
@@ -107,10 +107,10 @@ class PageController extends Controller
 	 * Get settings collection of current context
 	 * @return array
 	 */
-	public function settings() : array
+	public function settings($context_id) : array
 	{
 		try {
-			$all = Setting::where('context_id', 1)->get();
+			$all = Setting::where('context_id', $context_id)->get();
 		}
 		catch (\Exception $e) {
 			logger($e->getMessage());
