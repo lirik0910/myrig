@@ -16,20 +16,41 @@ class CheckLocale
      */
     public function handle($request, Closure $next)
     {
-        //var_dump($current_domain); die;
+        //var_dump('dvsdvsd'); die;
         if($request->method() == 'GET'){
             $current_domain = $_SERVER['HTTP_HOST'];
-            $session_locale = session()->get('locale');
-            //var_dump($cache); die;
-            if(!$session_locale){
-                $clientIp = $_SERVER['REMOTE_ADDR'];
-                $locale = geoip($clientIp)->iso_code;
-                if($locale != 'UA' &&  $locale != 'RU'){
-                    $locale = 'en';
+
+            $clientIp = $_SERVER['REMOTE_ADDR'];
+            $locale = strtolower(geoip($clientIp)->iso_code);
+            if($locale !== 'ua' && $locale !== 'ru'){
+                $locale = 'en';
+            }
+
+            if($request->get('locale')){
+                session()->put('locale', $request->get('locale'));
+            }
+            //var_dump($locale, $current_domain); die;
+            if($locale == 'ua' && $current_domain !== env('UA_DOMAIN') || $locale == 'ru' && $current_domain !== env('RU_DOMAIN') || $locale =='en' && $current_domain !== env('EN_DOMAIN')){
+                //var_dump($locale, $current_domain); die;
+                if(session()->get('locale')){
+                    switch (session()->get('locale')){
+                        case 'ua':
+                            App::setLocale('ua');
+                            return redirect(env('UA_DOMAIN'));
+                            break;
+                        case 'ru':
+                            App::setLocale('ru');
+                            return redirect(env('RU_DOMAIN'));
+                            break;
+                        case 'en':
+                            App::setLocale('en');
+                            return redirect(env('EN_DOMAIN'));
+                            break;
+                    }
                 } else{
-                    $locale = strtolower($locale);
+                    App::setLocale($locale);
                 }
-                session()->put('locale', $locale);
+            } else{
                 App::setLocale($locale);
             }
         }

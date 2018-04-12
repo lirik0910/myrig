@@ -11,11 +11,19 @@ use Illuminate\Support\Facades\App;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Collection;
+use Barryvdh\DomPDF\Facade as PDF;
+use Dompdf\Dompdf;
 use Illuminate\Support\Facades\Cache;
 
 
 class PageController extends Controller
 {
+	//private $pdf;
+
+	//public function __construct(Pdf $pdf)
+   // {
+   //     $this->pdf = $pdf;
+   // }
 	/**
 	 * Get page
 	 * @param Request $request
@@ -162,6 +170,19 @@ class PageController extends Controller
 
 			return $dest;
 		};
+	}
+
+	public function pdf(Request $request, $number = null)
+	{
+		
+    	
+        $html = view('layouts.pdf', ['number' => $number]);
+    	$html = mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8');
+    	$pdf = \App::make('dompdf.wrapper');
+    	$pdf->loadHTML($html)->setPaper(array(0, 0, 795.28, 765.89), 'landscape');
+    	return $pdf->download('invoice');
+    	    	
+
 	}
 }
 

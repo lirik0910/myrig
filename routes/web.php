@@ -24,6 +24,7 @@ Route::prefix('connector')
 		Route::post('cart', 'SessionController@add');
 		Route::delete('cart', 'SessionController@delete');
 });
+Route::get('download-pdf/{number}', 'PageController@pdf');
 
 Route::post('create_report', 'ReportController@create');
 Route::post('rep-avail', 'ProductController@all');

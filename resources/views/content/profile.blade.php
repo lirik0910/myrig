@@ -105,7 +105,8 @@
                                             @if(count($order->products) > 1)
                                                 <div class="table-cell table-product-cell">
                                                     <div class="order_thumbs order_thumbs_several">
-                                                        <span class="several_products">@php echo count($order->products) @endphp items</span>
+                                                        <span class="several_products">@php echo count($order->products) 
+                                                        @endphp items</span>
                                                         <a href=".order-{{$order->number}}" data-wpel-link="internal" class="">
                                                             <span class="show_products"><i class="fa fa-chevron-down" aria-hidden="true"></i>Show</span>
                                                             <span class="hide_products"><i class="fa fa-chevron-up" aria-hidden="true"></i>Hide</span>
