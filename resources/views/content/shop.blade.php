@@ -1,21 +1,22 @@
 @extends('layouts.app')
 
-@php 
+@php
+//var_dump($it->context_id); die;
 $mainProducts = $select('\App\Model\Shop\Product')
 	->whereHas('categories', function ($q) {
 		$q->where('title', 'Base');
-		$q->where('delete', 0);
-		$q->where('context_id', $it->context_id);
 	})
+	->where('delete', 0)
+	->where('context_id', $it->context_id)
 	->with('page', 'options', 'images')
 	->get();
 
 $secondaryProducts = $select('\App\Model\Shop\Product')
 	->whereHas('categories', function ($q) {
 		$q->where('title', 'Secondary');
-		$q->where('delete', 0);
-		$q->where('context_id', $it->context_id);
 	})
+	->where('delete', 0)
+	->where('context_id', $it->context_id)
 	->with('page', 'options', 'images')
 	->get();
 //var_dump($secondaryProducts); die;

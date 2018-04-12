@@ -23,12 +23,16 @@ class PageController extends Controller
 	 */
 	public function view(Request $request, $number = null)
 	{
-        $custom_locale = $request->get('locale');
+/*        $custom_locale = $request->get('locale');
+        //var_dump($custom_locale); die;
         if($custom_locale){
-            Cache::put('locale', $custom_locale, 86400);
+            session()->put('locale', $custom_locale);
+            //Cache::put('locale', $custom_locale, 86400);
             App::setLocale($custom_locale);
-        }
+        }*/
         $locale = App::getLocale();
+
+        //var_dump($locale); die;
 
 		$link = $request->decodedPath();
 		$link = $link === '/' ?

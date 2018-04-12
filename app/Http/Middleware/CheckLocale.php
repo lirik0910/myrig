@@ -16,8 +16,12 @@ class CheckLocale
      */
     public function handle($request, Closure $next)
     {
+        //var_dump($current_domain); die;
         if($request->method() == 'GET'){
-            if(!Cache::get('locale')){
+            $current_domain = $_SERVER['HTTP_HOST'];
+            $session_locale = session()->get('locale');
+            //var_dump($cache); die;
+            if(!$session_locale){
                 $clientIp = $_SERVER['REMOTE_ADDR'];
                 $locale = geoip($clientIp)->iso_code;
                 if($locale != 'UA' &&  $locale != 'RU'){
@@ -25,7 +29,7 @@ class CheckLocale
                 } else{
                     $locale = strtolower($locale);
                 }
-                Cache::put('locale', $locale, 86400);
+                session()->put('locale', $locale);
                 App::setLocale($locale);
             }
         }
