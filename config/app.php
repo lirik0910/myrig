@@ -163,11 +163,6 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        //Vsmoraes\Pdf\PdfServiceProvider::class,
-
-       // Barryvdh\Snappy\ServiceProvider::class
-
-        Barryvdh\DomPDF\ServiceProvider::class
 
     ],
 
@@ -220,9 +215,6 @@ return [
         //'Image' => Folklore\Image\Facades\Image::class,
         'Zendesk' => Huddle\Zendesk\Facades\Zendesk::class,
         'Image' => Intervention\Image\Facades\Image::class,
-
-
-        'PDF' => Barryvdh\DomPDF\Facade::class,
         'GeoIP' => \Torann\GeoIP\Facades\GeoIP::class,
     ],
 

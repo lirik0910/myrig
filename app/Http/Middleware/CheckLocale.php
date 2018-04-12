@@ -16,7 +16,6 @@ class CheckLocale
      */
     public function handle($request, Closure $next)
     {
-        //var_dump('dvsdvsd'); die;
         if($request->method() == 'GET'){
             $current_domain = $_SERVER['HTTP_HOST'];
 

@@ -61,7 +61,7 @@
                                     <h4 class="woocommerce-notice woocommerce-notice--success woocommerce-thankyou-order-received">Thank you. Your order was successfully accepted.</h4>
                                     <ul class="woocommerce-order-overview woocommerce-thankyou-order-details order_details">
                                         <li class="woocommerce-order-overview__order order">
-                                            Order number:						<strong class="order-number">{{$order->number}}</strong>
+                                            Order number:						<strong>{{$order->number}}</strong>
                                         </li>
                                         <li class="woocommerce-order-overview__date  ">
                                             Date:						<strong>@php echo date('d-m-Y', strtotime($order->created_at)) @endphp</strong>
@@ -79,9 +79,7 @@
                                 <div class="article-text">
                                     <div class="widget wDelivery">
                                         <section class="woocommerce-order-details">
-                                        <a href="download-pdf/{{ $order->number }}">DOWNLOAD INVOICE</a>
                                             <h2 class="woocommerce-order-details__title">Info about order</h2>
-                                            
                                             <table class="woocommerce-table woocommerce-table--order-details shop_table order_details">
                                                 <thead>
                                                 <tr>

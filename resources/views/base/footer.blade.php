@@ -135,11 +135,10 @@ $courses = $select('App\Model\Shop\ExchangeRate')->get()->groupBy('title');
 						<a title="USA" href="http://{{ env('EN_DOMAIN') . '/?locale=en' }}" data-wpel-link="external" rel="nofollow external noopener noreferrer">
 							<img src="{{ asset('uploads/design/us.png') }}" alt="">
 						</a>
-						
 						<a title="UKR" href="http://{{ env('UA_DOMAIN') . '/?locale=ua' }}" data-wpel-link="internal">
 							<img src="{{ asset('uploads/design/ua.png') }}" alt="">
 						</a>
-						
+
 						<a title="RUS" href="http://{{ env('RU_DOMAIN') . '/?locale=ru' }}" data-wpel-link="external" rel="nofollow external noopener noreferrer">
 							<img src="{{ asset('uploads/design/ru.png') }}" alt="ru">
 						</a>
