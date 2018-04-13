@@ -17,6 +17,7 @@
         "laravel/framework": "5.6.*",
         "laravel/scout": "^4.0",
         "laravel/tinker": "~1.0",
+        "nicklayb/laravel-db-import": "^1.1",
         "torann/geoip": "^1.0"
     },
     "require-dev": {

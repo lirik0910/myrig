@@ -149,6 +149,7 @@ return [
         Huddle\Zendesk\Providers\ZendeskServiceProvider::class,
         \Torann\GeoIP\GeoIPServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
+        Nicklayb\LaravelDbImport\ServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -218,6 +219,7 @@ return [
         'Image' => Intervention\Image\Facades\Image::class,
         'GeoIP' => \Torann\GeoIP\Facades\GeoIP::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
+
     ],
 
 ];
