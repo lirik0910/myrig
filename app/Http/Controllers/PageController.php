@@ -25,6 +25,7 @@ class PageController extends Controller
 	{
         //$locale = App::getLocale();
         //var_dump($request->getSchemeAndHttpHost()); die;
+        //var_dump($request->server('HTTP_HOST')); die;
         switch ($request->getSchemeAndHttpHost()) {
             case env('UA_DOMAIN'):
                 $locale = 'ua';
