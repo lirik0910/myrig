@@ -12,20 +12,7 @@
 */
 use Illuminate\Http\Request;
 
-/*Route::domain('{domain_locale}.' . env('EN_DOMAIN'))->group(function () {
-    foreach (\App\Model\Base\Page::all() as $page) {
-        Route::get($page->link, 'PageController@view');
-    }
-}) ;*/
 
-/*Route::group(array('domain' => env('RU_DOMAIN')), function (){
-    foreach (\App\Model\Base\Page::all() as $page) {
-        Route::get($page->link, array(
-            'as' => env('EN_DOMAIN'),
-            'uses' => 'PageController@view'
-        ));
-    }
-});*/
 foreach (\App\Model\Base\Page::all() as $page) {
 	Route::get($page->link, 'PageController@view');
 }

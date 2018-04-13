@@ -23,7 +23,6 @@ class PageController extends Controller
 	 */
 	public function view(Request $request, $number = null, $domain_locale = null)
 	{
-        //$locale = App::getLocale();
         //var_dump($request->getSchemeAndHttpHost()); die;
         //var_dump($request->server('HTTP_HOST')); die;
         switch ($request->getSchemeAndHttpHost()) {
@@ -43,10 +42,6 @@ class PageController extends Controller
                 break;
         }
         App::setLocale($locale);
-
-        //$locale = App::getLocale();
-
-        //var_dump($request); die;
 
 		$link = $request->decodedPath();
 		$link = $link === '/' ?
