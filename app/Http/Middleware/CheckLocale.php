@@ -35,15 +35,15 @@ class CheckLocale
                     switch (session()->get('locale')){
                         case 'ua':
                             App::setLocale('ua');
-                            return redirect()->away('http://' . env('UA_DOMAIN'));
+                            return redirect()->away(env('UA_DOMAIN'));
                             break;
                         case 'ru':
                             App::setLocale('ru');
-                            return redirect()->away('http://' . env('RU_DOMAIN'));
+                            return redirect()->away(env('RU_DOMAIN'));
                             break;
                         case 'en':
                             App::setLocale('en');
-                            return redirect()->away('http://' . env('EN_DOMAIN'));
+                            return redirect()->away(env('EN_DOMAIN'));
                             break;
                     }
                 } else{

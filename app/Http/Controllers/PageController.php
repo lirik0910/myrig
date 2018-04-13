@@ -30,7 +30,24 @@ class PageController extends Controller
             //Cache::put('locale', $custom_locale, 86400);
             App::setLocale($custom_locale);
         }*/
-        $locale = App::getLocale();
+
+        switch ($request->getSchemeAndHttpHost()) {
+        	case env('UA_DOMAIN'):
+        		$locale = 'ua';
+        		break;
+
+        	case env('RU_DOMAIN'):
+        		$locale = 'ru';
+        		break;
+
+        	case env('EN_DOMAIN'):
+        		$locale = 'en';
+        		break;
+
+        	default:
+        		break;
+        }
+        App::setLocale($locale);
 
         //var_dump($locale); die;
 
