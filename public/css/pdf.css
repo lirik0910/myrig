@@ -47,7 +47,7 @@
 }
 
 .border-top {
-	border-top: 3px, solid #dee2e6;
+	border-top: 3px solid #dee2e6;
 }
 
 
@@ -64,11 +64,7 @@ table.minimalistBlack td, table.minimalistBlack th {
   padding: 5px 4px;
 }
 table.minimalistBlack tbody td {
-<<<<<<< HEAD
-  font-size: 18px;
-=======
   font-size: 23px;
->>>>>>> 2d67bf5f582d6d559c42732db2fd9641b42e033d
   line-height: 3;
 }
 table.minimalistBlack tr:nth-child(even) {
@@ -78,34 +74,22 @@ table.minimalistBlack thead {
 
   }
 table.minimalistBlack thead th {
-<<<<<<< HEAD
-  font-size: 14px;
-=======
   font-size: 18px;
->>>>>>> 2d67bf5f582d6d559c42732db2fd9641b42e033d
   font-weight: normal;
   color: #000000;
   text-align: center;
   vertical-align: bottom;
-  padding: 4px, 5px;
+  padding: 4px 5px;
 }
 table.minimalistBlack thead tr {
 
 }
 table.minimalistBlack tfoot td {
-<<<<<<< HEAD
   font-size: 14px;
 }
 
 .description {
-	font-size: 14px;
-=======
-  font-size: 18px;
-}
-
-.description {
 	font-size: 18px;
->>>>>>> 2d67bf5f582d6d559c42732db2fd9641b42e033d
 	vertical-align: bottom;
 }
 
@@ -142,7 +126,7 @@ table.minimalist thead th {
   color: #000000;
   text-align: center;
   vertical-align: bottom;
-  padding: 4px, 5px;
+  padding: 4px 5px;
 }
 
 .font_pay {
@@ -150,7 +134,7 @@ table.minimalist thead th {
     font-family: "Roboto";
     color: #aaa;
     line-height: 1.5;
-    font-weight: 350;
+    font-weight: 300;
 }
 
  #green {

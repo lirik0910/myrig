@@ -41,6 +41,7 @@ class PageController extends Controller
             default:
                 break;
         }
+
         App::setLocale($locale);
 
 		$link = $request->decodedPath();
