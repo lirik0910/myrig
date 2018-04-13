@@ -2,7 +2,7 @@
 
 namespace App\Http\Middleware;
 
-use Closure;
+use Closure; 
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\App;
 class CheckLocale
@@ -36,7 +36,6 @@ class CheckLocale
                 if(session()->get('locale')){
                     switch (session()->get('locale')){
                         case 'ua':
-                            //App::setLocale('ua');
                             return redirect(env('UA_DOMAIN'));
                             break;
                         case 'ru':

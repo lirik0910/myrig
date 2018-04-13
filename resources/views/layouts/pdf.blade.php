@@ -3,11 +3,12 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="{{ asset('css/pdf.css') }}">
 </head>
 <body style="margin: 0; padding: 0; font: 400 30px Calibri, sans-serif;">
 @php
     $order = App\Model\Shop\Order::where('number', $number)->with('orderDeliveries', 'products')->first();
-        $delivery = App\Model\Shop\Delivery::where('id', $order->orderDeliveries->delivery_id)->first();
+    $delivery = App\Model\Shop\Delivery::where('id', $order->orderDeliveries->delivery_id)->first();
 @endphp
 <div style="width: 1000px; margin: 0 auto; padding-top: 270px">
     <img src="{{ url('uploads/design/dots.png') }}" alt="" style="position: absolute; top: 0; right: 650px;">
@@ -30,53 +31,98 @@
             </tr>
             <tr>
                 <td>{{ date('d F`y') }}</td>
-                <td style="text-align: right;">{{ $order->number }}</td>
+                <td style="text-align: right;">{{$order->number }}</td>
             </tr>
         </table>
     </div>
-    <div>
-        <table style="width: 100%; border-collapse: collapse; margin-top: 100px; font-size: 30px;">
-            <tr style="text-transform: uppercase; text-align: center; font-size: 20px;">
-                <td style="text-align: left; font-weight: 400; padding: 15px 5px; width: 500px; border-bottom: 5px solid #7f7e7c;">Description</td>
-                <td style="font-weight: 400; width: 100px; border-bottom: 5px solid #7f7e7c;">Quantity</td>
-                <td style="font-weight: 400; width: 200px; border-bottom: 5px solid #7f7e7c;">Price</td>
-                <td style="font-weight: 400; width: 200px; border-bottom: 5px solid #7f7e7c;">Total</td>
+    <div style="margin-top: 70px;">
+        <table class="minimalistBlack">
+            <thead id="bottom">
+            <tr>
+                <td><span class="description">Description</span></td>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Total</th>
             </tr>
+            </thead>
+            <tbody id="bottom">
             @foreach($order->products as $product)
                 @php
                     if($product->auto_price){
-                       $price = number_format($product->calcAutoPrice(), 2, '.', '');
-                       } else{
-                       $price = number_format($product->price, 2, '.', '');
-                        }
+                     $price = number_format($product->calcAutoPrice(), 2, '.', '');
+                     } else{
+                     $price = number_format($product->price, 2, '.', '');
+                      }
                 @endphp
-                <tr style="text-align: center;">
-                    <td style="text-align: left; padding: 20px 5px;">{{ $product->title }}</td>
-                    <td>{{$product->pivot->count}}</td>
-                    <td>{{ number_format($price, 2, '.', '') }}</td>
-                    <td style="color: #76a364">{{ number_format($price * $product->pivot->count, 2, '.', '') }}</td>
+                <tr>
+                    <td>{{ $product->title }}</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td align="center">{{$product->pivot->count}}</td>
+                    <td align="center">{{number_format($price, 2, '.', '') }}</td>
+                    <td align="center" id="green">{{number_format($price * $product->pivot->count, 2, '.', '') }}</td>
                 </tr>
             @endforeach
 
+            </tbody>
         </table>
 
+        <table>
+            <tr>
+                <td style="width: 625px;">
 
-        <div style="float: right; width: 333.3px">
-            <table style="width: 333.3px; border-collapse: collapse; font-size: 23px;">
-                <tr style="text-transform: uppercase;">
-                    <td style="padding: 40px 0 15px 10px;">Total</td>
-                    <td style="padding: 40px 0 15px 10px;">{{ number_format($order->cost, 2, '.', '') }}</td>
-                </tr>
-                <tr style="text-transform: uppercase;">
-                    <th style="font-weight: 600; padding: 15px 0 15px 10px;">Tax</th>
-                    <th style="font-weight: 600; padding: 15px 0 15px 10px;">$00.0</th>
-                </tr>
-                <tr style="text-transform: uppercase;">
-                    <td style="padding: 15px 0 15px 10px; font-weight: 600;">Amount Due</td>
-                    <td style="color: #76a364; font-size: 40px; font-weight: 600;">{{ number_format($order->cost, 2, '.', '') }}</td>
-                </tr>
-            </table>
-        </div>
+                    <table>
+                        <tr><td><table class="minimalist">
+                                    <tbody>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong></strong></td>
+                                        <td><strong></strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong></strong></td>
+                                        <td><h2></h2></td>
+                                    </tr>
+                                    </tbody>
+                                </table></td></tr>
+                    </table>
+
+
+                </td>
+
+                <td>
+
+                    <table>
+                        <tr><td><table class="minimalist" style="width: 375px;">
+                                    <tbody>
+                                    <tr id="bottom">
+                                        <td id="bottom">TOTAL</td>
+                                        <td id="bottom">{{ number_format($order->cost, 2, '.', '') }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td id="bottom"><strong>TAX</strong></td>
+                                        <td id="bottom"><strong>$0.00</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="line-height: 30px;"><strong>AMOUNT DUE</strong></td>
+                                        <td id="green" style="line-height: 30px;"><h2>{{ number_format($order->cost, 2, '.', '') }}</h2></td>
+                                    </tr>
+                                    </tbody>
+                                </table></td></tr>
+                    </table>
+
+
+                </td>
+            </tr>
+        </table>
+
 
     </div>
     <p style="text-transform: uppercase; margin: 350px 0 0 0; font-size: 25px;">Payment Terms</p>
