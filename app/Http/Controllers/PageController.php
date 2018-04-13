@@ -11,19 +11,11 @@ use Illuminate\Support\Facades\App;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Collection;
-use Barryvdh\DomPDF\Facade as PDF;
-use Dompdf\Dompdf;
 use Illuminate\Support\Facades\Cache;
 
 
 class PageController extends Controller
 {
-	//private $pdf;
-
-	//public function __construct(Pdf $pdf)
-   // {
-   //     $this->pdf = $pdf;
-   // }
 	/**
 	 * Get page
 	 * @param Request $request
@@ -31,12 +23,33 @@ class PageController extends Controller
 	 */
 	public function view(Request $request, $number = null)
 	{
-        $custom_locale = $request->get('locale');
+/*        $custom_locale = $request->get('locale');
+        //var_dump($custom_locale); die;
         if($custom_locale){
-            Cache::put('locale', $custom_locale, 86400);
+            session()->put('locale', $custom_locale);
+            //Cache::put('locale', $custom_locale, 86400);
             App::setLocale($custom_locale);
+        }*/
+
+        switch ($request->getSchemeAndHttpHost()) {
+        	case env('UA_DOMAIN'):
+        		$locale = 'ua';
+        		break;
+
+        	case env('RU_DOMAIN'):
+        		$locale = 'ru';
+        		break;
+
+        	case env('EN_DOMAIN'):
+        		$locale = 'en';
+        		break;
+
+        	default:
+        		break;
         }
-        $locale = App::getLocale();
+        App::setLocale($locale);
+
+        //var_dump($locale); die;
 
 		$link = $request->decodedPath();
 		$link = $link === '/' ?
@@ -178,4 +191,5 @@ class PageController extends Controller
     	$pdf->loadHTML($html)->setPaper(array(0, 0, 895.28, 765.89), 'landscape');
     	return $pdf->download('invoice');
 	}
+}
 

@@ -1002,21 +1002,7 @@ $(document).on('change', '.cart-form  input.qty', function(e) {
 		
 	}
 		
-	$('#invoice-pdf_generate').on('click', function(e){
-		e.preventDefault();
-		var number = $(document).find('.order-number').text();
-
-		$.ajax({
-			headers: {
-       		'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-   			},
-			url: global.url + 'download-pdf',
-			method: 'POST',
-			data: {number: number},
-		});	
-		//console.log('hghfj');
-	});
-
+		
 	 $('.expand_order').click(function(e){
 		e.preventDefault();
 		$('.items_order').hide()

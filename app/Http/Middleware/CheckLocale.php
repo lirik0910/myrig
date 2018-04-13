@@ -2,7 +2,7 @@
 
 namespace App\Http\Middleware;
 
-use Closure;
+use Closure; 
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\App;
 class CheckLocale
@@ -17,15 +17,39 @@ class CheckLocale
     public function handle($request, Closure $next)
     {
         if($request->method() == 'GET'){
-            if(!Cache::get('locale')){
-                $clientIp = $_SERVER['REMOTE_ADDR'];
-                $locale = geoip($clientIp)->iso_code;
-                if($locale != 'UA' &&  $locale != 'RU'){
-                    $locale = 'en';
+            $current_domain = $_SERVER['HTTP_HOST'];
+
+            $clientIp = $_SERVER['REMOTE_ADDR'];
+            $locale = strtolower(geoip($clientIp)->iso_code);
+            if($locale !== 'ua' && $locale !== 'ru'){
+                $locale = 'en';
+            }
+
+            if($request->get('locale')){
+                session()->put('locale', $request->get('locale'));
+            }
+            //var_dump($locale, $current_domain); die;
+            if($locale == 'ua' && $current_domain !== env('UA_DOMAIN') || $locale == 'ru' && $current_domain !== env('RU_DOMAIN') || $locale =='en' && $current_domain !== env('EN_DOMAIN')){
+                //var_dump($locale, $current_domain); die;
+                if(session()->get('locale')){
+                    switch (session()->get('locale')){
+                        case 'ua':
+                            App::setLocale('ua');
+                            return redirect()->away(env('UA_DOMAIN'));
+                            break;
+                        case 'ru':
+                            App::setLocale('ru');
+                            return redirect()->away(env('RU_DOMAIN'));
+                            break;
+                        case 'en':
+                            App::setLocale('en');
+                            return redirect()->away(env('EN_DOMAIN'));
+                            break;
+                    }
                 } else{
-                    $locale = strtolower($locale);
+                    App::setLocale($locale);
                 }
-                Cache::put('locale', $locale, 86400);
+            } else{
                 App::setLocale($locale);
             }
         }

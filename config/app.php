@@ -221,7 +221,7 @@ return [
 
 
         'PDF' => Barryvdh\DomPDF\Facade::class,
-        'GeoIP' => \Torann\GeoIP\Facades\GeoIP::class,
+        'GeoIP' => \Torann\GeoIP\Facades\GeoIP::class
     ],
 
 ];
