@@ -132,14 +132,14 @@ $courses = $select('App\Model\Shop\ExchangeRate')->get()->groupBy('title');
 					</div>
 					<a href="#call" class="btn-default reg-c" data-wpel-link="internal">{{ _('default.contact_us_button') }}</a>
 					<div class="locale-switcher">
-						<a title="USA" href="http://{{ env('EN_DOMAIN') . '/?locale=en' }}" data-wpel-link="external" rel="nofollow external noopener noreferrer">
+						<a title="USA" href="{{ env('EN_DOMAIN') . '?locale=en' }}" data-wpel-link="external" rel="nofollow external noopener noreferrer">
 							<img src="{{ asset('uploads/design/us.png') }}" alt="">
 						</a>
-						<a title="UKR" href="http://{{ env('UA_DOMAIN') . '/?locale=ua' }}" data-wpel-link="internal">
+						<a title="UKR" href="{{ env('UA_DOMAIN') . '?locale=ua' }}" data-wpel-link="internal">
 							<img src="{{ asset('uploads/design/ua.png') }}" alt="">
 						</a>
 
-						<a title="RUS" href="http://{{ env('RU_DOMAIN') . '/?locale=ru' }}" data-wpel-link="external" rel="nofollow external noopener noreferrer">
+						<a title="RUS" href="{{ env('RU_DOMAIN') . '?locale=ru' }}" data-wpel-link="external" rel="nofollow external noopener noreferrer">
 							<img src="{{ asset('uploads/design/ru.png') }}" alt="ru">
 						</a>
 					</div>

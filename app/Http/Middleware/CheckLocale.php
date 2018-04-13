@@ -28,26 +28,29 @@ class CheckLocale
             if($request->get('locale')){
                 session()->put('locale', $request->get('locale'));
             }
+            //var_dump(session()->get('locale'));// die;
+/*            if(!session()->get('locale')){
+                session()->put('locale', $locale);
+            }*/
             if($locale == 'ua' && $current_domain !== env('UA_DOMAIN') || $locale == 'ru' && $current_domain !== env('RU_DOMAIN') || $locale =='en' && $current_domain !== env('EN_DOMAIN')){
                 if(session()->get('locale')){
                     switch (session()->get('locale')){
                         case 'ua':
-                            App::setLocale('ua');
-                            return redirect()->away('http://' . env('UA_DOMAIN'));
+                            //App::setLocale('ua');
+                            return redirect(env('UA_DOMAIN'));
                             break;
                         case 'ru':
-                            App::setLocale('ru');
-                            return redirect()->away('http://' . env('RU_DOMAIN'));
+                            //App::setLocale('ru');
+                            return redirect(env('RU_DOMAIN'));
                             break;
                         case 'en':
-                            App::setLocale('en');
-                            return redirect()->away('http://' . env('EN_DOMAIN'));
+                           // App::setLocale('en');
+                            return redirect(env('EN_DOMAIN'));
                             break;
                     }
                 }
             }
         }
-
         return $next($request);
     }
 }

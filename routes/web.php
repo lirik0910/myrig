@@ -16,7 +16,7 @@ use Illuminate\Http\Request;
     foreach (\App\Model\Base\Page::all() as $page) {
         Route::get($page->link, 'PageController@view');
     }
-});*/
+}) ;*/
 
 /*Route::group(array('domain' => env('RU_DOMAIN')), function (){
     foreach (\App\Model\Base\Page::all() as $page) {

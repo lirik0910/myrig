@@ -23,14 +23,27 @@ class PageController extends Controller
 	 */
 	public function view(Request $request, $number = null, $domain_locale = null)
 	{
-/*        $custom_locale = $request->get('locale');
-        //var_dump($custom_locale); die;
-        if($custom_locale){
-            session()->put('locale', $custom_locale);
-            //Cache::put('locale', $custom_locale, 86400);
-            App::setLocale($custom_locale);
-        }*/
-        $locale = App::getLocale();
+        //$locale = App::getLocale();
+        //var_dump($request->getSchemeAndHttpHost()); die;
+        switch ($request->getSchemeAndHttpHost()) {
+            case env('UA_DOMAIN'):
+                $locale = 'ua';
+                break;
+
+            case env('RU_DOMAIN'):
+                $locale = 'ru';
+                break;
+
+            case env('EN_DOMAIN'):
+                $locale = 'en';
+                break;
+
+            default:
+                break;
+        }
+        App::setLocale($locale);
+
+        //$locale = App::getLocale();
 
         //var_dump($request); die;
 
@@ -42,8 +55,6 @@ class PageController extends Controller
 		if ($number) {
 			$link = explode('/' . $number, $link)[0];
 		}
-
-
 
 		$contexts = Context::all();
 		$locale_context_id = 1;
