@@ -175,10 +175,7 @@ class PageController extends Controller
         $html = view('layouts.pdf', ['number' => $number]);
     	$html = mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8');
     	$pdf = \App::make('dompdf.wrapper');
-    	$pdf->loadHTML($html)->setPaper(array(0, 0, 795.28, 765.89), 'landscape');
+    	$pdf->loadHTML($html)->setPaper(array(0, 0, 895.28, 765.89), 'landscape');
     	return $pdf->download('invoice');
-    	    	
-
 	}
-}
 
