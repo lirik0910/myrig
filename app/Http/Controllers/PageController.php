@@ -21,7 +21,7 @@ class PageController extends Controller
 	 * @param Request $request
 	 * @param (Integer) $number Number of order for success page
 	 */
-	public function view(Request $request, $number = null)
+	public function view(Request $request, $number = null, $domain_locale = null)
 	{
 /*        $custom_locale = $request->get('locale');
         //var_dump($custom_locale); die;
@@ -32,16 +32,18 @@ class PageController extends Controller
         }*/
         $locale = App::getLocale();
 
-        //var_dump($locale); die;
+        //var_dump($request); die;
 
 		$link = $request->decodedPath();
 		$link = $link === '/' ?
 			$link :
 			rtrim(ltrim($link, '/\\'), '/\\');
-		
+
 		if ($number) {
 			$link = explode('/' . $number, $link)[0];
 		}
+
+
 
 		$contexts = Context::all();
 		$locale_context_id = 1;

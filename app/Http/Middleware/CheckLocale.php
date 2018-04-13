@@ -28,9 +28,7 @@ class CheckLocale
             if($request->get('locale')){
                 session()->put('locale', $request->get('locale'));
             }
-            //var_dump($locale, $current_domain); die;
             if($locale == 'ua' && $current_domain !== env('UA_DOMAIN') || $locale == 'ru' && $current_domain !== env('RU_DOMAIN') || $locale =='en' && $current_domain !== env('EN_DOMAIN')){
-                //var_dump($locale, $current_domain); die;
                 if(session()->get('locale')){
                     switch (session()->get('locale')){
                         case 'ua':
@@ -46,11 +44,7 @@ class CheckLocale
                             return redirect()->away('http://' . env('EN_DOMAIN'));
                             break;
                     }
-                } else{
-                    App::setLocale($locale);
                 }
-            } else{
-                App::setLocale($locale);
             }
         }
 

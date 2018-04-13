@@ -12,8 +12,20 @@
 */
 use Illuminate\Http\Request;
 
+/*Route::domain('{domain_locale}.' . env('EN_DOMAIN'))->group(function () {
+    foreach (\App\Model\Base\Page::all() as $page) {
+        Route::get($page->link, 'PageController@view');
+    }
+});*/
 
-
+/*Route::group(array('domain' => env('RU_DOMAIN')), function (){
+    foreach (\App\Model\Base\Page::all() as $page) {
+        Route::get($page->link, array(
+            'as' => env('EN_DOMAIN'),
+            'uses' => 'PageController@view'
+        ));
+    }
+});*/
 foreach (\App\Model\Base\Page::all() as $page) {
 	Route::get($page->link, 'PageController@view');
 }
@@ -25,6 +37,7 @@ Route::prefix('connector')
 		Route::delete('cart', 'SessionController@delete');
 });
 
+Route::get('download-pdf/{number}', 'OrderController@invoice');
 Route::post('create_report', 'ReportController@create');
 Route::post('rep-avail', 'ProductController@all');
 Route::post('profile', 'ClientAuthController@updateClient');
