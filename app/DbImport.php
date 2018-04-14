@@ -147,7 +147,7 @@ class DbImport
             if($orders[$line['order_id']]){
                 $line_cost = $line['cost'] * $line['count'];
                 $orders[$line['order_id']]['cost'] += (int)$line_cost;
-                if($orders[$line['order_id']]['cost'] < 0){
+                if($orders[$line['order_id']]['cost'] < 0 || orders[$line['order_id']]['cost'] > 300000){
                     unset($orders[$line['order_id']]);
                 }
 /*                if(isset($orders[$line['order_id']])){
