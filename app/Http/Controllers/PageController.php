@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Cache;
 
+use App\DbImport as Import;
 
 class PageController extends Controller
 {
@@ -25,6 +26,9 @@ class PageController extends Controller
 	{
         //var_dump($request->getSchemeAndHttpHost()); die;
         //var_dump($request->server('HTTP_HOST')); die;
+/*        $import = new Import();
+        $import->process();*/
+
         switch ($request->getSchemeAndHttpHost()) {
             case env('UA_DOMAIN'):
                 $locale = 'ua';
@@ -41,7 +45,7 @@ class PageController extends Controller
             default:
                 break;
         }
-
+//var_dump($locale); die;
         App::setLocale($locale);
 
 		$link = $request->decodedPath();

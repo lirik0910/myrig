@@ -12,7 +12,6 @@ $otherPages = $select('App\Model\Base\Page')
 	})->get();
 
 $courses = $select('App\Model\Shop\ExchangeRate')->get()->groupBy('title');
-//var_dump($courses); die;
 @endphp
 
 <footer class="footer">
@@ -116,7 +115,6 @@ $courses = $select('App\Model\Shop\ExchangeRate')->get()->groupBy('title');
 								if (isset($contacts)) {
 									$contactsMulti = App\Model\Base\MultiVariableContent::multiConvert($contacts->view->variables);
 								}
-							//var_dump($contactsMulti)
 							@endphp
 
 							@isset($contactsMulti['Contact items'])
@@ -138,7 +136,6 @@ $courses = $select('App\Model\Shop\ExchangeRate')->get()->groupBy('title');
 						<a title="UKR" href="{{ env('UA_DOMAIN') . '?locale=ua' }}" data-wpel-link="internal">
 							<img src="{{ asset('uploads/design/ua.png') }}" alt="">
 						</a>
-
 						<a title="RUS" href="{{ env('RU_DOMAIN') . '?locale=ru' }}" data-wpel-link="external" rel="nofollow external noopener noreferrer">
 							<img src="{{ asset('uploads/design/ru.png') }}" alt="ru">
 						</a>
