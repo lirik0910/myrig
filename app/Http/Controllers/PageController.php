@@ -21,41 +21,34 @@ class PageController extends Controller
 	 * @param Request $request
 	 * @param (Integer) $number Number of order for success page
 	 */
-	public function view(Request $request, $number = null)
+	public function view(Request $request, $number = null, $domain_locale = null)
 	{
-/*        $custom_locale = $request->get('locale');
-        //var_dump($custom_locale); die;
-        if($custom_locale){
-            session()->put('locale', $custom_locale);
-            //Cache::put('locale', $custom_locale, 86400);
-            App::setLocale($custom_locale);
-        }*/
-
+        //var_dump($request->getSchemeAndHttpHost()); die;
+        //var_dump($request->server('HTTP_HOST')); die;
         switch ($request->getSchemeAndHttpHost()) {
-        	case env('UA_DOMAIN'):
-        		$locale = 'ua';
-        		break;
+            case env('UA_DOMAIN'):
+                $locale = 'ua';
+                break;
 
-        	case env('RU_DOMAIN'):
-        		$locale = 'ru';
-        		break;
+            case env('RU_DOMAIN'):
+                $locale = 'ru';
+                break;
 
-        	case env('EN_DOMAIN'):
-        		$locale = 'en';
-        		break;
+            case env('EN_DOMAIN'):
+                $locale = 'en';
+                break;
 
-        	default:
-        		break;
+            default:
+                break;
         }
-        App::setLocale($locale);
 
-        //var_dump($locale); die;
+        App::setLocale($locale);
 
 		$link = $request->decodedPath();
 		$link = $link === '/' ?
 			$link :
 			rtrim(ltrim($link, '/\\'), '/\\');
-		
+
 		if ($number) {
 			$link = explode('/' . $number, $link)[0];
 		}

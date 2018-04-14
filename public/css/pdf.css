@@ -1,0 +1,143 @@
+#logo {
+  width: 250px;
+  padding-top: 50px;
+  padding-bottom: 120px;
+  padding-left: 20px;
+}
+
+.header-main {
+	padding-top: 60px;
+	padding-left: 15px;
+	padding-bottom: 150px;
+	position: relative;
+	width: 100%;
+	height: auto;
+	z-index:9999;
+}
+
+.font {
+    font-size: 16px;
+    font-family: "Roboto";
+    color: #ffffff;
+    line-height: 1.5;
+    font-weight: 300;
+}
+
+.footer {
+	background-color: #59a655;
+	padding-top: 0;
+	width: 100%;
+	height: 174px;
+}
+
+.icons {
+	position: relative;
+	max-width: 100%;
+	max-height: 100%;
+}
+
+.client {
+	padding-top: 40px;
+	padding-bottom: 100px;
+}
+
+.pay {
+	padding-top: 220px;
+	padding-bottom: 80px;
+}
+
+.border-top {
+	border-top: 3px solid #dee2e6;
+}
+
+
+table.minimalistBlack {
+  font-family: Arial;
+  width: 100%;
+  height: 300px;
+  text-align: left;
+  border-collapse: collapse;
+  line-height: 3;
+  font-weight: 400;
+}
+table.minimalistBlack td, table.minimalistBlack th {
+  padding: 5px 4px;
+}
+table.minimalistBlack tbody td {
+  font-size: 23px;
+  line-height: 3;
+}
+table.minimalistBlack tr:nth-child(even) {
+  background: #eeefef;
+}
+table.minimalistBlack thead {
+
+  }
+table.minimalistBlack thead th {
+  font-size: 18px;
+  font-weight: normal;
+  color: #000000;
+  text-align: center;
+  vertical-align: bottom;
+  padding: 4px 5px;
+}
+table.minimalistBlack thead tr {
+
+}
+table.minimalistBlack tfoot td {
+  font-size: 14px;
+}
+
+.description {
+	font-size: 18px;
+	vertical-align: bottom;
+}
+
+#bottom {
+    border-bottom-width: 2px; 
+    border-bottom-style: solid; 
+    border-bottom-color: grey; 
+   }
+
+table.minimalist {
+  font-family: Arial;
+  width: 100%;
+  height: 190px;
+  text-align: left;
+  border-collapse: collapse;
+  line-height: 3;
+  font-weight: 400;
+}
+
+table.minimalist td {
+  padding: 5px 4px;
+}
+table.minimalist tbody td {
+  font-size: 23px;
+  line-height: 3;
+}
+
+table.minimalist thead {
+	
+  }
+table.minimalist thead th {
+  font-size: 18px;
+  font-weight: normal;
+  color: #000000;
+  text-align: center;
+  vertical-align: bottom;
+  padding: 4px 5px;
+}
+
+.font_pay {
+    font-size: 16px;
+    font-family: "Roboto";
+    color: #aaa;
+    line-height: 1.5;
+    font-weight: 300;
+}
+
+ #green {
+ 	color: #59a655;
+ }
+
