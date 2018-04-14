@@ -32,7 +32,7 @@
                 @endphp
                 <div class="row">
                     <div class="col-sm-4">
-                        <a href="{{url($parent_link->link)}}" class="article-link" data-wpel-link="internal"><i class="article-arrow"></i>Back to list</a>
+                        <a href="{{url($parent_link->link)}}" class="article-link" data-wpel-link="internal"><i class="article-arrow"></i>{{ __('default.back_to_list') }}</a>
                         <h1 style="word-wrap: break-word">{{$it->title}}</h1>
                         <div class="date">@php echo date('d F', strtotime($it->created_at)) @endphp<i class="fa fa-eye"></i>@if($visits){{$visits->count}}@else 1 @endif</div>
 					</div>
@@ -41,7 +41,7 @@
 							{!! $it->content !!}
 						</div>
 						<div class="links">
-							@isset($prev_link)<a href="{{url($prev_link->link)}}" class="article-link" data-wpel-link="internal"><i class="article-arrow"></i>Previous article</a>@endisset @isset($next_link)<a href="{{url($next_link->link)}}" class="article-link next-link" data-wpel-link="internal"><i class="article-arrow article-arrow-right"></i>Next article</a>@endisset
+							@isset($prev_link)<a href="{{url($prev_link->link)}}" class="article-link" data-wpel-link="internal"><i class="article-arrow"></i>{{__('default.previous_article')}}</a>@endisset @isset($next_link)<a href="{{url($next_link->link)}}" class="article-link next-link" data-wpel-link="internal"><i class="article-arrow article-arrow-right"></i>{{__('next_article')}}</a>@endisset
 						</div>
 					</div>
 				</div>

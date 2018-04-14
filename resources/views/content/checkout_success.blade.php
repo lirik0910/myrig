@@ -58,19 +58,19 @@
                         <div class="woocommerce-order">
                             <div class="col-sm-4" id="customer_details">
                                 <div class="widget wPay">
-                                    <h4 class="woocommerce-notice woocommerce-notice--success woocommerce-thankyou-order-received">Thank you. Your order was successfully accepted.</h4>
+                                    <h4 class="woocommerce-notice woocommerce-notice--success woocommerce-thankyou-order-received">{{ __('default.order_was_successfully_accepted') }}</h4>
                                     <ul class="woocommerce-order-overview woocommerce-thankyou-order-details order_details">
                                         <li class="woocommerce-order-overview__order order">
-                                            Order number:						<strong>{{$order->number}}</strong>
+                                            {{ __('default.order_number') }}						<strong>{{$order->number}}</strong>
                                         </li>
                                         <li class="woocommerce-order-overview__date  ">
-                                            Date:						<strong>@php echo date('d-m-Y', strtotime($order->created_at)) @endphp</strong>
+                                            {{ __('default.date')}} 						<strong>@php echo date('d-m-Y', strtotime($order->created_at)) @endphp</strong>
                                         </li>
                                         <li class="woocommerce-order-overview__total total">
-                                            Total:						<strong><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#36;</span>{{ number_format($order->cost, 2, '.', '') }}</span></strong>
+                                            {{ __('default.total')}}						<strong><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#36;</span>{{ number_format($order->cost, 2, '.', '') }}</span></strong>
                                         </li>
                                         <li class="woocommerce-order-overview__payment-method method">
-                                            Payment:						<strong>{{$payment->title}}</strong>
+                                            {{ __('default.payment')}}						<strong>{{$payment->title}}</strong>
                                         </li>
                                     </ul>
                                 </div>
@@ -79,12 +79,12 @@
                                 <div class="article-text">
                                     <div class="widget wDelivery">
                                         <section class="woocommerce-order-details">
-                                            <h2 class="woocommerce-order-details__title">Info about order</h2>
+                                            <h2 class="woocommerce-order-details__title">{{ __('default.info_about_order')}}</h2>
                                             <table class="woocommerce-table woocommerce-table--order-details shop_table order_details">
                                                 <thead>
                                                 <tr>
-                                                    <th class="woocommerce-table__product-name product-name">Product</th>
-                                                    <th class="woocommerce-table__product-table product-total">Price</th>
+                                                    <th class="woocommerce-table__product-name product-name">{{ __('default.product') }}</th>
+                                                    <th class="woocommerce-table__product-table product-total">{{ __('default.price') }}</th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
@@ -106,29 +106,29 @@
                                                 </tbody>
                                                 <tfoot>
                                                 <tr>
-                                                    <th scope="row">Items cost:</th>
+                                                    <th scope="row">{{ __('default.items_cost') }}</th>
                                                     <td><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#36;</span>{{ number_format($order->cost, 2, '.', '') }}</span></td>
                                                 </tr>
                                                 <tr>
-                                                    <th scope="row">Delivery:</th>
+                                                    <th scope="row">{{ __('default.delivery') }}</th>
                                                     <td>{{$delivery->title}}</td>
                                                 </tr>
                                                 <tr>
-                                                    <th scope="row">Payment type:</th>
+                                                    <th scope="row">{{ __('default.payment_type') }}</th>
                                                     <td>{{$payment->title}}</td>
                                                 </tr>
                                                 <tr>
-                                                    <th scope="row">Total:</th>
+                                                    <th scope="row">{{ __('default.total') }}</th>
                                                     <td><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#36;{{ number_format($order->cost, 2, '.', '') }}</span></span></td>
                                                 </tr>
                                                 </tfoot>
 
                                             </table>
                                             <section class="woocommerce-customer-details">
-                                                <h2>Info about client</h2>
+                                                <h2>{{ __('default.info_about_client') }}</h2>
                                                 <table class="woocommerce-table woocommerce-table--customer-details shop_table customer_details">
                                                     <tr>
-                                                        <th>Comment:</th>
+                                                        <th>{{ __('default.comment') }}</th>
                                                         <td>{{$order->orderDeliveries->comment}}</td>
                                                     </tr>
 
@@ -138,11 +138,11 @@
                                                     </tr>
 
                                                     <tr>
-                                                        <th>Phone:</th>
+                                                        <th>{{ __('default.phone') }}</th>
                                                         <td>{{$order->orderDeliveries->phone}}</td>
                                                     </tr>
                                                 </table>
-                                                <h3 class="woocommerce-column__title">Address info</h3>
+                                                <h3 class="woocommerce-column__title">{{ __('default.address_info') }}</h3>
                                                 <address>{{$order->orderDeliveries->first_name}} {{$order->orderDeliveries->last_name}}<br/>{{ __('common.country_' . $order->orderDeliveries->country) }}, {{$order->orderDeliveries->city}}<br/>{{$order->orderDeliveries->address}}</address>
                                             </section>
                                         </section>

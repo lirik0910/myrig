@@ -4,7 +4,7 @@ $context = $select('App\Model\Base\Context')->where('title', $locale)->first();
 
 $otherPages = $select('App\Model\Base\Page')
 	->where('parent_id', 0)
-	//->where('context_id', $context->id)
+	->where('context_id', $context->id)
 	->where(function ($q) {
 		return $q
 			->orWhere('view_id', 4)
@@ -77,7 +77,7 @@ $courses = $select('App\Model\Shop\ExchangeRate')->get()->groupBy('title');
 						</li>
 						<li id="menu-item-144" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-144">
 							<a href="https://host.myrig.com/" data-wpel-link="internal">
-								{{ _('default.footer_hosting') }}
+								{{ __('default.footer_hosting') }}
 							</a>
 						</li>
 						@foreach ($otherPages as $page)
@@ -130,7 +130,7 @@ $courses = $select('App\Model\Shop\ExchangeRate')->get()->groupBy('title');
 							@endisset
 						</ul>
 					</div>
-					<a href="#call" class="btn-default reg-c" data-wpel-link="internal">{{ _('default.contact_us_button') }}</a>
+					<a href="#call" class="btn-default reg-c" data-wpel-link="internal">{{ __('default.contact_us_button') }}</a>
 					<div class="locale-switcher">
 						<a title="USA" href="{{ env('EN_DOMAIN') . '/?locale=en' }}" data-wpel-link="external" rel="nofollow external noopener noreferrer">
 							<img src="{{ asset('uploads/design/us.png') }}" alt="">
@@ -152,18 +152,18 @@ $courses = $select('App\Model\Shop\ExchangeRate')->get()->groupBy('title');
 <div style="display:none">
 	<div id="callsuccess" class="popup-success">
 		<div class="modal-header success-header">
-			{{ _('default.thank_you') }}</div>
+			{{ __('default.thank_you') }}</div>
 		<div class="modal-body">
-			{{ _('default.manager_contact') }}
+			{{ __('default.manager_contact') }}
        </div>
 		<div class="modal-footer">
-			<button data-fancybox-close>{{ _('default.close') }}</button>
+			<button data-fancybox-close>{{ __('default.close') }}</button>
 		</div>
 	</div>
 	<div id="call">
 		<div class="modal-header">
 			<ul class="reg-links">
-				<li class="active" data-target="#enter-field"><a href="" data-wpel-link="internal">{{ _('default.contact_us_button') }}</a></li>
+				<li class="active" data-target="#enter-field"><a href="" data-wpel-link="internal">{{ __('default.contact_us_button') }}</a></li>
 			</ul>
 		</div>
 		<div class="modal-body">
@@ -181,9 +181,9 @@ $courses = $select('App\Model\Shop\ExchangeRate')->get()->groupBy('title');
 					<input type="hidden" name="subject" value="Заказать звонок - Bitmain">
 				</form>
 				<div class="result">
-					<div class="success-header">{{ _('default.thank_you') }}!</div>
-					<div class="result-body">{{ _('default.manager_contact') }}.</div>
-					<button data-fancybox-close>{{ _('default.close') }}</button>
+					<div class="success-header">{{ __('default.thank_you') }}!</div>
+					<div class="result-body">{{ __('default.manager_contact') }}.</div>
+					<button data-fancybox-close>{{ __('default.close') }}</button>
 				</div>
 			</div>
 
@@ -193,7 +193,7 @@ $courses = $select('App\Model\Shop\ExchangeRate')->get()->groupBy('title');
 	<div id="ticket">
 		<div class="modal-header">
 			<ul class="reg-links">
-				<li data-target="#enter-field"><a href="" data-wpel-link="internal">{{ _('default.create_ticket_button') }}</a></li>
+				<li data-target="#enter-field"><a href="" data-wpel-link="internal">{{ __('default.create_ticket_button') }}</a></li>
 			</ul>
 		</div>
 		<div class="modal-body">
@@ -209,7 +209,7 @@ $courses = $select('App\Model\Shop\ExchangeRate')->get()->groupBy('title');
 						<textarea name="message" class="form-control" placeholder="Description" required="required" data-bv-message=" "></textarea></div>
 					<div class="form-group">
 						<span class="filename"></span>
-						<label for="fileName"><i class="fa fa-paperclip"></i> {{ _('default.attach_file') }}</label>
+						<label for="fileName"><i class="fa fa-paperclip"></i> {{ __('default.attach_file') }}</label>
 						<input id="fileName" type="file" name="file" class="form-control" data-bv-message=" "></div>
 
 					<input type="hidden" name="action" value="ticket_ajax_request">
@@ -219,9 +219,9 @@ $courses = $select('App\Model\Shop\ExchangeRate')->get()->groupBy('title');
 					</div>
 				</form>
 				<div class="result">
-					<div class="success-header">{{ _('default.thank_you') }}!</div>
-					<div class="result-body">{{ _('default.manager_contact') }}.</div>
-					<button data-fancybox-close>{{ _('default.close') }}</button>
+					<div class="success-header">{{ __('default.thank_you') }}!</div>
+					<div class="result-body">{{ __('default.manager_contact') }}.</div>
+					<button data-fancybox-close>{{ __('default.close') }}</button>
 				</div>
 			</div>
 
@@ -274,9 +274,9 @@ $courses = $select('App\Model\Shop\ExchangeRate')->get()->groupBy('title');
 </div>
 
 <div id="response-message" class="modal-body result" style="display: none">
-    <div class="success-header">{{ _('default.order_create') }}!</div>
-    <div class="result-body">{{ _('default.manager_contact') }}.</div>
-    <button id="order_success_close" data-fancybox-close>{{ _('default.okay') }}</button>
+    <div class="success-header">{{ __('default.order_create') }}!</div>
+    <div class="result-body">{{ __('default.manager_contact') }}.</div>
+    <button id="order_success_close" data-fancybox-close>{{ __('default.okay') }}</button>
 </div>
 
 <script type="text/javascript">

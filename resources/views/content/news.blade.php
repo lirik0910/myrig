@@ -46,7 +46,7 @@
                             @else
                                 <p>{!! $article->introtext !!}</p>
                             @endif
-                            <a href="{{url($article->link)}}" class="article-link" data-wpel-link="internal"><i class="article-arrow article-arrow-right"></i>Read</a>
+                            <a href="{{url($article->link)}}" class="article-link" data-wpel-link="internal"><i class="article-arrow article-arrow-right"></i>{{ __('default.read') }}</a>
                         </div>
                     </div>
                 </div>
