@@ -204,7 +204,7 @@ foreach ($products as $item) {
 
 						<div class="woocommerce-shipping-fields"></div>
 						<div class="woocommerce-additional-fields">
-							<h3>Additional info</h3>
+							<h3>{{ __('default.additional_info') }}</h3>
 
 							<div class="woocommerce-additional-fields__field-wrapper">
 								<p class="form-row form-row-full" id="order_comments_field" data-priority="">
@@ -218,22 +218,22 @@ foreach ($products as $item) {
 				<div class="col-sm-8">
 					<div class="article-text">
 						<div class="widget wDelivery">
-							<h3 id="order_review_heading">Your order</h3>
+							<h3 id="order_review_heading">{{ __('default.your_order') }}</h3>
 
 							<div id="product-checkout" class="shop_table woocommerce-checkout-review-order-table">
 								<div class="table-like">
 									<div class="table-row table-header">
-										<div class="table-cell table-cell-title">Photo</div>
-										<div class="table-cell">Name</div>
-										<div class="table-cell">Count</div>
-										<div class="table-cell table-cell-status">Cost</div>
+										<div class="table-cell table-cell-title">{{ __('default.photo') }}</div>
+										<div class="table-cell">{{ __('default.name') }}</div>
+										<div class="table-cell">{{ __('default.count') }}</div>
+										<div class="table-cell table-cell-status">{{ __('default.cost') }}</div>
 									</div>
                                     @foreach($products as $item)
                                         @include('parts.checkout.item_products_list', ['item' => $item, 'cart' => $inCart])
                                     @endforeach
 									<div class="table-row delivery-wrap">
 										<div class="table-cell">
-											<span class="delivery">Delivery</span>
+											<span class="delivery">{{ __('default.delivery') }}</span>
 										</div>
 
 										<div class="table-cell">
@@ -251,7 +251,7 @@ foreach ($products as $item) {
 															<li style="display: inline-block">
 																<input type="radio" name="delivery" data-index="0"  value="0" class="shipping_method"  />
 
-																<label for="shipping_method_0_local_pickup15">Self shipment</label>
+																<label for="shipping_method_0_local_pickup15">{{ __('default.self_shipment') }}</label>
 															</li>
 														</ul>
 													</td>

@@ -94,7 +94,7 @@ $payback = $payback->calcPayback($product->id);
 					</a>
 				@endif
 			</form>
-			@isset($payback)<div class="tag tag-payback">{{ __('default.payback') }} {{ $payback }} days</div>@endisset
+			@isset($payback)<div class="tag tag-payback">{{ __('default.payback') }} {{ $payback }} {{ __('default.read') }}</div>@endisset
 			
 			<div class="single-product-tabs">
 				<div class="product-tab-links">
