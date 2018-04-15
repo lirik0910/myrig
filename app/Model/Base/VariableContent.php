@@ -25,6 +25,7 @@ class VariableContent extends Model
 	 */
 	public static function content(int $id, string $fields)
 	{
+	    //var_dump($id); die;
 		try {
 			VariableContent::where('page_id', $id)->delete();
 		}
@@ -59,9 +60,10 @@ class VariableContent extends Model
 				}
 
 				foreach ($data['multi_variable_lines'] as $line) {
+				    //var
 					$lineModel = new MultiVariableLine;
 
-					$lineModel->page_id = $line['page_id'];
+					$lineModel->page_id = $id;
 					$lineModel->variable_id = $line['variable_id'];
 
 					/** Try save new multi variable line

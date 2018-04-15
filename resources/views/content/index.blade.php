@@ -11,6 +11,7 @@ $shop = $select('App\Model\Base\Page')
 		$q->where('title', 'Shop');
 	})
 	->first();
+//var_dump($multi); die;
 @endphp
 
 <section class="slider">

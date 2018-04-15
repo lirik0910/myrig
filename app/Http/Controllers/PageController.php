@@ -28,17 +28,18 @@ class PageController extends Controller
         //var_dump($request->server('HTTP_HOST')); die;
 /*        $import = new Import();
         $import->process();*/
+        //var_dump($request->getSchemeAndHttpHost(), env('UA_DOMAIN'), env('RU_DOMAIN'), env('EN_DOMAIN'), config('app.en_domain')); die;
 
         switch ($request->getSchemeAndHttpHost()) {
-            case env('UA_DOMAIN'):
+            case config('app.ua_domain'):
                 $locale = 'ua';
                 break;
 
-            case env('RU_DOMAIN'):
+            case config('app.ru_domain'):
                 $locale = 'ru';
                 break;
 
-            case env('EN_DOMAIN'):
+            case config('app.en_domain'):
                 $locale = 'en';
                 break;
 
@@ -72,7 +73,7 @@ class PageController extends Controller
                     return redirect('shop');
                 }
             }
-
+//var_dump(MultiVariableContent::multiConvert($page->view->variables)); die;
 			return view($page->view->path, [
 				'it' => $page,
 				'get' => $this->get(),

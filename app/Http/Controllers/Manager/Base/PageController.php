@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Manager\Base;
 
 use App\Model\Base\Page;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Validation\Rule;
 use Illuminate\Http\JsonResponse;
 use App\Model\Base\VariableContent;
@@ -152,6 +153,8 @@ class PageController extends Controller
 		try {
 			$page = Page::find($id);
 			$page->view;
+
+			$context = strtolower($page->context->title);
 
 			$a = [];
 			foreach ($page->view->variables as $item) {
@@ -320,7 +323,7 @@ class PageController extends Controller
 			logger($e->getMessage());
 			return response()->json(['message' => $e->getMessage()], 422);
 		}
-
+//var_dump($request->only('context_id')); die;
 		$data = $request->only([
 			'title',
 			'description',

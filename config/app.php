@@ -81,6 +81,15 @@ return [
     'locale' => 'en',
 
     /*
+     * Domains for cross context
+     */
+    'ru_domain' => env('RU_DOMAIN', 'http://myrig.lara.ru'),
+
+    'ua_domain' => env('UA_DOMAIN', 'http://myrig.lara.ua'),
+
+    'en_domain' => env('EN_DOMAIN', 'http://myrig.lara'),
+
+    /*
     |--------------------------------------------------------------------------
     | Application Fallback Locale
     |--------------------------------------------------------------------------
