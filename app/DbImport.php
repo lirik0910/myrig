@@ -18,6 +18,7 @@ class DbImport
     public $orders;
     public $news;
     public $products;
+    public $articles;
 
     public function __construct()
     {
@@ -29,11 +30,12 @@ class DbImport
     {
         $export = [];
 
-        $this->users = $this->source->select('select id, user_login, user_pass, user_email, display_name from wploc_users where id  != 1');
+        $this->users = $this->source->select('select id, user_login, user_pass, user_email, display_name from wpbit2_users where id  != 1');
         //$this->users_meta = $this->source->select('select user_id, user_login, user_pass, display_name from wploc_users where id  != 1');
-        //$this->news = $this->source->select('select * from wploc_posts where post_type=:post_type', ['post_type' => '']);
-        $this->orders = $this->source->select('select id, post_author, post_date from wploc_posts where post_type=:post_type', ['post_type' => 'shop_order']);
-        $this->products = $this->source->select('select id, post_title,post_content, post_name from wploc_posts where post_type =:post_type', ['post_type' => 'product']);
+        $this->news = $this->source->select('select id, post_author, post_content, post_title, post_name from wpbit2_posts where post_type=:post_type', ['post_type' => 'post']);
+        $this->orders = $this->source->select('select id, post_author, post_date from wpbit2_posts where post_type=:post_type', ['post_type' => 'shop_order']);
+        $this->products = $this->source->select('select id, post_title, post_content, post_name from wpbit2_posts where post_type =:post_type', ['post_type' => 'product']);
+        //$this->articles = $this->source->select('select id, post_author, post_date, post_content, post_title, post_name, ');
 
         //var_dump($this->news); die;
 
@@ -199,6 +201,7 @@ class DbImport
         $export['users'] = $users;
         $export['user_attrs'] = $user_attrs;
 
+        var_dump($export); die;
         return $export;
     }
 

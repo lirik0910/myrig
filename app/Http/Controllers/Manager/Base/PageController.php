@@ -160,11 +160,15 @@ class PageController extends Controller
 			foreach ($page->view->variables as $item) {
 				if ($item->type === 'multi') {
 					foreach ($item->multiVariableLines as $line) {
-						$c = [];
-						foreach ($line->content as $value) {
-							$c[$value->multiVariable->title] = $value->content;
-						}
-						$a[$item->title][] = $c;
+					    //var_dump($line->page_id, $page->id); die;
+					    if($line->page_id == $page->id){
+                            $c = [];
+                            foreach ($line->content as $value) {
+                                $c[$value->multiVariable->title] = $value->content;
+                            }
+                        //if($line->page_id == $page->id){
+                            $a[$item->title][] = $c;
+                        }
 					}
 					$item->columns;
 				}
@@ -177,6 +181,8 @@ class PageController extends Controller
 					}
 				}
 			}
+			//var_dump($a); die;
+            //var_dump($page->view->variables->multiVariables); die;
 		}
 		catch(\Exception $e) {
 			logger($e->getMessage());

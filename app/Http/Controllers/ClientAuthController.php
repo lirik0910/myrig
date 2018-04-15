@@ -18,7 +18,7 @@ class ClientAuthController
     public function __construct()
     {
         //$this->appurl = $_SERVER['SERVER_NAME'];
-        $this->homeappurl = $_SERVER['APP_URL'].'sso-login';
+        $this->homeappurl = config('app.app_url') . 'sso-login';
     }
 
     /*

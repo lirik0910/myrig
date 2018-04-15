@@ -173,6 +173,48 @@ class MultiVariableContentsTableSeeder extends Seeder
 				$content = 'Analytics, equipment reviews';
 			}
 
+            if ($key === 3) {
+                $link = 'news';
+                $icon = 'design/news.svg';
+                $header = 'News';
+                $content = 'Actual information about the world of cryptocurrency';
+            }
+
+            if ($key === 4) {
+                $link = 'calculator';
+                $icon = 'design/calc.svg';
+                $header = 'Calculator';
+                $content = 'Correct calculation of profit from mining';
+            }
+
+            if ($key === 5) {
+                $link = 'info';
+                $icon = 'design/articles.svg';
+                $header = 'Articles';
+                $content = 'Analytics, equipment reviews';
+            }
+
+            if ($key === 6) {
+                $link = 'news';
+                $icon = 'design/news.svg';
+                $header = 'News';
+                $content = 'Actual information about the world of cryptocurrency';
+            }
+
+            if ($key === 7) {
+                $link = 'calculator';
+                $icon = 'design/calc.svg';
+                $header = 'Calculator';
+                $content = 'Correct calculation of profit from mining';
+            }
+
+            if ($key === 8) {
+                $link = 'info';
+                $icon = 'design/articles.svg';
+                $header = 'Articles';
+                $content = 'Analytics, equipment reviews';
+            }
+
 			App\Model\Base\MultiVariableContent::create([
 				'multi_variable_id' => $multiHeader->id,
 				'multi_variable_line_id' => $item->id,
