@@ -113,6 +113,7 @@ class PaperMultiVariable extends Component {
 						});
 					}}
 					onEditButtonClicked={item => {
+						console.log(item)
 						this.setState({
 							editItem: item,
 							editDialog: true,
@@ -184,7 +185,9 @@ class PaperMultiVariable extends Component {
 			this.setState({ 
 				completed: true,
 				data: this.buildData(data)
-			}, () => this.props.onAddedField(data));
+			}, () => {
+				this.props.onAddedField(data);
+			});
 		});
 	}
 
