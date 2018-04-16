@@ -108,6 +108,13 @@ class ClientAuthController
                         ];
                         UserAttribute::create($attributesdata);
                     }
+                } elseif (!$user->attributes){
+                    $attributesdata = [
+                        'user_id' => $user->id,
+                        'fname' => $data['fname'],
+                        'lname' => $data['lname']
+                    ];
+                    UserAttribute::create($attributesdata);
                 }
 
                 session()->put('client', $data['email']);

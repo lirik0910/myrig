@@ -17,6 +17,7 @@ if(isset($client_email) && !empty($client_email)){
     $user = $select('App\Model\Base\User')->where('email', $client_email)->first();
 
     if($user){
+    //var_dump($user->attributes); die;
         $client_name = $user->attributes->fname;
     }
 }
