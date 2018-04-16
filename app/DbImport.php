@@ -141,14 +141,18 @@ class DbImport
                     ];
                 }
             }
-            //$user_meta[$user->id] =
         }
 
         $orders_items_meta = [];
         $orders_items = [];
         $order_deliveries = [];
-
         $orders = [];
+
+        foreach ($this->orders as $order){
+            $orders_meta[$order->id] = $this->source->select('select * from wpbit2_postmeta where post_id =:post_id', ['post_id' => $order->id]);
+            $orders_items[$order->id] = $this->source->select('select * from wpbit2_woocommerce_order_items where order_id = :order_id', ['order_id' => $order->id]);
+        }
+        //var_dump($orders_meta); die;
         foreach ($this->orders as $order){
             $orders_meta[$order->id][] = $this->source->select('select * from wpbit2_postmeta where post_id =:post_id', ['post_id' => $order->id]);
             $orders_items[$order->id] = $this->source->select('select * from wpbit2_woocommerce_order_items where order_id = :order_id', ['order_id' => $order->id]);

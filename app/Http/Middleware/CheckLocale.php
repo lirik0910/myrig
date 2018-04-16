@@ -16,6 +16,7 @@ class CheckLocale
      */
     public function handle($request, Closure $next)
     {
+        //var_dump($request); die;
         if($request->method() == 'GET'){
             $current_domain = $_SERVER['HTTP_HOST'];
 
@@ -32,7 +33,7 @@ class CheckLocale
 /*            if(!session()->get('locale')){
                 session()->put('locale', $locale);
             }*/
-            if($locale == 'ua' && $current_domain !== env('UA_DOMAIN') || $locale == 'ru' && $current_domain !== env('RU_DOMAIN') || $locale =='en' && $current_domain !== env('EN_DOMAIN')){
+            if($locale == 'ua' && $current_domain !== config('app.ua_domain') || $locale == 'ru' && $current_domain !== config('app.ru_domain') || $locale =='en' && $current_domain !== config('app.en_domain')){
                 if(session()->get('locale')){
                     switch (session()->get('locale')){
                         case 'ua':
@@ -50,6 +51,7 @@ class CheckLocale
                 }
             }
         }
+        //var_dump($locale); die;
         return $next($request);
     }
 }

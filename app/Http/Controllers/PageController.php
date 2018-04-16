@@ -29,7 +29,7 @@ class PageController extends Controller
 /*        $import = new Import();
         $import->process();*/
         //var_dump($request->getSchemeAndHttpHost(), env('UA_DOMAIN'), env('RU_DOMAIN'), env('EN_DOMAIN'), config('app.en_domain')); die;
-
+//var_dump($request); die;
         switch ($request->getSchemeAndHttpHost()) {
             case config('app.ua_domain'):
                 $locale = 'ua';
