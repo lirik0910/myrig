@@ -289,7 +289,7 @@ class ListOrdersContainer extends Component {
 	 * Stylize table data
 	 */
 	stylizeRows(data = []) {
-		let { classes } = this.props
+		let { classes, editButtonValue } = this.props
 
 		return data.map((item, i) => {
 			if (this.state.save === true && this.state.editOrder.id === item.id) {
@@ -317,34 +317,40 @@ class ListOrdersContainer extends Component {
 							context {item.context.title}
 						</div>
 					</div>,
-				deliveryRow: <div className={classes.deliveryCell}>
-						<div className={classes.fieldItem}>
-							{item.order_deliveries.first_name} {item.order_deliveries.last_name}
-						</div>
 
-						{item.order_deliveries.email ? <div className={classes.fieldItem}>
-							{item.order_deliveries.email}
-						</div> : null}
+				deliveryRow: <div className={classes.deliveryCell}>
+						{ item.order_deliveries ? <div>
+							{item.order_deliveries.first_name && item.order_deliveries.last_name ?
+                                <div className={classes.fieldItem}>
+                                    {item.order_deliveries.first_name} {item.order_deliveries.last_name}
+                                </div>
+							: null}
+
+							{item.order_deliveries.email ? <div className={classes.fieldItem}>
+								{item.order_deliveries.email}
+							</div> : null}
 
 						{item.order_deliveries.phone ? <div className={classes.fieldItem}>
 							{item.order_deliveries.phone}
-						</div> : null}
+							</div> : null}
 
-						{item.order_deliveries.city || item.order_deliveries.address ? 
+						{item.order_deliveries.city || item.order_deliveries.address ?
 							<div className={classes.fieldItem}>
-								{item.order_deliveries.city} {item.order_deliveries.address}
+							{item.order_deliveries.city} {item.order_deliveries.address}
 							</div> : null}
 
-						{item.order_deliveries.delivery ? 
+						{item.order_deliveries.delivery ?
 							<div className={classes.fieldItem} style={{
-								marginTop: '8px',
-								paddingTop: '8px',
-								borderTop: '1px solid #d6d6d6',
-								color: item.order_deliveries.delivery.color
-							}}>
-								<b>{item.order_deliveries.delivery.title}</b>
+							marginTop: '8px',
+							paddingTop: '8px',
+							borderTop: '1px solid #d6d6d6',
+							color: item.order_deliveries.delivery.color
+						}}>
+                        <b>{item.order_deliveries.delivery.title}</b>
 							</div> : null}
-					</div>,
+						</div>
+						: null },
+						</div>,
 				costRow: <div className={classes.costCell}>
 						<div>
 							<span className={classes.fieldItem}>Order cost:</span>
@@ -356,10 +362,12 @@ class ListOrdersContainer extends Component {
 							<span className={classes.costItem}>{item.prepayment.toFixed(2)} $</span>
 						</div>
 
-						<div>
-							<span className={classes.fieldItem}>BTC cost:</span>
-							<span className={classes.costItem}>{item.btc_price.toFixed(5)}</span>
-						</div>
+					    {item.btc_price ?
+                            <div>
+                                <span className={classes.fieldItem}>BTC cost:</span>
+                                <span className={classes.costItem}>{item.btc_price.toFixed(5)}</span>
+                            </div>
+					    : null}
 
 						{item.payment_type ? 
 							<div className={classes.fieldItem} style={{
@@ -375,7 +383,7 @@ class ListOrdersContainer extends Component {
 					</div>,
 				control: <ControlOptions
 							item={item}
-							editButton={true}
+							editButton={item.order_deliveries ? true : false}
 							onEditButtonClicked={item => {
 								this.setState({
 									editOrder: item,
@@ -542,7 +550,7 @@ class ListOrdersContainer extends Component {
 							onStartValueChanged={start => {
 								this.setState({ 
 									start,
-								}, () => this.productsGetDataRequest());
+								}, () => this.ordersGetDataRequest());
 							}}
 							onLimitValueChanged={limit => this.setState({ limit })} /> : null}
 					</Grid>

@@ -19,6 +19,7 @@ class DbImport
     public $news;
     public $products;
     public $articles;
+    public $users_meta;
 
     public function __construct()
     {
@@ -31,6 +32,7 @@ class DbImport
         $export = [];
 
         $this->users = $this->source->select('select id, user_login, user_pass, user_email, display_name from wpbit2_users where id  != 1');
+        $this->users_meta = $this->source->select('select user_id, meta_key, meta_value from wpbit2_usermeta');
         //$this->users_meta = $this->source->select('select user_id, user_login, user_pass, display_name from wploc_users where id  != 1');
         $this->news = $this->source->select('select id, post_author, post_content, post_title, post_name from wpbit2_posts where post_type=:post_type', ['post_type' => 'post']);
         $this->orders = $this->source->select('select id, post_author, post_date from wpbit2_posts where post_type=:post_type', ['post_type' => 'shop_order']);
@@ -43,24 +45,28 @@ class DbImport
 
         foreach ($this->products as $product){
             //var_dump($product); die;
-            $products[$product->id] = [
-                'id' => $product->id,
-                'context_id' => 2,
-                'vendor_id' => 1,
-                'page_id' => 0,
-                'product_status_id' => 1,
-                'title' => $product->post_title,
-                'articul' => $product->post_name,
-                'description' => $product->post_content,
-                'warranty' => '',
-                'active' => 1,
-                'auto_price' => 0,
-                'price' => 0
-            ];
+            if($product->post_content != ''){
+                $products[$product->id] = [
+                    'id' => $product->id,
+                    'context_id' => 2,
+                    'vendor_id' => 1,
+                    'page_id' => 0,
+                    'product_status_id' => 1,
+                    'title' => $product->post_title,
+                    'articul' => $product->post_name,
+                    'description' => $product->post_content,
+                    'warranty' => '',
+                    'active' => 1,
+                    'auto_price' => 0,
+                    'price' => 0
+                ];
+            }
+
         }
 
         $users = [];
         $user_attrs = [];
+        $user_meta = [];
         //var_dump($this->users); die;
         foreach ($this->users as $user){
            // var_dump($user); die;
@@ -84,6 +90,57 @@ class DbImport
                 'fname' => $fname,
                 'lname' => $lname
             ];
+//var_dump($this->users_meta); die;
+            $user_name = '';
+            $user_last_name = '';
+            $user_phone = '';
+            $user_email = '';
+            $user_city = '';
+            $user_country = '';
+            $user_address = '';
+            $user_state = '';
+            foreach($this->users_meta as $meta){
+                if($meta->user_id == $user->id){
+                    switch ($meta->meta_key){
+                        case 'billing_first_name':
+                            $user_name = $meta->meta_value;
+                            break;
+                        case  'blling_last_name':
+                            $user_last_name = $meta->meta_value;
+                            break;
+                        case 'billing_phone':
+                            $user_phone = $meta->meta_value;
+                            break;
+                        case 'billing_email':
+                            $user_email = $meta->meta_value;
+                            break;
+                        case 'billing_city':
+                            $user_city = $meta->meta_value;
+                            break;
+                        case 'billing_country':
+                            $user_country = $meta->meta_value;
+                            break;
+                        case 'billing_address_1':
+                            $user_address = $meta->meta_value;
+                            break;
+                        case 'billing_state':
+                            $user_state = $meta->meta_value;
+                            break;
+                    }
+                    $user_meta[$user->id] = [
+                        'user_id' => $user->id,
+                        'fname' => $user_name,
+                        'lname' => $user_last_name,
+                        'phone' => $user_phone,
+                        'email' => $user_email,
+                        'city' => $user_city,
+                        'country' => $user_country,
+                        'address' => $user_address,
+                        'state' => $user_state,
+                    ];
+                }
+            }
+            //$user_meta[$user->id] =
         }
         //die;
 
@@ -92,10 +149,11 @@ class DbImport
 
         $orders_items_meta = [];
         $orders_items = [];
+        $order_deliveries = [];
 
         $orders = [];
         foreach ($this->orders as $order){
-            $orders_items[] = $this->source->select('select * from wploc_woocommerce_order_items where order_id = :order_id', ['order_id' => $order->id]);
+            $orders_items[] = $this->source->select('select * from wpbit2_woocommerce_order_items where order_id = :order_id', ['order_id' => $order->id]);
             $orders[$order->id] = [
                 'id' => $order->id,
                 'number' => $order->id,
@@ -107,6 +165,20 @@ class DbImport
                 'context_id' => 2,
                 'created_at' => $order->post_date
             ];
+            if(isset($users[$order->post_author])){
+                $order_deliveries[$order->id] = [
+                    'order_id' => $order->id,
+                    'delivery_id' => 1,
+                    'first_name' => $user_meta[$order->post_author]['fname'],
+                    'last_name' => $user_meta[$order->post_author]['lname'],
+                    'phone' => $user_meta[$order->post_author]['phone'],
+                    'email' => $user_meta[$order->post_author]['email'],
+                    'city' => $user_meta[$order->post_author]['city'],
+                    'country' => $user_meta[$order->post_author]['country'],
+                    'address' => $user_meta[$order->post_author]['address'],
+                    'state' => $user_meta[$order->post_author]['state']
+                ];
+            }
         }
 //var_dump($orders); die;
         $cart = [];
@@ -114,30 +186,43 @@ class DbImport
         foreach ($orders_items as $items){
             if (count($items) > 0){
                 foreach ($items as $item){
-                    $orders_items_meta[$item->order_id][$item->order_item_name] = $this->source->select('select * from wploc_woocommerce_order_itemmeta where order_item_id = :order_item_id', ['order_item_id' => $item->order_item_id ]);
+                    $orders_items_meta[$item->order_id][$item->order_item_name] = $this->source->select('select * from wpbit2_woocommerce_order_itemmeta where order_item_id = :order_item_id', ['order_item_id' => $item->order_item_id ]);
                     if($item->order_item_name != 'Shipping' && $item->order_item_name != 'Product Shipping'){
+                        if($item->order_item_name == 'Новая почта'){
+                            if(isset($order_deliveries[$item->order_id])){
+                                $order_deliveries[$item->order_id]['delivery_id'] = 1;
+                            }
+                        } elseif ($item->order_item_name == 'Самовывоз'){
+                            if(isset($order_deliveries[$item->order_id])) {
+                                $order_deliveries[$item->order_id]['delivery_id'] = 3;
+                            }
+                        }
                         $cost = 0;
                         $item_count = 1;
                         $item_total_cost = 0;
+
                         foreach ($orders_items_meta[$item->order_id][$item->order_item_name] as $meta){
-                            //var_dump($meta); die;
                             if($meta->meta_key == '_line_subtotal'){
                                 $item_total_cost = $meta->meta_value;
                             } elseif ($meta->meta_key == '_qty'){
                                 $item_count = $meta->meta_value;
+                            } elseif($meta->meta_key == '_product_id'){
+                                $item_product_id = $meta->meta_value;
                             }
                         }
                         $cost = $item_total_cost / $item_count;
                         $cart[] = [
                             'order_id' => $item->order_id,
-                            'product_id' => $item->order_item_id,
+                            'product_id' => $item_product_id,
                             'cost' => $cost,
                             'count' => $item_count
                         ];
                     }
                 }
+
             }
         }
+      //  var_dump($orders_items_meta); die;
 //var_dump($cart); die;
         foreach($cart as $key => $line){
             if($line['cost'] == 0){
@@ -146,19 +231,19 @@ class DbImport
             }
 
             //var_dump($orders[$line['order_id']]);
-            if($orders[$line['order_id']]){
-                $line_cost = $line['cost'] * $line['count'];
-                $orders[$line['order_id']]['cost'] += (int)$line_cost;
-                if($orders[$line['order_id']]['cost'] < 0 || $orders[$line['order_id']]['cost'] > 300000){
-                    unset($orders[$line['order_id']]);
+            if (isset($line['order_id'])){
+                if(isset($orders[$line['order_id']])){
+                    $line_cost = $line['cost'] * $line['count'];
+                    $orders[$line['order_id']]['cost'] += (int)$line_cost;
+                    if($orders[$line['order_id']]['cost'] < 0 || $orders[$line['order_id']]['cost'] > 300000){
+                        unset($orders[$line['order_id']]);
+                    }
                 }
-/*                if(isset($orders[$line['order_id']])){
-                    var_dump($orders[$line['order_id']]['cost']);
-                }*/
-
+            } else{
+                unset($cart[$key]);
             }
         }
-
+//var_dump()
         foreach ($cart as $key => $line){
             $isset = false;
             foreach ($orders as $order){
@@ -201,7 +286,7 @@ class DbImport
         $export['users'] = $users;
         $export['user_attrs'] = $user_attrs;
 
-        var_dump($export); die;
+        //var_dump($export['carts']); die;
         return $export;
     }
 
@@ -211,35 +296,59 @@ class DbImport
          * Import users
          */
         foreach ($data['users'] as $user){
-            User::create($user);
+            try {
+                User::create($user);
+            } catch (\Exception $e){
+                continue;
+            }
         }
 
         /*
          * Import User attributes
          */
-/*        foreach ($data['user_attrs'] as $attr){
-            UserAttribute::create($attr);
-        }*/
+        foreach ($data['user_attrs'] as $attr){
+            try{
+                UserAttribute::create($attr);
+            } catch (\Exception $e){
+                continue;
+            }
+
+        }
 //die;
         /*
          * Import products
          */
         foreach ($data['products'] as $product){
-            Product::create($product);
+            try{
+                Product::create($product);
+            } catch (\Exception $e){
+                continue;
+            }
+
         }
 
         /*
          * Import orders
          */
         foreach ($data['orders'] as $order){
-            Order::create($order);
+            try{
+                Order::create($order);
+            } catch (\Exception $e){
+                continue;
+            }
+
         }
 
         /*
          * Import carts
          */
         foreach ($data['carts'] as $cart){
-            Cart::create($cart);
+            try{
+                Cart::create($cart);
+            } catch (\Exception $e){
+                continue;
+            }
+
         }
     }
 

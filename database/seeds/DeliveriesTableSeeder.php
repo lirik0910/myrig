@@ -24,5 +24,12 @@ class DeliveriesTableSeeder extends Seeder
 			'color' => '#444389',
 			'active' => 1
 		]);
+
+        App\Model\Shop\Delivery::create([
+            'title' => 'Self shippment',
+            'description' => '',
+            'color' => '#71cece',
+            'active' => 1
+        ]);
 	}
 }

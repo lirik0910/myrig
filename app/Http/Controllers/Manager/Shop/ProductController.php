@@ -49,6 +49,7 @@ class ProductController extends Controller
 
 		if (isset($params['start']) && isset($params['limit'])) {
 			$c = $c->forPage($params['start'], $params['limit']);
+			//var_dump($c);
 		}
 
 		return $c;
