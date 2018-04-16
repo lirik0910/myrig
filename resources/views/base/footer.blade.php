@@ -278,7 +278,7 @@ $courses = $select('App\Model\Shop\ExchangeRate')->get()->groupBy('title');
 
 <script type="text/javascript">
 	var global = {
-		url: "{{env('APP_URL')}}",
+		url: "{{ config('app.' . $locale . '_domain') . '/' }}",
 		app: {
 			connector: "{{ asset('connector') }}",
 			csrf: "{{ csrf_token() }}"
