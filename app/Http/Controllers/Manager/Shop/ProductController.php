@@ -47,11 +47,6 @@ class ProductController extends Controller
 			$c = $c->where('delete', $params['delete_type']);
 		}
 
-		if (isset($params['start']) && isset($params['limit'])) {
-			$c = $c->forPage($params['start'], $params['limit']);
-			//var_dump($c);
-		}
-
 		return $c;
 	}
 
@@ -99,6 +94,11 @@ class ProductController extends Controller
 		catch(\Exception $e) {
 			logger($e->getMessage());
 			return response()->json(['message' => $e->getMessage()], 422);
+		}
+
+		if ($request->input('start') && $request->input('limit')) {
+			$all = $all->forPage($request->input('start'), $request->input('limit'));
+			//var_dump($c);
 		}
 
 		/** Add pagination and get
