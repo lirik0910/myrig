@@ -24,11 +24,8 @@ Route::prefix('connector')
 		Route::post('cart', 'SessionController@add');
 		Route::delete('cart', 'SessionController@delete');
 });
-<<<<<<< HEAD
 
 Route::get('download-pdf/{number}', 'PageController@pdf');
-=======
->>>>>>> bda54e61d5ad4e920cefa3896830802f0bcc60de
 
 Route::post('create_report', 'ReportController@create');
 Route::post('rep-avail', 'ProductController@all');
