@@ -33,10 +33,10 @@ class Kernel extends ConsoleKernel
             $calculate->parse_btc_course_calculated();
         })->everyMinute();
 
-        $schedule->call(function (){
+/*        $schedule->call(function (){
             $import = new Import();
             $import->process();
-        })->everyMinute();
+        })->everyMinute();*/
     }
 
     /**

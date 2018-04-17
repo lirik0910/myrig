@@ -175,7 +175,7 @@ class DbImport
                 'cost' => 0,
                 'prepayment' => 0.00,
                 'status_id' => $order_status,
-                'payment_type_id' => 1,
+                'payment_type_id' => 2,
                 'context_id' => 2,
                 'created_at' => $order->post_date
             ];
@@ -233,8 +233,20 @@ class DbImport
                         case '_billing_phone':
                             $billing_phone = $meta_item->meta_value;
                             break;
+                        case '_payment_method':
+                           // cod
+                            //var_dump('cscdcsv'); die;
+                            if($meta_item->meta_value == 'cheque'){
+                               // var_dump($orders[$order->id]);// die;
+                                $orders[$order->id]['payment_type_id'] = 1;
+                               // var_dump($orders[$order->id]);
+                                //die;
+                            } else{
+                                $orders[$order->id]['payment_type_id'] = 2;
+                            }
                     }
                 }
+
                 $order_deliveries[$order->id] = [
                     'order_id' => $order->id,
                     'delivery_id' => $delivery_id,
