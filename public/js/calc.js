@@ -83,8 +83,7 @@
 				$('.energy').attr('readonly', 'readonly');
 				$('.costs').attr('disabled','disabled');
 			}
-				
-		})
+		});
 		
  		/**
 		update
@@ -93,7 +92,7 @@
 		$(window).load(function(){
 			update_rates($('#rialto').val());
 			update_net_status()
-		})
+		});
 		//$( "#quantity" ).spinner();
 		/**
 		submit

@@ -15,65 +15,74 @@ class MultiVariableLinesTableSeeder extends Seeder
 		 */
 		$contact = App\Model\Base\Page::whereHas('view', function ($q) {
 			$q->where('title', 'Contacts');
-		})->first();
+		})->get();
 
-		/** Get variables
-		 */
-		$variable = App\Model\Base\Variable::where('title', 'Contact items')->first();
+		foreach ($contact as $item){
+            /** Get variables
+             */
+            $variable = App\Model\Base\Variable::where('title', 'Contact items')->first();
 
-		for ($i = 0; $i < 5; $i++) {
-			App\Model\Base\MultiVariableLine::create([
-				'variable_id' => $variable->id,
-				'page_id' => $contact->id,
-			]);
-		}
+            for ($i = 0; $i < 5; $i++) {
+                App\Model\Base\MultiVariableLine::create([
+                    'variable_id' => $variable->id,
+                    'page_id' => $item->id,
+                ]);
+            }
+        }
+
 
 		/** Get page
 		 */
 		$index = App\Model\Base\Page::whereHas('view', function ($q) {
 			$q->where('title', 'Index');
-		})->first();
+		})->get();
 
 		/** Get variables
 		 */
 		$variable = App\Model\Base\Variable::where('title', 'indexLinks')->first();
 
-		App\Model\Base\MultiVariableLine::create([
-			'variable_id' => $variable->id,
-			'page_id' => $index->id,
-		]);
+		foreach ($index as $item){
+            App\Model\Base\MultiVariableLine::create([
+                'variable_id' => $variable->id,
+                'page_id' => $item->id,
+            ]);
 
-		App\Model\Base\MultiVariableLine::create([
-			'variable_id' => $variable->id,
-			'page_id' => $index->id,
-		]);
+            App\Model\Base\MultiVariableLine::create([
+                'variable_id' => $variable->id,
+                'page_id' => $item->id,
+            ]);
 
-		App\Model\Base\MultiVariableLine::create([
-			'variable_id' => $variable->id,
-			'page_id' => $index->id,
-		]);
+            App\Model\Base\MultiVariableLine::create([
+                'variable_id' => $variable->id,
+                'page_id' => $item->id,
+            ]);
+        }
+
 
 		/** Get variables
 		 */
 		$variable = App\Model\Base\Variable::where('title', 'indexSlider')->first();
-		App\Model\Base\MultiVariableLine::create([
-			'variable_id' => $variable->id,
-			'page_id' => $index->id,
-		]);
 
-		App\Model\Base\MultiVariableLine::create([
-			'variable_id' => $variable->id,
-			'page_id' => $index->id,
-		]);
+		foreach ($index as $item){
+            App\Model\Base\MultiVariableLine::create([
+                'variable_id' => $variable->id,
+                'page_id' => $item->id,
+            ]);
 
-		App\Model\Base\MultiVariableLine::create([
-			'variable_id' => $variable->id,
-			'page_id' => $index->id,
-		]);
+            App\Model\Base\MultiVariableLine::create([
+                'variable_id' => $variable->id,
+                'page_id' => $item->id,
+            ]);
 
-		App\Model\Base\MultiVariableLine::create([
-			'variable_id' => $variable->id,
-			'page_id' => $index->id,
-		]);
+            App\Model\Base\MultiVariableLine::create([
+                'variable_id' => $variable->id,
+                'page_id' => $item->id,
+            ]);
+
+            App\Model\Base\MultiVariableLine::create([
+                'variable_id' => $variable->id,
+                'page_id' => $item->id,
+            ]);
+        }
 	}
 }

@@ -150,7 +150,10 @@ class OrderController extends Controller
 			$order->status;
 			$order->context;
 			$order->paymentType;
-			$order->orderDeliveries->delivery;
+			if($order->orderDeliveries){
+                $order->orderDeliveries->delivery;
+            }
+
 
 			//$order->btc_price = ($order->cost * $point) / 1;
 

@@ -16,6 +16,7 @@ class CheckLocale
      */
     public function handle($request, Closure $next)
     {
+        //var_dump($request); die;
         if($request->method() == 'GET'){
             $current_domain = $_SERVER['HTTP_HOST'];
 
@@ -28,32 +29,29 @@ class CheckLocale
             if($request->get('locale')){
                 session()->put('locale', $request->get('locale'));
             }
-            //var_dump($locale, $current_domain); die;
-            if($locale == 'ua' && $current_domain !== env('UA_DOMAIN') || $locale == 'ru' && $current_domain !== env('RU_DOMAIN') || $locale =='en' && $current_domain !== env('EN_DOMAIN')){
-                //var_dump($locale, $current_domain); die;
+            //var_dump(session()->get('locale'));// die;
+/*            if(!session()->get('locale')){
+                session()->put('locale', $locale);
+            }*/
+            if($locale == 'ua' && $current_domain !== config('app.ua_domain') || $locale == 'ru' && $current_domain !== config('app.ru_domain') || $locale =='en' && $current_domain !== config('app.en_domain')){
                 if(session()->get('locale')){
                     switch (session()->get('locale')){
                         case 'ua':
-                            App::setLocale('ua');
-                            return redirect()->away(env('UA_DOMAIN'));
+                            return redirect(config('app.ua_domain'));
                             break;
                         case 'ru':
-                            App::setLocale('ru');
-                            return redirect()->away(env('RU_DOMAIN'));
+                            //App::setLocale('ru');
+                            return redirect(config('app.ru_domain'));
                             break;
                         case 'en':
-                            App::setLocale('en');
-                            return redirect()->away(env('EN_DOMAIN'));
+                           // App::setLocale('en');
+                            return redirect(config('app.en_domain'));
                             break;
                     }
-                } else{
-                    App::setLocale($locale);
                 }
-            } else{
-                App::setLocale($locale);
             }
         }
-
+        //var_dump($locale); die;
         return $next($request);
     }
 }

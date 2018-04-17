@@ -1,39 +1,40 @@
 <?php
 
 return [
-	'city_label' => 'Город',
-	'required' => 'Обязательный',
-	'phone_label' => 'Телефон',
-	'email_label' => 'Email ',
-	'region_label' => 'Регион',
-	'address_label' => 'Адрес ',
-	'country_label' => 'Страна ',
-	'first_name_label' => 'Имя ',
-	'last_name_label' => 'Фамилия ',
-	'select_country' => 'Выберите страну',
-	'update_country' => 'Обновите страну',
-	'checkout_title' => 'Оплата и доставка',
+    'city_label' => 'Город',
+    'required' => 'Обязательный',
+    'phone_label' => 'Телефон',
+    'email_label' => 'Email ',
+    'region_label' => 'Регион',
+    'address_label' => 'Адрес ',
+    'country_label' => 'Страна ',
+    'first_name_label' => 'Имя ',
+    'last_name_label' => 'Фамилия ',
+    'select_country' => 'Выберите страну',
+    'update_country' => 'Обновите страну',
+    'checkout_title' => 'Оплата и доставка',
 
-	'phone_input' => 'Ввод без +',
-	'no_matches' => 'Нет ни одного совпадения',
+    'phone_input' => 'Ввод без +',
+    'no_matches' => 'Нет ни одного совпадения',
 
-	'video' => 'Видео',
-	'added' => 'Добвлен!',
-	'total' => 'ИТОГО: ',
-	'amount' => 'Количество',
-	'payback' => 'Окупаемость',
-	'warranty' => 'Гарантия',
-	'to_cart' => 'Добавить в корзину',
-	'make_order' => 'Checkout',
-	'more_info' => 'Больше информации',
-	'description' => 'Описание',
-	'payment_methods' => 'Способ оплаты',
-	'characteristics' => 'Характеристики',
-	'in_the_cart' => 'Товар в корзине',
-	'remove_product' => 'Удалить эту позицию',
-	'optional_equipment' => 'Дополнительное оборудование',
-	'payment_methods_description' => 'Наш менеджер свяжиться с вами для уточнения деталей',
-	'hosting_title' => 'Хостинг',
+    'video' => 'Видео',
+    'added' => 'Добвлен!',
+    'total' => 'ИТОГО: ',
+    'amount' => 'Количество',
+    'payback' => 'Окупаемость',
+    'warranty' => 'Гарантия',
+    'to_cart' => 'Добавить в корзину',
+    'make_order' => 'Checkout',
+    'more_info' => 'Больше информации',
+    'description' => 'Описание',
+    'payment_methods' => 'Способ оплаты',
+    'characteristics' => 'Характеристики',
+    'in_the_cart' => 'Товар в корзине',
+    'remove_product' => 'Удалить эту позицию',
+    'optional_equipment' => 'Дополнительное оборудование',
+    'payment_methods_description' => 'Наш менеджер свяжиться с вами для уточнения деталей',
+    'hosting_title' => 'Хостинг',
+
 
     //base.footer
     'footer_hosting' => 'Хостинг',
@@ -48,6 +49,7 @@ return [
 
     //base.header
     'welcome_title' => 'Добро пожаловать',
+
 
     //content.article
     'back_to_list' => 'Вернуться к списку',
@@ -136,6 +138,20 @@ return [
     'contacts_for_communication' => 'Контанты для связи',
     'schedule' => 'График работы',
     'monday_friday' => 'Понедельник &#8212; Пятница',
+
+    //-------------------------
+    'description_service' => 'Компания MYRIG является единственным официальным представителем от завода по предоставлению услуг послегарантийного обслуживания оборудования Bitmain. Наша компания предоставляет услуги поддержки и ремонта майнеров и комплектующих по всей территории Украины и России.',
+    'our_service' => 'Наш сервисный центр готов вам помочь в следующих вопросах:',
+    'first_li' => 'Поддержка по программе расширенной гарантии от MyRig;',
+    'second_li' => 'Ремонт майнеров Antminer всех моделей и любой сложности;',
+    'third_li' => 'Восстановление блоков питания Bitmain всех моделей;',
+    'fourth_li' => 'Программное и аппаратное восстановление хешплат и запчастей для Antminer;',
+    'fifth_li' => 'Техническая консультация.',
+    'get_information' => 'Получить информацию от нашей службы поддержки очень легко. Для этого пройдите по ссылке ниже и заполните необходимые поля, через короткое время с вами свяжутся наши специалисты.',
+    'contact_for_communication' => 'Контакты для связи',
+    'ukraine' => 'Украина',
+    'russia' => 'Россия',
+
 
     //parts.shop
     'report_availability' => 'Сообщить о наличии',

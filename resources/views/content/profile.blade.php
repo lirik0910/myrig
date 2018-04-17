@@ -28,13 +28,13 @@
                 <div class="article-row row">
                     <div class="col-sm-4 profile-links">
                         <div>
-                            <a href="" class="personal active" data-target="#personalF" data-wpel-link="internal">Personal info</a>
+                            <a href="" class="personal active" data-target="#personalF" data-wpel-link="internal">{{ __('default.personal_info') }}</a>
                         </div>
                         <div>
-                            <a href="" class="history" data-target="#historyField" data-wpel-link="internal">Orders history</a>
+                            <a href="" class="history" data-target="#historyField" data-wpel-link="internal"> {{ __('default.orders_history') }} </a>
                         </div>
                         <div>
-                            <a href="{{url(env('APP_URL') . 'sso-login?action=logout')}}" class="exit" data-wpel-link="internal">Logout</a>
+                            <a href="{{url(env('APP_URL') . 'sso-login?action=logout')}}" class="exit" data-wpel-link="internal">{{ __('default.logout') }}</a>
                         </div>
                     </div>
                     <div class="article-content col-sm-8">
@@ -82,11 +82,11 @@
                             <div id="historyField">
                                 <div class="table-like">
                                     <div class="table-row table-header">
-                                        <div class="table-cell  ">Number and date</div>
-                                        <div class="table-cell ">Product and price</div>
-                                        <div class="table-cell table-cell-title">Count</div>
-                                        <div class="table-cell">Cost</div>
-                                        <div class="table-cell table-cell-status">Status</div>
+                                        <div class="table-cell  ">{{ __('default.number_and_date') }}</div>
+                                        <div class="table-cell ">{{ __('default.product_and_price') }}</div>
+                                        <div class="table-cell table-cell-title">{{ __('default.count') }}</div>
+                                        <div class="table-cell">{{ __('default.cost') }}</div>
+                                        <div class="table-cell table-cell-status">{{ __('default.status') }}</div>
                                         <div class="table-cell"></div>
                                     </div>
                                     @foreach($orders as $order)
@@ -107,8 +107,8 @@
                                                     <div class="order_thumbs order_thumbs_several">
                                                         <span class="several_products">@php echo count($order->products) @endphp items</span>
                                                         <a href=".order-{{$order->number}}" data-wpel-link="internal" class="">
-                                                            <span class="show_products"><i class="fa fa-chevron-down" aria-hidden="true"></i>Show</span>
-                                                            <span class="hide_products"><i class="fa fa-chevron-up" aria-hidden="true"></i>Hide</span>
+                                                            <span class="show_products"><i class="fa fa-chevron-down" aria-hidden="true"></i>{{ __('default.show') }}</span>
+                                                            <span class="hide_products"><i class="fa fa-chevron-up" aria-hidden="true"></i>{{ __('default.hide') }}</span>
                                                         </a>
                                                     </div>
                                                 </div>
@@ -130,7 +130,7 @@
                                                         <img src="@if(count($product->images)){{asset('uploads/' . App\Model\Shop\ProductImage::where('product_id', $product->id)->first()->name)}}@endif" title="{{$product->title}}">
                                                         <div class="cost">
                                                             <a href="{{$product->page->link}}" data-wpel-link="internal">{{$product->title}}</a>
-                                                            <span class="hidden-md">Item cost</span>
+                                                            <span class="hidden-md">{{ __('default.item_cost') }}</span>
                                                             <span class="table-price">${{ $price }}</span>
                                                             <span class="table-bitcoin">{{ $btcPrice }}<i class="fa fa-bitcoin"></i></span>
                                                         </div>
@@ -140,17 +140,17 @@
 
                                             @endif
                                             <div class="table-cell number">
-                                                <span class="hidden-md">Count</span>
+                                                <span class="hidden-md">{{ __('default.count') }}</span>
                                                 <span> @php $count = 0; foreach($order->carts as $cart){ $count += $cart->count; } echo $count @endphp</span>
                                             </div>
                                             <div class="table-cell number number-price">
-                                                <span class="hidden-md">Total</span>
+                                                <span class="hidden-md">{{ __('default.total') }}</span>
                                                 <span class="table-price"><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">$</span>{{ number_format($order->cost, 2, '.', '') }}</span></span>
                                                 <span class="table-bitcoin">{{ $btcCost }}<i class="fa fa-bitcoin"></i></span>
                                             </div>
                                             <div class="table-cell status">
                                                 <span class="">
-                                                    <p class="hidden-md">Status</p>
+                                                    <p class="hidden-md">{{ __('default.status') }}</p>
                                                     <span class="mark cancelled" style="color: {{$order->status->color}}">{{$order->status->title}}</span><br>
                                                     @if(isset($status_logs) && count($status_logs) > 0)
                                                         <a class="order-history" data-wpel-link="internal">History
@@ -159,7 +159,7 @@
                                                                 @foreach($status_logs as $log)
                                                                     <h3>@php echo date('d F Y ', strtotime($log->created_at)) . ' at ' . date('H:i', strtotime($log->created_at)) @endphp</h3>
                                                                     <div class="comment-order">
-																        Order status was changed from @if(isset($prev)) {{ $prev }} @else New order @endif to {{ $log->value }}.
+																        {{ __('default.order_status_changed_from') }} @if(isset($prev)) {{ $prev }} @else {{ __('default.new_order') }} @endif {{ __('default.to') }} {{ $log->value }}.
                                                                     </div>
                                                                     @php
                                                                         $prev = $log->value;
@@ -193,18 +193,18 @@
                                                             <img src="@if(count($product->images)){{asset('uploads/' . $product->images[0]->name)}}@endif" title="{{$product->title}}">
                                                             <div class="cost">
                                                                 <a href="{{$product->page->link}}" data-wpel-link="internal">{{$product->title}}</a>
-                                                                <span class="hidden-md">Cost</span>
+                                                                <span class="hidden-md">{{ __('default.cost') }}</span>
                                                                 <span class="table-price">${{ $price }}</span>
                                                                 <span class="table-bitcoin">{{ $btcPrice }}<i class="fa fa-bitcoin"></i></span>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="table-cell number">
-                                                        <span class="hidden-md">Count</span>
+                                                        <span class="hidden-md">{{ __('default.count') }}</span>
                                                         <span> {{$product->pivot->count}} </span>
                                                     </div>
                                                     <div class="table-cell number number-price">
-                                                        <span class="hidden-md">Item cost</span>
+                                                        <span class="hidden-md">{{ __('default.item_cost') }}</span>
                                                         <span class="table-price">$@php echo $price * $product->pivot->count; @endphp</span>
                                                         <span class="table-bitcoin">{{ $btcPrice * $product->pivot->count }}<i class="fa fa-bitcoin"></i></span>
                                                     </div>

@@ -47,7 +47,7 @@
 }
 
 .border-top {
-	border-top: 3px, solid #dee2e6;
+	border-top: 3px solid #dee2e6;
 }
 
 
@@ -79,13 +79,13 @@ table.minimalistBlack thead th {
   color: #000000;
   text-align: center;
   vertical-align: bottom;
-  padding: 4px, 5px;
+  padding: 4px 5px;
 }
 table.minimalistBlack thead tr {
 
 }
 table.minimalistBlack tfoot td {
-  font-size: 18px;
+  font-size: 14px;
 }
 
 .description {
@@ -126,7 +126,7 @@ table.minimalist thead th {
   color: #000000;
   text-align: center;
   vertical-align: bottom;
-  padding: 4px, 5px;
+  padding: 4px 5px;
 }
 
 .font_pay {
@@ -134,11 +134,10 @@ table.minimalist thead th {
     font-family: "Roboto";
     color: #aaa;
     line-height: 1.5;
-    font-weight: 350;
+    font-weight: 300;
 }
 
  #green {
  	color: #59a655;
  }
 
- 

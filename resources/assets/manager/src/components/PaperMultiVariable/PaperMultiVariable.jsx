@@ -83,40 +83,45 @@ class PaperMultiVariable extends Component {
 			k;
 
 		for (i in data) {
-			l = {};
-			for (k = 0; k < data[i].content.length; k++) {
+            if(data[i].content){
+				l = {};
+			//console.log(data[i]);
 
-				if (data[i].content[k].multi_variable.type === 'image') {
-					l[data[i].content[k].multi_variable.title] = <img 
-						style={{
-							//width: '128px',
-							display: 'block',
-							maxHeight: '72px'
-						}}
-						src={App.uploads() + data[i].content[k].content} 
-						alt="img" />					
-				}
-				else l[data[i].content[k].multi_variable.title] = data[i].content[k].content;
-			}
+                for (k = 0; k < data[i].content.length; k++) {
 
-			l['control'] = <ControlOptions
-				key={i}
-				item={data[i]}
-				editButton={true}
-				onDeleteButtonClicked={item => {
-					this.setState({
-						deleteDialog: true,
-						deleteItemId: item.id,
-					});
-				}}
-				onEditButtonClicked={item => {
-					this.setState({
-						editItem: item,
-						editDialog: true,
-						editItemId: item.id
-					})
-				}} />
-			a.push(l);
+                    if (data[i].content[k].multi_variable.type === 'image') {
+                        l[data[i].content[k].multi_variable.title] = <img
+                            style={{
+                                //width: '128px',
+                                display: 'block',
+                                maxHeight: '72px'
+                            }}
+                            src={App.uploads() + data[i].content[k].content}
+                            alt="img" />
+                    }
+                    else l[data[i].content[k].multi_variable.title] = data[i].content[k].content;
+                }
+
+				l['control'] = <ControlOptions
+					key={i}
+					item={data[i]}
+					editButton={true}
+					onDeleteButtonClicked={item => {
+						this.setState({
+							deleteDialog: true,
+							deleteItemId: item.id,
+						});
+					}}
+					onEditButtonClicked={item => {
+						console.log(item)
+						this.setState({
+							editItem: item,
+							editDialog: true,
+							editItemId: item.id
+						})
+					}} />
+				a.push(l);
+            }
 		}
 		return a;
 	}
@@ -180,7 +185,9 @@ class PaperMultiVariable extends Component {
 			this.setState({ 
 				completed: true,
 				data: this.buildData(data)
-			}, () => this.props.onAddedField(data));
+			}, () => {
+				this.props.onAddedField(data);
+			});
 		});
 	}
 

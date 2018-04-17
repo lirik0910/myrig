@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Manager\Base;
 
 use App\Model\Base\Page;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Validation\Rule;
 use Illuminate\Http\JsonResponse;
 use App\Model\Base\VariableContent;
@@ -153,15 +154,21 @@ class PageController extends Controller
 			$page = Page::find($id);
 			$page->view;
 
+			$context = strtolower($page->context->title);
+
 			$a = [];
 			foreach ($page->view->variables as $item) {
 				if ($item->type === 'multi') {
 					foreach ($item->multiVariableLines as $line) {
-						$c = [];
-						foreach ($line->content as $value) {
-							$c[$value->multiVariable->title] = $value->content;
-						}
-						$a[$item->title][] = $c;
+					    //var_dump($line->page_id, $page->id); die;
+					    if($line->page_id == $page->id){
+                            $c = [];
+                            foreach ($line->content as $value) {
+                                $c[$value->multiVariable->title] = $value->content;
+                            }
+                        //if($line->page_id == $page->id){
+                            $a[$item->title][] = $c;
+                        }
 					}
 					$item->columns;
 				}
@@ -174,6 +181,8 @@ class PageController extends Controller
 					}
 				}
 			}
+			//var_dump($a); die;
+            //var_dump($page->view->variables->multiVariables); die;
 		}
 		catch(\Exception $e) {
 			logger($e->getMessage());
@@ -320,7 +329,7 @@ class PageController extends Controller
 			logger($e->getMessage());
 			return response()->json(['message' => $e->getMessage()], 422);
 		}
-
+//var_dump($request->only('context_id')); die;
 		$data = $request->only([
 			'title',
 			'description',

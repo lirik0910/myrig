@@ -120,4 +120,12 @@ class OrderController extends Controller
         session()->forget('cart');
         return response()->json(['success' => true, 'order' => $order], 200);
     }
+
+    public function invoice($number){
+        $html = view('layouts.pdf', ['number' => $number]);
+        $html = mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8');
+        $pdf = \App::make('dompdf.wrapper');
+        $pdf->loadHTML($html)->setPaper(array(0, 0, 895.28, 765.89), 'landscape');
+        return $pdf->download('invoice');
+    }
 }

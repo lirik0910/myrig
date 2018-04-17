@@ -25,6 +25,7 @@ class VariableContent extends Model
 	 */
 	public static function content(int $id, string $fields)
 	{
+	    //var_dump($id); die;
 		try {
 			VariableContent::where('page_id', $id)->delete();
 		}
@@ -57,44 +58,48 @@ class VariableContent extends Model
 					}
 					$line->delete();
 				}
-
+//var_dump($data['multi_variable_lines']); die;
 				foreach ($data['multi_variable_lines'] as $line) {
-					$lineModel = new MultiVariableLine;
+				    //var
+                    if($line['page_id'] == $id){
+                        $lineModel = new MultiVariableLine;
 
-					$lineModel->page_id = $line['page_id'];
-					$lineModel->variable_id = $line['variable_id'];
+                        $lineModel->page_id = $id;
+                        $lineModel->variable_id = $line['variable_id'];
 
-					/** Try save new multi variable line
-					 */
-					try {
-						$lineModel->save();
-					}
-					catch (\Eception $e) {
-						logger($e->getMessage());
-						throw new \Exception($e->getMessage(), 1);
+                        /** Try save new multi variable line
+                         */
+                        try {
+                            $lineModel->save();
+                        }
+                        catch (\Eception $e) {
+                            logger($e->getMessage());
+                            throw new \Exception($e->getMessage(), 1);
 
-						return false;
-					}
+                            return false;
+                        }
 
-					foreach ($line['content'] as $field) {
-						$contentModel = new MultiVariableContent;
+                        foreach ($line['content'] as $field) {
+                            $contentModel = new MultiVariableContent;
 
-						$contentModel->multi_variable_id = $field['multi_variable']['id'];
-						$contentModel->multi_variable_line_id = $lineModel->id;
-						$contentModel->content = $field['content'];
+                            $contentModel->multi_variable_id = $field['multi_variable']['id'];
+                            $contentModel->multi_variable_line_id = $lineModel->id;
+                            $contentModel->content = $field['content'];
 
-						/** Try save new content item
-						 */
-						try {
-							$contentModel->save();
-						}
-						catch (\Eception $e) {
-							logger($e->getMessage());
-							throw new \Exception($e->getMessage(), 1);
+                            /** Try save new content item
+                             */
+                            try {
+                                $contentModel->save();
+                            }
+                            catch (\Eception $e) {
+                                logger($e->getMessage());
+                                throw new \Exception($e->getMessage(), 1);
 
-							return false;
-						}
-					}
+                                return false;
+                            }
+                        }
+                    }
+
 				}
 			}
 

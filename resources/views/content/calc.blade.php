@@ -9,7 +9,7 @@
                     <div class="col-sm-4">
                         <!--CALCULATOR BEGIN-->
                         <div class="section-tab">
-                            <h1 class="calc_title">Yield calculator</h1>
+                            <h1 class="calc_title">{{__('default.yield_calculator')}}</h1>
                             <div class="korpus">
                                 <input data-index="1" data-currencyType="BTC" data-updateAction="parse_btc_network_status" type="radio" name="odin" checked="checked" id="vkl1" />
                                 <label for="vkl1" class="tab-label label-1 fixborder">BTC</label>
@@ -52,8 +52,8 @@
                                             <div class="calculator-form--item">
                                                 <div class="width-60">
                                                     <select id="device" name="device" class="calc-select">
-                                                        <option value="hide" >Device</option>
-                                                        <option value="" data-hr="0">Manual input</option>
+                                                        <option value="hide" >{{__('default.device')}}</option>
+                                                        <option value="" data-hr="0">{{__('default.manual_input')}}</option>
                                                         @isset($allowedDevices)
                                                             @foreach($allowedDevices as $device)
                                                                 <option data-currency="{{$device[3]}}" data-hr="{{$device[1]}}" data-en="{{$device[2]}}" value="{{$device[0]}}">{{$device[0]}}</option>
@@ -90,16 +90,16 @@
                                             <input type="number"  step="0.01" class="quantity width-60 energy" name="energy" placeholder="Energy consumption">
                                             <div class="width-33">
                                                 <select  disabled class="calc-select">
-                                                    <option value="hide" >kWh</option>
+                                                    <option value="hide" >{{__('default.kwh')}}</option>
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="radio-buttons calculator-form--item">
                                             <input type="radio" name="radio" class="radio" id="radio1"   value="1">
-                                            <label for="radio1" class="hosting-label">Hosting	<b class="tooltip">i<span class="tooltiptext">Equipment placement at MyRig data centre</span></b></label>
+                                            <label for="radio1" class="hosting-label">{{ __('default.hosting_title') }}<b class="tooltip">i<span class="tooltiptext">{{__('default.equipment_placement_desk')}}</span></b></label>
 
                                             <input type="radio" name="radio" class="radio" id="radio2" value="2" checked>
-                                            <label for="radio2">Local placement	<b class="tooltip">i<span class="tooltiptext">Local device placement</span></b></label>
+                                            <label for="radio2">{{__('default.local_placement')}}<b class="tooltip">i<span class="tooltiptext">{{__('default.local_device_placement')}}</span></b></label>
                                         </div>
                                         <div class="calculator-form--item">
                                             <input type="number" step="0.01" class="quantity width-60 quantity-center qw costs" name="costs"  placeholder="0.1 $"  value="0.1">
@@ -107,10 +107,10 @@
                                         <div class="calculator-form--item">
                                             <div class="">
                                                 <select id="rialto" name="days" class="calc-select">
-                                                    <option value="hide">Billing period</option>
-                                                    <option value="1" selected>1 day</option>
-                                                    <option value="31" >1 month</option>
-                                                    <option value="365" >1 year</option>
+                                                    <option value="hide">{{ __('billing_period') }}</option>
+                                                    <option value="1" selected>{{ __('default.one_day') }}</option>
+                                                    <option value="31" >{{ __('default.one_month') }}</option>
+                                                    <option value="365" >{{ __('default.one_year') }}</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -135,30 +135,30 @@
                             <!--NETWORK STATUS BEGIN-->
                             <div class="">
                                 <div class="network-status bg-white">
-                                    <div class="network-status--title ">Network status</div>
+                                    <div class="network-status--title ">{{ __('default.network_status') }}</div>
                                     <div class="network-status--parent">
                                         <div class="network-status--inner">
-                                            <div>Hashrate</div>
+                                            <div>{{ __('default.hashrate') }}</div>
                                             <div><i class="fa fa-cog fa-spin"></i></div>
                                         </div>
 
                                         <div class="network-status--inner">
-                                            <div>Difficulty</div>
+                                            <div>{{ __('default.difficulty') }}</div>
                                             <div><i class="fa fa-cog fa-spin"></i></div>
                                         </div>
 
                                         <div class="network-status--inner network-delimiter">
-                                            <div>Mining</div>
+                                            <div>{{ __('default.mining') }}</div>
                                             <div><i class="fa fa-cog fa-spin"></i></div>
                                         </div>
 
                                         <div class="network-status--inner">
-                                            <div>Expected next difficulty</div>
+                                            <div>{{ __('default.next_difficulty') }}</div>
                                             <div><i class="fa fa-cog fa-spin"></i></div>
                                         </div>
 
                                         <div class="network-status--inner">
-                                            <div>Next difficulty date</div>
+                                            <div>{{ __('default.next_difficulty_date') }}</div>
                                             <div><i class="fa fa-cog fa-spin"></i></div>
                                         </div>
 
@@ -172,7 +172,7 @@
                                 <div class="table--responsive income-table bg-white">
 
                                     <div class="income-table__inner">
-                                        <div class="income-days-title ">Calculation</div>
+                                        <div class="income-days-title ">{{ __('default.calculation') }}</div>
                                     </div>
 
                                     <div class="income-table__title">
@@ -185,7 +185,7 @@
                                     </div>
 
                                     <div class="income-table__inner">
-                                        <div class="income-table__inner-title">Income</div>
+                                        <div class="income-table__inner-title">{{ __('default.income') }}</div>
                                         <div class="income-table__item">
                                             <div class="income-icon income-icon-1">BTC</div>
                                             <div class="income-number">-</div>
@@ -199,7 +199,7 @@
                                     </div>
 
                                     <div class="income-table__inner">
-                                        <div class="income-table__inner-title">Expenses</div>
+                                        <div class="income-table__inner-title">{{ __('default.expenses') }}</div>
                                         <div class="income-table__item">
                                             <div class="income-icon income-icon-1">BTC</div>
                                             <div class="income-number">-</div>
@@ -213,7 +213,7 @@
                                     </div>
 
                                     <div class="income-table__inner">
-                                        <div class="income-table__inner-title">Profit</div>
+                                        <div class="income-table__inner-title">{{ __('default.profit') }}</div>
                                         <div class="income-table__item">
                                             <div class="income-icon income-icon-1">BTC</div>
                                             <div class="income-number">-</div>

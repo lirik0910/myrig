@@ -336,7 +336,10 @@ class CalculateController
 
         //var_dump($t * $R * $H, ($D * 2^32) * $days; die;
         //var_dump($t, $R, $H, $D); die;
-        $P = ($t*$R*$H)/(number_format($D, 2)*(2**32)) * $days;
+        if($currency === 'BTC'){
+            $P = ($t*$R*$H)/(number_format($D, 2)*(2**32)) * $days;
+        }
+
 //var_dump($P); die;
         if ($currency === 'LTC') {
             $network = $this->parse_others_network_status(1, $currency, $request);
@@ -371,7 +374,7 @@ class CalculateController
             $energy = 1;
         }
         //var_dump($energy_costs, $energy); die;
-
+//var_dump($coursers); die;
         $costs['BTC'] = $energy * $energy_costs   * $days / $coursers['base']["$currency / USD"] ;
         $costs['USD'] = $energy * $energy_costs   * $days;
         $costs['RUR'] = $energy * $energy_costs   * $coursers['USD / RUR'] * $days;

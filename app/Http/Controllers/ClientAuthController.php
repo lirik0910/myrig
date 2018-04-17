@@ -18,7 +18,8 @@ class ClientAuthController
     public function __construct()
     {
         //$this->appurl = $_SERVER['SERVER_NAME'];
-        $this->homeappurl = $_SERVER['APP_URL'].'sso-login';
+        $this->homeappurl = config('app.url') . 'sso-login';
+       // var_dump($this->homeappurl); die;
     }
 
     /*
@@ -107,6 +108,13 @@ class ClientAuthController
                         ];
                         UserAttribute::create($attributesdata);
                     }
+                } elseif (!$user->attributes){
+                    $attributesdata = [
+                        'user_id' => $user->id,
+                        'fname' => $data['fname'],
+                        'lname' => $data['lname']
+                    ];
+                    UserAttribute::create($attributesdata);
                 }
 
                 session()->put('client', $data['email']);

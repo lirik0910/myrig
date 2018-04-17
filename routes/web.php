@@ -13,7 +13,6 @@
 use Illuminate\Http\Request;
 
 
-
 foreach (\App\Model\Base\Page::all() as $page) {
 	Route::get($page->link, 'PageController@view');
 }
@@ -25,8 +24,8 @@ Route::prefix('connector')
 		Route::delete('cart', 'SessionController@delete');
 });
 
-Route::get('download-pdf/{number}', 'PageController@pdf');
 
+Route::get('download-pdf/{number}', 'OrderController@invoice');
 Route::post('create_report', 'ReportController@create');
 Route::post('rep-avail', 'ProductController@all');
 Route::post('profile', 'ClientAuthController@updateClient');

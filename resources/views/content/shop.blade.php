@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @php
-//var_dump($it->context_id); die;
+//var_dump($it); die;
 $mainProducts = $select('\App\Model\Shop\Product')
 	->whereHas('categories', function ($q) {
 		$q->where('title', 'Base');
@@ -16,7 +16,7 @@ $secondaryProducts = $select('\App\Model\Shop\Product')
 		$q->where('title', 'Secondary');
 	})
 	->where('delete', 0)
-	->where('context_id', $it->context_id)
+    ->where('context_id', $it->context_id)
 	->with('page', 'options', 'images')
 	->get();
 //var_dump($secondaryProducts); die;

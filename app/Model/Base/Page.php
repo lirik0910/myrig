@@ -62,6 +62,11 @@ class Page extends Model
 		return $this->hasMany(MultiVariableLine::class);
 	}
 
+	public function variableContents()
+    {
+        return $this->hasMany(VariableContent::class);
+    }
+
 	/**
 	 * Remove all childs of certain page
 	 * @param {Int} $id

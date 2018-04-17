@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Cache;
 
+use App\DbImport as Import;
 
 class PageController extends Controller
 {
@@ -21,41 +22,38 @@ class PageController extends Controller
 	 * @param Request $request
 	 * @param (Integer) $number Number of order for success page
 	 */
-	public function view(Request $request, $number = null)
+	public function view(Request $request, $number = null, $domain_locale = null)
 	{
-/*        $custom_locale = $request->get('locale');
-        //var_dump($custom_locale); die;
-        if($custom_locale){
-            session()->put('locale', $custom_locale);
-            //Cache::put('locale', $custom_locale, 86400);
-            App::setLocale($custom_locale);
-        }*/
-
+        //var_dump($request->getSchemeAndHttpHost()); die;
+        //var_dump($request->server('HTTP_HOST')); die;
+/*        $import = new Import();
+        $import->process();*/
+        //var_dump($request->getSchemeAndHttpHost(), env('UA_DOMAIN'), env('RU_DOMAIN'), env('EN_DOMAIN'), config('app.en_domain')); die;
+//var_dump($request); die;
         switch ($request->getSchemeAndHttpHost()) {
-        	case env('UA_DOMAIN'):
-        		$locale = 'ua';
-        		break;
+            case config('app.ua_domain'):
+                $locale = 'ua';
+                break;
 
-        	case env('RU_DOMAIN'):
-        		$locale = 'ru';
-        		break;
+            case config('app.ru_domain'):
+                $locale = 'ru';
+                break;
 
-        	case env('EN_DOMAIN'):
-        		$locale = 'en';
-        		break;
+            case config('app.en_domain'):
+                $locale = 'en';
+                break;
 
-        	default:
-        		break;
+            default:
+                break;
         }
+//var_dump($locale); die;
         App::setLocale($locale);
-
-        //var_dump($locale); die;
 
 		$link = $request->decodedPath();
 		$link = $link === '/' ?
 			$link :
 			rtrim(ltrim($link, '/\\'), '/\\');
-		
+
 		if ($number) {
 			$link = explode('/' . $number, $link)[0];
 		}
@@ -75,7 +73,7 @@ class PageController extends Controller
                     return redirect('shop');
                 }
             }
-
+//var_dump(MultiVariableContent::multiConvert($page->view->variables)); die;
 			return view($page->view->path, [
 				'it' => $page,
 				'get' => $this->get(),
@@ -179,17 +177,6 @@ class PageController extends Controller
 
 			return $dest;
 		};
-	}
-
-	public function pdf(Request $request, $number = null)
-	{
-		
-    	
-        $html = view('layouts.pdf', ['number' => $number]);
-    	$html = mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8');
-    	$pdf = \App::make('dompdf.wrapper');
-    	$pdf->loadHTML($html)->setPaper(array(0, 0, 895.28, 765.89), 'landscape');
-    	return $pdf->download('invoice');
 	}
 }
 
