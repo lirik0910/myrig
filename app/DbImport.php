@@ -148,14 +148,7 @@ class DbImport
         $order_deliveries = [];
         $orders = [];
 
-        foreach ($this->orders as $order){
-            $orders_meta[$order->id] = $this->source->select('select * from wpbit2_postmeta where post_id =:post_id', ['post_id' => $order->id]);
-            $orders_items[$order->id] = $this->source->select('select * from wpbit2_woocommerce_order_items where order_id = :order_id', ['order_id' => $order->id]);
-        }
-        //var_dump($orders_meta); die;
-        foreach ($this->orders as $order){
-            $orders_meta[$order->id][] = $this->source->select('select * from wpbit2_postmeta where post_id =:post_id', ['post_id' => $order->id]);
-            $orders_items[$order->id] = $this->source->select('select * from wpbit2_woocommerce_order_items where order_id = :order_id', ['order_id' => $order->id]);
+        foreach($this->orders as $order){
             $order_status = 1;
             switch ($order->post_status){
                 case 'wc-completed':
@@ -186,83 +179,85 @@ class DbImport
                 'context_id' => 2,
                 'created_at' => $order->post_date
             ];
-            //var_dump($orders_meta[$order->id]); die;
-            foreach($orders_meta as $meta){
-               // var_dump($meta); die;
-                if(isset($meta['post_id'])){
-                    if($meta['post_id'] == $order->id){
-                        $user_name = '';
-                        $user_last_name = '';
-                        $user_phone = '';
-                        $user_email = '';
-                        $user_city = '';
-                        $user_country = '';
-                        $user_address = '';
-                        $user_state = '';
-                        switch ($meta->meta_key){
-                            case '_billing_first_name':
-                                $user_name = $meta->meta_value;
-                                break;
-                            case  '_billing_last_name':
-                                $user_last_name = $meta->meta_value;
-                                break;
-                            case '_billing_phone':
-                                $user_phone = $meta->meta_value;
-                                break;
-                            case '_billing_email':
-                                $user_email = $meta->meta_value;
-                                break;
-                            case '_billing_city':
-                                $user_city = $meta->meta_value;
-                                break;
-                            case '_billing_country':
-                                $user_country = $meta->meta_value;
-                                break;
-                            case '_billing_address_1':
-                                $user_address = $meta->meta_value;
-                                break;
-                            case '_billing_state':
-                                $user_state = $meta->meta_value;
-                                break;
-                        }
-                        $user_meta[$order->id] = [
-                            'user_id' => $user->id,
-                            'fname' => $user_name,
-                            'lname' => $user_last_name,
-                            'phone' => $user_phone,
-                            'email' => $user_email,
-                            'city' => $user_city,
-                            'country' => $user_country,
-                            'address' => $user_address,
-                            'state' => $user_state,
-                        ];
+        }
+        //var_dump($orders); die;
+        $order_deliveries = [];
+        foreach ($this->orders as $order){
+            $delivery_id = 1;
+            $delivery_cost = 0;
+
+            $orders_items[$order->id] = $this->source->select('select * from wpbit2_woocommerce_order_items where order_id = :order_id', ['order_id' => $order->id]);
+
+            //var_dump($orders_items); die;
+
+
+            /*
+             * Order delivery info
+             */
+
+            $orders_meta[$order->id] = $this->source->select('select * from wpbit2_postmeta where post_id =:post_id', ['post_id' => $order->id]);
+            foreach ($orders_meta as $order_meta){
+                $billing_fname = '';
+                $billing_lname = '';
+                //$delivery_cost = 0.00;
+                $billing_email = '';
+                $billing_phone = '';
+                $billing_country = '';
+                $billing_address = '';
+                $billing_state = '';
+                $billing_country = '';
+                $billing_city = '';
+                foreach ($order_meta as $meta_item){
+                    switch ($meta_item->meta_key){
+                        case '_billing_first_name':
+                            $billing_fname = $meta_item->meta_value;
+                            break;
+                        case '_billing_last_name':
+                            $billing_lname = $meta_item->meta_value;
+                            break;
+                        case '_billing_address_1':
+                            $billing_address = $meta_item->meta_value;
+                            break;
+                        case '_billing_city':
+                            $billing_city = $meta_item->meta_value;
+                            break;
+                        case '_billing_state':
+                            $billing_state = $meta_item->meta_value;
+                            break;
+                        case '_billing_country':
+                            $billing_country = $meta_item->meta_value;
+                            break;
+                        case '_billing_email':
+                            $billing_email = $meta_item->meta_value;
+                            break;
+                        case '_billing_phone':
+                            $billing_phone = $meta_item->meta_value;
+                            break;
                     }
                 }
-            }
-           // var_dump($user_meta); die;
-            if(isset($user_meta[$order->id])){
                 $order_deliveries[$order->id] = [
                     'order_id' => $order->id,
-                    'delivery_id' => 1,
-                    'first_name' => $user_meta[$order->id]['fname'],
-                    'last_name' => $user_meta[$order->id]['lname'],
-                    'phone' => $user_meta[$order->id]['phone'],
-                    'email' => $user_meta[$order->id]['email'],
-                    'city' => $user_meta[$order->id]['city'],
-                    'country' => $user_meta[$order->id]['country'],
-                    'address' => $user_meta[$order->id]['address'],
-                    'state' => $user_meta[$order->id]['state']
+                    'delivery_id' => $delivery_id,
+                    'cost' => $delivery_cost,
+                    'first_name' => $billing_fname,
+                    'last_name' => $billing_lname,
+                    'phone' => $billing_phone,
+                    'email' => $billing_email,
+                    'city' => $billing_city,
+                    'country' => $billing_country,
+                    'state' => $billing_state,
+                    'address' => $billing_address
                 ];
             }
         }
-       // var_dump($order_deliveries); die;
-//var_dump($orders); die;
+        //var_dump($order_deliveries); die;
         $cart = [];
-
+//var_dump($orders_items); die;
         foreach ($orders_items as $items){
             if (count($items) > 0){
                 foreach ($items as $item){
                     $orders_items_meta[$item->order_id][$item->order_item_name] = $this->source->select('select * from wpbit2_woocommerce_order_itemmeta where order_item_id = :order_item_id', ['order_item_id' => $item->order_item_id ]);
+                    //var_dump($orders_items_meta); die;
                     if($item->order_item_name != 'Shipping' && $item->order_item_name != 'Product Shipping'){
                         if($item->order_item_name == 'Новая почта'){
                             if(isset($order_deliveries[$item->order_id])){
@@ -272,7 +267,7 @@ class DbImport
                             if(isset($order_deliveries[$item->order_id])) {
                                 $order_deliveries[$item->order_id]['delivery_id'] = 3;
                             }
-                        } elseif($item->order_item_name == 'Деловые линии'){
+                        } elseif($item->order_item_name == 'Деловые линии' || $item->order_item_name == 'СДЭК'){
                             if(isset($order_deliveries[$item->order_id])){
                                 $order_deliveries[$item->order_id]['delivery_id'] = 1;
                             }
@@ -280,7 +275,9 @@ class DbImport
                         $item_count = 1;
                         $item_total_cost = 0;
 
+
                         foreach ($orders_items_meta[$item->order_id][$item->order_item_name] as $meta){
+                            //var_dump(); die;
                             if($meta->meta_key == '_line_subtotal'){
                                 $item_total_cost = $meta->meta_value;
                             } elseif ($meta->meta_key == '_qty'){
@@ -301,7 +298,8 @@ class DbImport
 
             }
         }
-
+        //var_dump($orders_items_meta); die;
+//var_dump($cart); die;
         foreach($cart as $key => $line){
             if($line['cost'] == 0){
                 unset($cart[$key]);
@@ -312,7 +310,7 @@ class DbImport
                 if(isset($orders[$line['order_id']])){
                     $line_cost = $line['cost'] * $line['count'];
                     $orders[$line['order_id']]['cost'] += (int)$line_cost;
-                    if($orders[$line['order_id']]['cost'] < 0 || $orders[$line['order_id']]['cost'] > 300000){
+                    if($orders[$line['order_id']]['cost'] < 0 || $orders[$line['order_id']]['cost'] > 999999){
                         unset($orders[$line['order_id']]);
                     }
                 }
@@ -320,8 +318,8 @@ class DbImport
                 unset($cart[$key]);
             }
         }
-
-        foreach ($cart as $key => $line){
+//var_dump($cart); die;
+/*        foreach ($cart as $key => $line){
             $isset = false;
             foreach ($orders as $order){
                 if($line['order_id'] == $order['id']){
@@ -343,7 +341,7 @@ class DbImport
             if(!$isset){
                 unset($cart[$key]);
             }
-        }
+        }*/
 
         foreach ($user_attrs as $key => $attr){
             $isset = false;
