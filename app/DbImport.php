@@ -66,6 +66,20 @@ class DbImport
         }
 //var_dump($this->orders); die;
         $users = [];
+/*        $users[1] = [
+            'id' => 1,
+            'policy_id' => 1,
+            'name' => 'admin',
+            'email' => 'admin@myrig.com',
+            'password' => '$2y$10$ba4gmtzfXUnNC0JL95J5Aup/u/IIdULTz8kFvruLNoTQJnIM..zG2',
+        ];
+        $users[2] = [
+            'id' => 2,
+            'policy_id' => 2,
+            'name' => 'manager',
+            'email' => 'manager@myrig.com',
+            'password' => '$2y$10$6uM5SSb10/D7NJUI43s4zuDOSJBC3Ymu2a9gPcnkqz1GBI1yx0Pqa',
+        ];*/
         $user_attrs = [];
         $user_meta = [];
         //var_dump($this->users); die;
@@ -77,6 +91,7 @@ class DbImport
                 'name' => $user->user_login,
                 'email' => $user->user_email,
                 'password' => $user->user_pass,
+                'remember_token' => ''
             ];
             $display_name = explode(' ', $user->display_name);
             $fname = $display_name[0];
@@ -92,7 +107,7 @@ class DbImport
                 'lname' => $lname
             ];
 //var_dump($this->users_meta); die;
-            $user_name = '';
+/*            $user_name = '';
             $user_last_name = '';
             $user_phone = '';
             $user_email = '';
@@ -140,7 +155,7 @@ class DbImport
                         'state' => $user_state,
                     ];
                 }
-            }
+            }*/
         }
 
         $orders_items_meta = [];
@@ -265,6 +280,7 @@ class DbImport
                 $billing_state = '';
                 $billing_country = '';
                 $billing_city = '';
+                $billing_comment = '';
                 foreach ($order_meta as $meta_item){
                     switch ($meta_item->meta_key){
                         case '_billing_first_name':
@@ -302,7 +318,10 @@ class DbImport
                             } else{
                                 $orders[$order->id]['payment_type_id'] = 2;
                             }
-
+                            break;
+                        case '_customer_user':
+                            $orders[$order->id]['user_id'] = $meta_item->meta_value;
+                            break;
                     }
                 }
 
@@ -323,7 +342,7 @@ class DbImport
                     'city' => $billing_city,
                     'country' => $billing_country,
                     'state' => $billing_state,
-                    'address' => $billing_address
+                    'address' => $billing_address,
                 ];
             }
         }
@@ -445,7 +464,7 @@ class DbImport
         $export['users'] = $users;
         $export['user_attrs'] = $user_attrs;
         $export['orders_deliveries'] = $order_deliveries;
-       // var_dump($export['orders']); die;
+        //var_dump($export['users']); die;
         return $export;
     }
 
@@ -454,9 +473,17 @@ class DbImport
         /*
          * Import users
          */
-        foreach ($data['users'] as $user){
+        foreach ($data['users'] as $user_item){
             try {
-                User::create($user);
+                $user = new User();
+                $user->id = $user_item['id'];
+                $user->policy_id = $user_item['policy_id'];
+                $user->name = $user_item['name'];
+                $user->email = $user_item['email'];
+                $user->password = $user_item['password'];
+               // $user->fill($user_item);
+                $user->save();
+                //User::create($user);
             } catch (\Exception $e){
                 continue;
             }
