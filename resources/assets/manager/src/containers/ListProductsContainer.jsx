@@ -325,7 +325,6 @@ class ListProductsContainer extends Component {
 
 				<Grid container spacing={24} className={classes.root}>
 					<Grid item xs={12}>
-						{console.log(total)}
 						{completed === 100 && <PaperTable
 							page={start}
 							limit={limit}
