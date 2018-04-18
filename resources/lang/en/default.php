@@ -13,10 +13,8 @@ return [
 	'select_country' => 'Select country',
 	'update_country' => 'Update country',
 	'checkout_title' => 'Payment and delivery',
-
 	'phone_input' => 'Input without +',
 	'no_matches' => 'no matches found',
-
 	'video' => 'Video',
 	'added' => 'Added!',
 	'total' => 'TOTAL: ',
@@ -34,7 +32,6 @@ return [
 	'optional_equipment' => 'Optional equipment',
 	'payment_methods_description' => 'Our manager will contact you to clarify details',
 	'hosting_title' => 'Hosting',
-
     'service_title' => 'Local service',
 
     //base.footer
@@ -64,6 +61,9 @@ return [
     'manual_input' => 'Manual input',
     'kwh' => 'kWh',
     'equipment_placement_desk' => 'Placement of equipment in the MyRig data center',
+    'input_hashrate' => 'Input Hashrate',
+    'energy_consumption' => 'Energy consumption',
+    'calculate' => 'Calculate',
     'local_placement' => 'Local location',
     'local_device_placement' => 'Local location equipment',
     'billing_period' => 'Billing period',
@@ -81,7 +81,6 @@ return [
     'expenses' => 'Expenses',
     'profit' => 'Profit',
 
-
     //content.checkout
     'additional_info' => 'Additionalinfo',
     'your_order' => 'Your order',
@@ -91,9 +90,6 @@ return [
     'cost' => 'Cost',
     'delivery' => 'Delivery',
     'self_shipment' => 'Self shipment',
-
-
-
 
     //content.checkout_success
     'order_was_successfully_accepted' => 'Thank you!. Your order was successfully accepted.',
@@ -110,12 +106,8 @@ return [
     'phone' => 'Phone:',
     'address_info' => 'Address info',
 
-
-
-
     //content.news
     'read' => 'Read',
-
 
     //content.product
     'days' => 'days',
@@ -135,7 +127,6 @@ return [
     'order_status_changed_from' => 'Order status changed from',
     'new_order' => 'New order',
     'to' => 'to',
-    ////////////////////////////end
 
     //content.service
     'local_service' => 'Local service',
@@ -143,8 +134,6 @@ return [
     'contacts_for_communication' => 'Contacts for communication',
     'schedule' => 'Schedule',
     'monday_friday' => 'Monday &#8212; Friday',
-
-    //-------------------------
     'description_service' => 'MYRIG is the only official representative from the plant to provide post-warranty services for Bitmain equipment. Our company provides support and repair services for miners and components throughout Ukraine and Russia.',
     'our_service' => 'Our service center is ready to help you with the following questions:',
     'first_li' => 'Support for the extended warranty program from MyRig;',
