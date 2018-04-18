@@ -35,11 +35,17 @@ console.log(wM);
 		}
 
 		else {
-			r = JSON.parse(data);
+			if (typeof data === 'string') {
+				r = JSON.parse(data);
+			}
+			else {
+				r = data;
+			}
 				
 			for (i in r) {
 				s.push({id: i, count: r[i]});
 			}
+
 			sessionStorage['cart'] = JSON.stringify(s);
 		}
 	});
@@ -704,6 +710,7 @@ $(document).on('change', '.cart-form  input.qty', function(e) {
 	$(document).on('click', '.intocarts:not(.disabled)', function(e) {
 		e.preventDefault();
 	});
+
 
 	$(document).on('click', '.addtocarts:not(.disabled)', function(e) {
 		e.preventDefault();

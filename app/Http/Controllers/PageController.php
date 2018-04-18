@@ -69,7 +69,7 @@ class PageController extends Controller
 
 		if ($page = Page::where('link', $link)->where('context_id', $locale_context_id)->with('view')->first()) {
 		    if ($page->link == 'checkout' || $page->link == 'cart'){
-		        if(count($this->getInSessionCart()) < 1){
+		        if(count($_SESSION['cart']) < 1){
                     return redirect('shop');
                 }
             }
@@ -80,7 +80,7 @@ class PageController extends Controller
 				'request' => $request,
 				'select' => $this->select(),
 				'settings' => $this->settings($locale_context_id),
-				'inCart' => $this->getInSessionCart(),
+				'inCart' => $_SESSION['cart'],
 				'multi' => MultiVariableContent::multiConvert($page->view->variables),
 				'number' => $number,
 				'preview' => $this->preview(),
