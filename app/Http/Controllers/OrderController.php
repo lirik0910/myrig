@@ -54,11 +54,12 @@ class OrderController extends Controller
 
         $order = new Order();
 
+        $max_id = Order::orderBy('id','desc')->first()->id;
         $numbersArray = str_split((string)time() - 2000000, 3);
-        $order_number = 0;
-        foreach($numbersArray as $number){
+        $order_number = $max_id + 1;
+        /*foreach($numbersArray as $number){
             $order_number += (int)$number;
-        }
+        }*/
 
         $order->fill([
             'number' => $order_number,
