@@ -33,6 +33,12 @@
                         </div>
                     </div>
 
+                    <div class="form-group" style="margin-top: 60px; margin-bottom: 20px">
+                        <div class="g-recaptcha" data-sitekey="6LdY_VMUAAAAANIypbzQz5mga0NnT-PJyASZbJOQ"></div>
+                    </div>
+
+                    <p class="error-captcha">Пройдите капчу</p>
+
                     <div class="form-group" style="position: inherit">
                         <input type="submit" name="submit" value="Send" class="btn-default btn-subscribe"/>
                     </div>

@@ -13,10 +13,8 @@ return [
 	'select_country' => 'Выберите страну',
 	'update_country' => 'Обновите страну',
 	'checkout_title' => 'Оплата и доставка',
-
 	'phone_input' => 'Ввод без +',
 	'no_matches' => 'Нет ни одного совпадения',
-
 	'video' => 'Видео',
 	'added' => 'Добвлен!',
 	'total' => 'ИТОГО: ',
@@ -34,7 +32,7 @@ return [
 	'optional_equipment' => 'Дополнительное оборудование',
 	'payment_methods_description' => 'Наш менеджер свяжиться с вами для уточнения деталей',
 	'hosting_title' => 'Хостинг',
-
+    'service_title' => 'Локальное сервисное обслуживание',
 
     //base.footer
     'footer_hosting' => 'Хостинг',
@@ -50,12 +48,10 @@ return [
     //base.header
     'welcome_title' => 'Добро пожаловать',
 
-
     //content.article
     'back_to_list' => 'Вернуться к списку',
     'previous_article' => 'Предыдущая статья',
     'next_article' => 'Следующая статья',
-
 
     //content.calc
     'yield_calculator' => 'Расчет доходности',
@@ -63,6 +59,9 @@ return [
     'manual_input' => 'Ручной ввод',
     'kwh' => 'kWh',
     'equipment_placement_desk' => 'Размещение оборудования в дата-центре MyRig',
+    'input_hashrate' => 'Введите хешрейт',
+    'energy_consumption' => 'Энергопотребление',
+    'calculate' => 'Рассчитать',
     'local_placement' => 'Локальное размещение',
     'local_device_placement' => 'Локальное размещение оборудование',
     'billing_period' => 'Рассчетный период',
@@ -80,7 +79,6 @@ return [
     'expenses' => 'Затраты',
     'profit' => 'Прибыль',
 
-
     //content.checkout
     'additional_info' => 'Дополнительная информация',
     'your_order' => 'Ваш заказ',
@@ -90,7 +88,6 @@ return [
     'cost' => 'Стоимость',
     'delivery' => 'Доставка',
     'self_shipment' => 'Самовывоз',
-
 
     //content.checkout_success
     'order_was_successfully_accepted.' => 'Спасибо. Ваш заказ был успешно принят.',
@@ -111,7 +108,6 @@ return [
 
     //content.news
     'read' => 'Читать',
-
 
     //content.product
     'days' => 'дней',
@@ -138,8 +134,6 @@ return [
     'contacts_for_communication' => 'Контанты для связи',
     'schedule' => 'График работы',
     'monday_friday' => 'Понедельник &#8212; Пятница',
-
-    //-------------------------
     'description_service' => 'Компания MYRIG является единственным официальным представителем от завода по предоставлению услуг послегарантийного обслуживания оборудования Bitmain. Наша компания предоставляет услуги поддержки и ремонта майнеров и комплектующих по всей территории Украины и России.',
     'our_service' => 'Наш сервисный центр готов вам помочь в следующих вопросах:',
     'first_li' => 'Поддержка по программе расширенной гарантии от MyRig;',
@@ -152,10 +146,8 @@ return [
     'ukraine' => 'Украина',
     'russia' => 'Россия',
 
-
     //parts.shop
     'report_availability' => 'Сообщить о наличии',
     'leave_request' => 'Оставьте заявку для получения оповещения о наличии',
-
 
 ];

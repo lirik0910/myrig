@@ -66,6 +66,20 @@ class DbImport
         }
 //var_dump($this->orders); die;
         $users = [];
+/*        $users[1] = [
+            'id' => 1,
+            'policy_id' => 1,
+            'name' => 'admin',
+            'email' => 'admin@myrig.com',
+            'password' => '$2y$10$ba4gmtzfXUnNC0JL95J5Aup/u/IIdULTz8kFvruLNoTQJnIM..zG2',
+        ];
+        $users[2] = [
+            'id' => 2,
+            'policy_id' => 2,
+            'name' => 'manager',
+            'email' => 'manager@myrig.com',
+            'password' => '$2y$10$6uM5SSb10/D7NJUI43s4zuDOSJBC3Ymu2a9gPcnkqz1GBI1yx0Pqa',
+        ];*/
         $user_attrs = [];
         $user_meta = [];
         //var_dump($this->users); die;
@@ -77,6 +91,7 @@ class DbImport
                 'name' => $user->user_login,
                 'email' => $user->user_email,
                 'password' => $user->user_pass,
+                'remember_token' => ''
             ];
             $display_name = explode(' ', $user->display_name);
             $fname = $display_name[0];
@@ -92,7 +107,7 @@ class DbImport
                 'lname' => $lname
             ];
 //var_dump($this->users_meta); die;
-            $user_name = '';
+/*            $user_name = '';
             $user_last_name = '';
             $user_phone = '';
             $user_email = '';
@@ -140,36 +155,87 @@ class DbImport
                         'state' => $user_state,
                     ];
                 }
-            }
-            //$user_meta[$user->id] =
+            }*/
         }
 
         $orders_items_meta = [];
         $orders_items = [];
         $order_deliveries = [];
-
         $orders = [];
-        foreach ($this->orders as $order){
-            $orders_meta[$order->id][] = $this->source->select('select * from wpbit2_postmeta where post_id =:post_id', ['post_id' => $order->id]);
-            $orders_items[$order->id] = $this->source->select('select * from wpbit2_woocommerce_order_items where order_id = :order_id', ['order_id' => $order->id]);
+        $order_logs = [];
+        $order_statuses_count = [
+            'wc-new' => 0,
+            'wc-processing' => 0,
+            'wc-pending' => 0,
+            'wc-paid' => 0,
+            'wc-on-hold' => 0,
+            'wc-local' => 0,
+            'wc-completed' => 0,
+            'wc-refunded' => 0,
+            'wc-cancelled' => 0,
+            'trash' => 0
+        ];
+        $auto_drafts = [];
+
+        foreach($this->orders as $order){
             $order_status = 1;
+
+            //$order_statuses_count = []
+/*            if($order->post_status == 'wc-wc-local'){
+                $auto_drafts[] = $order->id;
+            }
+            if(!in_array($order->post_status, $order_statuses)){
+                $order_statuses[$order->id] = $order->post_status;
+            }*/
+            $in_trash = 0;
             switch ($order->post_status){
-                case 'wc-completed':
-                    $order_status = 7;
+                case 'wc-new':
+                    $order_status = 1;
+                    $order_statuses_count['wc-new'] += 1;
                     break;
-                case 'wc-cancelled':
-                    $order_status = 9;
-                    break;
-                case 'trash':
-                    $order_status = 9;
-                    break;
-                case 'auto-draft':
+                case 'wc-processing':
                     $order_status = 2;
+                    $order_statuses_count['wc-processing'] += 1;
+                    break;
+                case 'wc-pending':
+                    $order_status = 3;
+                    $order_statuses_count['wc-pending'] += 1;
                     break;
                 case 'wc-paid':
                     $order_status = 4;
+                    $order_statuses_count['wc-paid'] += 1;
                     break;
-
+                case 'wc-on-hold':
+                    $order_status = 5;
+                    $order_statuses_count['wc-on-hold'] += 1;
+                    break;
+                case 'wc-local':
+                    $order_status = 6;
+                    $order_statuses_count['wc-local'] += 1;
+                    break;
+                case 'wc-completed':
+                    $order_status = 7;
+                    $order_statuses_count['wc-completed'] += 1;
+                    break;
+                case 'wc-refunded':
+                    $order_status = 8;
+                    $order_statuses_count['wc-refunded'] += 1;
+                    break;
+                case 'wc-cancelled':
+                    $order_status = 9;
+                    $order_statuses_count['wc-cancelled'] += 1;
+                    break;
+                case 'trash':
+                    $order_status = 1;
+                    $order_statuses_count['trash'] += 1;
+                    $in_trash = 1;
+                    break;
+                case 'auto-draft':
+                    $order_status = 10;
+                    break;
+                case 'wc-local-local':
+                    $order_status = 11;
+                    break;
             }
             $orders[$order->id] = [
                 'id' => $order->id,
@@ -178,87 +244,118 @@ class DbImport
                 'cost' => 0,
                 'prepayment' => 0.00,
                 'status_id' => $order_status,
-                'payment_type_id' => 1,
-                'context_id' => 2,
+                'payment_type_id' => 2,
+                'context_id' => 1,
+                'delete' => $in_trash,
                 'created_at' => $order->post_date
             ];
-            //var_dump($orders_meta[$order->id]); die;
-            foreach($orders_meta as $meta){
-               // var_dump($meta); die;
-                if(isset($meta['post_id'])){
-                    if($meta['post_id'] == $order->id){
-                        $user_name = '';
-                        $user_last_name = '';
-                        $user_phone = '';
-                        $user_email = '';
-                        $user_city = '';
-                        $user_country = '';
-                        $user_address = '';
-                        $user_state = '';
-                        switch ($meta->meta_key){
-                            case '_billing_first_name':
-                                $user_name = $meta->meta_value;
-                                break;
-                            case  '_billing_last_name':
-                                $user_last_name = $meta->meta_value;
-                                break;
-                            case '_billing_phone':
-                                $user_phone = $meta->meta_value;
-                                break;
-                            case '_billing_email':
-                                $user_email = $meta->meta_value;
-                                break;
-                            case '_billing_city':
-                                $user_city = $meta->meta_value;
-                                break;
-                            case '_billing_country':
-                                $user_country = $meta->meta_value;
-                                break;
-                            case '_billing_address_1':
-                                $user_address = $meta->meta_value;
-                                break;
-                            case '_billing_state':
-                                $user_state = $meta->meta_value;
-                                break;
-                        }
-                        $user_meta[$order->id] = [
-                            'user_id' => $user->id,
-                            'fname' => $user_name,
-                            'lname' => $user_last_name,
-                            'phone' => $user_phone,
-                            'email' => $user_email,
-                            'city' => $user_city,
-                            'country' => $user_country,
-                            'address' => $user_address,
-                            'state' => $user_state,
-                        ];
+        }
+        //var_dump($order_statuses_count); die;
+        //var_dump($auto_drafts); die;
+        //var_dump($order_statuses); die;
+        //var_dump($orders); die;
+       // $order_deliveries = [];
+        foreach ($this->orders as $order){
+            $delivery_id = 1;
+            $delivery_cost = 0;
+
+            $order_logs[$order->id] = $this->source->select('select * from wpbit2_comments where comment_post_ID = :comment_post_ID', ['comment_post_ID' => $order->id]);
+            $orders_items[$order->id] = $this->source->select('select * from wpbit2_woocommerce_order_items where order_id = :order_id', ['order_id' => $order->id]);
+
+            //var_dump($orders_items); die;
+
+
+            /*
+             * Order delivery info
+             */
+
+            $orders_meta[$order->id] = $this->source->select('select * from wpbit2_postmeta where post_id =:post_id', ['post_id' => $order->id]);
+            foreach ($orders_meta as $order_meta){
+                $billing_fname = '';
+                $billing_lname = '';
+                //$delivery_cost = 0.00;
+                $billing_email = '';
+                $billing_phone = '';
+                $billing_country = '';
+                $billing_address = '';
+                $billing_state = '';
+                $billing_country = '';
+                $billing_city = '';
+                $billing_comment = '';
+                foreach ($order_meta as $meta_item){
+                    switch ($meta_item->meta_key){
+                        case '_billing_first_name':
+                            $billing_fname = $meta_item->meta_value;
+                            break;
+                        case '_billing_last_name':
+                            $billing_lname = $meta_item->meta_value;
+                            break;
+                        case '_billing_address_1':
+                            $billing_address = $meta_item->meta_value;
+                            break;
+                        case '_billing_city':
+                            $billing_city = $meta_item->meta_value;
+                            break;
+                        case '_billing_state':
+                            $billing_state = $meta_item->meta_value;
+                            break;
+                        case '_billing_country':
+                            $billing_country = $meta_item->meta_value;
+                            break;
+                        case '_billing_email':
+                            $billing_email = $meta_item->meta_value;
+                            break;
+                        case '_billing_phone':
+                            $billing_phone = $meta_item->meta_value;
+                            break;
+                        case '_payment_method':
+                           // cod
+                            //var_dump('cscdcsv'); die;
+                            if($meta_item->meta_value == 'cheque'){
+                               // var_dump($orders[$order->id]);// die;
+                                $orders[$order->id]['payment_type_id'] = 1;
+                               // var_dump($orders[$order->id]);
+                                //die;
+                            } else{
+                                $orders[$order->id]['payment_type_id'] = 2;
+                            }
+                            break;
+                        case '_customer_user':
+                            $orders[$order->id]['user_id'] = $meta_item->meta_value;
+                            break;
                     }
                 }
-            }
-           // var_dump($user_meta); die;
-            if(isset($user_meta[$order->id])){
+
+                if($billing_country == 'UA'){
+                    $orders[$order->id]['context_id'] = 2;
+                } else{
+                    $orders[$order->id]['context_id'] = 3;
+                }
+
                 $order_deliveries[$order->id] = [
                     'order_id' => $order->id,
-                    'delivery_id' => 1,
-                    'first_name' => $user_meta[$order->id]['fname'],
-                    'last_name' => $user_meta[$order->id]['lname'],
-                    'phone' => $user_meta[$order->id]['phone'],
-                    'email' => $user_meta[$order->id]['email'],
-                    'city' => $user_meta[$order->id]['city'],
-                    'country' => $user_meta[$order->id]['country'],
-                    'address' => $user_meta[$order->id]['address'],
-                    'state' => $user_meta[$order->id]['state']
+                    'delivery_id' => $delivery_id,
+                    'cost' => $delivery_cost,
+                    'first_name' => $billing_fname,
+                    'last_name' => $billing_lname,
+                    'phone' => $billing_phone,
+                    'email' => $billing_email,
+                    'city' => $billing_city,
+                    'country' => $billing_country,
+                    'state' => $billing_state,
+                    'address' => $billing_address,
                 ];
             }
         }
-       // var_dump($order_deliveries); die;
-//var_dump($orders); die;
-        $cart = [];
 
+       // var_dump($order_); die;
+        $cart = [];
+//var_dump($order_logs); die;
         foreach ($orders_items as $items){
             if (count($items) > 0){
                 foreach ($items as $item){
                     $orders_items_meta[$item->order_id][$item->order_item_name] = $this->source->select('select * from wpbit2_woocommerce_order_itemmeta where order_item_id = :order_item_id', ['order_item_id' => $item->order_item_id ]);
+                    //var_dump($orders_items_meta); die;
                     if($item->order_item_name != 'Shipping' && $item->order_item_name != 'Product Shipping'){
                         if($item->order_item_name == 'Новая почта'){
                             if(isset($order_deliveries[$item->order_id])){
@@ -268,7 +365,7 @@ class DbImport
                             if(isset($order_deliveries[$item->order_id])) {
                                 $order_deliveries[$item->order_id]['delivery_id'] = 3;
                             }
-                        } elseif($item->order_item_name == 'Деловые линии'){
+                        } elseif($item->order_item_name == 'Деловые линии' || $item->order_item_name == 'СДЭК'){
                             if(isset($order_deliveries[$item->order_id])){
                                 $order_deliveries[$item->order_id]['delivery_id'] = 1;
                             }
@@ -276,7 +373,9 @@ class DbImport
                         $item_count = 1;
                         $item_total_cost = 0;
 
+
                         foreach ($orders_items_meta[$item->order_id][$item->order_item_name] as $meta){
+                            //var_dump(); die;
                             if($meta->meta_key == '_line_subtotal'){
                                 $item_total_cost = $meta->meta_value;
                             } elseif ($meta->meta_key == '_qty'){
@@ -297,7 +396,8 @@ class DbImport
 
             }
         }
-
+        //var_dump($orders_items_meta); die;
+//var_dump($cart); die;
         foreach($cart as $key => $line){
             if($line['cost'] == 0){
                 unset($cart[$key]);
@@ -308,7 +408,7 @@ class DbImport
                 if(isset($orders[$line['order_id']])){
                     $line_cost = $line['cost'] * $line['count'];
                     $orders[$line['order_id']]['cost'] += (int)$line_cost;
-                    if($orders[$line['order_id']]['cost'] < 0 || $orders[$line['order_id']]['cost'] > 300000){
+                    if($orders[$line['order_id']]['cost'] < 0 || $orders[$line['order_id']]['cost'] > 999999){
                         unset($orders[$line['order_id']]);
                     }
                 }
@@ -316,8 +416,8 @@ class DbImport
                 unset($cart[$key]);
             }
         }
-
-        foreach ($cart as $key => $line){
+//var_dump($cart); die;
+/*        foreach ($cart as $key => $line){
             $isset = false;
             foreach ($orders as $order){
                 if($line['order_id'] == $order['id']){
@@ -339,7 +439,7 @@ class DbImport
             if(!$isset){
                 unset($cart[$key]);
             }
-        }
+        }*/
 
         foreach ($user_attrs as $key => $attr){
             $isset = false;
@@ -353,13 +453,19 @@ class DbImport
             }
         }
 
+        foreach ($orders as $key => $order){
+            if($order['status_id'] == 10 || $order['status_id'] == 11){
+                unset($orders[$key]);
+            }
+        }
+
         $export['products'] = $products;
         $export['orders'] = $orders;
         $export['carts'] = $cart;
         $export['users'] = $users;
         $export['user_attrs'] = $user_attrs;
         $export['orders_deliveries'] = $order_deliveries;
-        //var_dump($export['carts']); die;
+        //var_dump($export['users']); die;
         return $export;
     }
 
@@ -368,9 +474,17 @@ class DbImport
         /*
          * Import users
          */
-        foreach ($data['users'] as $user){
+        foreach ($data['users'] as $user_item){
             try {
-                User::create($user);
+                $user = new User();
+                $user->id = $user_item['id'];
+                $user->policy_id = $user_item['policy_id'];
+                $user->name = $user_item['name'];
+                $user->email = $user_item['email'];
+                $user->password = $user_item['password'];
+               // $user->fill($user_item);
+                $user->save();
+                //User::create($user);
             } catch (\Exception $e){
                 continue;
             }

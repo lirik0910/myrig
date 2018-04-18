@@ -1205,6 +1205,9 @@ $(document).on('change', '.cart-form  input.qty', function(e) {
                         'opacity': 1
                     }, 400);
                 }
+            },
+            error: function (data) {
+				$('.error-captcha').show();
             }
         });
     });
