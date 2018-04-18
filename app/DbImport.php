@@ -147,26 +147,80 @@ class DbImport
         $orders_items = [];
         $order_deliveries = [];
         $orders = [];
+        $order_statuses = [];
+        $order_statuses_count = [
+            'wc-new' => 0,
+            'wc-processing' => 0,
+            'wc-pending' => 0,
+            'wc-paid' => 0,
+            'wc-on-hold' => 0,
+            'wc-local' => 0,
+            'wc-completed' => 0,
+            'wc-refunded' => 0,
+            'wc-cancelled' => 0,
+            'trash' => 0
+        ];
+        $auto_drafts = [];
 
         foreach($this->orders as $order){
             $order_status = 1;
+
+            //$order_statuses_count = []
+/*            if($order->post_status == 'wc-wc-local'){
+                $auto_drafts[] = $order->id;
+            }
+            if(!in_array($order->post_status, $order_statuses)){
+                $order_statuses[$order->id] = $order->post_status;
+            }*/
+            $in_trash = 0;
             switch ($order->post_status){
-                case 'wc-completed':
-                    $order_status = 7;
+                case 'wc-new':
+                    $order_status = 1;
+                    $order_statuses_count['wc-new'] += 1;
                     break;
-                case 'wc-cancelled':
-                    $order_status = 9;
-                    break;
-                case 'trash':
-                    $order_status = 9;
-                    break;
-                case 'auto-draft':
+                case 'wc-processing':
                     $order_status = 2;
+                    $order_statuses_count['wc-processing'] += 1;
+                    break;
+                case 'wc-pending':
+                    $order_status = 3;
+                    $order_statuses_count['wc-pending'] += 1;
                     break;
                 case 'wc-paid':
                     $order_status = 4;
+                    $order_statuses_count['wc-paid'] += 1;
                     break;
-
+                case 'wc-on-hold':
+                    $order_status = 5;
+                    $order_statuses_count['wc-on-hold'] += 1;
+                    break;
+                case 'wc-local':
+                    $order_status = 6;
+                    $order_statuses_count['wc-local'] += 1;
+                    break;
+                case 'wc-completed':
+                    $order_status = 7;
+                    $order_statuses_count['wc-completed'] += 1;
+                    break;
+                case 'wc-refunded':
+                    $order_status = 8;
+                    $order_statuses_count['wc-refunded'] += 1;
+                    break;
+                case 'wc-cancelled':
+                    $order_status = 9;
+                    $order_statuses_count['wc-cancelled'] += 1;
+                    break;
+                case 'trash':
+                    $order_status = 1;
+                    $order_statuses_count['trash'] += 1;
+                    $in_trash = 1;
+                    break;
+                case 'auto-draft':
+                    $order_status = 10;
+                    break;
+                case 'wc-local-local':
+                    $order_status = 11;
+                    break;
             }
             $orders[$order->id] = [
                 'id' => $order->id,
@@ -176,12 +230,16 @@ class DbImport
                 'prepayment' => 0.00,
                 'status_id' => $order_status,
                 'payment_type_id' => 2,
-                'context_id' => 2,
+                'context_id' => 1,
+                'delete' => $in_trash,
                 'created_at' => $order->post_date
             ];
         }
+        //var_dump($order_statuses_count); die;
+        //var_dump($auto_drafts); die;
+        //var_dump($order_statuses); die;
         //var_dump($orders); die;
-        $order_deliveries = [];
+       // $order_deliveries = [];
         foreach ($this->orders as $order){
             $delivery_id = 1;
             $delivery_cost = 0;
@@ -244,7 +302,14 @@ class DbImport
                             } else{
                                 $orders[$order->id]['payment_type_id'] = 2;
                             }
+
                     }
+                }
+
+                if($billing_country == 'UA'){
+                    $orders[$order->id]['context_id'] = 2;
+                } else{
+                    $orders[$order->id]['context_id'] = 3;
                 }
 
                 $order_deliveries[$order->id] = [
@@ -262,7 +327,8 @@ class DbImport
                 ];
             }
         }
-        //var_dump($order_deliveries); die;
+
+       // var_dump($order_); die;
         $cart = [];
 //var_dump($orders_items); die;
         foreach ($orders_items as $items){
@@ -367,13 +433,19 @@ class DbImport
             }
         }
 
+        foreach ($orders as $key => $order){
+            if($order['status_id'] == 10 || $order['status_id'] == 11){
+                unset($orders[$key]);
+            }
+        }
+
         $export['products'] = $products;
         $export['orders'] = $orders;
         $export['carts'] = $cart;
         $export['users'] = $users;
         $export['user_attrs'] = $user_attrs;
         $export['orders_deliveries'] = $order_deliveries;
-        //var_dump($export['carts']); die;
+       // var_dump($export['orders']); die;
         return $export;
     }
 
