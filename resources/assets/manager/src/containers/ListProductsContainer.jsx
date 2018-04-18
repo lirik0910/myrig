@@ -15,9 +15,9 @@ import Grid from 'material-ui/Grid';
 import { Link } from 'react-router-dom';
 import Menu from '../components/Menu/Menu.jsx';
 import Header from '../components/Header/Header.jsx';
+import PaperTable from 'components/Paper/PaperTable';
 import { LinearProgress } from 'material-ui/Progress';
 import TopTitle from '../components/TopTitle/TopTitle.jsx';
-import PaperTable from '../components/PaperTable/PaperTable.jsx';
 import DialogError from '../components/DialogError/DialogError.jsx';
 import PaperToolBar from '../components/PaperToolBar/PaperToolBar.jsx';
 import DialogDelete from '../components/DialogDelete/DialogDelete.jsx';
@@ -325,76 +325,41 @@ class ListProductsContainer extends Component {
 
 				<Grid container spacing={24} className={classes.root}>
 					<Grid item xs={12}>
+						{console.log(total)}
 						{completed === 100 && <PaperTable
-							data={data}
 							page={start}
 							limit={limit}
 							total={total}
-							except={[
-								'delete',
-								'icon',
-								'active', 
-								'page_id',
-								'vendor_id',
-								'context_id',
-								'created_at', 
-								'updated_at', 
-								'category_id', 
-								'description',
-								'compare_price',
-								'images',
-								'options',
-								'category',
-								'product_status_id',
-								'auto_price',
-								'warranty'
-							]}
-							columns={[{
-								id: 'id', 
-								numeric: false, 
-								disablePadding: true, 
-								label: 'ID'
+							headerItems={[{
+								name: 'id', 
+								title: 'ID'
 							}, {
-								id: 'title', 
-								numeric: false, 
-								disablePadding: true, 
-								label: 'Name'
+								name: 'title', 
+								title: 'Name'
 							}, {
-								id: 'articul', 
-								numeric: false, 
-								disablePadding: true, 
-								label: 'Articul'
+								name: 'articul', 
+								title: 'Articul'
 							}, {
-								id: 'price', 
-								numeric: false, 
-								disablePadding: true, 
-								label: 'Price'
+								name: 'price', 
+								title: 'Price'
 							}, {
-								id: 'img', 
-								numeric: false, 
-								disablePadding: true, 
-								label: 'Icon'
+								name: 'img',  
+								title: 'Icon'
 							}, {
-								id: 'control', 
-								numeric: false, 
-								disablePadding: true, 
-								label: 'Manage'
+								name: 'control', 
+								title: 'Manage'
 							}]}
-							onRowsSelected={(selected, start) => {
-								this.setState({ selected, start })
-							}}
-							onStartValueChanged={start => {
-								this.setState({ 
-									start,
-								}, () => this.productsGetDataRequest());
-							}}
-							onLimitValueChanged={limit => {
-								this.setState({ completed: 0 }, () => {
-									this.setState({ limit }, () => {
-										this.setState({ completed: 100 });
-									});
-								});
-							}} />}
+							dataItems={data}
+							onPrevPageClicked={e => this.setState({
+								start: this.state.start - 1
+							}, () => {
+								this.productsGetDataRequest()
+							})}
+							onNextPageClicked={e => this.setState({
+								start: this.state.start + 1
+							}, () => {
+								this.productsGetDataRequest()
+							})} />}
 					</Grid>
 				</Grid>
 

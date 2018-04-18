@@ -7,6 +7,7 @@ use App\Model\Base\User;
 use App\Model\Base\UserAttribute;
 use App\Model\Shop\Product;
 use App\Model\Shop\Order;
+use App\Model\Shop\OrderDelivery;
 use App\Model\Shop\Cart;
 
 class DbImport
@@ -35,7 +36,7 @@ class DbImport
         $this->users_meta = $this->source->select('select user_id, meta_key, meta_value from wpbit2_usermeta');
         //$this->users_meta = $this->source->select('select user_id, user_login, user_pass, display_name from wploc_users where id  != 1');
         $this->news = $this->source->select('select id, post_author, post_content, post_title, post_name from wpbit2_posts where post_type=:post_type', ['post_type' => 'post']);
-        $this->orders = $this->source->select('select id, post_author, post_date from wpbit2_posts where post_type=:post_type', ['post_type' => 'shop_order']);
+        $this->orders = $this->source->select('select id, post_author, post_date, post_status from wpbit2_posts where post_type=:post_type', ['post_type' => 'shop_order']);
         $this->products = $this->source->select('select id, post_title, post_content, post_name from wpbit2_posts where post_type =:post_type', ['post_type' => 'product']);
         //$this->articles = $this->source->select('select id, post_author, post_date, post_content, post_title, post_name, ');
 
@@ -63,7 +64,7 @@ class DbImport
             }
 
         }
-
+//var_dump($this->orders); die;
         $users = [];
         $user_attrs = [];
         $user_meta = [];
@@ -140,53 +141,135 @@ class DbImport
                     ];
                 }
             }
-            //$user_meta[$user->id] =
         }
-        //die;
-
-        //var_dump($user_attrs); die;
-        //var_dump($products); die;
 
         $orders_items_meta = [];
         $orders_items = [];
         $order_deliveries = [];
-
         $orders = [];
-        foreach ($this->orders as $order){
-            $orders_items[] = $this->source->select('select * from wpbit2_woocommerce_order_items where order_id = :order_id', ['order_id' => $order->id]);
+
+        foreach($this->orders as $order){
+            $order_status = 1;
+            switch ($order->post_status){
+                case 'wc-completed':
+                    $order_status = 7;
+                    break;
+                case 'wc-cancelled':
+                    $order_status = 9;
+                    break;
+                case 'trash':
+                    $order_status = 9;
+                    break;
+                case 'auto-draft':
+                    $order_status = 2;
+                    break;
+                case 'wc-paid':
+                    $order_status = 4;
+                    break;
+
+            }
             $orders[$order->id] = [
                 'id' => $order->id,
                 'number' => $order->id,
                 'user_id' => $order->post_author,
                 'cost' => 0,
                 'prepayment' => 0.00,
-                'status_id' => 7,
-                'payment_type_id' => 1,
+                'status_id' => $order_status,
+                'payment_type_id' => 2,
                 'context_id' => 2,
                 'created_at' => $order->post_date
             ];
-            if(isset($users[$order->post_author])){
+        }
+        //var_dump($orders); die;
+        $order_deliveries = [];
+        foreach ($this->orders as $order){
+            $delivery_id = 1;
+            $delivery_cost = 0;
+
+            $orders_items[$order->id] = $this->source->select('select * from wpbit2_woocommerce_order_items where order_id = :order_id', ['order_id' => $order->id]);
+
+            //var_dump($orders_items); die;
+
+
+            /*
+             * Order delivery info
+             */
+
+            $orders_meta[$order->id] = $this->source->select('select * from wpbit2_postmeta where post_id =:post_id', ['post_id' => $order->id]);
+            foreach ($orders_meta as $order_meta){
+                $billing_fname = '';
+                $billing_lname = '';
+                //$delivery_cost = 0.00;
+                $billing_email = '';
+                $billing_phone = '';
+                $billing_country = '';
+                $billing_address = '';
+                $billing_state = '';
+                $billing_country = '';
+                $billing_city = '';
+                foreach ($order_meta as $meta_item){
+                    switch ($meta_item->meta_key){
+                        case '_billing_first_name':
+                            $billing_fname = $meta_item->meta_value;
+                            break;
+                        case '_billing_last_name':
+                            $billing_lname = $meta_item->meta_value;
+                            break;
+                        case '_billing_address_1':
+                            $billing_address = $meta_item->meta_value;
+                            break;
+                        case '_billing_city':
+                            $billing_city = $meta_item->meta_value;
+                            break;
+                        case '_billing_state':
+                            $billing_state = $meta_item->meta_value;
+                            break;
+                        case '_billing_country':
+                            $billing_country = $meta_item->meta_value;
+                            break;
+                        case '_billing_email':
+                            $billing_email = $meta_item->meta_value;
+                            break;
+                        case '_billing_phone':
+                            $billing_phone = $meta_item->meta_value;
+                            break;
+                        case '_payment_method':
+                           // cod
+                            //var_dump('cscdcsv'); die;
+                            if($meta_item->meta_value == 'cheque'){
+                               // var_dump($orders[$order->id]);// die;
+                                $orders[$order->id]['payment_type_id'] = 1;
+                               // var_dump($orders[$order->id]);
+                                //die;
+                            } else{
+                                $orders[$order->id]['payment_type_id'] = 2;
+                            }
+                    }
+                }
+
                 $order_deliveries[$order->id] = [
                     'order_id' => $order->id,
-                    'delivery_id' => 1,
-                    'first_name' => $user_meta[$order->post_author]['fname'],
-                    'last_name' => $user_meta[$order->post_author]['lname'],
-                    'phone' => $user_meta[$order->post_author]['phone'],
-                    'email' => $user_meta[$order->post_author]['email'],
-                    'city' => $user_meta[$order->post_author]['city'],
-                    'country' => $user_meta[$order->post_author]['country'],
-                    'address' => $user_meta[$order->post_author]['address'],
-                    'state' => $user_meta[$order->post_author]['state']
+                    'delivery_id' => $delivery_id,
+                    'cost' => $delivery_cost,
+                    'first_name' => $billing_fname,
+                    'last_name' => $billing_lname,
+                    'phone' => $billing_phone,
+                    'email' => $billing_email,
+                    'city' => $billing_city,
+                    'country' => $billing_country,
+                    'state' => $billing_state,
+                    'address' => $billing_address
                 ];
             }
         }
-//var_dump($orders); die;
+        //var_dump($order_deliveries); die;
         $cart = [];
-
+//var_dump($orders_items); die;
         foreach ($orders_items as $items){
             if (count($items) > 0){
                 foreach ($items as $item){
                     $orders_items_meta[$item->order_id][$item->order_item_name] = $this->source->select('select * from wpbit2_woocommerce_order_itemmeta where order_item_id = :order_item_id', ['order_item_id' => $item->order_item_id ]);
+                    //var_dump($orders_items_meta); die;
                     if($item->order_item_name != 'Shipping' && $item->order_item_name != 'Product Shipping'){
                         if($item->order_item_name == 'Новая почта'){
                             if(isset($order_deliveries[$item->order_id])){
@@ -196,12 +279,17 @@ class DbImport
                             if(isset($order_deliveries[$item->order_id])) {
                                 $order_deliveries[$item->order_id]['delivery_id'] = 3;
                             }
+                        } elseif($item->order_item_name == 'Деловые линии' || $item->order_item_name == 'СДЭК'){
+                            if(isset($order_deliveries[$item->order_id])){
+                                $order_deliveries[$item->order_id]['delivery_id'] = 1;
+                            }
                         }
-                        $cost = 0;
                         $item_count = 1;
                         $item_total_cost = 0;
 
+
                         foreach ($orders_items_meta[$item->order_id][$item->order_item_name] as $meta){
+                            //var_dump(); die;
                             if($meta->meta_key == '_line_subtotal'){
                                 $item_total_cost = $meta->meta_value;
                             } elseif ($meta->meta_key == '_qty'){
@@ -222,7 +310,7 @@ class DbImport
 
             }
         }
-      //  var_dump($orders_items_meta); die;
+        //var_dump($orders_items_meta); die;
 //var_dump($cart); die;
         foreach($cart as $key => $line){
             if($line['cost'] == 0){
@@ -230,12 +318,11 @@ class DbImport
                 continue;
             }
 
-            //var_dump($orders[$line['order_id']]);
             if (isset($line['order_id'])){
                 if(isset($orders[$line['order_id']])){
                     $line_cost = $line['cost'] * $line['count'];
                     $orders[$line['order_id']]['cost'] += (int)$line_cost;
-                    if($orders[$line['order_id']]['cost'] < 0 || $orders[$line['order_id']]['cost'] > 300000){
+                    if($orders[$line['order_id']]['cost'] < 0 || $orders[$line['order_id']]['cost'] > 999999){
                         unset($orders[$line['order_id']]);
                     }
                 }
@@ -243,8 +330,8 @@ class DbImport
                 unset($cart[$key]);
             }
         }
-//var_dump()
-        foreach ($cart as $key => $line){
+//var_dump($cart); die;
+/*        foreach ($cart as $key => $line){
             $isset = false;
             foreach ($orders as $order){
                 if($line['order_id'] == $order['id']){
@@ -266,7 +353,7 @@ class DbImport
             if(!$isset){
                 unset($cart[$key]);
             }
-        }
+        }*/
 
         foreach ($user_attrs as $key => $attr){
             $isset = false;
@@ -285,7 +372,7 @@ class DbImport
         $export['carts'] = $cart;
         $export['users'] = $users;
         $export['user_attrs'] = $user_attrs;
-
+        $export['orders_deliveries'] = $order_deliveries;
         //var_dump($export['carts']); die;
         return $export;
     }
@@ -337,6 +424,17 @@ class DbImport
                 continue;
             }
 
+        }
+
+        /*
+         * Import orders deliveries
+         */
+        foreach ($data['orders_deliveries'] as $delivery){
+            try{
+                OrderDelivery::create($delivery);
+            } catch (\Exception $e){
+                continue;
+            }
         }
 
         /*
