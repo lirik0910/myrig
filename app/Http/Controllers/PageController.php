@@ -26,8 +26,8 @@ class PageController extends Controller
 	{
         //var_dump($request->getSchemeAndHttpHost()); die;
         //var_dump($request->server('HTTP_HOST')); die;
-        $import = new Import();
-        $import->process();
+/*        $import = new Import();
+        $import->process();*/
         //var_dump($request->getSchemeAndHttpHost(), env('UA_DOMAIN'), env('RU_DOMAIN'), env('EN_DOMAIN'), config('app.en_domain')); die;
 //var_dump($request); die;
         switch ($request->getSchemeAndHttpHost()) {

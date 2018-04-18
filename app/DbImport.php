@@ -162,7 +162,7 @@ class DbImport
         $orders_items = [];
         $order_deliveries = [];
         $orders = [];
-        $order_statuses = [];
+        $order_logs = [];
         $order_statuses_count = [
             'wc-new' => 0,
             'wc-processing' => 0,
@@ -259,6 +259,7 @@ class DbImport
             $delivery_id = 1;
             $delivery_cost = 0;
 
+            $order_logs[$order->id] = $this->source->select('select * from wpbit2_comments where comment_post_ID = :comment_post_ID', ['comment_post_ID' => $order->id]);
             $orders_items[$order->id] = $this->source->select('select * from wpbit2_woocommerce_order_items where order_id = :order_id', ['order_id' => $order->id]);
 
             //var_dump($orders_items); die;
@@ -349,7 +350,7 @@ class DbImport
 
        // var_dump($order_); die;
         $cart = [];
-//var_dump($orders_items); die;
+//var_dump($order_logs); die;
         foreach ($orders_items as $items){
             if (count($items) > 0){
                 foreach ($items as $item){

@@ -184,7 +184,7 @@ return array(
          *
          * @var int
          */
-        "dpi" => 158.9,
+        "dpi" => 94.9,
 
         /**
          * Enable inline PHP
