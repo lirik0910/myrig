@@ -82,7 +82,6 @@ class EditMultiItem extends Component {
 
 					for (i = 0; i < e.target.elements.length; i++) {
 						if (e.target.elements[i].name) {
-							console.log(e.target.elements[i].name, e.target.elements[i].value)
 							data[e.target.elements[i].name] = e.target.elements[i].value;
 						}
 					}
