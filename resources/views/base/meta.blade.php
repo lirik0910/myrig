@@ -28,7 +28,6 @@
 <link rel="stylesheet" href="{{ URL::asset('css/style.css?ver=1.55') }}">
 <link rel="stylesheet" id="dashicons-css"  href="{{ URL::asset('css/dashicons.min.css?ver=4.9.4') }}" type="text/css" media="all" />
 
-<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 <script type="text/javascript" src="{{ asset('js/jquery-1.11.0.min.js') }}"></script>
 <script type="text/javascript">
     window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/2.4\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/2.4\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/myrig.com.ua\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.9.4"}};
