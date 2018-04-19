@@ -1211,6 +1211,17 @@ $(document).on('change', '.cart-form  input.qty', function(e) {
             }
         });
     });
+
+    $('#billing_country').on('change', function () {
+    	if($(this).val() == 'UA'){
+			$('.ua-shipping-method').show();
+			$('.other-shipping-method').hide();
+		} else{
+            $('.ua-shipping-method').hide();
+            $('.other-shipping-method').show();
+		}
+		//console.log($(this).val());
+    });
 });
  
  

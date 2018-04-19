@@ -288,6 +288,9 @@ $courses = $select('App\Model\Shop\ExchangeRate')->get()->groupBy('title');
 	var products = {};
 </script>
 
+<script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
+		async defer>
+</script>
 
 <!-- <script type="text/javascript" src='https://myrig.com.ua/wp-content/plugins/woocommerce/assets/js/frontend/cart-fragments.min.js?ver=3.2.6'></script> -->
 <script type="text/javascript" src="{{ asset('js/owl.carousel2.min.js?ver=1.12') }}"></script>

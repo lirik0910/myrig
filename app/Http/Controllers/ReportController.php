@@ -34,16 +34,6 @@ class ReportController extends Controller
             return response()->json(['message' => $e->getMessage()], 422);
         }
 
-        /*
-         * Captcha
-         */
-        $user_ip = $_SERVER['REMOTE_ADDR'];
-        $response = $request->post('g-recaptcha-response');
-        $validate = $this->captchaValidate($response, $user_ip);
-
-        if($validate['success'] == false){
-            return response()->json(['message' => 'Повторите снова пройти капчу'], 422);
-        }
 
         /** Create and fill new product model
          */
@@ -73,37 +63,5 @@ class ReportController extends Controller
         }
 
         return response()->json(true, 200);
-    }
-
-    /*
-     * Captcha curl
-     */
-    public function captchaValidate($response, $remoteip)
-    {
-        $data = [
-            'secret' => '6LdY_VMUAAAAAJpD1qJ6R8VxPhCB0_MhUAjBAapa',
-            'response' => $response,
-            'remoteip' => $remoteip
-        ];
-        $ch = curl_init();
-        $url = "https://www.google.com/recaptcha/api/siteverify";
-
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
-        curl_setopt($ch, CURLOPT_TIMEOUT, 5);
-        curl_setopt($ch, CURLOPT_POST,true);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
-
-        $reply = curl_exec($ch);
-        $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        curl_close($ch);
-
-        $reply = json_decode($reply, true);
-
-        return $reply;
     }
 }
