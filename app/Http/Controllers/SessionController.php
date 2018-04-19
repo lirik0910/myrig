@@ -7,7 +7,18 @@ use \Illuminate\Http\JsonResponse;
 
 class SessionController extends Controller
 {
-	/**
+    public $cart;
+
+    public function __construct()
+    {
+        if(isset($_SESSION['cart'])){
+            $this->cart = $_SESSION['cart'];
+        } else{
+            $this->cart = [];
+        }
+    }
+
+    /**
 	 * Add new product to cart server session
 	 * @param Illuminate\Http\Request $request
 	 * @return \Illuminate\Http\JsonResponse
@@ -25,7 +36,7 @@ class SessionController extends Controller
 	public function delete(Request $request)
 	{
 		unset($_SESSION['cart'][$request->input('id')]);
-		return response($_SESSION['cart']);
+		return response($this->cart);
 	}
 
 	/**
@@ -34,6 +45,6 @@ class SessionController extends Controller
 	 */
 	public function get(Request $request)
 	{
-		return response($_SESSION['cart']);
+		return response($this->cart);
 	}
 }

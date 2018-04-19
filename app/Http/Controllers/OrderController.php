@@ -95,7 +95,7 @@ class OrderController extends Controller
             'comment' => $data['comment']
         ]);
 
-        $cart = json_decode(session()->get('cart'), true);
+        $cart = $_SESSION['cart'];
         foreach ($cart as $productId => $count){
             $product = Product::where('id', $productId)->first();
             if($product->auto_price){
@@ -118,7 +118,8 @@ class OrderController extends Controller
         $order->cost = $order->countCost();
         $order->save();
 
-        session()->forget('cart');
+        unset($_SESSION['cart']);
+        //session()->forget('cart');
         return response()->json(['success' => true, 'order' => $order], 200);
     }
 

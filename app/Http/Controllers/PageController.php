@@ -77,7 +77,7 @@ class PageController extends Controller
 
 		if ($page = Page::where('link', $link)->where('context_id', $locale_context_id)->with('view')->first()) {
 		    if ($page->link == 'checkout' || $page->link == 'cart'){
-		        if(count($_SESSION['cart']) < 1){
+		        if(count($cart) < 1){
                     return redirect('shop');
                 }
             }
