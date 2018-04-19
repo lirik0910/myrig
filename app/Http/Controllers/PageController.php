@@ -49,10 +49,12 @@ class PageController extends Controller
 //var_dump($locale); die;
         App::setLocale($locale);
 
-        $cart = $_SESSION['cart'];
+        //$cart = $_SESSION['cart'];
 
-        if(!$cart){
+        if(!isset($_SESSION['cart'])){
             $cart = [];
+        } else{
+            $cart = $_SESSION['cart'];
         }
 
 		$link = $request->decodedPath();
