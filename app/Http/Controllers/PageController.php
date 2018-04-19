@@ -49,6 +49,12 @@ class PageController extends Controller
 //var_dump($locale); die;
         App::setLocale($locale);
 
+        $cart = $_SESSION['cart'];
+
+        if(!$cart){
+            $cart = [];
+        }
+
 		$link = $request->decodedPath();
 		$link = $link === '/' ?
 			$link :
@@ -80,7 +86,7 @@ class PageController extends Controller
 				'request' => $request,
 				'select' => $this->select(),
 				'settings' => $this->settings($locale_context_id),
-				'inCart' => $_SESSION['cart'],
+				'inCart' => $cart,
 				'multi' => MultiVariableContent::multiConvert($page->view->variables),
 				'number' => $number,
 				'preview' => $this->preview(),
