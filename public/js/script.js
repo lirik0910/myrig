@@ -1222,13 +1222,28 @@ $(document).on('change', '.cart-form  input.qty', function(e) {
     $('#billing_country').on('change', function () {
     	if($(this).val() == 'UA'){
 			$('.ua-shipping-method').show();
-			$('.other-shipping-method').hide();
-		} else{
+			$('.ua-shipping-method').find('input').prop('checked', true);
+            $('.selfment-shipping-method').show();
+			$('.ru-shipping-method').hide();
+			$('.ru-shipping-method').find('input').prop('checked', false);
+            $('.no-availible-shipping-method').hide();
+		} else if($(this).val() == 'RU'){
             $('.ua-shipping-method').hide();
-            $('.other-shipping-method').show();
+            $('.ua-shipping-method').find('input').prop('checked', false);
+            $('.ru-shipping-method').show();
+            $('.ru-shipping-method').find('input').prop('checked', true);
+            $('.selfment-shipping-method').show();
+            $('.no-availible-shipping-method').hide();
+		} else{
+            $('.ru-shipping-method').hide();
+            $('.ua-shipping-method').hide();
+            $('.selfment-shipping-method').hide();
+            $('.no-availible-shipping-method').show();
 		}
 		//console.log($(this).val());
     });
+
+
 });
  
  

@@ -40,7 +40,15 @@ class OrderController extends Controller
             return response()->json(['success' => false, 'message' => 'User is not exist']);
         }
 
-        $delivery = Delivery::where('id', $data['delivery'])->where('active', 1)->first();
+        if(!isset($data['delivery'])){
+            $data['delivery'] = 4;
+        }
+        if($data['delivery'] == 4){
+            $delivery = Delivery::where('id', $data['delivery'])->first();
+        } else{
+            $delivery = Delivery::where('id', $data['delivery'])->where('active', 1)->first();
+        }
+
 
         if(!$delivery){
             return response()->json(['success' => false, 'message' => 'Delivery with this ID is not exist']);

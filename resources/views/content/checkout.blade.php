@@ -121,7 +121,7 @@ foreach ($products as $item) {
 										<option value="GE">{{ __('common.country_GE') }}</option>
 										<option value="KZ">{{ __('common.country_KZ') }}</option>
 										<option value="KG">{{ __('common.country_KG') }}</option>
-										<!--<option value="RU">{{ __('common.country_RU') }}</option>-->
+										@if($locale != 'en') <option value="RU">{{ __('common.country_RU') }}</option>@endif
 										<option value="TM">{{ __('common.country_TM') }}</option>
 										<option value="UZ">{{ __('common.country_UZ') }}</option>
 										<option value="UA">{{ __('common.country_UA') }}</option>
@@ -242,17 +242,15 @@ foreach ($products as $item) {
 													<td data-title="Доставка">
 														<ul id="shipping_method">
                                                             @foreach($deliveries as $delivery)
-                                                            <li class="@if($loop->first) ua-shipping-method @elseif($loop->iteration == 2) other-shipping-method @endif" style="display: inline-block">
-																<input type="radio" name="delivery" id="shipping_method_{{$loop->iteration}}" data-index="{{$delivery->id}}" value="{{$delivery->id}}" class="shipping_method"  @if($loop->first) checked='checked' @endif/>
+                                                            <li class="@if($loop->first) ua-shipping-method @elseif($loop->iteration == 2) ru-shipping-method @else selfment-shipping-method @endif" style="display: inline-block">
+																<input type="radio" name="delivery" id="shipping_method_{{$loop->iteration}}" data-index="{{$delivery->id}}" value="{{$delivery->id}}" class="shipping_method"  @if($loop->iteration == 2) checked='checked' @endif/>
 
 																<label for id="shipping_method_{{$loop->iteration}}">{{$delivery->title}}</label>
 															</li>
                                                             @endforeach
-															<!--<li style="display: inline-block">
-																<input type="radio" name="delivery" data-index="0"  value="0" class="shipping_method"  />
-
-																<label for="shipping_method_0_local_pickup15">{{ __('default.self_shipment') }}</label>
-															</li>-->
+															<li style="display: inline-block">
+																<p class="no-availible-shipping-method">There are no shipping methods available. Please double check your address, or contact us if you need any help.</p>
+															</li>
 														</ul>
 													</td>
 												</tr>

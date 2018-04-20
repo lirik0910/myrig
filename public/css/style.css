@@ -617,6 +617,11 @@ ul{
     color: red;
 }
 
+.no-availible-shipping-method {
+    display: none;
+    color: red;
+}
+
 .ua-shipping-method {
     display: none;
 }
