@@ -43,6 +43,7 @@ class OrderController extends Controller
         if(!isset($data['delivery'])){
             $data['delivery'] = 4;
         }
+        var_dump(); die;
         if($data['delivery'] == 4){
             $delivery = Delivery::where('id', $data['delivery'])->first();
         } else{

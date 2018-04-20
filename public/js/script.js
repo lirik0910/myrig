@@ -1239,6 +1239,9 @@ $(document).on('change', '.cart-form  input.qty', function(e) {
             $('.ua-shipping-method').hide();
             $('.selfment-shipping-method').hide();
             $('.no-availible-shipping-method').show();
+            $('.ua-shipping-method').find('input').prop('checked', false);
+            $('.ru-shipping-method').find('input').prop('checked', false);
+            $('.selfment-shipping-method').find('input').prop('checked', false);
 		}
 		//console.log($(this).val());
     });
