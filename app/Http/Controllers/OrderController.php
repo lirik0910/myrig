@@ -43,7 +43,7 @@ class OrderController extends Controller
         if(!isset($data['delivery'])){
             $data['delivery'] = 4;
         }
-        var_dump(); die;
+        //var_dump($data['delivery']); die;
         if($data['delivery'] == 4){
             $delivery = Delivery::where('id', $data['delivery'])->first();
         } else{
@@ -62,10 +62,18 @@ class OrderController extends Controller
         }
 
         $order = new Order();
+        $last_order = Order::orderBy('id','desc')->first();
+        if(!$last_order){
+            $max_id = 1;
+            $order_number = $max_id;
+        } else{
+            $max_id = $last_order->id;
+            $order_number = $max_id + 1;
+        }
+//var_dump(Order::orderBy('id','desc')->first()); die;
 
-        $max_id = Order::orderBy('id','desc')->first()->id;
         $numbersArray = str_split((string)time() - 2000000, 3);
-        $order_number = $max_id + 1;
+
         /*foreach($numbersArray as $number){
             $order_number += (int)$number;
         }*/
