@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Model\Base\User;
 use App\Model\Base\UserAttribute;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Validator;
 
 class ClientAuthController
@@ -15,10 +16,29 @@ class ClientAuthController
     private $loggedin = false;
     protected $notvalid = 0;
 
-    public function __construct()
+    public function __construct(Request $request)
     {
+        switch ($request->getSchemeAndHttpHost()) {
+            case config('app.ua_domain'):
+                $locale = 'ua';
+                break;
+
+            case config('app.ru_domain'):
+                $locale = 'ru';
+                break;
+
+            case config('app.en_domain'):
+                $locale = 'en';
+                break;
+
+            default:
+                break;
+        }
+        App::setLocale($locale);
         //$this->appurl = $_SERVER['SERVER_NAME'];
-        $this->homeappurl = config('app.url') . 'sso-login';
+        $domain = App::getLocale() . '_domain';
+        //var_dump($domain); die;
+        $this->homeappurl = config('app.' . App::getLocale() . '_domain') . '/sso-login';
        // var_dump($this->homeappurl); die;
     }
 
@@ -117,7 +137,8 @@ class ClientAuthController
                     UserAttribute::create($attributesdata);
                 }
 
-                session()->put('client', $data['email']);
+                $_SESSION['client'] = $data['email'];
+                //session()->put('client', $data['email']);
                 return redirect('/');
             } else {
                 echo "notvalid";
@@ -131,7 +152,11 @@ class ClientAuthController
         } elseif(isset($action)){
             switch ($action) {
                 case "logout":
-                    session()->forget('client');
+                    if(isset($_SESSION['client'])){
+                        unset($_SESSION['client']);
+                    }
+
+                    //session()->forget('client');
                     return redirect('/');
                     break;
                 case "somethingelse":
@@ -142,7 +167,14 @@ class ClientAuthController
                     break;
             }
         }
-        $user = User::where('email', session()->get('client'))->first();
+        $client_email = '';
+        if(isset($_SESSION['client'])){
+            $client_email = $_SESSION['client'];
+            $user = User::where('email', $client_email)->first();
+        } else{
+            $user = NULL;
+        }
+
         if($user || $this->loggedin === true){
             return redirect('/profile');
         } else {

@@ -12,7 +12,10 @@ $count = 0;
 foreach ($inCart as $i) {
 	$count += (int) $i;
 }
-$client_email = session()->get('client');
+if(isset($_SESSION['client'])){
+    $client_email = $_SESSION['client'];
+}
+//$client_email = $_SESSION['client'];
 if(isset($client_email) && !empty($client_email)){
     $user = $select('App\Model\Base\User')->where('email', $client_email)->first();
 
@@ -107,7 +110,7 @@ if(isset($client_email) && !empty($client_email)){
 				</div>
 
 				<div class="user-panel">
-					<a href="{{url(env('APP_URL') . 'sso-login')}}" class="profile-link reg-f0" data-wpel-link="internal">
+					<a href="{{ env(strtoupper($locale) . '_DOMAIN') . '/sso-login' }}" class="profile-link reg-f0" data-wpel-link="internal">
                         @isset($client_name)<p class=""> Welcome, {{ $client_name }}! </p>@endisset
 						<img src="{{ $preview(asset('uploads/design/icons-97.svg'), 30, 30) }}" alt="login" style=""/>
 					</a>

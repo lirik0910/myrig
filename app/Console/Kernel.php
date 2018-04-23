@@ -6,6 +6,7 @@ use function foo\func;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use App\Http\Controllers\CalculateController as Calculate;
+use App\DbImport as Import;
 
 class Kernel extends ConsoleKernel
 {
@@ -31,6 +32,11 @@ class Kernel extends ConsoleKernel
             $calculate->parse_btc_courses_others();
             $calculate->parse_btc_course_calculated();
         })->everyMinute();
+
+/*        $schedule->call(function (){
+            $import = new Import();
+            $import->process();
+        })->everyMinute();*/
     }
 
     /**

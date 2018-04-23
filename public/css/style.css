@@ -611,6 +611,21 @@ ul{
     border: none;
     outline: none;
 }
+
+.error-captcha {
+    display: none;
+    color: red;
+}
+
+.no-availible-shipping-method {
+    display: none;
+    color: red;
+}
+
+.ua-shipping-method {
+    display: none;
+}
+
 .navbar-collapse.in {
     overflow-y: auto;
 }

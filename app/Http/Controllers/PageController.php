@@ -26,7 +26,7 @@ class PageController extends Controller
 	{
         //var_dump($request->getSchemeAndHttpHost()); die;
         //var_dump($request->server('HTTP_HOST')); die;
-/*        $import = new Import();
+        /*$import = new Import();
         $import->process();*/
         //var_dump($request->getSchemeAndHttpHost(), env('UA_DOMAIN'), env('RU_DOMAIN'), env('EN_DOMAIN'), config('app.en_domain')); die;
 //var_dump($request); die;
@@ -49,6 +49,14 @@ class PageController extends Controller
 //var_dump($locale); die;
         App::setLocale($locale);
 
+        //$cart = $_SESSION['cart'];
+
+        if(!isset($_SESSION['cart'])){
+            $cart = [];
+        } else{
+            $cart = $_SESSION['cart'];
+        }
+
 		$link = $request->decodedPath();
 		$link = $link === '/' ?
 			$link :
@@ -69,7 +77,7 @@ class PageController extends Controller
 
 		if ($page = Page::where('link', $link)->where('context_id', $locale_context_id)->with('view')->first()) {
 		    if ($page->link == 'checkout' || $page->link == 'cart'){
-		        if(count($this->getInSessionCart()) < 1){
+		        if(count($cart) < 1){
                     return redirect('shop');
                 }
             }
@@ -80,7 +88,7 @@ class PageController extends Controller
 				'request' => $request,
 				'select' => $this->select(),
 				'settings' => $this->settings($locale_context_id),
-				'inCart' => $this->getInSessionCart(),
+				'inCart' => $cart,
 				'multi' => MultiVariableContent::multiConvert($page->view->variables),
 				'number' => $number,
 				'preview' => $this->preview(),

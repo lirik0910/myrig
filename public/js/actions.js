@@ -392,6 +392,7 @@ jQuery(document).ready(function ($) {
             data: data,
             type: 'POST',
             success: function (response) {
+            	console.log(response);
                 if(response.success){
                     window.location = global.url + 'checkout/order_success/' + response.order.number;
                 } else{

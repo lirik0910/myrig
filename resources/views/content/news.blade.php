@@ -34,10 +34,10 @@
                         <div class="date">@php echo date('d F', strtotime($article->created_at)) @endphp<i class="fa fa-eye"></i>@if($article->visits){{$article->visits->count}}@else 0 @endif</div>
                     </div>
                     <div class="article-content col-sm-8">
-                        <div class="article-text">
+                        <div class="article-text" style="word-wrap: break-word;">
                             @if (empty($article->introtext))
                                 @php
-                                    $introtext = substr(strip_tags($article->content), 0, 400);
+                                    $introtext = substr(strip_tags($article->content), 0, 450);
                                     $introtext = rtrim($introtext, '!,.-');
                                     $introtext = substr($introtext, 0, strrpos($introtext, ' '));
                                 @endphp

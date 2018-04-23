@@ -31,5 +31,12 @@ class DeliveriesTableSeeder extends Seeder
             'color' => '#71cece',
             'active' => 1
         ]);
+
+        App\Model\Shop\Delivery::create([
+            'title' => 'Without delivery',
+            'description' => '',
+            'color' => '#71cece',
+            'active' => 0
+        ]);
 	}
 }

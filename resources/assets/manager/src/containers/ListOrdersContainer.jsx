@@ -303,6 +303,7 @@ class ListOrdersContainer extends Component {
 				numberRow: <div className={classes.numberCell}>
 						<span className={classes.numberItem}
 							style={{
+								fontSize: '29px',
 								color: item.delete === 1 ?
 									'red' :
 									'#000000',

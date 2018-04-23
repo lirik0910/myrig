@@ -35,11 +35,17 @@ console.log(wM);
 		}
 
 		else {
-			r = JSON.parse(data);
+			if (typeof data === 'string') {
+				r = JSON.parse(data);
+			}
+			else {
+				r = data;
+			}
 				
 			for (i in r) {
 				s.push({id: i, count: r[i]});
 			}
+
 			sessionStorage['cart'] = JSON.stringify(s);
 		}
 	});
@@ -705,6 +711,7 @@ $(document).on('change', '.cart-form  input.qty', function(e) {
 		e.preventDefault();
 	});
 
+
 	$(document).on('click', '.addtocarts:not(.disabled)', function(e) {
 		e.preventDefault();
 		
@@ -1205,9 +1212,45 @@ $(document).on('change', '.cart-form  input.qty', function(e) {
                         'opacity': 1
                     }, 400);
                 }
+            },
+            error: function (data) {
+				$('.error-captcha').show();
             }
         });
     });
+
+    $('#billing_country').on('change', function () {
+    	if($(this).val() == 'UA'){
+			$('.ua-shipping-method').show();
+			$('.ua-shipping-method').find('input').prop('checked', true);
+            $('.selfment-shipping-method').show();
+			$('.ru-shipping-method').hide();
+			$('.ru-shipping-method').find('input').prop('checked', false);
+			$('.without-delivery').val(0);
+            $('.no-availible-shipping-method').hide();
+		} else if($(this).val() == 'RU'){
+            $('.ua-shipping-method').hide();
+            $('.ua-shipping-method').find('input').prop('checked', false);
+            $('.without-delivery').val(0);
+            $('.ru-shipping-method').show();
+            $('.ru-shipping-method').find('input').prop('checked', true);
+            $('.selfment-shipping-method').show();
+            $('.no-availible-shipping-method').hide();
+		} else{
+            $('.ru-shipping-method').hide();
+            $('.ua-shipping-method').hide();
+            $('.selfment-shipping-method').hide();
+            $('.no-availible-shipping-method').show();
+            $('.ua-shipping-method').find('input').prop('checked', false);
+            $('.ru-shipping-method').find('input').prop('checked', false);
+            $('.without-delivery').val(1);
+            console.log($('.without-delivery').find('input').val());
+            $('.selfment-shipping-method').find('input').prop('checked', false);
+		}
+		//console.log($(this).val());
+    });
+
+
 });
  
  

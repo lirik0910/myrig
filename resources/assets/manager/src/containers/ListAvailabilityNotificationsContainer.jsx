@@ -150,19 +150,21 @@ class ListAvailabilityNotificationsContainer extends Component
                             r.data[i]['control'] = <ControlOptions
                                 item={r.data[i]}
                                 checkButton={checkButton}
+                                deleteButton={false}
                                 onCheckButtonClicked={item => {
                                     this.setState({
                                         editNotificationDialog: true,
                                         editNotificationItem: item,
                                         editNotificationId: item.id
                                     });
-                                }}
-                                onDeleteButtonClicked={item => {
+                                }} />
+
+/*                                onDeleteButtonClicked={item => {
                                     this.setState({
                                         deleteDialog: true,
                                         deleteUserId: item.id,
                                     });
-                                }} />
+                                }} />*/
                         }
 
                         this.setState({
@@ -316,9 +318,7 @@ class ListAvailabilityNotificationsContainer extends Component
                 title={''}
                 addButtonDisplay={false}
                 saveButtonDisplay={false}
-                deleteButtonDisplay={selected.length > 0 ?
-                    true :
-                    false}
+                deleteButtonDisplay={false}
                 addButtonTitle={'Add new notification'}
                 deleteButtonTitle={'Delete selected'}
                 onCheckButtonClicked={() => {

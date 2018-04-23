@@ -1,4 +1,12 @@
 <div style="display: none">
+    <script type="text/javascript">
+        var onloadCallback = function() {
+            grecaptcha.render('g-recaptcha', {
+                'sitekey' : '6LdY_VMUAAAAANIypbzQz5mga0NnT-PJyASZbJOQ'
+            });
+            //alert("grecaptcha is ready!");
+        };
+    </script>
     <div id="report-availability">
         <div class="modal-header">
             <ul class="reg-links">
@@ -32,6 +40,12 @@
                             <a href="#" class="form-control report-select-btn remove-report-select">-</a>
                         </div>
                     </div>
+
+                    <div class="form-group" style="margin-top: 60px; margin-bottom: 20px">
+                        <div id="g-recaptcha"></div>
+                    </div>
+
+                    <p class="error-captcha">Пройдите капчу</p>
 
                     <div class="form-group" style="position: inherit">
                         <input type="submit" name="submit" value="Send" class="btn-default btn-subscribe"/>

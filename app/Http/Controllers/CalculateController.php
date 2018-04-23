@@ -336,7 +336,7 @@ class CalculateController
 
         //var_dump($t * $R * $H, ($D * 2^32) * $days; die;
         //var_dump($t, $R, $H, $D); die;
-        if($currency === 'BTC'){
+        if($currency === 'BTC' || $currency == 'BCH'){
             $P = ($t*$R*$H)/(number_format($D, 2)*(2**32)) * $days;
         }
 
@@ -346,7 +346,7 @@ class CalculateController
             $calcLTC = $this->parse_btc_courses_others($currency);
             $P = $network['p'] ;
             $TH = 'MH';
-            $P =  number_format( $P*$request->get('hash') , 6) * $days;
+            $P =  number_format( $P*$request->get('hash') , 6) * $days * 0.001;
         }
 
         if ($currency === 'DASH') {

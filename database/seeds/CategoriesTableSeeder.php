@@ -24,5 +24,11 @@ class CategoriesTableSeeder extends Seeder
 			'description' => 'Secondary products category',
 			'active' => 1
 		]);
+
+        App\Model\Shop\Category::create([
+            'title' => 'Services',
+            'description' => 'Services category',
+            'active' => 1
+        ]);
 	}
 }

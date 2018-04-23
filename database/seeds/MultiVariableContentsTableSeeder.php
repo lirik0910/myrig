@@ -327,17 +327,18 @@ class MultiVariableContentsTableSeeder extends Seeder
 				'content' => $content
 			]);
 
+            App\Model\Base\MultiVariableContent::create([
+                'multi_variable_id' => $multiIcon->id,
+                'multi_variable_line_id' => $item->id,
+                'content' => $icon
+            ]);
+
 			App\Model\Base\MultiVariableContent::create([
 				'multi_variable_id' => $multiLink->id,
 				'multi_variable_line_id' => $item->id,
 				'content' => $link
 			]);
 
-			App\Model\Base\MultiVariableContent::create([
-				'multi_variable_id' => $multiIcon->id,
-				'multi_variable_line_id' => $item->id,
-				'content' => $icon
-			]);
 			$key++;
 		}
 

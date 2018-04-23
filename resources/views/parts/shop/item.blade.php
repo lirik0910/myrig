@@ -39,7 +39,7 @@
 	<div class="col-sm-8">
 		<div class="article-text">
 			<h2>
-				<a href="{{ asset($item->page->link) }}" data-wpel-link="internal">
+				 <a href="{{ asset($item->page->link) }}" data-wpel-link="internal">
 					{{ $item->title }}
 				</a>
 			</h2>
@@ -52,7 +52,7 @@
 				<div class="tag tag-no">{{ $item->productStatus->description }}</div>
 			@endif
 
-			<div class="tag tag tag-waranty">{{ __('default.warranty') }} {{ $item->warranty }}</div>
+			@if(isset($item->warranty) && !empty($item->warranty))<div class="tag tag tag-waranty">{{ __('default.warranty') }} {{ $item->warranty }}</div>@endif
 
 			@if (isset($item->page->view->variables))
 				@if (isset($item->page->view->variables))

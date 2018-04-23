@@ -16,10 +16,21 @@
             }
         </script>
         @php
-            $user = App\Model\Base\User::where('email', session()->get('client'))->with('attributes', 'orders')->first();
-            if(!$user){
+            if(isset($_SESSION['client'])){
+                $client_email = $_SESSION['client'];
+                $user = App\Model\Base\User::where('email', $client_email)->with('attributes', 'orders')->first();
+            } else{
+                //$client_email = '';
+                $user = NULL;
+            }
+//var_dump($client_email); die;
+
+          //  var_dump($user); die;
+            if($user == NULL){
+            //var_dump($user); die;
                 redirect('sso-login');
             }
+            //var_dump($user); die;
             $orders = App\Model\Shop\Order::where('user_id', $user->id)->with('products')->get();
 
         @endphp
@@ -34,7 +45,7 @@
                             <a href="" class="history" data-target="#historyField" data-wpel-link="internal"> {{ __('default.orders_history') }} </a>
                         </div>
                         <div>
-                            <a href="{{url(env('APP_URL') . 'sso-login?action=logout')}}" class="exit" data-wpel-link="internal">{{ __('default.logout') }}</a>
+                            <a href="{{ env(strtoupper($locale) . '_DOMAIN') . '/sso-login?action=logout'}}" class="exit" data-wpel-link="internal">{{ __('default.logout') }}</a>
                         </div>
                     </div>
                     <div class="article-content col-sm-8">
@@ -132,7 +143,7 @@
                                                             <a href="{{$product->page->link}}" data-wpel-link="internal">{{$product->title}}</a>
                                                             <span class="hidden-md">{{ __('default.item_cost') }}</span>
                                                             <span class="table-price">${{ $price }}</span>
-                                                            <span class="table-bitcoin">{{ $btcPrice }}<i class="fa fa-bitcoin"></i></span>
+                                                            @if($btcPrce != 0)<span class="table-bitcoin">{{ $btcPrice }}<i class="fa fa-bitcoin"></i></span>@endif
                                                         </div>
                                                     </div>
                                                 </div>
@@ -195,7 +206,7 @@
                                                                 <a href="{{$product->page->link}}" data-wpel-link="internal">{{$product->title}}</a>
                                                                 <span class="hidden-md">{{ __('default.cost') }}</span>
                                                                 <span class="table-price">${{ $price }}</span>
-                                                                <span class="table-bitcoin">{{ $btcPrice }}<i class="fa fa-bitcoin"></i></span>
+                                                                @if($btcPrice != 0)<span class="table-bitcoin">{{ $btcPrice }}<i class="fa fa-bitcoin"></i></span>@endif
                                                             </div>
                                                         </div>
                                                     </div>
@@ -206,7 +217,7 @@
                                                     <div class="table-cell number number-price">
                                                         <span class="hidden-md">{{ __('default.item_cost') }}</span>
                                                         <span class="table-price">$@php echo $price * $product->pivot->count; @endphp</span>
-                                                        <span class="table-bitcoin">{{ $btcPrice * $product->pivot->count }}<i class="fa fa-bitcoin"></i></span>
+                                                        @if($btcPrice != 0)<span class="table-bitcoin">{{ $btcPrice * $product->pivot->count }}<i class="fa fa-bitcoin"></i></span>@endif
                                                     </div>
                                                     <div class="table-cell status">
                                                     </div>

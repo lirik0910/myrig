@@ -59,7 +59,14 @@ $payback = $payback->calcPayback($product->id);
 		<div class="article-text">
 			<h1>{{ $product->title }}</h1>
 
-			<div class="tag tag-order">{{ $product->productStatus->description }}</div>
+			@if ($product->productStatus->title === 'in-stock')
+				<div class="tag tag-check">{{ $product->productStatus->description }}</div>
+			@elseif ($product->productStatus->title === 'pre-order')
+				<div class="tag tag-order">{{ $product->productStatus->description }}</div>
+			@elseif ($product->productStatus->title === 'not-available')
+				<div class="tag tag-no">{{ $product->productStatus->description }}</div>
+			@endif
+
 			<div class="tag tag-waranty">{{ __('default.warranty') }} {{ $product->warranty }}</div>
 	
 			<div class="single-product-price">
@@ -87,10 +94,15 @@ $payback = $payback->calcPayback($product->id);
 						<span>{{ __('default.added') }}</span>
 						<i class="fa fa-spin fa-refresh" style="display: none"></i>
 					</a>
+				@elseif ($product->productStatus->title === 'not-available')
+					<a rel="nofollow" href="#report-availability" data-id="{{ $product->id }}" class="btn-default report-availability">
+						<span>Report availability</span>
+						<i class="fa fa-spin fa-refresh" style="display: none"></i>
+					</a>
 				@else
 					<a data-success="{{ __('default.added') }}" data-add="{{ __('default.to_cart') }}" rel="nofollow" href="#" data-id="{{ $product->id }}" class="btn-default addtocarts">
 						<span>{{ __('default.to_cart') }}</span>
-							<i class="fa fa-spin fa-refresh" style="display: none"></i>
+						<i class="fa fa-spin fa-refresh" style="display: none"></i>
 					</a>
 				@endif
 			</form>
@@ -151,4 +163,5 @@ $payback = $payback->calcPayback($product->id);
 
 
 </main>
+@include('parts.shop.report-availability_form')
 @endsection

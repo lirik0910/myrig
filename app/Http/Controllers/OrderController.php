@@ -19,12 +19,14 @@ class OrderController extends Controller
      * @return boolean
      */
     public function create(Request $request){
-        if (!session()->get('client')){
+        //if (!session()->get('client')){
+        //var_dump($_SESSION); die;
+        if (!isset($_SESSION['client'])){
             return response()->json(['success' => false, 'session' => false]);//redirect()->to('sso-login');
         }
 
         $data = $request->post();
-        $user = User::where('email', session()->get('client'))->first();
+        $user = User::where('email', $_SESSION['client'])->first();
 
         $locale = App::getLocale();
         $contexts = Context::all();
@@ -40,8 +42,15 @@ class OrderController extends Controller
             return response()->json(['success' => false, 'message' => 'User is not exist']);
         }
 
-        $delivery = Delivery::where('id', $data['delivery'])->where('active', 1)->first();
+        //var_dump('vfvvfvfbd'); die;
+        //var_dump($data['without-delivery']); die;
+        if($data['without-delivery'] == 1){
+            $delivery = Delivery::where('id', 4)->first();
+        } else{
+            $delivery = Delivery::where('id', $data['delivery'])->where('active', 1)->first();
+        }
 
+//var_dump($delivery); die;
         if(!$delivery){
             return response()->json(['success' => false, 'message' => 'Delivery with this ID is not exist']);
         }
@@ -53,12 +62,21 @@ class OrderController extends Controller
         }
 
         $order = new Order();
+        $last_order = Order::orderBy('id','desc')->first();
+        if(!$last_order){
+            $max_id = 1;
+            $order_number = $max_id;
+        } else{
+            $max_id = $last_order->id;
+            $order_number = $max_id + 1;
+        }
+//var_dump(Order::orderBy('id','desc')->first()); die;
 
         $numbersArray = str_split((string)time() - 2000000, 3);
-        $order_number = 0;
-        foreach($numbersArray as $number){
+
+        /*foreach($numbersArray as $number){
             $order_number += (int)$number;
-        }
+        }*/
 
         $order->fill([
             'number' => $order_number,
@@ -94,7 +112,7 @@ class OrderController extends Controller
             'comment' => $data['comment']
         ]);
 
-        $cart = json_decode(session()->get('cart'), true);
+        $cart = $_SESSION['cart'];
         foreach ($cart as $productId => $count){
             $product = Product::where('id', $productId)->first();
             if($product->auto_price){
@@ -117,7 +135,8 @@ class OrderController extends Controller
         $order->cost = $order->countCost();
         $order->save();
 
-        session()->forget('cart');
+        unset($_SESSION['cart']);
+        //session()->forget('cart');
         return response()->json(['success' => true, 'order' => $order], 200);
     }
 
@@ -125,7 +144,10 @@ class OrderController extends Controller
         $html = view('layouts.pdf2', ['number' => $number]);
         $html = mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8');
         $pdf = \App::make('dompdf.wrapper');
-        $pdf->loadHTML($html)->setPaper(array(0, 0, 595.28, 841.89), 'portrait');
+        $pdf->loadHTML($html)->setPaper(array(0, 0, 595.28, 861.89), 'portrait');
         return $pdf->download('invoice');
+        //return view('layouts.pdf2', ['number' => $number]);
+        //"a4" => array(0, 0, 595.28, 841.89)
+        //dpi = 96
     }
 }

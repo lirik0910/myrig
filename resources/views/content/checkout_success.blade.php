@@ -79,9 +79,10 @@
                                 <div class="article-text">
                                     <div class="widget wDelivery">
                                         <section class="woocommerce-order-details">
-                                            <h2 class="woocommerce-order-details__title">{{ __('default.info_about_order')}}
 
-                                            <a href="download-pdf/{{ $order->number }}" style="float: right; border: red">DOWNLOAD INVOICE</a>
+                                            <h2 class="woocommerce-order-details__title" style="float: left">{{ __('default.info_about_order')}}</h2>
+                                            <a href="download-pdf/{{ $order->number }}" style="float: right; margin-top: 30px">DOWNLOAD INVOICE</a>
+
                                             <table class="woocommerce-table woocommerce-table--order-details shop_table order_details">
                                                 <thead>
                                                 <tr>

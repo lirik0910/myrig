@@ -78,7 +78,7 @@
                                                 <input type="number"  step="1" class="quantity width-33 quantity-center" id="quantity" name="qty" placeholder="1" min="1" value="1" readonly>
                                             </div>
                                             <div class="calculator-form--item cur-LTC">
-                                                <input type="number" step="0.01" class="quantity width-60 hash" name="hash" placeholder="Input hashrate"  >
+                                                <input type="number" step="0.01" class="quantity width-60 hash" name="hash" placeholder="{{ __('default.input_hashrate') }}"  >
                                                 <div class="width-33 cur-LTC-ul">
                                                     <select id="ghs" name="powers" class="calc-select">
                                                         <option  value="0.001" selected >TH/s</option>
@@ -87,7 +87,7 @@
                                             </div>
                                         </div>
                                         <div class="calculator-form--item kvtch">
-                                            <input type="number"  step="0.01" class="quantity width-60 energy" name="energy" placeholder="Energy consumption">
+                                            <input type="number"  step="0.01" class="quantity width-60 energy" name="energy" placeholder="{{__('default.energy_consumption')}}">
                                             <div class="width-33">
                                                 <select  disabled class="calc-select">
                                                     <option value="hide" >{{__('default.kwh')}}</option>
@@ -107,14 +107,14 @@
                                         <div class="calculator-form--item">
                                             <div class="">
                                                 <select id="rialto" name="days" class="calc-select">
-                                                    <option value="hide">{{ __('billing_period') }}</option>
+                                                    <option value="hide">{{ __('default.billing_period') }}</option>
                                                     <option value="1" selected>{{ __('default.one_day') }}</option>
                                                     <option value="31" >{{ __('default.one_month') }}</option>
                                                     <option value="365" >{{ __('default.one_year') }}</option>
                                                 </select>
                                             </div>
                                         </div>
-                                        <input type="submit" class="button-green" value="Calculate">
+                                        <input type="submit" class="button-green" value="{{__('default.calculate')}}">
                                         <input type="hidden" value="calc_btc_profit" name="action">
                                         <input type="hidden" value="BTC" class="currencyType" name="currency">
                                     </form>							</div>
