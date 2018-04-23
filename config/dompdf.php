@@ -149,7 +149,7 @@ return array(
          * Used if no suitable fonts can be found. This must exist in the font folder.
          * @var string
          */
-        "default_font" => "calibri",
+        "default_font" => "sans-serif",
 
         /**
          * Image DPI setting
@@ -184,7 +184,7 @@ return array(
          *
          * @var int
          */
-        "dpi" => 158.9,
+        "dpi" => 98.3,
 
         /**
          * Enable inline PHP
