@@ -45,7 +45,7 @@
                             <a href="" class="history" data-target="#historyField" data-wpel-link="internal"> {{ __('default.orders_history') }} </a>
                         </div>
                         <div>
-                            <a href="{{env(strtoupper($locale) . '_DOMAIN') . '/sso-login?action=logout')}}" class="exit" data-wpel-link="internal">{{ __('default.logout') }}</a>
+                            <a href="{{ env(strtoupper($locale) . '_DOMAIN') . '/sso-login?action=logout')}}" class="exit" data-wpel-link="internal">{{ __('default.logout') }}</a>
                         </div>
                     </div>
                     <div class="article-content col-sm-8">
