@@ -512,23 +512,17 @@ class DbImport
 //var_dump($contexts); die;
             foreach ($contexts as $context){
                 //try{
+                $parent_page = Page::where('context_id', $context->id)->where('link', 'shop')->first();
+
                     $page = Page::create([
-                        'parent_id' => 0,
+                        'parent_id' => $parent_page->id,
                         'context_id' => $context->id,
                         'view_id' => 5,
                         'link' => 'product/' . $product['articul'],
                         'title' => $product['title'],
                         'description' => '',
                     ]);
-                    //var_dump($page); die;
-                //} catch (\Exception $e){
                     $page = Page::where('context_id', $context->id)->where('link', 'product/' . $product['articul'])->first();
-                    //if(!$page){
-                  //      continue;
-                    //}
-                    //continue;
-                //}
-                //var_dump($page); die;
                 try{
                     $product['page_id'] = $page->id;
                     $product['context_id'] = $context->id;

@@ -30,5 +30,11 @@ class CategoriesTableSeeder extends Seeder
             'description' => 'Services category',
             'active' => 1
         ]);
+
+        App\Model\Shop\Category::create([
+            'title' => 'Hosting',
+            'description' => 'Hosting payment category',
+            'active' => 1
+        ]);
 	}
 }

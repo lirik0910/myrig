@@ -4,6 +4,9 @@
             grecaptcha.render('g-recaptcha', {
                 'sitekey' : '6LdY_VMUAAAAANIypbzQz5mga0NnT-PJyASZbJOQ'
             });
+            grecaptcha.getResponse(
+                opt_widget_id
+            )
             //alert("grecaptcha is ready!");
         };
     </script>
