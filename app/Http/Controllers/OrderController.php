@@ -141,7 +141,7 @@ class OrderController extends Controller
     }
 
     public function invoice($number){
-        $html = view('layouts.pdf2', ['number' => $number]);
+        $html = view('layouts.pdf', ['number' => $number]);
         $html = mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8');
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($html)->setPaper(array(0, 0, 595.28, 861.89), 'portrait');
