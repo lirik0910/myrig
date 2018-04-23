@@ -19,12 +19,14 @@ class OrderController extends Controller
      * @return boolean
      */
     public function create(Request $request){
-        if (!session()->get('client')){
+        //if (!session()->get('client')){
+        //var_dump($_SESSION); die;
+        if (!isset($_SESSION['client'])){
             return response()->json(['success' => false, 'session' => false]);//redirect()->to('sso-login');
         }
 
         $data = $request->post();
-        $user = User::where('email', session()->get('client'))->first();
+        $user = User::where('email', $_SESSION['client'])->first();
 
         $locale = App::getLocale();
         $contexts = Context::all();
@@ -40,17 +42,15 @@ class OrderController extends Controller
             return response()->json(['success' => false, 'message' => 'User is not exist']);
         }
 
-        if(!isset($data['delivery'])){
-            $data['delivery'] = 4;
-        }
-        //var_dump($data['delivery']); die;
-        if($data['delivery'] == 4){
-            $delivery = Delivery::where('id', $data['delivery'])->first();
+        //var_dump('vfvvfvfbd'); die;
+        //var_dump($data['without-delivery']); die;
+        if($data['without-delivery'] == 1){
+            $delivery = Delivery::where('id', 4)->first();
         } else{
             $delivery = Delivery::where('id', $data['delivery'])->where('active', 1)->first();
         }
 
-
+//var_dump($delivery); die;
         if(!$delivery){
             return response()->json(['success' => false, 'message' => 'Delivery with this ID is not exist']);
         }

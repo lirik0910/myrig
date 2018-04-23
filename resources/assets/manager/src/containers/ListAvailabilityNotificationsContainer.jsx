@@ -159,12 +159,12 @@ class ListAvailabilityNotificationsContainer extends Component
                                     });
                                 }}
 
-/*                                onDeleteButtonClicked={item => {
+                                onDeleteButtonClicked={item => {
                                     this.setState({
                                         deleteDialog: true,
                                         deleteUserId: item.id,
                                     });
-                                }}*/ />
+                                }} />
                         }
 
                         this.setState({

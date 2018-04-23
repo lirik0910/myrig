@@ -117,7 +117,8 @@ class ClientAuthController
                     UserAttribute::create($attributesdata);
                 }
 
-                session()->put('client', $data['email']);
+                $_SESSION['client'] = $data['email'];
+                //session()->put('client', $data['email']);
                 return redirect('/');
             } else {
                 echo "notvalid";
@@ -131,7 +132,11 @@ class ClientAuthController
         } elseif(isset($action)){
             switch ($action) {
                 case "logout":
-                    session()->forget('client');
+                    if(isset($_SESSION['client'])){
+                        unset($_SESSION['client']);
+                    }
+
+                    //session()->forget('client');
                     return redirect('/');
                     break;
                 case "somethingelse":
@@ -142,7 +147,14 @@ class ClientAuthController
                     break;
             }
         }
-        $user = User::where('email', session()->get('client'))->first();
+        $client_email = '';
+        if(isset($_SESSION['client'])){
+            $client_email = $_SESSION['client'];
+            $user = User::where('email', $client_email)->first();
+        } else{
+            $user = NULL;
+        }
+
         if($user || $this->loggedin === true){
             return redirect('/profile');
         } else {

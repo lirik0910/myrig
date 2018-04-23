@@ -336,7 +336,7 @@ class CalculateController
 
         //var_dump($t * $R * $H, ($D * 2^32) * $days; die;
         //var_dump($t, $R, $H, $D); die;
-        if($currency === 'BTC'){
+        if($currency === 'BTC' || $currency == 'BCH'){
             $P = ($t*$R*$H)/(number_format($D, 2)*(2**32)) * $days;
         }
 

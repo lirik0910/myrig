@@ -2,7 +2,9 @@
 
 namespace App;
 
+use App\Model\Base\Context;
 use Illuminate\Support\Facades\DB;
+use App\Model\Base\Page;
 use App\Model\Base\User;
 use App\Model\Base\UserAttribute;
 use App\Model\Shop\Product;
@@ -506,11 +508,37 @@ class DbImport
          * Import products
          */
         foreach ($data['products'] as $product){
-            try{
-                Product::create($product);
-            } catch (\Exception $e){
-                continue;
+            $contexts = Context::where('title', 'UA')->orWhere('title', 'RU')->get();
+//var_dump($contexts); die;
+            foreach ($contexts as $context){
+                //try{
+                    $page = Page::create([
+                        'parent_id' => 0,
+                        'context_id' => $context->id,
+                        'view_id' => 5,
+                        'link' => 'product/' . $product['articul'],
+                        'title' => $product['title'],
+                        'description' => '',
+                    ]);
+                    //var_dump($page); die;
+                //} catch (\Exception $e){
+                    $page = Page::where('context_id', $context->id)->where('link', 'product/' . $product['articul'])->first();
+                    //if(!$page){
+                  //      continue;
+                    //}
+                    //continue;
+                //}
+                //var_dump($page); die;
+                try{
+                    $product['page_id'] = $page->id;
+                    $product['context_id'] = $context->id;
+                    //var_dump($product); die;
+                    Product::create($product);
+                } catch (\Exception $e){
+                    continue;
+                }
             }
+
 
         }
 

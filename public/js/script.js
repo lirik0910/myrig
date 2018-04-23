@@ -1226,10 +1226,12 @@ $(document).on('change', '.cart-form  input.qty', function(e) {
             $('.selfment-shipping-method').show();
 			$('.ru-shipping-method').hide();
 			$('.ru-shipping-method').find('input').prop('checked', false);
+			$('.without-delivery').val(0);
             $('.no-availible-shipping-method').hide();
 		} else if($(this).val() == 'RU'){
             $('.ua-shipping-method').hide();
             $('.ua-shipping-method').find('input').prop('checked', false);
+            $('.without-delivery').val(0);
             $('.ru-shipping-method').show();
             $('.ru-shipping-method').find('input').prop('checked', true);
             $('.selfment-shipping-method').show();
@@ -1241,6 +1243,8 @@ $(document).on('change', '.cart-form  input.qty', function(e) {
             $('.no-availible-shipping-method').show();
             $('.ua-shipping-method').find('input').prop('checked', false);
             $('.ru-shipping-method').find('input').prop('checked', false);
+            $('.without-delivery').val(1);
+            console.log($('.without-delivery').find('input').val());
             $('.selfment-shipping-method').find('input').prop('checked', false);
 		}
 		//console.log($(this).val());

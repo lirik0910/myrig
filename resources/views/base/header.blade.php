@@ -12,7 +12,10 @@ $count = 0;
 foreach ($inCart as $i) {
 	$count += (int) $i;
 }
-$client_email = session()->get('client');
+if(isset($_SESSION['client'])){
+    $client_email = $_SESSION['client'];
+}
+//$client_email = $_SESSION['client'];
 if(isset($client_email) && !empty($client_email)){
     $user = $select('App\Model\Base\User')->where('email', $client_email)->first();
 

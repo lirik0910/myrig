@@ -3,7 +3,13 @@
 @php
 $deliveries = $select('App\Model\Shop\Delivery')->where('active', 1)->get();
 $paymentTypes = $select('App\Model\Shop\PaymentType')->get();
-$user = $select('App\Model\Base\User')->where('email', session()->get('client'))->with('attributes')->first();
+if(isset($_SESSION['client'])){
+	$client_email = $_SESSION['client'];
+} else{
+	$client_email = '';
+}
+
+$user = $select('App\Model\Base\User')->where('email', $client_email)->with('attributes')->first();
 //var_dump($user->attributes);
 $count = 0;
 foreach ($inCart as $i) {
@@ -249,6 +255,7 @@ foreach ($products as $item) {
 															</li>
                                                             @endforeach
 															<li style="display: inline-block">
+																<input type="text" name="without-delivery" value="0" class="without-delivery" disabled style="display: none"/>
 																<p class="no-availible-shipping-method">There are no shipping methods available. Please double check your address, or contact us if you need any help.</p>
 															</li>
 														</ul>
