@@ -1177,13 +1177,9 @@ $(document).on('change', '.cart-form  input.qty', function(e) {
             products: {}
         };
 
-       // var captcha = $('.recaptcha-checkbox').attr('aria-checked');
-        var captcha = $(this).find('iframe').contents('.recaptcha-checkbox');
-/*        var captcha = $(this).find('iframe').load(function(){
-            return $(this).attributes;
-        });*/
-        console.log(captcha);
-        if(captcha === true) {
+        var captcha = $(this).find('#g-recaptcha-response').text();
+//console.log(captcha.length);
+        if(captcha.length > 0) {
             $(this).find('.error-captcha').hide();
 
             $(this).find('input').each(function () {
@@ -1263,8 +1259,6 @@ $(document).on('change', '.cart-form  input.qty', function(e) {
 		}
 		//console.log($(this).val());
     });
-
-
 });
  
  
