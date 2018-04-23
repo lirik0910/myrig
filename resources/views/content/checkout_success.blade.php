@@ -81,7 +81,7 @@
                                         <section class="woocommerce-order-details">
                                             <h2 class="woocommerce-order-details__title">{{ __('default.info_about_order')}}
 
-                                            {{--<a href="download-pdf/{{ $order->number }}" style="float: right; border: red">DOWNLOAD INVOICE</a>--}}
+                                            <a href="download-pdf/{{ $order->number }}" style="float: right; border: red">DOWNLOAD INVOICE</a>
                                             <table class="woocommerce-table woocommerce-table--order-details shop_table order_details">
                                                 <thead>
                                                 <tr>

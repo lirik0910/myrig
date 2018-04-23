@@ -43,7 +43,7 @@
                             <p>Telegram &#8212; <span style="color: #2ba1df;"><a style="color: #2ba1df;" href="http://t.me/myrigservice" data-wpel-link="external" rel="nofollow external noopener noreferrer">@myrigservice</a></span><br />
                                 support@myrig.com  </p>
                             <p><strong><span style="color: #60a600;">{{ __('default.schedule') }}</span></strong><br />
-                                {{ __('friday_monday') }}<br />
+                                {{ __('monday-friday') }}<br />
                                 10:00 &#8212; 19:00</p>
                         </div>
 
