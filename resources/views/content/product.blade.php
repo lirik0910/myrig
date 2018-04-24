@@ -106,7 +106,7 @@ $payback = $payback->calcPayback($product->id);
 					</a>
 				@endif
 			</form>
-			@if($payback && !empty($payback)) <div class="tag tag-payback">{{ __('default.payback') }} {{ $payback }} {{--{{ __('default.read') }}--}}</div>@endif
+			@if(isset($payback) && !empty($payback)) <div class="tag tag-payback">{{ __('default.payback') }} {{ $payback }} {{--{{ __('default.read') }}--}}</div>@endif
 			
 			<div class="single-product-tabs">
 				<div class="product-tab-links">

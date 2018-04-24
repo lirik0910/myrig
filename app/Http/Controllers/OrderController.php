@@ -45,7 +45,7 @@ class OrderController extends Controller
         //var_dump('vfvvfvfbd'); die;
         //var_dump($data['without-delivery']); die;
         if($data['without-delivery'] == 1){
-            $delivery = Delivery::where('id', 4)->first();
+            $delivery = Delivery::where('title', 'Without delivery')->first();
         } else{
             $delivery = Delivery::where('id', $data['delivery'])->where('active', 1)->first();
         }
