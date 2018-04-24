@@ -103,6 +103,7 @@
                                     @foreach($orders as $order)
                                         @php
                                             $btcCost = $order->countBtcCost();
+                                            //var_dump($btcCost); die;
                                             $status_logs = $order->logs->sortBy('created_at');
                                             //var_dump($status_logs); die;
                                         @endphp
@@ -129,6 +130,7 @@
                                                    //  var_dump($product->pivot); die;
                                                     $price = number_format($product->pivot->cost, 2, '.', '');
                                                     $btcPrice = number_format($product->pivot->btcCost, 4, '.', '');
+
 /*                                                    if($product->auto_price){
                                                         $price = number_format($product->calcAutoPrice(), 2, '.', '');
                                                     } else{
@@ -143,7 +145,7 @@
                                                             <a href="{{$product->page->link}}" data-wpel-link="internal">{{$product->title}}</a>
                                                             <span class="hidden-md">{{ __('default.item_cost') }}</span>
                                                             <span class="table-price">${{ $price }}</span>
-                                                            @if($btcPrice != 0)<span class="table-bitcoin">{{ $btcPrice }}<i class="fa fa-bitcoin"></i></span>@endif
+                                                            @if($btcPrice > 0)<span class="table-bitcoin">{{ $btcPrice }}<i class="fa fa-bitcoin"></i></span>@endif
                                                         </div>
                                                     </div>
                                                 </div>
@@ -157,7 +159,7 @@
                                             <div class="table-cell number number-price">
                                                 <span class="hidden-md">{{ __('default.total') }}</span>
                                                 <span class="table-price"><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">$</span>{{ number_format($order->cost, 2, '.', '') }}</span></span>
-                                                <span class="table-bitcoin">{{ $btcCost }}<i class="fa fa-bitcoin"></i></span>
+                                                @if($btcCost > 0)<span class="table-bitcoin">{{ $btcCost }}<i class="fa fa-bitcoin"></i></span>@endif
                                             </div>
                                             <div class="table-cell status">
                                                 <span class="">
@@ -189,6 +191,7 @@
                                                 @php
                                                     $price = number_format($product->pivot->cost, 2, '.', '');
                                                     $btcPrice = number_format($product->pivot->btcCost, 4, '.', '');
+                                                    //var_dump($btcPrice); die;
 /*                                                    if($product->auto_price){
                                                         $price = number_format($product->calcAutoPrice(), 2, '.', '');
                                                     } else{
@@ -217,7 +220,7 @@
                                                     <div class="table-cell number number-price">
                                                         <span class="hidden-md">{{ __('default.item_cost') }}</span>
                                                         <span class="table-price">$@php echo $price * $product->pivot->count; @endphp</span>
-                                                        @if($btcPrice != 0)<span class="table-bitcoin">{{ $btcPrice * $product->pivot->count }}<i class="fa fa-bitcoin"></i></span>@endif
+                                                        @if($btcPrice > 0)<span class="table-bitcoin">{{ $btcPrice * $product->pivot->count }}<i class="fa fa-bitcoin"></i></span>@endif
                                                     </div>
                                                     <div class="table-cell status">
                                                     </div>

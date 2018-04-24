@@ -19,15 +19,15 @@ class DeliveriesTableSeeder extends Seeder
 		]);
 
 		App\Model\Shop\Delivery::create([
-			'title' => 'SDEK',
-			'description' => 'SDEK. Pickup. Russia',
+			'title' => 'СДЕК',
+			'description' => 'СДЕК. Доставка. Россия',
 			'color' => '#444389',
 			'active' => 1
 		]);
 
         App\Model\Shop\Delivery::create([
-            'title' => 'Business lines',
-            'description' => 'Business lines. Pickup. Russia',
+            'title' => 'Деловые линии',
+            'description' => 'Деловые линии. Доставка. Россия',
             'color' => '#444389',
             'active' => 1
         ]);

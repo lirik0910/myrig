@@ -154,10 +154,17 @@ class Order extends Model
 	 */
 	public function countBtcCost()
     {
-        $btc = ExchangeRate::where('title', 'BTC/USD')->first()->value;
-        $order_cost = $this->cost;
+       // $btc = ExchangeRate::where('title', 'BTC/USD')->first()->value;
+        $items = $this->carts()->get();
+        $btcCost = 0;
+        foreach ($items as $item){
+            $btcCost += $item->btcCost;
+            //var_dump($item->pivot->btcCost); die;
+        }
+        //var_dump($items); die;
+        //$order_cost = $this->cost;
 
-        return number_format($order_cost / $btc, 4, '.', '');
+        return number_format($btcCost, 4, '.', '');
     }
 
 	public function addProduct()
