@@ -11,6 +11,8 @@ use App\Model\Shop\PaymentType;
 use Illuminate\Support\Facades\App;
 use App\Model\Shop\OrderDelivery;
 use App\Model\Shop\Cart;
+use App\Mail\MailClass;
+use Illuminate\Support\Facades\Mail;
 
 class OrderController extends Controller
 {
@@ -134,6 +136,10 @@ class OrderController extends Controller
 
         $order->cost = $order->countCost();
         $order->save();
+       
+
+        $number = $order_number;
+        Mail::to($data['email'])->send(new MailClass($number)); 
 
         unset($_SESSION['cart']);
         //session()->forget('cart');

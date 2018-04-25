@@ -1252,5 +1252,8 @@ $(document).on('change', '.cart-form  input.qty', function(e) {
 
 
 });
+
+ 
+ 
  
  

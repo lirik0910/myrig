@@ -9,6 +9,8 @@ use App\Model\Shop\OrderDelivery;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
+use App\Mail\OrderStatusMail;
+use Illuminate\Support\Facades\Mail;
 
 class OrderController extends Controller
 {
@@ -286,6 +288,7 @@ class OrderController extends Controller
 		//var_dump($model->status_id, $request->input('status_id')); die;
 		if ($model->status_id != $request->input('status_id')) {
 			$model->changeStatus($request->input('status_id'));
+			Mail::to($delivery->email)->send(New OrderStatusMail($model));
 		}
 
 		$orderData = $request->only([
