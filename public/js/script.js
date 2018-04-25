@@ -1260,5 +1260,8 @@ $(document).on('change', '.cart-form  input.qty', function(e) {
 		//console.log($(this).val());
     });
 });
+
+ 
+ 
  
  

@@ -49,3 +49,4 @@ Route::post('/back_call', function (Request $request){
 		return $requestException;
 	}
 });
+
