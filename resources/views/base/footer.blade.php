@@ -203,7 +203,7 @@ $courses = $select('App\Model\Shop\ExchangeRate')->get()->groupBy('title');
 						<input type="text" name="topic" class="form-control" required="required" data-bv-message=" " placeholder="Topic"/></div>
 
 					<div class="form-group">
-						<textarea name="message" class="form-control" placeholder="Description" required="required" data-bv-message=" "></textarea></div>
+						<textarea name="message" class="form-control" placeholder="Description" required="required" data-bv-message=""></textarea></div>
 					<div class="form-group">
 						<span class="filename"></span>
 						<label for="fileName"><i class="fa fa-paperclip"></i> {{ __('default.attach_file') }}</label>

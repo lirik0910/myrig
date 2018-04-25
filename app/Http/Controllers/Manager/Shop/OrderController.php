@@ -288,7 +288,13 @@ class OrderController extends Controller
 		//var_dump($model->status_id, $request->input('status_id')); die;
 		if ($model->status_id != $request->input('status_id')) {
 			$model->changeStatus($request->input('status_id'));
-			Mail::to($delivery->email)->send(New OrderStatusMail($model));
+			try{
+                //Mail::to($delivery->email)->send(New OrderStatusMail($model));
+            } catch ( \Exception $e)
+            {
+
+            }
+
 		}
 
 		$orderData = $request->only([
