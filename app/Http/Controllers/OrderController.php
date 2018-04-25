@@ -47,7 +47,7 @@ class OrderController extends Controller
         //var_dump('vfvvfvfbd'); die;
         //var_dump($data['without-delivery']); die;
         if($data['without-delivery'] == 1){
-            $delivery = Delivery::where('id', 4)->first();
+            $delivery = Delivery::where('title', 'Without delivery')->first();
         } else{
             $delivery = Delivery::where('id', $data['delivery'])->where('active', 1)->first();
         }
@@ -147,7 +147,7 @@ class OrderController extends Controller
     }
 
     public function invoice($number){
-        $html = view('layouts.pdf2', ['number' => $number]);
+        $html = view('layouts.pdf', ['number' => $number]);
         $html = mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8');
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($html)->setPaper(array(0, 0, 595.28, 861.89), 'portrait');

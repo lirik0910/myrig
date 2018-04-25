@@ -67,7 +67,7 @@ $payback = $payback->calcPayback($product->id);
 				<div class="tag tag-no">{{ $product->productStatus->description }}</div>
 			@endif
 
-			<div class="tag tag-waranty">{{ __('default.warranty') }} {{ $product->warranty }}</div>
+			@if(isset($product->warranty) && !empty($product->warranty))<div class="tag tag-waranty">{{ __('default.warranty') }} {{ $product->warranty }}</div>@endif
 	
 			<div class="single-product-price">
 				<span class="woocommerce-Price-amount amount">
@@ -106,7 +106,7 @@ $payback = $payback->calcPayback($product->id);
 					</a>
 				@endif
 			</form>
-			@isset($payback)<div class="tag tag-payback">{{ __('default.payback') }} {{ $payback }} {{ __('default.read') }}</div>@endisset
+			@if(isset($payback) && !empty($payback)) <div class="tag tag-payback">{{ __('default.payback') }} {{ $payback }} {{--{{ __('default.read') }}--}}</div>@endif
 			
 			<div class="single-product-tabs">
 				<div class="product-tab-links">

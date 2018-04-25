@@ -230,7 +230,7 @@ class ClientAuthController
             return response()->json(['success' => false, 'messages' => json_encode($validator->errors()->messages())]);
         }
 
-        $user = User::where('email', session()->get('client'))->first();
+        $user = User::where('email',$_SESSION['client'])->first();
         $update = UserAttribute::where('user_id', $user->id)->update(['fname' => $post['first_name'], 'lname' => $post['last_name'], 'phone' => $post['phone'], 'address' => $post['address']]);
 
         if($update){

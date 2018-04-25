@@ -1,9 +1,16 @@
 <div style="display: none">
     <script type="text/javascript">
+        var verifyCallback = function(response) {
+            //console.log(response);
+            $(document).find('#g-recaptcha-response').text(response);
+        };
         var onloadCallback = function() {
-            grecaptcha.render('g-recaptcha', {
-                'sitekey' : '6LdY_VMUAAAAANIypbzQz5mga0NnT-PJyASZbJOQ'
+            var captcha = grecaptcha.render('g-recaptcha', {
+                'sitekey' : '6LdY_VMUAAAAANIypbzQz5mga0NnT-PJyASZbJOQ',
+                'callback' : verifyCallback
             });
+            //console.log('captcha response : ' + grecaptcha.getResponse(captcha));
+          //  $(document).find('#g-recaptcha-response').text(grecaptcha.getResponse(captcha));
             //alert("grecaptcha is ready!");
         };
     </script>
@@ -42,7 +49,7 @@
                     </div>
 
                     <div class="form-group" style="margin-top: 60px; margin-bottom: 20px">
-                        <div id="g-recaptcha"></div>
+                        <div id="g-recaptcha" data-check="0"></div>
                     </div>
 
                     <p class="error-captcha">Пройдите капчу</p>

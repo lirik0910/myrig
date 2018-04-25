@@ -5,6 +5,7 @@ namespace App;
 use App\Model\Base\Context;
 use Illuminate\Support\Facades\DB;
 use App\Model\Base\Page;
+use App\Model\Base\PageVisits;
 use App\Model\Base\User;
 use App\Model\Base\UserAttribute;
 use App\Model\Shop\Product;
@@ -37,12 +38,48 @@ class DbImport
         $this->users = $this->source->select('select id, user_login, user_pass, user_email, display_name from wpbit2_users where id  != 1');
         $this->users_meta = $this->source->select('select user_id, meta_key, meta_value from wpbit2_usermeta');
         //$this->users_meta = $this->source->select('select user_id, user_login, user_pass, display_name from wploc_users where id  != 1');
-        $this->news = $this->source->select('select id, post_author, post_content, post_title, post_name from wpbit2_posts where post_type=:post_type', ['post_type' => 'post']);
+        $this->news = $this->source->select('select id, post_author, post_content, post_title, post_name, post_date, post_status from wpbit2_posts where post_type=:post_type and post_status=:post_status', ['post_type' => 'post', 'post_status' => 'publish']);
+        $this->articles = $this->source->select('select id, post_author, post_content, post_title, post_name, post_date, post_status from wpbit2_posts where post_type=:post_type', ['post_type' => 'article']);
         $this->orders = $this->source->select('select id, post_author, post_date, post_status from wpbit2_posts where post_type=:post_type', ['post_type' => 'shop_order']);
         $this->products = $this->source->select('select id, post_title, post_content, post_name from wpbit2_posts where post_type =:post_type', ['post_type' => 'product']);
         //$this->articles = $this->source->select('select id, post_author, post_date, post_content, post_title, post_name, ');
 
-        //var_dump($this->news); die;
+        $news = [];
+        //$views_count = [];
+        foreach ($this->news as $new){
+            $views_count = $this->source->select('select meta_value from wpbit2_postmeta where post_id =:post_id and meta_key =:meta_key', ['post_id' => $new->id, 'meta_key' => 'post_views_count'])[0]->meta_value;
+            //var_dump($views_count); die;
+            $news[$new->id] = [
+                'view_id' => 10,
+                'link' => 'news/' . $new->post_name,
+                'title' => $new->post_title,
+                'description' => '',
+                'introtext' => '',
+                'content' => $new->post_content,
+                'delete' => 0,
+                'createdby_id' => $new->post_author,
+                'created_at' => $new->post_date,
+                'views_count' => $views_count
+            ];
+        }
+
+        $articles = [];
+        foreach ($this->articles as $article){
+            $views_count = $this->source->select('select meta_value from wpbit2_postmeta where post_id =:post_id and meta_key =:meta_key', ['post_id' => $new->id, 'meta_key' => 'post_views_count'])[0]->meta_value;
+            $articles[$article->id] = [
+                'view_id' => 10,
+                'link' => 'articles/' . $article->post_name,
+                'title' => $article->post_title,
+                'description' => '',
+                'introtext' => '',
+                'content' => $article->post_content,
+                'delete' => 0,
+                'createdby_id' => $article->post_author,
+                'created_at' => $article->post_date,
+                'views_count' => $views_count
+            ];
+        }
+        //var_dump($views_count); die;
 
         $products = [];
 
@@ -68,23 +105,7 @@ class DbImport
         }
 //var_dump($this->orders); die;
         $users = [];
-/*        $users[1] = [
-            'id' => 1,
-            'policy_id' => 1,
-            'name' => 'admin',
-            'email' => 'admin@myrig.com',
-            'password' => '$2y$10$ba4gmtzfXUnNC0JL95J5Aup/u/IIdULTz8kFvruLNoTQJnIM..zG2',
-        ];
-        $users[2] = [
-            'id' => 2,
-            'policy_id' => 2,
-            'name' => 'manager',
-            'email' => 'manager@myrig.com',
-            'password' => '$2y$10$6uM5SSb10/D7NJUI43s4zuDOSJBC3Ymu2a9gPcnkqz1GBI1yx0Pqa',
-        ];*/
         $user_attrs = [];
-        $user_meta = [];
-        //var_dump($this->users); die;
         foreach ($this->users as $user){
            // var_dump($user); die;
             $users[$user->id] = [
@@ -108,56 +129,6 @@ class DbImport
                 'fname' => $fname,
                 'lname' => $lname
             ];
-//var_dump($this->users_meta); die;
-/*            $user_name = '';
-            $user_last_name = '';
-            $user_phone = '';
-            $user_email = '';
-            $user_city = '';
-            $user_country = '';
-            $user_address = '';
-            $user_state = '';
-            foreach($this->users_meta as $meta){
-                if($meta->user_id == $user->id){
-                    switch ($meta->meta_key){
-                        case 'billing_first_name':
-                            $user_name = $meta->meta_value;
-                            break;
-                        case  'blling_last_name':
-                            $user_last_name = $meta->meta_value;
-                            break;
-                        case 'billing_phone':
-                            $user_phone = $meta->meta_value;
-                            break;
-                        case 'billing_email':
-                            $user_email = $meta->meta_value;
-                            break;
-                        case 'billing_city':
-                            $user_city = $meta->meta_value;
-                            break;
-                        case 'billing_country':
-                            $user_country = $meta->meta_value;
-                            break;
-                        case 'billing_address_1':
-                            $user_address = $meta->meta_value;
-                            break;
-                        case 'billing_state':
-                            $user_state = $meta->meta_value;
-                            break;
-                    }
-                    $user_meta[$user->id] = [
-                        'user_id' => $user->id,
-                        'fname' => $user_name,
-                        'lname' => $user_last_name,
-                        'phone' => $user_phone,
-                        'email' => $user_email,
-                        'city' => $user_city,
-                        'country' => $user_country,
-                        'address' => $user_address,
-                        'state' => $user_state,
-                    ];
-                }
-            }*/
         }
 
         $orders_items_meta = [];
@@ -177,18 +148,10 @@ class DbImport
             'wc-cancelled' => 0,
             'trash' => 0
         ];
-        $auto_drafts = [];
 
         foreach($this->orders as $order){
             $order_status = 1;
 
-            //$order_statuses_count = []
-/*            if($order->post_status == 'wc-wc-local'){
-                $auto_drafts[] = $order->id;
-            }
-            if(!in_array($order->post_status, $order_statuses)){
-                $order_statuses[$order->id] = $order->post_status;
-            }*/
             $in_trash = 0;
             switch ($order->post_status){
                 case 'wc-new':
@@ -252,20 +215,12 @@ class DbImport
                 'created_at' => $order->post_date
             ];
         }
-        //var_dump($order_statuses_count); die;
-        //var_dump($auto_drafts); die;
-        //var_dump($order_statuses); die;
-        //var_dump($orders); die;
-       // $order_deliveries = [];
         foreach ($this->orders as $order){
             $delivery_id = 1;
             $delivery_cost = 0;
 
             $order_logs[$order->id] = $this->source->select('select * from wpbit2_comments where comment_post_ID = :comment_post_ID', ['comment_post_ID' => $order->id]);
             $orders_items[$order->id] = $this->source->select('select * from wpbit2_woocommerce_order_items where order_id = :order_id', ['order_id' => $order->id]);
-
-            //var_dump($orders_items); die;
-
 
             /*
              * Order delivery info
@@ -467,6 +422,8 @@ class DbImport
         $export['users'] = $users;
         $export['user_attrs'] = $user_attrs;
         $export['orders_deliveries'] = $order_deliveries;
+        $export['news'] = $news;
+        $export['articles'] = $articles;
         //var_dump($export['users']); die;
         return $export;
     }
@@ -503,32 +460,24 @@ class DbImport
             }
 
         }
-//die;
+        $contexts = Context::where('title', 'UA')->orWhere('title', 'RU')->get();
         /*
          * Import products
          */
         foreach ($data['products'] as $product){
-            $contexts = Context::where('title', 'UA')->orWhere('title', 'RU')->get();
-//var_dump($contexts); die;
             foreach ($contexts as $context){
                 //try{
+                $parent_page = Page::where('context_id', $context->id)->where('link', 'shop')->first();
+
                     $page = Page::create([
-                        'parent_id' => 0,
+                        'parent_id' => $parent_page->id,
                         'context_id' => $context->id,
                         'view_id' => 5,
                         'link' => 'product/' . $product['articul'],
                         'title' => $product['title'],
                         'description' => '',
                     ]);
-                    //var_dump($page); die;
-                //} catch (\Exception $e){
                     $page = Page::where('context_id', $context->id)->where('link', 'product/' . $product['articul'])->first();
-                    //if(!$page){
-                  //      continue;
-                    //}
-                    //continue;
-                //}
-                //var_dump($page); die;
                 try{
                     $product['page_id'] = $page->id;
                     $product['context_id'] = $context->id;
@@ -575,6 +524,62 @@ class DbImport
                 continue;
             }
 
+        }
+
+        /*
+         * Import news
+         */
+        foreach ($data['news'] as $new){
+            $view_count = $new['views_count'];
+            //var_dump($view_count); die;
+            unset($new['views_count']);
+
+            foreach ($contexts as $context){
+                $newsPage = Page::where('title', 'News')->where('context_id', $context->id)->first();
+                $new['parent_id'] = $newsPage->id;
+                $new['context_id'] = $context->id;
+                try{
+                    $page = Page::create($new);
+                } catch (\Exception $e){
+                    continue;
+                }
+               // var_dump($page->id); die;
+                try{
+                    PageVisits::create([
+                        'page_id' => $page->id,
+                        'count' => $view_count
+                    ]);
+                } catch (\Exception $e){
+                    continue;
+                }
+            }
+        }
+
+        /*
+         * Import articles
+         */
+        foreach ($data['articles'] as $article){
+            $view_count = $article['views_count'];
+            unset($article['views_count']);
+
+            foreach ($contexts as $context){
+                $article['context_id'] = $context->id;
+                $articlesPage = Page::where('title', 'Articles')->where('context_id', $context->id)->first();
+                $article['parent_id'] = $articlesPage->id;
+                try{
+                    $page = Page::create($article);
+                } catch (\Exception $e){
+                    continue;
+                }
+                try{
+                    PageVisits::create([
+                        'page_id' => $page->id,
+                        'count' => $view_count
+                    ]);
+                } catch (\Exception $e){
+                    continue;
+                }
+            }
         }
     }
 

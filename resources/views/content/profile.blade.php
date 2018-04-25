@@ -54,10 +54,10 @@
                                 <form id="personalForm">
                                     {{csrf_field()}}
                                     <div class="form-group">
-                                        <input type="text" value="{{$user->attributes->fname}}" name="first_name" placeholder="First Name" class="form-control full-width" required="required" data-bv-message=" "/>
+                                        <input type="text" value="{{$user->attributes->fname}}" name="first_name" placeholder="First Name" class="form-control full-width" required="required" data-bv-message=" " style="padding-left: 14px"/>
                                     </div>
                                     <div class="form-group">
-                                        <input type="text" value="{{$user->attributes->lname}}" name="last_name" placeholder="Last Name" class="form-control full-width" required="required" data-bv-message=" "/>
+                                        <input type="text" value="{{$user->attributes->lname}}" name="last_name" placeholder="Last Name" class="form-control full-width" required="required" data-bv-message=" " style="padding-left: 14px"/>
                                     </div>
                                     <!--<div class="form-group">
                                         <input type="password" name="password" class="form-control" placeholder="Passsword" data-bv-identical-field="password_confirm" data-bv-message="Пароли не совпадают"/>
@@ -73,13 +73,13 @@
                                         [twofactor_user_settings]
                                     </div>-->
                                     <div class="form-group">
-                                        <input type="email" name="email"  value="{{$user->email}}" disabled class="form-control" placeholder="E-mail"/>
+                                        <input type="email" name="email"  value="{{$user->email}}" disabled class="form-control" placeholder="E-mail" style="padding-left: 14px"/>
                                     </div>
                                     <div class="form-group">
-                                        <input type="tel" name="phone" value="{{$user->attributes->phone}}" class="form-control" placeholder="Phone" required="required" data-bv-message=""/>
+                                        <input type="tel" name="phone" value="{{$user->attributes->phone}}" class="form-control" placeholder="Phone" required="required" data-bv-message="" style="padding-left: 14px"/>
                                     </div>
                                     <div class="form-group">
-                                        <input type="text" name="address" value="{{$user->attributes->address}}" class="form-control full-width" placeholder="Delivery address" />
+                                        <input type="text" name="address" value="{{$user->attributes->address}}" class="form-control full-width" placeholder="Delivery address" style="padding-left: 14px"/>
                                     </div>
                                     <div class="form-group">
                                         <input type="submit" name="submit" class="btn-default" value="Save"/>
@@ -103,6 +103,7 @@
                                     @foreach($orders as $order)
                                         @php
                                             $btcCost = $order->countBtcCost();
+                                            //var_dump($btcCost); die;
                                             $status_logs = $order->logs->sortBy('created_at');
                                             //var_dump($status_logs); die;
                                         @endphp
@@ -129,6 +130,7 @@
                                                    //  var_dump($product->pivot); die;
                                                     $price = number_format($product->pivot->cost, 2, '.', '');
                                                     $btcPrice = number_format($product->pivot->btcCost, 4, '.', '');
+
 /*                                                    if($product->auto_price){
                                                         $price = number_format($product->calcAutoPrice(), 2, '.', '');
                                                     } else{
@@ -143,21 +145,21 @@
                                                             <a href="{{$product->page->link}}" data-wpel-link="internal">{{$product->title}}</a>
                                                             <span class="hidden-md">{{ __('default.item_cost') }}</span>
                                                             <span class="table-price">${{ $price }}</span>
-                                                            @if($btcPrce != 0)<span class="table-bitcoin">{{ $btcPrice }}<i class="fa fa-bitcoin"></i></span>@endif
+                                                            @if($btcPrice > 0)<span class="table-bitcoin">{{ $btcPrice }}<i class="fa fa-bitcoin"></i></span>@endif
                                                         </div>
                                                     </div>
                                                 </div>
                                                 @endforeach
 
                                             @endif
-                                            <div class="table-cell number">
+                                            <div class="table-cell number" style="padding-top: 0px !important; vertical-align: middle !important;">
                                                 <span class="hidden-md">{{ __('default.count') }}</span>
                                                 <span> @php $count = 0; foreach($order->carts as $cart){ $count += $cart->count; } echo $count @endphp</span>
                                             </div>
                                             <div class="table-cell number number-price">
                                                 <span class="hidden-md">{{ __('default.total') }}</span>
                                                 <span class="table-price"><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">$</span>{{ number_format($order->cost, 2, '.', '') }}</span></span>
-                                                <span class="table-bitcoin">{{ $btcCost }}<i class="fa fa-bitcoin"></i></span>
+                                                @if($btcCost > 0)<span class="table-bitcoin">{{ $btcCost }}<i class="fa fa-bitcoin"></i></span>@endif
                                             </div>
                                             <div class="table-cell status">
                                                 <span class="">
@@ -189,6 +191,7 @@
                                                 @php
                                                     $price = number_format($product->pivot->cost, 2, '.', '');
                                                     $btcPrice = number_format($product->pivot->btcCost, 4, '.', '');
+                                                    //var_dump($btcPrice); die;
 /*                                                    if($product->auto_price){
                                                         $price = number_format($product->calcAutoPrice(), 2, '.', '');
                                                     } else{
@@ -210,14 +213,14 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="table-cell number">
+                                                    <div class="table-cell number" style="padding-top: 0px !important; vertical-align: middle !important;">
                                                         <span class="hidden-md">{{ __('default.count') }}</span>
                                                         <span> {{$product->pivot->count}} </span>
                                                     </div>
                                                     <div class="table-cell number number-price">
                                                         <span class="hidden-md">{{ __('default.item_cost') }}</span>
                                                         <span class="table-price">$@php echo $price * $product->pivot->count; @endphp</span>
-                                                        @if($btcPrice != 0)<span class="table-bitcoin">{{ $btcPrice * $product->pivot->count }}<i class="fa fa-bitcoin"></i></span>@endif
+                                                        @if($btcPrice > 0)<span class="table-bitcoin">{{ $btcPrice * $product->pivot->count }}<i class="fa fa-bitcoin"></i></span>@endif
                                                     </div>
                                                     <div class="table-cell status">
                                                     </div>

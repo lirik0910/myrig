@@ -1177,46 +1177,56 @@ $(document).on('change', '.cart-form  input.qty', function(e) {
             products: {}
         };
 
-        $(this).find('input').each(function () {
-            if($(this).attr('name') != 'submit' && $(this).attr('name').indexOf('count') == -1){
-                dat[$(this).attr('name')] = $(this).val();
-            }
-            //console.log($(this).attr('name') + ' ' + $(this).val());
-        });
-        //console.log($(this).find('select'));
-        let i = 0;
-        $(this).find('.report-form-select').each(function () {
-            dat.products[i] = {};
-            dat.products[i]['id'] = $(this).find('select').val();
-            dat.products[i]['count'] = $(this).find('input').val();
-            i++;
-        });
-        //console.log(dat);
-        $.ajax({
-            url:global.url + 'create_report',
-            method: 'post',
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            data: dat,
-            success: function (data) {
-                $('#report-availability-form').hide();
-                $('#report-availability .modal-header').hide();
-                $('#report-availability .report-message').hide();
-                if(data.message){
+        var captcha = $(this).find('#g-recaptcha-response').text();
+//console.log(captcha.length);
+        if(captcha.length > 0) {
+            $(this).find('.error-captcha').hide();
 
-                } else{
-                    $('#report-availability').addClass('popup-success');
-                    $('#report-availability').find('.result').show();
-                    $('body').animate({
-                        'opacity': 1
-                    }, 400);
+            $(this).find('input').each(function () {
+                if($(this).attr('name') != 'submit' && $(this).attr('name').indexOf('count') == -1){
+                    dat[$(this).attr('name')] = $(this).val();
                 }
-            },
-            error: function (data) {
-				$('.error-captcha').show();
-            }
-        });
+                //console.log($(this).attr('name') + ' ' + $(this).val());
+            });
+            //console.log($(this).find('select'));
+            let i = 0;
+            $(this).find('.report-form-select').each(function () {
+                dat.products[i] = {};
+                dat.products[i]['id'] = $(this).find('select').val();
+                dat.products[i]['count'] = $(this).find('input').val();
+                i++;
+            });
+            //console.log(dat);
+            $.ajax({
+                url:global.url + 'create_report',
+                method: 'post',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: dat,
+                success: function (data) {
+                    $('#report-availability-form').hide();
+                    $('#report-availability .modal-header').hide();
+                    $('#report-availability .report-message').hide();
+                    if(data.message){
+
+                    } else{
+                        $('#report-availability').addClass('popup-success');
+                        $('#report-availability').find('.result').show();
+                        $('body').animate({
+                            'opacity': 1
+                        }, 400);
+                    }
+                },
+                error: function (data) {
+                    $('.error-captcha').show();
+                }
+            });
+        } else{
+            $(this).find('.error-captcha').show();
+		}
+
+
     });
 
     $('#billing_country').on('change', function () {
@@ -1249,8 +1259,6 @@ $(document).on('change', '.cart-form  input.qty', function(e) {
 		}
 		//console.log($(this).val());
     });
-
-
 });
 
  
