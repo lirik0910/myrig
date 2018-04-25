@@ -139,7 +139,11 @@ class OrderController extends Controller
        
 
         $number = $order_number;
-        Mail::to($data['email'])->send(new MailClass($number)); 
+        try{
+            //Mail::to($data['email'])->send(new MailClass($number));
+        } catch (\Exception $e){
+
+        }
 
         unset($_SESSION['cart']);
         //session()->forget('cart');
