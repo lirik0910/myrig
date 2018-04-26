@@ -333,7 +333,9 @@ jQuery(document).ready(function ($) {
 				'opacity': 0.7
 			}, 400)
 			var fd = new FormData();
+            console.log($(this), $(this)[0]);
 			fd.append($(this)[0]);
+
 			var url = global.url + $('#ticketback').attr('action');
 
 			$.ajax({
