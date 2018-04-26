@@ -338,8 +338,8 @@ jQuery(document).ready(function ($) {
 			form.find('input').each(function () {
 				fd[$(this).attr('name')] = $(this).val();
             });
-			fd['description'] = form.find('textarea').val();
-            console.log(fd);
+			fd['message'] = form.find('textarea').val();
+            //console.log(fd);
 			//fd.append($(this)[0]).find('form');
 
 
@@ -353,17 +353,17 @@ jQuery(document).ready(function ($) {
 				contentType: false,
 				processData: false,
 				success: function(data) {
-					$('#ticket').addClass('popup-success');
-					$('#ticketback').hide();
-					$('#ticket .modal-header').hide();
-					$('#ticket .result').show();
-					$('body').animate({
-						'opacity': 1
-					}, 400);
-
-
-
-
+					//console.log(data);
+					data = JSON.parse(data);
+					if(data.success){
+                        $('#ticket').addClass('popup-success');
+                        $('#ticketback').hide();
+                        $('#ticket .modal-header').hide();
+                        $('#ticket .result').show();
+                        $('body').animate({
+                            'opacity': 1
+                        }, 400);
+					}
 				},
 				error: function(errorThrown) {
 					console.log(errorThrown);

@@ -23,6 +23,10 @@ class ZendeskController
             $requestException = RequestException::create($e->getRequest(), $e->getResponse(), $e);
             return $requestException;
         }
+
+        return response()->json([
+            'success' => true
+        ], 200);
     }
 
 
