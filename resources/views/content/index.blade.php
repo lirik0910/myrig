@@ -37,7 +37,7 @@ $shop = $select('App\Model\Base\Page')
 							@endif
 						</div>
 						
-						<div class="slide-img" style="background-image: url('{{ $preview(asset('uploads/' . $slide['icon']), 662, 602) }}')"></div>
+						<div class="slide-img" style="background-image: url('{{ $preview(asset('uploads/' . $slide['icon']), 1024, 941) }}')"></div>
 					</div>
 				</div>
 				@endforeach
