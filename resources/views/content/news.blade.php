@@ -20,12 +20,15 @@
             @php
                 $page_limit = 10;
                 $page_no = $request->get('page');
-                if(isset($page_no)){
-                    $news = App\Model\Base\Page::where('parent_id', $it->id)->offset($page_limit * ($page_no - 1))->orderBy('created_at', 'DESC')->paginate($page_limit);
-                } else{
-                    $news = App\Model\Base\Page::where('parent_id', $it->id)->orderBy('created_at', 'DESC')->paginate($page_limit);
-                }
 
+                $ua_parent_page = \App\Model\Base\Page::where('link', $it->link)->where('context_id', 2)->first();
+                $ru_parent_page = \App\Model\Base\Page::where('link', $it->link)->where('context_id', 3)->first();
+
+                if(isset($page_no)){
+                    $news = App\Model\Base\Page::where('parent_id', $ua_parent_page->id)->orWhere('parent_id', $ua_parent_page)->offset($page_limit * ($page_no - 1))->orderBy('created_at', 'DESC')->paginate($page_limit);
+                } else{
+                    $news = App\Model\Base\Page::where('parent_id', $ua_parent_page->id)->orWhere('parent_id', $ru_parent_page->id)->orderBy('created_at', 'DESC')->paginate($page_limit);
+                }
             @endphp
             @foreach($news as $article)
                 <div class="article-row row">

@@ -600,10 +600,10 @@ class DbImport
             //var_dump($view_count); die;
             unset($new['views_count']);
 
-            foreach ($contexts as $context){
-                $newsPage = Page::where('title', 'News')->where('context_id', $context->id)->first();
+            //foreach ($contexts as $context){
+                $newsPage = Page::where('title', 'News')->where('context_id', 2)->first();
                 $new['parent_id'] = $newsPage->id;
-                $new['context_id'] = $context->id;
+                $new['context_id'] = 2;
                 try{
                     $page = Page::create($new);
                 } catch (\Exception $e){
@@ -618,7 +618,7 @@ class DbImport
                 } catch (\Exception $e){
                     continue;
                 }
-            }
+            //}
         }
 
         /*
@@ -628,9 +628,9 @@ class DbImport
             $view_count = $article['views_count'];
             unset($article['views_count']);
 
-            foreach ($contexts as $context){
-                $article['context_id'] = $context->id;
-                $articlesPage = Page::where('title', 'Articles')->where('context_id', $context->id)->first();
+           // foreach ($contexts as $context){
+                $article['context_id'] = 2;
+                $articlesPage = Page::where('title', 'Articles')->where('context_id', 2)->first();
                 $article['parent_id'] = $articlesPage->id;
                 try{
                     $page = Page::create($article);
@@ -645,7 +645,7 @@ class DbImport
                 } catch (\Exception $e){
                     continue;
                 }
-            }
+            //}
         }
 
         /*

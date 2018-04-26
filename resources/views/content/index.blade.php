@@ -36,8 +36,18 @@ $shop = $select('App\Model\Base\Page')
 							<a href="{{ url( $slide['link'] ) }}" class="btn-default" data-wpel-link="internal">{{ __('default.more_info') }}</a>
 							@endif
 						</div>
-						
-						<div class="slide-img" style="background-image: url('{{ $preview(asset('uploads/' . $slide['icon']), 1350, 941) }}')"></div>
+						@php
+							$image = asset('uploads/' . $slide['icon']);
+							$imageinfo = getimagesize($image);
+							$image_width = $imageinfo[0];
+							$image_height = $imageinfo[1];
+							//var_dump(getimagesize($image)); die;
+						@endphp
+						@if($image_height < $image_width)
+							<div class="slide-img" style="background-image: url('{{ $preview($image, 1350, 941) }}')"></div>
+						@else
+							<div class="slide-img" style="background-image: url('{{ $preview($image, 1024, 1024) }}')"></div>
+						@endif
 					</div>
 				</div>
 				@endforeach

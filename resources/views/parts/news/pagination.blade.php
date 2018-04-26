@@ -22,9 +22,11 @@
             <a class="page-numbers" href="{{ $paginator->url($current_page - 1) }}" data-wpel-link="internal" style="display: block">{{ $current_page - 1 }}</a>
         </li>
         @endif
-        <li class="page-item">
-            <span aria-current="page" class="page-numbers current">{{ $current_page }}</span>
-        </li>
+        @if($paginator->total() > 0)
+            <li class="page-item">
+                <span aria-current="page" class="page-numbers current">{{ $current_page }}</span>
+            </li>
+        @endif
         @if(($current_page + 1) < $paginator->lastPage())
         <li class="page-item">
             <a class="page-numbers" href="{{ $paginator->url($current_page + 1) }}" data-wpel-link="internal" style="display: block">{{ $current_page + 1 }}</a>
