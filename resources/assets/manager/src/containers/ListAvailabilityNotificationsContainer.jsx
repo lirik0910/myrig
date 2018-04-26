@@ -326,11 +326,11 @@ class ListAvailabilityNotificationsContainer extends Component
                         editNotificationDialog: true
                     });
                 }}
-                onDeleteButtonClicked={() => {
+/*                onDeleteButtonClicked={() => {
                     this.setState({
                         deleteDialog: true
                     });
-                }} />
+                }}*/ />
 
             <PaperToolBar
                 searchShow={false}
