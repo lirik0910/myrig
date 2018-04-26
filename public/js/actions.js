@@ -331,10 +331,17 @@ jQuery(document).ready(function ($) {
 			e.preventDefault();
 			$('body').animate({
 				'opacity': 0.7
-			}, 400)
-			var fd = new FormData();
-            console.log($(this), $(this)[0]);
-			fd.append($(this)[0].find('form'));
+			}, 400);
+			var form = $(this).find('form');
+			var fd = [];
+
+			form.find('input').each(function () {
+				fd[$(this).attr('name')] = $(this).val();
+            });
+			fd['description'] = form.find('textarea').val();
+            console.log(fd);
+			//fd.append($(this)[0]).find('form');
+
 
 			var url = global.url + $('#ticketback').attr('action');
 
