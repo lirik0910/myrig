@@ -334,7 +334,7 @@ jQuery(document).ready(function ($) {
 			}, 400)
 			var fd = new FormData();
             console.log($(this), $(this)[0]);
-			fd.append($(this)[0]);
+			fd.append($(this)[0].find('form'));
 
 			var url = global.url + $('#ticketback').attr('action');
 
