@@ -113,7 +113,7 @@ class TopTitle extends Component {
 							{duplicateButtonTitle}
 					</Button>}
 
-					{deleteButtonDisplay && 
+					{deleteButtonDisplay === true ?
 						(typeof this.props.item !== 'undefined' && this.props.item.delete === 1) ?
 							<Button 
 								onClick={e => this.props.onDeleteButtonClicked()}
@@ -130,7 +130,7 @@ class TopTitle extends Component {
 								color="secondary">
 									<Delete className={classes.leftIcon} />
 									{deleteButtonTitle}
-							</Button>}
+							</Button> : null}
 
 					{trashButtonDisplay && <Button 
 						onClick={e => this.props.onTrashButtonClicked()}

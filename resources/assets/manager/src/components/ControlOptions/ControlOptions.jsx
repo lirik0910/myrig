@@ -97,7 +97,7 @@ class ControlOptions extends Component {
 					<Edit />
 				</Button>}
 				
-				{deleteButton && 
+				{deleteButton === true ?
 					(typeof this.props.item !== 'undefined' && this.props.item.delete === 1) ? <Button 
 						size="small"
 						className={classes.control}
@@ -113,7 +113,7 @@ class ControlOptions extends Component {
 						onClick={e => this.props.onDeleteButtonClicked(item)}>
 						
 						<Delete />
-					</Button>}
+					</Button> : null}
 			</div>
 	}
 }
