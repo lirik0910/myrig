@@ -11,6 +11,7 @@ use App\Model\Base\UserAttribute;
 use App\Model\Shop\Product;
 use App\Model\Shop\Order;
 use App\Model\Shop\OrderDelivery;
+use App\Model\Shop\OrderLog;
 use App\Model\Shop\Cart;
 
 class DbImport
@@ -135,7 +136,7 @@ class DbImport
         $orders_items = [];
         $order_deliveries = [];
         $orders = [];
-        $order_logs = [];
+        $orders_logs = [];
         $order_statuses_count = [
             'wc-new' => 0,
             'wc-processing' => 0,
@@ -219,7 +220,7 @@ class DbImport
             $delivery_id = 1;
             $delivery_cost = 0;
 
-            $order_logs[$order->id] = $this->source->select('select * from wpbit2_comments where comment_post_ID = :comment_post_ID', ['comment_post_ID' => $order->id]);
+            $orders_logs[$order->id] = $this->source->select('select * from wpbit2_comments where comment_post_ID = :comment_post_ID', ['comment_post_ID' => $order->id]);
             $orders_items[$order->id] = $this->source->select('select * from wpbit2_woocommerce_order_items where order_id = :order_id', ['order_id' => $order->id]);
 
             /*
@@ -398,6 +399,70 @@ class DbImport
             }
         }*/
 
+        $logs = [];
+        $log_statuses = [];
+        foreach ($orders_logs as $order_id => $order_log){
+            if(count($orders_logs) > 0){
+                foreach($order_log as $log){
+                    $meta = count($this->source->select('select * from wpbit2_commentmeta where comment_id =:comment_id', ['comment_id' => $log->comment_ID]));
+                    if($meta == 0 && $log->comment_author !== 'WooCommerce'){
+                        $string = $log->comment_content;
+                        $newStatus = trim(stristr(stristr($string, 'на '), ' '), '.!,; ');
+                        if($newStatus === ''){
+                            if($string == 'Order Paid in Full'){
+                                $newStatus = 'Оплачен';
+                            }
+                            //var_dump($string); die;
+                        }
+                        //var_dump($newStatus); die;
+                        if(!in_array($newStatus, $log_statuses)){
+                            $log_statuses[] = $newStatus;
+                        }
+
+                        $value = '';
+                        switch ($newStatus){
+                            case 'Новый заказ':
+                                $value = 'New order';
+                                break;
+                            case 'В ожидании оплаты':
+                                $value = 'Waiting for payment';
+                                break;
+                            case 'Оплачен':
+                                $value = 'Has been paid';
+                                break;
+                            case 'Обработка':
+                                $value = 'Processing';
+                                break;
+                            case 'На удержании':
+                                $value = 'Shipped by the factory';
+                                break;
+                            case 'Отменен':
+                                $value = 'Сancelled';
+                                break;
+                            case 'Выполнен':
+                                $value = 'Completed';
+                                break;
+                            case 'Возвращен':
+                                $value = 'Returned';
+                                break;
+                        }
+                        //var_dump($log->comment_date); die;
+                        if($value){
+                            $logs[] = [
+                                'order_id' => $order_id,
+                                'user_id' => 1,
+                                'type' => 'status',
+                                'value' => $value,
+                                'created_at' => $log->comment_date
+                            ];
+                        }
+                    }
+                    //var_dump($meta); die;
+
+                }
+            }
+        }
+//var_dump($logs); die;
         foreach ($user_attrs as $key => $attr){
             $isset = false;
             foreach ($users as $user){
@@ -424,6 +489,7 @@ class DbImport
         $export['orders_deliveries'] = $order_deliveries;
         $export['news'] = $news;
         $export['articles'] = $articles;
+        $export['logs'] = $logs;
         //var_dump($export['users']); die;
         return $export;
     }
@@ -580,6 +646,17 @@ class DbImport
                     continue;
                 }
             }
+        }
+
+        /*
+         * Import order logs
+         */
+        foreach ($data['logs'] as $log){
+            //try{
+                OrderLog::create($log);
+/*            } catch (Exeption $e){
+
+            }*/
         }
     }
 

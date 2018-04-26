@@ -145,8 +145,8 @@ class OrderController extends Controller
 
 		/** Get BTC rate
 		 */
-		$btcRate = ExchangeRate::where('title', 'BTC/USD')->first();
-		$point = 1 / (float) $btcRate->value;
+		//$btcRate = ExchangeRate::where('title', 'BTC/USD')->first();
+		//$point = 1 / (float) $btcRate->value;
 
 		foreach ($all as $order) {
 			$order->status;

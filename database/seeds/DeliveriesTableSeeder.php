@@ -12,8 +12,8 @@ class DeliveriesTableSeeder extends Seeder
 	public function run()
 	{
 		App\Model\Shop\Delivery::create([
-			'title' => 'Nova Pochta. Pickup',
-			'description' => 'Nova Pochta. Pickup. Ukraine',
+			'title' => 'Новая почта',
+			'description' => 'Новая почта. Доставка. Украина',
 			'color' => '#D82020',
 			'active' => 1
 		]);
@@ -33,7 +33,7 @@ class DeliveriesTableSeeder extends Seeder
         ]);
 
         App\Model\Shop\Delivery::create([
-            'title' => 'Self shippment',
+            'title' => 'Самовывоз',
             'description' => '',
             'color' => '#71cece',
             'active' => 1
