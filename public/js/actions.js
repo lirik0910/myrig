@@ -7,7 +7,7 @@ jQuery(document).ready(function ($) {
 	
  
 	
-	$('#ticketback').bootstrapValidator({        
+	$('#ticketback').bootstrapValidator({
 		preventSubmit: true,      
 		message: 'This value is not valid',
 		feedbackIcons: {
@@ -27,27 +27,30 @@ jQuery(document).ready(function ($) {
 	    fd.append( "file", individual_file );
 	    var individual_capt = caption.val();
 	    fd.append("caption", individual_capt);
-	    //console.log(fd);
+	    console.log(fd);
 		$.ajax({
 			type: 'POST',
 			//dataType: 'json',
+			async: false,
 			url: global.url + 'create_ticket',
 			contentType: false,
              processData: false,
 			data: fd,
 			success: function(data){
-				console.log(data)
-			    $('#ticket').addClass('popup-success');
-					$('#ticketback').hide();
-					$('#ticket .modal-header').hide();
-					$('#ticket .result').show();
-					$('body').animate({
-						'opacity': 1
-					}, 400);
-		 
+				data = JSON.parse(data);
+				//console.log(data);
+				if(data.success === true){
+                    $('#ticket').addClass('popup-success');
+                    $('#ticketback').hide();
+                    $('#ticket .modal-header').hide();
+                    $('#ticket .result').show();
+                    $('body').animate({
+                        'opacity': 1
+                    }, 400);
+				}
 			} 
 		});     
-	})
+	});
 	
 	$('.tfa-check').change(function(){
 		$('.tfa').toggleClass('hidden')	
@@ -310,7 +313,7 @@ jQuery(document).ready(function ($) {
 
 
 
-	$('#ticket').each(function() {
+	/*$('#ticket').each(function() {
 		var that = $(this);
 		$(this).bootstrapValidator({
 			preventSubmit: true,
@@ -341,7 +344,7 @@ jQuery(document).ready(function ($) {
 			//fd.append($(this)[0]).find('form');
 
 
-			var url = global.url + $('#ticketback').attr('action');
+			var url = global.url + 'create_ticket';
 
 			$.ajax({
 				url: url,
@@ -349,8 +352,8 @@ jQuery(document).ready(function ($) {
 				type: 'POST',
                 async: false,
 				//dataType: 'json',
-				contentType: 'multipart/form-data',
-				boundary: 'WebKitFormBoundaryCIkXuNWC8OhEuT3S',
+				//contentType: 'multipart/form-data',
+				//boundary: 'WebKitFormBoundaryCIkXuNWC8OhEuT3S',
 				processData: false,
 				success: function(data) {
 					//console.log(data);
@@ -370,7 +373,7 @@ jQuery(document).ready(function ($) {
 				}
 			});
 		})
-	});
+	});*/
 
 	$('#checkout_form').on('submit', function (e) {
         e.preventDefault();
