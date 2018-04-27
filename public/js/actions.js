@@ -27,6 +27,7 @@ jQuery(document).ready(function ($) {
 	    fd.append( "file", individual_file );
 	    var individual_capt = caption.val();
 	    fd.append("caption", individual_capt);
+	    console.log(fd);
 		$.ajax({
 			type: 'POST',
 			//dataType: 'json',
