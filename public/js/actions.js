@@ -350,7 +350,8 @@ jQuery(document).ready(function ($) {
 				data: fd,
 				type: 'POST',
 				//dataType: 'json',
-				contentType: false,
+				contentType: 'multipart/form-data',
+				boundary: 'WebKitFormBoundaryCIkXuNWC8OhEuT3S',
 				processData: false,
 				success: function(data) {
 					//console.log(data);
