@@ -164,18 +164,22 @@
                                             <div class="table-cell status">
                                                 <span class="">
                                                     <p class="hidden-md">{{ __('default.status') }}</p>
-                                                    <span class="mark cancelled" style="color: {{$order->status->color}}">{{$order->status->title}}</span><br>
+                                                    <span class="mark cancelled" style="color: {{$order->status->color}}">{{ __('_' . str_replace(' ', '_', mb_strtolower($order->status->title))) }}</span><br>
                                                     @if(isset($status_logs) && count($status_logs) > 0)
                                                         <a class="order-history" data-wpel-link="internal">History
                                                         <div class="history-dd" style="height: auto !important">
                                                             <div class="modal-body">
                                                                 @foreach($status_logs as $log)
+                                                                    @php
+                                                                        $convert_log = str_replace(' ', '_', mb_strtolower($log->value));
+                                                                        //var_dump($convert_log); die;
+                                                                    @endphp
                                                                     <h3>@php echo date('d F Y ', strtotime($log->created_at)) . ' at ' . date('H:i', strtotime($log->created_at)) @endphp</h3>
                                                                     <div class="comment-order">
-																        {{ __('default.order_status_changed_from') }} @if(isset($prev)) {{ $prev }} @else {{ __('default.new_order') }} @endif {{ __('default.to') }} {{ $log->value }}.
+																        {{ __('default.order_status_changed_from') }} @if(isset($prev)) {{ __('common.status_' . $prev) }} @else {{ __('default.new_order') }} @endif {{ __('default.to') }} {{ __('common.status_' . $convert_log) }}.
                                                                     </div>
                                                                     @php
-                                                                        $prev = $log->value;
+                                                                        $prev = $convert_log;
                                                                     @endphp
                                                                 @endforeach
                                                             </div>

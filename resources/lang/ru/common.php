@@ -17,4 +17,14 @@ return [
 	'cont_UKRAINE' => 'UA',
 	'cont_JAPAN' => 'JAP',
 	'cont_VENEZUELA' => 'VE',
+
+    'status_new_order' => 'Новый заказ',
+    'status_processing' => 'Обрабатывается',
+    'status_waiting_for_payment' => 'В ожидании оплаты',
+    'status_has_been_paid' => 'Оплачено',
+    'status_shipped_by_the_factory' => 'На удержании',
+    'status_in_a_local_warehouse' => 'На локально складе',
+    'status_completed' => 'Завершен',
+    'status_returned' => 'Возвращен',
+    'status_сancelled' => 'Отменен',
 ];

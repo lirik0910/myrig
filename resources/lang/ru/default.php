@@ -150,4 +150,17 @@ return [
     'report_availability' => 'Сообщить о наличии',
     'leave_request' => 'Оставьте заявку для получения оповещения о наличии',
 
+    // pdf invoice
+    'client_name_invoice' => 'Имя клиента',
+    'invoice' => 'Инвойс',
+    'description_title' => 'Описание',
+    'quantity_title' => 'Количество',
+    'price_title' => 'Цена',
+    'total_title' => 'Стоимость',
+    'total_bottom' => 'Стоимость',
+    'tax_bottom' => 'Наценка',
+    'amount_bottom' => 'Итого',
+    'payment_terms_title' => 'Условия оплаты',
+    'payment_terms_desc' => 'Напишите условия оплаты здесь',
+
 ];

@@ -16,7 +16,7 @@
 	<div>
 		<table style="width: 100%; font-size: 14px; margin-top: 130px;">
 			<tr>
-				<td style="font-size: 16px;">Client Name</td>
+				<td style="font-size: 16px;">{{ __('default.client_name_invoice') }}</td>
 				<td style="text-align: right; vertical-align: bottom;">{{$order->orderDeliveries->first_name}} {{$order->orderDeliveries->last_name}}</td>
 			</tr>
 			<tr>
@@ -24,7 +24,7 @@
 				<td style="text-align: right;">{{$order->orderDeliveries->address}}</td>
 			</tr>
 			<tr>
-				<td style="text-transform: uppercase; font-weight: 700; letter-spacing: 4px;">INVOICE # {{ $order->number }}</td>
+				<td style="text-transform: uppercase; font-weight: 700; letter-spacing: 4px;">{{ __('default.invoice') }} # {{ $order->number }}</td>
 				<td style="text-align: right;">{{$order->orderDeliveries->city}}</td>
 			</tr>
 			<tr>
@@ -44,10 +44,10 @@
 					@endif
 					<table class="main-table" style="border-collapse: collapse;">
 						<tr style="border-bottom: 2px solid grey; font-size: 10px; text-transform: uppercase;">
-							<td style="width: 200px; text-align: left; border-bottom: 2px solid grey; padding: 10px 5px;">Description</td>
-							<td style="text-align: center; width: 100px; border-bottom: 2px solid grey; padding: 10px 5px;">Quantity</td>
-							<td style="text-align: center; width: 100px; border-bottom: 2px solid grey; padding: 10px 5px;">Price</td>
-							<td style="text-align: center; width: 100px; border-bottom: 2px solid grey; padding: 10px 5px;">Total</td>
+							<td style="width: 200px; text-align: left; border-bottom: 2px solid grey; padding: 10px 5px;">{{ __('default.description_title') }}</td>
+							<td style="text-align: center; width: 100px; border-bottom: 2px solid grey; padding: 10px 5px;">{{ __('default.quantity_title') }}</td>
+							<td style="text-align: center; width: 100px; border-bottom: 2px solid grey; padding: 10px 5px;">{{ __('default.price_title') }}</td>
+							<td style="text-align: center; width: 100px; border-bottom: 2px solid grey; padding: 10px 5px;">{{ __('default.total_title') }}</td>
 						</tr>
 						<tbody style="border-bottom: 2px solid grey; font-size: 10px;">
 						@foreach($order->products as $product)
@@ -78,15 +78,15 @@
 								<table class="additional-table" style="width: 193px; font-size: 10px; border-collapse: collapse; margin-top: 5px;">
 									<tbody>
 									<tr id="bottom">
-										<td id="bottom" style="padding: 10px 0;">TOTAL</td>
+										<td id="bottom" style="padding: 10px 0;">{{ __('default.total_bottom') }}</td>
 										<td id="bottom" style="padding: 10px 0;">{{ number_format($order->cost, 2, '.', '') }}</td>
 									</tr>
 									<tr>
-										<td id="bottom" style="padding: 10px 0;"><strong>TAX</strong></td>
+										<td id="bottom" style="padding: 10px 0;"><strong>{{ __('default.tax_bottom') }}</strong></td>
 										<td id="bottom" style="padding: 10px 0;"><strong>$0.00</strong></td>
 									</tr>
 									<tr style="vertical-align: middle;">
-										<td style="padding: 10px 0;"><strong>AMOUNT DUE</strong></td>
+										<td style="padding: 10px 0;"><strong>{{ __('default.amount_bottom') }}</strong></td>
 										<td id="green" style="font-weight: 700; font-size: 16px; padding: 10px 0;">{{ number_format($order->cost, 2, '.', '') }}</td>
 									</tr>
 									</tbody>
@@ -98,8 +98,8 @@
 
 
 				</div>
-				<p style="text-transform: uppercase; margin: 20px 0 0 0; font-size: 14px;">Payment Terms</p>
-				<p style="margin: 0 0 20px; font-size: 14px;">Write your payment terms and conditions here</p>
+				<p style="text-transform: uppercase; margin: 20px 0 0 0; font-size: 14px;">{{ __('default.payment_terms_title') }}</p>
+				<p style="margin: 0 0 20px; font-size: 14px;">{{ __('default.payment_terms_desc') }}</p>
 		</div>
 		<footer style="position: fixed; bottom: 0px; left: 0px; right: 0px; height: 55px; padding: 20px 0 50px; background: #77a565; font-size: 0; color: #fff;">
 			<div style="width: 500px; margin: 0 auto;">

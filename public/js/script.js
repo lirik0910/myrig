@@ -25,10 +25,10 @@ console.log(wM);
 	/**
 	 * Get cart session
 	 */
-	$.get(window.global.app.connector +'/cart', (data) => {
-		let i,
-			r,
-			s = [];
+	$.get(window.global.app.connector +'/cart', function (data)  {
+		var i;
+		var	r;
+		var	s = [];
 
 		if (data === '' || data === null) {
 			sessionStorage['cart'] = JSON.stringify(s);
@@ -237,7 +237,7 @@ console.log(wM);
 						else session[a] = cart;
 
 						cart['_token'] = window.global.app.csrf;
-						$.post(window.global.app.connector +'/cart', cart, () => {
+						$.post(window.global.app.connector +'/cart', cart, function () {
 							sessionStorage['cart'] = JSON.stringify(session);
 							countProducts(session);
 							click = false;
@@ -292,7 +292,7 @@ console.log(wM);
 				else session[a] = cart;
 
 				cart['_token'] = window.global.app.csrf;
-				$.post(window.global.app.connector +'/cart', cart, () => {
+				$.post(window.global.app.connector +'/cart', cart, function () {
 					sessionStorage['cart'] = JSON.stringify(session);
 					countProducts(session);
 					click = false;
@@ -752,7 +752,7 @@ $(document).on('change', '.cart-form  input.qty', function(e) {
 
 					cart['_token'] = window.global.app.csrf;
 					
-					$.post(window.global.app.connector +'/cart', cart, () => {
+					$.post(window.global.app.connector +'/cart', cart, function () {
 						el.find('span').text(el.attr('data-success'));
 						el.find('.fa-refresh').hide();
 
@@ -1114,7 +1114,7 @@ $(document).on('change', '.cart-form  input.qty', function(e) {
      */
     $('.report-availability').on('click', function (e) {
         e.preventDefault();
-		let productId = $(this).data('id');
+		var productId = $(this).data('id');
 
 		if($.isEmptyObject(products)){
             $.ajax({
@@ -1128,9 +1128,9 @@ $(document).on('change', '.cart-form  input.qty', function(e) {
                    // console.log('data ' + data);
                     products = data;
 
-                    let select = $('.selects').find('select')[0];
-                    for(let k in products){
-                        let option = document.createElement('option');
+                    var select = $('.selects').find('select')[0];
+                    for(var k in products){
+                        var option = document.createElement('option');
 
                         $(option).attr('value', products[k].id);
                         $(option).text(products[k].title);
@@ -1151,7 +1151,7 @@ $(document).on('change', '.cart-form  input.qty', function(e) {
 		var newSelect = $(this).parent('.form-group').prev('.report-form-select').clone();
         $(this).parent('.form-group').prev('.report-form-select').after(newSelect);
         newSelect.find('.input').val(1);
-        let defaultOption = document.createElement('option');//'<option selected="selected" value="0">Choose product</option>';
+        var defaultOption = document.createElement('option');//'<option selected="selected" value="0">Choose product</option>';
 		$(defaultOption).attr('selected', 'selected');
 		$(defaultOption).attr('disabled', 'disabled');
 		$(defaultOption).text('Choose product');
@@ -1189,7 +1189,7 @@ $(document).on('change', '.cart-form  input.qty', function(e) {
                 //console.log($(this).attr('name') + ' ' + $(this).val());
             });
             //console.log($(this).find('select'));
-            let i = 0;
+            var i = 0;
             $(this).find('.report-form-select').each(function () {
                 dat.products[i] = {};
                 dat.products[i]['id'] = $(this).find('select').val();

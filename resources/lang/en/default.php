@@ -150,4 +150,17 @@ return [
     'report_availability' => 'Report availability',
     'leave_request' => 'Leave a request for availability alert',
 
+    // pdf invoice
+    'client_name_invoice' => 'Client Name',
+    'invoice' => 'Invoice',
+    'description_title' => 'Description',
+    'quantity_title' => 'Quantity',
+    'price_title' => 'Price',
+    'total_title' => 'Total',
+    'total_bottom' => 'Total',
+    'tax_bottom' => 'Tax',
+    'amount_bottom' => 'Amount due',
+    'payment_terms_title' => 'Payment terms',
+    'payment_terms_desc' => 'Write your payment terms and conditions here',
+
 ];
