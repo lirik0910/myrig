@@ -27,11 +27,10 @@ jQuery(document).ready(function ($) {
 	    fd.append( "file", individual_file );
 	    var individual_capt = caption.val();
 	    fd.append("caption", individual_capt);
-	    console.log(fd);
+	    //console.log(fd);
 		$.ajax({
 			type: 'POST',
 			//dataType: 'json',
-			async: false,
 			url: global.url + 'create_ticket',
 			contentType: false,
              processData: false,
@@ -338,7 +337,7 @@ jQuery(document).ready(function ($) {
 				fd[$(this).attr('name')] = $(this).val();
             });
 			fd['message'] = form.find('textarea').val();
-            //console.log(fd);
+            console.log(fd);
 			//fd.append($(this)[0]).find('form');
 
 
@@ -348,6 +347,7 @@ jQuery(document).ready(function ($) {
 				url: url,
 				data: fd,
 				type: 'POST',
+                async: false,
 				//dataType: 'json',
 				contentType: 'multipart/form-data',
 				boundary: 'WebKitFormBoundaryCIkXuNWC8OhEuT3S',
