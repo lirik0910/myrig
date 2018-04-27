@@ -1,7 +1,4 @@
 jQuery(document).ready(function ($) {
-	
-	//sessionStorage['govno'] = 'cdcdc';
-
 
 	$('#ticketback input[type=file]').change(function(){
 		var fileName = $(this).val().split('/').pop().split('\\').pop();
@@ -33,6 +30,7 @@ jQuery(document).ready(function ($) {
 		$.ajax({
 			type: 'POST',
 			//dataType: 'json',
+			async: false,
 			url: global.url + 'create_ticket',
 			contentType: false,
              processData: false,
