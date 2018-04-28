@@ -19,25 +19,39 @@ jQuery(document).ready(function ($) {
 	}).on('success.form.bv', function(e) {
 		e.preventDefault();		      
 		$('body').animate({'opacity' : 0.7}, 400)
-	 	var fd = new FormData($('#ticketback')[0]);
+        var form = $(this);
+		console.log(form.find('input'));
+        var fd = {};
+
+        form.find('input').each(function () {
+        	//console.log();
+            fd[$(this).attr('name')] = $(this).val();
+            //console.log($(this).attr('name'), $(this).val());
+        });
+        fd['message'] = form.find('textarea').val();
+        //console.log(fd);
+	 	/*var fd = new FormData($('#ticketback')[0]);
 	    var file = jQuery(document).find('input[type="file"]');
 	    var caption = jQuery('#ticketback').find('input[name=file]');
 	         
 	    var individual_file = file[0].files[0];	    
 	    fd.append( "file", individual_file );
 	    var individual_capt = caption.val();
-	    fd.append("caption", individual_capt);
-	    console.log(fd);
+	    fd.append("caption", individual_capt);*/
+	    console.log('form : ' + form, 'object : ' +  JSON.stringify(fd));
 		$.ajax({
 			type: 'POST',
-			//dataType: 'json',
-			async: false,
+			dataType: 'json',
 			url: global.url + 'create_ticket',
-			contentType: false,
-             processData: false,
+			headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                "cache-control" : "no-cache"
+			},
+/*			timeout: 30000,*/
+			//processData: false,
 			data: fd,
 			success: function(data){
-				data = JSON.parse(data);
+				//data = JSON.parse(data);
 				//console.log(data);
 				if(data.success === true){
                     $('#ticket').addClass('popup-success');
