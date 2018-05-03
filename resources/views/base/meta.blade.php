@@ -12,8 +12,8 @@
 <link rel='dns-prefetch' href='//ajax.googleapis.com' />
 <link rel='dns-prefetch' href='//maxcdn.bootstrapcdn.com' />
 <link rel='dns-prefetch' href='//s.w.org' />
-<link rel='stylesheet' href="{{ URL::asset('css/woocommerce-layout.css?ver=3.2.6') }}" type='text/css' media='all' />
-<link rel='stylesheet' href="{{ URL::asset('css/woocommerce-smallscreen.css?ver=3.2.6') }}" type='text/css' media='only screen and (max-width: 768px)' />
+{{--<link rel='stylesheet' href="{{ URL::asset('css/woocommerce-layout.css?ver=3.2.6') }}" type='text/css' media='all' />
+<link rel='stylesheet' href="{{ URL::asset('css/woocommerce-smallscreen.css?ver=3.2.6') }}" type='text/css' media='only screen and (max-width: 768px)' />--}}
 <link rel='stylesheet' href='{{ URL::asset('css/woocommerce.css?ver=3.2.6') }}' type='text/css' media='all' />
 <link rel="stylesheet" href="{{ URL::asset('css/jquery.fancybox.min.css') }}">
 <link rel="stylesheet" href="{{ URL::asset('css/animate.css') }}">
