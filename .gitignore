@@ -1,8 +1,8 @@
 /node_modules
 /public/images
-/public/uploads
+#/public/uploads
 /public/hot
-/public/storage
+#/public/storage
 /storage/*.key
 /vendor
 /.idea
@@ -14,3 +14,4 @@ npm-debug.log
 yarn-error.log
 .env
 
+!/public/storage/

@@ -38,9 +38,14 @@ $shop = $select('App\Model\Base\Page')
 						</div>
 						@php
 							$image = asset('uploads/' . $slide['icon']);
-							$imageinfo = getimagesize($image);
-							$image_width = $imageinfo[0];
-							$image_height = $imageinfo[1];
+							$image_width = 1350;
+							$image_height = 941;
+							if(file_exists($image)){
+							    $imageinfo = getimagesize($image);
+								$image_width = $imageinfo[0];
+								$image_height = $imageinfo[1];
+							}
+
 							//var_dump(getimagesize($image)); die;
 						@endphp
 						@if($image_height < $image_width)
