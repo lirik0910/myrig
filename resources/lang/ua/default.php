@@ -13,10 +13,8 @@ return [
     'select_country' => 'Выберите страну',
     'update_country' => 'Обновите страну',
     'checkout_title' => 'Оплата и доставка',
-
     'phone_input' => 'Ввод без +',
     'no_matches' => 'Нет ни одного совпадения',
-
     'video' => 'Видео',
     'added' => 'Добвлен!',
     'total' => 'ИТОГО: ',
@@ -34,7 +32,7 @@ return [
     'optional_equipment' => 'Дополнительное оборудование',
     'payment_methods_description' => 'Наш менеджер свяжиться с вами для уточнения деталей',
     'hosting_title' => 'Хостинг',
-
+    'service_title' => 'Локальное сервисное обслуживание',
 
     //base.footer
     'footer_hosting' => 'Хостинг',
@@ -50,12 +48,10 @@ return [
     //base.header
     'welcome_title' => 'Добро пожаловать',
 
-
     //content.article
     'back_to_list' => 'Вернуться к списку',
     'previous_article' => 'Предыдущая статья',
     'next_article' => 'Следующая статья',
-
 
     //content.calc
     'yield_calculator' => 'Расчет доходности',
@@ -63,6 +59,9 @@ return [
     'manual_input' => 'Ручной ввод',
     'kwh' => 'kWh',
     'equipment_placement_desk' => 'Размещение оборудования в дата-центре MyRig',
+    'input_hashrate' => 'Введите хешрейт',
+    'energy_consumption' => 'Энергопотребление',
+    'calculate' => 'Рассчитать',
     'local_placement' => 'Локальное размещение',
     'local_device_placement' => 'Локальное размещение оборудование',
     'billing_period' => 'Рассчетный период',
@@ -80,7 +79,6 @@ return [
     'expenses' => 'Затраты',
     'profit' => 'Прибыль',
 
-
     //content.checkout
     'additional_info' => 'Дополнительная информация',
     'your_order' => 'Ваш заказ',
@@ -90,7 +88,6 @@ return [
     'cost' => 'Стоимость',
     'delivery' => 'Доставка',
     'self_shipment' => 'Самовывоз',
-
 
     //content.checkout_success
     'order_was_successfully_accepted.' => 'Спасибо. Ваш заказ был успешно принят.',
@@ -104,21 +101,23 @@ return [
     'items_cost:' => 'Стоимость единицы:',
     'delivery:' => 'Доставка:',
     'payment_type:' => 'Способ оплаты:',
-    'info_about_client' => 'Информация о зазазчике',
+    'info_about_client' => 'Информация о заказчике',
     'comment:' => 'Коментарий:',
     'phone:' => 'Телефон:',
     'address_info' => 'Информация об адресе',
 
+
+    'DOWNLOAD_INVOICE' => 'Загрузить инвойс',
+
     //content.news
     'read' => 'Читать',
-
 
     //content.product
     'days' => 'дней',
 
     //content.profile
     'personal_info' => 'Персональные данные',
-    'Orders history' => 'История заказов',
+    'orders_history' => 'История заказов',
     'logout' => 'Выйти',
     'number_and_date' => 'Номер и дата',
     'product_and_price' => 'Товар и цена',
@@ -131,6 +130,13 @@ return [
     'order_status_changed_from' => 'Статус заказ изменен с',
     'new_order' => 'Новый заказ',
     'to' => 'на',
+    'first_name' => 'Имя',
+    'last_name' => 'Фамилия',
+    'delivery_address' => 'Адресс доставки',
+    'items_profile' => 'Товаров',
+
+
+
 
     //content.service
     'local_service' => 'Локальное местное обслуживание',
@@ -138,8 +144,6 @@ return [
     'contacts_for_communication' => 'Контанты для связи',
     'schedule' => 'График работы',
     'monday_friday' => 'Понедельник &#8212; Пятница',
-
-    //-------------------------
     'description_service' => 'Компания MYRIG является единственным официальным представителем от завода по предоставлению услуг послегарантийного обслуживания оборудования Bitmain. Наша компания предоставляет услуги поддержки и ремонта майнеров и комплектующих по всей территории Украины и России.',
     'our_service' => 'Наш сервисный центр готов вам помочь в следующих вопросах:',
     'first_li' => 'Поддержка по программе расширенной гарантии от MyRig;',
@@ -152,22 +156,18 @@ return [
     'ukraine' => 'Украина',
     'russia' => 'Россия',
 
-
     //parts.shop
     'report_availability' => 'Сообщить о наличии',
     'leave_request' => 'Оставьте заявку для получения оповещения о наличии',
 
-    // pdf invoice
-    'client_name_invoice' => 'Имя клиента',
-    'invoice' => 'Инвойс',
-    'description_title' => 'Описание',
-    'quantity_title' => 'Количество',
-    'price_title' => 'Цена',
-    'total_title' => 'Стоимость',
-    'total_bottom' => 'Стоимость',
-    'tax_bottom' => 'Наценка',
-    'amount_bottom' => 'Итого',
-    'payment_terms_title' => 'Условия оплаты',
-    'payment_terms_desc' => 'Напишите условия оплаты здесь',
-
+    //invoice
+    'client_name' => 'Покупатель',
+    'INVOICE' => 'ЗАКАЗ',
+    'quantity' => 'Количество',
+    'TOTAL' => 'ИТОГО',
+    'TAX' => 'НАЛОГ',
+    'AMOUNT_DUE' => 'ОБЩАЯ СУММА',
+    'payment_terms' => 'Условия оплаты',
+    'write_your_payment' => 'Напишите условия оплаты здесь.',
+    'link_pdf' => 'www.myrig.ru',
 ];
