@@ -75,7 +75,8 @@ class PageController extends Controller
             }
         }
 
-		if ($page = Page::where('link', $link)->where('context_id', $locale_context_id)->with('view')->first()) {
+        $page = Page::where('link', $link)->where('context_id', $locale_context_id)->with('view')->first();
+		if ($page) {
 		    if ($page->link == 'checkout' || $page->link == 'cart'){
 		        if(count($cart) < 1){
                     return redirect('shop');
@@ -94,8 +95,21 @@ class PageController extends Controller
 				'preview' => $this->preview(),
                 'locale' => $locale
 			]);
-		}
-		else  abort(404);
+		} elseif (stristr($link, 'news') || stristr($link, 'info')){
+            $page = Page::where('link', $link)->where('context_id', 2)->orWhere('context_id', 3)->with('view')->first();
+            return view($page->view->path, [
+                'it' => $page,
+                'get' => $this->get(),
+                'request' => $request,
+                'select' => $this->select(),
+                'settings' => $this->settings($locale_context_id),
+                'inCart' => $cart,
+                'multi' => MultiVariableContent::multiConvert($page->view->variables),
+                'number' => $number,
+                'preview' => $this->preview(),
+                'locale' => $locale
+            ]);
+        } else  abort(404);
 	}
 
 	/** 

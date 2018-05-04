@@ -72,7 +72,7 @@ $shop = $select('App\Model\Base\Page')
 			
 				<div class="banner-text">
 					<div class="title">
-						{{ $var['header'] }}
+						{!! $var['header'] !!}
 					</div>
 					
 					<div class="subtitle">

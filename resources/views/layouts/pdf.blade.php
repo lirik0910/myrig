@@ -98,8 +98,8 @@
 
 
 				</div>
-				<p style="text-transform: uppercase; margin: 20px 0 0 0; font-size: 14px;">{{ __('default.payment_terms_title') }}</p>
-				<p style="margin: 0 0 20px; font-size: 14px;">{{ __('default.payment_terms_desc') }}</p>
+				<p style="text-transform: uppercase; margin: 20px 0 0 0; font-size: 14px;">{{ __('default.payment_terms') }}</p>
+				<p style="margin: 0 0 20px; font-size: 14px;">{{ __('default.write_your_payment') }}</p>
 		</div>
 		<footer style="position: fixed; bottom: 0px; left: 0px; right: 0px; height: 55px; padding: 20px 0 50px; background: #77a565; font-size: 0; color: #fff;">
 			<div style="width: 500px; margin: 0 auto;">
@@ -126,7 +126,7 @@
 					</div>
 					<div style="display: inline-block; vertical-align: top; width: 116.6px; font-size: 11px;">
 						<p style="margin: 0;">alex@bitmainwarranty.com</p>
-						<p style="margin: 0;">www.myrig.com.ua</p>
+						<p style="margin: 0;">{{ __('default.link_pdf') }}</p>
 					</div>
 				</div>
 			</div>

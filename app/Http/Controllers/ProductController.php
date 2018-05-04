@@ -44,7 +44,7 @@ class ProductController extends Controller
         $currency = '';
 
         foreach ($product->options as $option){
-            if(strnatcasecmp(trim($option->name), 'Hashrate') === 0 || strnatcasecmp(trim($option->name), 'Хэшрейт') === 0){
+            if(strnatcasecmp(trim($option->name), 'Hashrate') === 0 || strnatcasecmp(trim($option->name), 'Хешрейт') === 0){
                 $hashrate = (float)$option->value;
             } elseif (strnatcasecmp(trim($option->name), 'Currency') === 0 || strnatcasecmp(trim($option->name), 'Валюта') === 0){
                 $currency = explode(',', $option->value)[0];

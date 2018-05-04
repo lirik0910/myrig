@@ -82,7 +82,7 @@ return [
     'profit' => 'Profit',
 
     //content.checkout
-    'additional_info' => 'Additionalinfo',
+    'additional_info' => 'Additional info',
     'your_order' => 'Your order',
     'photo' => 'Photo',
     'name' => 'Name',
@@ -161,10 +161,10 @@ return [
 
     //invoice
     'client_name' => 'Client Name',
-    'INVOICE' => 'INVOICE',
+    'invoice' => 'INVOICE',
     'quantity' => 'Quantity',
-    'TOTAL' => 'TOTAL',
-    'TAX' => 'TAX',
+    'total' => 'TOTAL',
+    'TA' => 'TAX',
     'AMOUNT_DUE' => 'AMOUNT DUE',
     'payment_terms' => 'Payment Terms',
     'write_your_payment' => 'Write your payment terms and conditions here',

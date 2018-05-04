@@ -67,7 +67,7 @@
                                             {{ __('default.date')}} 						<strong>@php echo date('d-m-Y', strtotime($order->created_at)) @endphp</strong>
                                         </li>
                                         <li class="woocommerce-order-overview__total total">
-                                            {{ __('default.total')}}						<strong><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#36;</span>{{ number_format($order->cost, 2, '.', '') }}</span></strong>
+                                            {{ __('default.total_checkout_success')}}						<strong><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#36;</span>{{ number_format($order->cost, 2, '.', '') }}</span></strong>
                                         </li>
                                         <li class="woocommerce-order-overview__payment-method method">
                                             {{ __('default.payment')}}						<strong>{{$payment->title}}</strong>
@@ -88,6 +88,7 @@
                                                 <tr>
                                                     <th class="woocommerce-table__product-name product-name">{{ __('default.product') }}</th>
                                                     <th class="woocommerce-table__product-table product-total">{{ __('default.price') }}</th>
+                                                </tr>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
@@ -113,7 +114,7 @@
                                                     <td><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#36;</span>{{ number_format($order->cost, 2, '.', '') }}</span></td>
                                                 </tr>
                                                 <tr>
-                                                    <th scope="row">{{ __('default.delivery') }}</th>
+                                                    <th scope="row">{{ __('default.delivery_checkout_success') }}</th>
                                                     <td>{{$delivery->title}}</td>
                                                 </tr>
                                                 <tr>
