@@ -155,7 +155,6 @@ class FileController extends Controller
 
 		foreach ($request->file('file') as $file) {
 			try {
-				print_r($request->input('path'));
 				$file->store($request->input('path'), 'uploads');
 			}
 			catch (\Exception $e) {
