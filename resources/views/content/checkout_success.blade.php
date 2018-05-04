@@ -81,7 +81,7 @@
                                         <section class="woocommerce-order-details">
 
                                             <h2 class="woocommerce-order-details__title" style="float: left">{{ __('default.info_about_order')}}</h2>
-                                            <a class="btn-default" href="download-pdf/{{ $order->number }}" style="float: right; margin-top: 30px; margin-bottom: 20px">DOWNLOAD INVOICE</a>
+                                            <a class="btn-default" href="download-pdf/{{ $order->number }}" style="float: right; margin-top: 30px; margin-bottom: 20px">{{ __('default.download_invoice')}}</a>
 
                                             <table class="woocommerce-table woocommerce-table--order-details shop_table order_details">
                                                 <thead>

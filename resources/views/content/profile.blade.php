@@ -164,7 +164,7 @@
                                             <div class="table-cell status">
                                                 <span class="">
                                                     <p class="hidden-md">{{ __('default.status') }}</p>
-                                                    <span class="mark cancelled" style="color: {{$order->status->color}}">{{ __('_' . str_replace(' ', '_', mb_strtolower($order->status->title))) }}</span><br>
+                                                    <span class="mark cancelled" style="color: {{$order->status->color}}">{{ __('common.status_' . str_replace(' ', '_', mb_strtolower($order->status->title))) }}</span><br>
                                                     @if(isset($status_logs) && count($status_logs) > 0)
                                                         <a class="order-history" data-wpel-link="internal">History
                                                         <div class="history-dd" style="height: auto !important">

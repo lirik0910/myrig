@@ -21,9 +21,9 @@ return [
     'amount' => 'Количество',
     'payback' => 'Окупаемость',
     'warranty' => 'Гарантия',
-    'to_cart' => 'Добавить в корзину',
+    'to_cart' => 'В корзину',
     'make_order' => 'Checkout',
-    'more_info' => 'Больше информации',
+    'more_info' => 'Подробнее',
     'description' => 'Описание',
     'payment_methods' => 'Способ оплаты',
     'characteristics' => 'Характеристики',
@@ -107,7 +107,7 @@ return [
     'address_info' => 'Информация об адресе',
 
 
-    'DOWNLOAD_INVOICE' => 'Загрузить инвойс',
+    'download_invoice' => 'Загрузить инвойс',
 
     //content.news
     'read' => 'Читать',

@@ -23,7 +23,7 @@ return [
     'warranty' => 'Гарантия',
     'to_cart' => 'Добавить в корзину',
     'make_order' => 'Checkout',
-    'more_info' => 'Больше информации',
+    'more_info' => 'Подробнее',
     'description' => 'Описание',
     'payment_methods' => 'Способ оплаты',
     'characteristics' => 'Характеристики',

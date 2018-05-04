@@ -6,6 +6,7 @@
 <div class="main-back"></div>
 @php
 $product = App\Model\Shop\Product::where('page_id', $it->id)->with('images', 'options')->first();
+//var_dump($it->id); die;
 foreach ($product->options as $item) {
 	if ($item->type->title === 'video') {
 		$video = $item;
