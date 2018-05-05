@@ -169,11 +169,11 @@
 				<form id="callback" action="/back_call">
 					{{csrf_field()}}
 					<div class="form-group">
-						<input id="name" type="text" name="name" class="form-control" placeholder="Name" required="required" data-bv-message=" " data-bv-remote-message="Email уже занят"/></div>
+						<input id="name" type="text" name="name" class="form-control" placeholder="{{ __('default.name') }}" required="required" data-bv-message=" " data-bv-remote-message="Email уже занят"/></div>
 					<div class="form-group">
-						<input type="tel" name="tel" class="form-control" required="required" data-bv-message=" " placeholder="Phone"/></div>
+						<input type="tel" name="tel" class="form-control" required="required" data-bv-message=" " placeholder="{{ __('default.phone') }}"/></div>
 					<div class="form-group">
-						<input type="submit" name="submit" value="Request a call" class="btn-default btn-subscribe"/>
+						<input type="submit" name="submit" value="{{ __('default.request_a_call') }}" class="btn-default btn-subscribe"/>
 					</div>
 					<input type="hidden" name="action" value="formcall_ajax_request">
 					<input type="hidden" name="subject" value="Заказать звонок - Bitmain">
@@ -213,7 +213,7 @@
 					<input type="hidden" name="action" value="ticket_ajax_request">
 					<input type="hidden" name="subject" value="Тикет - Bitmain">
 					<div class="form-group">
-						<input type="submit" name="submit" value="Send" class="btn-default btn-subscribe"/>
+						<input type="submit" name="submit" value="{{ __('default.send') }}" class="btn-default btn-subscribe"/>
 					</div>
 				</form>
 				<div class="result">

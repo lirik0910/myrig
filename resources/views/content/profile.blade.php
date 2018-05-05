@@ -117,7 +117,7 @@
                                             @if(count($order->products) > 1)
                                                 <div class="table-cell table-product-cell">
                                                     <div class="order_thumbs order_thumbs_several">
-                                                        <span class="several_products">@php echo count($order->products) @endphp items</span>
+                                                        <span class="several_products">@php echo count($order->products) @endphp {{ __('default.items_profile') }}</span>
                                                         <a href=".order-{{$order->number}}" data-wpel-link="internal" class="">
                                                             <span class="show_products"><i class="fa fa-chevron-down" aria-hidden="true"></i>{{ __('default.show') }}</span>
                                                             <span class="hide_products"><i class="fa fa-chevron-up" aria-hidden="true"></i>{{ __('default.hide') }}</span>
@@ -163,10 +163,10 @@
                                             </div>
                                             <div class="table-cell status">
                                                 <span class="">
-                                                    <p class="hidden-md">{{ __('default.status') }}</p>
+                                                    <!--<p class="hidden-md">{{ __('default.status') }}</p>-->
                                                     <span class="mark cancelled" style="color: {{$order->status->color}}">{{ __('common.status_' . str_replace(' ', '_', mb_strtolower($order->status->title))) }}</span><br>
                                                     @if(isset($status_logs) && count($status_logs) > 0)
-                                                        <a class="order-history" data-wpel-link="internal">History
+                                                        <a class="order-history" data-wpel-link="internal">{{ __('default.history') }}
                                                         <div class="history-dd" style="height: auto !important">
                                                             <div class="modal-body">
                                                                 @foreach($status_logs as $log)

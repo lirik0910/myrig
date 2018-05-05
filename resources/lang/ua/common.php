@@ -27,4 +27,8 @@ return [
     'status_completed' => 'Завершен',
     'status_returned' => 'Возвращен',
     'status_cancelled' => 'Отменен',
+
+    'product_status_pre-order' => 'Предзаказ',
+    'product_status_in_stock' => 'В наличии',
+    'product_status_not_available' => 'Нет в наличии',
 ];

@@ -28,4 +28,7 @@ return [
     'status_returned' => 'Returned',
     'status_cancelled' => 'Cancelled',
 
+    'product_status_pre-order' => 'Pre-order',
+    'product_status_in_stock' => 'In stock',
+    'product_status_not_available' => 'Not available',
 ];

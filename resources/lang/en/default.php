@@ -44,6 +44,7 @@ return [
     'order_create' => 'The order was successfully created!',
     'close' => 'Close',
     'okay' => 'Okay',
+    'request_a_call' => 'Request a call',
 
     //base.header
     'welcome_title' => 'Welcome',
@@ -90,6 +91,7 @@ return [
     'cost' => 'Cost',
     'delivery' => 'Delivery',
     'self_shipment' => 'Self shipment',
+    'approve_order' => 'Approve order',
 
     //content.checkout_success
     'order_was_successfully_accepted' => 'Thank you!. Your order was successfully accepted.',
@@ -158,16 +160,23 @@ return [
     //parts.shop
     'report_availability' => 'Report availability',
     'leave_request' => 'Leave a request for availability alert',
+    'send' => 'Send',
 
     //invoice
-    'client_name' => 'Client Name',
-    'invoice' => 'INVOICE',
-    'quantity' => 'Quantity',
-    'total' => 'TOTAL',
-    'TA' => 'TAX',
-    'AMOUNT_DUE' => 'AMOUNT DUE',
-    'payment_terms' => 'Payment Terms',
-    'write_your_payment' => 'Write your payment terms and conditions here',
-    'link_pdf' => 'www.myrig.com',
+    'client_name_invoice' => 'Client name',
+    'invoice' => 'invoice',
+    'description_title' => 'Description',
+    'quantity_title' => 'Quantity',
+    'price_title' => 'Price',
+    'total_title' => 'Total',
+    'total_bottom' => 'Total',
+    'tax_bottom' => 'Tax',
+    'amount_bottom' => 'Amount due',
+    'payment_terms' => 'Payment terms',
+    'write_your_payment' => 'Write your payment terms here.',
+    'link_pdf' => 'www.myrig.ru',
 
+    //report availability
+    'report_availability_popup' => 'Report availability',
+    'captcha' => 'Go through captcha'
 ];

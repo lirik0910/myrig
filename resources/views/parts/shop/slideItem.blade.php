@@ -23,13 +23,8 @@
         @endif
     </div>
 
-    @if ($item->productStatus->title === 'in-stock')
-        <div class="tag tag-check">{{ $item->productStatus->description }}</div>
-    @elseif ($item->productStatus->title === 'pre-order')
-        <div class="tag tag-order">{{ $item->productStatus->description }}</div>
-    @elseif ($item->productStatus->title === 'not-available')
-        <div class="tag tag-no">{{ $item->productStatus->description }}</div>
-    @endif
+
+    <div class="tag @if ($item->productStatus->title === 'in-stock') tag-check @elseif ($item->productStatus->title === 'pre-order') tag-order  @elseif ($item->productStatus->title === 'not-available') tag-no @endif">{{ __('common.product_status_' . str_replace(' ', '_', mb_strtolower($item->productStatus->description))) }}</div>
 
     <div class="tag tag tag-waranty">{{ __('default.warranty') }} {{ $item->warranty }}</div>
 
@@ -72,7 +67,7 @@
             </p>
         @elseif ($item->productStatus->title === 'not-available')
             <p href="#report-availability" data-id="{{ $item->id }}" class="btn-default report-availability">
-                <span>Report availability</span>
+                <span>{{ __('default.report_availability') }}</span>
                 <i class="fa fa-spin fa-refresh" style="display: none"></i>
             </p>
         @else

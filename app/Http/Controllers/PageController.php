@@ -96,7 +96,7 @@ class PageController extends Controller
                 'locale' => $locale
 			]);
 		} elseif (stristr($link, 'news') || stristr($link, 'info')){
-            $page = Page::where('link', $link)->where('context_id', 2)->orWhere('context_id', 3)->with('view')->first();
+            $page = Page::where('link', $link)->with('view')->first();
             return view($page->view->path, [
                 'it' => $page,
                 'get' => $this->get(),

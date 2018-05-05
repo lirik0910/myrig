@@ -150,7 +150,26 @@ class OrderController extends Controller
         return response()->json(['success' => true, 'order' => $order], 200);
     }
 
-    public function invoice($number){
+    public function invoice(Request $request, $number){
+        switch ($request->getSchemeAndHttpHost()) {
+            case config('app.ua_domain'):
+                $locale = 'ua';
+                break;
+
+            case config('app.ru_domain'):
+                $locale = 'ru';
+                break;
+
+            case config('app.en_domain'):
+                $locale = 'en';
+                break;
+
+            default:
+                $locale = 'ua';
+                break;
+        }
+        App::setLocale($locale);
+        //var_dump($locale); die;
         $html = view('layouts.pdf', ['number' => $number]);
         $html = mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8');
         $pdf = \App::make('dompdf.wrapper');

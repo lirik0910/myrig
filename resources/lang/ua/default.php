@@ -22,7 +22,7 @@ return [
     'payback' => 'Окупаемость',
     'warranty' => 'Гарантия',
     'to_cart' => 'В корзину',
-    'make_order' => 'Checkout',
+    'make_order' => 'Заказать',
     'more_info' => 'Подробнее',
     'description' => 'Описание',
     'payment_methods' => 'Способ оплаты',
@@ -44,6 +44,7 @@ return [
     'order_create' => 'Заказ был успешно создан!',
     'close' => 'Закрыть',
     'okay' => 'Хорошо',
+    'request_a_call' => 'Заказать звонок',
 
     //base.header
     'welcome_title' => 'Добро пожаловать',
@@ -88,6 +89,7 @@ return [
     'cost' => 'Стоимость',
     'delivery' => 'Доставка',
     'self_shipment' => 'Самовывоз',
+    'approve_order' => 'Подтвердить заказ',
 
     //content.checkout_success
     'order_was_successfully_accepted.' => 'Спасибо. Ваш заказ был успешно принят.',
@@ -159,6 +161,7 @@ return [
     //parts.shop
     'report_availability' => 'Сообщить о наличии',
     'leave_request' => 'Оставьте заявку для получения оповещения о наличии',
+    'send' => 'Отправить',
 
     //invoice
     'client_name_invoice' => 'Покупатель',
@@ -173,4 +176,8 @@ return [
     'payment_terms' => 'Условия оплаты',
     'write_your_payment' => 'Напишите условия оплаты здесь.',
     'link_pdf' => 'www.myrig.ru',
+
+    //report availability
+    'report_availability_popup' => 'Уведомление о наличии',
+    'captcha' => 'Пройдите капчу'
 ];

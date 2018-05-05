@@ -14,8 +14,15 @@
 
     $btcPrice = number_format($item->calcBtcPrice(), 4, '.', '');
 
-    $payback = new App\Http\Controllers\ProductController();
-    $payback = $payback->calcPayback($item->id);
+foreach($item->categories as $category){
+    if ($category->title == 'Base'){
+        $payback = new App\Http\Controllers\ProductController();
+		$payback = $payback->calcPayback($item->id);
+    }
+}
+    //$payback = new App\Http\Controllers\ProductController();
+    //$payback = $payback->calcPayback($item->id);
+//var_dump($payback); die;
 @endphp
 <div class="article-row row">
 	<div class="col-sm-4">
@@ -44,13 +51,8 @@
 				</a>
 			</h2>
 
-			@if ($item->productStatus->title === 'in-stock')
-				<div class="tag tag-check">{{ $item->productStatus->description }}</div>
-			@elseif ($item->productStatus->title === 'pre-order')
-				<div class="tag tag-order">{{ $item->productStatus->description }}</div>
-			@elseif ($item->productStatus->title === 'not-available')
-				<div class="tag tag-no">{{ $item->productStatus->description }}</div>
-			@endif
+
+			<div class="tag @if ($item->productStatus->title === 'in-stock') tag-check @elseif ($item->productStatus->title === 'pre-order') tag-order  @elseif ($item->productStatus->title === 'not-available') tag-no @endif">{{ __('common.product_status_' . str_replace(' ', '_', mb_strtolower($item->productStatus->description))) }}</div>
 
 			@if(isset($item->warranty) && !empty($item->warranty))<div class="tag tag tag-waranty">{{ __('default.warranty') }} {{ $item->warranty }}</div>@endif
 
@@ -101,7 +103,7 @@
 					</a>
 				@elseif ($item->productStatus->title === 'not-available')
 					<a rel="nofollow" href="#report-availability" data-id="{{ $item->id }}" class="btn-default report-availability">
-						<span>Report availability</span>
+						<span>{{ __('default.report_availability') }}</span>
 						<i class="fa fa-spin fa-refresh" style="display: none"></i>
 					</a>
 				@else
@@ -112,7 +114,7 @@
 				@endif
 			</form>
 			
-			@if($payback)<div class='tag tag-payback'>{{ __('default.payback') }} {{ $payback }} days</div>@endif
+			@if($payback)<div class='tag tag-payback'>{{ __('default.payback') }} {{ $payback }} {{ __('default.days') }}</div>@endif
 		</div>
 	</div>
 </div>

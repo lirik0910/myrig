@@ -1,3 +1,6 @@
+@php
+//var_dump(app()->getLocale()); die;
+@endphp
 <!DOCTYPE html>
 <html lang="{{app()->getLocale()}}" style="margin: 0; padding: 0;">
 <head>

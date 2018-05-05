@@ -5,7 +5,9 @@
 
 <div class="main-back"></div>
 @php
-$product = App\Model\Shop\Product::where('page_id', $it->id)->with('images', 'options')->first();
+	$context = $select('App\Model\Base\Context')->where('title', $locale)->first();
+
+$product = App\Model\Shop\Product::where('page_id', $it->id)->where('context_id', $context->id)->with('images', 'options')->first();
 //var_dump($it->id); die;
 foreach ($product->options as $item) {
 	if ($item->type->title === 'video') {
@@ -60,13 +62,8 @@ $payback = $payback->calcPayback($product->id);
 		<div class="article-text">
 			<h1>{{ $product->title }}</h1>
 
-			@if ($product->productStatus->title === 'in-stock')
-				<div class="tag tag-check">{{ $product->productStatus->description }}</div>
-			@elseif ($product->productStatus->title === 'pre-order')
-				<div class="tag tag-order">{{ $product->productStatus->description }}</div>
-			@elseif ($product->productStatus->title === 'not-available')
-				<div class="tag tag-no">{{ $product->productStatus->description }}</div>
-			@endif
+
+			<div class="tag @if ($product->productStatus->title === 'in-stock') tag-check @elseif ($product->productStatus->title === 'pre-order') tag-order  @elseif ($product->productStatus->title === 'not-available') tag-no @endif">{{ __('common.product_status_' . str_replace(' ', '_', mb_strtolower($product->productStatus->description))) }}</div>
 
 			@if(isset($product->warranty) && !empty($product->warranty))<div class="tag tag-waranty">{{ __('default.warranty') }} {{ $product->warranty }}</div>@endif
 	
@@ -97,7 +94,7 @@ $payback = $payback->calcPayback($product->id);
 					</a>
 				@elseif ($product->productStatus->title === 'not-available')
 					<a rel="nofollow" href="#report-availability" data-id="{{ $product->id }}" class="btn-default report-availability">
-						<span>Report availability</span>
+						<span>{{ __('default.report_availability') }}</span>
 						<i class="fa fa-spin fa-refresh" style="display: none"></i>
 					</a>
 				@else
@@ -107,7 +104,7 @@ $payback = $payback->calcPayback($product->id);
 					</a>
 				@endif
 			</form>
-			@if(isset($payback) && !empty($payback)) <div class="tag tag-payback">{{ __('default.payback') }} {{ $payback }} {{--{{ __('default.read') }}--}}</div>@endif
+			@if(isset($payback) && !empty($payback)) <div class="tag tag-payback">{{ __('default.payback') }} {{ $payback }} {{ __('default.days') }}</div>@endif
 			
 			<div class="single-product-tabs">
 				<div class="product-tab-links">

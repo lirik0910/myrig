@@ -102,7 +102,7 @@ foreach ($products as $item) {
 										<abbr class="required" title="{{ __('default.required') }}">*</abbr>
 									</label>
 
-									<input type="text" class="input-text form-control" name="first_name" id="billing_first_name" placeholder="{{ __('default.first_name_label') }}" value="@isset($user->attributes->fname) {{$user->attributes->fname}} @endisset" autocomplete="given-name" autofocus="autofocus" required />
+									<input type="text" class="input-text form-control" name="first_name" id="billing_first_name" value="@isset($user->attributes->fname) {{$user->attributes->fname}} @endisset" autocomplete="given-name" autofocus="autofocus" required />
 								</p>
 
 								<p class="form-row form-row-last form-group validate-required" id="billing_last_name_field" data-priority="20">
@@ -289,7 +289,7 @@ foreach ($products as $item) {
 								</div>
 							</div>
 
-							<input type="submit" class="button alt" name="woocommerce_checkout_place_order" id="place_order" value="Approve order" data-value="Approve order" />
+							<input type="submit" class="button alt" name="woocommerce_checkout_place_order" id="place_order" value="{{ __('default.approve_order') }}" data-value="Approve order" />
 						</div>
 					</div>
 				</div>
