@@ -201,10 +201,10 @@
 					<div class="form-group">
 						<input type="email" name="email" class="form-control" placeholder="E-mail" required="required" data-bv-message=" " data-bv-remote-message="Email уже занят"/></div>
 					<div class="form-group">
-						<input type="text" name="topic" class="form-control" required="required" data-bv-message=" " placeholder="Topic"/></div>
+						<input type="text" name="topic" class="form-control" required="required" data-bv-message=" " placeholder="{{ __('default.topic') }}"/></div>
 
 					<div class="form-group">
-						<textarea name="message" class="form-control" placeholder="Description" required="required" data-bv-message=""></textarea></div>
+						<textarea name="message" class="form-control" placeholder="{{ __('default.description') }}" required="required" data-bv-message=""></textarea></div>
 					<div class="form-group">
 						<span class="filename"></span>
 						<label for="fileName"><i class="fa fa-paperclip"></i> {{ __('default.attach_file') }}</label>

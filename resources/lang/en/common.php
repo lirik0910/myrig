@@ -12,6 +12,20 @@ return [
 	'country_UZ' => 'Uzbekistan',
 	'country_UA' => 'Ukraine',
 
+
+    'january' => 'January',
+    'february' => 'February',
+    'march' => 'March',
+    'april' => 'April',
+    'may' => 'May',
+    'june' => 'June',
+    'july' => 'July',
+    'august' => 'August',
+    'september' => 'September',
+    'october' => 'October',
+    'november' => 'November',
+    'december' => 'December',
+
 	'cont_USA' => 'USA',
 	'cont_RUSSIA' => 'RU',
 	'cont_UKRAINE' => 'UA',

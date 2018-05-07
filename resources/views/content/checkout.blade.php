@@ -214,7 +214,7 @@ foreach ($products as $item) {
 
 							<div class="woocommerce-additional-fields__field-wrapper">
 								<p class="form-row form-row-full" id="order_comments_field" data-priority="">
-									<textarea name="comment" class="input-text form-control" id="order_comments" placeholder="Post office number etc"  rows="2" cols="5"></textarea>
+									<textarea name="comment" class="input-text form-control" id="order_comments" placeholder="{{ __('default.comment_placeholder') }}"  rows="2" cols="5"></textarea>
 								</p>
 							</div>
 						</div>
@@ -256,7 +256,7 @@ foreach ($products as $item) {
                                                             @endforeach
 															<li style="display: inline-block">
 																<input type="text" name="without-delivery" value="0" class="without-delivery" disabled style="display: none"/>
-																<p class="no-availible-shipping-method">There are no shipping methods available. Please double check your address, or contact us if you need any help.</p>
+																<p class="no-availible-shipping-method">{{ __('default.no_shipping') }}</p>
 															</li>
 														</ul>
 													</td>

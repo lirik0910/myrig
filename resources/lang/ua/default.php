@@ -16,15 +16,16 @@ return [
     'phone_input' => 'Ввод без +',
     'no_matches' => 'Нет ни одного совпадения',
     'video' => 'Видео',
-    'added' => 'Добвлен!',
+    'added' => 'Добавлен!',
     'total' => 'ИТОГО: ',
     'amount' => 'Количество',
     'payback' => 'Окупаемость',
     'warranty' => 'Гарантия',
     'to_cart' => 'В корзину',
-    'make_order' => 'Заказать',
+    'make_order' => 'Оформить заказ',
     'more_info' => 'Подробнее',
     'description' => 'Описание',
+    'topic' => 'Тема',
     'payment_methods' => 'Способ оплаты',
     'characteristics' => 'Характеристики',
     'in_the_cart' => 'Товар в корзине',
@@ -90,9 +91,11 @@ return [
     'delivery' => 'Доставка',
     'self_shipment' => 'Самовывоз',
     'approve_order' => 'Подтвердить заказ',
+    'comment_placeholder' => 'Номер почтового отделения и т.д.',
+    'no_shipping' => 'Нет доступных методов доставки. Проверьте ещё раз указанный вами адрес или свяжитесь с нами',
 
     //content.checkout_success
-    'order_was_successfully_accepted.' => 'Спасибо. Ваш заказ был успешно принят.',
+    'order_was_successfully_accepted' => 'Спасибо. Ваш заказ был успешно принят.',
     'order_number' => 'Номер заказа:',
     'date' => 'Дата:',
     'total_checkout_success' => 'Итого:',
@@ -129,16 +132,14 @@ return [
     'hide' => 'Скрыть',
     'item_cost' => 'Стоимость за единицу',
     'history' => 'История',
-    'order_status_changed_from' => 'Статус заказ изменен с',
+    'order_status_changed_from' => 'Статус заказа изменен с',
     'new_order' => 'Новый заказ',
     'to' => 'на',
     'first_name' => 'Имя',
     'last_name' => 'Фамилия',
     'delivery_address' => 'Адресс доставки',
     'items_profile' => 'Товаров',
-
-
-
+    'save' => 'Сохранить',
 
     //content.service
     'local_service' => 'Локальное местное обслуживание',

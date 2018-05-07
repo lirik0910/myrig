@@ -183,6 +183,14 @@ console.log(wM);
 		main.trigger('stop.owl.autoplay');
 		window.clearTimeout();}    	
 	});
+
+	var related = $('.related-slider');
+    related.on('changed.owl.carousel',function(event){
+        transit++;
+        if(transit==ms.length-1){
+            main.trigger('stop.owl.autoplay');
+            window.clearTimeout();}
+    });
   
 
 	$('.contacts ul li').on('click',function () {
@@ -642,14 +650,15 @@ $(window).on('load',function(){
 		items : 3,
 		dots: true,
 		nav: false,
+		loop: true,
 		margin:20,
         slideSpeed : 500,
         smartSpeed: 200,
         autoplay:true,
         //onInitialized:stopAuto,
-/*        dotsData:true,
+        //dotsData:true,
         animateOut: 'fadeOut',
-        animateIn: 'fadeIn',*/
+        animateIn: 'fadeIn',
 
 		slideBy: 3, //alternatively you can slide by 1, this way the active slide will stick to the first item in the second carousel
 		responsiveClass:true,

@@ -54,10 +54,10 @@
                                 <form id="personalForm">
                                     {{csrf_field()}}
                                     <div class="form-group">
-                                        <input type="text" value="{{$user->attributes->fname}}" name="first_name" placeholder="First Name" class="form-control full-width" required="required" data-bv-message=" " style="padding-left: 14px"/>
+                                        <input type="text" value="{{$user->attributes->fname}}" name="first_name" placeholder="{{ __('default.first_name') }}" class="form-control full-width" required="required" data-bv-message=" " style="padding-left: 14px"/>
                                     </div>
                                     <div class="form-group">
-                                        <input type="text" value="{{$user->attributes->lname}}" name="last_name" placeholder="Last Name" class="form-control full-width" required="required" data-bv-message=" " style="padding-left: 14px"/>
+                                        <input type="text" value="{{$user->attributes->lname}}" name="last_name" placeholder="{{ __('default.last_name') }}" class="form-control full-width" required="required" data-bv-message=" " style="padding-left: 14px"/>
                                     </div>
                                     <!--<div class="form-group">
                                         <input type="password" name="password" class="form-control" placeholder="Passsword" data-bv-identical-field="password_confirm" data-bv-message="Пароли не совпадают"/>
@@ -76,13 +76,13 @@
                                         <input type="email" name="email"  value="{{$user->email}}" disabled class="form-control" placeholder="E-mail" style="padding-left: 14px"/>
                                     </div>
                                     <div class="form-group">
-                                        <input type="tel" name="phone" value="{{$user->attributes->phone}}" class="form-control" placeholder="Phone" required="required" data-bv-message="" style="padding-left: 14px"/>
+                                        <input type="tel" name="phone" value="{{$user->attributes->phone}}" class="form-control" placeholder="{{ __('default.phone') }}" required="required" data-bv-message="" style="padding-left: 14px"/>
                                     </div>
                                     <div class="form-group">
-                                        <input type="text" name="address" value="{{$user->attributes->address}}" class="form-control full-width" placeholder="Delivery address" style="padding-left: 14px"/>
+                                        <input type="text" name="address" value="{{$user->attributes->address}}" class="form-control full-width" placeholder="{{ __('default.delivery_address') }}" style="padding-left: 14px"/>
                                     </div>
                                     <div class="form-group">
-                                        <input type="submit" name="submit" class="btn-default" value="Save"/>
+                                        <input type="submit" name="submit" class="btn-default" value="{{ __('default.save') }}"/>
                                     </div>
                                     <input type="hidden" name="action" value="bitmain_account_register">
                                     <input type="hidden" name="user" value="{{$user->id}}">
@@ -174,9 +174,9 @@
                                                                         $convert_log = str_replace(' ', '_', mb_strtolower($log->value));
                                                                         //var_dump($convert_log); die;
                                                                     @endphp
-                                                                    <h3>@php echo date('d F Y ', strtotime($log->created_at)) . ' at ' . date('H:i', strtotime($log->created_at)) @endphp</h3>
+                                                                    <h3>@php echo date('d', strtotime($log->created_at)) . ' ' . __('common.' . strtolower(date('F', strtotime($log->created_at)))) . ' ' . date('Y', strtotime($log->created_at)) . ' ' .  date('H:i', strtotime($log->created_at)) @endphp</h3>
                                                                     <div class="comment-order">
-																        {{ __('default.order_status_changed_from') }} @if(isset($prev)) {{ __('common.status_' . $prev) }} @else {{ __('default.new_order') }} @endif {{ __('default.to') }} {{ __('common.status_' . $convert_log) }}.
+																        {{ __('default.order_status_changed_from') }} @if(isset($prev) && count($status_logs) > 1) {{ __('common.status_' . $prev) }} @else {{ __('default.new_order') }} @endif {{ __('default.to') }} {{ __('common.status_' . $convert_log) }}.
                                                                     </div>
                                                                     @php
                                                                         $prev = $convert_log;

@@ -67,7 +67,7 @@ foreach ($products as $item) {
 							</div>
 
 							<div class="table-cell table-submit">
-								<a href="{{ url($get($settings['site.checkout_page'])->link) }}" class="btn-default" data-wpel-link="internal">{{ __('default.make_order') }}</a>
+								<a href="{{ url($get($settings['site.checkout_page'])->link) }}" class="btn-default" data-wpel-link="internal" style="width: max-content">{{ __('default.make_order') }}</a>
 							</div>
 							
 							<div class="table-cell table-close"></div>

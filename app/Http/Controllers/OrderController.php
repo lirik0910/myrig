@@ -74,7 +74,7 @@ class OrderController extends Controller
         }
 //var_dump(Order::orderBy('id','desc')->first()); die;
 
-        $numbersArray = str_split((string)time() - 2000000, 3);
+        //$numbersArray = str_split((string)time() - 2000000, 3);
 
         /*foreach($numbersArray as $number){
             $order_number += (int)$number;
@@ -115,6 +115,7 @@ class OrderController extends Controller
         ]);
 
         $cart = $_SESSION['cart'];
+       // var_dump($cart); die;
         foreach ($cart as $productId => $count){
             $product = Product::where('id', $productId)->first();
             if($product->auto_price){
@@ -122,9 +123,9 @@ class OrderController extends Controller
             } else{
                 $cost = $product->price;
             }
-
+//var_dump($cost, $count, $productId); die;
             $btcCost = $product->calcBtcPrice();
-
+//var_dump($btcCost); die;
             $order->carts()->create([
                 'order_id' => $order->id,
                 'product_id' => $productId,
@@ -135,15 +136,16 @@ class OrderController extends Controller
         }
 
         $order->cost = $order->countCost();
+        //var_dump($order->cost); die;
         $order->save();
        
 
         $number = $order_number;
-        try{
+       // try{
             //Mail::to($data['email'])->send(new MailClass($number));
-        } catch (\Exception $e){
+        //} catch (\Exception $e){
 
-        }
+       // }
 
         unset($_SESSION['cart']);
         //session()->forget('cart');

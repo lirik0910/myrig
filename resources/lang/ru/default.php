@@ -21,10 +21,11 @@ return [
     'amount' => 'Количество',
     'payback' => 'Окупаемость',
     'warranty' => 'Гарантия',
-    'to_cart' => 'Добавить в корзину',
-    'make_order' => 'Заказать',
+    'to_cart' => 'В корзину',
+    'make_order' => 'Оформить заказ',
     'more_info' => 'Подробнее',
     'description' => 'Описание',
+    'topic' => 'Тема',
     'payment_methods' => 'Способ оплаты',
     'characteristics' => 'Характеристики',
     'in_the_cart' => 'Товар в корзине',
@@ -90,6 +91,8 @@ return [
     'delivery' => 'Доставка',
     'self_shipment' => 'Самовывоз',
     'approve_order' => 'Подтвердить заказ',
+    'comment_placeholder' => 'Номер почтового отделения и т.д.',
+    'no_shipping' => 'Нет доступных методов доставки. Проверьте ещё раз указанный вами адрес или свяжитесь с нами',
 
     //content.checkout_success
     'order_was_successfully_accepted' => 'Спасибо. Ваш заказ был успешно принят.',
@@ -129,15 +132,14 @@ return [
     'hide' => 'Скрыть',
     'item_cost' => 'Стоимость за единицу',
     'history' => 'История',
-    'order_status_changed_from' => 'Статус заказ изменен с',
+    'order_status_changed_from' => 'Статус заказа изменен с',
     'new_order' => 'Новый заказ',
     'to' => 'на',
     'first_name' => 'Имя',
     'last_name' => 'Фамилия',
     'delivery_address' => 'Адресс доставки',
     'items_profile' => 'Товаров',
-
-
+    'save' => 'Сохранить',
 
 
     //content.service
@@ -172,7 +174,7 @@ return [
     'total_title' => 'Всего',
     'total_bottom' => 'ИТОГО',
     'tax_bottom' => 'НАЛОГ',
-    'amount_bottom' => 'Общая сумма',
+    'amount_bottom' => 'ОБЩАЯ СУММА',
     'payment_terms' => 'Условия оплаты',
     'write_your_payment' => 'Напишите условия оплаты здесь.',
     'link_pdf' => 'www.myrig.ru',

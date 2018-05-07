@@ -31,7 +31,7 @@
 				<td style="text-align: right;">{{$order->orderDeliveries->city}}</td>
 			</tr>
 			<tr>
-				<td>{{ date('d F`y') }}</td>
+				<td>{{ date('d', strtotime($order->created_at)) . ' ' . __('common.' . strtolower(date('F', strtotime($order->created_at)))) . ' ' . date('Y', strtotime($order->created_at)) }}</td>
 				<td style="text-align: right;">{{$order->number }}</td>
 			</tr>
 		</table>
