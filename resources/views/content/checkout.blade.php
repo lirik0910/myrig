@@ -49,8 +49,22 @@ foreach ($products as $item) {
 @endphp
 
 @section('content')
-<main>
-<div class="main-back"></div>
+<main style="width: 100%">
+<div class="main-back" style="position: absolute;"></div>
+<script>
+	var width = $(window).width(),
+		cont = $('.container').outerWidth();
+	var margin = (width - cont) / 2;
+	var wM = cont * 33.333333 / 100 + margin;
+
+	if (width > 767) {
+		$('.main-back').css('left', wM +'px');
+	}
+
+	else {
+		$('.main-back').css('left', '0px');
+	}
+</script>
 
 <section class="content order">
 <div class="container">

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <main>
+    <main style="width: 100%" style="position: absolute;">
         @php
             $order = App\Model\Shop\Order::where('number', $number)->with('orderDeliveries', 'products')->first();
             $delivery = App\Model\Shop\Delivery::where('id', $order->orderDeliveries->delivery_id)->first();
@@ -10,17 +10,19 @@
         @endphp
         <div class="main-back"  ></div>
         <script>
-            var width = $(window).width();
-            var cont = $('.container').outerWidth();
+            var width = $(window).width(),
+                cont = $('.container').outerWidth();
             var margin = (width - cont) / 2;
             var wM = cont * 33.333333 / 100 + margin;
+
             if (width > 767) {
                 $('.main-back').css('left', wM +'px');
             }
+
             else {
                 $('.main-back').css('left', '0px');
             }
-
+            
             jQuery(document).ready(function($){
 
                 if ($("#timer").length) {
