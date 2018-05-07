@@ -39,7 +39,7 @@ $shop = $select('App\Model\Base\Page')
 					<div class="container">
 						<div class="slide-text">
 							<div class="title">
-							{{ $slide['header'] }}
+							{!! $slide['header'] !!}
 							</div>
 								
 							<div class="subtitle">
