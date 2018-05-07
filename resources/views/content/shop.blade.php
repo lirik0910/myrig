@@ -23,7 +23,7 @@ $secondaryProducts = $select('\App\Model\Shop\Product')
 @endphp
 
 @section('content')
-<main>
+<main style="width: 100%" style="position: absolute;">
 <div class="main-back"></div>
 	
 <section class="content item items">

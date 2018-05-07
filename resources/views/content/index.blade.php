@@ -2,8 +2,8 @@
 
 @section('content')
 
-<main>
-<div class="main-back"></div>
+<main style="width: 100%">
+<div class="main-back" style="position: absolute;"></div>
 
 @php
 $shop = $select('App\Model\Base\Page')

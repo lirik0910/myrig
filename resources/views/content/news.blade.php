@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-<main>
-    <div class="main-back"  ></div>
+<main style="width: 100%">
+    <div class="main-back" style="position: absolute;"></div>
     <section class="content list">
         <div class="container">
             @php

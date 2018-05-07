@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <main>
+    <main style="width: 100%" style="position: absolute;">
         @php
             $order = App\Model\Shop\Order::where('number', $number)->with('orderDeliveries', 'products')->first();
             $delivery = App\Model\Shop\Delivery::where('id', $order->orderDeliveries->delivery_id)->first();

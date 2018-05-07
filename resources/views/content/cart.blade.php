@@ -26,9 +26,9 @@ foreach ($products as $item) {
 @endphp
 
 @section('content')
-<main>
+<main style="width: 100%">
 
-<div class="main-back"></div>
+<div class="main-back" style="position: absolute;"></div>
 <section class="content cart">
 	<div class="container">
 		<div class="article-row row cart-holder">
