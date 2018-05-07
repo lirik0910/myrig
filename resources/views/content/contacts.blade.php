@@ -8,6 +8,20 @@
 <div class="main-back" style="left: 588px !important">
 	<div id="mapField" data-img="https://myrig.com.ua/wp-content/themes/bitmain/img/contact_logo.png?v=1" data-lat="39.768294" data-lng="-104.90209679999998"></div>
 </div>
+<script>
+	var width = $(window).width(),
+		cont = $('.container').outerWidth();
+	var margin = (width - cont) / 2;
+	var wM = cont * 33.333333 / 100 + margin;
+
+	if (width > 767) {
+		$('.main-back').css('left', wM +'px');
+	}
+
+	else {
+		$('.main-back').css('left', '0px');
+	}
+</script>
 @php
 //var_dump($multi['Contact items'])
 
