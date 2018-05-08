@@ -655,10 +655,8 @@ $(window).on('load',function(){
         slideSpeed : 500,
         smartSpeed: 200,
         autoplay:true,
-		dotsData: true,
         //onInitialized:stopAuto,
-        //dotsData:true,
-		dotsEach: 3,
+        dotsData:true,
         animateOut: 'fadeOut',
         animateIn: 'fadeIn',
 
