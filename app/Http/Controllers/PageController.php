@@ -75,12 +75,16 @@ class PageController extends Controller
             }
         }
 
-        $page = Page::where('link', $link)->where('context_id', $locale_context_id)->with('view')->first();
+        $page = Page::where('link', $link)->where('context_id', $locale_context_id)->where('delete', 0)->with('view')->first();
 		if ($page) {
 		    if ($page->link == 'checkout' || $page->link == 'cart'){
 		        if(count($cart) < 1){
                     return redirect('shop');
                 }
+            }
+
+            if($page->view->title == 'Product' && $page->product->delete == 1){
+                return redirect('shop');
             }
 //var_dump(MultiVariableContent::multiConvert($page->view->variables)); die;
 			return view($page->view->path, [
@@ -96,7 +100,7 @@ class PageController extends Controller
                 'locale' => $locale
 			]);
 		} elseif (stristr($link, 'news') || stristr($link, 'info')){
-            $page = Page::where('link', $link)->with('view')->first();
+            $page = Page::where('link', $link)->where('delete', 0)->with('view')->first();
             return view($page->view->path, [
                 'it' => $page,
                 'get' => $this->get(),

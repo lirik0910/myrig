@@ -1,14 +1,40 @@
 @extends('layouts.app')
 
 @section('content')
-<main>
+<main style="width: 100%">
 
-<div class="main-back"></div>
+<div class="main-back" style="position: absolute;"></div>
+<script>
+	var width = $(window).width(),
+		cont = $('.container').outerWidth();
+	var margin = (width - cont) / 2;
+	var wM = cont * 33.333333 / 100 + margin;
+
+	if (width > 767) {
+		$('.main-back').css('left', wM +'px');
+	}
+
+	else {
+		$('.main-back').css('left', '0px');
+	}
+</script>
 @php
 	$context = $select('App\Model\Base\Context')->where('title', $locale)->first();
 
-$product = App\Model\Shop\Product::where('page_id', $it->id)->where('context_id', $context->id)->with('images', 'options')->first();
+$product = App\Model\Shop\Product::where('page_id', $it->id)->where('context_id', $context->id)->where('delete', 0)->with('images', 'options')->first();
 //var_dump($it->id); die;
+@endphp
+
+@if($product){
+	<script type="text/javascript">
+		console.log('aasds');
+		window.location = "{ url('shop')}";
+	</script>
+}
+@endif
+
+@php
+
 foreach ($product->options as $item) {
 	if ($item->type->title === 'video') {
 		$video = $item;

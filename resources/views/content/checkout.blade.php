@@ -49,8 +49,22 @@ foreach ($products as $item) {
 @endphp
 
 @section('content')
-<main>
-<div class="main-back"></div>
+<main style="width: 100%">
+<div class="main-back" style="position: absolute;"></div>
+<script>
+	var width = $(window).width(),
+		cont = $('.container').outerWidth();
+	var margin = (width - cont) / 2;
+	var wM = cont * 33.333333 / 100 + margin;
+
+	if (width > 767) {
+		$('.main-back').css('left', wM +'px');
+	}
+
+	else {
+		$('.main-back').css('left', '0px');
+	}
+</script>
 
 <section class="content order">
 <div class="container">
@@ -167,10 +181,10 @@ foreach ($products as $item) {
 										{{ __('default.phone_label') }}
 										<abbr class="required" title="{{ __('default.required') }}">*</abbr></label>
 
-									<input type="tel" class="input-text form-control" name="phone" id="billing_phone" placeholder="Phone {{ __('default.phone_input') }}" value="@isset($user->attributes->phone) {{$user->attributes->phone}} @endisset" autocomplete="tel" required />
+									<input type="tel" class="input-text form-control" name="phone" id="billing_phone" placeholder="{{ __('default.phone') }} {{ __('default.phone_input') }}" value="@isset($user->attributes->phone) {{$user->attributes->phone}} @endisset" autocomplete="tel" required />
 								</p>
 
-								<p class="form-row form-row-last form-group validate-required validate-email" id="billing_email_field" data-priority="110" style="width: 47%; float:  right; display:  inline-block;"">
+								<p class="form-row form-row-last form-group validate-required validate-email" id="billing_email_field" data-priority="110" style="width: 47%; float:  right; display:  inline-block;">
 									<label for="billing_email" class="">
 										{{ __('default.email_label') }}
 										<abbr class="required" title="{{ __('default.required') }}">*</abbr></label>
@@ -214,7 +228,7 @@ foreach ($products as $item) {
 
 							<div class="woocommerce-additional-fields__field-wrapper">
 								<p class="form-row form-row-full" id="order_comments_field" data-priority="">
-									<textarea name="comment" class="input-text form-control" id="order_comments" placeholder="Post office number etc"  rows="2" cols="5"></textarea>
+									<textarea name="comment" class="input-text form-control" id="order_comments" placeholder="{{ __('default.comment_placeholder') }}"  rows="2" cols="5"></textarea>
 								</p>
 							</div>
 						</div>
@@ -256,7 +270,7 @@ foreach ($products as $item) {
                                                             @endforeach
 															<li style="display: inline-block">
 																<input type="text" name="without-delivery" value="0" class="without-delivery" disabled style="display: none"/>
-																<p class="no-availible-shipping-method">There are no shipping methods available. Please double check your address, or contact us if you need any help.</p>
+																<p class="no-availible-shipping-method">{{ __('default.no_shipping') }}</p>
 															</li>
 														</ul>
 													</td>

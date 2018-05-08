@@ -39,6 +39,17 @@ class Page extends Model
 	    return $this->hasOne(PageVisits::class);
     }
 
+    /*
+     * Bind with Product model
+     * @return boolean
+     */
+    public function product()
+    {
+        return $this->hasOne(Product::class);
+    }
+
+
+
 	/*
 	 * Convert multivariables collection object to array
 	 * @param object $mvs Multivariables object

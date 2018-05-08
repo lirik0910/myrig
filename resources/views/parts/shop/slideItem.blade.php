@@ -78,4 +78,5 @@
             </p>
         @endif
     </form>
+    <span class="owl-dot"></span>
 </a>

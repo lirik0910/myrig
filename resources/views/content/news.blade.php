@@ -1,8 +1,23 @@
 @extends('layouts.app')
 
 @section('content')
-<main>
-    <div class="main-back"  ></div>
+<main style="width: 100%">
+    <div class="main-back" style="position: absolute;"></div>
+    <script>
+        var width = $(window).width(),
+            cont = $('.container').outerWidth();
+        var margin = (width - cont) / 2;
+        var wM = cont * 33.333333 / 100 + margin;
+
+        if (width > 767) {
+            $('.main-back').css('left', wM +'px');
+        }
+
+        else {
+            $('.main-back').css('left', '0px');
+        }
+    </script>
+
     <section class="content list">
         <div class="container">
             @php
@@ -22,7 +37,7 @@
                 <div class="article-row row">
                     <div class="col-sm-4">
                         <h2 style="word-wrap: break-word"><a href="{{url($article->link)}}" data-wpel-link="internal">{{$article->title}}</a></h2>
-                        <div class="date">@php echo date('d F', strtotime($article->created_at)) @endphp<i class="fa fa-eye"></i>@if($article->visits){{$article->visits->count}}@else 0 @endif</div>
+                        <div class="date">@php echo date('d', strtotime($article->created_at)) . ' ' . __('common.' . strtolower(date('F', strtotime($article->created_at)))) @endphp<i class="fa fa-eye"></i>@if($article->visits){{$article->visits->count}}@else 0 @endif</div>
                     </div>
                     <div class="article-content col-sm-8">
                         <div class="article-text" style="word-wrap: break-word;">

@@ -25,6 +25,7 @@ return [
     'make_order' => 'Checkout',
     'more_info' => 'More info',
     'description' => 'Description',
+    'topic' => 'Topic',
     'payment_methods' => 'Payment Methods',
     'characteristics' => 'Characteristics',
     'in_the_cart' => 'Products in the cart',
@@ -92,6 +93,8 @@ return [
     'delivery' => 'Delivery',
     'self_shipment' => 'Self shipment',
     'approve_order' => 'Approve order',
+    'comment_placeholder' => 'Post office number etc',
+    'no_shipping' => 'There are no shipping methods available. Please double check your address, or contact us if you need any help',
 
     //content.checkout_success
     'order_was_successfully_accepted' => 'Thank you!. Your order was successfully accepted.',
@@ -107,6 +110,7 @@ return [
     'comment' => 'Comment:',
     'phone' => 'Phone:',
     'address_info' => 'Address info',
+    'without_delivery' => 'Without delivery',
 
     'DOWNLOAD_INVOICE' => 'DOWNLOAD INVOICE',
 
@@ -138,6 +142,7 @@ return [
     'last_name' => 'Last Name',
     'delivery_address' => 'Delivery address',
     'items_profile' => 'items',
+    'save' => 'Save',
 
     //content.service
     'local_service' => 'Local service',

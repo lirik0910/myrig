@@ -75,6 +75,7 @@ class Product extends Model
         return $this->belongsToMany(Reports::class, 'report_products');
     }
 
+
 	/**
 	 * Get auto prices settings
 	 * @return boolean

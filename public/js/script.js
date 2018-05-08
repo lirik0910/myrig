@@ -183,6 +183,14 @@ console.log(wM);
 		main.trigger('stop.owl.autoplay');
 		window.clearTimeout();}    	
 	});
+
+	var related = $('.related-slider');
+    related.on('changed.owl.carousel',function(event){
+        transit++;
+        if(transit==ms.length-1){
+            main.trigger('stop.owl.autoplay');
+            window.clearTimeout();}
+    });
   
 
 	$('.contacts ul li').on('click',function () {
