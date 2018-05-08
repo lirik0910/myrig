@@ -110,6 +110,7 @@ return [
     'comment' => 'Коментарий:',
     'phone' => 'Телефон:',
     'address_info' => 'Информация об адресе',
+    'without_delivery' => 'Без доставки',
 
 
     'download_invoice' => 'Загрузить инвойс',

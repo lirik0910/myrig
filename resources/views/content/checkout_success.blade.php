@@ -117,7 +117,7 @@
                                                 </tr>
                                                 <tr>
                                                     <th scope="row">{{ __('default.delivery_checkout_success') }}</th>
-                                                    <td>{{$delivery->title}}</td>
+                                                    <td>@if($delivery->title == 'Without delivery')  {{ __('default.' . str_replace(' ', '_', mb_strtolower($delivery->title))) }} @else {{ $delivery->title }} @endif</td>
                                                 </tr>
                                                 <tr>
                                                     <th scope="row">{{ __('default.payment_type') }}</th>

@@ -110,6 +110,7 @@ return [
     'comment' => 'Comment:',
     'phone' => 'Phone:',
     'address_info' => 'Address info',
+    'without_delivery' => 'Without delivery',
 
     'DOWNLOAD_INVOICE' => 'DOWNLOAD INVOICE',
 

@@ -61,6 +61,7 @@ $secondaryProducts = $select('\App\Model\Shop\Product')
 						@include('parts.shop.slideItem', $item)
 					@endif
 				@endforeach
+
 			</div>
 		</div>
 	</div>
