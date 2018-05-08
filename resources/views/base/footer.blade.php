@@ -295,7 +295,7 @@
 
 
 <!-- <script type="text/javascript" src='https://myrig.com.ua/wp-content/plugins/woocommerce/assets/js/frontend/cart-fragments.min.js?ver=3.2.6'></script> -->
-<script type="text/javascript" src="{{ asset('js/owl.carousel2.min.js?ver=1.12') }}"></script>
+<script type="text/javascript" src="{{ asset('js/owl.carousel.min.js?ver=1.12') }}"></script>
 <script type="text/javascript" src="{{ asset('js/intlTelInput.min.js?ver=1.12') }}"></script>
 <script type="text/javascript" src="{{ asset('js/jquery.fancybox.min.js?ver=1.12') }}"></script>
 <script type="text/javascript" src="{{ asset('js/bootstrapValidator.js?ver=1.12') }}"></script>

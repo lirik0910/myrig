@@ -13,7 +13,7 @@
     $btcPrice = number_format($item->calcBtcPrice(), 4, '.', '');
 @endphp
 
-<a href="{{ asset($item->page->link) }}" class="related-item" data-wpel-link="internal">
+<a href="{{ asset($item->page->link) }}" class="related-item" data-wpel-link="internal" data-dot="<span class='dot' data-id='{{ $i }}'><p class='dashnav-progress'></p></span>">
     <div class="related-title">{{ $item->title }}</div>
 
     <div class="related-img">
