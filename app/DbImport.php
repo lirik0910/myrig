@@ -527,10 +527,12 @@ class DbImport
 
         }
         $contexts = Context::where('title', 'UA')->orWhere('title', 'RU')->get();
+        //var_dump($contexts); die;
         /*
          * Import products
          */
         foreach ($data['products'] as $product){
+            //var_
             foreach ($contexts as $context){
                 //try{
                // $parent_page = Page::where('context_id', $context->id)->where('link', 'shop')->first();
@@ -547,14 +549,18 @@ class DbImport
                 try{
                     $product['page_id'] = 0;
                     $product['context_id'] = $context->id;
+                    if($context->id == 3){
+                       unset($product['id']);
+                    }
                     //var_dump($product); die;
                     Product::create($product);
                 } catch (\Exception $e){
+/*                    if($context->id == 3){
+                        var_dump('RUUUUU'); die;
+                    }*/
                     continue;
                 }
             }
-
-
         }
 
         /*
