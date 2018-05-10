@@ -23,18 +23,6 @@
 
 $product = App\Model\Shop\Product::where('page_id', $it->id)->where('context_id', $context->id)->where('delete', 0)->with('images', 'options')->first();
 //var_dump($it->id); die;
-@endphp
-
-@if($product){
-	<script type="text/javascript">
-		console.log('aasds');
-		window.location = "{ url('shop')}";
-	</script>
-}
-@endif
-
-@php
-
 foreach ($product->options as $item) {
 	if ($item->type->title === 'video') {
 		$video = $item;
