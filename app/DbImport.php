@@ -533,19 +533,19 @@ class DbImport
         foreach ($data['products'] as $product){
             foreach ($contexts as $context){
                 //try{
-                $parent_page = Page::where('context_id', $context->id)->where('link', 'shop')->first();
+               // $parent_page = Page::where('context_id', $context->id)->where('link', 'shop')->first();
 
-                    $page = Page::create([
+/*                    $page = Page::create([
                         'parent_id' => $parent_page->id,
                         'context_id' => $context->id,
                         'view_id' => 5,
                         'link' => 'product/' . $product['articul'],
                         'title' => $product['title'],
                         'description' => '',
-                    ]);
-                    $page = Page::where('context_id', $context->id)->where('link', 'product/' . $product['articul'])->first();
+                    ]);*/
+              //      $page = Page::where('context_id', $context->id)->where('link', 'product/' . $product['articul'])->first();
                 try{
-                    $product['page_id'] = $page->id;
+                    $product['page_id'] = 0;
                     $product['context_id'] = $context->id;
                     //var_dump($product); die;
                     Product::create($product);
