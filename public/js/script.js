@@ -145,7 +145,8 @@ console.log(wM);
 		nav: false,
 		dots: true,
 		loop: true,
-		autoplay:4000,
+		autoplay: true,
+        rewind: true,
 		//onInitialized:stopAuto,
 	   	dotsData:true,
 		animateOut: 'fadeOut',
@@ -155,6 +156,7 @@ console.log(wM);
 		items: 1,
 		slideSpeed: 4000,
 		smartSpeed:1000,
+        rewind: true,
 		nav: false,
 		dots: true,
 		loop: true,
@@ -651,11 +653,13 @@ $(window).on('load',function(){
 		nav: false,
 		dots: true,
 		loop: true,
+        rewind: true,
         //autoplay: 4000,
 		margin:20,
         slideSpeed : 500,
         smartSpeed: 200,
         autoplay: true,
+        afterMove: moved,
         onInitialized: hideDots,
         dotsData:true,
         animateOut: 'fadeOut',
@@ -676,6 +680,10 @@ $(window).on('load',function(){
 			}
 		}
 	});
+
+	function moved(e) {
+            
+    }
 
 	function hideDots(e){
 		//console.log($('.dot'));

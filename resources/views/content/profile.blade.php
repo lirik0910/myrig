@@ -144,7 +144,7 @@
                                                     <div class="order_thumbs">
                                                         <img src="@if(count($product->images)){{asset('uploads/' . App\Model\Shop\ProductImage::where('product_id', $product->id)->first()->name)}}@endif" title="{{$product->title}}">
                                                         <div class="cost">
-                                                            <a href="{{$product->page->link}}" data-wpel-link="internal">{{$product->title}}</a>
+                                                            <a @if(isset($product->page) && !empty($product->page))href="{{$product->page->link}}" @endif data-wpel-link="internal">{{$product->title}}</a>
                                                             <span class="hidden-md">{{ __('default.item_cost') }}</span>
                                                             <span class="table-price">${{ $price }}</span>
                                                             @if($btcPrice > 0)<span class="table-bitcoin">{{ $btcPrice }}<i class="fa fa-bitcoin"></i></span>@endif
@@ -212,7 +212,7 @@
                                                         <div class="order_thumbs">
                                                             <img src="@if(count($product->images)){{asset('uploads/' . $product->images[0]->name)}}@endif" title="{{$product->title}}">
                                                             <div class="cost">
-                                                                <a href="{{$product->page->link}}" data-wpel-link="internal">{{$product->title}}</a>
+                                                                <a @if(isset($product->page) && !empty($product->page))href="{{$product->page->link}}" @endif data-wpel-link="internal">{{$product->title}}</a>
                                                                 <span class="hidden-md">{{ __('default.cost') }}</span>
                                                                 <span class="table-price">${{ $price }}</span>
                                                                 @if($btcPrice != 0)<span class="table-bitcoin">{{ $btcPrice }}<i class="fa fa-bitcoin"></i></span>@endif
