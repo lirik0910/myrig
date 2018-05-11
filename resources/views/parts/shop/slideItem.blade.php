@@ -11,6 +11,7 @@
     }
 
     $btcPrice = number_format($item->calcBtcPrice(), 4, '.', '');
+//var_dump($item); die;
 @endphp
 
 <a href="{{ asset($item->page->link) }}" class="related-item" data-wpel-link="internal" data-dot="<span class='dot' data-id='{{ $i }}'><p class='dashnav-progress'></p></span>">

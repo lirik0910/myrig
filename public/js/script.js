@@ -657,7 +657,9 @@ $(window).on('load',function(){
         smartSpeed: 200,
         autoplay: true,
         onInitialized: hideDots,
-        dotsData:true,
+		onChange: viewDots,
+		onDragged: viewDots,
+        dotsData: true,
         animateOut: 'fadeOut',
         animateIn: 'fadeIn',
 		slideBy: 3, //alternatively you can slide by 1, this way the active slide will stick to the first item in the second carousel
@@ -677,10 +679,15 @@ $(window).on('load',function(){
 		}
 	});
 
+	function viewDots(e) {
+		$('.owl-dots').removeClass('disabled');
+    }
+
 	function hideDots(e){
 		//console.log($('.dot'));
+		$('.owl-dots').removeClass('disabled');
 		$('.dot').each(function (){
-			var id = $(this).data('id');
+			let id = $(this).data('id');
 			console.log(id);
 			if(id % 3 !== 0 ){
 				$(this).hide();
