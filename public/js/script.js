@@ -147,7 +147,7 @@ console.log(wM);
 		loop: true,
 		autoplay:4000,
 		//onInitialized:stopAuto,
-	   dotsData:true,
+	   	dotsData:true,
 		animateOut: 'fadeOut',
 	   animateIn: 'fadeIn'
 	});
@@ -648,20 +648,18 @@ $(window).on('load',function(){
 
 	$('#relatedSlider').owlCarousel({
 		items : 3,
-		dots: true,
 		nav: false,
+		dots: true,
 		loop: true,
+        //autoplay: 4000,
 		margin:20,
         slideSpeed : 500,
         smartSpeed: 200,
-        autoplay:true,
-		dotsData: '<span class="owl-dot"></span>',
-        //onInitialized:stopAuto,
-        //dotsData:true,
-		dotsEach: 3,
+        autoplay: true,
+        onInitialized: hideDots,
+        dotsData:true,
         animateOut: 'fadeOut',
         animateIn: 'fadeIn',
-
 		slideBy: 3, //alternatively you can slide by 1, this way the active slide will stick to the first item in the second carousel
 		responsiveClass:true,
 		responsive:{
@@ -678,6 +676,17 @@ $(window).on('load',function(){
 			}
 		}
 	});
+
+	function hideDots(e){
+		//console.log($('.dot'));
+		$('.dot').each(function (){
+			var id = $(this).data('id');
+			console.log(id);
+			if(id % 3 !== 0 ){
+				$(this).hide();
+			}
+		});
+	}
 /*$('.table-close img').on('click',function () {
 	$(this).parent().parent().remove();
 	var count = $('.table-like div').length;
