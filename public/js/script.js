@@ -655,7 +655,7 @@ $(window).on('load',function(){
         slideSpeed : 500,
         smartSpeed: 200,
         autoplay:true,
-		dotsData: true,
+		dotsData: '<span class="owl-dot"></span>',
         //onInitialized:stopAuto,
         //dotsData:true,
 		dotsEach: 3,
