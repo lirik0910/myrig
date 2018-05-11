@@ -659,7 +659,7 @@ $(window).on('load',function(){
         slideSpeed : 500,
         smartSpeed: 200,
         autoplay: true,
-        afterMove: moved,
+
         onInitialized: hideDots,
         dotsData:true,
         animateOut: 'fadeOut',
@@ -682,7 +682,7 @@ $(window).on('load',function(){
 	});
 
 	function moved(e) {
-            
+
     }
 
 	function hideDots(e){

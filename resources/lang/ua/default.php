@@ -119,7 +119,9 @@ return [
     'read' => 'Читать',
 
     //content.product
+    'day' => 'день',
     'days' => 'дней',
+    'two_days' => 'дня',
 
     //content.profile
     'personal_info' => 'Персональные данные',

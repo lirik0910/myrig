@@ -118,7 +118,9 @@ return [
     'read' => 'Read',
 
     //content.product
+    'day' => 'day',
     'days' => 'days',
+    'two_days' => 'days',
 
     //content.profile
     'personal_info' => 'Personal info',

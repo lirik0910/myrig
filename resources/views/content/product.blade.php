@@ -118,7 +118,7 @@ $payback = $payback->calcPayback($product->id);
 					</a>
 				@endif
 			</form>
-			@if(isset($payback) && !empty($payback)) <div class="tag tag-payback">{{ __('default.payback') }} {{ $payback }} {{ __('default.days') }}</div>@endif
+			@if(isset($payback) && !empty($payback)) <div class="tag tag-payback">{{ __('default.payback') }} {{ $payback }} @if(substr((string)$payback, -1) == 1) {{ __('default.day') }} @elseif(substr((string)$payback, -1) == 2 && $locale !== 'en') {{ __('default.two_days') }} @else {{ __('default.days') }}</div>@endif
 			
 			<div class="single-product-tabs">
 				<div class="product-tab-links">
