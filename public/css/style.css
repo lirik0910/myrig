@@ -2178,6 +2178,7 @@ font-size: 14px;
 }
 .owl-theme .owl-nav.disabled+.owl-dots {
     margin-top: 0;
+    margin-left: 65px;
 }
 .related .owl-theme .owl-dots{
     margin-top: 23px!important;

@@ -31,7 +31,7 @@ $shop = $select('App\Model\Base\Page')
 <section class="slider">
 	<div class="container-fluid">
 		<div class="row">
-			<div class="main-slider owl-carousel owl-theme" id="mainSlider">
+			<div class="main-slider owl-carousel owl-theme" id="relatedSlider">
 			@if (isset($multi['indexSlider']))
 				@foreach ($multi['indexSlider'] as $slide)
 

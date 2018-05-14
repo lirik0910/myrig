@@ -150,7 +150,40 @@ console.log(wM);
 	   	dotsData:true,
 		animateOut: 'fadeOut',
 	   animateIn: 'fadeIn'
+	   
 	});
+	$('#relatedSlider2').owlCarousel({
+		items : 3,
+        slideSpeed : 4000,
+        smartSpeed: 1000,
+		nav: false,
+		dots: true,
+		loop: true,
+        autoplay: 4000,
+		margin:20,
+        //onInitialized:stopAuto,
+       // dotsEach: 3,
+        onInitialized: hideDots,
+        dotsData:true,
+        animateOut: 'fadeOut',
+        animateIn: 'fadeIn',
+		slideBy: 3, //alternatively you can slide by 1, this way the active slide will stick to the first item in the second carousel
+		responsiveClass:true,
+		responsive:{
+			0:{
+				items:1,
+				dots:true
+			},
+			768:{
+				items:2,
+				dots:true
+			},
+			1000:{
+				items:3
+			}
+		}
+	});
+
 	$('.single-slider').owlCarousel({
 		items: 1,
 		slideSpeed: 4000,
@@ -647,35 +680,18 @@ $(window).on('load',function(){
 	}
 
 	$('#relatedSlider').owlCarousel({
-		items : 3,
+		items : 1,
         slideSpeed : 4000,
         smartSpeed: 1000,
 		nav: false,
 		dots: true,
 		loop: true,
         autoplay: 4000,
-		margin:20,
-        //onInitialized:stopAuto,
-       // dotsEach: 3,
-        onInitialized: hideDots,
+		
         dotsData:true,
         animateOut: 'fadeOut',
         animateIn: 'fadeIn',
-		slideBy: 3, //alternatively you can slide by 1, this way the active slide will stick to the first item in the second carousel
-		responsiveClass:true,
-		responsive:{
-			0:{
-				items:1,
-				dots:true
-			},
-			768:{
-				items:2,
-				dots:true
-			},
-			1000:{
-				items:3
-			}
-		}
+		
 	});
 
 	function hideDots(e){
