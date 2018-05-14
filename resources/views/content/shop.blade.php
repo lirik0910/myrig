@@ -58,6 +58,7 @@ $secondaryProducts = $select('\App\Model\Shop\Product')
 			<div id="relatedSlider2" class="related-slider owl-carousel owl-theme">
 				@php
 				$i = 0;
+				//var_dump($secondaryProducts); die;
 				@endphp
 				@foreach ($secondaryProducts as $item)
 					@if (isset($item->page))

@@ -76,6 +76,7 @@ class PageController extends Controller
         }
 
         $page = Page::where('link', $link)->where('context_id', $locale_context_id)->where('delete', 0)->with('view')->first();
+
 		if ($page) {
 		    if ($page->link == 'checkout' || $page->link == 'cart'){
 		        if(count($cart) < 1){
@@ -86,7 +87,7 @@ class PageController extends Controller
             if($page->view->title == 'Product' && $page->product->delete == 1){
                 return redirect('shop');
             }
-//var_dump(MultiVariableContent::multiConvert($page->view->variables)); die;
+
 			return view($page->view->path, [
 				'it' => $page,
 				'get' => $this->get(),

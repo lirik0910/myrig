@@ -113,8 +113,8 @@ foreach($item->categories as $category){
 					</a>
 				@endif
 			</form>
-			
-			@if($payback)<div class='tag tag-payback'>{{ __('default.payback') }} {{ $payback }} {{ __('default.days') }}</div>@endif
+
+			@if(isset($payback) && !empty($payback)) <div class="tag tag-payback">{{ __('default.payback') }} {{ $payback }} @if(substr((string)$payback, -1) == 1) {{ __('default.day') }} @elseif(substr((string)$payback, -1) == 2 && $locale !== 'en') {{ __('default.two_days') }} @else {{ __('default.days') }} @endif</div>@endif
 		</div>
 	</div>
 </div>

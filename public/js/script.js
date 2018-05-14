@@ -689,15 +689,21 @@ $(window).on('load',function(){
         autoplay: 4000,
 		
         dotsData:true,
+
         animateOut: 'fadeOut',
         animateIn: 'fadeIn',
 		
 	});
 
+	function viewDots(e) {
+		$('.owl-dots').removeClass('disabled');
+    }
+
 	function hideDots(e){
 		//console.log($('.dot'));
+		$('.owl-dots').removeClass('disabled');
 		$('.dot').each(function (){
-			var id = $(this).data('id');
+			let id = $(this).data('id');
 			console.log(id);
 			if(id % 3 !== 0 ){
 				$(this).hide();
