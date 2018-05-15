@@ -19,7 +19,7 @@
 
     <div class="related-img">
         @if (isset($item->images[0]))
-            <img width="1000" height="1000" src="{{ $preview(asset('uploads/' . $item->images[0]->name), 215, 215) }}"
+            <img width="1000" height="1000" src="@if(empty($item->images[0])){{ $preview(asset('uploads/' . 'penguins.jpg'), 215, 215) }}@else{{ $preview(asset('uploads/' . $item->images[0]->name), 215, 215) }}@endif"
                  class="attachment-post-thumbnail size-post-thumbnail wp-post-image" alt="previw"/>
         @endif
     </div>

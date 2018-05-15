@@ -58,7 +58,7 @@ $payback = $payback->calcPayback($product->id);
 		<div id="isync1" class="  owl-carousel owl-theme">
 			@foreach ($product->images as $item)
 			<div class="product-item">
-				<img width="300" height="300" src="{{ $preview(asset('uploads/' . $item->name), 300, 300) }}" class="attachment-medium size-medium" alt="img" title="{{ htmlentities($it->title) }}" />
+				<img width="300" height="300" src="@if(empty($item->name)){{ $preview(asset('uploads/' . 'penguins.jpg'), 300, 300) }}@else{{ $preview(asset('uploads/' . $item->name), 300, 300) }}@endif" class="attachment-medium size-medium" alt="img" title="{{ htmlentities($it->title) }}" />
 			</div>
 			@endforeach
 		</div>
@@ -66,7 +66,7 @@ $payback = $payback->calcPayback($product->id);
 		<div id="isync2" class="visible-md owl-carousel owl-theme">
 			@foreach ($product->images as $item)
 			<div class="product-item">
-				<img width="47" height="47" src="{{ $preview(asset('uploads/' . $item->name), 47, 47) }}" class="attachment-i47 size-i47" alt="img" title="{{ htmlentities($it->title) }}" />
+				<img width="47" height="47" src="@if(empty($item->name)){{ $preview(asset('uploads/' . 'penguins.jpg'), 47, 47) }}@else{{ $preview(asset('uploads/' . $item->name), 47, 47) }}@endif" class="attachment-i47 size-i47" alt="img" title="{{ htmlentities($it->title) }}" />
 			</div>
 			@endforeach
 		</div>
