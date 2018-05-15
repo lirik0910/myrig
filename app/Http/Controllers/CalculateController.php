@@ -1,10 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Model\Base\Context;
 use App\Model\Base\Variable;
 use App\Model\Base\VariableContent;
 use Illuminate\Http\Request;
 use App\Model\Base\Setting;
+use Illuminate\Support\Facades\App;
 use App\Model\Shop\ExchangeRate;
 use App\SimpleHtmlDom as simple_html_dom;
 use App\Model\Base\Page;
@@ -366,9 +368,29 @@ class CalculateController
             //var_dump($energy_costs); die;
         } else {
             $qty = $request->get('qty') ? $request->get('qty') : 1;
-            $page = Page::where('link', 'calculator')->first();
-            $hosting = $page->view->variables->where('title', 'hosting')->first()->variableContent[0]->content;
-            //var_dump($hosting); die;
+
+            switch ($request->getSchemeAndHttpHost()) {
+                case config('app.ua_domain'):
+                    $locale = 'ua';
+                    break;
+
+                case config('app.ru_domain'):
+                    $locale = 'ru';
+                    break;
+
+                case config('app.en_domain'):
+                    $locale = 'en';
+                    break;
+
+                default:
+                    $locale = 'ua';
+                    break;
+            }
+
+            $context = Context::where('title', $locale)->first();
+            $page = Page::where('link', 'calculator')->where('context_id', $context->id)->first();
+
+            $hosting = $page->variableContents[0]->content;
 
             $energy_costs = $hosting * $qty;
             $energy = 1;
