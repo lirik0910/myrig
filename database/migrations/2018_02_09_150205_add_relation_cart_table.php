@@ -23,8 +23,8 @@ class AddRelationCartTable extends Migration
 		Schema::table('carts', function (Blueprint $table) {
 			$table->foreign('product_id')
 				->references('id')
-				->on('products')
-				->onDelete('cascade');
+				->on('products');
+				//->onDelete('cascade');
 		});
 	}
 

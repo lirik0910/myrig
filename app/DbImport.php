@@ -590,11 +590,11 @@ class DbImport
          * Import carts
          */
         foreach ($data['carts'] as $cart){
-            try{
+            //try{
                 Cart::create($cart);
-            } catch (\Exception $e){
+           // } catch (\Exception $e){
                 continue;
-            }
+            //}
 
         }
 
