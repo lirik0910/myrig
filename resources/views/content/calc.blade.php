@@ -128,7 +128,7 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <input type="submit" class="button-green" value="{{__('default.calculate')}}">
+                                        <input type="submit" id="calcul" disabled="disabled" class="button-green" value="{{__('default.calculate')}}">
                                         <input type="hidden" value="calc_btc_profit" name="action">
                                         <input type="hidden" value="BTC" class="currencyType" name="currency">
                                     </form>							</div>
@@ -184,62 +184,7 @@
                             <!--INCOME TABLE BEGIN-->
                             <div class="">
                                 <div class="table--responsive income-table bg-white">
-
-                                    <div class="income-table__inner">
-                                        <div class="income-days-title ">{{ __('default.calculation') }}</div>
-                                    </div>
-
-                                    <div class="income-table__title">
-                                        <div class="income-table__title--item">
-                                            <div class="income-icon income-icon-1">BTC</div>
-                                            <div class="income-icon income-icon-2">USD</div>
-                                            <div class="income-icon income-icon-3">RUB</div>
-                                            <div class="income-icon income-icon-4">UAH &#8372;</div>
-                                        </div>
-                                    </div>
-
-                                    <div class="income-table__inner">
-                                        <div class="income-table__inner-title">{{ __('default.income') }}</div>
-                                        <div class="income-table__item">
-                                            <div class="income-icon income-icon-1">BTC</div>
-                                            <div class="income-number">-</div>
-                                            <div class="income-icon income-icon-2">USD</div>
-                                            <div class="income-number">-</div>
-                                            <div class="income-icon income-icon-3">RUB</div>
-                                            <div class="income-number">-</div>
-                                            <div class="income-icon income-icon-4">UAH</div>
-                                            <div class="income-number">-</div>
-                                        </div>
-                                    </div>
-
-                                    <div class="income-table__inner">
-                                        <div class="income-table__inner-title">{{ __('default.expenses') }}</div>
-                                        <div class="income-table__item">
-                                            <div class="income-icon income-icon-1">BTC</div>
-                                            <div class="income-number">-</div>
-                                            <div class="income-icon income-icon-2">USD</div>
-                                            <div class="income-number">-</div>
-                                            <div class="income-icon income-icon-3">RUB</div>
-                                            <div class="income-number">-</div>
-                                            <div class="income-icon income-icon-4">UAH</div>
-                                            <div class="income-number">-</div>
-                                        </div>
-                                    </div>
-
-                                    <div class="income-table__inner">
-                                        <div class="income-table__inner-title">{{ __('default.profit') }}</div>
-                                        <div class="income-table__item">
-                                            <div class="income-icon income-icon-1">BTC</div>
-                                            <div class="income-number">-</div>
-                                            <div class="income-icon income-icon-2">USD</div>
-                                            <div class="income-number">-</div>
-                                            <div class="income-icon income-icon-3">RUB</div>
-                                            <div class="income-number">-</div>
-                                            <div class="income-icon income-icon-4">UAH</div>
-                                            <div class="income-number">-</div>
-                                        </div>
-                                    </div>
-
+                                    @include('parts.calculator.result')
                                 </div>
                             </div>
                             <!--INCOME TABLE END-->
