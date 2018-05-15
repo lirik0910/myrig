@@ -210,8 +210,8 @@ jQuery(document).ready(function ($) {
 		}
 	}*/
    
-/*	var transit=0;
-	main.on('changed.owl.carousel',function(event){
+	var transit=0;
+/*	main.on('changed.owl.carousel',function(event){
 		transit++;
 		if(transit==ms.length-1){
 		main.trigger('stop.owl.autoplay');
@@ -705,7 +705,7 @@ $(window).on('load',function(){
 		$('.owl-dots').removeClass('disabled');
 		$('.dot').each(function (){
 			let id = $(this).data('id');
-			console.log(id);
+			//console.log(id);
 			if(id % 3 !== 0 ){
 				$(this).hide();
 			}
