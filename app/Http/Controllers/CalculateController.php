@@ -202,7 +202,7 @@ class CalculateController
 
         $hashrate = explode(' ', $data['hashrate']);
         $data['hashrate'] = $hashrate[0] . $hashrate[1] . ' ' . $hashrate[2];
-
+//var_dump(App::getLocale()); die;
         if ($die != 1 && $request->post('action') != 'calc_btc_profit') {
             return view('parts/calculator/network_status', ['data' => $data, 'TH' => $TH, 'P' => $P, 'currency' => $currency]);
         }  else
@@ -295,7 +295,7 @@ class CalculateController
         $H = 1;
 
         $P =  number_format(($t*$R*$H)/($D*(2**32)), 8);
-
+//var_dump(App::getLocale()); die;
         //var_dump($D, $data, ); die;
         if ($request->post('action') != 'calc_btc_profit' && $die != 1) {
             return view('parts/calculator/network_status', ['btc' => 1, 'data' => $data, 'TH' => 'T', 'P' => $P, 'D' => $D, 'currency' => 'BTC']);
@@ -369,7 +369,7 @@ class CalculateController
         } else {
             $qty = $request->get('qty') ? $request->get('qty') : 1;
 
-            switch ($request->getSchemeAndHttpHost()) {
+/*            switch ($request->getSchemeAndHttpHost()) {
                 case config('app.ua_domain'):
                     $locale = 'ua';
                     break;
@@ -385,11 +385,14 @@ class CalculateController
                 default:
                     $locale = 'ua';
                     break;
-            }
+            }*/
 
+            //App::setLocale($locale);
+            $locale = App::getLocale();
+//var_dump($locale); die;
             $context = Context::where('title', $locale)->first();
             $page = Page::where('link', 'calculator')->where('context_id', $context->id)->first();
-
+//var_dump($page->variableContents); die;
             $hosting = $page->variableContents[0]->content;
 
             $energy_costs = $hosting * $qty;

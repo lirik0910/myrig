@@ -17,8 +17,8 @@ class CheckLocale
     public function handle($request, Closure $next)
     {
         //var_dump($request); die;
-        if($request->method() == 'GET'){
-            $current_domain = $_SERVER['HTTP_HOST'];
+        if($request->method() == 'GET' || $request->method() == 'POST'){
+            $current_domain = $request->getSchemeAndHttpHost();
 
             $clientIp = $_SERVER['REMOTE_ADDR'];
             $locale = strtolower(geoip($clientIp)->iso_code);
@@ -33,8 +33,11 @@ class CheckLocale
 /*            if(!session()->get('locale')){
                 session()->put('locale', $locale);
             }*/
+
             if($locale == 'ua' && $current_domain !== config('app.ua_domain') || $locale == 'ru' && $current_domain !== config('app.ru_domain') || $locale =='en' && $current_domain !== config('app.en_domain')){
+
                 if(session()->get('locale')){
+                  //  var_dump('Evil!!'); die;
                     switch (session()->get('locale')){
                         case 'ua':
                             return redirect(config('app.ua_domain'));
@@ -49,6 +52,26 @@ class CheckLocale
                             break;
                     }
                 }
+            }
+
+            switch ($current_domain) {
+                case config('app.ua_domain'):
+                   // $locale = 'ua';
+                    App::setLocale('ua');
+                    break;
+
+                case config('app.ru_domain'):
+                    App::setLocale('ru');
+                    //$locale = 'ru';
+                    break;
+
+                case config('app.en_domain'):
+                    //$locale = 'en';
+                    App::setLocale('en');
+                    break;
+
+                default:
+                    break;
             }
         }
         //var_dump($locale); die;

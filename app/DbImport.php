@@ -586,18 +586,20 @@ class DbImport
             }
         }
 
+       // $broken_carts = [];
         /*
          * Import carts
          */
         foreach ($data['carts'] as $cart){
-            //try{
+            try{
                 Cart::create($cart);
-           // } catch (\Exception $e){
+            } catch (\Exception $e){
+                //$broken_carts[] = $cart;
                 continue;
-            //}
-
+            }
         }
 
+        //var_dump(count($broken_carts)); die;
         /*
          * Import news
          */

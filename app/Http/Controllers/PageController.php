@@ -30,7 +30,7 @@ class PageController extends Controller
         $import->process();*/
         //var_dump($request->getSchemeAndHttpHost(), env('UA_DOMAIN'), env('RU_DOMAIN'), env('EN_DOMAIN'), config('app.en_domain')); die;
 //var_dump($request); die;
-        switch ($request->getSchemeAndHttpHost()) {
+/*        switch ($request->getSchemeAndHttpHost()) {
             case config('app.ua_domain'):
                 $locale = 'ua';
                 break;
@@ -45,10 +45,11 @@ class PageController extends Controller
 
             default:
                 break;
-        }
+        }*/
 //var_dump($locale); die;
-        App::setLocale($locale);
-
+        //App::setLocale($locale);
+        $locale = App::getLocale();
+//var_dump($locale); die;
         //$cart = $_SESSION['cart'];
 
         if(!isset($_SESSION['cart'])){

@@ -32,6 +32,7 @@
 						currency:obj.currencyType, 
 					},
 					success: function(data) {
+						$('#calcul').removeAttr('disabled');
 						$('.network-status').html(data);
 						if (obj.currencyType == 'LTC' || obj.currencyType == 'DASH')
 							$('#quantity').attr('readonly','readonly');
@@ -91,7 +92,7 @@
 		
 		$(window).load(function(){
 			update_rates($('#rialto').val());
-			update_net_status()
+			update_net_status();
 		});
 		//$( "#quantity" ).spinner();
 		/**
@@ -100,7 +101,7 @@
 		
 		$('.calculator-form').submit(function(e){
 			e.preventDefault();
-			calc_btc(1);
+			 calc_btc(1);
 		});
 
 		function calc_btc(val) {
@@ -256,6 +257,7 @@
 					 
 				},
 				success: function(data) {
+					$('#calcul').removeAttr('disabled');
 					$('.network-status').html(data)
 				}
 			})
