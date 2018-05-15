@@ -34,7 +34,7 @@ class CheckLocale
                 session()->put('locale', $locale);
             }*/
 
-            if($locale == 'ua' && $current_domain !== config('app.ua_domain') || $locale == 'ru' && $current_domain !== config('app.ru_domain') || $locale =='en' && $current_domain !== config('app.en_domain')){
+/*            if($locale == 'ua' && $current_domain !== config('app.ua_domain') || $locale == 'ru' && $current_domain !== config('app.ru_domain') || $locale =='en' && $current_domain !== config('app.en_domain')){
 
                 if(session()->get('locale')){
                   //  var_dump('Evil!!'); die;
@@ -52,7 +52,7 @@ class CheckLocale
                             break;
                     }
                 }
-            }
+            }*/
 
             switch ($current_domain) {
                 case config('app.ua_domain'):
