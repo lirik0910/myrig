@@ -9,13 +9,13 @@ jQuery(document).ready(function ($) {
 		cont = $('.container').outerWidth();
 
 	var margin = (width - cont) / 2;
-	console.log(margin);
-	console.log(cont);
+	//console.log(margin);
+	//console.log(cont);
 /*    if($('#mapField').attr('data-lat')){
         margin = margin - 21;
     }*/
 	wM = cont * 33.333333 / 100 + margin;
-console.log(wM);
+//console.log(wM);
 	if (width > 767) {
 		$('.main-back').css('left', wM +'px');
 	}
@@ -132,11 +132,12 @@ console.log(wM);
 			$(this).val(countryData.dialCode) 
 		});
 		
-	 $(window).on('load resize',function(){
+	$(window).on('load resize',function(){
 		var hfooter=$('.footer').height();
 		var hw=$(window).height();
 		$('main').css('minHeight',hw-hfooter+'px');
-	 });
+	});
+
 	var main=$('.main-slider');
 	$('#mainSlider').owlCarousel({
 		items: 1,
@@ -152,14 +153,14 @@ console.log(wM);
 	   animateIn: 'fadeIn'
 	   
 	});
-	$('#relatedSlider2').owlCarousel({
+	$('#relatedSlider').owlCarousel({
 		items : 3,
-        slideSpeed : 4000,
-        smartSpeed: 1000,
+        slideSpeed : 500,
+        smartSpeed: 200,
 		nav: false,
 		dots: true,
 		loop: true,
-        autoplay: 4000,
+        autoplay: 500,
 		margin:20,
         //onInitialized:stopAuto,
        // dotsEach: 3,
@@ -209,13 +210,13 @@ console.log(wM);
 		}
 	}*/
    
-	var transit=0;
+/*	var transit=0;
 	main.on('changed.owl.carousel',function(event){
-		transit++;    	
+		transit++;
 		if(transit==ms.length-1){
 		main.trigger('stop.owl.autoplay');
-		window.clearTimeout();}    	
-	});
+		window.clearTimeout();}
+	});*/
 
 	var related = $('.related-slider');
     related.on('changed.owl.carousel',function(event){
@@ -679,7 +680,7 @@ $(window).on('load',function(){
 
 	}
 
-	$('#relatedSlider').owlCarousel({
+/*	$('#relatedSlider').owlCarousel({
 		items : 1,
         slideSpeed : 4000,
         smartSpeed: 1000,
@@ -693,7 +694,7 @@ $(window).on('load',function(){
         animateOut: 'fadeOut',
         animateIn: 'fadeIn',
 		
-	});
+	});*/
 
 	function viewDots(e) {
 		$('.owl-dots').removeClass('disabled');
