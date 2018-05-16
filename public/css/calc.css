@@ -31,6 +31,7 @@
 	-o-transition: all 0.2s ease-in;
 	-webkit-transition: all 0.2s ease-in;
 	transition: all 0.2s ease-in;
+	font: 300 16px/50px 'Roboto', sans-serif !important;
 }
 
 .select-styled:after {

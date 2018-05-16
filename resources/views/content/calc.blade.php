@@ -63,16 +63,8 @@
                                                 }
                                             //var_dump($allowedDevices); die;
                                             @endphp
-                                            <div class="calculator-form--item">
-                                                <div class="width-60">
-                                                    <select id="device" name="device" class="calc-select">
-                                                        <option value="hide" >{{__('default.device')}}</option>
-                                                        <option value="" data-hr="0">{{__('default.manual_input')}}</option>
-                                                        @isset($allowedDevices)
-                                                            @foreach($allowedDevices as $device)
-                                                                <option data-currency="{{$device[3]}}" data-hr="{{$device[1]}}" data-en="{{$device[2]}}" value="{{$device[0]}}">{{$device[0]}}</option>
-                                                            @endforeach
-                                                        @endisset
+                                            @include('parts.calculator.calculator_form_item')
+                                            
                                                         <!--<option  data-currency="BTC,BCH" data-hr="4.73" data-en="1.43" value="ANTMINER S7 4.7Th/s">ANTMINER S7 4.7Th/s</option>
                                                         <option  data-currency="BTC,BCH" data-hr="8.6" data-en="0.93" value="ANTMINER R4 8.6Th/s">ANTMINER R4 8.6Th/s</option>
                                                         <option  data-currency="BTC,BCH" data-hr="12.5" data-en="1.73" value="ANTMINER T9 12.5Th/s">ANTMINER T9 12.5Th/s</option>
@@ -89,17 +81,6 @@
                                                     <div class="btn-count btn-count-plus"><i class="fa fa-plus"></i></div>
                                                     <div class="btn-count btn-count-minus"><i class="fa fa-minus"></i></div>
                                                 </span>-->
-                                                <input type="number"  step="1" class="quantity width-33 quantity-center" id="quantity" name="qty" placeholder="1" min="1" value="1" readonly>
-                                            </div>
-                                            <div class="calculator-form--item cur-LTC">
-                                                <input type="number" step="0.01" class="quantity width-60 hash" name="hash" placeholder="{{ __('default.input_hashrate') }}"  >
-                                                <div class="width-33 cur-LTC-ul">
-                                                    <select id="ghs" name="powers" class="calc-select">
-                                                        <option  value="0.001" selected >TH/s</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
                                         <div class="calculator-form--item kvtch">
                                             <input type="number"  step="0.01" class="quantity width-60 energy" name="energy" placeholder="{{__('default.energy_consumption')}}">
                                             <div class="width-33">
@@ -110,7 +91,7 @@
                                         </div>
                                         <div class="radio-buttons calculator-form--item">
                                             <input type="radio" name="radio" class="radio" id="radio1"   value="1">
-                                            <label for="radio1" class="hosting-label">{{ __('default.hosting_title') }}<b class="tooltip">i<span class="tooltiptext">{{__('default.equipment_placement_desk')}}</span></b></label>
+                                            <label for="radio1" class="hosting-label">{{__('default.hosting_title') }}<b class="tooltip">i<span class="tooltiptext">{{__('default.equipment_placement_desk')}}</span></b></label>
 
                                             <input type="radio" name="radio" class="radio" id="radio2" value="2" checked>
                                             <label for="radio2">{{__('default.local_placement')}}<b class="tooltip">i<span class="tooltiptext">{{__('default.local_device_placement')}}</span></b></label>
