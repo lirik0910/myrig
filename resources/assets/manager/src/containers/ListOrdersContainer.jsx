@@ -350,7 +350,7 @@ class ListOrdersContainer extends Component {
                         <b>{item.order_deliveries.delivery.title}</b>
 							</div> : null}
 						</div>
-						: null },
+						: null }
 						</div>,
 				costRow: <div className={classes.costCell}>
 						<div>
