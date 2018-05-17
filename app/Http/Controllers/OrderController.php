@@ -13,6 +13,7 @@ use App\Model\Shop\OrderDelivery;
 use App\Model\Shop\Cart;
 use App\Mail\MailClass;
 use Illuminate\Support\Facades\Mail;
+use App\Model\Shop\ProductAutoPrice;
 
 class OrderController extends Controller
 {
@@ -119,6 +120,21 @@ class OrderController extends Controller
         foreach ($cart as $productId => $count){
             $product = Product::where('id', $productId)->first();
             if($product->auto_price){
+                $auto_price_model = ProductAutoPrice::where('product_id', $productId)->first();
+                $btcCost = $product->calcBtcPrice();
+                $cost = $product->price;
+                $order->carts()->create([
+                    'order_id' => $order->id,
+                    'product_id' => $productId,
+                    'count' => $count,
+                    'cost' => $cost,
+                    'btcCost' => $btcCost,
+                    'fes' => $auto_price_model->fes_price,
+                    'warranty' => $auto_price_model->warranty_price,
+                    'prime_cost' => $auto_price_model->prime_price,
+                    'delivery_cost' => $auto_price_model->delivery_price,
+                    'profit' => $auto_price_model->profit_price
+                ]);
                 $cost = $product->calcAutoPrice();
             } else{
                 $cost = $product->price;

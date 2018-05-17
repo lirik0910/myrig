@@ -30,36 +30,38 @@ class ExchangeRate extends Model
 		$valueCustom = Setting::where('title', 'rate.value_custom')->first();
 
 		$total = 0;
-		if ($valueSize->value === 'max') {
-			foreach ($shop as $item) {
-				$v = (float) $item->value;
+		
+			if ($valueSize->value === 'max') {
+				foreach ($shop as $item) {
+					$v = (float) $item->value;
 
-				if ($total < $v) {
-					$total = $v;
+					if ($total < $v) {
+						$total = $v;
+					}
 				}
 			}
-		}
 
-		if ($valueSize->value === 'min') {
-			$first = $shop->first();
-			$total = (float) $first->value;
+			if ($valueSize->value === 'min') {
+				$first = $shop->first();
+				$total = (float) $first->value;
 
-			foreach ($shop as $item) {
-				$v = (float) $item->value;
-				if ($total > $v) {
-					$total = $v;
+				foreach ($shop as $item) {
+					$v = (float) $item->value;
+					if ($total > $v) {
+						$total = $v;
+					}
 				}
 			}
-		}
 
-		if ($valueType->value === 'usd') {
-			$total = $total + (float) $valueCustom->value;
-		}
+			if ($valueType->value === 'usd') {
+				$total = $total + (float) $valueCustom->value;
+			}
 
-		if ($valueType->value === 'percent') {
-			$x = ((float) $valueCustom->value * $total) / 100;
-			$total = $total + $x;
-		}
+			if ($valueType->value === 'percent') {
+				$x = ((float) $valueCustom->value * $total) / 100;
+				$total = $total + $x;
+			}
+		
 
 		$this->value = $total;
 		return $total;
