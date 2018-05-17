@@ -10,6 +10,7 @@ class ZendeskController
 {
     public function createTicket(Request $request){
         $data = $request->post();
+      //  var_dump($data); die;
         //logger($data);
 //var_dump($data); die;
         //comment

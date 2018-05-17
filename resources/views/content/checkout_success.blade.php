@@ -69,7 +69,7 @@
                                             {{ __('default.date')}} 						<strong>@php echo date('d-m-Y', strtotime($order->created_at)) @endphp</strong>
                                         </li>
                                         <li class="woocommerce-order-overview__total total">
-                                            {{ __('default.total_checkout_success')}}						<strong><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#36;</span>{{ number_format($order->cost, 2, '.', '') }}</span></strong>
+                                            {{ __('default.total_checkout_success') }}						<strong><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#36;</span>{{ number_format($order->cost, 2, '.', '') }}</span></strong>
                                         </li>
                                         <li class="woocommerce-order-overview__payment-method method">
                                             {{ __('default.payment')}}						<strong>{{$payment->title}}</strong>

@@ -100,6 +100,7 @@ return [
     'order_was_successfully_accepted' => 'Thank you!. Your order was successfully accepted.',
     'order_number' => 'Order number:',
     'date' => 'Date:',
+    'total_checkout_success' => 'Total cost:',
     'payment' => 'Payment:',
     'info_about_order' => 'Info about order',
     'product' => 'Product',
