@@ -61,9 +61,9 @@
                                                         $allowedDevices[] = $device;
                                                     }
                                                 }
-                                            //var_dump($allowedDevices); die;
+                                           // var_dump($allowedDevices); die;
                                             @endphp
-                                            @include('parts.calculator.calculator_form_item')
+                                            @include('parts.calculator.calculator_form_item', ['devices' => $allowedDevices])
                                             
                                                         <!--<option  data-currency="BTC,BCH" data-hr="4.73" data-en="1.43" value="ANTMINER S7 4.7Th/s">ANTMINER S7 4.7Th/s</option>
                                                         <option  data-currency="BTC,BCH" data-hr="8.6" data-en="0.93" value="ANTMINER R4 8.6Th/s">ANTMINER R4 8.6Th/s</option>
