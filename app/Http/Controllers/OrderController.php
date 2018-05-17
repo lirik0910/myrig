@@ -138,7 +138,7 @@ class OrderController extends Controller
                 $cost = $product->calcAutoPrice();
             } else{
                 $cost = $product->price;
-            }
+            
 //var_dump($cost, $count, $productId); die;
             $btcCost = $product->calcBtcPrice();
 //var_dump($btcCost); die;
@@ -149,6 +149,7 @@ class OrderController extends Controller
                 'cost' => $cost,
                 'btcCost' => $btcCost
             ]);
+         }
         }
 
         $order->cost = $order->countCost();
