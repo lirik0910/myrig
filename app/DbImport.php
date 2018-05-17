@@ -660,11 +660,11 @@ class DbImport
          * Import order logs
          */
         foreach ($data['logs'] as $log){
-            //try{
+            try{
                 OrderLog::create($log);
-/*            } catch (Exeption $e){
-
-            }*/
+            } catch (\Exception $e){
+                continue;
+            }
         }
     }
 
