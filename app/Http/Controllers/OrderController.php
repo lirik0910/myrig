@@ -120,36 +120,35 @@ class OrderController extends Controller
         foreach ($cart as $productId => $count){
             $product = Product::where('id', $productId)->first();
             if($product->auto_price){
-                $auto_price_model = ProductAutoPrice::where('product_id', $productId)->first();
                 $btcCost = $product->calcBtcPrice();
+                $autoprice_data = $product->calcAutoPrice(true);
+
+                $order->carts()->create([
+                    'order_id' => $order->id,
+                    'product_id' => $productId,
+                    'count' => $count,
+                    'cost' => $autoprice_data['total'],
+                    'btcCost' => $btcCost,
+                    'fes' => $autoprice_data['fes'],
+                    'warranty' => $autoprice_data['warranty'],
+                    'prime_cost' => $autoprice_data['prime'],
+                    'delivery_cost' => $autoprice_data['delivery'],
+                    'profit' => $autoprice_data['profit'],
+                ]);
+
+            } else{
                 $cost = $product->price;
+            
+                $btcCost = $product->calcBtcPrice();
+
                 $order->carts()->create([
                     'order_id' => $order->id,
                     'product_id' => $productId,
                     'count' => $count,
                     'cost' => $cost,
-                    'btcCost' => $btcCost,
-                    'fes' => $auto_price_model->fes_price,
-                    'warranty' => $auto_price_model->warranty_price,
-                    'prime_cost' => $auto_price_model->prime_price,
-                    'delivery_cost' => $auto_price_model->delivery_price,
-                    'profit' => $auto_price_model->profit_price
+                    'btcCost' => $btcCost
                 ]);
-                $cost = $product->calcAutoPrice();
-            } else{
-                $cost = $product->price;
-            
-//var_dump($cost, $count, $productId); die;
-            $btcCost = $product->calcBtcPrice();
-//var_dump($btcCost); die;
-            $order->carts()->create([
-                'order_id' => $order->id,
-                'product_id' => $productId,
-                'count' => $count,
-                'cost' => $cost,
-                'btcCost' => $btcCost
-            ]);
-         }
+            }
         }
 
         $order->cost = $order->countCost();

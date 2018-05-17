@@ -19,9 +19,10 @@
 
     <div class="width-33 cur-LTC-ul">
         <select id="ghs" name="powers" class="calc-select">
-            @if(isset($cur) and $cur == 'LTC')
+
+            @if(isset($cur) && $cur == 'LTC')
                 <option value="1" selected>MH/s</option>
-            @elseif(isset($cur) and $cur == 'DASH')
+            @elseif(isset($cur) && $cur == 'DASH')
                 <option value="1" selected>GH/s</option>
             @else
                 <option  value="0.001" selected >TH/s</option>

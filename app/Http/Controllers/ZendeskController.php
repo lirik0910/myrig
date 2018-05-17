@@ -11,7 +11,7 @@ class ZendeskController
 {
     public function createTicket(Request $request){
         $data = $request->post();
-        
+
         try{
             Zendesk::tickets()->create([
                 'subject' => $data['subject'],

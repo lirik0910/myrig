@@ -40,26 +40,6 @@ class CreateCartTable extends Migration
 				->default(1)
 				->comment('Products count');
 
-			$table->float('fes', 2, false, true)
-				->nullable(true)
-				->comment('FES constant');
-
-			$table->float('warranty', false, true)
-				->nullable(true)
-				->comment('Warranty of product');
-
-			$table->float('prime_cost', false, true)
-				->nullable(true)
-				->comment('Prime cost of product');
-
-			$table->float('delivery_cost', false, true)
-			   ->nullable(true)
-			   ->comment('Delivery cost of product');
-
-			$table->float('profit', false, true)
-				->nullable(true)
-				->comment('Profit of product');
-
 			$table->timestamps();
 		});
 	}

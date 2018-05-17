@@ -315,7 +315,7 @@ class Product extends Model
 	 * Calculate auto-price
 	 * @return float|string|boolean
 	 */
-	public function calcAutoPrice()
+	public function calcAutoPrice($for_order = false)
 	{
 		$params = $this->productAutoPrices()->first();
 
@@ -368,6 +368,17 @@ class Product extends Model
         }
 
 		$total = $prime_price + $delivery_price + $fes_price + $profit_price + $warranty_price;
+
+		if($for_order){
+		    return [
+		        'total' => $total,
+                'fes' => $fes_price,
+                'profit' => $profit_price,
+                'delivery' => $delivery_price,
+                'warranty' => $warranty_price,
+                'prime' => $prime_price
+            ];
+        }
 
 		return $total;
 	}
