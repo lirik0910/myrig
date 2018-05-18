@@ -5,15 +5,13 @@ namespace App\Http\Controllers;
 use GuzzleHttp\Exception\RequestException;
 use Huddle\Zendesk\Facades\Zendesk;
 use Illuminate\Http\Request;
+use Validator;
 
 class ZendeskController
 {
     public function createTicket(Request $request){
         $data = $request->post();
-      //  var_dump($data); die;
-        //logger($data);
-//var_dump($data); die;
-        //comment
+
         try{
             Zendesk::tickets()->create([
                 'subject' => $data['subject'],
@@ -21,6 +19,7 @@ class ZendeskController
                 'email' => $data['email'],
                 'topic' => $data['topic'],
                 'description' => $data['message'],
+                'image' => $data['file']
             ]);
         } catch (RequestException $e){
             $requestException = RequestException::create($e->getRequest(), $e->getResponse(), $e);
