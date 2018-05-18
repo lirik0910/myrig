@@ -20,6 +20,7 @@ jQuery(document).ready(function ($) {
 		e.preventDefault();		      
 		$('body').animate({'opacity' : 0.7}, 400)
         var form = $(this);
+        form.find('.faspin').html('<i class="fa fa-cog fa-spin"></>');
 		console.log(form.find('input'));
         var fd = {};
 
@@ -292,6 +293,7 @@ jQuery(document).ready(function ($) {
 			})
 			$(this).on('success.form.bv', function(e) {
 				e.preventDefault();
+				$(this).find('.faspin').html('<i class="fa fa-cog fa-spin"></i>');
 				$('body').animate({
 					'opacity': 0.7
 				}, 400);

@@ -172,6 +172,7 @@
 						<input id="name" type="text" name="name" class="form-control" placeholder="{{ __('default.name') }}" required="required" data-bv-message=" " data-bv-remote-message="Email уже занят"/></div>
 					<div class="form-group">
 						<input type="tel" name="tel" class="form-control" required="required" data-bv-message=" " placeholder="{{ __('default.phone') }}"/></div>
+						<div class="faspin"><i class="fa fa-cog fa-spin" hidden="hidden"></i></div>
 					<div class="form-group">
 						<input type="submit" name="submit" value="{{ __('default.request_a_call') }}" class="btn-default btn-subscribe"/>
 					</div>
@@ -212,6 +213,7 @@
 
 					<input type="hidden" name="action" value="ticket_ajax_request">
 					<input type="hidden" name="subject" value="Тикет - Bitmain">
+					<div class="faspin"><i class="fa fa-cog fa-spin" hidden="hidden"></i></div>
 					<div class="form-group">
 						<input type="submit" name="submit" value="{{ __('default.send') }}" class="btn-default btn-subscribe"/>
 					</div>

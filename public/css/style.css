@@ -503,6 +503,10 @@ a:hover,a:focus{
     width: 100%;
 }
 
+.refresh{
+    display:none!important;
+}
+
 
 .navbar-toggle .icon-bar {
     display: block;
