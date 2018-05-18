@@ -14,33 +14,50 @@
 
     $btcPrice = number_format($item->calcBtcPrice(), 4, '.', '');
 
-foreach($item->categories as $category){
-    if ($category->title == 'Base'){
-        $payback = new App\Http\Controllers\ProductController();
-		$payback = $payback->calcPayback($item->id);
-    }
-}
-    //$payback = new App\Http\Controllers\ProductController();
-    //$payback = $payback->calcPayback($item->id);
-//var_dump($payback); die;
+	foreach($item->categories as $category){
+		if ($category->title == 'Base'){
+			$payback = new App\Http\Controllers\ProductController();
+			$payback = $payback->calcPayback($item->id);
+		}
+	}
+
+	if($locale == 'en'){
+		$default_img = 'eng.no-photo.jpg';
+	} else{
+		$default_img = 'ru.no-photo.jpeg';
+	}
+
 @endphp
 <div class="article-row row">
 	<div class="col-sm-4">
 		<div class="slider-tag"></div>
-		<div class="itemSlider owl-carousel owl-theme">
-			@foreach($item->images as $image)
-				<div class="product-item @if($loop->first) active @endif">
-					<img width="300" height="300" src="@if(empty($image->name)){{ $preview(asset('uploads/' . 'penguins.jpg'), 300, 300) }}@else{{ $preview(asset('uploads/' . $image->name), 300, 300) }}@endif" class="attachment-medium size-medium" alt="" title="" data-src="@if(empty($image->name)){{ $preview(asset('uploads/' . 'penguins.jpg'), 300, 300) }}@else{{ $preview(asset('uploads/' . $image->name), 300, 300) }}@endif" data-large_image="@if(empty($image->name)){{ asset('uploads/' . 'penguins.jpg') }}@else{{ asset('uploads/' . $image->name) }}@endif" data-large_image_width="1280" data-large_image_height="1280" sizes="(max-width: 300px) 100vw, 300px" />
+		@if(count($item->images) > 0)
+			<div class="itemSlider owl-carousel owl-theme">
+				@foreach($item->images as $image)
+					<div class="product-item @if($loop->first) active @endif">
+						<img width="300" height="300" src="@if(empty($image->name)){{ $preview(asset('uploads/' . $default_img), 300, 300) }}@else{{ $preview(asset('uploads/' . $image->name), 300, 300) }}@endif" class="attachment-medium size-medium" alt="" title="" data-src="@if(empty($image->name)){{ $preview(asset('uploads/' . $default_img), 300, 300) }}@else{{ $preview(asset('uploads/' . $image->name), 300, 300) }}@endif" data-large_image="@if(empty($image->name)){{ asset('uploads/' . $default_img) }}@else{{ asset('uploads/' . $image->name) }}@endif" data-large_image_width="1280" data-large_image_height="1280" sizes="(max-width: 300px) 100vw, 300px" />
+					</div>
+				@endforeach
+			</div>
+			<div class="itemSliderVer visible-md">
+				@foreach($item->images as $image)
+					<div class="product-item @if($loop->first) active @endif">
+						<img width="47" height="47" src="@if(empty($image->name)){{ $preview(asset('uploads/' . $default_img), 47, 47) }}@else{{ $preview(asset('uploads/' . $image->name), 47, 47) }}@endif" class="attachment-i47 size-i47" alt="" title="" data-src="@if(empty($image->name)){{ $preview(asset('uploads/' . $default_img), 47, 47) }}@else{{ $preview(asset('uploads/' . $image->name), 47, 47) }}@endif" data-large_image="@if(empty($image->name)){{ asset('uploads/' . $default_img) }}@else{{ asset('uploads/' . $image->name) }}@endif" data-large_image_width="1280" data-large_image_height="1280" sizes="(max-width: 47px) 100vw, 47px" />
+					</div>
+				@endforeach
+			</div>
+		@else
+			<div class="itemSlider owl-carousel owl-theme">
+				<div class="product-item active">
+					<img width="300" height="300" src="{{ $preview(asset('uploads/' . $default_img), 300, 300) }}" class="attachment-medium size-medium" alt="" title="" data-src="{{ $preview(asset('uploads/' . $default_img), 300, 300) }}" data-large_image="{{ $preview(asset('uploads/' . $default_img), 300, 300) }}" data-large_image_width="1280" data-large_image_height="1280" sizes="(max-width: 300px) 100vw, 300px" />
 				</div>
-			@endforeach
-		</div>
-		<div class="itemSliderVer visible-md">
-			@foreach($item->images as $image)
-				<div class="product-item @if($loop->first) active @endif">
-					<img width="47" height="47" src="@if(empty($image->name)){{ $preview(asset('uploads/' . 'penguins.jpg'), 47, 47) }}@else{{ $preview(asset('uploads/' . $image->name), 47, 47) }}@endif" class="attachment-i47 size-i47" alt="" title="" data-src="@if(empty($image->name)){{ $preview(asset('uploads/' . 'penguins.jpg'), 47, 47) }}@else{{ $preview(asset('uploads/' . $image->name), 47, 47) }}@endif" data-large_image="@if(empty($image->name)){{ asset('uploads/' . 'penguins.jpg') }}@else{{ asset('uploads/' . $image->name) }}@endif" data-large_image_width="1280" data-large_image_height="1280" sizes="(max-width: 47px) 100vw, 47px" />
+			</div>
+			<div class="itemSliderVer visible-md">
+				<div class="product-item active">
+					<img width="47" height="47" src="{{ $preview(asset('uploads/' . $default_img), 47, 47) }}" class="attachment-i47 size-i47" alt="" title="" data-src="{{ $preview(asset('uploads/' . $default_img), 47, 47) }}" data-large_image="{{ $preview(asset('uploads/' . $default_img), 47, 47) }}" data-large_image_width="1280" data-large_image_height="1280" sizes="(max-width: 47px) 100vw, 47px" />
 				</div>
-			@endforeach
-		</div>
+			</div>
+		@endif
 	</div>
 
 	<div class="col-sm-8">
