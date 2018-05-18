@@ -59,7 +59,7 @@ return [
     'yield_calculator' => 'Расчет доходности',
     'device' => 'Устройство',
     'manual_input' => 'Ручной ввод',
-    'kwh' => 'kWh',
+    'kwh' => 'кВт/ч',
     'equipment_placement_desk' => 'Размещение оборудования в дата-центре MyRig',
     'input_hashrate' => 'Введите хешрейт',
     'energy_consumption' => 'Энергопотребление',

@@ -43,7 +43,7 @@
 							{!! $it->content !!}
 						</div>
 						<div class="links">
-							@isset($prev_link)<a href="{{url($prev_link->link)}}" class="article-link" data-wpel-link="internal"><i class="article-arrow"></i>{{__('default.previous_article')}}</a>@endisset @isset($next_link)<a href="{{url($next_link->link)}}" class="article-link next-link" data-wpel-link="internal"><i class="article-arrow article-arrow-right"></i>{{__('next_article')}}</a>@endisset
+							@isset($prev_link)<a href="{{url($prev_link->link)}}" class="article-link" data-wpel-link="internal"><i class="article-arrow"></i>{{__('default.previous_article')}}</a>@endisset @isset($next_link)<a href="{{url($next_link->link)}}" class="article-link next-link" data-wpel-link="internal"><i class="article-arrow article-arrow-right"></i>{{__('default.next_article')}}</a>@endisset
 						</div>
 					</div>
 				</div>
