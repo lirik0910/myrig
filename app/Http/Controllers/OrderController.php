@@ -22,8 +22,7 @@ class OrderController extends Controller
      * @return boolean
      */
     public function create(Request $request){
-        //if (!session()->get('client')){
-        //var_dump($_SESSION); die;
+
         if (!isset($_SESSION['client'])){
             return response()->json(['success' => false, 'session' => false]);//redirect()->to('sso-login');
         }
@@ -45,15 +44,12 @@ class OrderController extends Controller
             return response()->json(['success' => false, 'message' => 'User is not exist']);
         }
 
-        //var_dump('vfvvfvfbd'); die;
-        //var_dump($data['without-delivery']); die;
         if($data['without-delivery'] == 1){
             $delivery = Delivery::where('title', 'Without delivery')->first();
         } else{
             $delivery = Delivery::where('id', $data['delivery'])->where('active', 1)->first();
         }
 
-//var_dump($delivery); die;
         if(!$delivery){
             return response()->json(['success' => false, 'message' => 'Delivery with this ID is not exist']);
         }
@@ -73,13 +69,6 @@ class OrderController extends Controller
             $max_id = $last_order->id;
             $order_number = $max_id + 1;
         }
-//var_dump(Order::orderBy('id','desc')->first()); die;
-
-        //$numbersArray = str_split((string)time() - 2000000, 3);
-
-        /*foreach($numbersArray as $number){
-            $order_number += (int)$number;
-        }*/
 
         $order->fill([
             'number' => $order_number,
@@ -116,9 +105,10 @@ class OrderController extends Controller
         ]);
 
         $cart = $_SESSION['cart'];
-       // var_dump($cart); die;
+
         foreach ($cart as $productId => $count){
             $product = Product::where('id', $productId)->first();
+
             if($product->auto_price){
                 $btcCost = $product->calcBtcPrice();
                 $autoprice_data = $product->calcAutoPrice(true);

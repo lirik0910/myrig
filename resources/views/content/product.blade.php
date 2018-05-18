@@ -21,7 +21,7 @@
 @php
 	$context = $select('App\Model\Base\Context')->where('title', $locale)->first();
 
-$product = App\Model\Shop\Product::where('page_id', $it->id)->where('context_id', $context->id)->where('delete', 0)->with('images', 'options')->first();
+	$product = App\Model\Shop\Product::where('page_id', $it->id)->where('context_id', $context->id)->where('delete', 0)->with('images', 'options')->first();
 //var_dump($it->id); die;
 foreach ($product->options as $item) {
 	if ($item->type->title === 'video') {
@@ -44,10 +44,15 @@ if($product->auto_price){
 foreach($product->categories as $category){
     if ($category->title == 'Base'){
         $payback = new App\Http\Controllers\ProductController();
-$payback = $payback->calcPayback($product->id);
+		$payback = $payback->calcPayback($product->id);
     }
 }
 
+    if($locale == 'en'){
+		$default_img = 'eng.no-photo.jpg';
+	} else{
+		$default_img = 'ru.no-photo.jpeg';
+	}
 @endphp
 <section class="content item">
 <div class="container">
@@ -55,21 +60,34 @@ $payback = $payback->calcPayback($product->id);
 @isset($product)
 <div class="article-row row">
 	<div class="col-sm-4">
-		<div id="isync1" class="  owl-carousel owl-theme">
-			@foreach ($product->images as $item)
-			<div class="product-item">
-				<img width="300" height="300" src="@if(empty($item->name)){{ $preview(asset('uploads/' . 'penguins.jpg'), 300, 300) }}@else{{ $preview(asset('uploads/' . $item->name), 300, 300) }}@endif" class="attachment-medium size-medium" alt="img" title="{{ htmlentities($it->title) }}" />
+		@if(count($product->images) > 0)
+			<div id="isync1" class="  owl-carousel owl-theme">
+				@foreach ($product->images as $item)
+					<div class="product-item">
+						<img width="300" height="300" src="@if(empty($item->name)){{ $preview(asset('uploads/' . $default_img), 300, 300) }}@else{{ $preview(asset('uploads/' . $item->name), 300, 300) }}@endif" class="attachment-medium size-medium" alt="img" title="{{ htmlentities($it->title) }}" />
+					</div>
+				@endforeach
 			</div>
-			@endforeach
-		</div>
 
-		<div id="isync2" class="visible-md owl-carousel owl-theme">
-			@foreach ($product->images as $item)
-			<div class="product-item">
-				<img width="47" height="47" src="@if(empty($item->name)){{ $preview(asset('uploads/' . 'penguins.jpg'), 47, 47) }}@else{{ $preview(asset('uploads/' . $item->name), 47, 47) }}@endif" class="attachment-i47 size-i47" alt="img" title="{{ htmlentities($it->title) }}" />
+			<div id="isync2" class="visible-md owl-carousel owl-theme">
+				@foreach ($product->images as $item)
+					<div class="product-item">
+						<img width="47" height="47" src="@if(empty($item->name)){{ $preview(asset('uploads/' . $default_img), 47, 47) }}@else{{ $preview(asset('uploads/' . $item->name), 47, 47) }}@endif" class="attachment-i47 size-i47" alt="img" title="{{ htmlentities($it->title) }}" />
+					</div>
+				@endforeach
 			</div>
-			@endforeach
-		</div>
+		@else
+			<div id="isync1" class="  owl-carousel owl-theme">
+				<div class="product-item">
+					<img width="300" height="300" src="{{ $preview(asset('uploads/' . $default_img), 300, 300) }}" class="attachment-medium size-medium" alt="img" title="{{ htmlentities($it->title) }}" />
+				</div>
+			</div>
+			<div id="isync2" class="visible-md owl-carousel owl-theme">
+				<div class="product-item">
+					<img width="47" height="47" src="{{ $preview(asset('uploads/' . $default_img), 47, 47) }}" class="attachment-i47 size-i47" alt="img" title="{{ htmlentities($it->title) }}" />
+				</div>
+			</div>
+		@endif
 	</div>
 
 	<div class="col-sm-8">
