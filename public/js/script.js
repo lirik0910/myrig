@@ -758,7 +758,6 @@ $(document).on('change', '.cart-form  input.qty', function(e) {
 
 	$(document).on('click', '.addtocarts:not(.disabled)', function(e) {
 		e.preventDefault();
-		
 		if (click === false) {
 			click = true;
 
@@ -770,7 +769,9 @@ $(document).on('change', '.cart-form  input.qty', function(e) {
 				input;
 
 			if (id) {
-				el.find('.fa-refresh').show();
+				
+				// console.log();
+
 
 				input = $('#count-products-'+ id);
 				var session = sessionStorage['cart'];
