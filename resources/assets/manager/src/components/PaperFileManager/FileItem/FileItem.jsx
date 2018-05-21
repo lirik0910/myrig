@@ -84,6 +84,7 @@ class FileItem extends Component {
 	editFileNameRequest = name => {
 		let { path, data } = this.props;
 
+
 		App.api({
 			type: 'PUT',
 			name: 'path',
@@ -94,6 +95,8 @@ class FileItem extends Component {
 			},
 			success: (r) => {
 				r = JSON.parse(r.response);
+/*				console.log(r);*/
+/*				console.log(name);*/
 				if (r) {
 					this.setState({
 						click: false, 
