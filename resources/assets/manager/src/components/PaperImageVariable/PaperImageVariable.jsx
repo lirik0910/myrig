@@ -123,6 +123,7 @@ class PaperImageVariable extends Component {
 						return <ImageFieldItem 
 							key={i}
 							data={item}
+							remove={true}
 							onImageSet={field => {
 								for (var i in data) {
 									if (field.id === data[i].id) {
