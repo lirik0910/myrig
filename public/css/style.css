@@ -45,6 +45,10 @@
     font-family: "Roboto";
 }
 
+.width{
+    width:50%;
+}
+
 .user-panel .profile-link{
     width: max-content;
 }
@@ -1174,7 +1178,7 @@ input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill{
 }
 
 #report-availability .form-control{
-    margin-bottom: 25px;
+    margin-bottom: 15px;
     padding: 0;
 }
 
@@ -1731,6 +1735,7 @@ position: relative;
 
 .form-group-btn{
    width: 40%;
+   margin-top: 20px;
 }
 
 #personalForm .form-control{
@@ -1785,6 +1790,11 @@ position: relative;
 .report-form-select input{
     height: 40px;
     border-bottom: solid 1px  rgb(96, 166, 69);
+    margin-top: 9px;
+}
+
+.dinus{
+    margin-bottom: -10px;
 }
 
 .report-select-btn{

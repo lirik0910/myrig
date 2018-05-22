@@ -115,13 +115,13 @@
 				</span>
 				@if (isset($inCart[$item->id]))
 					<a data-success="{{ __('default.added') }}" data-add="{{ __('default.to_cart') }}" rel="nofollow" href="#" data-id="{{ $item->id }}" class="btn-default intocarts">
-						<span>{{ __('default.added') }}</span>
+						<span class="sp">{{ __('default.added') }}</span>
 						{{-- <i class="fa fa-spin fa-refresh"></i> --}}
 					</a>
 				@elseif ($item->productStatus->title === 'not-available')
 					<a rel="nofollow" href="#report-availability" data-id="{{ $item->id }}" class="btn-default report-availability">
 						<span>{{ __('default.report_availability') }}</span>
-						<i class="fa fa-spin fa-refresh"></i>
+						{{-- <i class="fa fa-spin fa-refresh"></i> --}}
 					</a>
 				@else
 					<a data-success="{{ __('default.added') }}" data-add="{{ __('default.to_cart') }}" rel="nofollow" href="#" data-id="{{ $item->id }}" class="btn-default addtocarts">

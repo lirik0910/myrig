@@ -799,7 +799,7 @@ $(document).on('change', '.cart-form  input.qty', function(e) {
 					
 					$.post(window.global.app.connector +'/cart', cart, function () {
 						el.find('span').text(el.attr('data-success'));
-						el.find('.fa-refresh').hide();
+						el.find('.fa-spin').hide();
 
 						el.removeClass('addtocarts');
 						el.addClass('intocarts');
@@ -837,6 +837,12 @@ $(document).on('change', '.cart-form  input.qty', function(e) {
 		
 		$('#total-default-cost').html(cost.toFixed(2));
 	}
+
+	// $(document).on('click', 'btn-count-minus', function(e){
+	// 	e.prevetDefault();
+	// 	countProducts(session);
+	// 	if()
+	// });
 
 	
 	 $(document).on('click', '.contact-item', function(e) {
