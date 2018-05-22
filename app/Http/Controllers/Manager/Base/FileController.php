@@ -95,7 +95,7 @@ class FileController extends Controller
 			return response()->json(['message' => $e->getMessage()], 422);
 		}
 
-		return response()->json(['message' => true, 'name' => $request->input('name')], 200);
+		return response()->json(['message' => true], 200);
 	}
 
 	/**

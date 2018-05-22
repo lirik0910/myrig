@@ -48,7 +48,7 @@ class FileItem extends Component {
 	 * Init default props
 	 * @type {Object} 
 	 * @inner
-	 * @property {Object} classes Material defult classes collection 
+	 * @property {Object} classes Material default classes collection
 	 */
 	static defaultProps = {
 		data: {},
@@ -95,8 +95,6 @@ class FileItem extends Component {
 			},
 			success: (r) => {
 				r = JSON.parse(r.response);
-/*				console.log(r);*/
-/*				console.log(name);*/
 				if (r) {
 					this.setState({
 						click: false, 
@@ -231,9 +229,10 @@ class FileItem extends Component {
 							className={classes.button}
 							onClick={e => {
 								if (click === false) {
-									this.setState({ 
+									this.setState({
 										click: true,
-										editDailogOpen: true 
+										editDailogOpen: true,
+										value: data.name,
 									}, () => {
 										this.props.onEditDialogOpened(data);
 										this.setState({ click: false });

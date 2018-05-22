@@ -34,6 +34,8 @@ class PaperFileManager extends Component {
 	 */
 	static defaultProps = {
 		defaultPath: '/',
+		completed: 100,
+        onLoaded: () => {},
 		onFileSelected: () => {},
 		onFilesDataLoaded: () => {},
 		classes: PropTypes.object.isRequired,
@@ -49,6 +51,7 @@ class PaperFileManager extends Component {
 		path: '/',
 		error: false,
 		click: false,
+		//completed: this.props.completed,
 		errorDialogMessage: '',
 	}
 
@@ -92,7 +95,8 @@ class PaperFileManager extends Component {
 	 * @fires click
 	 */
 	filesPostRequest = files => {
-		let { path, click } = this.state;
+		let { completed } = this.props;
+		let { path, click} = this.state;
 
 		if (click === false) {
 			this.setState({ click: true });
@@ -106,6 +110,7 @@ class PaperFileManager extends Component {
 				formData.append('file[]', files[i]);
 			}
 
+			this.props.onLoaded(0);
 			App.api({
 				type: 'POST',
 				name: 'path',
@@ -118,6 +123,7 @@ class PaperFileManager extends Component {
 				success: (r) => {
 					r = JSON.parse(r.response);
 					if (r) {
+                        this.props.onLoaded(100);
 						this.setState({
 							click: false,
 							error: false,

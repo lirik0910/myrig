@@ -15,6 +15,7 @@ import Menu from '../components/Menu/Menu.jsx';
 import Header from '../components/Header/Header.jsx';
 import PaperFileManager from '../components/PaperFileManager/PaperFileManager.jsx';
 import PaperFolderManager from '../components/PaperFolderManager/PaperFolderManager.jsx';
+import { LinearProgress } from 'material-ui/Progress';
 
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
@@ -28,8 +29,12 @@ class FileManagerContainer extends Component {
 	state = {
 		path: '/',
 		ready: true,
-		completed: 0
+		completed: 100,
 	}
+
+/*	onLoaded(value){
+		this.setState({completed: value});
+	}*/
 
 	/**
 	 * Init default props
@@ -47,9 +52,12 @@ class FileManagerContainer extends Component {
 	 */
 	render() {
 		let { classes } = this.props;
-		let { path, ready } = this.state;
+		let { path, ready, completed } = this.state;
 
 		return <div className="file-manager__container">
+            		{completed === 0 &&
+						<LinearProgress color="secondary" variant="determinate" value={completed} />}
+
 					<Header
 						title={'Create new product'} />
 					<Menu />
@@ -68,7 +76,14 @@ class FileManagerContainer extends Component {
 
 						<Grid item xs={6}>
 							{ready === true && <PaperFileManager
-								defaultPath={path} />}
+								completed={completed}
+								defaultPath={path}
+								onLoaded={value => {
+									this.setState({
+										completed: value
+									})
+								}}
+							/>}
 						</Grid>
 					</Grid>
 				</div>

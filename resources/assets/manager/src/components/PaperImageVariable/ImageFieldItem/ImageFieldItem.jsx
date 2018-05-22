@@ -76,13 +76,13 @@ class ImageFieldItem extends Component {
 						alt="img"
 						className={classes.img} />}
 			
-				{remove === true && <Button 
+				{remove === true ? <Button
 					className={classes.button} 
 					variant="raised" 
 					color="secondary"
 					onClick={e => this.props.onDeletedField(data)}>
 						<Delete />{'Remove field'}
-				</Button>}
+				</Button> : null}
 
 				<DialogFileManager
 					open={open}
