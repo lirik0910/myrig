@@ -22,9 +22,9 @@
 	}
 
 	if($locale == 'en'){
-		$default_img = 'eng.no-photo.jpg';
+		$default_img = 'default/eng.no-photo.jpg';
 	} else{
-		$default_img = 'ru.no-photo.jpeg';
+		$default_img = 'default/ru.no-photo.jpeg';
 	}
 
 @endphp
