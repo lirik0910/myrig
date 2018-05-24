@@ -42,6 +42,7 @@ Route::post('/back_call', function (Request $request){
 			'subject' => $data['subject'],
 			'description' => 'Заказ обратного звонка',
 			'name' => $data['name'],
+			'email' => $data['email'],
 			'tel' => $data['tel']
 		]);
 	} catch (\GuzzleHttp\Exception\RequestException $e){

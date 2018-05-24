@@ -25,7 +25,7 @@
 
     <div class="related-img">
         @if (isset($item->images[0]))
-            <img width="1000" height="1000" src="@if(empty($item->images[0])){{ $preview(asset('uploads/' . $default_img), 215, 215) }}@else{{ $preview(asset('uploads/' . $item->images[0]->name), 215, 215) }}@endif"
+            <img width="1000" height="1000" src="@if(empty($item->images[0]) or !file_exists(public_path() . '/uploads/' . $item->images[0]->name)){{ $preview(asset('uploads/' . $default_img), 215, 215) }}@else{{ $preview(asset('uploads/' . $item->images[0]->name), 215, 215) }}@endif"
                  class="attachment-post-thumbnail size-post-thumbnail wp-post-image" alt="previw"/>
         @else
             <img width="1000" height="1000" src="{{ $preview(asset('uploads/' . $default_img), 215, 215) }}"

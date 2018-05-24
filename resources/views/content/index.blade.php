@@ -51,6 +51,7 @@ $shop = $select('App\Model\Base\Page')
 							@endif
 						</div>
 						@php
+							if(file_exists(public_path() . '/uploads/' . $slide['icon']))
 							$image = asset('uploads/' . $slide['icon']);
 							//$image_width = 1350;
 							//$image_height = 941;
@@ -62,9 +63,9 @@ $shop = $select('App\Model\Base\Page')
 
 							//var_dump(getimagesize($image)); die;
 						@endphp
-						@if($image_height < $image_width)
+						@if(isset($image) and $image_height < $image_width)
 							<div class="slide-img" style="background-image: url('{{ $preview($image, 1350, 941) }}')"></div>
-						@else
+						@elseif(isset($image))
 							<div class="slide-img" style="background-image: url('{{ $preview($image, 800, 800) }}')"></div>
 						@endif
 					</div>
