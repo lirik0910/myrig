@@ -155,26 +155,22 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-        Huddle\Zendesk\Providers\ZendeskServiceProvider::class,
-        \Torann\GeoIP\GeoIPServiceProvider::class,
-        Barryvdh\DomPDF\ServiceProvider::class,
-        //Nicklayb\LaravelDbImport\ServiceProvider::class,
 
         /*
          * Package Service Providers...
          */
-        //Folklore\Image\ImageServiceProvider::class,
+        Barryvdh\DomPDF\ServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
+        Huddle\Zendesk\Providers\ZendeskServiceProvider::class,
+        \Torann\GeoIP\GeoIPServiceProvider::class,
 
         /*
          * Application Service Providers...
          */
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
-        // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        Barryvdh\DomPDF\ServiceProvider::class
 
     ],
 
