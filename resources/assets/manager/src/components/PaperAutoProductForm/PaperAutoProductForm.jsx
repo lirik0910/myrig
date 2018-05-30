@@ -121,9 +121,9 @@ console.log(data);
         } else{
             //$warranty_price = $params->warranty_price;
         }
-console.log('prime ', prime_price,'delivery ', delivery_price, 'fes ', fes_price, 'profit ', profit_price, 'warranty', warranty_price_currency, 0);
+
         let total = prime_price + delivery_price + fes_price + profit_price + warranty_price;
-console.log(total);
+
         this.setState({
 			totalAutoPrice: total
         });
