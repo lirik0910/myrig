@@ -1247,7 +1247,7 @@ $(document).on('change', '.cart-form  input.qty', function(e) {
                 dat.products[i]['count'] = $(this).find('input').val();
                 i++;
             });
-            //console.log(dat);
+            console.log(dat);
             $.ajax({
                 url:global.url + 'create_report',
                 method: 'post',

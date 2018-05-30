@@ -13,6 +13,11 @@ use App\Http\Middleware\Manager\FolderEditMiddleware;
 use App\Http\Middleware\Manager\FolderCreateMiddleware;
 use App\Http\Middleware\Manager\FolderDeleteMiddleware;
 
+/** Access policy middleware for order notes
+ */
+use App\Http\Middleware\Manager\NoteCreateMiddleware;
+use App\Http\Middleware\Manager\NoteListMiddleware;
+
 /** Access policy middleware for files of filesystem component
  */
 use App\Http\Middleware\Manager\FileListMiddleware;
@@ -94,7 +99,13 @@ Route::prefix('notifications')
     ->middleware('auth')
     ->group(function () {
         Route::get('/', 'Manager\Base\ViewController@index');
-    });
+ });
+
+/*Route::prefix('notifications')
+    ->middleware('auth')
+    ->group(function () {
+        Route::get('/', 'Manager\Base\ViewController@index');
+    });*/
 
 Route::prefix('orders')
 	->middleware('auth')
@@ -157,6 +168,11 @@ Route::prefix('api')
             Route::put('/{id}', 'Manager\Shop\ReportController@edit')->middleware(ReportEditMiddleware::class);
             Route::delete('/', 'Manager\Shop\ReportController@deleteMany')->middleware(ReportDeleteMiddleware::class);
             Route::delete('/{id}', 'Manager\Shop\ReportController@delete')->middleware(ReportDeleteMiddleware::class);
+        });
+
+        Route::prefix('note')->group(function() {
+            Route::get('/{orderId}', 'Manager\Shop\OrderLogController@get')->middleware(NoteListMiddleware::class);
+            Route::post('/', 'Manager\Shop\OrderLogController@createNote')->middleware(NoteCreateMiddleware::class);
         });
 
 		Route::prefix('policy')->group(function() {

@@ -34,7 +34,7 @@ class ReportController extends Controller
             return response()->json(['message' => $e->getMessage()], 422);
         }
 
-
+        //var_dump($data); die;
         /** Create and fill new product model
          */
         $model = new Report;

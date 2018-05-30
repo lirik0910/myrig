@@ -96,7 +96,7 @@ class App {
 		if (this.isEmpty(opt)) {
 			return false;
 		}
-		
+        //console.log('object in App ' + opt);
 		var query = '',
 			data = '',
 			i;
@@ -108,7 +108,7 @@ class App {
 
 		query += '/'+ opt.model;
 		query += '/'+ Api[opt.model][opt.type][opt.name];
-
+console.log('query ' + query);
 		if (opt.resource) {
 			query = query.replace(/{id}/gi, opt.resource);
 		}

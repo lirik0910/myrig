@@ -6,6 +6,7 @@ use App\Model\Shop\Cart;
 use App\Model\Shop\Order;
 use App\Model\Shop\ExchangeRate;
 use App\Model\Shop\OrderDelivery;
+use App\Model\Shop\OrderLog;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;

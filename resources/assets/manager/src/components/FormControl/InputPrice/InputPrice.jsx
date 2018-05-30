@@ -122,10 +122,11 @@ class InputPrice extends Component {
 			classes, 
 			inputID,
 			currencies,
+            disabled,
 			placeholder
 		} = this.props;
 
-		return <FormControl fullWidth className={classes.formControl}>
+		return <FormControl fullWidth className={classes.formControl} disabled={disabled}>
 				<InputLabel htmlFor={inputID}>
 					{title}
 				</InputLabel>
