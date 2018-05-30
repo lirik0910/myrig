@@ -357,6 +357,7 @@ class DbImport
         //var_dump($orders_items_meta); die;
 //var_dump($cart); die;
         foreach($cart as $key => $line){
+            //$cart
             if($line['cost'] == 0){
                 unset($cart[$key]);
                 continue;

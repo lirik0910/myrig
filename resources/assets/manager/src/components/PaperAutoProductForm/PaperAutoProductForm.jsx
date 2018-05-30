@@ -50,11 +50,25 @@ class PaperAutoProductForm extends Component {
      * @fires componentWillMount
      */
     componentWillMount() {
-        this.calcAutoPrice();
+    	if(this.props.data !== null){
+            this.calcAutoPrice();
+		}
     }
 
 	calcAutoPrice(){
 
+    	let data = this.props.data ? this.props.data : {
+                fes_price: 0,
+                fes_price_currency: 1,
+                prime_price: 0,
+                prime_price_currency: 1,
+                delivery_price: 0,
+                delivery_price_currency: 1,
+                profit_price: 0,
+                profit_price_currency: 1,
+                warranty_price: 0,
+                warranty_price_currency: 1,
+            };
 		let {
 			fes_price,
 			fes_price_currency,
@@ -66,50 +80,50 @@ class PaperAutoProductForm extends Component {
 			delivery_price_currency,
 			profit_price,
 			profit_price_currency
-		} = this.props.data;
+		} = data;
 
-		let btc = this.props.btc;
-
+		let btc = parseFloat(this.props.btc);
+console.log(data);
 		//let { totalAutoPrice } = this.state;
 
-        if (prime_price_currency === 2){
+        if (prime_price_currency == 2){
             prime_price = prime_price * btc;
         } else {
          //   $prime_price = $params->prime_price;
         }
 
-        if (delivery_price_currency === 2){
+        if (delivery_price_currency == 2){
             delivery_price = delivery_price * btc;
         } else {
         //    delivery_price = delivery_price;
         }
 
-        if (fes_price_currency === 2){
+        if (fes_price_currency == 2){
             fes_price = fes_price * btc;
-        } else if (fes_price_currency === 3){
-            fes_price = fes_price / 100;
+        } else if (fes_price_currency == 3){
+            fes_price = prime_price * fes_price / 100;
         } else{
             //fes_price = fes_price;
         }
 
-        if (profit_price_currency === 2){
+        if (profit_price_currency == 2){
             profit_price = profit_price * btc;
-        } else if (profit_price_currency === 3){
+        } else if (profit_price_currency == 3){
             profit_price = prime_price * profit_price / 100;
         } else{
           //  $profit_price = $params->profit_price;
         }
 
-        if (warranty_price_currency === 2){
+        if (warranty_price_currency == 2){
             warranty_price = warranty_price * btc;
-        } else if (warranty_price_currency === 3){
+        } else if (warranty_price_currency == 3){
             warranty_price = prime_price * warranty_price / 100;
         } else{
             //$warranty_price = $params->warranty_price;
         }
-
+console.log('prime ', prime_price,'delivery ', delivery_price, 'fes ', fes_price, 'profit ', profit_price, 'warranty', warranty_price_currency, 0);
         let total = prime_price + delivery_price + fes_price + profit_price + warranty_price;
-
+console.log(total);
         this.setState({
 			totalAutoPrice: total
         });
@@ -133,15 +147,15 @@ class PaperAutoProductForm extends Component {
 
 		if (data === null) {
 			data = {
-				fes_price: '',
+				fes_price: 0,
 				fes_price_currency: 1,
-				prime_price: '',
+				prime_price: 0,
 				prime_price_currency: 1,
-				delivery_price: '',
+				delivery_price: 0,
 				delivery_price_currency: 1,
-				profit_price: '',
+				profit_price: 0,
 				profit_price_currency: 1,
-				warranty_price: '',
+				warranty_price: 0,
 				warranty_price_currency: 1,
 			};
 		}
@@ -165,6 +179,7 @@ class PaperAutoProductForm extends Component {
 					defaultValue={data.fes_price}
 					currencyID={data.fes_price_currency}
 					onFieldInputed={value => {
+						value = value === '' ? 0 : value;
 						data.fes_price = parseFloat(value);
 						this.props.onDataUpdated(data);
                         this.calcAutoPrice();
@@ -183,10 +198,11 @@ class PaperAutoProductForm extends Component {
 					defaultValue={data.warranty_price}
 					currencyID={data.warranty_price_currency}
 					onFieldInputed={value => {
+                        value = value === '' ? 0 : value;
 						data.warranty_price = parseFloat(value);
 						this.props.onDataUpdated(data);
                         this.calcAutoPrice();
-                        console.log('inputed');
+                        //console.log('inputed');
 					}}
 					onCurencySelected={value => {
 						data.warranty_price_currency = value.id;
@@ -207,6 +223,7 @@ class PaperAutoProductForm extends Component {
 						this.props.onDataUpdated(data);
 					}}
 					onFieldInputed={value => {
+                        value = value === '' ? 0 : value;
 						data.prime_price = parseFloat(value);
 						this.props.onDataUpdated(data);
                         this.calcAutoPrice();
@@ -225,6 +242,7 @@ class PaperAutoProductForm extends Component {
 						this.props.onDataUpdated(data);
 					}}
 					onFieldInputed={value => {
+                        value = value === '' ? 0 : value;
 						data.delivery_price = parseFloat(value);
 						this.props.onDataUpdated(data);
                         this.calcAutoPrice();
@@ -243,6 +261,7 @@ class PaperAutoProductForm extends Component {
 						this.props.onDataUpdated(data);
 					}}
 					onFieldInputed={value => {
+                        value = value === '' ? 0 : value;
 						data.profit_price = parseFloat(value);
 						this.props.onDataUpdated(data);
 						this.calcAutoPrice();
@@ -256,7 +275,6 @@ class PaperAutoProductForm extends Component {
 						inputID="total-cost-field"
 						disabled={false}
 						defaultValue={totalAutoPrice}
-
 						currencyID={1}
 						/>
 				</Paper>

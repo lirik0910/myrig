@@ -31,7 +31,7 @@ class InputPrice extends Component {
 		currencyID: 0,
 		currencies: [],
 		title: 'Price',
-		defaultValue: '',
+		defaultValue: 0,
 		inputID: 'price-field',
 		onDataLoaded: () => {},
 		onFieldInputed: () => {},
