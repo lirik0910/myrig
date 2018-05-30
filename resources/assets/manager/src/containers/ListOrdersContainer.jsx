@@ -483,6 +483,7 @@ class ListOrdersContainer extends Component {
 			resultDialog,
 			resultDialogTitle,
 			resultDialogMessage,
+			users,
 			completed } = this.state;
 
 		return <div className="pages-list__container">

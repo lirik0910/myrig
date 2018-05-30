@@ -70,6 +70,8 @@ class PaperAutoProductForm extends Component {
 
 		let btc = this.props.btc;
 
+		//let { totalAutoPrice } = this.state;
+
         if (prime_price_currency === 2){
             prime_price = prime_price * btc;
         } else {
@@ -106,15 +108,11 @@ class PaperAutoProductForm extends Component {
             //$warranty_price = $params->warranty_price;
         }
 
-
         let total = prime_price + delivery_price + fes_price + profit_price + warranty_price;
-
-        console.log('value in method ' + total);
 
         this.setState({
 			totalAutoPrice: total
         });
-        console.log('state ' + this.state.totalAutoPrice);
 	}
 
 	/**
@@ -258,6 +256,7 @@ class PaperAutoProductForm extends Component {
 						inputID="total-cost-field"
 						disabled={false}
 						defaultValue={totalAutoPrice}
+
 						currencyID={1}
 						/>
 				</Paper>

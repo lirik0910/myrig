@@ -299,6 +299,7 @@ class OrderController extends Controller
 		}
 
 		$orderData = $request->only([
+		    'user_id',
 			'payment_type_id',
 			'context_id',
 		]);

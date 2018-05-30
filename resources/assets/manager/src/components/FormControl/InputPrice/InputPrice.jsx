@@ -75,6 +75,12 @@ class InputPrice extends Component {
 		});
 	}
 
+	componentDidUpdate(prevProps, prevState){
+		if(prevProps.defaultValue !== this.props.defaultValue){
+			this.componentWillMount();
+		}
+    }
+
 	/**
 	 * Get value that inputed to field
 	 * @fires input
