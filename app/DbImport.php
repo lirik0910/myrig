@@ -358,7 +358,7 @@ class DbImport
 //var_dump($cart); die;
         foreach($cart as $key => $line){
             //var_dump($cart, $key, $line); die;
-            $cart[$key]['created_at'] = $orders[$line['order_id']]['created_at'];
+            //var_dump($orders); die;
             //var_dump($cart[$key]); die;
             if($line['cost'] == 0){
                 unset($cart[$key]);
@@ -367,6 +367,7 @@ class DbImport
 
             if (isset($line['order_id'])){
                 if(isset($orders[$line['order_id']])){
+                    $cart[$key]['created_at'] = $orders[$line['order_id']]['created_at'];
                     $line_cost = $line['cost'] * $line['count'];
                     $orders[$line['order_id']]['cost'] += (int)$line_cost;
                     if($orders[$line['order_id']]['cost'] < 0 || $orders[$line['order_id']]['cost'] > 999999){

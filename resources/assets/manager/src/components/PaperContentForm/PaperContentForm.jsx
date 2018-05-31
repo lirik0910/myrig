@@ -93,16 +93,19 @@ class PaperContentForm extends Component {
 	editorSetDefaultValue() {
 		let { editorDefaultValue } = this.props;
 
-		if (editorDefaultValue) {
+		if (editorDefaultValue !== '' && editorDefaultValue !== null) {
 			let blocksFromHTML = convertFromHTML(editorDefaultValue);
-			let state = ContentState.createFromBlockArray(
-				blocksFromHTML.contentBlocks,
-				blocksFromHTML.entityMap
-			);
 
-			this.setState({ 
-				editorState: EditorState.createWithContent(state) 
-			});
+			if(blocksFromHTML.contentBlocks !== '' && blocksFromHTML.contentBlocks !== null){
+                let state = ContentState.createFromBlockArray(
+                    blocksFromHTML.contentBlocks,
+                    blocksFromHTML.entityMap
+                );
+
+                this.setState({
+                    editorState: EditorState.createWithContent(state)
+                });
+			}
 		}
 	}
 

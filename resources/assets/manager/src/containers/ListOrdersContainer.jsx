@@ -239,6 +239,7 @@ class ListOrdersContainer extends Component {
                             resultDialogMessage: 'The request was successful',
                             noteDialog: false
                         }, () => callback());
+                        this.ordersGetDataRequest();
                     }
                 },
                 error: (r) => {
