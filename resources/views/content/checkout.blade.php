@@ -181,7 +181,7 @@ foreach ($products as $item) {
 										{{ __('default.phone_label') }}
 										<abbr class="required" title="{{ __('default.required') }}">*</abbr></label>
 
-									<input type="tel" class="input-text form-control" name="phone" id="billing_phone" placeholder="{{ __('default.phone') }} {{ __('default.phone_input') }}" value="@isset($user->attributes->phone) {{$user->attributes->phone}} @endisset" autocomplete="tel" required />
+									<input type="tel" pattern="[0-9]{7,20}" class="input-text form-control" name="phone" id="billing_phone" placeholder="{{ __('default.phone') }} {{ __('default.phone_input') }}" value="@isset($user->attributes->phone){{trim($user->attributes->phone)}}@endisset" autocomplete="tel" required />
 								</p>
 
 								<p class="form-row form-row-last form-group validate-required validate-email" id="billing_email_field" data-priority="110" style="width: 47%; float:  right; display:  inline-block;">
