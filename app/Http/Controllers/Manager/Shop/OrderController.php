@@ -6,6 +6,7 @@ use App\Model\Shop\Cart;
 use App\Model\Shop\Order;
 use App\Model\Shop\ExchangeRate;
 use App\Model\Shop\OrderDelivery;
+use App\Model\Shop\OrderLog;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
@@ -298,6 +299,7 @@ class OrderController extends Controller
 		}
 
 		$orderData = $request->only([
+		    'user_id',
 			'payment_type_id',
 			'context_id',
 		]);

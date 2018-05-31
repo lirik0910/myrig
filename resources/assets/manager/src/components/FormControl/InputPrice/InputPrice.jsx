@@ -31,7 +31,7 @@ class InputPrice extends Component {
 		currencyID: 0,
 		currencies: [],
 		title: 'Price',
-		defaultValue: '',
+		defaultValue: 0,
 		inputID: 'price-field',
 		onDataLoaded: () => {},
 		onFieldInputed: () => {},
@@ -74,6 +74,12 @@ class InputPrice extends Component {
 			this.props.onDataLoaded(defaultValue)
 		});
 	}
+
+	componentDidUpdate(prevProps, prevState){
+		if(prevProps.defaultValue !== this.props.defaultValue){
+			this.componentWillMount();
+		}
+    }
 
 	/**
 	 * Get value that inputed to field
@@ -122,10 +128,11 @@ class InputPrice extends Component {
 			classes, 
 			inputID,
 			currencies,
+            disabled,
 			placeholder
 		} = this.props;
 
-		return <FormControl fullWidth className={classes.formControl}>
+		return <FormControl fullWidth className={classes.formControl} disabled={disabled}>
 				<InputLabel htmlFor={inputID}>
 					{title}
 				</InputLabel>

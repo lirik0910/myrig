@@ -9,6 +9,7 @@ use App\Model\Shop\ProductCategory;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Schema;
 use App\Http\Requests\CreateProductRequest;
+use App\Model\Shop\ExchangeRate;
 
 class ProductController extends Controller
 {
@@ -238,7 +239,12 @@ class ProductController extends Controller
 			return response()->json(['message' => $e->getMessage()], 422);
 		}
 
-		return response()->json($model, 200);
+		$btc = ExchangeRate::where('title', 'BTC/USD')->first();
+		if($btc === NULL){
+		    $btc = 1;
+        }
+
+		return response()->json(['product' => $model, 'btc' => $btc], 200);
 	}
 
 	/**

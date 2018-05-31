@@ -57,6 +57,7 @@ class EditProductContainer extends Component {
 		options: [],
 		currencies: [],
 		completed: 100,
+		btc: 0,
 		deleteDialog: false,
 		resultDialog: false,
 		resultDialogTitle: '',
@@ -70,6 +71,8 @@ class EditProductContainer extends Component {
 	componentWillMount() {
 		this.currenciesDataGetRequest(() => {
 			this.productDataGetRequest();
+			//this.btcDataGetRequest();
+			//console.log(this.state.btc);
 		});
 	}
 
@@ -121,13 +124,14 @@ class EditProductContainer extends Component {
 				r = JSON.parse(r.response);
 				if (r) {
 					this.setState({ 
-						data: r,
-						images: r.images,
-						options: r.options,
-						categories_line: '0'
+						data: r.product,
+						images: r.product.images,
+						options: r.product.options,
+						categories_line: '0',
+                        btc: r.btc.value
 					}, () => {
-						if (r.page_id > 0 && r.page_id !== '') {
-							this.pageDataGetRequest(r.page_id)
+						if (r.product.page_id > 0 && r.product.page_id !== '') {
+							this.pageDataGetRequest(r.product.page_id)
 						}
 
 						else this.setState({ completed: 100 });
@@ -355,6 +359,7 @@ class EditProductContainer extends Component {
 			images,
 			options,
 			completed,
+			btc,
 			currencies,
 			deleteDialog,
 			resultDialog, 
@@ -500,6 +505,7 @@ class EditProductContainer extends Component {
 						{completed === 100 && <PaperAutoProductForm
 							currencies={currencies}
 							data={data.product_auto_prices}
+							btc={btc}
 							activeDefaultValue={Boolean(data.auto_price)}
 							onActiveChanged={value => {
 								data['auto_price'] = Number(value);

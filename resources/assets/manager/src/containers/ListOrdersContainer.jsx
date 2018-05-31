@@ -18,6 +18,7 @@ import { LinearProgress } from 'material-ui/Progress';
 import TopTitle from '../components/TopTitle/TopTitle.jsx';
 import PaperTable from '../components/PaperTable/PaperTable.jsx';
 import DialogOrder from '../components/DialogOrder/DialogOrder.jsx';
+import DialogNote from '../components/DialogNote/DialogNote.jsx';
 import DialogError from '../components/DialogError/DialogError.jsx';
 import DialogDelete from '../components/DialogDelete/DialogDelete.jsx';
 import PaperToolBar from '../components/PaperToolBar/PaperToolBar.jsx';
@@ -59,9 +60,13 @@ class ListOrdersContainer extends Component {
 		completed: 100,
 		deleteOrderId: 0,
 		editOrder: {},
+		noteOrder: {},
+		noteData: {},
+		dat: {},
 		trash: false,
 		deleteID: null,
 		editDialog: false,
+		noteDialog: false,
 		deleteDialog: false,
 		resultDialog: false,
 		resultDialogTitle: '',
@@ -206,6 +211,51 @@ class ListOrdersContainer extends Component {
 			});
 		});
 	}
+
+    /**
+     * Get orders from server
+     * @param {Function} callback
+     */
+    noteCreateRequest(data, callback = () => {}) {
+        this.setState({
+            completed: 0
+        }, () => {
+            let { noteOrder, noteData, dat } = this.state;
+
+            dat.orderId = noteOrder.id;
+            dat.text = noteData.text;
+            App.api({
+                type: 'POST',
+                name: 'createNote',
+                model: 'note',
+                data: dat,
+                success: (r) => {
+                    r = JSON.parse(r.response);
+                    if (r) {
+                        this.setState({
+                            completed: 100,
+                            resultDialog: true,
+                            resultDialogTitle: 'Success',
+                            resultDialogMessage: 'The request was successful',
+                            noteDialog: false
+                        }, () => callback());
+                        this.ordersGetDataRequest();
+                    }
+                },
+                error: (r) => {
+                    r = JSON.parse(r.response);
+                    if (r.message) {
+                        this.setState({
+                            completed: 100,
+                            resultDialog: true,
+                            resultDialogTitle: 'Error',
+                            resultDialogMessage: r.message,
+                        }, () => callback());
+                    }
+                }
+            });
+        });
+    }
 
 	/**
 	 * Delete order
@@ -385,6 +435,13 @@ class ListOrdersContainer extends Component {
 				control: <ControlOptions
 							item={item}
 							editButton={item.order_deliveries ? true : false}
+							noteButton={true}
+							onNoteButtonClicked={item => {
+								this.setState({
+									noteOrder: item,
+									noteDialog: true
+								})
+							}}
 							onEditButtonClicked={item => {
 								this.setState({
 									editOrder: item,
@@ -422,10 +479,12 @@ class ListOrdersContainer extends Component {
 			deliveryID,
 			searchText, 
 			editDialog,
+			noteDialog,
 			deleteDialog,
 			resultDialog,
 			resultDialogTitle,
 			resultDialogMessage,
+			users,
 			completed } = this.state;
 
 		return <div className="pages-list__container">
@@ -572,6 +631,23 @@ class ListOrdersContainer extends Component {
 					})}
 					onDialogConfirmed={() => this.ordersDelteRequest(() => {
 						this.ordersGetDataRequest();
+					})} />}
+
+				{noteDialog === true && <DialogNote
+					defaultValue={noteDialog}
+					onNoteFieldInputed={value => {
+						data['text'] = value;
+						this.setState({
+							noteData: data
+						})
+					}}
+					onDialogClosed={() => this.setState({
+						noteDialog: false
+					})}
+					onDialogConfirmed={() =>
+
+						this.noteCreateRequest(() => {
+						//this.ordersGetDataRequest();
 					})} />}
 
 				{this.state.trash === true && <DialogDelete

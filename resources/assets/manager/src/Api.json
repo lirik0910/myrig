@@ -80,6 +80,11 @@
 			"one": "{id}"
 		}
 	},
+	"note": {
+		"POST": {
+			"createNote": ""
+		}
+	},
 	"policy": {
 		"GET": {
 			"all": ""
