@@ -171,7 +171,7 @@
 					<div class="form-group">
 						<input id="name" type="text" name="name" class="form-control" placeholder="{{ __('default.name') }}" required="required" data-bv-message=" " data-bv-remote-message="Email уже занят"/></div>
 					<div class="form-group">
-						<input type="email" name="email" class="form-control" placeholder="E-mail" required="required" data-bv-message=" " data-bv-remote-message="Email уже занят"/></div>
+						<input type="email" name="email" value="callback@myrig.com" class="form-control" placeholder="E-mail" required="required" data-bv-message=" " data-bv-remote-message="Email уже занят"/></div>
 					<div class="form-group">
 						<input type="tel" name="tel" class="form-control" required="required" data-bv-message=" " placeholder="{{ __('default.phone') }}"/></div>
 						{{-- <div class="faspin"><i class="fa fa-cog fa-spin" hidden="hidden"></i></div> --}}

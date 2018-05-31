@@ -203,7 +203,7 @@ foreach ($products as $item) {
                                         <li class="payment_method">
                                             <input type="radio" class="payment-type" id="payment_method_{{$loop->iteration}}" name="payment_method" data-id="{{$type->id}}" value="{{$type->id}}"  @if($loop->first) checked='checked' @endif data-order_button_text="" style="display: inline" />
 
-                                            <label for="payment_method_cheque">{{$type->title}}</label>
+                                            <label for="payment_method_cheque">@if($type->title === 'Bitcoin'){{$type->title}}@else{{ __('default.cash') }}@endif</label>
 
                                             <div class="payment_box" style="display:none;">
                                                 <p>{{ __('default.payment_methods_description') }}</p>
