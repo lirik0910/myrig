@@ -20,7 +20,7 @@
 @endphp
 
 <tr style="border-top: 1px solid #FFF">
-    <td class="product-line__container">
+    <td class="product-line__container" style="width: 84px">
         <img src="{{ asset('uploads/' . $icon['name']) }}" alt="product" style="width: 68px;">
     </td>
 
@@ -29,22 +29,32 @@
             {{$item->title}}
         </a>
 
-        <div class="price__container padding__collapse margin__collapse mobile-price__container d-block">
-            <span class="font-weight-bold default-small__price" style="color: #000; font-size: 15px;">
+        <div class="price__container padding__collapse margin__collapse mobile-price__container d-block" style="min-width: 194px">
+            <span class="font-weight-bold default-small__price attribute-item__container" style="color: #000; font-size: 15px;">
+                <span class="attribute-item__label">Product price</span>
                 <span class="currency__symbol">&#36;</span>
                 <span id="{{ 'default-price__container-' . $item->id }}" class="font-weight-light">{{ $price }}</span>
             </span>
 
-            <span class="bitcoin-small__price"  style="font-size: 15px;">
+            <span class="bitcoin-small__price attribute-item__container" style="font-size: 15px;">
+                <span class="attribute-item__label">Cost</span>
                 <span id="{{ 'bitcoin-price__container-' . $item->id }}" class="font-weight-light">{{ $btcPrice }}</span>
                 <i class="fa fa-bitcoin"></i>
+            </span>
+
+            <span class="attribute-item__container d-block-991" style="font-size: 15px;">
+                <span class="attribute-item__label">Count</span>
+                <span class="font-weight-light" style="color: #000">{{ $count }}</span>
             </span>
         </div>
     </td>
 
-    <td class="product-line__container">{{ $count }}</td>
+    <td class="product-line__container checkout-order__cost">
+        <span class="hidden-md">Count</span>
+        <span style="color: #000">{{ $count }}</span>
+    </td>
 
-    <td class="product-line__container" style="width: 100px">
+    <td class="checkout-order__cost product-line__container" style="width: 100px">
         <div class="price__container padding__collapse margin__collapse mobile-price__container d-block" style="min-width: 174px">
             <span class="font-weight-bold default-small__price d-block margin__collapse padding__collapse" style="color: #000; font-size: 15px; line-height: 24px;">
                 <span class="currency__symbol">&#36;</span>

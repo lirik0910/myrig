@@ -14874,126 +14874,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
 /**
- * Default drop-down list
- * @extends Base
- */
-
-var ToggleList = function (_Base) {
-	_inherits(ToggleList, _Base);
-
-	function ToggleList() {
-		_classCallCheck(this, ToggleList);
-
-		return _possibleConstructorReturn(this, (ToggleList.__proto__ || Object.getPrototypeOf(ToggleList)).apply(this, arguments));
-	}
-
-	_createClass(ToggleList, [{
-		key: 'initDOMElements',
-
-		/**
-   * Get and save DOM elements
-   * @param {Object} e
-   */
-		value: function initDOMElements(e) {
-			this.els = {
-				_toggleCurrent: $('.toggle__current'),
-				_toggleList: $('.toggle__list')
-			};
-		}
-
-		/**
-   * Invoked when DOM becomes safe to manipulate
-   * @param {Object} e
-   */
-
-	}, {
-		key: 'onDOMReady',
-		value: function onDOMReady(e) {
-			var _this2 = this;
-
-			this.els._toggleCurrent.on('click', function (e) {
-				return _this2.openToggleList(e);
-			});
-			this.els._toggleList.on('click', function (e) {
-				return _this2.selectItem(e);
-			});
-		}
-
-		/**
-   * Add event listeners for new form container
-   * @param {Object} e
-   */
-
-	}, {
-		key: 'newFormEventListener',
-		value: function newFormEventListener(formEl) {
-			var _this3 = this;
-
-			formEl.find('.toggle__current').on('click', function (e) {
-				return _this3.openToggleList(e);
-			});
-			formEl.find('.toggle__list').on('click', function (e) {
-				return _this3.selectItem(e);
-			});
-		}
-
-		/**
-   * Open the drop-down list
-   * @param {Object} e
-   */
-
-	}, {
-		key: 'openToggleList',
-		value: function openToggleList(e) {
-			var currentTarget = $(e.currentTarget);
-
-			currentTarget.siblings('.toggle__list').toggle();
-			currentTarget.toggleClass('show');
-		}
-
-		/**
-   * Select element
-   * @param {Object} e
-   */
-
-	}, {
-		key: 'selectItem',
-		value: function selectItem(e) {
-			var target = $(e.target),
-			    currentTarget = $(e.currentTarget),
-			    currentToggle = currentTarget.siblings('.toggle__current');
-
-			currentTarget.toggle();
-			currentToggle.text(target.text());
-
-			currentTarget.siblings('.toggle__input').val(target.data('id'));
-			currentToggle.toggleClass('show');
-		}
-	}]);
-
-	return ToggleList;
-}(__WEBPACK_IMPORTED_MODULE_0__Base_js__["a" /* default */]);
-
-/* harmony default export */ __webpack_exports__["a"] = (ToggleList);
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
-
-/***/ }),
-/* 10 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Base_js__ = __webpack_require__(1);
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-
-
-/**
  * Product counter field to add to the cart
  * @extends Base
  */
@@ -15192,7 +15072,7 @@ var InputProductCount = function (_Base) {
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
 
 /***/ }),
-/* 11 */
+/* 10 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -15461,6 +15341,126 @@ var DialogAvailability = function (_Base) {
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
 
 /***/ }),
+/* 11 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Base_js__ = __webpack_require__(1);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+/**
+ * Default drop-down list
+ * @extends Base
+ */
+
+var ToggleList = function (_Base) {
+	_inherits(ToggleList, _Base);
+
+	function ToggleList() {
+		_classCallCheck(this, ToggleList);
+
+		return _possibleConstructorReturn(this, (ToggleList.__proto__ || Object.getPrototypeOf(ToggleList)).apply(this, arguments));
+	}
+
+	_createClass(ToggleList, [{
+		key: 'initDOMElements',
+
+		/**
+   * Get and save DOM elements
+   * @param {Object} e
+   */
+		value: function initDOMElements(e) {
+			this.els = {
+				_toggleCurrent: $('.toggle__current'),
+				_toggleList: $('.toggle__list')
+			};
+		}
+
+		/**
+   * Invoked when DOM becomes safe to manipulate
+   * @param {Object} e
+   */
+
+	}, {
+		key: 'onDOMReady',
+		value: function onDOMReady(e) {
+			var _this2 = this;
+
+			this.els._toggleCurrent.on('click', function (e) {
+				return _this2.openToggleList(e);
+			});
+			this.els._toggleList.on('click', function (e) {
+				return _this2.selectItem(e);
+			});
+		}
+
+		/**
+   * Add event listeners for new form container
+   * @param {Object} e
+   */
+
+	}, {
+		key: 'newFormEventListener',
+		value: function newFormEventListener(formEl) {
+			var _this3 = this;
+
+			formEl.find('.toggle__current').on('click', function (e) {
+				return _this3.openToggleList(e);
+			});
+			formEl.find('.toggle__list').on('click', function (e) {
+				return _this3.selectItem(e);
+			});
+		}
+
+		/**
+   * Open the drop-down list
+   * @param {Object} e
+   */
+
+	}, {
+		key: 'openToggleList',
+		value: function openToggleList(e) {
+			var currentTarget = $(e.currentTarget);
+
+			currentTarget.siblings('.toggle__list').toggle();
+			currentTarget.toggleClass('show');
+		}
+
+		/**
+   * Select element
+   * @param {Object} e
+   */
+
+	}, {
+		key: 'selectItem',
+		value: function selectItem(e) {
+			var target = $(e.target),
+			    currentTarget = $(e.currentTarget),
+			    currentToggle = currentTarget.siblings('.toggle__current');
+
+			currentTarget.toggle();
+			currentToggle.text(target.text());
+
+			currentTarget.siblings('.toggle__input').val(target.data('id'));
+			currentToggle.toggleClass('show');
+		}
+	}]);
+
+	return ToggleList;
+}(__WEBPACK_IMPORTED_MODULE_0__Base_js__["a" /* default */]);
+
+/* harmony default export */ __webpack_exports__["a"] = (ToggleList);
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
+
+/***/ }),
 /* 12 */,
 /* 13 */,
 /* 14 */,
@@ -15497,9 +15497,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_ButtonSendToCart__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_Footer__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_DialogCallback__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_DialogAvailability__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_ToggleList__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_InputProductsCount__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_DialogAvailability__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_ToggleList__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_InputProductsCount__ = __webpack_require__(9);
 
 
 

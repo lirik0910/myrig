@@ -63,9 +63,8 @@
 /******/ 	return __webpack_require__(__webpack_require__.s = 33);
 /******/ })
 /************************************************************************/
-/******/ ({
-
-/***/ 0:
+/******/ ([
+/* 0 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -10436,8 +10435,7 @@ return jQuery;
 
 
 /***/ }),
-
-/***/ 1:
+/* 1 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -10507,8 +10505,7 @@ var Base = function () {
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
 
 /***/ }),
-
-/***/ 2:
+/* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(__webpack_provided_window_dot_jQuery, jQuery) {/**
@@ -13963,8 +13960,7 @@ var Base = function () {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0), __webpack_require__(0)))
 
 /***/ }),
-
-/***/ 3:
+/* 3 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -14137,50 +14133,7 @@ var Header = function (_Base) {
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
 
 /***/ }),
-
-/***/ 33:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(34);
-
-
-/***/ }),
-
-/***/ 34:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Base_js__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_Header__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_Background__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_PaperProduct__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_FormCheckout__ = __webpack_require__(68);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_Footer__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_DialogCallback__ = __webpack_require__(6);
-
-
-
-
-
-
-
-
-
-new __WEBPACK_IMPORTED_MODULE_0__Base_js__["a" /* default */]().call(function (e) {
-	new __WEBPACK_IMPORTED_MODULE_1__components_Header__["a" /* default */]();
-	new __WEBPACK_IMPORTED_MODULE_2__components_Background__["a" /* default */]();
-	new __WEBPACK_IMPORTED_MODULE_3__components_PaperProduct__["a" /* default */]();
-	new __WEBPACK_IMPORTED_MODULE_4__components_FormCheckout__["a" /* default */]();
-
-	new __WEBPACK_IMPORTED_MODULE_5__components_Footer__["a" /* default */]({
-		dialogCallback: new __WEBPACK_IMPORTED_MODULE_6__components_DialogCallback__["a" /* default */]({ selector: '#contacts__dialog' })
-	});
-});
-
-/***/ }),
-
-/***/ 4:
+/* 4 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -14268,8 +14221,7 @@ var Background = function (_Base) {
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
 
 /***/ }),
-
-/***/ 5:
+/* 5 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -14370,8 +14322,7 @@ var Footer = function (_Base) {
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
 
 /***/ }),
-
-/***/ 6:
+/* 6 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -14507,13 +14458,177 @@ var DialogCallback = function (_Base) {
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
 
 /***/ }),
-
-/***/ 68:
+/* 7 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Base_js__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_select2__ = __webpack_require__(69);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_owl_carousel__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_owl_carousel___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_owl_carousel__);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+
+/**
+ * Product item container
+ * @extends Base
+ */
+
+var PaperProduct = function (_Base) {
+	_inherits(PaperProduct, _Base);
+
+	function PaperProduct(props) {
+		_classCallCheck(this, PaperProduct);
+
+		var _this = _possibleConstructorReturn(this, (PaperProduct.__proto__ || Object.getPrototypeOf(PaperProduct)).call(this, props));
+
+		_this.setModuleProps(props);
+		return _this;
+	}
+
+	/**
+  * Get and save DOM elements
+  * @param {Object} e
+  */
+
+
+	_createClass(PaperProduct, [{
+		key: 'initDOMElements',
+		value: function initDOMElements(e) {
+			this.els = {
+				_sliderContainer: $('.slider__container'),
+				_productContentContainer: $('.product-content__container')
+			};
+		}
+
+		/**
+   * Runs after window size changes
+   * @param {Object} e
+   */
+
+	}, {
+		key: 'onResized',
+		value: function onResized(e) {
+			this.setTopBorder();
+		}
+
+		/**
+   * Invoked when DOM becomes safe to manipulate
+   * @param {Object} e
+   */
+
+	}, {
+		key: 'onDOMReady',
+		value: function onDOMReady(e) {
+			this.setTopBorder();
+		}
+
+		/**
+   * Building the upper border of the block
+   */
+
+	}, {
+		key: 'setTopBorder',
+		value: function setTopBorder() {
+			var width = this.els._sliderContainer.offset().left;
+
+			this.els._sliderContainer.children('.border__container').css({
+				left: -width,
+				backgroundColor: '#F2F2F2'
+			});
+
+			this.els._productContentContainer.children('.border__container').css({
+				right: -width,
+				backgroundColor: '#FFF'
+			});
+		}
+	}]);
+
+	return PaperProduct;
+}(__WEBPACK_IMPORTED_MODULE_0__Base_js__["a" /* default */]);
+
+/* harmony default export */ __webpack_exports__["a"] = (PaperProduct);
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
+
+/***/ }),
+/* 8 */,
+/* 9 */,
+/* 10 */,
+/* 11 */,
+/* 12 */,
+/* 13 */,
+/* 14 */,
+/* 15 */,
+/* 16 */,
+/* 17 */,
+/* 18 */,
+/* 19 */,
+/* 20 */,
+/* 21 */,
+/* 22 */,
+/* 23 */,
+/* 24 */,
+/* 25 */,
+/* 26 */,
+/* 27 */,
+/* 28 */,
+/* 29 */,
+/* 30 */,
+/* 31 */,
+/* 32 */,
+/* 33 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(34);
+
+
+/***/ }),
+/* 34 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Base_js__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_Header__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_Background__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_PaperProduct__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_FormCheckout__ = __webpack_require__(35);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_Footer__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_DialogCallback__ = __webpack_require__(6);
+
+
+
+
+
+
+
+
+
+new __WEBPACK_IMPORTED_MODULE_0__Base_js__["a" /* default */]().call(function (e) {
+	new __WEBPACK_IMPORTED_MODULE_1__components_Header__["a" /* default */]();
+	new __WEBPACK_IMPORTED_MODULE_2__components_Background__["a" /* default */]();
+	new __WEBPACK_IMPORTED_MODULE_3__components_PaperProduct__["a" /* default */]();
+	new __WEBPACK_IMPORTED_MODULE_4__components_FormCheckout__["a" /* default */]();
+
+	new __WEBPACK_IMPORTED_MODULE_5__components_Footer__["a" /* default */]({
+		dialogCallback: new __WEBPACK_IMPORTED_MODULE_6__components_DialogCallback__["a" /* default */]({ selector: '#contacts__dialog' })
+	});
+});
+
+/***/ }),
+/* 35 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Base_js__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_select2__ = __webpack_require__(36);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_select2___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_select2__);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -14544,7 +14659,11 @@ var FormCheckout = function (_Base) {
    */
 		value: function initDOMElements(e) {
 			this.els = {
-				_countrySelect: $('#country__select')
+				_countrySelect: $('#country__select'),
+				_uaDeliveryMethod: $('.ua-delivery__method'),
+				_ruDeliveryMethod: $('.ru-delivery__method'),
+				_selfmentDeliveryMethod: $('.selfment-delivery__method'),
+				_withoutDeliveryMethod: $('.without-delivery__method')
 			};
 		}
 
@@ -14556,7 +14675,51 @@ var FormCheckout = function (_Base) {
 	}, {
 		key: 'onDOMReady',
 		value: function onDOMReady(e) {
+			var _this2 = this;
+
 			this.els._countrySelect.select2();
+			this.els._countrySelect.on('change', function (e) {
+				return _this2.displayDeliveryMethods($(e.currentTarget));
+			});
+
+			this.displayDeliveryMethods(this.els._countrySelect);
+		}
+
+		/**
+   * display delivery methods
+   * @param {Object} currentTarget
+   */
+
+	}, {
+		key: 'displayDeliveryMethods',
+		value: function displayDeliveryMethods(currentTarget) {
+			switch (currentTarget.val()) {
+				case 'UA':
+				case 'RU':
+					this.els._uaDeliveryMethod.show();
+					this.els._uaDeliveryMethod.find('input').prop('checked', true);
+
+					this.els._selfmentDeliveryMethod.show();
+					this.els._ruDeliveryMethod.hide();
+					this.els._ruDeliveryMethod.find('input').prop('checked', false);
+
+					this.els._withoutDeliveryMethod.val(0);
+					this.els._withoutDeliveryMethod.hide();
+					break;
+
+				default:
+					this.els._uaDeliveryMethod.hide();
+					this.els._ruDeliveryMethod.hide();
+					this.els._selfmentDeliveryMethod.hide();
+
+					this.els._withoutDeliveryMethod.show();
+					this.els._uaDeliveryMethod.find('input').prop('checked', false);
+					this.els._ruDeliveryMethod.find('input').prop('checked', false);
+
+					this.els._withoutDeliveryMethod.val(1);
+					this.els._selfmentDeliveryMethod.find('input').prop('checked', false);
+					break;
+			}
 		}
 	}]);
 
@@ -14567,8 +14730,7 @@ var FormCheckout = function (_Base) {
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
 
 /***/ }),
-
-/***/ 69:
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function($) {var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var require;var require;/*!
@@ -20424,107 +20586,5 @@ S2.define('jquery.select2',[
 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
-/***/ }),
-
-/***/ 7:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Base_js__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_owl_carousel__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_owl_carousel___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_owl_carousel__);
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-
-
-
-/**
- * Product item container
- * @extends Base
- */
-
-var PaperProduct = function (_Base) {
-	_inherits(PaperProduct, _Base);
-
-	function PaperProduct(props) {
-		_classCallCheck(this, PaperProduct);
-
-		var _this = _possibleConstructorReturn(this, (PaperProduct.__proto__ || Object.getPrototypeOf(PaperProduct)).call(this, props));
-
-		_this.setModuleProps(props);
-		return _this;
-	}
-
-	/**
-  * Get and save DOM elements
-  * @param {Object} e
-  */
-
-
-	_createClass(PaperProduct, [{
-		key: 'initDOMElements',
-		value: function initDOMElements(e) {
-			this.els = {
-				_sliderContainer: $('.slider__container'),
-				_productContentContainer: $('.product-content__container')
-			};
-		}
-
-		/**
-   * Runs after window size changes
-   * @param {Object} e
-   */
-
-	}, {
-		key: 'onResized',
-		value: function onResized(e) {
-			this.setTopBorder();
-		}
-
-		/**
-   * Invoked when DOM becomes safe to manipulate
-   * @param {Object} e
-   */
-
-	}, {
-		key: 'onDOMReady',
-		value: function onDOMReady(e) {
-			this.setTopBorder();
-		}
-
-		/**
-   * Building the upper border of the block
-   */
-
-	}, {
-		key: 'setTopBorder',
-		value: function setTopBorder() {
-			var width = this.els._sliderContainer.offset().left;
-
-			this.els._sliderContainer.children('.border__container').css({
-				left: -width,
-				backgroundColor: '#F2F2F2'
-			});
-
-			this.els._productContentContainer.children('.border__container').css({
-				right: -width,
-				backgroundColor: '#FFF'
-			});
-		}
-	}]);
-
-	return PaperProduct;
-}(__WEBPACK_IMPORTED_MODULE_0__Base_js__["a" /* default */]);
-
-/* harmony default export */ __webpack_exports__["a"] = (PaperProduct);
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
-
 /***/ })
-
-/******/ });
+/******/ ]);

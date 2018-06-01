@@ -63,7 +63,8 @@ input.input__border {
 	border: 1px solid #60A645;
 }
 
-button {
+button,
+label {
 	cursor: pointer !important;
 }
 
@@ -76,6 +77,21 @@ a:hover,
 a.default__link:hover {
 	color: #000;
 	text-decoration: underline;
+}
+
+.d-block-991,
+.d-inline-block-991 {
+	display: none;
+}
+
+@media (max-width: 991px) {
+	.d-block-991 {
+		display: block;
+	}
+
+	.d-inline-block-991 {
+		display: inline-block;
+	}
 }
 
 .root__container {

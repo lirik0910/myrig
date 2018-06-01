@@ -1,6 +1,31 @@
+.checkout__container {
+	.slider__container {
+		padding-right: 32px !important;
+		padding-left: 32px !important;
+		background-color: #FFF;
+	}
+
+	@media (max-width: 767px) {
+		margin-top: -32px !important;
+
+		.slider__container {
+			border-top: 1px solid #F2F2F2 !important;
+		}
+
+		.product-item__container {
+			background-color: #FFF;
+		}
+	}
+}
+
 .checkout-products__container {
-	border: 6px solid #DDD;
 	padding: 6px 18px;
+
+	@media (max-width: 767px) {
+		margin-top: 12px;
+		margin-right: 32px !important;
+		background-color: #FFF;
+	}
 
 	.checkout-products__table {
 		width: 100%;
@@ -10,24 +35,87 @@
 
 		.product-line__container {
 			padding: 12px 0;
+
+			@media (max-width: 991px) {
+				vertical-align: top;
+			}
 		}
 	}
 
 	.product-title__container {
 		font-size: 18px;
+
+		@media (max-width: 767px) {
+			display: block;
+		}
 	}
 
 	.delivery-title__col {
 		font-size: 18px; 
 		color: #000; 
+
+		@media (max-width: 447px) {
+			display: none !important;
+		}
 	}
 
 	.checkout-deliveries__container {
 		margin-left: 38px;
 		font-size: 13px;
+		max-width: 72%;
+
+		/* @media (max-width: 991px) {
+
+		} */
 	}
 }
 
 .confirm__button {
 	margin-top: 18px;
+}
+
+.delivery-method__item {
+	display: inline-block;
+}
+
+@media (max-width: 767px) {
+	.amount__container {
+		padding: 8px 32px !important;
+
+		.amount__label {
+			margin-right: 32px;
+		}
+	}
+}
+
+@media (max-width: 447px) {
+	.cart-amount__containrt {
+		width: 100%;
+		text-align: left !important; 
+		margin: 0 !important;
+		padding: 0 !important;
+
+		.default-small__price,
+		.bitcoin-small__price {
+			display: block;
+			margin: 0 !important;
+		}
+	}
+
+	.checkout__form,
+	.payment-types__container {
+		margin-right: 0 !important;
+	}
+
+	.payment-types-title__container,
+	.additional-data-title__container {
+		font-size: 20px;
+		padding-left: 14px;
+	}
+
+	.checkout-products__container {
+		margin-left: 0 !important;
+		margin-right: 0 !important;
+		padding-left: 0 !important;
+	}
 }

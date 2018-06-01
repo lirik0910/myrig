@@ -31,29 +31,29 @@ if(isset($client_email) && !empty($client_email)){
 	<nav class="navigation__container" role="navigation">
 		<ul class="list__container padding__collapse margin__collapse">
 			@if ($products)
-			<li class="list__item">
+			<li class="list__item text-uppercase font-weight-light">
 				<a href="{{ asset($products->link) }}">{{ $products->title }}</a>
 			</li>
 			@endif
 
-			<li class="list__item">
+			<li class="list__item text-uppercase font-weight-light">
 				<a href="https://host.myrig.com/">{{ __('default.hosting_title') }}</a>
 			</li>
 
 			@if ($service)
-			<li class="list__item">
+			<li class="list__item text-uppercase font-weight-light">
 				<a href="{{ asset($service->link) }}">{{ $service->title }}</a>
 			</li>
 			@endif
 
 			@if ($news)
-			<li class="list__item">
+			<li class="list__item text-uppercase font-weight-light">
 				<a href="{{ asset($news->link) }}">{{ $news->title }}</a>
 			</li>
 			@endif
 
 			@if ($contacts)
-			<li class="list__item">
+			<li class="list__item text-uppercase font-weight-light">
 				<a href="{{ asset($contacts->link) }}">{{ $contacts->title }}</a>
 			</li>
 			@endif

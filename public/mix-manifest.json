@@ -10,8 +10,8 @@
     "/css/newsItem.css": "/css/newsItem.css",
     "/js/shop.js": "/js/shop.js",
     "/js/product.js": "/js/product.js",
-    "/js/cart.js": "/js/cart.js",
     "/js/checkout.js": "/js/checkout.js",
+    "/js/cart.js": "/js/cart.js",
     "/js/newsList.js": "/js/newsList.js",
     "/js/newsItem.js": "/js/newsItem.js"
 }
