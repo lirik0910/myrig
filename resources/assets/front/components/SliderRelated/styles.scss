@@ -1,0 +1,105 @@
+.related__container {
+	padding: 44px 0;
+	background-color: #F2F2F2;
+	border-top: 1px solid #FFF;
+
+	.align__container {
+		margin: 0 auto;
+
+		.related__title {
+			width: 100%;
+			font-size: 32px;
+			text-align: center;
+			margin-bottom: 32px;
+		}
+
+		.related-item__container {
+			margin: auto;
+			cursor: pointer;
+			font-weight: 600;
+			min-height: 475px;
+			position: relative;
+			background-color: #FFF;
+			padding: 25px 30px 16px;
+			border-bottom: 3px solid transparent;
+
+			@media (min-width: 992px) {
+				width: 306px;
+			}
+
+			@media (min-width: 1250px) {
+				width: 394px;
+			}
+
+			@media (max-width: 767px) {
+				width: 442px;
+				min-height: 454px;
+			}
+
+			@media (max-width: 479px) {
+				width: 308px;
+				max-width: 100%;
+				padding: 15px 10px;
+			}
+
+			.title__container {
+				margin-top: 5px;
+				font-size: 24px;
+				min-height: 84px;
+				line-height: 1.6;
+				color: rgb(96, 166, 69);
+			}
+
+			.icon__container {
+				height: 215px;
+				line-height: 215px;
+				position: relative;
+
+				.related__icon {
+					width: auto;
+					height: auto;
+					margin: auto;
+					max-width: 100%;
+					max-height: 100%;
+					display: inline-block;
+				}
+			}
+
+			.price__container {
+				.default__price {
+					margin-right: 10px;
+					color: rgb(96, 166, 69);
+				}
+
+				.bitcoin__price {
+					color: #FF8400;
+				}
+			}
+
+			.cart-count__container {
+				width: 100%;
+
+				.cart__button {
+					width: calc(100% - 136px);
+				}
+			}
+		}
+
+		.related-item__container:hover {
+			border-bottom: 3px solid rgb(96, 166, 69);
+			box-shadow: 0px 12px 18px 0px rgba(209, 208, 207, 0.83);
+		}
+
+		.owl-dots {
+			margin: 0;
+			width: 100%;
+			display: block;
+			position: relative;
+			text-align: center;
+
+			.owl-dot {
+				display: inline-block;
+			}
+		}
+	}
+}

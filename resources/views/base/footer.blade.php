@@ -1,342 +1,254 @@
 @php
 	$context = $select('App\Model\Base\Context')->where('title', $locale)->first();
 
-    $productsPage = $select('App\Model\Base\Page')->where('parent_id', 0)->where('context_id', $context->id)->where('view_id', 3)->first();
+	$productsPage = $select('App\Model\Base\Page')->where('parent_id', 0)->where('context_id', $context->id)->where('view_id', 3)->first();
 
-    $otherPages = $select('App\Model\Base\Page')
-        ->where('parent_id', 0)
-        ->where('context_id', $context->id)
-        ->where(function ($q) {
-            return $q
-                ->orWhere('view_id', 4)
-                ->orWhere('view_id', 7);
-        })->get();
+	$otherPages = $select('App\Model\Base\Page')
+		->where('parent_id', 0)
+		->where('context_id', $context->id)
+		->where(function ($q) {
+			return $q
+				->orWhere('view_id', 4)
+				->orWhere('view_id', 7);
+		})->get();
 
-    $courses = $select('App\Model\Shop\ExchangeRate')->get()->groupBy('title');
+	$courses = $select('App\Model\Shop\ExchangeRate')->get()->groupBy('title');
 @endphp
 
-<footer class="footer">
-	<div class="top-row">
-		<div class="container">
-			<div class="row">
-				<div class="social col-sm-4 col-md-2 col-lg-4">
-					
-					<a target="_blank" href="http://facebook.com/#" data-wpel-link="external" rel="nofollow external noopener noreferrer">
-						<div class="social-title">Facebook</div>
-						<div class="hidden-icon">
-							<i class="fa fa-facebook"></i>
-						</div>
-					</a>
+<footer id="footer__container" class="footer__container">
+	<div class="service__container">
+		<div class="row__container row default__container">
+			<div class="social__container padding__collapse col-sm-4 col-md-2 col-lg-4">
+				<a target="_blank" href="http://facebook.com/#" class="item__link">
+					<div class="title__container">Facebook</div>
+					<div class="icon__container text-center">
+						<i class="fa fa-facebook"></i>
+					</div>
+				</a>
 
-					<a target="_blank" href="https://twitter.com/myrig_com" data-wpel-link="external" rel="nofollow external noopener noreferrer">
-						<div class="social-title">Twitter</div>
-						<div class="hidden-icon">
-							<i class="fa fa-twitter"></i>
-						</div>
-					</a>
+				<a target="_blank" href="https://twitter.com/myrig_com" class="item__link">
+					<div class="title__container">Twitter</div>
+					<div class="icon__container text-center">
+						<i class="fa fa-twitter"></i>
+					</div>
+				</a>
 
-					<a target="_blank" href="http://youtube.com/#" data-wpel-link="external" rel="nofollow external noopener noreferrer">
-						<div class="social-title">Youtube</div>
-						<div class="hidden-icon">
-							<i class="fa fa-youtube-play"></i>
-						</div>
-					</a>
-				</div>
+				<a target="_blank" href="http://youtube.com/#" class="item__link">
+					<div class="title__container">Youtube</div>
+					<div class="icon__container text-center">
+						<i class="fa fa-youtube-play"></i>
+					</div>
+				</a>
+			</div>
+
+			<div class="currency-rates__container text-right padding__collapse col-sm-8 col-md-10 col-lg-8">
+				<span class="currency__item">BTC <span class="equal__item">=</span> ${{number_format($courses['BTC/USD'][0]->value, 2, '.', '')}}</span>
 				
-				<div class="exchange col-sm-8 col-md-10 col-lg-8">
-					<span class="current">BTC <span class="h-m">=</span> ${{number_format($courses['BTC/USD'][0]->value, 2, '.', '')}}</span>
-					<span class="current">BCH <span class="h-m">=</span> ${{number_format($courses['BCH/USD'][0]->value, 2, '.', '')}}</span>
-					<span class="current">LTC <span class="h-m">=</span> ${{number_format($courses['LTC/USD'][0]->value, 2, '.', '')}}</span>
-					<span class="current">DASH <span class="h-m">=</span> ${{number_format($courses['DASH/USD'][0]->value, 2, '.', '')}}</span>
-					<span class="current">ETH <span class="h-m">=</span> ${{number_format($courses['ETH/USD'][0]->value, 2, '.', '')}}</span>
-				</div>
+				<span class="currency__item">BCH <span class="equal__item">=</span> ${{number_format($courses['BCH/USD'][0]->value, 2, '.', '')}}</span>
+				
+				<span class="currency__item">LTC <span class="equal__item">=</span> ${{number_format($courses['LTC/USD'][0]->value, 2, '.', '')}}</span>
+				
+				<span class="currency__item">DASH <span class="equal__item">=</span> ${{number_format($courses['DASH/USD'][0]->value, 2, '.', '')}}</span>
+				
+				<span class="currency__item">ETH <span class="equal__item">=</span> ${{number_format($courses['ETH/USD'][0]->value, 2, '.', '')}}</span>
 			</div>
 		</div>
 	</div>
-	
-	<div class="middle-row">
-		<div class="container">
-			<div class="row">
-				<div class="col-sm-2 col-md-2 col-lg-2 logo">
-					<a href="{{ asset('/') }}" data-wpel-link="internal">
-						<img src="{{ $preview(asset('uploads/design/logo.png'), 162, 35) }}" alt="logo"/>
-					</a>
+
+	<div class="info__container">
+		<div class="row__container row default__container">
+			<div class="logo__container padding__collapse col-sm-2 col-md-2 col-lg-2">
+				<a class="link__item logo-link__item" href="{{ asset('/') }}">
+					<img class="logo__icon" src="{{ $preview(asset('uploads/design/logo.png'), 162, 35) }}" alt="logo" style="width: 162px" />
+				</a>
 					
-					<div class="payment">
-						<img src="{{ asset('uploads/design/bitcoin.png') }}" alt="bitcoin"/>
-						<img src="{{ asset('uploads/design/paypal.png') }}" alt="paypal"/>
-					</div>
+				<div class="payment-types__container">
+					<img src="{{ asset('uploads/design/bitcoin.png') }}" alt="bitcoin" />
+					<img src="{{ asset('uploads/design/paypal.png') }}" alt="paypal" />
 				</div>
-				
-				<div class="col-sm-10 col-md-7 col-lg-7 footer-menu">
-					<ul id="menu-footer-menu-1" class="">
-						<li id="menu-item-144" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-144">
-							<a href="{{ url($productsPage->link) }}" data-wpel-link="internal">
-								{{ $productsPage->title }}
-							</a>
-						</li>
-						<li id="menu-item-144" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-144">
-							<a href="https://host.myrig.com/" data-wpel-link="internal">
-								{{ __('default.footer_hosting') }}
-							</a>
-						</li>
-						@foreach ($otherPages as $page)
-						<li id="menu-item-144" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-144">
-							<a href="{{ url($page->link) }}" data-wpel-link="internal">
-								{{ $page->title }}
-							</a>
-						</li>
-						@endforeach
-					</ul>
+			</div>
 
-					<!--<ul id="menu-footer-menu-2" class="">
-						<li id="menu-item-820" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-820">
-							<a href="https://myrig.com.ua/dostavka-otgruzka/" data-wpel-link="internal">Shipping and shipment</a>
-						</li>
-						
-						<li id="menu-item-730" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-730">
-							<a href="https://myrig.com.ua/wrnt/" data-wpel-link="internal">Extended warranty</a>
-						</li>
-						
-						<li id="menu-item-4714" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-4714">
-							<a href="https://myrig.com.ua/how-to-repair/" data-wpel-link="internal">Packing of items</a>
-						</li>
-					</ul>-->
+			<ul class="navigation__list list__container margin__collapse padding__collapse col-sm-10 col-md-7 col-lg-7">
+				<li class="list__item">
+					<a href="{{ url($productsPage->link) }}">
+						{{ $productsPage->title }}
+					</a>
+				</li>
+
+				<li class="list__item">
+					<a href="https://host.myrig.com/">
+						{{ __('default.footer_hosting') }}
+					</a>
+				</li>
+
+				@foreach ($otherPages as $page)
+				<li class="list__item">
+					<a href="{{ url($page->link) }}">
+						{{ $page->title }}
+					</a>
+				</li>
+				@endforeach
+			</ul>
+
+			<div class="contacts__container padding__collapse col-sm-12 col-md-3 col-lg-3 row">
+				<ul id="footer-contacts__list" class="contacts__list col-md-6">
+				@php
+					$contacts = App\Model\Base\Page::whereHas('view', function ($q) {
+						$q->where('title', 'Contacts');
+					})->first();
+									
+					$contactsMulti = [];
+					if (isset($contacts)) {
+						$contactsMulti = App\Model\Base\MultiVariableContent::multiConvert($contacts->view->variables);
+					}
+				@endphp
+
+				@foreach ($contactsMulti['Contact items'] as $line)
+				<li class="list__item @if($line['country'] == 'USA') active @endif">{{ __('common.cont_' . $line['country'] ) }}
+					<div class="phone-area__container">
+						@if(isset($line['phone']) && $line['phone']) 
+							{{ $line['phone'] }} 
+						@else 
+							support@myrig.com 
+						@endif
+					</div>
+				</li>
+				@endforeach
+				</ul>
+
+				<div class="col-md-6 connect-button__container padding__collapse text-right">
+					<button id="connect__button" class="default__button connect__button text-uppercase">
+						{{ __('default.contact_us_button') }}
+					</button>
 				</div>
-				
-				<div class="col-sm-12 col-md-3 col-lg-3">
-					<div class="contacts">
-						<ul>
-							@php
-								$contacts = App\Model\Base\Page::whereHas('view', function ($q) {
-									$q->where('title', 'Contacts');
-								})->first();
-								
-								$contactsMulti = [];
-								if (isset($contacts)) {
-									$contactsMulti = App\Model\Base\MultiVariableContent::multiConvert($contacts->view->variables);
-								}
-							@endphp
 
-							@isset($contactsMulti['Contact items'])
-								@foreach ($contactsMulti['Contact items'] as $line)
-									<li class="@if($line['country'] == 'USA') active @endif">{{ __('common.cont_' . $line['country'] ) }}
-										<div class="phone-area">
-											@if(isset($line['phone']) && $line['phone']) {{ $line['phone'] }} @else support@myrig.com @endif
-										</div>
-									</li>
-								@endforeach
-							@endisset
-						</ul>
-					</div>
-					<a href="#call" class="btn-default reg-c" data-wpel-link="internal">{{ __('default.contact_us_button') }}</a>
-					<div class="locale-switcher">
-						<a title="USA" href="{{ env('EN_DOMAIN') . '?locale=en' }}" data-wpel-link="external" rel="nofollow external noopener noreferrer">
-							<img src="{{ asset('uploads/design/us.png') }}" alt="">
-						</a>
-						<a title="UKR" href="{{ env('UA_DOMAIN') . '?locale=ua' }}" data-wpel-link="internal">
-							<img src="{{ asset('uploads/design/ua.png') }}" alt="">
-						</a>
-						<a title="RUS" href="{{ env('RU_DOMAIN') . '?locale=ru' }}" data-wpel-link="external" rel="nofollow external noopener noreferrer">
-							<img src="{{ asset('uploads/design/ru.png') }}" alt="ru">
-						</a>
-					</div>
+				<div class="locales__container">
+					<a title="USA" href="{{ env('EN_DOMAIN') . '?locale=en' }}">
+						<img src="{{ asset('uploads/design/us.png') }}" alt="USA">
+					</a>
+
+					<a title="UA" href="{{ env('UA_DOMAIN') . '?locale=ua' }}">
+						<img src="{{ asset('uploads/design/ua.png') }}" alt="UA">
+					</a>
+
+					<a title="RUR" href="{{ env('RU_DOMAIN') . '?locale=ru' }}">
+						<img src="{{ asset('uploads/design/ru.png') }}" alt="RU">
+					</a>
 				</div>
 			</div>
 		</div>
 	</div>
 </footer>
 
-<div style="display:none">
-	<div id="callsuccess" class="popup-success">
-		<div class="modal-header success-header">
-			{{ __('default.thank_you') }}</div>
-		<div class="modal-body">
-			{{ __('default.manager_contact') }}
-       </div>
-		<div class="modal-footer">
-			<button data-fancybox-close>{{ __('default.close') }}</button>
+<div id="contacts__dialog" class="curtain__container">
+	<div class="center__container">
+		<div class="dialog__container contacts-dialog__container">
+			<div class="title__container">
+				<span>{{ __('default.contact_us_button') }}</span>
+			</div>
+
+			<form id="callback__form" class="form__container" method="post" action="/back_call">
+				{{ csrf_field() }}
+
+				<input id="name__field" name="name" type="text" class="field__input" placeholder="{{ __('default.name') }}" />
+
+				<input type="tel" name="tel" class="field__input" required="required" placeholder="{{ __('default.phone') }}" />
+
+				<input type="submit" name="submit" value="{{ __('default.request_a_call') }}" class="default__button submit__button" />
+
+				<input type="hidden" name="action" value="formcall_ajax_request">
+				<input type="hidden" name="subject" value="Заказать звонок - Bitmain">
+			</form>
+
+			<div class="callback-success__container">
+				<div class="message__container">{{ __('default.thank_you') }}</div>
+				<div class="content__container">{{ __('default.manager_contact') }}</div>
+			</div>
 		</div>
 	</div>
-	<div id="call">
-		<div class="modal-header">
-			<ul class="reg-links">
-				<li class="active" data-target="#enter-field"><a href="" data-wpel-link="internal">{{ __('default.contact_us_button') }}</a></li>
-			</ul>
-		</div>
-		<div class="modal-body">
-			<div id="call-field">
-				<form id="callback" action="/back_call">
-					{{csrf_field()}}
-					<div class="form-group">
-						<input id="name" type="text" name="name" class="form-control" placeholder="{{ __('default.name') }}" required="required" data-bv-message=" " data-bv-remote-message="Email уже занят"/></div>
-					<div class="form-group">
-						<input type="email" name="email" class="form-control" placeholder="E-mail" required="required" data-bv-message=" " data-bv-remote-message="Email уже занят"/></div>
-					<div class="form-group">
-						<input type="tel" name="tel" class="form-control" required="required" data-bv-message=" " placeholder="{{ __('default.phone') }}"/></div>
-						<div class="faspin"><i class="fa fa-cog fa-spin" hidden="hidden"></i></div>
-					<div class="form-group">
-						<input type="submit" name="submit" value="{{ __('default.request_a_call') }}" class="btn-default btn-subscribe"/>
-					</div>
-					<input type="hidden" name="action" value="formcall_ajax_request">
-					<input type="hidden" name="subject" value="Заказать звонок - Bitmain">
-				</form>
-				<div class="result">
-					<div class="success-header">{{ __('default.thank_you') }}!</div>
-					<div class="result-body">{{ __('default.manager_contact') }}.</div>
-					<button data-fancybox-close>{{ __('default.close') }}</button>
-				</div>
-			</div>
-
-		</div>
-	</div>
-
-	<div id="ticket">
-		<div class="modal-header">
-			<ul class="reg-links">
-				<li data-target="#enter-field"><a href="" data-wpel-link="internal">{{ __('default.create_ticket_button') }}</a></li>
-			</ul>
-		</div>
-		<div class="modal-body">
-			<div id="ticket-field">
-				<form id="ticketback">
-					{{csrf_field()}}
-					<div class="form-group">
-						<input type="email" name="email" class="form-control" placeholder="E-mail" required="required" data-bv-message=" " data-bv-remote-message="Email уже занят"/></div>
-					<div class="form-group">
-						<input type="text" name="topic" class="form-control" required="required" data-bv-message=" " placeholder="{{ __('default.topic') }}"/></div>
-
-					<div class="form-group">
-						<textarea name="message" class="form-control" placeholder="{{ __('default.description') }}" required="required" data-bv-message=""></textarea></div>
-					<div class="form-group">
-						<span class="filename"></span>
-						<label for="fileName"><i class="fa fa-paperclip"></i> {{ __('default.attach_file') }}</label>
-						<input id="fileName" type="file" name="file" class="form-control" data-bv-message=" "></div>
-
-					<input type="hidden" name="action" value="ticket_ajax_request">
-					<input type="hidden" name="subject" value="Тикет - Bitmain">
-					<div class="faspin"><i class="fa fa-cog fa-spin" hidden="hidden"></i></div>
-					<div class="form-group">
-						<input type="submit" name="submit" value="{{ __('default.send') }}" class="btn-default btn-subscribe"/>
-					</div>
-				</form>
-				<div class="result">
-					<div class="success-header">{{ __('default.thank_you') }}!</div>
-					<div class="result-body">{{ __('default.manager_contact') }}.</div>
-					<button data-fancybox-close>{{ __('default.close') }}</button>
-				</div>
-			</div>
-
-		</div>
-	</div>
-	<!--<div id="reg">
-		<div class="modal-header">
-			<ul class="reg-links">
-				<li class="active" data-target="#enter-field"><a href="" data-wpel-link="internal">Вход</a></li>
-				<li data-target="#reg-field"><a href="" data-wpel-link="internal">Регистрация</a></li>
-			</ul>
-		</div>
-		<div class="modal-body">
-			<div id="reg-field">
-				<form id="registration" action="#">
-					<div class="form-group">
-						<input id="user_email" type="email" name="user_email" class="form-control" placeholder="Эл. почта" required="required" data-bv-message=" " data-bv-remote-message="Email уже занят"/></div>
-					<div class="form-group">
-						<input type="tel" name="billing_phone" class="form-control billing_phone-reg" required="required"  data-bv-digits="true"   data-bv-message=" " placeholder="Телефон"/></div>
-
-					<div class="form-group">
-						<input type="submit" name="submit" value="Зарегистрироваться" class="btn-default btn-subscribe"/>
-					</div>
-					<input type="hidden" name="action" value="bitmain_account_register">
-					<input type="hidden" name="register" value="1">
-					<input type="hidden" name="subject" value="Регистрация пользователя - Bitmain">
-				</form>
-				<p class="result" data-text="Регистрация успешная! Пароль отправлен вам на email"></p>
-			</div>
-			<div id="enter-field">
-
-				<div class="woocommerce">
-					<form  id="enter" class="woocomerce-form woocommerce-form-login login " method="post">
-						<div class="form-group">
-							<input type="text" class="form-control" name="username" id="username" placeholder="Логин" value="" />
-						</div>
-						<div class="form-group">
-							<input class="form-control" type="password" name="password" id="password" placeholder="Пароль"/>
-						</div>
-						<p class="form-row">
-							<input type="hidden" id="woocommerce-login-nonce" name="woocommerce-login-nonce" value="c6b529870e" /><input type="hidden" name="_wp_http_referer" value="/" />             <input type="submit" class="btn-default btn-subscribe" name="login" value="Авторизация" />
-
-						</p>
-						<div class="more-wrapper"><a href="/wp-login.php?action=lostpassword" class="btn-recover" data-wpel-link="internal">Напомнить</a></div>
-					</form>
-				</div>
-			</div>
-		</div>
-	</div>-->
 </div>
 
-<div id="response-message" class="modal-body result" style="display: none">
-    <div class="success-header">{{ __('default.order_create') }}!</div>
-    <div class="result-body">{{ __('default.manager_contact') }}.</div>
-    <button id="order_success_close" data-fancybox-close>{{ __('default.okay') }}</button>
+<div id="availability__dialog" class="curtain__container">
+	<div class="center__container">
+		<div class="availability-dialog__container">
+			<div class="title__container">
+				<span>{{ __('default.report_availability_popup') }}</span>
+			</div>
+
+			<form id="availability__form" class="availability__form form__container" method="post" action="">
+				<div class="report-message__container font-weight-bold">
+					{{ __('default.leave_request') }}
+				</div>
+
+				<input id="name__field" name="name" type="text" class="field__input" placeholder="{{ __('default.name') }}" required="required" />
+
+				<input id="email__field" name="email" type="email" class="field__input" placeholder="E-mail" required="required" />
+
+				<input type="tel" name="phone" class="field__input" required="required" placeholder="{{ __('default.phone') }}" />
+
+				<div id="products-select__container" class="products-select__container">
+					<div class="product-item__container product-item__container-1 row padding__collapse">
+						<div class="select__container col-sm-8 padding__collapse margin__collapse">
+							<ul class="list__container products__list toggle__list padding__collapse margin__collapse"></ul>
+							
+							<div class="selected__product toggle__current"></div>
+
+							<input type="hidden" name="products[]" class="product-selected__input toggle__input" />
+						</div>
+
+						<div class="col-sm-1 padding__collapse margin__collapse"></div>
+
+						<div class="cart-count__container col-sm-3 padding__collapse margin__collapse text-right">
+							<div class="counter__container">
+								<input type="text" name="count-1" class="form-control form-number cart-count__input margin__collapse padding__collapse text-center input__border" value="1" />
+									
+								<button class="default__button plus-icon__button padding__collapse margin__collapse">
+									<i class="fa fa-plus"></i>
+								</button>
+
+								<button class="default__button minus-icon__button padding__collapse margin__collapse">
+									<i class="fa fa-minus"></i>
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="products-control__container">
+					<button id="add-product__button" class="add-product__button transparent__button">+</button>
+					<button id="delete-product__button" class="delete-product__button transparent__button">-</button>
+				</div>
+
+				<div class="recaptcha__container">
+					<div class="form-group">
+						<div id="g-recaptcha" data-check="0"></div>
+					</div>
+					<p class="error-captcha__container text-center font-weight-bold">{{ __('default.captcha') }}</p>
+				</div>
+
+				<input type="submit" name="submit" value="{{ __('default.send') }}" class="default__button submit__button text-uppercase" />
+			</form>
+
+			<div class="callback-success__container">
+				<div class="message__container">{{ __('default.thank_you') }}</div>
+				<div class="content__container">{{ __('default.manager_contact') }}</div>
+			</div>
+		</div>
+	</div>
 </div>
 
+<script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async defer></script>
+<link rel="stylesheet" href="{{ asset('css/' . strtolower($it->view->title) . '.css') }}">
+<script type="text/javascript" src="{{ asset('js/' . strtolower($it->view->title) . '.js') }}"></script>
 <script type="text/javascript">
 	var global = {
 		url: "{{ config('app.' . $locale . '_domain') . '/' }}",
 		app: {
-			connector: "{{ asset('connector') }}",
-			csrf: "{{ csrf_token() }}"
+			connector: "{{ asset('connector') }}"
 		}
 	};
-	var calc = {};
-	var products = {};
-</script>
-
-<script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
-		async defer>
-</script>
-
-
-<!-- <script type="text/javascript" src='https://myrig.com.ua/wp-content/plugins/woocommerce/assets/js/frontend/cart-fragments.min.js?ver=3.2.6'></script> -->
-<script type="text/javascript" src="{{ asset('js/owl.carousel.min.js?ver=1.12') }}"></script>
-<script type="text/javascript" src="{{ asset('js/intlTelInput.min.js?ver=1.12') }}"></script>
-<script type="text/javascript" src="{{ asset('js/jquery.fancybox.min.js?ver=1.12') }}"></script>
-<script type="text/javascript" src="{{ asset('js/bootstrapValidator.js?ver=1.12') }}"></script>
-<script type="text/javascript" src="{{ asset('js/script.js?ver=1.12') }}"></script>
-<script type="text/javascript" src="{{ asset('js/Chart.min.js?ver=1.12') }}"></script>
-<script type="text/javascript" src="{{ asset('js/actions.js?ver=1.12') }}"></script>
-<script type="text/javascript" src="{{ asset('js/calc.js?ver=1.12') }}"></script>
-
-<script type="text/javascript" src="{{ asset('js/selectWoo.full.min.js?ver=1.0.1') }}"></script>
-<script type="text/javascript" src="{{ asset('js/country-select.min.js?ver=3.2.6') }}"></script>
-<script type="text/javascript">
-var wc_country_select_params = {
-	"countries": "[]",
-	"i18n_select_state_text": "",
-	"i18n_no_matches": "{{ __('default.no_matches') }}",
-	"i18n_ajax_error": "",
-	"i18n_input_too_short_1": "",
-	"i18n_input_too_short_n": "",
-	"i18n_input_too_long_1": "",
-	"i18n_input_too_long_n": "",
-	"i18n_selection_too_long_1": "",
-	"i18n_selection_too_long_n": "",
-	"i18n_load_more": "",
-	"i18n_searching": ""
-};
-</script>
-
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-103386645-1"></script>
-<script>
-	window.dataLayer = window.dataLayer || [];
-	function gtag(){dataLayer.push(arguments);}
-	gtag('js', new Date());
-
-	gtag('config', 'UA-103386645-1');
 </script>
 
 <script>
-window.zEmbed||function(e,t){var n,o,d,i,s,a=[],r=document.createElement("iframe");window.zEmbed=function(){a.push(arguments)},window.zE=window.zE||window.zEmbed,r.src="javascript:false",r.title="",r.role="presentation",(r.frameElement||r).style.cssText="display: none",d=document.getElementsByTagName("script"),d=d[d.length-1],d.parentNode.insertBefore(r,d),i=r.contentWindow,s=i.document;try{o=s}catch(c){n=document.domain,r.src='javascript:var d=document.open();d.domain="'+n+'";void(0);',o=s}o.open()._l=function(){var o=this.createElement("script");n&&(this.domain=n),o.id="js-iframe-async",o.src=e,this.t=+new Date,this.zendeskHost=t,this.zEQueue=a,this.body.appendChild(o)},o.write('<body onload="document._l();">'),o.close()}("https://assets.zendesk.com/embeddable_framework/main.js","bitmain.zendesk.com");/*]]>*/
+window.zEmbed||function(e,t){var n,o,d,i,s,a=[],r=document.createElement("iframe");window.zEmbed=function(){a.push(arguments)},window.zE=window.zE||window.zEmbed,r.src="javascript:false",r.title="",r.role="presentation",(r.frameElement||r).style.cssText="display: none",d=document.getElementsByTagName("script"),d=d[d.length-1],d.parentNode.insertBefore(r,d),i=r.contentWindow,s=i.document;try{o=s}catch(c){n=document.domain,r.src='javascript:var d=document.open();d.domain="'+n+'";void(0);',o=s}o.open()._l=function(){var o=this.createElement("script");n&&(this.domain=n),o.id="js-iframe-async",o.src=e,this.t=+new Date,this.zendeskHost=t,this.zEQueue=a,this.body.appendChild(o)},o.write('<body onload="document._l();">'),o.close()}("https://assets.zendesk.com/embeddable_framework/main.js","bitmain.zendesk.com");
 </script>
-<!-- End of Zendesk Widget script -->

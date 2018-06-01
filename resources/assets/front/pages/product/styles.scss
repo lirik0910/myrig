@@ -1,0 +1,37 @@
+@import '~bootstrap/scss/_functions.scss';
+@import '~bootstrap/scss/_variables.scss';
+@import '~bootstrap/scss/_mixins.scss';
+@import '~bootstrap/scss/_root.scss';
+@import '~bootstrap/scss/_reboot.scss';
+@import '~bootstrap/scss/_grid.scss';
+@import '~bootstrap/scss/_utilities.scss';
+
+@import '~owl.carousel/dist/assets/owl.carousel.css';
+@import '~font-awesome/scss/font-awesome.scss';
+
+@import '../../components/Header/styles.scss';
+@import '../../components/ButtonDefault/styles.scss';
+@import '../../components/ButtonTransparent/styles.scss';
+@import '../../components/PaperProduct/styles.scss';
+@import '../../components/SliderProduct/styles.scss';
+@import '../../components/SliderDots/styles.scss';
+@import '../../components/PaperTabs/styles.scss';
+@import '../../components/TableAttributes/styles.scss';
+@import '../../components/FormSendToCart/styles.scss';
+@import '../../components/InputProductsCount/styles.scss';
+@import '../../components/ButtonSendToCart/styles.scss';
+@import '../../components/LabelTag/styles.scss';
+@import '../../components/Footer/styles.scss';
+@import '../../components/DialogDefault/styles.scss';
+@import '../../components/DialogCallback/styles.scss';
+@import '../../components/DialogAvailability/styles.scss';
+@import '../../components/ToggleList/styles.scss';
+
+.products__container {
+	margin: 0 auto;
+	padding-top: 90px;
+
+	@media (min-width: 1250px) {
+		padding-top: 95px;
+	}
+}

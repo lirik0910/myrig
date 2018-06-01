@@ -1,0 +1,14 @@
+.transparent__button {
+	color: #000;
+	height: 40px;
+	line-height: 40px;
+	font-size: 25px;
+	padding: 0 18px;
+	border: 1px solid #60A645;
+	background-color: transparent;
+}
+
+.transparent__button:hover {
+	color: #FFF;
+	background-color: #60A645;
+}

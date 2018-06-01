@@ -11,27 +11,18 @@
     }
 
     $btcPrice = number_format($item->calcBtcPrice(), 4, '.', '');
-
-    if($locale == 'en'){
-		$default_img = 'default/eng.no-photo.jpg';
-	} else{
-		$default_img = 'default/ru.no-photo.jpeg';
-	}
-//var_dump($item); die;
 @endphp
 
-<a href="{{ asset($item->page->link) }}" class="related-item" data-wpel-link="internal" data-dot="<span class='dot' data-id='{{ $i }}'><p class='dashnav-progress'></p></span>">
+<a href="{{ asset($item->page->link) }}" class="related-item" data-wpel-link="internal">
     <div class="related-title">{{ $item->title }}</div>
 
     <div class="related-img">
         @if (isset($item->images[0]))
-            <img width="1000" height="1000" src="@if(empty($item->images[0]) or !file_exists(public_path() . '/uploads/' . $item->images[0]->name)){{ $preview(asset('uploads/' . $default_img), 215, 215) }}@else{{ $preview(asset('uploads/' . $item->images[0]->name), 215, 215) }}@endif"
-                 class="attachment-post-thumbnail size-post-thumbnail wp-post-image" alt="previw"/>
-        @else
-            <img width="1000" height="1000" src="{{ $preview(asset('uploads/' . $default_img), 215, 215) }}"
+            <img width="1000" height="1000" src="{{ $preview(asset('uploads/' . $item->images[0]->name), 215, 215) }}"
                  class="attachment-post-thumbnail size-post-thumbnail wp-post-image" alt="previw"/>
         @endif
     </div>
+
 
     <div class="tag @if ($item->productStatus->title === 'in-stock') tag-check @elseif ($item->productStatus->title === 'pre-order') tag-order  @elseif ($item->productStatus->title === 'not-available') tag-no @endif">{{ __('common.product_status_' . str_replace(' ', '_', mb_strtolower($item->productStatus->description))) }}</div>
 

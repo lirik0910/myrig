@@ -1,13 +1,11 @@
 <div class="calculator-form--item ">
     <div class="width-60">
         <select id="device" name="device" class="calc-select">
-            <option value="hide" >{{__('default.device')}}</option>
-            <option value="" data-hr="0">{{__('default.manual_input')}}</option>
-            @if(isset($devices))
+            <option value="hide" >Device</option>
+            <option value="" data-hr="0">Manual input</option>
             @foreach ($devices as $device)
                 <option data-currency="{{$device[3]}}" data-hr="{{$device[1]}}" data-en="{{$device[2]}}" value="{{$device[0]}}">{{$device[0]}}</option>
             @endforeach
-            @endif
         </select>
     </div>
 
@@ -15,14 +13,13 @@
 </div>
 
 <div class="calculator-form--item cur-LTC">
-    <input type="number" step="0.01" class="quantity width-60 hash" name="hash" placeholder="{{__('default.input_hashrate') }}">
+    <input type="number" step="0.01" class="quantity width-60 hash" name="hash" placeholder="Input hashrate">
 
     <div class="width-33 cur-LTC-ul">
         <select id="ghs" name="powers" class="calc-select">
-
-            @if(isset($cur) && $cur == 'LTC')
+            @if($cur == 'LTC')
                 <option value="1" selected>MH/s</option>
-            @elseif(isset($cur) && $cur == 'DASH')
+            @elseif($cur == 'DASH')
                 <option value="1" selected>GH/s</option>
             @else
                 <option  value="0.001" selected >TH/s</option>

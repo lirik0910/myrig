@@ -1,0 +1,28 @@
+@import '~bootstrap/scss/_functions.scss';
+@import '~bootstrap/scss/_variables.scss';
+@import '~bootstrap/scss/_mixins.scss';
+@import '~bootstrap/scss/_root.scss';
+@import '~bootstrap/scss/_reboot.scss';
+@import '~bootstrap/scss/_grid.scss';
+@import '~bootstrap/scss/_utilities.scss';
+
+@import '~font-awesome/scss/font-awesome.scss';
+
+@import '../../components/Header/styles.scss';
+@import '../../components/ButtonDefault/styles.scss';
+@import '../../components/PaperProduct/styles.scss';
+@import '../../components/FormSendToCart/styles.scss';
+@import '../../components/InputProductsCount/styles.scss';
+@import '../../components/PaperAmountCart/styles.scss';
+@import '../../components/Footer/styles.scss';
+@import '../../components/DialogDefault/styles.scss';
+@import '../../components/DialogCallback/styles.scss';
+
+.products__container {
+	margin: 0 auto;
+	padding-top: 90px;
+
+	@media (min-width: 1250px) {
+		padding-top: 95px;
+	}
+}

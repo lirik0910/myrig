@@ -1,0 +1,17 @@
+{
+    "/js/index.js": "/js/index.js",
+    "/css/critical.css": "/css/critical.css",
+    "/css/index.css": "/css/index.css",
+    "/css/shop.css": "/css/shop.css",
+    "/css/product.css": "/css/product.css",
+    "/css/cart.css": "/css/cart.css",
+    "/css/checkout.css": "/css/checkout.css",
+    "/css/newsList.css": "/css/newsList.css",
+    "/css/newsItem.css": "/css/newsItem.css",
+    "/js/shop.js": "/js/shop.js",
+    "/js/product.js": "/js/product.js",
+    "/js/cart.js": "/js/cart.js",
+    "/js/checkout.js": "/js/checkout.js",
+    "/js/newsList.js": "/js/newsList.js",
+    "/js/newsItem.js": "/js/newsItem.js"
+}

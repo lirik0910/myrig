@@ -24,33 +24,7 @@ class PageController extends Controller
 	 */
 	public function view(Request $request, $number = null, $domain_locale = null)
 	{
-        //var_dump($request->getSchemeAndHttpHost()); die;
-        //var_dump($request->server('HTTP_HOST')); die;
-/*        $import = new Import();
-        $import->process();*/
-        //var_dump($request->getSchemeAndHttpHost(), env('UA_DOMAIN'), env('RU_DOMAIN'), env('EN_DOMAIN'), config('app.en_domain')); die;
-//var_dump($request); die;
-/*        switch ($request->getSchemeAndHttpHost()) {
-            case config('app.ua_domain'):
-                $locale = 'ua';
-                break;
-
-            case config('app.ru_domain'):
-                $locale = 'ru';
-                break;
-
-            case config('app.en_domain'):
-                $locale = 'en';
-                break;
-
-            default:
-                break;
-        }*/
-//var_dump($locale); die;
-        //App::setLocale($locale);
         $locale = App::getLocale();
-//var_dump($locale); die;
-        //$cart = $_SESSION['cart'];
 
         if(!isset($_SESSION['cart'])){
             $cart = [];

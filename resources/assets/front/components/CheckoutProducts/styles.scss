@@ -1,0 +1,33 @@
+.checkout-products__container {
+	border: 6px solid #DDD;
+	padding: 6px 18px;
+
+	.checkout-products__table {
+		width: 100%;
+		font-size: 14px;
+		color: rgb(153, 153, 153);
+		border-collapse: collapse;
+
+		.product-line__container {
+			padding: 12px 0;
+		}
+	}
+
+	.product-title__container {
+		font-size: 18px;
+	}
+
+	.delivery-title__col {
+		font-size: 18px; 
+		color: #000; 
+	}
+
+	.checkout-deliveries__container {
+		margin-left: 38px;
+		font-size: 13px;
+	}
+}
+
+.confirm__button {
+	margin-top: 18px;
+}

@@ -1,6 +1,3 @@
-@php
-    $products = App\Model\Shop\Product::where('active', 1)->get();
-@endphp
 <div style="display: none">
     <script type="text/javascript">
         var verifyCallback = function(response) {
@@ -39,16 +36,8 @@
                     </div>
                     <div class="selects">
                         <div class="form-group report-form-select">
-                            <div class="dinus">
-                               <div class="width">
-                                <select name="product" class="calc-select">
-                                   @foreach($products as $product)
-                                   <option value="{{ $product->id }}">{{ $product->title }}</option>
-                                   @endforeach
-                                </select>
-                               </div>
-                                <input type="number"  step="1" class="quantity width-33 quantity-center" name="count-1" placeholder="1" min="1" value="1"/>
-                            </div>
+                            <select name="product" class="form-control"></select>
+                            <input type="number"  step="1" class="quantity width-33 quantity-center" name="count-1" placeholder="1" min="1" value="1"/>
                         </div>
 
                         <div class="form-group form-group-btn" style="float: left">

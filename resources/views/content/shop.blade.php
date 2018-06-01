@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @php
-//var_dump($it); die;
 $mainProducts = $select('\App\Model\Shop\Product')
 	->whereHas('categories', function ($q) {
 		$q->where('title', 'Base');
@@ -19,60 +18,32 @@ $secondaryProducts = $select('\App\Model\Shop\Product')
     ->where('context_id', $it->context_id)
 	->with('page', 'options', 'images')
 	->get();
-//var_dump($secondaryProducts); die;
 @endphp
 
 @section('content')
-<main style="width: 100%" style="position: absolute;">
-<div class="main-back"></div>
-<script>
-	var width = $(window).width(),
-		cont = $('.container').outerWidth();
-	var margin = (width - cont) / 2;
-	var wM = cont * 33.333333 / 100 + margin;
 
-	if (width > 767) {
-		$('.main-back').css('left', wM +'px');
-	}
+<div id="dark__container" class="dark__container"></div>
 
-	else {
-		$('.main-back').css('left', '0px');
-	}
-</script>
-	
-<section class="content item items">
-	<div class="container">
-		<div class="clearfix" style="clear: both"></div>
-		@foreach($mainProducts as $item)
-			@if (isset($item->page))
-				@include('parts.shop.item', $item)
-			@endif
-		@endforeach
-	</div>
-</section>
+<div class="products__container default__container">
+	@foreach($mainProducts as $item)
+		@include('partsShop.productItem', $item)
+	@endforeach
+</div>
 
-<section class="related">
-	<div class="container">
+<div class="related__container">
+	<div class="container align__container default__container">
 		<div class="row">
-			<header>{{ __('default.optional_equipment') }}</header>
-			<div id="relatedSlider" class="related-slider owl-carousel owl-theme">
+			<div class="related__title">{{ __('default.optional_equipment') }}</div>
+			<div id="related-slider__container" class="related-slider__container owl-carousel owl-theme">
+			@foreach ($secondaryProducts as $key => $item)
 				@php
-				$i = 0;
-				//var_dump($secondaryProducts); die;
+					$item->index = $key;
 				@endphp
-				@foreach ($secondaryProducts as $item)
-					@if (isset($item->page))
-						@include('parts.shop.slideItem', ['item' => $item, 'i' => $i])
-						@php
-							$i++;
-						@endphp
-					@endif
-				@endforeach
-
+				@include('partsShop.relatedItem', $item)
+			@endforeach
 			</div>
 		</div>
 	</div>
-</section>
-</main>
-@include('parts.shop.report-availability_form')
+</div>
+
 @endsection
