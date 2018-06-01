@@ -63,8 +63,9 @@
 /******/ 	return __webpack_require__(__webpack_require__.s = 12);
 /******/ })
 /************************************************************************/
-/******/ ([
-/* 0 */
+/******/ ({
+
+/***/ 0:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -10435,7 +10436,8 @@ return jQuery;
 
 
 /***/ }),
-/* 1 */
+
+/***/ 1:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -10505,7 +10507,493 @@ var Base = function () {
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
 
 /***/ }),
-/* 2 */
+
+/***/ 12:
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(13);
+__webpack_require__(15);
+__webpack_require__(16);
+__webpack_require__(17);
+__webpack_require__(18);
+__webpack_require__(19);
+__webpack_require__(20);
+__webpack_require__(21);
+module.exports = __webpack_require__(72);
+
+
+/***/ }),
+
+/***/ 13:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Base_js__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_Header__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_Background__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_SliderIndex__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_Footer__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_DialogCallback__ = __webpack_require__(6);
+
+
+
+
+
+
+
+
+new __WEBPACK_IMPORTED_MODULE_0__Base_js__["a" /* default */]().call(function (e) {
+	new __WEBPACK_IMPORTED_MODULE_1__components_Header__["a" /* default */]();
+	new __WEBPACK_IMPORTED_MODULE_2__components_Background__["a" /* default */]();
+	new __WEBPACK_IMPORTED_MODULE_3__components_SliderIndex__["a" /* default */]();
+	new __WEBPACK_IMPORTED_MODULE_4__components_Footer__["a" /* default */]({
+		dialogCallback: new __WEBPACK_IMPORTED_MODULE_5__components_DialogCallback__["a" /* default */]({ selector: '#contacts__dialog' })
+	});
+});
+
+/***/ }),
+
+/***/ 14:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Base_js__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_owl_carousel__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_owl_carousel___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_owl_carousel__);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+
+/**
+ * Slider on the main page
+ * @extends Base
+ */
+
+var IndexSlider = function (_Base) {
+	_inherits(IndexSlider, _Base);
+
+	function IndexSlider(props) {
+		_classCallCheck(this, IndexSlider);
+
+		var _this = _possibleConstructorReturn(this, (IndexSlider.__proto__ || Object.getPrototypeOf(IndexSlider)).call(this, props));
+
+		_this.setModuleProps(props);
+		return _this;
+	}
+
+	/**
+  * Get and save DOM elements
+  * @param {Object} e
+  */
+
+
+	_createClass(IndexSlider, [{
+		key: 'initDOMElements',
+		value: function initDOMElements(e) {
+			this.els = {
+				_sliderIndex: $('#index-slider__container'),
+				_footerContainer: $('#footer__container')
+			};
+		}
+
+		/**
+   * Invoked when DOM becomes safe to manipulate
+   * @param {Object} e
+   */
+
+	}, {
+		key: 'onDOMReady',
+		value: function onDOMReady(e) {
+			var _this2 = this;
+
+			this.initSlider(function (e) {
+				return _this2.sliderHeightAlign();
+			});
+		}
+
+		/**
+   * Invoked when window has resized
+   * @param {Object} e
+   */
+
+	}, {
+		key: 'onResized',
+		value: function onResized(e) {
+			this.sliderHeightAlign();
+		}
+
+		/**
+   * Initialize slider
+   * @param {Object} baseDOM cached DOM elements
+   * @return {Object}
+   */
+
+	}, {
+		key: 'initSlider',
+		value: function initSlider() {
+			var callback = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : function () {};
+
+			return this.els._sliderIndex.owlCarousel({
+				items: 1,
+				nav: false,
+				dots: true,
+				loop: true,
+				dotsData: true,
+				autoplay: 4000,
+				smartSpeed: 1000,
+				slideSpeed: 4000,
+				animateIn: 'fadeIn',
+				animateOut: 'fadeOut',
+				onResized: function onResized(e) {
+					return callback(e);
+				},
+				onInitialized: function onInitialized(e) {
+					return callback(e);
+				}
+			});
+		}
+
+		/**
+   * Leveling of slides in height
+   */
+
+	}, {
+		key: 'sliderHeightAlign',
+		value: function sliderHeightAlign() {
+			var bottomDistance = this.baseDOM._window.height() - this.els._footerContainer.height();
+			this.els._sliderIndex.css('minHeight', bottomDistance);
+		}
+	}]);
+
+	return IndexSlider;
+}(__WEBPACK_IMPORTED_MODULE_0__Base_js__["a" /* default */]);
+
+/* harmony default export */ __webpack_exports__["a"] = (IndexSlider);
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
+
+/***/ }),
+
+/***/ 15:
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
+/***/ 16:
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
+/***/ 17:
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
+/***/ 18:
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
+/***/ 19:
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
+/***/ 2:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Base_js__ = __webpack_require__(1);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+/**
+ * Header block
+ * @extends Base
+ */
+
+var Header = function (_Base) {
+	_inherits(Header, _Base);
+
+	function Header(props) {
+		_classCallCheck(this, Header);
+
+		return _possibleConstructorReturn(this, (Header.__proto__ || Object.getPrototypeOf(Header)).call(this, props));
+	}
+
+	/**
+  * Get and save DOM elements
+  * @param {Object} e
+  */
+
+
+	_createClass(Header, [{
+		key: 'initDOMElements',
+		value: function initDOMElements(e) {
+			this.els = {
+				_mobileHeaderContainer: $('#mobile-header__container'),
+				_navigationToggleButton: $('#navigation-toggle__button'),
+				_linkCartContainer: $('#link-cart__container')
+			};
+		}
+
+		/**
+   * Invoked when DOM becomes safe to manipulate
+   * @param {Object} e
+   */
+
+	}, {
+		key: 'onDOMReady',
+		value: function onDOMReady(e) {
+			var _this2 = this;
+
+			this.els._navigationToggleButton.on('click', function (e) {
+				return _this2.onClickedToggleButton(e);
+			});
+			this.els._linkCartContainer.on('click', function (e) {
+				return _this2.checkCartIsEmpty(e);
+			});
+
+			this.els._linkCartContainer.on('addProducts', function (e, params) {
+				return _this2.addProductsToCart(e, params);
+			});
+			this.els._linkCartContainer.on('deleteProducts', function (e, params) {
+				return _this2.deleteProductsToCart(e, params);
+			});
+
+			this.getCartContent();
+		}
+
+		/**
+   * Display the menu for the mobile regime
+   * @param {Object} e
+   */
+
+	}, {
+		key: 'onClickedToggleButton',
+		value: function onClickedToggleButton(e) {
+			$(e.currentTarget).toggleClass('hide-toggle__button');
+			this.els._mobileHeaderContainer.toggleClass('display-mobile__container');
+		}
+
+		/**
+   * Open the shopping cart page if the shopping cart is not empty
+   * @param {Object} e
+   */
+
+	}, {
+		key: 'checkCartIsEmpty',
+		value: function checkCartIsEmpty(e) {
+			var currentTarget = $(e.currentTarget),
+			    counterContainer = currentTarget.find('.cart__counter');
+
+			if (Number(counterContainer.text()) <= 0) {
+				e.preventDefault();
+			}
+		}
+
+		/**
+   * Get cart data from server
+   */
+
+	}, {
+		key: 'getCartContent',
+		value: function getCartContent() {
+			var _this3 = this;
+
+			$.get(window.global.app.connector + '/cart', function (r) {
+				var i = void 0,
+				    data = void 0,
+				    a = [],
+				    counter = 0,
+				    cartCounter = _this3.els._linkCartContainer.find('.cart__counter');
+
+				if (r === '' || r === null) {
+					sessionStorage['cart'] = JSON.stringify(a);
+				} else {
+					if (typeof r === 'string') {
+						data = JSON.parse(data);
+					} else {
+						data = r;
+					}
+
+					for (i in data) {
+						a.push({ id: i, count: data[i] });
+						counter += Number(data[i]);
+					}
+
+					sessionStorage['cart'] = JSON.stringify(a);
+					cartCounter.text(counter);
+				}
+			});
+		}
+
+		/**
+   * Produce products amount in cart
+   * @param {Object} e
+   * @param {Object} params
+   */
+
+	}, {
+		key: 'addProductsToCart',
+		value: function addProductsToCart(e, params) {
+			var cartCounter = this.els._linkCartContainer.find('.cart__counter');
+			cartCounter.text(Number(cartCounter.text()) + Number(params.count));
+		}
+
+		/**
+   * Reduce products amount in cart
+   * @param {Object} e
+   * @param {Object} params
+   */
+
+	}, {
+		key: 'deleteProductsToCart',
+		value: function deleteProductsToCart(e, params) {
+			var cartCounter = this.els._linkCartContainer.find('.cart__counter'),
+			    newCount = Number(cartCounter.text()) - Number(params.count);
+
+			newCount = newCount > 0 ? newCount : 0;
+			cartCounter.text(newCount);
+		}
+	}]);
+
+	return Header;
+}(__WEBPACK_IMPORTED_MODULE_0__Base_js__["a" /* default */]);
+
+/* harmony default export */ __webpack_exports__["a"] = (Header);
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
+
+/***/ }),
+
+/***/ 20:
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
+/***/ 21:
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
+/***/ 3:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Base_js__ = __webpack_require__(1);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+/**
+ * Gray block on the background
+ * @extends Base
+ */
+
+var Background = function (_Base) {
+	_inherits(Background, _Base);
+
+	function Background(props) {
+		_classCallCheck(this, Background);
+
+		return _possibleConstructorReturn(this, (Background.__proto__ || Object.getPrototypeOf(Background)).call(this, props));
+	}
+
+	/**
+  * Get and save DOM elements
+  * @param {Object} e
+  */
+
+
+	_createClass(Background, [{
+		key: 'initDOMElements',
+		value: function initDOMElements(e) {
+			this.els = {
+				_darkContainer: $('#dark__container'),
+				_darkHelperContainer: $('#dark-helper__container')
+			};
+		}
+
+		/**
+   * Invoked when DOM becomes safe to manipulate
+   * @param {Object} e
+   */
+
+	}, {
+		key: 'onDOMReady',
+		value: function onDOMReady(e) {
+			this.getDarkContainerLeftDistance();
+		}
+
+		/**
+   * Invoked when window has resized
+   * @param {Object} e
+   */
+
+	}, {
+		key: 'onResized',
+		value: function onResized(e) {
+			this.getDarkContainerLeftDistance();
+		}
+
+		/**
+   * Calculate the distance from the left side of the screen for the gray block
+   * @param {Object} baseDOM cached DOM elements
+   * @return {Array}
+   */
+
+	}, {
+		key: 'getDarkContainerLeftDistance',
+		value: function getDarkContainerLeftDistance() {
+			return this.els._darkContainer.css({
+				left: this.baseDOM._window.width() > 767 ? this.els._darkHelperContainer.offset().left : 0
+			});
+		}
+	}]);
+
+	return Background;
+}(__WEBPACK_IMPORTED_MODULE_0__Base_js__["a" /* default */]);
+
+/* harmony default export */ __webpack_exports__["a"] = (Background);
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
+
+/***/ }),
+
+/***/ 4:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(__webpack_provided_window_dot_jQuery, jQuery) {/**
@@ -13960,268 +14448,8 @@ var Base = function () {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0), __webpack_require__(0)))
 
 /***/ }),
-/* 3 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-"use strict";
-/* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Base_js__ = __webpack_require__(1);
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-
-
-/**
- * Header block
- * @extends Base
- */
-
-var Header = function (_Base) {
-	_inherits(Header, _Base);
-
-	function Header(props) {
-		_classCallCheck(this, Header);
-
-		return _possibleConstructorReturn(this, (Header.__proto__ || Object.getPrototypeOf(Header)).call(this, props));
-	}
-
-	/**
-  * Get and save DOM elements
-  * @param {Object} e
-  */
-
-
-	_createClass(Header, [{
-		key: 'initDOMElements',
-		value: function initDOMElements(e) {
-			this.els = {
-				_mobileHeaderContainer: $('#mobile-header__container'),
-				_navigationToggleButton: $('#navigation-toggle__button'),
-				_linkCartContainer: $('#link-cart__container')
-			};
-		}
-
-		/**
-   * Invoked when DOM becomes safe to manipulate
-   * @param {Object} e
-   */
-
-	}, {
-		key: 'onDOMReady',
-		value: function onDOMReady(e) {
-			var _this2 = this;
-
-			this.els._navigationToggleButton.on('click', function (e) {
-				return _this2.onClickedToggleButton(e);
-			});
-			this.els._linkCartContainer.on('click', function (e) {
-				return _this2.checkCartIsEmpty(e);
-			});
-
-			this.els._linkCartContainer.on('addProducts', function (e, params) {
-				return _this2.addProductsToCart(e, params);
-			});
-			this.els._linkCartContainer.on('deleteProducts', function (e, params) {
-				return _this2.deleteProductsToCart(e, params);
-			});
-
-			this.getCartContent();
-		}
-
-		/**
-   * Display the menu for the mobile regime
-   * @param {Object} e
-   */
-
-	}, {
-		key: 'onClickedToggleButton',
-		value: function onClickedToggleButton(e) {
-			$(e.currentTarget).toggleClass('hide-toggle__button');
-			this.els._mobileHeaderContainer.toggleClass('display-mobile__container');
-		}
-
-		/**
-   * Open the shopping cart page if the shopping cart is not empty
-   * @param {Object} e
-   */
-
-	}, {
-		key: 'checkCartIsEmpty',
-		value: function checkCartIsEmpty(e) {
-			var currentTarget = $(e.currentTarget),
-			    counterContainer = currentTarget.find('.cart__counter');
-
-			if (Number(counterContainer.text()) <= 0) {
-				e.preventDefault();
-			}
-		}
-
-		/**
-   * Get cart data from server
-   */
-
-	}, {
-		key: 'getCartContent',
-		value: function getCartContent() {
-			var _this3 = this;
-
-			$.get(window.global.app.connector + '/cart', function (r) {
-				var i = void 0,
-				    data = void 0,
-				    a = [],
-				    counter = 0,
-				    cartCounter = _this3.els._linkCartContainer.find('.cart__counter');
-
-				if (r === '' || r === null) {
-					sessionStorage['cart'] = JSON.stringify(a);
-				} else {
-					if (typeof r === 'string') {
-						data = JSON.parse(data);
-					} else {
-						data = r;
-					}
-
-					for (i in data) {
-						a.push({ id: i, count: data[i] });
-						counter += Number(data[i]);
-					}
-
-					sessionStorage['cart'] = JSON.stringify(a);
-					cartCounter.text(counter);
-				}
-			});
-		}
-
-		/**
-   * Produce products amount in cart
-   * @param {Object} e
-   * @param {Object} params
-   */
-
-	}, {
-		key: 'addProductsToCart',
-		value: function addProductsToCart(e, params) {
-			var cartCounter = this.els._linkCartContainer.find('.cart__counter');
-			cartCounter.text(Number(cartCounter.text()) + Number(params.count));
-		}
-
-		/**
-   * Reduce products amount in cart
-   * @param {Object} e
-   * @param {Object} params
-   */
-
-	}, {
-		key: 'deleteProductsToCart',
-		value: function deleteProductsToCart(e, params) {
-			var cartCounter = this.els._linkCartContainer.find('.cart__counter'),
-			    newCount = Number(cartCounter.text()) - Number(params.count);
-
-			newCount = newCount > 0 ? newCount : 0;
-			cartCounter.text(newCount);
-		}
-	}]);
-
-	return Header;
-}(__WEBPACK_IMPORTED_MODULE_0__Base_js__["a" /* default */]);
-
-/* harmony default export */ __webpack_exports__["a"] = (Header);
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
-
-/***/ }),
-/* 4 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Base_js__ = __webpack_require__(1);
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-
-
-/**
- * Gray block on the background
- * @extends Base
- */
-
-var Background = function (_Base) {
-	_inherits(Background, _Base);
-
-	function Background(props) {
-		_classCallCheck(this, Background);
-
-		return _possibleConstructorReturn(this, (Background.__proto__ || Object.getPrototypeOf(Background)).call(this, props));
-	}
-
-	/**
-  * Get and save DOM elements
-  * @param {Object} e
-  */
-
-
-	_createClass(Background, [{
-		key: 'initDOMElements',
-		value: function initDOMElements(e) {
-			this.els = {
-				_darkContainer: $('#dark__container'),
-				_darkHelperContainer: $('#dark-helper__container')
-			};
-		}
-
-		/**
-   * Invoked when DOM becomes safe to manipulate
-   * @param {Object} e
-   */
-
-	}, {
-		key: 'onDOMReady',
-		value: function onDOMReady(e) {
-			this.getDarkContainerLeftDistance();
-		}
-
-		/**
-   * Invoked when window has resized
-   * @param {Object} e
-   */
-
-	}, {
-		key: 'onResized',
-		value: function onResized(e) {
-			this.getDarkContainerLeftDistance();
-		}
-
-		/**
-   * Calculate the distance from the left side of the screen for the gray block
-   * @param {Object} baseDOM cached DOM elements
-   * @return {Array}
-   */
-
-	}, {
-		key: 'getDarkContainerLeftDistance',
-		value: function getDarkContainerLeftDistance() {
-			return this.els._darkContainer.css({
-				left: this.baseDOM._window.width() > 767 ? this.els._darkHelperContainer.offset().left : 0
-			});
-		}
-	}]);
-
-	return Background;
-}(__WEBPACK_IMPORTED_MODULE_0__Base_js__["a" /* default */]);
-
-/* harmony default export */ __webpack_exports__["a"] = (Background);
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
-
-/***/ }),
-/* 5 */
+/***/ 5:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -14322,7 +14550,8 @@ var Footer = function (_Base) {
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
 
 /***/ }),
-/* 6 */
+
+/***/ 6:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -14458,227 +14687,12 @@ var DialogCallback = function (_Base) {
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
 
 /***/ }),
-/* 7 */,
-/* 8 */,
-/* 9 */,
-/* 10 */,
-/* 11 */,
-/* 12 */
-/***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(13);
-__webpack_require__(15);
-__webpack_require__(16);
-__webpack_require__(17);
-__webpack_require__(18);
-__webpack_require__(19);
-__webpack_require__(20);
-__webpack_require__(21);
-module.exports = __webpack_require__(22);
-
-
-/***/ }),
-/* 13 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Base_js__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_Header__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_Background__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_SliderIndex__ = __webpack_require__(14);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_Footer__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_DialogCallback__ = __webpack_require__(6);
-
-
-
-
-
-
-
-
-new __WEBPACK_IMPORTED_MODULE_0__Base_js__["a" /* default */]().call(function (e) {
-	new __WEBPACK_IMPORTED_MODULE_1__components_Header__["a" /* default */]();
-	new __WEBPACK_IMPORTED_MODULE_2__components_Background__["a" /* default */]();
-	new __WEBPACK_IMPORTED_MODULE_3__components_SliderIndex__["a" /* default */]();
-	new __WEBPACK_IMPORTED_MODULE_4__components_Footer__["a" /* default */]({
-		dialogCallback: new __WEBPACK_IMPORTED_MODULE_5__components_DialogCallback__["a" /* default */]({ selector: '#contacts__dialog' })
-	});
-});
-
-/***/ }),
-/* 14 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Base_js__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_owl_carousel__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_owl_carousel___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_owl_carousel__);
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-
-
-
-/**
- * Slider on the main page
- * @extends Base
- */
-
-var IndexSlider = function (_Base) {
-	_inherits(IndexSlider, _Base);
-
-	function IndexSlider(props) {
-		_classCallCheck(this, IndexSlider);
-
-		var _this = _possibleConstructorReturn(this, (IndexSlider.__proto__ || Object.getPrototypeOf(IndexSlider)).call(this, props));
-
-		_this.setModuleProps(props);
-		return _this;
-	}
-
-	/**
-  * Get and save DOM elements
-  * @param {Object} e
-  */
-
-
-	_createClass(IndexSlider, [{
-		key: 'initDOMElements',
-		value: function initDOMElements(e) {
-			this.els = {
-				_sliderIndex: $('#index-slider__container'),
-				_footerContainer: $('#footer__container')
-			};
-		}
-
-		/**
-   * Invoked when DOM becomes safe to manipulate
-   * @param {Object} e
-   */
-
-	}, {
-		key: 'onDOMReady',
-		value: function onDOMReady(e) {
-			var _this2 = this;
-
-			this.initSlider(function (e) {
-				return _this2.sliderHeightAlign();
-			});
-		}
-
-		/**
-   * Invoked when window has resized
-   * @param {Object} e
-   */
-
-	}, {
-		key: 'onResized',
-		value: function onResized(e) {
-			this.sliderHeightAlign();
-		}
-
-		/**
-   * Initialize slider
-   * @param {Object} baseDOM cached DOM elements
-   * @return {Object}
-   */
-
-	}, {
-		key: 'initSlider',
-		value: function initSlider() {
-			var callback = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : function () {};
-
-			return this.els._sliderIndex.owlCarousel({
-				items: 1,
-				nav: false,
-				dots: true,
-				loop: true,
-				dotsData: true,
-				autoplay: 4000,
-				smartSpeed: 1000,
-				slideSpeed: 4000,
-				animateIn: 'fadeIn',
-				animateOut: 'fadeOut',
-				onResized: function onResized(e) {
-					return callback(e);
-				},
-				onInitialized: function onInitialized(e) {
-					return callback(e);
-				}
-			});
-		}
-
-		/**
-   * Leveling of slides in height
-   */
-
-	}, {
-		key: 'sliderHeightAlign',
-		value: function sliderHeightAlign() {
-			var bottomDistance = this.baseDOM._window.height() - this.els._footerContainer.height();
-			this.els._sliderIndex.css('minHeight', bottomDistance);
-		}
-	}]);
-
-	return IndexSlider;
-}(__WEBPACK_IMPORTED_MODULE_0__Base_js__["a" /* default */]);
-
-/* harmony default export */ __webpack_exports__["a"] = (IndexSlider);
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
-
-/***/ }),
-/* 15 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 16 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 17 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 18 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 19 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 20 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 21 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 22 */
+/***/ 72:
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ })
-/******/ ]);
+
+/******/ });

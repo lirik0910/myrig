@@ -60,11 +60,12 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 30);
+/******/ 	return __webpack_require__(__webpack_require__.s = 38);
 /******/ })
 /************************************************************************/
-/******/ ([
-/* 0 */
+/******/ ({
+
+/***/ 0:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -10435,7 +10436,8 @@ return jQuery;
 
 
 /***/ }),
-/* 1 */
+
+/***/ 1:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -10505,7 +10507,8 @@ var Base = function () {
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
 
 /***/ }),
-/* 2 */
+
+/***/ 2:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -10678,7 +10681,8 @@ var Header = function (_Base) {
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
 
 /***/ }),
-/* 3 */
+
+/***/ 3:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -10766,7 +10770,16 @@ var Background = function (_Base) {
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
 
 /***/ }),
-/* 4 */
+
+/***/ 38:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(71);
+
+
+/***/ }),
+
+/***/ 4:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(__webpack_provided_window_dot_jQuery, jQuery) {/**
@@ -14221,7 +14234,8 @@ var Background = function (_Base) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0), __webpack_require__(0)))
 
 /***/ }),
-/* 5 */
+
+/***/ 5:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -14322,7 +14336,8 @@ var Footer = function (_Base) {
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
 
 /***/ }),
-/* 6 */
+
+/***/ 6:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -14458,7 +14473,8 @@ var DialogCallback = function (_Base) {
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
 
 /***/ }),
-/* 7 */
+
+/***/ 7:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -14558,548 +14574,8 @@ var PaperProduct = function (_Base) {
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
 
 /***/ }),
-/* 8 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-"use strict";
-/* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Base_js__ = __webpack_require__(1);
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-
-
-/**
- * Send cart button
- * @extends Base
- */
-
-var ButtonSendToCart = function (_Base) {
-	_inherits(ButtonSendToCart, _Base);
-
-	function ButtonSendToCart(props) {
-		_classCallCheck(this, ButtonSendToCart);
-
-		var _this = _possibleConstructorReturn(this, (ButtonSendToCart.__proto__ || Object.getPrototypeOf(ButtonSendToCart)).call(this, props));
-
-		_this.state = {
-			click: false
-		};
-		return _this;
-	}
-
-	/**
-  * Get and save DOM elements
-  * @param {Object} e
-  */
-
-
-	_createClass(ButtonSendToCart, [{
-		key: 'initDOMElements',
-		value: function initDOMElements(e) {
-			this.els = {
-				_cartContainer: this.baseDOM._linkCartContainer.find('.cart__counter'),
-				_defaultPriceContainer: $('#default-price__container'),
-				_bitcoinPriceContainer: $('#bitcoin-price__container')
-			};
-		}
-
-		/**
-   * Invoked when DOM becomes safe to manipulate
-   * @param {Object} e
-   */
-
-	}, {
-		key: 'onDOMReady',
-		value: function onDOMReady(e) {
-			var _this2 = this;
-
-			this.baseDOM._cartButton.on('click', function (e) {
-				return _this2.clickProductCartButton(e);
-			});
-			this.baseDOM._cartButton.on('updateCounter', function (e) {
-				return _this2.updateCounterIfAdded(e);
-			});
-			this.baseDOM._cartButton.on('deleteProduct', function (e) {
-				_this2.clickProductCartButton(e);
-			});
-		}
-
-		/**
-   * Check button click available state
-   * @param {Object} e
-   */
-
-	}, {
-		key: 'changeClickState',
-		value: function changeClickState(e) {
-			return this.state.click = !this.state.click;
-		}
-
-		/**
-   * Send ptoduct to cart
-   * @fires click
-   * @param {Object} e
-   */
-
-	}, {
-		key: 'clickProductCartButton',
-		value: function clickProductCartButton(e) {
-			var _this3 = this;
-
-			e.preventDefault();
-
-			if (this.state.click === false) {
-				this.changeClickState(e);
-
-				var currentTarget = $(e.currentTarget),
-				    input = currentTarget.siblings('.counter__container').find('.cart-count__input'),
-				    session = sessionStorage['cart'];
-
-				/** If object cart exists in session
-     */
-				if (session) {
-					session = JSON.parse(session);
-
-					/** Remove product item container in cart page
-      */
-					$('#product-item__container-' + currentTarget.data('product-id')).remove();
-
-					if (currentTarget.hasClass('add-cart__button')) {
-						this.sendProductsToCart(currentTarget, input, session, function (r) {
-							return _this3.changeClickState(r);
-						});
-					} else if (currentTarget.hasClass('added-cart__button')) {
-						this.deleteProductFromCart(currentTarget, input, session, function (r) {
-							return _this3.changeClickState(r);
-						});
-					} else this.changeClickState({});
-				}
-			}
-		}
-
-		/** 
-   * Send products to cart
-   * @param {Object} currentTarget
-   * @param {Object} input
-   * @param {Array} session
-   * @param {Function} callback
-   */
-
-	}, {
-		key: 'sendProductsToCart',
-		value: function sendProductsToCart(currentTarget, input) {
-			var _this4 = this;
-
-			var session = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
-			var callback = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : function () {};
-
-			/** Save session on server
-    */
-			$.post(window.global.app.connector + '/cart', {
-				id: currentTarget.data('product-id'),
-				count: input.val(),
-				_token: this.baseDOM._csrfToken
-			}, function (r) {
-				/** Add product to session
-     */
-				session.push({
-					id: currentTarget.data('product-id'),
-					count: input.val()
-				});
-				sessionStorage['cart'] = JSON.stringify(session);
-
-				/** Change current button state
-     */
-				currentTarget.removeClass('add-cart__button').addClass('added-cart__button');
-				currentTarget.html('<span>' + currentTarget.data('added-text') + '</span>');
-
-				_this4.baseDOM._linkCartContainer.trigger('addProducts', { count: input.val() });
-				callback(r);
-			});
-		}
-
-		/**
-   * Delete products from cart
-   * @param {Object} currentTarget
-   * @param {Object} input
-   * @param {Array} session
-   * @param {Function} callback
-   */
-
-	}, {
-		key: 'deleteProductFromCart',
-		value: function deleteProductFromCart(currentTarget, input) {
-			var _this5 = this;
-
-			var session = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
-			var callback = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : function () {};
-
-			var i = 0,
-			    el = void 0,
-			    defaultPrice = 0,
-			    bitcoinPrice = 0;
-
-			while (i < session.length) {
-				if (Number(session[i].id) === Number(currentTarget.data('product-id'))) {
-					session.splice(i, 1);
-				}
-
-				/** Count amount
-     */
-				if (this.els._defaultPriceContainer.length === 1) {
-					el = $('#count-products-' + session[i].id);
-
-					defaultPrice += el.data('default-price') * session[i].count;
-					bitcoinPrice += el.data('bitcoin-price') * session[i].count;
-				}
-
-				i++;
-			}
-
-			/** Send request to server for deleting products from cart
-    */
-			$.ajax({
-				url: window.global.app.connector + '/cart',
-				type: 'DELETE',
-				data: {
-					id: currentTarget.data('product-id'),
-					_token: this.baseDOM._csrfToken
-				},
-				success: function success(r) {
-					sessionStorage['cart'] = JSON.stringify(session);
-
-					/** Change current button state
-      */
-					currentTarget.removeClass('added-cart__button').addClass('add-cart__button');
-					currentTarget.html('<span>' + currentTarget.data('adding-text') + '</span>');
-
-					_this5.baseDOM._linkCartContainer.trigger('deleteProducts', { count: input.val() });
-
-					/** Update amount block
-      */
-					_this5.els._defaultPriceContainer.text(defaultPrice.toFixed(2));
-					_this5.els._bitcoinPriceContainer.text(bitcoinPrice.toFixed(4));
-
-					callback(r);
-				}
-			});
-		}
-
-		/**
-   * Count cart counter if product has already added
-   * @fires updateCounter
-   * @param {Object} e
-   */
-
-	}, {
-		key: 'updateCounterIfAdded',
-		value: function updateCounterIfAdded(e) {
-			var _this6 = this;
-
-			var currentTarget = $(e.currentTarget),
-			    input = currentTarget.siblings('.counter__container').find('.cart-count__input'),
-			    session = sessionStorage['cart'];
-
-			if (session) {
-				session = JSON.parse(session);
-
-				var i = 0,
-				    el = void 0,
-				    price = 0,
-				    counter = 0,
-				    defaultPrice = 0,
-				    bitcoinPrice = 0;
-
-				while (i < session.length) {
-					if (Number(currentTarget.data('product-id')) === Number(session[i].id)) {
-						session[i].count = input.val();
-					}
-					counter += Number(session[i].count);
-
-					/** Count amount
-      */
-					if (this.els._defaultPriceContainer.length === 1) {
-						el = $('#count-products-' + session[i].id);
-
-						defaultPrice += el.data('default-price') * session[i].count;
-						bitcoinPrice += el.data('bitcoin-price') * session[i].count;
-					}
-					i++;
-				}
-
-				/** Save session on server
-     */
-				$.post(window.global.app.connector + '/cart', {
-					id: currentTarget.data('product-id'),
-					count: input.val(),
-					_token: this.baseDOM._csrfToken
-				}, function (r) {
-					_this6.els._cartContainer.text(counter);
-					sessionStorage['cart'] = JSON.stringify(session);
-
-					/** Update amount block
-      */
-					_this6.els._defaultPriceContainer.text(defaultPrice.toFixed(2));
-					_this6.els._bitcoinPriceContainer.text(bitcoinPrice.toFixed(4));
-				});
-			}
-		}
-	}]);
-
-	return ButtonSendToCart;
-}(__WEBPACK_IMPORTED_MODULE_0__Base_js__["a" /* default */]);
-
-/* harmony default export */ __webpack_exports__["a"] = (ButtonSendToCart);
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
-
-/***/ }),
-/* 9 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Base_js__ = __webpack_require__(1);
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-
-
-/**
- * Product counter field to add to the cart
- * @extends Base
- */
-
-var InputProductCount = function (_Base) {
-	_inherits(InputProductCount, _Base);
-
-	function InputProductCount() {
-		_classCallCheck(this, InputProductCount);
-
-		return _possibleConstructorReturn(this, (InputProductCount.__proto__ || Object.getPrototypeOf(InputProductCount)).apply(this, arguments));
-	}
-
-	_createClass(InputProductCount, [{
-		key: 'initDOMElements',
-
-		/**
-   * Get and save DOM elements
-   * @param {Object} e
-   */
-		value: function initDOMElements(e) {
-			this.els = {
-				_plusIconButton: $('.plus-icon__button'),
-				_minusIconButton: $('.minus-icon__button'),
-				_cartCountInput: $('.cart-count__input'),
-				_deleteButton: $('.delete__button')
-			};
-		}
-
-		/**
-   * Invoked when DOM becomes safe to manipulate
-   * @param {Object} e
-   */
-
-	}, {
-		key: 'onDOMReady',
-		value: function onDOMReady(e) {
-			var _this2 = this;
-
-			this.els._plusIconButton.on('click', function (e) {
-				return _this2.produceCounter(e);
-			});
-			this.els._minusIconButton.on('click', function (e) {
-				return _this2.reduceCounter(e);
-			});
-			this.els._cartCountInput.on('input', function (e) {
-				return _this2.inputCounter(e);
-			});
-			this.els._cartCountInput.on('blur', function (e) {
-				return _this2.setDefaultCounter(e);
-			});
-			this.els._deleteButton.on('click', function (e) {
-				$(e.currentTarget).siblings('.cart-count__container').find('.cart__button').trigger('deleteProduct');
-			});
-		}
-
-		/**
-   * Add event listeners for new form container
-   * @param {Object} e
-   */
-
-	}, {
-		key: 'newFormEventListener',
-		value: function newFormEventListener(el) {
-			var _this3 = this;
-
-			var cartCountInput = el.find('.cart-count__input');
-
-			el.find('.plus-icon__button').on('click', function (e) {
-				return _this3.produceCounter(e);
-			});
-			el.find('.minus-icon__button').on('click', function (e) {
-				return _this3.reduceCounter(e);
-			});
-
-			cartCountInput.on('input', function (e) {
-				return _this3.inputCounter(e);
-			});
-			cartCountInput.on('blur', function (e) {
-				return _this3.setDefaultCounter(e);
-			});
-		}
-
-		/**
-   * Increment counter
-   * @fires click
-   * @param {Object} e
-   */
-
-	}, {
-		key: 'produceCounter',
-		value: function produceCounter(e) {
-			e.preventDefault();
-
-			var currentTarget = $(e.currentTarget),
-			    input = currentTarget.siblings('.cart-count__input'),
-			    button = currentTarget.parent('.counter__container').siblings('.cart__button'),
-			    currentCount = Number(input.val()) + 1;
-
-			input.val(currentCount);
-
-			if (button.hasClass('added-cart__button')) {
-				button.trigger('updateCounter');
-			}
-
-			this.updatePriceContainers(currentCount, input);
-		}
-
-		/**
-   * Decrement counter
-   * @fires click
-   * @param {Object} e
-   */
-
-	}, {
-		key: 'reduceCounter',
-		value: function reduceCounter(e) {
-			e.preventDefault();
-
-			var currentTarget = $(e.currentTarget),
-			    input = currentTarget.siblings('.cart-count__input'),
-			    currentCount = Number(input.val()),
-			    button = currentTarget.parent('.counter__container').siblings('.cart__button');
-
-			if (currentCount > 1) {
-				currentCount--;
-				input.val(currentCount);
-
-				if (button.hasClass('added-cart__button')) {
-					button.trigger('updateCounter');
-				}
-
-				this.updatePriceContainers(currentCount, input);
-			}
-		}
-	}, {
-		key: 'updatePriceContainers',
-		value: function updatePriceContainers(currentCount, input) {
-			var defaultPrice = input.data('default-price');
-			if (typeof defaultPrice !== 'undefined') {
-
-				var bitcoinPrice = input.data('bitcoin-price'),
-				    defaultPriceContainer = $('#default-price__container-' + input.data('id')),
-				    bitcoinPriceContainer = $('#bitcoin-price__container-' + input.data('id'));
-
-				defaultPriceContainer.text((currentCount * defaultPrice).toFixed(2));
-				bitcoinPriceContainer.text((currentCount * bitcoinPrice).toFixed(4));
-			}
-		}
-
-		/**
-   * Validate inputed values
-   * @fires input
-   * @param {Object} e
-   */
-
-	}, {
-		key: 'inputCounter',
-		value: function inputCounter(e) {
-			var regex = /[0-9]|\./,
-			    currentTarget = $(e.currentTarget);
-
-			if (!regex.test(Number(currentTarget.val()))) {
-				currentTarget.val(1);
-			}
-		}
-
-		/**
-   * Set dfault value if current value isn't property
-   * @fires blur
-   * @param {Object} e
-   */
-
-	}, {
-		key: 'setDefaultCounter',
-		value: function setDefaultCounter(e) {
-			var currentTarget = $(e.currentTarget),
-			    currentVal = currentTarget.val(),
-			    button = currentTarget.parent('.counter__container').siblings('.cart__button');
-
-			if (currentVal === null || currentVal === '' || Number(currentVal) === 0) {
-				currentTarget.val(1);
-			}
-
-			if (button.hasClass('added-cart__button')) {
-				button.trigger('updateCounter');
-				this.updatePriceContainers(currentVal, currentTarget);
-			}
-		}
-	}]);
-
-	return InputProductCount;
-}(__WEBPACK_IMPORTED_MODULE_0__Base_js__["a" /* default */]);
-
-/* harmony default export */ __webpack_exports__["a"] = (InputProductCount);
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
-
-/***/ }),
-/* 10 */,
-/* 11 */,
-/* 12 */,
-/* 13 */,
-/* 14 */,
-/* 15 */,
-/* 16 */,
-/* 17 */,
-/* 18 */,
-/* 19 */,
-/* 20 */,
-/* 21 */,
-/* 22 */,
-/* 23 */,
-/* 24 */,
-/* 25 */,
-/* 26 */,
-/* 27 */,
-/* 28 */,
-/* 29 */,
-/* 30 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(31);
-
-
-/***/ }),
-/* 31 */
+/***/ 71:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -15108,12 +14584,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_Header__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_Background__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_PaperProduct__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_ButtonSendToCart__ = __webpack_require__(8);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_Footer__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_DialogCallback__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_InputProductsCount__ = __webpack_require__(9);
-
-
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_Footer__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_DialogCallback__ = __webpack_require__(6);
 
 
 
@@ -15126,13 +14598,11 @@ new __WEBPACK_IMPORTED_MODULE_0__Base_js__["a" /* default */]().call(function (e
 	new __WEBPACK_IMPORTED_MODULE_1__components_Header__["a" /* default */]();
 	new __WEBPACK_IMPORTED_MODULE_2__components_Background__["a" /* default */]();
 	new __WEBPACK_IMPORTED_MODULE_3__components_PaperProduct__["a" /* default */]();
-	new __WEBPACK_IMPORTED_MODULE_7__components_InputProductsCount__["a" /* default */]();
-	new __WEBPACK_IMPORTED_MODULE_4__components_ButtonSendToCart__["a" /* default */]();
-
-	new __WEBPACK_IMPORTED_MODULE_5__components_Footer__["a" /* default */]({
-		dialogCallback: new __WEBPACK_IMPORTED_MODULE_6__components_DialogCallback__["a" /* default */]({ selector: '#contacts__dialog' })
+	new __WEBPACK_IMPORTED_MODULE_4__components_Footer__["a" /* default */]({
+		dialogCallback: new __WEBPACK_IMPORTED_MODULE_5__components_DialogCallback__["a" /* default */]({ selector: '#contacts__dialog' })
 	});
 });
 
 /***/ })
-/******/ ]);
+
+/******/ });

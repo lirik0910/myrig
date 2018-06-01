@@ -6,12 +6,12 @@
     "/css/product.css": "/css/product.css",
     "/css/cart.css": "/css/cart.css",
     "/css/checkout.css": "/css/checkout.css",
-    "/css/newsList.css": "/css/newsList.css",
-    "/css/newsItem.css": "/css/newsItem.css",
+    "/css/news.css": "/css/news.css",
     "/js/shop.js": "/js/shop.js",
     "/js/product.js": "/js/product.js",
     "/js/checkout.js": "/js/checkout.js",
     "/js/cart.js": "/js/cart.js",
-    "/js/newsList.js": "/js/newsList.js",
-    "/js/newsItem.js": "/js/newsItem.js"
+    "/js/news.js": "/js/news.js",
+    "/js/article.js": "/js/article.js",
+    "/css/article.css": "/css/article.css"
 }

@@ -24,8 +24,8 @@ class OrderController extends Controller
     public function create(Request $request){
 
         if (!isset($_SESSION['client'])) {
-            return redirect()->to('sso-login');
-            //return response()->json(['success' => false, 'session' => false]);
+            //return redirect()->to('sso-login');
+            return response()->json(['success' => false, 'session' => false]);
         }
 
         $data = $request->post();

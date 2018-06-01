@@ -78,12 +78,17 @@ class ClientAuthController
      */
     public function login(Request $request)
     {
-        $sso_token = $request->get('ssotoken');
+        $ssoToken = $request->get('ssotoken');
         $action = $request->get('action');
 
-        if(isset($sso_token)){
-            $data = array('procedure' => 'com.backend.sso.validatetoken', 'args' => array($sso_token, $this->homeappurl));
+        if (isset($ssoToken)) {
+            print_r($ssoToken);
+        }
 
+        die();
+
+        if (isset($ssoToken)) {
+            $data = ['procedure' => 'com.backend.sso.validatetoken', 'args' => [$ssoToken, $this->homeappurl]];
             $signed = $this->prepareSignature($data);
 
             $ch = curl_init();

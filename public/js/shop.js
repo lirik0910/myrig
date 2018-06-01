@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 23);
+/******/ 	return __webpack_require__(__webpack_require__.s = 22);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -10506,6 +10506,267 @@ var Base = function () {
 
 /***/ }),
 /* 2 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Base_js__ = __webpack_require__(1);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+/**
+ * Header block
+ * @extends Base
+ */
+
+var Header = function (_Base) {
+	_inherits(Header, _Base);
+
+	function Header(props) {
+		_classCallCheck(this, Header);
+
+		return _possibleConstructorReturn(this, (Header.__proto__ || Object.getPrototypeOf(Header)).call(this, props));
+	}
+
+	/**
+  * Get and save DOM elements
+  * @param {Object} e
+  */
+
+
+	_createClass(Header, [{
+		key: 'initDOMElements',
+		value: function initDOMElements(e) {
+			this.els = {
+				_mobileHeaderContainer: $('#mobile-header__container'),
+				_navigationToggleButton: $('#navigation-toggle__button'),
+				_linkCartContainer: $('#link-cart__container')
+			};
+		}
+
+		/**
+   * Invoked when DOM becomes safe to manipulate
+   * @param {Object} e
+   */
+
+	}, {
+		key: 'onDOMReady',
+		value: function onDOMReady(e) {
+			var _this2 = this;
+
+			this.els._navigationToggleButton.on('click', function (e) {
+				return _this2.onClickedToggleButton(e);
+			});
+			this.els._linkCartContainer.on('click', function (e) {
+				return _this2.checkCartIsEmpty(e);
+			});
+
+			this.els._linkCartContainer.on('addProducts', function (e, params) {
+				return _this2.addProductsToCart(e, params);
+			});
+			this.els._linkCartContainer.on('deleteProducts', function (e, params) {
+				return _this2.deleteProductsToCart(e, params);
+			});
+
+			this.getCartContent();
+		}
+
+		/**
+   * Display the menu for the mobile regime
+   * @param {Object} e
+   */
+
+	}, {
+		key: 'onClickedToggleButton',
+		value: function onClickedToggleButton(e) {
+			$(e.currentTarget).toggleClass('hide-toggle__button');
+			this.els._mobileHeaderContainer.toggleClass('display-mobile__container');
+		}
+
+		/**
+   * Open the shopping cart page if the shopping cart is not empty
+   * @param {Object} e
+   */
+
+	}, {
+		key: 'checkCartIsEmpty',
+		value: function checkCartIsEmpty(e) {
+			var currentTarget = $(e.currentTarget),
+			    counterContainer = currentTarget.find('.cart__counter');
+
+			if (Number(counterContainer.text()) <= 0) {
+				e.preventDefault();
+			}
+		}
+
+		/**
+   * Get cart data from server
+   */
+
+	}, {
+		key: 'getCartContent',
+		value: function getCartContent() {
+			var _this3 = this;
+
+			$.get(window.global.app.connector + '/cart', function (r) {
+				var i = void 0,
+				    data = void 0,
+				    a = [],
+				    counter = 0,
+				    cartCounter = _this3.els._linkCartContainer.find('.cart__counter');
+
+				if (r === '' || r === null) {
+					sessionStorage['cart'] = JSON.stringify(a);
+				} else {
+					if (typeof r === 'string') {
+						data = JSON.parse(data);
+					} else {
+						data = r;
+					}
+
+					for (i in data) {
+						a.push({ id: i, count: data[i] });
+						counter += Number(data[i]);
+					}
+
+					sessionStorage['cart'] = JSON.stringify(a);
+					cartCounter.text(counter);
+				}
+			});
+		}
+
+		/**
+   * Produce products amount in cart
+   * @param {Object} e
+   * @param {Object} params
+   */
+
+	}, {
+		key: 'addProductsToCart',
+		value: function addProductsToCart(e, params) {
+			var cartCounter = this.els._linkCartContainer.find('.cart__counter');
+			cartCounter.text(Number(cartCounter.text()) + Number(params.count));
+		}
+
+		/**
+   * Reduce products amount in cart
+   * @param {Object} e
+   * @param {Object} params
+   */
+
+	}, {
+		key: 'deleteProductsToCart',
+		value: function deleteProductsToCart(e, params) {
+			var cartCounter = this.els._linkCartContainer.find('.cart__counter'),
+			    newCount = Number(cartCounter.text()) - Number(params.count);
+
+			newCount = newCount > 0 ? newCount : 0;
+			cartCounter.text(newCount);
+		}
+	}]);
+
+	return Header;
+}(__WEBPACK_IMPORTED_MODULE_0__Base_js__["a" /* default */]);
+
+/* harmony default export */ __webpack_exports__["a"] = (Header);
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
+
+/***/ }),
+/* 3 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Base_js__ = __webpack_require__(1);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+/**
+ * Gray block on the background
+ * @extends Base
+ */
+
+var Background = function (_Base) {
+	_inherits(Background, _Base);
+
+	function Background(props) {
+		_classCallCheck(this, Background);
+
+		return _possibleConstructorReturn(this, (Background.__proto__ || Object.getPrototypeOf(Background)).call(this, props));
+	}
+
+	/**
+  * Get and save DOM elements
+  * @param {Object} e
+  */
+
+
+	_createClass(Background, [{
+		key: 'initDOMElements',
+		value: function initDOMElements(e) {
+			this.els = {
+				_darkContainer: $('#dark__container'),
+				_darkHelperContainer: $('#dark-helper__container')
+			};
+		}
+
+		/**
+   * Invoked when DOM becomes safe to manipulate
+   * @param {Object} e
+   */
+
+	}, {
+		key: 'onDOMReady',
+		value: function onDOMReady(e) {
+			this.getDarkContainerLeftDistance();
+		}
+
+		/**
+   * Invoked when window has resized
+   * @param {Object} e
+   */
+
+	}, {
+		key: 'onResized',
+		value: function onResized(e) {
+			this.getDarkContainerLeftDistance();
+		}
+
+		/**
+   * Calculate the distance from the left side of the screen for the gray block
+   * @param {Object} baseDOM cached DOM elements
+   * @return {Array}
+   */
+
+	}, {
+		key: 'getDarkContainerLeftDistance',
+		value: function getDarkContainerLeftDistance() {
+			return this.els._darkContainer.css({
+				left: this.baseDOM._window.width() > 767 ? this.els._darkHelperContainer.offset().left : 0
+			});
+		}
+	}]);
+
+	return Background;
+}(__WEBPACK_IMPORTED_MODULE_0__Base_js__["a" /* default */]);
+
+/* harmony default export */ __webpack_exports__["a"] = (Background);
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
+
+/***/ }),
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(__webpack_provided_window_dot_jQuery, jQuery) {/**
@@ -13960,267 +14221,6 @@ var Base = function () {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0), __webpack_require__(0)))
 
 /***/ }),
-/* 3 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Base_js__ = __webpack_require__(1);
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-
-
-/**
- * Header block
- * @extends Base
- */
-
-var Header = function (_Base) {
-	_inherits(Header, _Base);
-
-	function Header(props) {
-		_classCallCheck(this, Header);
-
-		return _possibleConstructorReturn(this, (Header.__proto__ || Object.getPrototypeOf(Header)).call(this, props));
-	}
-
-	/**
-  * Get and save DOM elements
-  * @param {Object} e
-  */
-
-
-	_createClass(Header, [{
-		key: 'initDOMElements',
-		value: function initDOMElements(e) {
-			this.els = {
-				_mobileHeaderContainer: $('#mobile-header__container'),
-				_navigationToggleButton: $('#navigation-toggle__button'),
-				_linkCartContainer: $('#link-cart__container')
-			};
-		}
-
-		/**
-   * Invoked when DOM becomes safe to manipulate
-   * @param {Object} e
-   */
-
-	}, {
-		key: 'onDOMReady',
-		value: function onDOMReady(e) {
-			var _this2 = this;
-
-			this.els._navigationToggleButton.on('click', function (e) {
-				return _this2.onClickedToggleButton(e);
-			});
-			this.els._linkCartContainer.on('click', function (e) {
-				return _this2.checkCartIsEmpty(e);
-			});
-
-			this.els._linkCartContainer.on('addProducts', function (e, params) {
-				return _this2.addProductsToCart(e, params);
-			});
-			this.els._linkCartContainer.on('deleteProducts', function (e, params) {
-				return _this2.deleteProductsToCart(e, params);
-			});
-
-			this.getCartContent();
-		}
-
-		/**
-   * Display the menu for the mobile regime
-   * @param {Object} e
-   */
-
-	}, {
-		key: 'onClickedToggleButton',
-		value: function onClickedToggleButton(e) {
-			$(e.currentTarget).toggleClass('hide-toggle__button');
-			this.els._mobileHeaderContainer.toggleClass('display-mobile__container');
-		}
-
-		/**
-   * Open the shopping cart page if the shopping cart is not empty
-   * @param {Object} e
-   */
-
-	}, {
-		key: 'checkCartIsEmpty',
-		value: function checkCartIsEmpty(e) {
-			var currentTarget = $(e.currentTarget),
-			    counterContainer = currentTarget.find('.cart__counter');
-
-			if (Number(counterContainer.text()) <= 0) {
-				e.preventDefault();
-			}
-		}
-
-		/**
-   * Get cart data from server
-   */
-
-	}, {
-		key: 'getCartContent',
-		value: function getCartContent() {
-			var _this3 = this;
-
-			$.get(window.global.app.connector + '/cart', function (r) {
-				var i = void 0,
-				    data = void 0,
-				    a = [],
-				    counter = 0,
-				    cartCounter = _this3.els._linkCartContainer.find('.cart__counter');
-
-				if (r === '' || r === null) {
-					sessionStorage['cart'] = JSON.stringify(a);
-				} else {
-					if (typeof r === 'string') {
-						data = JSON.parse(data);
-					} else {
-						data = r;
-					}
-
-					for (i in data) {
-						a.push({ id: i, count: data[i] });
-						counter += Number(data[i]);
-					}
-
-					sessionStorage['cart'] = JSON.stringify(a);
-					cartCounter.text(counter);
-				}
-			});
-		}
-
-		/**
-   * Produce products amount in cart
-   * @param {Object} e
-   * @param {Object} params
-   */
-
-	}, {
-		key: 'addProductsToCart',
-		value: function addProductsToCart(e, params) {
-			var cartCounter = this.els._linkCartContainer.find('.cart__counter');
-			cartCounter.text(Number(cartCounter.text()) + Number(params.count));
-		}
-
-		/**
-   * Reduce products amount in cart
-   * @param {Object} e
-   * @param {Object} params
-   */
-
-	}, {
-		key: 'deleteProductsToCart',
-		value: function deleteProductsToCart(e, params) {
-			var cartCounter = this.els._linkCartContainer.find('.cart__counter'),
-			    newCount = Number(cartCounter.text()) - Number(params.count);
-
-			newCount = newCount > 0 ? newCount : 0;
-			cartCounter.text(newCount);
-		}
-	}]);
-
-	return Header;
-}(__WEBPACK_IMPORTED_MODULE_0__Base_js__["a" /* default */]);
-
-/* harmony default export */ __webpack_exports__["a"] = (Header);
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
-
-/***/ }),
-/* 4 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Base_js__ = __webpack_require__(1);
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-
-
-/**
- * Gray block on the background
- * @extends Base
- */
-
-var Background = function (_Base) {
-	_inherits(Background, _Base);
-
-	function Background(props) {
-		_classCallCheck(this, Background);
-
-		return _possibleConstructorReturn(this, (Background.__proto__ || Object.getPrototypeOf(Background)).call(this, props));
-	}
-
-	/**
-  * Get and save DOM elements
-  * @param {Object} e
-  */
-
-
-	_createClass(Background, [{
-		key: 'initDOMElements',
-		value: function initDOMElements(e) {
-			this.els = {
-				_darkContainer: $('#dark__container'),
-				_darkHelperContainer: $('#dark-helper__container')
-			};
-		}
-
-		/**
-   * Invoked when DOM becomes safe to manipulate
-   * @param {Object} e
-   */
-
-	}, {
-		key: 'onDOMReady',
-		value: function onDOMReady(e) {
-			this.getDarkContainerLeftDistance();
-		}
-
-		/**
-   * Invoked when window has resized
-   * @param {Object} e
-   */
-
-	}, {
-		key: 'onResized',
-		value: function onResized(e) {
-			this.getDarkContainerLeftDistance();
-		}
-
-		/**
-   * Calculate the distance from the left side of the screen for the gray block
-   * @param {Object} baseDOM cached DOM elements
-   * @return {Array}
-   */
-
-	}, {
-		key: 'getDarkContainerLeftDistance',
-		value: function getDarkContainerLeftDistance() {
-			return this.els._darkContainer.css({
-				left: this.baseDOM._window.width() > 767 ? this.els._darkHelperContainer.offset().left : 0
-			});
-		}
-	}]);
-
-	return Background;
-}(__WEBPACK_IMPORTED_MODULE_0__Base_js__["a" /* default */]);
-
-/* harmony default export */ __webpack_exports__["a"] = (Background);
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
-
-/***/ }),
 /* 5 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -14463,7 +14463,7 @@ var DialogCallback = function (_Base) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Base_js__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_owl_carousel__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_owl_carousel__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_owl_carousel___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_owl_carousel__);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -15471,25 +15471,24 @@ var ToggleList = function (_Base) {
 /* 19 */,
 /* 20 */,
 /* 21 */,
-/* 22 */,
-/* 23 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(24);
+module.exports = __webpack_require__(23);
 
 
 /***/ }),
-/* 24 */
+/* 23 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Base_js__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_Header__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_Background__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_Header__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_Background__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_PaperProduct__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_SliderPromo__ = __webpack_require__(25);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_SliderRelated__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_SliderPromo__ = __webpack_require__(24);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_SliderRelated__ = __webpack_require__(25);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_ButtonSendToCart__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_Footer__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_DialogCallback__ = __webpack_require__(6);
@@ -15530,7 +15529,7 @@ new __WEBPACK_IMPORTED_MODULE_0__Base_js__["a" /* default */]().call(function (e
 });
 
 /***/ }),
-/* 25 */
+/* 24 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -15749,12 +15748,12 @@ var SliderPromo = function (_Base) {
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
 
 /***/ }),
-/* 26 */
+/* 25 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Base_js__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_owl_carousel__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_owl_carousel__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_owl_carousel___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_owl_carousel__);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
