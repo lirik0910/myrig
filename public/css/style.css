@@ -1144,6 +1144,9 @@ input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill{
     outline: none;
     margin-top: 0;
 }
+.btn-light {
+    background-color: #7ad258;
+}
 #ticket label{
     font-size: 16px;
     font-family: "Roboto";

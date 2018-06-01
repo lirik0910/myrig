@@ -21,6 +21,7 @@ jQuery(document).ready(function ($) {
 		$('body').animate({'opacity' : 0.7}, 400)
         var form = $(this);
         form.find('.faspin').html('<i class="fa fa-cog fa-spin"></>');
+        $(this).find('.btn-default.btn-subscribe').addClass('btn-light');
 		console.log(form.find('input'));
         var fd = {};
 
@@ -294,6 +295,7 @@ jQuery(document).ready(function ($) {
 			$(this).on('success.form.bv', function(e) {
 				e.preventDefault();
 				$(this).find('.faspin').html('<i class="fa fa-cog fa-spin"></i>');
+	 			$(this).find('.btn-default.btn-subscribe').addClass('btn-light');
 				$('body').animate({
 					'opacity': 0.7
 				}, 400);
