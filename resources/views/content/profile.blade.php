@@ -170,168 +170,181 @@
 					</div>
 				</nav>
 			</header>
+<main style="width: 100%">
 
-    <main style="width: 100%" style="position: absolute;">
-        @php
-            $order = App\Model\Shop\Order::where('number', $number)->with('orderDeliveries', 'products')->first();
-            $delivery = App\Model\Shop\Delivery::where('id', $order->orderDeliveries->delivery_id)->first();
-            $payment = App\Model\Shop\PaymentType::where('id', $order->payment_type_id)->first();
-            //var_dump($order->products); die;
-        @endphp
-        <div class="main-back"  ></div>
-        <script>
-            var width = $(window).width(),
-                cont = $('.container').outerWidth();
-            var margin = (width - cont) / 2;
-            var wM = cont * 33.333333 / 100 + margin;
+<div class="main-back" style="position: absolute;"></div>
+<script>
+	var width = $(window).width(),
+		cont = $('.container').outerWidth();
+	var margin = (width - cont) / 2;
+	var wM = cont * 33.333333 / 100 + margin;
 
-            if (width > 767) {
-                $('.main-back').css('left', wM +'px');
-            }
+	if (width > 767) {
+		$('.main-back').css('left', wM +'px');
+	}
 
-            else {
-                $('.main-back').css('left', '0px');
-            }
-            
-            jQuery(document).ready(function($){
+	else {
+		$('.main-back').css('left', '0px');
+	}
+</script>
+@php
+	$context = $select('App\Model\Base\Context')->where('title', $locale)->first();
 
-                if ($("#timer").length) {
-                    function startTimer(){
-                        var e=document.getElementById("timer").innerHTML.split(/[:]+/),
-                            t=e[0],n=checkSecond(e[1]-1);59==n&&(t-=1),
-                            document.getElementById("timer").innerHTML=t+":"+n,
-                            setTimeout(startTimer,1e3)}
+$product = App\Model\Shop\Product::where('page_id', $it->id)->where('context_id', $context->id)->with('images', 'options')->first();
+//var_dump($it->id); die;
+foreach ($product->options as $item) {
+	if ($item->type->title === 'video') {
+		$video = $item;
+		break;
+	}
+}
 
-                    function checkSecond(e)
-                    {return e<10&&e>=0&&(e="0"+e),e<0&&(e="59"),e}
-                    document.getElementById("timer").innerHTML="",
-                        startTimer();
-                }
+if($product->auto_price){
+    $autoprice = $product->calcAutoPrice();
+    if(!$autoprice){
+        $price = number_format($product->price, 2, '.', '');
+    } else{
+        $price = number_format($autoprice, 2, '.', '');
+    }
+} else{
+    $price = number_format($product->price, 2, '.', '');
+}
 
-            })
+foreach($product->categories as $category){
+    if ($category->title == 'Base'){
+        $payback = new App\Http\Controllers\ProductController();
+$payback = $payback->calcPayback($product->id);
+    }
+}
 
-        </script>
-        <style>
-            .timer {
-                background: #60a645;
-                color: #fff;
+@endphp
+<section class="content item">
+<div class="container">
 
-                padding: 10px;
-                font-weight: bold;
-            }
-            #timer {
-                float: right;
-            }
-        </style>
-        <section class="content order">
-            <div class="container">
-                <div class="row widgets">
-                    <div class="woocommerce">
-                        <div class="woocommerce-order">
-                            <div class="col-sm-4" id="customer_details">
-                                <div class="widget wPay">
-                                    <h4 class="woocommerce-notice woocommerce-notice--success woocommerce-thankyou-order-received">{{ __('default.order_was_successfully_accepted') }}</h4>
-                                    <ul class="woocommerce-order-overview woocommerce-thankyou-order-details order_details">
-                                        <li class="woocommerce-order-overview__order order">
-                                            {{ __('default.order_number') }}						<strong>{{$order->number}}</strong>
-                                        </li>
-                                        <li class="woocommerce-order-overview__date  ">
-                                            {{ __('default.date')}} 						<strong>@php echo date('d-m-Y', strtotime($order->created_at)) @endphp</strong>
-                                        </li>
-                                        <li class="woocommerce-order-overview__total total">
-                                            {{ __('default.total_checkout_success')}}						<strong><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#36;</span>{{ number_format($order->cost, 2, '.', '') }}</span></strong>
-                                        </li>
-                                        <li class="woocommerce-order-overview__payment-method method">
-                                            {{ __('default.payment')}}						<strong>{{$payment->title}}</strong>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="col-sm-8">
-                                <div class="article-text">
-                                    <div class="widget wDelivery">
-                                        <section class="woocommerce-order-details">
+@isset($product)
+<div class="article-row row">
+	<div class="col-sm-4">
+		<div id="isync1" class="  owl-carousel owl-theme">
+			@foreach ($product->images as $item)
+			<div class="product-item">
+				<img width="300" height="300" src="{{ $preview(asset('uploads/' . $item->name), 300, 300) }}" class="attachment-medium size-medium" alt="img" title="{{ htmlentities($it->title) }}" />
+			</div>
+			@endforeach
+		</div>
 
-                                            <h2 class="woocommerce-order-details__title" style="float: left">{{ __('default.info_about_order')}}</h2>
-                                            <a class="btn-default" href="download-pdf/{{ $order->number }}" style="float: right; margin-top: 30px; margin-bottom: 20px">{{ __('default.download_invoice')}}</a>
+		<div id="isync2" class="visible-md owl-carousel owl-theme">
+			@foreach ($product->images as $item)
+			<div class="product-item">
+				<img width="47" height="47" src="{{ $preview(asset('uploads/' . $item->name), 47, 47) }}" class="attachment-i47 size-i47" alt="img" title="{{ htmlentities($it->title) }}" />
+			</div>
+			@endforeach
+		</div>
+	</div>
 
-                                            <table class="woocommerce-table woocommerce-table--order-details shop_table order_details">
-                                                <thead>
-                                                <tr>
-                                                    <th class="woocommerce-table__product-name product-name">{{ __('default.product') }}</th>
-                                                    <th class="woocommerce-table__product-table product-total">{{ __('default.price') }}</th>
-                                                </tr>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @foreach($order->products as $product)
-                                                        @php
-                                                            if($product->auto_price){
-                                                                $price = number_format($product->calcAutoPrice(), 2, '.', '');
-                                                            } else{
-                                                                $price = number_format($product->price, 2, '.', '');
-                                                            }
-                                                        @endphp
-                                                        <tr class="woocommerce-table__line-item order_item">
-                                                            <td class="woocommerce-table__product-name product-name">
-                                                                <a href="{{$product->page->link}}" data-wpel-link="internal">{{$product->title}}</a> <strong class="product-quantity">&times; {{$product->pivot->count}}</strong>	</td>
-                                                            <td class="woocommerce-table__product-total product-total">
-                                                                <span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#36;</span>{{ number_format($price * $product->pivot->count, 2, '.', '') }}</span>	</td>
-                                                        </tr>
-                                                    @endforeach
-                                                </tbody>
-                                                <tfoot>
-                                                <tr>
-                                                    <th scope="row">{{ __('default.items_cost') }}</th>
-                                                    <td><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#36;</span>{{ number_format($order->cost, 2, '.', '') }}</span></td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">{{ __('default.delivery_checkout_success') }}</th>
-                                                    <td>{{$delivery->title}}</td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">{{ __('default.payment_type') }}</th>
-                                                    <td>{{$payment->title}}</td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">{{ __('default.total') }}</th>
-                                                    <td><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#36;{{ number_format($order->cost, 2, '.', '') }}</span></span></td>
-                                                </tr>
-                                                </tfoot>
+	<div class="col-sm-8">
+		<div class="article-text">
+			<h1>{{ $product->title }}</h1>
 
-                                            </table>
-                                            <section class="woocommerce-customer-details">
-                                                <h2>{{ __('default.info_about_client') }}</h2>
-                                                <table class="woocommerce-table woocommerce-table--customer-details shop_table customer_details">
-                                                    <tr>
-                                                        <th>{{ __('default.comment') }}</th>
-                                                        <td>{{$order->orderDeliveries->comment}}</td>
-                                                    </tr>
 
-                                                    <tr>
-                                                        <th>Email:</th>
-                                                        <td>{{$order->orderDeliveries->email}}</td>
-                                                    </tr>
+			<div class="tag @if ($product->productStatus->title === 'in-stock') tag-check @elseif ($product->productStatus->title === 'pre-order') tag-order  @elseif ($product->productStatus->title === 'not-available') tag-no @endif">{{ __('common.product_status_' . str_replace(' ', '_', mb_strtolower($product->productStatus->description))) }}</div>
 
-                                                    <tr>
-                                                        <th>{{ __('default.phone') }}</th>
-                                                        <td>{{$order->orderDeliveries->phone}}</td>
-                                                    </tr>
-                                                </table>
-                                                <h3 class="woocommerce-column__title">{{ __('default.address_info') }}</h3>
-                                                <address>{{$order->orderDeliveries->first_name}} {{$order->orderDeliveries->last_name}}<br/>{{ __('common.country_' . $order->orderDeliveries->country) }}, {{$order->orderDeliveries->city}}<br/>{{$order->orderDeliveries->address}}</address>
-                                            </section>
-                                        </section>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
-    @php
+			@if(isset($product->warranty) && !empty($product->warranty))<div class="tag tag-waranty">{{ __('default.warranty') }} {{ $product->warranty }}</div>@endif
+	
+			<div class="single-product-price">
+				<span class="woocommerce-Price-amount amount">
+					<span class="woocommerce-Price-currencySymbol">&#36;</span>
+					{{ $price }}
+				</span>
+			</div>
+							
+			<form class="related-form item-count__container">
+				<span class="input-number ">
+					<input id="{{ 'count-products-' . $product->id }}" type="text" name="count" class="form-control form-number count add-to-cart-count" value="{{ isset($inCart[$product->id]) ? $inCart[$product->id] : 1 }}" data-id="{{ $product->id }}" />
+
+					<div class="btn-count btn-count-plus" data-id="{{ $product->id }}">
+						<i class="fa fa-plus"></i>
+					</div>
+
+					<div class="btn-count btn-count-minus" data-id="{{ $product->id }}">
+						<i class="fa fa-minus"></i>
+					</div>
+				</span>
+
+				@if (isset($inCart[$product->id]))
+					<a data-success="{{ __('default.added') }}" data-add="{{ __('default.to_cart') }}" rel="nofollow" href="#" data-id="{{ $product->id }}" class="btn-default intocarts">
+						<span>{{ __('default.added') }}</span>
+						<i class="fa fa-spin fa-refresh" style="display: none"></i>
+					</a>
+				@elseif ($product->productStatus->title === 'not-available')
+					<a rel="nofollow" href="#report-availability" data-id="{{ $product->id }}" class="btn-default report-availability">
+						<span>{{ __('default.report_availability') }}</span>
+						<i class="fa fa-spin fa-refresh" style="display: none"></i>
+					</a>
+				@else
+					<a data-success="{{ __('default.added') }}" data-add="{{ __('default.to_cart') }}" rel="nofollow" href="#" data-id="{{ $product->id }}" class="btn-default addtocarts">
+						<span>{{ __('default.to_cart') }}</span>
+						<i class="fa fa-spin fa-refresh" style="display: none"></i>
+					</a>
+				@endif
+			</form>
+			@if(isset($payback) && !empty($payback)) <div class="tag tag-payback">{{ __('default.payback') }} {{ $payback }} {{ __('default.days') }}</div>@endif
+			
+			<div class="single-product-tabs">
+				<div class="product-tab-links">
+					<a href="" class="active" data-target="#description" data-wpel-link="internal">{{ __('default.description') }}</a>
+
+					<a href="" class="" data-target="#details">
+						<span class="hidden-xxs">{{ __('default.characteristics') }}</span>
+						<span class="visible-xxs">{{ __('default.characteristics') }}</span>
+					</a>
+
+					@if (isset($video))
+					<a href="" class="" data-target="#video">
+						{{ __('default.video') }}
+					</a>
+					@endif
+				</div>
+				
+				<div class="tabs-field">
+					<div id="description">
+						{!! $product->description !!}
+					</div>
+				
+					<div id="details" style="">
+						<table class="shop_attributes">
+							<tbody>
+							@foreach ($product->options as $item)
+								@if ($item->type->title === 'characteristic')
+								<tr>
+									<th>{{ $item->name }}</th>
+									<td>
+										<p>{{ $item->value }}</p>
+									</td>
+									</tr>
+								@endif
+							@endforeach
+							</tbody>
+						</table>
+					</div>
+					
+					@if (isset($video))
+					<div id="video" style="display: block;">
+						{!! $video->value !!}
+					</div>
+					@endif
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+@endisset
+
+</div>
+</section>
+
+
+</main>
+@php
 	$context = $select('App\Model\Base\Context')->where('title', $locale)->first();
 
     $productsPage = $select('App\Model\Base\Page')->where('parent_id', 0)->where('context_id', $context->id)->where('view_id', 3)->first();
