@@ -15,7 +15,7 @@ import Grid from 'material-ui/Grid';
 import { Link } from 'react-router-dom';
 import Menu from '../components/Menu/Menu.jsx';
 import Header from '../components/Header/Header.jsx';
-import PaperTable from 'components/Paper/PaperTable';
+import PaperTable from '../components/Paper/PaperTable';
 import { LinearProgress } from 'material-ui/Progress';
 import TopTitle from '../components/TopTitle/TopTitle.jsx';
 import DialogError from '../components/DialogError/DialogError.jsx';

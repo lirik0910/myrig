@@ -57,6 +57,15 @@ class Order extends Model
 		return $this->hasOne(OrderDelivery::class);
 	}
 
+	/**
+	 * Get order delivery
+	 * @return boolean
+	 */
+	public function orderPayments()
+	{
+		return $this->hasOne(OrderPayment::class);
+	}
+
 
 	/**
 	 * Get order products
@@ -120,8 +129,9 @@ class Order extends Model
             }
 			//$price = $item->product->price;
 			$count = $item->count;
+			$discount = $item->discount;
 
-			$cost += ($count * $price);
+			$cost += ($count * ($price - $discount));
 		}
 		$this->cost = $cost;
 

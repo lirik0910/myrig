@@ -59,6 +59,7 @@ class SelectDelivery extends Component {
 			value: this.props.defaultValue,
 		}, () => {
 			this.viewDataGetRequest(data => this.props.onDataLoaded(data));
+			this.props.onItemSelected(this.props.defaultValue);
 		});
 	}
 

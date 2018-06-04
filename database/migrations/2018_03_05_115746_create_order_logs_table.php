@@ -28,7 +28,11 @@ class CreateOrderLogsTable extends Migration
 				->default(0)
 				->comment('User ID who changed order');
 
+<<<<<<< HEAD
 			$table->string('type', 255)
+=======
+			$table->string('type')
+>>>>>>> add_order_branch
 				->default('status')
 				->comment('Log type (status|paid|cost|delivery|payment|note)');
 

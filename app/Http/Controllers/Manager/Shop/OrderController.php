@@ -4,9 +4,12 @@ namespace App\Http\Controllers\Manager\Shop;
 
 use App\Model\Shop\Cart;
 use App\Model\Shop\Order;
+use App\Model\Shop\Product;
 use App\Model\Shop\ExchangeRate;
 use App\Model\Shop\OrderDelivery;
+use Illuminate\Validation\Rule;
 use App\Model\Shop\OrderLog;
+use Illuminate\Validation\Validatior;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
@@ -375,4 +378,153 @@ class OrderController extends Controller
 
 		return response()->json(['message' => true], 200);
 	}
+
+	/*
+     * Create new client order
+     * @return boolean
+     */
+    public function create(Request $request){
+
+
+        $order = new Order();
+        $last_order = Order::orderBy('id','desc')->first();
+
+        if(!$last_order){
+            $max_id = 1;
+            $order_number = $max_id;
+        } else {
+            $max_id = $last_order->id;
+            $order_number = $max_id + 1;
+        }
+		// $request->validate
+		$validator = $request->validate([
+			'user_id' => 'required',
+			'status_id' => 'required',
+			'payment_type_id' => 'required',
+			'context_id' => 'required',
+			'delivery_id' => 'required'
+		]);
+		$data = $request->input();
+		$dataOrder = $request->only('user_id', 'status_id', 'payment_type_id', 'context_id');
+		$delivery = $request->input('delivery_id') ?? NULL;
+		try {
+		}
+		catch (\Exception $e) {
+			logger($e->getMessage());
+			return response()->json(['message' => $validator->errors()], 422);
+		}
+
+		$dataOrder = array_merge([
+            'number' => $order_number,
+            'cost' => 0,
+            'prepayment' => 0,
+            'paid' => 0
+		], $dataOrder);
+        $order->fill($dataOrder);
+
+        try {
+            $order->save();
+        }
+        catch (\Exception $e) {
+            logger($e->getMessage());
+            return response()->json(['success' => false, 'message' => $e->getMessage()], 422);
+        }
+
+        if(!empty($data['cart'])){
+
+	        $cart = json_decode($data['cart'], TRUE);
+	        // var_dump($cart);
+	        foreach ($cart as $product){
+	        	$productId = $product['id'];
+	        	$count = $product['count'];
+	        	$discount = $product['discount'];
+	            $product = Product::where('id', $productId)->first();
+
+	            if($product->auto_price){
+	                $btcCost = $product->calcBtcPrice();
+	                $autoprice_data = $product->calcAutoPrice(true);
+
+	                $order->carts()->create([
+	                    'order_id' => $order->id,
+	                    'product_id' => $productId,
+	                    'count' => $count,
+	                    'discount' => $discount,
+	                    'cost' => $autoprice_data['total'],
+	                    'btcCost' => $btcCost,
+	                    'fes' => $autoprice_data['fes'],
+	                    'warranty' => $autoprice_data['warranty'],
+	                    'prime_cost' => $autoprice_data['prime'],
+	                    'delivery_cost' => $autoprice_data['delivery'],
+	                    'profit' => $autoprice_data['profit'],
+	                ]);
+
+	            } else{
+	                $cost = $product->price;
+	            
+	                $btcCost = $product->calcBtcPrice();
+
+	                $order->carts()->create([
+	                    'order_id' => $order->id,
+	                    'product_id' => $productId,
+	                    'count' => $count,
+	                    'discount' => $discount,
+	                    'cost' => $cost,
+	                    'btcCost' => $btcCost
+	                ]);
+	            }
+	        }
+        }
+
+
+        $order->cost = $order->countCost();
+
+        $order->orderDeliveries()->create([
+            'order_id' => $order->id,
+            'delivery_id' => $delivery,
+            'cost' => $order->cost,
+            'first_name' => $data['d_first_name'] ?? NULL,
+            'last_name' => $data['d_last_name'] ?? NULL,
+            'address' => $data['d_address'] ?? NULL,
+            'phone' => $data['d_phone'] ?? NULL,
+            'email' => $data['d_email'] ?? NULL,
+            'city' => $data['d_city'] ?? NULL,
+            'country' => $data['d_country'] ?? NULL,
+            'state' => $data['d_state'] ?? NULL,
+            'comment' => $data['d_comment'] ?? NULL,
+            'office' => $data['d_office'] ?? NULL,
+            'zendesk' => $data['d_zendesk'] ?? NULL,
+            'warranty' => $data['d_warranty'] ?? NULL,
+            'passport' => $data['d_passport'] ?? NULL
+        ]);
+
+        $order->orderPayments()->create([
+            'order_id' => $order->id,
+            'cost' => $order->cost,
+            'first_name' => $data['p_first_name'] ?? NULL,
+            'last_name' => $data['p_last_name'] ?? NULL,
+            'city' => $data['p_city'] ?? NULL,
+            'country' => $data['p_country'] ?? NULL,
+        ]);
+
+        //var_dump($order->cost); die;
+        try {
+	        $order->save();
+		}
+		catch (\Exception $e) {
+			logger($e->getMessage());
+			return response()->json(['message' => $e->getMessage()], 422);
+		}
+       
+
+       //  $number = $order_number;
+       // // try{
+       //      //Mail::to($data['email'])->send(new MailClass($number));
+       //  //} catch (\Exception $e){
+
+       // // }
+
+       //  unset($_SESSION['cart']);
+       //  //session()->forget('cart');
+        return response()->json(['success' => true, 'order' => $order], 200);
+    }
 }

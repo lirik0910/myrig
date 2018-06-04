@@ -59,6 +59,7 @@ class SelectPayment extends Component {
 			value: this.props.defaultValue,
 		}, () => {
 			this.viewDataGetRequest(data => this.props.onDataLoaded(data));
+			this.props.onItemSelected(this.props.defaultValue);
 		});
 	}
 
@@ -109,10 +110,6 @@ class SelectPayment extends Component {
 				value={value}
 				onChange={this.handleChangeSelect}
 				input={<Input name="payment_type_id" id={inputID} />}>
-
-				<MenuItem value={0}>
-					<em>{'None'}</em>
-				</MenuItem>
 
 				{data.map((item, i) => {
 					return <MenuItem 
