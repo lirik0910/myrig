@@ -1,23 +1,5 @@
 @extends('layouts.app')
-
 @section('content')
-
-<main style="width: 100%">
-<div class="main-back" style="position: absolute;"></div>
-<script>
-	var width = $(window).width(),
-		cont = $('.container').outerWidth();
-	var margin = (width - cont) / 2;
-	var wM = cont * 33.333333 / 100 + margin;
-
-	if (width > 767) {
-		$('.main-back').css('left', wM +'px');
-	}
-
-	else {
-		$('.main-back').css('left', '0px');
-	}
-</script>
 
 @php
 $shop = $select('App\Model\Base\Page')
@@ -25,82 +7,22 @@ $shop = $select('App\Model\Base\Page')
 		$q->where('title', 'Shop');
 	})
 	->first();
-//var_dump($multi); die;
 @endphp
 
-<section class="slider">
-	<div class="container-fluid">
-		<div class="row">
-			<div class="main-slider owl-carousel owl-theme" id="mainSlider">
-			@if (isset($multi['indexSlider']))
-				@foreach ($multi['indexSlider'] as $slide)
+<div id="dark__container" class="dark__container"></div>
 
-				<div class="main-slide" data-dot="<span><p class='dashnav-progress'></p></span>">
-					<div class="container">
-						<div class="slide-text">
-							<div class="title">
-							{!! $slide['header'] !!}
-							</div>
-								
-							<div class="subtitle">
-							{!! $slide['content'] !!}
-							</div>
-							
-							@if ($shop)
-							<a href="{{ url( $slide['link'] ) }}" class="btn-default" data-wpel-link="internal">{{ __('default.more_info') }}</a>
-							@endif
-						</div>
-						@php
-							if(file_exists(public_path() . '/uploads/' . $slide['icon']))
-							$image = asset('uploads/' . $slide['icon']);
-							//$image_width = 1350;
-							//$image_height = 941;
-							//if(file_exists($image)){
-							    $imageinfo = getimagesize($image);
-								$image_width = $imageinfo[0];
-								$image_height = $imageinfo[1];
-							//}
+<div id="index-slider__container" class="index-slider__container owl-carousel owl-theme">
+	@foreach ($multi['indexSlider'] as $slide)
+		@include('partsIndex.slideItem', $slide)
+	@endforeach
+</div>
 
-							//var_dump(getimagesize($image)); die;
-						@endphp
-						@if(isset($image) and $image_height < $image_width)
-							<div class="slide-img" style="background-image: url('{{ $preview($image, 1350, 941) }}')"></div>
-						@elseif(isset($image))
-							<div class="slide-img" style="background-image: url('{{ $preview($image, 800, 800) }}')"></div>
-						@endif
-					</div>
-				</div>
-				@endforeach
-			@endif
-			</div>
-		</div>
+<div class="promo__container">
+	<div class="row__container row default__container">
+		@foreach ($multi['indexLinks'] as $item)
+			@include('partsIndex.promoItem', $item)
+		@endforeach
 	</div>
-</section>
+</div>
 
-<section class="banners">
-	<div class="container">
-		<div class="row">
-		@if (isset($multi['indexLinks']))
-			@foreach ($multi['indexLinks'] as $var)
-			
-			<a href="{{ url($var['link']) }}" class="banner col-sm-4" data-wpel-link="internal">
-			
-				<div class="banner-text">
-					<div class="title">
-						{!! $var['header'] !!}
-					</div>
-					
-					<div class="subtitle">
-						{{ $var['content'] }}
-					</div>
-				</div>
-
-				<div class="banner-back" style="background-image: url('{{ $preview(asset('uploads/' . $var['icon']), 80, 100) }}'); top: 37px; width: 80px; right: 54px; left: 300px;"></div>
-			</a>
-			@endforeach
-		@endif
-		</div>
-	</div>
-</section>
-</main>
 @endsection

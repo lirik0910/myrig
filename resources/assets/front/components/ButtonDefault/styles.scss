@@ -1,0 +1,24 @@
+.default__button {
+	color: #FFF;
+	height: 50px;
+	border: none;
+	outline: none;
+	font-size: 14px;
+	padding: 0 40px;
+	border-radius: 0;
+	line-height: 50px;
+	font-weight: bold;
+	vertical-align: top;
+	display: inline-block;
+	background-color: rgb(96, 166, 69);
+}
+
+.default__button:focus {
+	outline: none;
+}
+
+.default__button:hover {
+	color: #FFF;
+	text-decoration: none;
+	background-color: #7AD258;
+}

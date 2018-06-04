@@ -24,9 +24,8 @@ class PageController extends Controller
 	 */
 	public function view(Request $request, $number = null, $domain_locale = null)
 	{
-/*        $import = new Import();
-        $import->process();*/
-
+		//$import = new Import();
+        //$import->process();
         $locale = App::getLocale();
 
         if(!isset($_SESSION['cart'])){

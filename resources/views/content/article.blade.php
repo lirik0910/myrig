@@ -1,53 +1,93 @@
 @extends('layouts.app')
 
 @section('content')
-	<main style="width: 100%">
-		<div class="main-back" style="position: absolute;"></div>
-		<script>
-			var width = $(window).width(),
-				cont = $('.container').outerWidth();
-			var margin = (width - cont) / 2;
-			var wM = cont * 33.333333 / 100 + margin;
 
-			if (width > 767) {
-				$('.main-back').css('left', wM +'px');
-			}
+@php
+$parent_link = App\Model\Base\Page::select('link')
+	->where('id', $it->parent_id)
+	->first();
 
-			else {
-				$('.main-back').css('left', '0px');
-			}
-		</script>
-		<section class="content single-article">
-			<div class="container">
+$prev_link = App\Model\Base\Page::select('link')
+	->where('parent_id', $it->parent_id)
+	->where('id', '<', $it->id)
+	->orderBy('id', 'DESC')
+	->limit(1)->first();
+
+$next_link = App\Model\Base\Page::select('link')
+	->where('parent_id', $it->parent_id)
+	->where('id', '>', $it->id)
+	->orderBy('id', 'ASC')
+	->limit(1)
+	->first();
+
+$visits = $it->visits;
+if (!$visits) {
+	$it->visits()->create(['page_id' => $it->id, 'count' => 1]);
+} else {
+	$visits->count++;
+	$visits->save();
+}
+@endphp
+
+<div id="dark__container" class="dark__container"></div>
+
+<div class="products__container default__container">
+	<div class="row row__container product-item__container margin__collapse">
+		<div class="d-block col-sm-4 slider__container margin__collapse padding__collapse" style="min-height: 300px">
+			<div class="border__container"></div>
+
+			<a href="{{ url($parent_link->link )}}" class="d-block default__link news-return__link font-weight-light">
+				<i class="article-arrow-left__icon"></i>
+				{{ __('default.back_to_list') }}
+			</a>
+			
+			<h3 class="title__container font-weight-bold news-title__container margin__collapse">
+				{{ $it->title }}
+			</h3>
+
+			<div class="news-option__container d-block">
 				@php
-					$parent_link = App\Model\Base\Page::select('link')->where('id', $it->parent_id)->first();
-					$prev_link = App\Model\Base\Page::select('link')->where('parent_id', $it->parent_id)->where('id', '<', $it->id)->orderBy('id', 'DESC')->limit(1)->first();
-					$next_link = App\Model\Base\Page::select('link')->where('parent_id', $it->parent_id)->where('id', '>', $it->id)->orderBy('id', 'ASC')->limit(1)->first();
-
-					$visits = $it->visits;
-					if(!$visits){
-						$it->visits()->create(['page_id' => $it->id, 'count' => 1]);
-					} else{
-						$visits->count++;
-						$visits->save();
-					}
+					echo date('d F', strtotime($it->created_at))
 				@endphp
-				<div class="row">
-					<div class="col-sm-4">
-						<a href="{{url($parent_link->link)}}" class="article-link" data-wpel-link="internal"><i class="article-arrow"></i>{{ __('default.back_to_list') }}</a>
-						<h1 style="word-wrap: break-word">{{$it->title}}</h1>
-						<div class="date">@php echo date('d', strtotime($it->created_at)) . ' ' . __('common.' . strtolower(date('F', strtotime($it->created_at)))) @endphp<i class="fa fa-eye"></i>@if($visits){{$visits->count}}@else 1 @endif</div>
-					</div>
-					<div class="article-content col-sm-8">
-						<div class="article-text">
-							{!! $it->content !!}
-						</div>
-						<div class="links">
-							@isset($prev_link)<a href="{{url($prev_link->link)}}" class="article-link" data-wpel-link="internal"><i class="article-arrow"></i>{{__('default.previous_article')}}</a>@endisset @isset($next_link)<a href="{{url($next_link->link)}}" class="article-link next-link" data-wpel-link="internal"><i class="article-arrow article-arrow-right"></i>{{__('default.next_article')}}</a>@endisset
-						</div>
-					</div>
-				</div>
+				<i class="fa fa-eye" style="margin-left: 18px"></i>
+
+				@if ($visits)
+					{{ $visits->count }}
+				@else 
+					0
+				@endif
 			</div>
-		</section>
-	</main>
+		</div>
+
+		<div class="col-sm-8 product-content__container news-content__container margin__collapse">
+			<div class="border__container"></div>
+
+			<div class="content__container font-weight-light">
+				<p>{!! $it->content !!}</p>
+			</div>
+		</div>
+
+		@if (isset($prev_link) && isset($next_link))
+		<div class="d-block col-sm-4 margin__collapse padding__collapse"></div>
+		<div class="d-block col-sm-8 margin__collapse" style="border-top: 1px solid #FFF; padding: 32px;">
+			<div class="beside-items__container d-flex">
+				@isset($prev_link)
+				<a href="{{ url($prev_link->link) }}" class="d-block default__link news-return__link font-weight-light" style="position: relative;">
+					<i class="article-arrow-left__icon"></i>
+					{{ __('default.previous_article') }}
+				</a>
+				@endisset
+
+				@isset($next_link)
+				<a href="{{ url($next_link->link) }}" class="d-block default__link news-return__link font-weight-light text-right" style="position: relative;">
+					<i class="article-arrow-right__icon" style="float: right"></i>
+					{{ __('next_article') }}
+				</a>
+				@endisset
+			</div>
+		</div>
+		@endif
+	</div>
+</div>
+	
 @endsection

@@ -15,6 +15,8 @@ class ReportController extends Controller
      */
     public function create(Request $request)
     {
+        print_r($request->all());
+
         //return response()->json(['message' => 'gergreg'], 422);
         try {
             $columns = Schema::getColumnListing('reports');

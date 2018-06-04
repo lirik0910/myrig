@@ -1,0 +1,11 @@
+.cart__button {
+	padding: 0 30px;
+	margin-left: 42px;
+
+	@media (max-width: 767px) {
+		padding: 0;
+		display: block;
+		margin-left: 20px;
+		width: calc(50% - 20px);
+	}
+}

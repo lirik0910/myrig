@@ -1,0 +1,14 @@
+.cart-amount__containrt {
+	@media (max-width: 767px) {
+		margin: 0 !important;
+		text-align: center;
+		width: 100%;
+		max-width: 100%;
+
+		.bitcoin-small__price,
+		.order__button {
+			display: block;
+			margin: 0 auto !important;
+		}
+	}
+}
