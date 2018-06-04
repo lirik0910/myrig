@@ -378,5 +378,4 @@ class DialogOrder extends Component {
 			</Dialog>
 	}
 }
-
 export default withStyles(styles)(DialogOrder);
