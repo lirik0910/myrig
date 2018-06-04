@@ -173,15 +173,20 @@
                                                             <div class="modal-body">
                                                                 @foreach($status_logs as $log)
                                                                     @php
-                                                                        $convert_log = str_replace(' ', '_', mb_strtolower($log->value));
+                                                                        if($log->type === 'status'){
+                                                                            $convert_log = str_replace(' ', '_', mb_strtolower($log->value));
+                                                                        }
                                                                         //var_dump($convert_log); die;
                                                                     @endphp
                                                                     <h3>@php echo date('d', strtotime($log->created_at)) . ' ' . __('common.' . strtolower(date('F', strtotime($log->created_at)))) . ' ' . date('Y', strtotime($log->created_at)) . ' ' .  date('H:i', strtotime($log->created_at)) @endphp</h3>
                                                                     <div class="comment-order">
-																        {{ __('default.order_status_changed_from') }} @if(isset($prev) && count($status_logs) > 1) {{ __('common.status_' . $prev) }} @else {{ __('default.new_order') }} @endif {{ __('default.to') }} {{ __('common.status_' . $convert_log) }}.
+																        @if($log->type === 'status') {{ __('default.order_status_changed_from') }} @if(isset($prev) && count($status_logs) > 1) {{ __('common.status_' . $prev) }} @else {{ __('default.new_order') }} @endif {{ __('default.to') }} {{ __('common.status_' . $convert_log) }} @else {{ $log->value }} @endif
                                                                     </div>
                                                                     @php
-                                                                        $prev = $convert_log;
+                                                                        if(isset($convert_log)){
+                                                                            $prev = $convert_log;
+                                                                        }
+
                                                                     @endphp
                                                                 @endforeach
                                                             </div>

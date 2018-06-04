@@ -16,7 +16,8 @@ import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 
 /**
- * Component for selecting page
+ * Component for sele
+ * cting page
  * @extends Component
  */
 class PaperAutoProductForm extends Component {
@@ -83,7 +84,7 @@ class PaperAutoProductForm extends Component {
 		} = data;
 
 		let btc = parseFloat(this.props.btc);
-console.log(data);
+//console.log(data);
 		//let { totalAutoPrice } = this.state;
 
         if (prime_price_currency == 2){
@@ -179,8 +180,10 @@ console.log(data);
 					defaultValue={data.fes_price}
 					currencyID={data.fes_price_currency}
 					onFieldInputed={value => {
+                        console.log(value);
 						value = value === '' ? 0 : value;
-						data.fes_price = parseFloat(value);
+
+						data.fes_price = Number(value);
 						this.props.onDataUpdated(data);
                         this.calcAutoPrice();
 					}}

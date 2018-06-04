@@ -108,6 +108,18 @@
 			$('.income-number').html('<i class="fa fa-cog fa-spin"></i>');
 			var network = {difficulty: $('.difficulty').text(), reward_block: 1250000000};
 			var status = {hashrate: $('.hashrate').text(), expected_difficulty_raw: $('.expected_diff').text(), expected_difficulty_date: $('.diff_date').text(), expected_difficulty: 8.52};
+			var options = $('#device').find('option');
+			var hosting = 0;
+			options.each(function () {
+				let el = $(this)[0];
+				//console.log(el);
+				//console.log(el.selected);
+				if(el.selected){
+					//console.log(el.data('host'));
+					hosting = $(el).attr('data-host');
+				}
+            });
+			//console.log(hosting);
 			//console.log('network :' + network, 'status' + status);
 			//console.log(calc);
 			//console.log($('.calculator-form').serialize());
@@ -117,7 +129,7 @@
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-				data: $('.calculator-form').serialize() + '&calc='+JSON.stringify(calc) + '&network=' + JSON.stringify(network) + '&status=' + JSON.stringify(status),
+				data: $('.calculator-form').serialize() + '&calc='+JSON.stringify(calc) + '&network=' + JSON.stringify(network) + '&status=' + JSON.stringify(status) + '&hosting=' + hosting,
 			 	//dataType: 'json',
 				success: function(data) {
 					if (data === 0) {
