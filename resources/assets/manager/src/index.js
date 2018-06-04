@@ -19,6 +19,7 @@ import EditPageContainer from './containers/EditPageContainer.jsx';
 import ListUsersContainer from './containers/ListUsersContainer.jsx';
 import ListPagesContainer from './containers/ListPagesContainer.jsx';
 import ListOrdersContainer from './containers/ListOrdersContainer.jsx';
+import CreateOrderContainer from './containers/CreateOrderContainer.jsx';
 import CreatePageContainer from './containers/CreatePageContainer.jsx';
 import FileManagerContainer from './containers/FileManagerContainer.jsx';
 import EditProductContainer from './containers/EditProductContainer.jsx';
@@ -50,6 +51,7 @@ render (<BrowserRouter>
 					<Route exact path={App.name() +'/notifications'} component={ListAvailabilityNotificationsContainer} />
 					<Route exact path={App.name() +'/files'} component={FileManagerContainer} />
 					<Route exact path={App.name() +'/orders'} component={ListOrdersContainer} />
+					<Route exact path={App.name() +'/orders/create'} component={CreateOrderContainer} />
 					<Route exact path={App.name() +'/products'} component={ListProductsContainer} />
 					<Route exact path={App.name() +'/products/create'} component={CreateProductContainer} />
 					<Route exact path={App.name() +'/products/:number'} component={EditProductContainer} />

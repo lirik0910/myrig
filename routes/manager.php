@@ -76,7 +76,7 @@ Route::auth();
 Route::get('/', 'Manager\Base\ViewController@index')->middleware('auth');
 
 Route::prefix('pages')
-	->middleware('auth')
+	->middleware('auth')	
 	->group(function () {
 		Route::get('/', 'Manager\Base\ViewController@index');
 		Route::get('/{id}', 'Manager\Base\ViewController@index');
@@ -84,43 +84,45 @@ Route::prefix('pages')
 });
 
 Route::prefix('files')
-	->middleware('auth')
+	->middleware('auth')	
 	->group(function () {
 		Route::get('/', 'Manager\Base\ViewController@index');
 });
 
 Route::prefix('users')
-	->middleware('auth')
+	->middleware('auth')	
 	->group(function () {
 		Route::get('/', 'Manager\Base\ViewController@index');
 });
 
 Route::prefix('notifications')
-    ->middleware('auth')
+    
+  ->middleware('auth')    
     ->group(function () {
         Route::get('/', 'Manager\Base\ViewController@index');
  });
 
-/*Route::prefix('notifications')
-    ->middleware('auth')
+Route::prefix('notifications')
+    
+  ->middleware('auth')    
     ->group(function () {
         Route::get('/', 'Manager\Base\ViewController@index');
-    });*/
+    });
 
 Route::prefix('orders')
-	->middleware('auth')
+	->middleware('auth')	
 	->group(function () {
 		Route::get('/', 'Manager\Base\ViewController@index');
 });
 
 Route::prefix('vocabulary')
-	->middleware('auth')
+	->middleware('auth')	
 	->group(function () {
 		Route::get('/', 'Manager\Base\ViewController@index');
 });
 
 Route::prefix('products')
-	->middleware('auth')
+	->middleware('auth')	
 	->group(function () {
 		Route::get('/', 'Manager\Base\ViewController@index');
 		Route::get('/{id}', 'Manager\Base\ViewController@index');
@@ -128,13 +130,13 @@ Route::prefix('products')
 });
 
 Route::prefix('rates')
-	->middleware('auth')
+	->middleware('auth')	
 	->group(function () {
 		Route::get('/', 'Manager\Base\ViewController@index');
 });
 
 Route::prefix('api')
-	->middleware('auth')
+	->middleware('auth')	
 	->group(function() {
 		Route::prefix('component')->group(function() {
 			Route::get('/', 'Manager\Base\ComponentController@all')->middleware(ComponentCollectionMiddleware::class);
@@ -204,6 +206,7 @@ Route::prefix('api')
 		});
 
 		Route::prefix('order')->group(function() {
+			Route::get('/statuses', 'Manager\Shop\OrderStatusController@all');
 			Route::get('/', 'Manager\Shop\OrderController@all')->middleware(OrderCollectionMiddleware::class);
 			Route::get('/{id}', 'Manager\Shop\OrderController@one')->middleware(OrderOneMiddleware::class);
 			Route::post('/', 'Manager\Shop\OrderController@create')->middleware(OrderCreateMiddleware::class);

@@ -30,10 +30,19 @@ class AddCartsCollumns extends Migration
                 ->nullable(true)
                 ->comment('Delivery cost of product');
 
+            $table->float('discount', 12,2, false, true)
+                ->nullable(true)
+                ->comment('Delivery cost of product');
+
             $table->float('profit', 12,2, false, true)
                 ->nullable(true)
                 ->comment('Profit of product');
+
+            $table->string('serial_number', 255)
+                ->nullable(true)
+                ->comment('serial_number of product');
         });
+
     }
 
     /**

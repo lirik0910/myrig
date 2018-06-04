@@ -41,7 +41,9 @@ class ProductController extends Controller
 		/** Filter by category_id
 		 */
 		if (isset($params['category_id'])) {
-			$c = $c->where('category_id', $params['category_id']);
+			$c = $c
+					->join('product_categories', 'products.id', '=', 'product_id')
+					->where('category_id', $params['category_id']);
 		}
 
 		if (isset($params['delete_type'])) {

@@ -1,6 +1,6 @@
 /**
  * Base module of manager users container
- * @module ProductContainers
+ * @module OrderContainers
  * @author Ihor Bielchenko
  * @requires react
  * @requires react#Component
@@ -12,6 +12,7 @@ import App from '../App.js';
 import React, { Component } from 'react';
 
 import Grid from 'material-ui/Grid';
+import { Link } from 'react-router-dom';
 import Menu from '../components/Menu/Menu.jsx';
 import Header from '../components/Header/Header.jsx';
 import { LinearProgress } from 'material-ui/Progress';
@@ -44,6 +45,7 @@ class ListOrdersContainer extends Component {
 	}
 
 	state = {
+		a: '',
 		data: [], 
 		start: 0, 
 		limit: 10, 
@@ -464,6 +466,7 @@ class ListOrdersContainer extends Component {
 	render() {
 		let { classes } = this.props;
 		let { 
+			a,
 			data, 
 			flag,
 			start, 
@@ -498,10 +501,20 @@ class ListOrdersContainer extends Component {
 					<Grid item xs={12}>
 						<TopTitle
 							title={''}
-							addButtonDisplay={false}
+							addButtonDisplay={true}
 							saveButtonDisplay={false}
 							deleteButtonDisplay={false}
-							addButtonTitle={'Add new product'}
+							addButtonTitle={'Add new order'}
+							onAddButtonClicked={() => {
+								this.setState({
+									a: App.name() +'/orders/create'
+								}, () => {
+									var el = document.getElementById('change-page');
+									if (el) {
+										el.click();
+									}
+								});
+							}}
 							deleteButtonTitle={'Delete selected'}
 							trashButtonDisplay={true}
 							onTrashButtonClicked={() => this.setState({ trash: true })} />
@@ -615,6 +628,9 @@ class ListOrdersContainer extends Component {
 					</Grid>
 				</Grid>
 
+				
+
+
 				{resultDialog === true && <DialogError 
 					title={resultDialogTitle}
 					defaultValue={resultDialog}
@@ -681,6 +697,10 @@ class ListOrdersContainer extends Component {
 							})));
 						});
 					}} />}
+
+					<Link to={a}
+						id="change-page"
+						style={{display: 'none'}}></Link>
 			</div>
 	}
 }

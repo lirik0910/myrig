@@ -58,7 +58,8 @@
 	},
 	"user": {
 		"GET": {
-			"all": ""
+			"all": "",
+			"one": "{id}"
 		},
 		"DELETE": {
 			"many": "",
@@ -159,7 +160,12 @@
 		"GET": {
 			"all": "",
 			"one": "{id}",
-			"log": "{id}/log"
+			"log": "{id}/log",
+			"statuses": "statuses"
+		},
+		"POST": {
+			"create": "",
+			"duplicate": "duplicate"
 		},
 		"DELETE": {
 			"one": "{id}",

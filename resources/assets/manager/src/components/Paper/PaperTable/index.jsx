@@ -31,7 +31,7 @@ import KeyboardArrowRight from 'material-ui-icons/KeyboardArrowRight';
 import styles from './styles.js';
 import { withStyles } from 'material-ui/styles';
 
-import * as StateElementAction from 'actions/StateElementAction.js';
+import * as StateElementAction from '../../../actions/StateElementAction.js';
 
 /**
  * Custom table

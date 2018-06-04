@@ -59,7 +59,7 @@ class SelectUser extends Component {
 		this.setState({ 
 			value: this.props.defaultValue,
 		}, () => {
-			this.usersDataGetRequest(data => this.props.onDataLoaded(data));
+			this.usersDataGetRequest(null, data => this.props.onDataLoaded(data));
 		});
 	}
 
