@@ -48,7 +48,6 @@ class CreateOrderContainers extends Component {
 		curUser: {},
 		data: {},
 		orderID: 0,
-		completed: 100,
 		category_id: 1,
 		cart: [],
 		completed: 100,
@@ -89,8 +88,8 @@ class CreateOrderContainers extends Component {
 			data[f] = v;
 		}) 
 
+		console.log(cart);
 		data['cart'] = JSON.stringify(cart);
-
 		App.api({
 			type: 'POST',
 			model: 'order',
@@ -307,7 +306,7 @@ class CreateOrderContainers extends Component {
 								this.setState({category_id: c});
 							}}
 							onCartChanged={c => {
-								console.log(c)
+								this.setState({cart:c})
 							}}
 						/>
 					</Grid>
