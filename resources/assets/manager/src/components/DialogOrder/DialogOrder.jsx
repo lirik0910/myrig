@@ -20,6 +20,7 @@ import Input, { InputLabel } from 'material-ui/Input';
 import PaperTable from '../PaperTable/PaperTable.jsx';
 import InputNumber from '../FormControl/InputNumber/InputNumber.jsx';
 import SelectStatus from '../FormControl/SelectStatus/SelectStatus.jsx';
+import SelectUser from '../FormControl/SelectUser/SelectUser.jsx';
 import SelectPayment from '../FormControl/SelectPayment/SelectPayment.jsx';
 import SelectContext from '../FormControl/SelectContext/SelectContext.jsx';
 import SelectDelivery from '../FormControl/SelectDelivery/SelectDelivery.jsx';
@@ -81,7 +82,7 @@ class DialogOrder extends Component {
 
 	componentWillMount() {
 		let { order } = this.props;
-		this.setState({ order: CloneDeep(order) });
+		this.setState({ order: CloneDeep(order)});
 	}
 
 	/**
@@ -91,8 +92,6 @@ class DialogOrder extends Component {
 	render() {
 		let { order, tab, open, completed } = this.state;
 		let { classes } = this.props;
-
-		/*console.log('order.carts', order.carts)*/
 
 		return <Dialog
 				open={open}
@@ -188,6 +187,10 @@ class DialogOrder extends Component {
 						</Grid>
 
 						<Grid item xs={5}>
+                            <SelectUser
+                                title={'Order user'}
+                                defaultValue={order.user_id} />
+
 							<SelectContext
 								title={'Order context'}
 								defaultValue={order.context_id} />

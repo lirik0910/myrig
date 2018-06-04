@@ -96,7 +96,7 @@ class App {
 		if (this.isEmpty(opt)) {
 			return false;
 		}
-		
+
 		var query = '',
 			data = '',
 			i;

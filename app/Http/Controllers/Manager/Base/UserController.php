@@ -24,7 +24,10 @@ class UserController extends Controller
 			$c = $c->where('id', $params['search'])
 					->orWhere('name', 'like', '%'. $params['search'] .'%')
 					->orWhere('email', 'like', '%'. $params['search'] .'%');
+                    //->with('attributes');
 		}
+
+		$c = $c->with('attributes');
 
 		return $c;
 	}
@@ -73,7 +76,7 @@ class UserController extends Controller
 			logger($e->getMessage());
 			return response()->json(['message' => $e->getMessage()], 422);
 		}	
-
+//var_dump($all); die;
 		/** Try count all models
 		 */
 		try {

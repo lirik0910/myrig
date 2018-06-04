@@ -45,7 +45,6 @@ class CalculateController
         $uah = $decoded[0]['rate'];
         $data['USD / UAH'] = $uah;
 
-
         $url['USD / RUR'] = 'https://www.cbr-xml-daily.ru/daily_json.js' ;
         $json = $this->get_data($url['USD / RUR']);
         $decoded  = json_decode($json, true);

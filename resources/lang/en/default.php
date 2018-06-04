@@ -95,6 +95,7 @@ return [
     'approve_order' => 'Approve order',
     'comment_placeholder' => 'Post office number etc',
     'no_shipping' => 'There are no shipping methods available. Please double check your address, or contact us if you need any help',
+    'cash' => 'Cash',
 
     //content.checkout_success
     'order_was_successfully_accepted' => 'Thank you!. Your order was successfully accepted.',

@@ -171,12 +171,13 @@
 					<div class="form-group">
 						<input id="name" type="text" name="name" class="form-control" placeholder="{{ __('default.name') }}" required="required" data-bv-message=" " data-bv-remote-message="Email уже занят"/></div>
 					<div class="form-group">
-						<input type="email" name="email" class="form-control" placeholder="E-mail" required="required" data-bv-message=" " data-bv-remote-message="Email уже занят"/></div>
+						<input type="email" name="email" value="callback@myrig.com" hidden="hidden"/></div>
 					<div class="form-group">
 						<input type="tel" name="tel" class="form-control" required="required" data-bv-message=" " placeholder="{{ __('default.phone') }}"/></div>
-						<div class="faspin"><i class="fa fa-cog fa-spin" hidden="hidden"></i></div>
+						{{-- <div class="faspin"><i class="fa fa-cog fa-spin" hidden="hidden"></i></div> --}}
 					<div class="form-group">
-						<input type="submit" name="submit" value="{{ __('default.request_a_call') }}" class="btn-default btn-subscribe"/>
+						{{-- <input type="submit" name="submit" value="{{ __('default.request_a_call') }}" class="btn-default btn-subscribe"/> --}}
+						<button type="submit" name="submit" class="btn-default btn-subscribe">{{ __('default.request_a_call') }}<span class="faspin"><i class="fa fa-cog fa-spin" hidden="hidden"></i></span></button>
 					</div>
 					<input type="hidden" name="action" value="formcall_ajax_request">
 					<input type="hidden" name="subject" value="Заказать звонок - Bitmain">
@@ -215,9 +216,9 @@
 
 					<input type="hidden" name="action" value="ticket_ajax_request">
 					<input type="hidden" name="subject" value="Тикет - Bitmain">
-					<div class="faspin"><i class="fa fa-cog fa-spin" hidden="hidden"></i></div>
 					<div class="form-group">
-						<input type="submit" name="submit" value="{{ __('default.send') }}" class="btn-default btn-subscribe"/>
+						{{-- <input type="submit" name="submit"/> --}}
+						<button type="submit" name="submit" class="btn-default btn-subscribe">{{ __('default.send') }}<span class="faspin"><i class="fa fa-cog fa-spin" hidden="hidden"></i></span></button>
 					</div>
 				</form>
 				<div class="result">

@@ -12,6 +12,7 @@ import React, { Component } from 'react';
 
 import Button from 'material-ui/Button';
 
+import Note from 'material-ui-icons/NoteAdd';
 import Check from 'material-ui-icons/ErrorOutline';
 import Add from 'material-ui-icons/Add';
 import Edit from 'material-ui-icons/Edit';
@@ -43,11 +44,13 @@ class ControlOptions extends Component {
 		editButton: false,
 		deleteButton: true,
 		expandButton: false,
+		noteButton: false,
         onCheckButtonClicked: () => {},
 		onAddButtonClicked: () => {},
 		onEditButtonClicked: () => {},
 		onDeleteButtonClicked: () => {},
 		onExpandButtonClicked: () => {},
+		onNoteButtonClicked: () => {},
 		classes: PropTypes.object.isRequired,
 	}
 
@@ -56,7 +59,7 @@ class ControlOptions extends Component {
 	 * @return {Object} jsx object
 	 */
 	render() {
-		let { item, classes, checkButton, addButton, editButton, expandButton, deleteButton } = this.props;
+		let { item, classes, checkButton, addButton, editButton, expandButton, deleteButton,  noteButton} = this.props;
 
 		return <div className={classes.root}>
 				{expandButton && <Button 
@@ -77,6 +80,15 @@ class ControlOptions extends Component {
 					onClick={e => this.props.onCheckButtonClicked(item)}>
 
 					<Check />
+				</Button>}
+
+				{noteButton && <Button
+					size="small"
+					className={classes.control}
+					title={'Create note'}
+					onClick={e => this.props.onNoteButtonClicked(item)}>
+
+					<Note />
 				</Button>}
 
 				{addButton && <Button 

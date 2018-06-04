@@ -181,7 +181,7 @@ foreach ($products as $item) {
 										{{ __('default.phone_label') }}
 										<abbr class="required" title="{{ __('default.required') }}">*</abbr></label>
 
-									<input type="tel" class="input-text form-control" name="phone" id="billing_phone" placeholder="{{ __('default.phone') }} {{ __('default.phone_input') }}" value="@isset($user->attributes->phone) {{$user->attributes->phone}} @endisset" autocomplete="tel" required />
+									<input type="tel" pattern="[0-9]{7,20}" class="input-text form-control" name="phone" id="billing_phone" placeholder="{{ __('default.phone') }} {{ __('default.phone_input') }}" value="@isset($user->attributes->phone){{trim($user->attributes->phone)}}@endisset" autocomplete="tel" required />
 								</p>
 
 								<p class="form-row form-row-last form-group validate-required validate-email" id="billing_email_field" data-priority="110" style="width: 47%; float:  right; display:  inline-block;">
@@ -203,7 +203,7 @@ foreach ($products as $item) {
                                         <li class="payment_method">
                                             <input type="radio" class="payment-type" id="payment_method_{{$loop->iteration}}" name="payment_method" data-id="{{$type->id}}" value="{{$type->id}}"  @if($loop->first) checked='checked' @endif data-order_button_text="" style="display: inline" />
 
-                                            <label for="payment_method_cheque">{{$type->title}}</label>
+                                            <label for="payment_method_cheque">@if($type->title === 'Bitcoin'){{$type->title}}@else{{ __('default.cash') }}@endif</label>
 
                                             <div class="payment_box" style="display:none;">
                                                 <p>{{ __('default.payment_methods_description') }}</p>
