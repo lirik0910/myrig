@@ -83,7 +83,6 @@ class PaperAutoProductForm extends Component {
 		} = data;
 
 		let btc = parseFloat(this.props.btc);
-console.log(data);
 		//let { totalAutoPrice } = this.state;
 
         if (prime_price_currency == 2){

@@ -20,7 +20,7 @@ import Input, { InputLabel } from 'material-ui/Input';
 import PaperTable from '../PaperTable/PaperTable.jsx';
 import InputNumber from '../FormControl/InputNumber/InputNumber.jsx';
 import SelectStatus from '../FormControl/SelectStatus/SelectStatus.jsx';
-import SelectUser from '../FormControl/SelectUser/SelectUser.jsx';
+import InputSelectUser from 'components/FormControl/InputSelectUser';
 import SelectPayment from '../FormControl/SelectPayment/SelectPayment.jsx';
 import SelectContext from '../FormControl/SelectContext/SelectContext.jsx';
 import SelectDelivery from '../FormControl/SelectDelivery/SelectDelivery.jsx';
@@ -187,9 +187,9 @@ class DialogOrder extends Component {
 						</Grid>
 
 						<Grid item xs={5}>
-                            <SelectUser
-                                title={'Order user'}
-                                defaultValue={order.user_id} />
+							<InputSelectUser
+								title={'Order user'}
+								defaultValue={order.user_id} />
 
 							<SelectContext
 								title={'Order context'}

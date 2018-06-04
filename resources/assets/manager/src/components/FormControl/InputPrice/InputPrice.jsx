@@ -88,13 +88,16 @@ class InputPrice extends Component {
 	 */
 	handleInputField = e => {
 		var target = e.target;
-		target.value = target.value.replace(/[^\d.]/g, '');
+		target.value = target.value.replace(/[^-\d.]/g, '');
 
-		/*if (target.value === '')
-			target.value = 0;*/
+		/*if (target.value === '-')
+			target.value = '-';*/
 		
 		this.setState({ value: target.value }, () => {
-			this.props.onFieldInputed(target.value);
+
+			if (target.value != '-') {
+				this.props.onFieldInputed(target.value);
+			}
 		});
 	}
 
