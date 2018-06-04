@@ -78,6 +78,7 @@ class DialogOrder extends Component {
 		completed: 100,
 		order: {},
 		open: this.props.defaultValue,
+		newUser: false
 	}
 
 	componentWillMount() {
@@ -189,7 +190,18 @@ class DialogOrder extends Component {
 						<Grid item xs={5}>
 							<InputSelectUser
 								title={'Order user'}
-								defaultValue={order.user_id} />
+								defaultValue={order.user_id}
+								onItemSelected={value => {
+									let u = document.getElementById('user-id-field');
+
+									this.setState({ newUser: value }, () => {
+										u.value = value;
+									});
+								}} />
+							<input id="user-id-field" type="hidden" name="user_id" value={this.state.newUser === false ?
+								order.user_id :
+								this.state.newUser
+								} />
 
 							<SelectContext
 								title={'Order context'}
@@ -372,5 +384,4 @@ class DialogOrder extends Component {
 			</Dialog>
 	}
 }
-
 export default withStyles(styles)(DialogOrder);
