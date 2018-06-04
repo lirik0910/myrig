@@ -194,6 +194,7 @@ class DialogOrder extends Component {
 									let u = document.getElementById('user-id-field');
 									u.value = value;
 								}} />
+							<input id="user-id-field" type="hidden" value={order.user_id} />
 
 							<SelectContext
 								title={'Order context'}
@@ -373,8 +374,6 @@ class DialogOrder extends Component {
 						Save
 					</Button>
 				</DialogActions>
-
-				<input id="user-id-field" type="hidden" value={order.user_id} />
 			</Dialog>
 	}
 }
