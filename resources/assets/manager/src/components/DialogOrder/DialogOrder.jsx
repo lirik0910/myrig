@@ -189,7 +189,11 @@ class DialogOrder extends Component {
 						<Grid item xs={5}>
 							<InputSelectUser
 								title={'Order user'}
-								defaultValue={order.user_id} />
+								defaultValue={order.user_id}
+								onItemSelected={value => {
+									let u = document.getElementById('user-id-field');
+									u.value = value;
+								}} />
 
 							<SelectContext
 								title={'Order context'}
@@ -369,6 +373,8 @@ class DialogOrder extends Component {
 						Save
 					</Button>
 				</DialogActions>
+
+				<input id="user-id-field" type="hidden" value={order.user_id} />
 			</Dialog>
 	}
 }
