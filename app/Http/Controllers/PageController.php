@@ -156,31 +156,54 @@ class PageController extends Controller
 	public function preview()
 	{
 		return function($name = '', $width = 50, $height = 50) {
-			$explode = explode('/', $name);
-			$file = array_pop($explode);
+			$fileInfo = pathinfo($name);
 
-			$explode = explode('.', $file);
-			$extension = array_pop($explode);
-
-			if ($extension === 'svg') {
-				return $name;
+			/** If standart image extension
+			 */
+			if ($fileInfo['extension'] !== 'jpg' && $fileInfo['extension'] !== 'jpeg' && $fileInfo['extension'] !== 'png') {
+					return $name;
 			}
 
-			$folder = 'preview/'. $width .'x'. $height;
+			/** Cached folder
+			 */
+			$storageDir = 'optimized/'. $width .'x'. $height;
+			
+			/** Optimazid file name
+			 */
+			$fileName = md5($name) .'-'. md5($width) .'-'. md5($height) .'.'. $fileInfo['extension'];
+
+			/** Check if current image already exists
+			 */
+			if (file_exists(public_path('storage/'. $storageDir .'/'. $fileName))) {
+				return asset('storage/'. $storageDir .'/'. $fileName);
+			}
+
+			/** Try to create folder for current size
+			 */
 			try {
-				Storage::disk('public')->makeDirectory($folder);
+				Storage::disk('public')->makeDirectory($storageDir);
 			}
 			catch (\Exception $e) {
 				logger($e->getMessage());
-				return '';
+				return $name;
 			}
 
-			$dest = 'storage/' . $folder .'/'. md5($name) .'.' .$extension;
-			Image::cache(function($image) use ($name, $width, $height, $dest) {
-				$image->make($name)->fit($width, $height)->save(public_path($dest));
-			});
+			/** Create instance of new file
+			 */
+			$image = Image::make(public_path() .'/'. str_replace(asset('/'), '', $name));
+			$image->fit($width, $height);
 
-			return $dest;
+			/** Try render and save new file
+			 */
+			try {
+				$image->save(storage_path('app/public/'. $storageDir .'/') . $fileName);
+			}
+			catch (\Exception $e) {
+				logger($e->getMessage());
+				return $name;
+			}
+
+			return asset('storage/'. $storageDir .'/'. $fileName);
 		};
 	}
 }

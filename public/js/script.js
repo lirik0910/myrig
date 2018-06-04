@@ -680,21 +680,9 @@ $(window).on('load',function(){
 
 	}
 
-/*	$('#relatedSlider').owlCarousel({
-		items : 1,
-        slideSpeed : 4000,
-        smartSpeed: 1000,
-		nav: false,
-		dots: true,
-		loop: true,
-        autoplay: 4000,
-		
-        dotsData:true,
-
-        animateOut: 'fadeOut',
-        animateIn: 'fadeIn',
-		
-	});*/
+	function viewDots(e) {
+		$('.owl-dots').removeClass('disabled');
+    }
 
 	function viewDots(e) {
 		$('.owl-dots').removeClass('disabled');

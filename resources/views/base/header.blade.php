@@ -25,6 +25,8 @@ if(isset($client_email) && !empty($client_email)){
     }
 }
 
+$preview(asset('uploads/design/logo.png'), 162, 35);
+
 @endphp
 
 <div id="canvas">

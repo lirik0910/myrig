@@ -84,7 +84,6 @@ class PaperAutoProductForm extends Component {
 		} = data;
 
 		let btc = parseFloat(this.props.btc);
-//console.log(data);
 		//let { totalAutoPrice } = this.state;
 
         if (prime_price_currency == 2){
@@ -180,7 +179,7 @@ class PaperAutoProductForm extends Component {
 					defaultValue={data.fes_price}
 					currencyID={data.fes_price_currency}
 					onFieldInputed={value => {
-                        console.log(value);
+                        //console.log(value);
 						value = value === '' ? 0 : value;
 
 						data.fes_price = Number(value);
