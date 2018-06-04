@@ -176,7 +176,6 @@
 
         $vars = App\Model\Base\Variable::where('title', 'calculatorDevices')->first()->multiVariableLines;
         $devices = [];
-//var_dump($devices); die;
         $i = 0;
         foreach ($vars as $var){
             foreach ($var->content as $content){
@@ -196,8 +195,6 @@
                 $allowedDevices[] = $device;
             }
         }
-
-        //var_dump($allowedDevices); die;
     @endphp
 
     <main style="width: 100%">
