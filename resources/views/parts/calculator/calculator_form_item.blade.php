@@ -5,7 +5,10 @@
             <option value="" data-hr="0">{{__('default.manual_input')}}</option>
             @if(isset($devices))
             @foreach ($devices as $device)
-                <option data-currency="{{$device[3]}}" data-hr="{{$device[1]}}" data-en="{{$device[2]}}" value="{{$device[0]}}">{{$device[0]}}</option>
+                    @php
+                        //var_dump($device); //die;
+                    @endphp
+                <option data-currency="{{$device[3]}}" data-hr="{{$device[1]}}" data-en="{{$device[2]}}" data-host="{{ $device[4] }}" value="{{$device[0]}}">{{$device[0]}}</option>
             @endforeach
             @endif
         </select>

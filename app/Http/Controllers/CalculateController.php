@@ -388,11 +388,15 @@ class CalculateController
 
             //App::setLocale($locale);
             $locale = App::getLocale();
-//var_dump($locale); die;
-            $context = Context::where('title', $locale)->first();
-            $page = Page::where('link', 'calculator')->where('context_id', $context->id)->first();
-//var_dump($page->variableContents); die;
-            $hosting = $page->variableContents[0]->content;
+
+            //var_dump($request->get('hosting')); die;
+            if($request->get('hosting') !== null && !empty($request->get('hosting'))){
+                $hosting = (float)$request->get('hosting');
+            } else{
+                $context = Context::where('title', $locale)->first();
+                $page = Page::where('link', 'calculator')->where('context_id', $context->id)->first();
+                $hosting = $page->variableContents[0]->content;
+            }
 
             $energy_costs = $hosting * $qty;
             $energy = 1;

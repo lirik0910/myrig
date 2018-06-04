@@ -157,5 +157,12 @@ class MultiVariablesTableSeeder extends Seeder
 			'description' => 'Currency',
 			'variable_id' => $variable->id
 		]);
+
+        App\Model\Base\MultiVariable::create([
+            'title' => 'hosting',
+            'type' => 'input',
+            'description' => 'Hosting',
+            'variable_id' => $variable->id
+        ]);
 	}
 }
