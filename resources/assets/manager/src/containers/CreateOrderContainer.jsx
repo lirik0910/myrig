@@ -303,13 +303,11 @@ class CreateOrderContainers extends Component {
 					<Grid item xs={12}>
 						<PaperOrderProductsForm
 							category_id={category_id}
-
 							onCategorySelected={c=>{
 								this.setState({category_id: c});
 							}}
-
-							onCartChanged={c=>{
-								this.setState({cart:c})
+							onCartChanged={c => {
+								console.log(c)
 							}}
 						/>
 					</Grid>
