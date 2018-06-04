@@ -55,7 +55,7 @@
 				@endforeach
 			</div>
 
-			<div id="dots-slider__container" class="margin__collapse dots-slider__container owl-carousel owl-theme">
+			<div id="dots-slider__container" class="dots-slider__container owl-carousel owl-theme">
 				@foreach($product->images as $image)
 				<div class="slide__item text-center">
 					<img src="{{ $preview(asset('uploads/' . $image->name), 47, 47) }}" class="slide__icon" alt="{{ $image->name }}" title="{{ $product->title }}" />
@@ -150,7 +150,7 @@
 				</div>
 
 				<div class="tab-content__container">
-					<div class="content__container active" data-id="1">
+					<div class="content__container active font-weight-light" data-id="1">
 						{!! $product->description !!}
 					</div>
 

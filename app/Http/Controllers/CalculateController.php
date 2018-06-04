@@ -227,21 +227,6 @@ class CalculateController
             }
             $i++;
         }
-/*        $devices = [
-            ['currency' => 'BTC,BCH', 'name' => 'ANTMINER S7 4.7Th/s', 'hr' => 4.73, 'en' => 1.43],
-            ['currency' => 'BTC,BCH', 'name' => 'ANTMINER R4 8.6Th/s', 'hr' => 8.6, 'en' => 0.93],
-            ['currency' => 'BTC,BCH', 'name' => 'ANTMINER T9 12.5Th/s', 'hr' => 12.5, 'en' => 1.73],
-            ['currency' => 'BTC,BCH', 'name' => 'ANTMINER S9 11.5Th/s', 'hr' => 11.5, 'en' => 1.24],
-            ['currency' => 'BTC,BCH', 'name' => 'ANTMINER S9 12.5Th/s', 'hr' => 12.5, 'en' => 1.34],
-            ['currency' => 'BTC,BCH', 'name' => 'ANTMINER S9 13Th/s', 'hr' => 13, 'en' => 1.4],
-            ['currency' => 'BTC,BCH', 'name' => 'ANTMINER S9 13.5Th/s', 'hr' => 13.5, 'en' => 1.45],
-            ['currency' => 'BTC,BCH', 'name' => 'ANTMINER S9 14Th/s', 'hr' => 14, 'en' => 1.5],
-            ['currency' => 'BTC,BCH', 'name' => 'DRAGONMINT T1', 'hr' => 16, 'en' => 1.47],
-            ['currency' => 'LTC', 'name' => 'L3+ 504 Mh', 'hr' => 504, 'en' => 0.8],
-            ['currency' => 'DASH', 'name' => 'D3 15 GH/s', 'hr' => 15, 'en' => 1.2],
-            ['currency' => 'DASH', 'name' => 'D3 17 GH/s', 'hr' => 17, 'en' => 1.2],
-            ['currency' => 'DASH', 'name' => 'D3 19.3 GH/s', 'hr' => 19.3, 'en' => 1.2],
-        ];*/
 
         $allowedDevices = [];
 
