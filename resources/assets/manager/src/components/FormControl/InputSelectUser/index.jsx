@@ -77,7 +77,7 @@ class InputSelectUser extends Component {
 			success: (r) => {
 				r = JSON.parse(r.response);
 				if (r) {
-					this.setState({ data: r.map(item => ({
+					this.setState({ data: r.data.map(item => ({
 						value: item.id,
 						label: item.name,
 						...item
