@@ -93,7 +93,7 @@ foreach ($products as $item) {
 		</div>
 	</div>
 
-	<form action="/checkout" method="post">
+	<form id="post-checkout__form" action="/checkout" method="post">
 		<input type="hidden" name="_token" value="{{ csrf_token() }}" />
 		<div class="row row__container product-item__container margin__collapse">
 			<div class="col-sm-4 row slider__container margin__collapse" style="padding: 42px 0 0">
