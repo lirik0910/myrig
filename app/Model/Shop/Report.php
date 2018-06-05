@@ -50,7 +50,7 @@ class Report extends Model
 
             return false;
         }
-var_dump($data); die;
+
         foreach ($data as $field) {
             //var_dump($field); die;
             if($field['id'] == 0){
