@@ -37,30 +37,8 @@ else {
 	@endforeach
 </div>
 
-@if(isset($news))
-	<div class="pagination__container default__container">
-	<div class="text-center">
-	<ul class="pagination text-center">
-									<li class="page-item">
-				<span aria-current="page" class="page-numbers current">1</span>
-			</li>
-						<li class="page-item">
-			<a class="page-numbers" href="http://test-myrig.ru/news?page=2" data-wpel-link="internal" style="display: block">2</a>
-		</li>
-						<li>
-			<span class="page-numbers dots">…</span>
-		</li>
-						<li class="page-item">
-			<a class="page-numbers" href="http://test-myrig.ru/news?page=132" data-wpel-link="internal" style="display: block">132</a>
-		</li>
-		<li class="page-item">
-			<a class="next page-numbers page-link" href="http://test-myrig.ru/news?page=2" data-wpel-link="internal" aria-label="Next" style="display: block">
-				<span aria-hidden="true">&rang;</span>
-			</a>
-		</li>
-			</ul>
-</div>
-	</div>
-@endif
+@isset($news)
+	{{ $news->links() }}
+@endisset
 
 @endsection
