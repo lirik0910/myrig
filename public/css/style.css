@@ -36,6 +36,30 @@
 }
 /*! normalize.css v6.0.0 | MIT License | github.com/necolas/normalize.css */
 
+.username__label {
+    font-size: 14px;
+    position: absolute;
+
+    @media (min-width: 768px) {
+        left: -248px;
+        max-width: 178px;
+    }
+
+    @media (min-width: 992px) {
+        left: -178px;
+        max-width: 178px;
+    }
+
+    @media (min-width: 1250px) {
+        left: -214px;
+        max-width: 198px;
+    }
+
+    @media (max-width: 767px) {
+        display: none;
+    }
+}
+
 .user-panel p{
     float: left;
     margin-bottom: 0px;
