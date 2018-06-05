@@ -156,8 +156,8 @@
 							</div>
 
 							<div class="user-panel">
-								<a href="{{ env(strtoupper($locale) . '_DOMAIN') . '/sso-login' }}" class="profile-link reg-f0 username__label" data-wpel-link="internal">
-			                        @isset($client_name)<p class=""> {{ __('default.welcome_title') }}, {{ $client_name }}! </p>@endisset
+								<a href="{{ env(strtoupper($locale) . '_DOMAIN') . '/sso-login' }}" class="profile-link reg-f0" data-wpel-link="internal">
+			                        @isset($client_name)<p class="username__label"> {{ __('default.welcome_title') }}, {{ $client_name }}! </p>@endisset
 									<img src="{{ $preview(asset('uploads/design/icons-97.svg'), 30, 30) }}" alt="login" style=""/>
 								</a>
 

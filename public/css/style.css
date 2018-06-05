@@ -37,34 +37,35 @@
 /*! normalize.css v6.0.0 | MIT License | github.com/necolas/normalize.css */
 
 .username__label {
-    font-size: 14px;
-    position: absolute;
+    float: none !important;
+    font-size: 14px !important;
+    position: absolute !important;
 }
 
-@media (min-width: 768px) {
+@media only screen and (min-width: 768px) {
     .username__label {
-        left: -248px;
-        max-width: 178px;
+        left: -248px !important;
+        max-width: 178px !important;
     }
 }
 
-@media (min-width: 992px) {
+@media only screen and (min-width: 992px) {
     .username__label {
-        left: -178px;
-        max-width: 178px;
+        left: -178px !important;
+        max-width: 178px !important;
     }
 }
 
-@media (min-width: 1250px) {
+@media only screen and (min-width: 1250px) {
     .username__label {
-        left: -214px;
-        max-width: 198px;
+        left: -214px !important;
+        max-width: 198px !important;
     }
 }
 
-@media (max-width: 767px) {
+@media only screen and (max-width: 767px) {
     .username__label {
-        display: none;
+        display: none !important;
     }
 }
 
