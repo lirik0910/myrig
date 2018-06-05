@@ -1,0 +1,134 @@
+.promo__container {
+	border-top: 1px solid #FFF;
+	background-color: rgb(242, 242, 242);
+
+	.row__container {
+		margin: 0 auto;
+
+		.promo-item__link {
+			height: 191px;
+			padding-right: 0;
+			padding-left: 38px;
+			position: relative;
+			border-right: 1px solid #FFF;
+
+			@media (max-width: 767px) {
+				width: 100%;
+				height: auto;
+				flex: 0 0 100%;
+				max-width: 100%;
+				border-top: 1px solid #FFF;
+				padding: 0 20px 12px !important;
+			}
+
+			@media (min-width: 768px) {
+				height: 150px;
+				padding-left: 20px;
+			}
+
+			.promo-item__about {
+				max-width: 230px;
+				padding-top: 36px;
+
+				@media (max-width: 767px) {
+					max-width: 50%;
+					padding-top: 22px;
+				}
+
+				@media (max-width: 479px) {
+					max-width: 200px;
+				}
+
+				@media (min-width: 768px) {
+					padding-top: 15px;
+				}
+
+				.title__container {
+					color: #000;
+
+					@media (max-width: 767px) {
+						font-size: 24px;
+					}
+
+					@media (min-width: 768px) {
+						font-size: 20px;
+					}
+
+					@media (min-width: 992px) {
+						font-size: 24px;
+					}
+				}
+
+				.content__container {
+					max-width: 70%;
+					color: #666666;
+					font-size: 18px;
+					line-height: 1.6;
+					margin-top: 14px;
+
+					@media (max-width: 767px) {
+						max-width: 100%;
+					}
+
+					@media (min-width: 768px) {
+						font-size: 16px;
+						line-height: 1.5;
+					}
+				}
+			}
+
+			.promo-item__icon {
+				top: 37px; 
+				right: 54px; 
+				left: 300px;
+				width: 80px;
+				height: 100px;
+				position: absolute;
+				margin-left: -76px;
+				background-size: contain; 
+				background-repeat: no-repeat !important;
+				background-position: right bottom !important;
+
+				@media (max-width: 767px) {
+					margin: 0;
+					right: 0 !important;
+					top: 23px !important;
+					left: 385px !important;
+					background-size: contain;
+					background-position: center 1px !important;
+				}
+
+				@media (max-width: 479px) {
+					margin-left: -147px;
+				}
+
+				@media (min-width: 768px) {
+					background-position: left 4px bottom 15px !important;
+				}
+
+				@media (min-width: 768px) and (max-width: 991px) {
+					width: 80px;
+					background-size: 64px;
+					top: 10px !important;
+					left: 244px !important;
+				}
+			}
+		}
+
+		.promo-item__link:first-child {
+			padding-left: 0;
+
+			@media (max-width: 767px) {
+				border-top: none;
+			}
+		}
+
+		.promo-item__link:last-child {
+			border-right: none;
+		}
+
+		.promo-item__link:hover {
+			text-decoration: none;
+		}
+	}
+}
