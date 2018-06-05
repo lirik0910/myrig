@@ -51,7 +51,7 @@ class ReportController extends Controller
             logger($e->getMessage());
             return response()->json(['message' => $e->getMessage()], 422);
         }
-var_dump($request->all()); die;
+//var_dump($request->all()); die;
         /** Add images to product
          */
         if ($request->input('products')) {
