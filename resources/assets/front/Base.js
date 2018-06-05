@@ -35,7 +35,7 @@ export default class Base {
 		callback(this);
 	}
 
-	setModuleProps(props) {
+	setModuleProps(props = {}) {
 		return this.props = props;
 	}
 }

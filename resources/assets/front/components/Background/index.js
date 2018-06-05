@@ -7,6 +7,7 @@ import Base from '../../Base.js';
 export default class Background extends Base {
 	constructor(props) {
 		super(props);
+		this.setModuleProps(props);
 	}
 
 	/**
@@ -25,7 +26,9 @@ export default class Background extends Base {
 	 * @param {Object} e
 	 */
 	onDOMReady(e) {
-		this.getDarkContainerLeftDistance();
+		if (typeof this.props.manually === 'undefined') {
+			this.getDarkContainerLeftDistance();
+		}
 	}
 
 	/**
@@ -42,6 +45,7 @@ export default class Background extends Base {
 	 * @return {Array}
 	 */
 	getDarkContainerLeftDistance() {
+		console.log('ttttttttttt')
 		return this.els._darkContainer.css({
 			left: this.baseDOM._window.width() > 767 ?
 				this.els._darkHelperContainer.offset().left :

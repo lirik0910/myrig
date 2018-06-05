@@ -27,7 +27,10 @@ export default class IndexSlider extends Base {
 	 * @param {Object} e
 	 */
 	onDOMReady(e) {
-		this.initSlider(e => this.sliderHeightAlign());
+		this.initSlider(e => {
+			this.sliderHeightAlign();
+			this.props.background.getDarkContainerLeftDistance();
+		});
 	}
 
 	/**

@@ -8,8 +8,9 @@ import DialogCallback from '../../components/DialogCallback';
 
 new Base().call(e => {
 	new Header();
-	new Background();
-	new SliderIndex();
+	new SliderIndex({
+		background: new Background({ manually: true })
+	});
 	new Footer({ 
 		dialogCallback: new DialogCallback({ selector: '#contacts__dialog' })
 	});
