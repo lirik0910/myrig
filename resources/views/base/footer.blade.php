@@ -154,7 +154,7 @@
 
 				<input type="tel" name="tel" class="field__input" required="required" placeholder="{{ __('default.phone') }}" />
 
-				<button type="submit" name="submit" class="default__button submit__button" />{{ __('default.request_a_call') }}</button>
+				<button type="submit" name="submit" class="text-uppercase default__button submit__button" />{{ __('default.request_a_call') }}</button>
 
 				<input type="hidden" name="action" value="formcall_ajax_request">
 				<input type="hidden" name="subject" value="Заказать звонок - Bitmain">
@@ -180,6 +180,8 @@
 					{{ __('default.leave_request') }}
 				</div>
 
+				<input type="hidden" name="_token" value="{{ csrf_token() }}" />
+
 				<input id="name__field" name="name" type="text" class="field__input" placeholder="{{ __('default.name') }}" required="required" />
 
 				<input id="email__field" name="email" type="email" class="field__input" placeholder="E-mail" required="required" />
@@ -193,14 +195,14 @@
 							
 							<div class="selected__product toggle__current"></div>
 
-							<input type="hidden" name="products[]" class="product-selected__input toggle__input" />
+							<input type="hidden" name="products[0]['id']" class="product-selected__input toggle__input prooduct-item__field" />
 						</div>
 
 						<div class="col-sm-1 padding__collapse margin__collapse"></div>
 
 						<div class="cart-count__container col-sm-3 padding__collapse margin__collapse text-right">
 							<div class="counter__container">
-								<input type="text" name="count-1" class="form-control form-number cart-count__input margin__collapse padding__collapse text-center input__border" value="1" />
+								<input type="text" name="products[0]['count']" class="form-control form-number cart-count__input margin__collapse padding__collapse text-center input__border count-item__field" value="1" />
 									
 								<button class="default__button plus-icon__button padding__collapse margin__collapse">
 									<i class="fa fa-plus"></i>

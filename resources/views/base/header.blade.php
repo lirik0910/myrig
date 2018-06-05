@@ -113,9 +113,9 @@ if(isset($client_email) && !empty($client_email)){
 				</li>
 
 				<li class="list__item">
-					<a class="link__item" href="{{ env(strtoupper($locale) . '_DOMAIN') . '/sso-login' }}">
+					<a class="default__link link__item" href="{{ env(strtoupper($locale) . '_DOMAIN') . '/sso-login' }}">
 						@isset($client_name)
-						<p>{{ __('default.welcome_title') }}, {{ $client_name }}!</p>
+						<p class="username__label">{{ __('default.welcome_title') }}, {{ $client_name }}!</p>
 						@endisset
 
 						<img class="item__img" src="{{ $preview(asset('uploads/design/icons-97.svg'), 30, 30) }}" alt="login"/>

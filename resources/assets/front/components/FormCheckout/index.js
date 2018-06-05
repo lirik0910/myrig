@@ -12,7 +12,8 @@ export default class FormCheckout extends Base {
 			_uaDeliveryMethod: $('.ua-delivery__method'),
 			_ruDeliveryMethod: $('.ru-delivery__method'),
 			_selfmentDeliveryMethod: $('.selfment-delivery__method'),
-			_withoutDeliveryMethod: $('.without-delivery__method')
+			_withoutDeliveryMethod: $('.without-delivery__method'),
+			_postCheckoutForm: $('#post-checkout__form')
 		};
 	}
 
@@ -23,8 +24,42 @@ export default class FormCheckout extends Base {
 	onDOMReady(e) {
 		this.els._countrySelect.select2();
 		this.els._countrySelect.on('change', (e) => this.displayDeliveryMethods($(e.currentTarget)));
+		
+		this.els._postCheckoutForm.on('submit', (e) => this.submitCheckoutForm(e));
 
 		this.displayDeliveryMethods(this.els._countrySelect);
+	}
+
+	/**
+	 * Check and send form
+	 * @fires submit
+	 * @param {Object} e
+	 */
+	submitCheckoutForm(e) {
+		e.preventDefault();
+
+		let currentTarget = $(e.currentTarget);
+		$.ajax({
+			url: '/checkout',
+			method: 'post',
+			headers: {
+				'X-CSRF-TOKEN': this.baseDOM._csrfToken
+			},
+			data: currentTarget.serialize(),
+			success: (r) => {
+				/** If user not authorized send to login 
+				 */
+				if (r.session === false) {
+					location.href = 'https://pancheckout/order_success/el.myrig.com/login/sso/'+ location.protocol +'//'+ location.host +'/sso-login';
+				}
+
+				/** Send to success page
+				 */
+				if (r.success === true) {
+					location.href = location.protocol +'//'+ location.host +'/checkout/order_success/'+ r.order.number;
+				}
+			}
+		});
 	}
 
 	/**
