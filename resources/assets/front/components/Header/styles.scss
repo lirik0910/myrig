@@ -210,3 +210,27 @@
 		}
 	}
 }
+
+.username__label {
+	font-size: 14px;
+	position: absolute;
+
+	@media (max-width: 768px) {
+		left: -248px;
+		max-width: 178px;
+	}
+
+	@media (max-width: 992px) {
+		left: -178px;
+		max-width: 178px;
+	}
+
+	@media (max-width: 1250px) {
+		left: -214px;
+		max-width: 198px;
+	}
+
+	@media (max-width: 767px) {
+		display: none;
+	}
+}
