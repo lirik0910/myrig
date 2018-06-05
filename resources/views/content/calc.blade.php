@@ -185,6 +185,7 @@
         }
 
         $allowedDevices = [];
+        $cur = 'BTC';
 
         if ($devices){
             foreach ($devices as $device){
