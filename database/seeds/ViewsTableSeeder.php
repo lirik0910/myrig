@@ -54,7 +54,7 @@ class ViewsTableSeeder extends Seeder
 		/** Add ArticleList view
 		 */
 		App\Model\Base\View::create([
-			'title' => 'ArticleList',
+			'title' => 'News',
 			'description' => 'Template for news/info page',
 			'path' => 'content/news'
 		]);
