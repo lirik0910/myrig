@@ -52,6 +52,7 @@ class Report extends Model
         }
 
         foreach ($data as $field) {
+            //var_dump($field); die;
             if($field['id'] == 0){
                 continue;
             }

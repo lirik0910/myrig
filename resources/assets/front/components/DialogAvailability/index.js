@@ -178,7 +178,7 @@ export default class DialogAvailability extends Base {
 		newForm.appendTo('#products-select__container');
 		newForm.find('.toggle__input').val('');
 		newForm.find('.toggle__current').text('');
-		newForm.find('.product-selected__input').attr('name', 'products['+ count +'][id]')
+		newForm.find('.product-selected__input').attr('name', 'products['+ count +'][id]');
 		newForm.find('.cart-count__input').attr('name', 'products['+ count +'][count]').val('1');
 
 		this.els._deleteProductButton.show();
