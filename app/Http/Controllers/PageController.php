@@ -195,7 +195,7 @@ class PageController extends Controller
 			/** Try render and save new file
 			 */
 			try {
-				$image->save(storage_path('app/public/'. $storageDir .'/') . $fileName);
+				$image->save(storage_path('app/public/'. $storageDir .'/') . $fileName, 60);
 			}
 			catch (\Exception $e) {
 				logger($e->getMessage());
