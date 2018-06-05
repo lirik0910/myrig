@@ -42,13 +42,6 @@
     position: absolute !important;
 }
 
-@media only screen and (min-width: 768px) {
-    .username__label {
-        left: -248px !important;
-        max-width: 178px !important;
-    }
-}
-
 @media only screen and (min-width: 992px) {
     .username__label {
         left: -178px !important;
@@ -63,7 +56,7 @@
     }
 }
 
-@media only screen and (max-width: 767px) {
+@media only screen and (max-width: 991px) {
     .username__label {
         display: none !important;
     }
