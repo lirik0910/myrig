@@ -53,7 +53,8 @@ textarea,
 input:focus,
 button:focus,
 select:focus,
-textarea:focus {
+textarea:focus,
+input[type="submit"] {
 	resize: none !important;
 	border: none;
 	outline: none !important;
