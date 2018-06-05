@@ -39,23 +39,31 @@
 .username__label {
     font-size: 14px;
     position: absolute;
+}
 
-    @media (min-width: 768px) {
+@media (min-width: 768px) {
+    .username__label {
         left: -248px;
         max-width: 178px;
     }
+}
 
-    @media (min-width: 992px) {
+@media (min-width: 992px) {
+    .username__label {
         left: -178px;
         max-width: 178px;
     }
+}
 
-    @media (min-width: 1250px) {
+@media (min-width: 1250px) {
+    .username__label {
         left: -214px;
         max-width: 198px;
     }
+}
 
-    @media (max-width: 767px) {
+@media (max-width: 767px) {
+    .username__label {
         display: none;
     }
 }
