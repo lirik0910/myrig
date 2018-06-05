@@ -98,9 +98,11 @@ export default class DialogAvailability extends Base {
 		e.preventDefault();
 
 		let captcha = $('#g-recaptcha-response').text(),
-			currentTarget = $(e.currentTarget);
+			currentTarget = $(e.currentTarget),
+			button = currentTarget.find('.submit__button');
 
 		if (captcha.length > 0) {
+			button.toggleClass('loading');
 			this.els._errorCaptchaContainer.hide();
 
 			$.ajax({
@@ -111,7 +113,7 @@ export default class DialogAvailability extends Base {
 				},
 				data: currentTarget.serialize(),
 				success: (r) => {
-
+					button.toggleClass('loading');
 				},
 			});
 		}

@@ -66,7 +66,10 @@ export default class DialogCallback extends Base {
 	onSubmit(e) {
 		e.preventDefault();
 
-		let target = $(e.target);
+		let target = $(e.target),
+			button = target.find('.submit__button');
+
+		button.toggleClass('loading');
 		$.ajax({
 			url: target.attr('action'),
 			type: target.attr('method'),
@@ -74,6 +77,7 @@ export default class DialogCallback extends Base {
 			processData: false,
 			success: (e) => {
 				target.hide();
+				button.toggleClass('loading');
 				this.els._callbackSuccess.show();
 			}
 		});

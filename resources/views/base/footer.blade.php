@@ -154,7 +154,7 @@
 
 				<input type="tel" name="tel" class="field__input" required="required" placeholder="{{ __('default.phone') }}" />
 
-				<input type="submit" name="submit" value="{{ __('default.request_a_call') }}" class="default__button submit__button" />
+				<button type="submit" name="submit" class="default__button submit__button" />{{ __('default.request_a_call') }}</button>
 
 				<input type="hidden" name="action" value="formcall_ajax_request">
 				<input type="hidden" name="subject" value="Заказать звонок - Bitmain">
@@ -226,7 +226,7 @@
 					<p class="error-captcha__container text-center font-weight-bold">{{ __('default.captcha') }}</p>
 				</div>
 
-				<input type="submit" name="submit" value="{{ __('default.send') }}" class="default__button submit__button text-uppercase" />
+				<button type="submit" name="submit" class="default__button submit__button text-uppercase">{{ __('default.send') }}</button>
 			</form>
 
 			<div class="callback-success__container">
