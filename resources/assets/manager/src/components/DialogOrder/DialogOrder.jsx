@@ -20,7 +20,7 @@ import Input, { InputLabel } from 'material-ui/Input';
 import PaperTable from '../PaperTable/PaperTable.jsx';
 import InputNumber from '../FormControl/InputNumber/InputNumber.jsx';
 import SelectStatus from '../FormControl/SelectStatus/SelectStatus.jsx';
-import InputSelectUser from 'components/FormControl/InputSelectUser';
+import InputSelectUser from '../FormControl/InputSelectUser';
 import SelectPayment from '../FormControl/SelectPayment/SelectPayment.jsx';
 import SelectContext from '../FormControl/SelectContext/SelectContext.jsx';
 import SelectDelivery from '../FormControl/SelectDelivery/SelectDelivery.jsx';

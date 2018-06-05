@@ -21,7 +21,7 @@ class PagesTableSeeder extends Seeder
 		$viewIndex = App\Model\Base\View::where('title', 'Index')->firstOrFail();
 		$view404 = App\Model\Base\View::where('title', '404')->firstOrFail();
 		$viewShop = App\Model\Base\View::where('title', 'Shop')->firstorFail();
-		$viewArticleList = App\Model\Base\View::where('title', 'ArticleList')->firstOrFail();
+		$viewArticleList = App\Model\Base\View::where('title', 'News')->firstOrFail();
 		$viewService = App\Model\Base\View::where('title', 'Service')->firstOrFail();
 		$viewContacts = App\Model\Base\View::where('title', 'Contacts')->firstOrFail();
 		$viewCart = App\Model\Base\View::where('title', 'Cart')->firstOrFail();
