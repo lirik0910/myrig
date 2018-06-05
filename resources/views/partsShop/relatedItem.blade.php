@@ -44,7 +44,7 @@
 
 	<form class="cart-count__container">
 		<div class="counter__container">
-			<input id="{{ 'count-products-' . $item->id }}" type="text" name="count" class="form-control form-number cart-count__input default__border" value="{{ isset($inCart[$item->id]) ? $inCart[$item->id] : 1 }}" data-id="{{ $item->id }}" />
+			<input id="{{ 'count-products-' . $item->id }}" type="text" name="count" class="form-control form-number cart-count__input default__border text-center" value="{{ isset($inCart[$item->id]) ? $inCart[$item->id] : 1 }}" data-id="{{ $item->id }}" />
 					
 			<button class="default__button plus-icon__button padding__collapse" data-id="{{ $item->id }}">
 				<i class="fa fa-plus"></i>

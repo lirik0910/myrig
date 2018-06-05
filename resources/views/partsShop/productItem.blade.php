@@ -62,7 +62,7 @@ foreach($item->categories as $category){
 
 		@if (isset($item->page->view->variables))
 			@if (isset($item->page->view->variables))
-			<ul class="options__list margin__collapse">
+			<ul class="options__list margin__collapse font-weight-light">
 			@foreach ($item->page->view->variables as $field)
 				@foreach ($field->variableContent as $var)
 					@if ($var->page_id == $item->page->id)
