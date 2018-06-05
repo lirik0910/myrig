@@ -99,7 +99,8 @@ class PaperOrderDeliveryForm extends Component {
 				onClick={e => {
 					let fields = ['_first_name', '_last_name', '_email', '_phone', '_city', '_state', '_address', '_country'];
 					fields.forEach((f) => {
-						document.getElementById('d'+f).value = document.getElementById('p'+f).value;
+						if(document.getElementById('d'+f) && document.getElementById('p'+f))
+							document.getElementById('d'+f).value = document.getElementById('p'+f).value;
 					});
 				}}
 				className={classes.button} 

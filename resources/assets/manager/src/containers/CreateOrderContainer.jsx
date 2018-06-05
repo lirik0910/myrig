@@ -129,7 +129,7 @@ class CreateOrderContainers extends Component {
 						a: App.name() + '/order'
 					}, () => {
 						setTimeout(() => {
-							var a = document.getElementById('orders');
+							var a = document.getElementById('change-page');
 							if (a) {
 								a.click();
 							}
@@ -323,7 +323,7 @@ class CreateOrderContainers extends Component {
 					})} />}
 
 				<Link 
-					id="order" 
+					id="change-page" 
 					to={App.name() + '/orders'} 
 					style={{display: 'none'}}></Link>
 			</div>

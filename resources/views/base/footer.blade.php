@@ -154,7 +154,7 @@
 
 				<input type="tel" name="tel" class="field__input" required="required" placeholder="{{ __('default.phone') }}" />
 
-				<button type="submit" name="submit" class="default__button submit__button" />{{ __('default.request_a_call') }}</button>
+				<button type="submit" name="submit" class="text-uppercase default__button submit__button" />{{ __('default.request_a_call') }}</button>
 
 				<input type="hidden" name="action" value="formcall_ajax_request">
 				<input type="hidden" name="subject" value="Заказать звонок - Bitmain">
