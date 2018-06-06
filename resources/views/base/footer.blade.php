@@ -19,10 +19,10 @@
 	<div class="service__container">
 		<div class="row__container row default__container">
 			<div class="social__container padding__collapse col-sm-4 col-md-2 col-lg-4">
-				<a target="_blank" href="http://facebook.com/#" class="item__link">
-					<div class="title__container">Facebook</div>
+				<a target="_blank" href="https://t.me/myriglive" class="item__link">
+					<div class="title__container">Telegram</div>
 					<div class="icon__container text-center">
-						<i class="fa fa-facebook"></i>
+						<i class="fa fa-telegram"></i>
 					</div>
 				</a>
 

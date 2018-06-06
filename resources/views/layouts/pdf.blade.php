@@ -128,7 +128,7 @@
 						<img src="{{ url('uploads/design/world.png') }}" alt="" style="width: 20px; height: 20px;">
 					</div>
 					<div style="display: inline-block; vertical-align: top; width: 116.6px; font-size: 11px;">
-						<p style="margin: 0;">alex@bitmainwarranty.com</p>
+						<p style="margin: 0;">support@myrig.com</p>
 						<p style="margin: 0;">{{ __('default.link_pdf') }}</p>
 					</div>
 				</div>
