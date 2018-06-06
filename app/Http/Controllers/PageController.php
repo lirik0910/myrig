@@ -100,7 +100,7 @@ class PageController extends Controller
                 'preview' => $this->preview(),
                 'locale' => $locale
             ]);
-        } else  abort(404);
+        } else abort(404);
 	}
 
 	/** 

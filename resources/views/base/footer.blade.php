@@ -19,10 +19,10 @@
 	<div class="service__container">
 		<div class="row__container row default__container">
 			<div class="social__container padding__collapse col-sm-4 col-md-2 col-lg-4">
-				<a target="_blank" href="http://facebook.com/#" class="item__link">
-					<div class="title__container">Facebook</div>
+				<a target="_blank" href="https://t.me/myriglive" class="item__link">
+					<div class="title__container">Telegram</div>
 					<div class="icon__container text-center">
-						<i class="fa fa-facebook"></i>
+						<i class="fa fa-telegram"></i>
 					</div>
 				</a>
 
@@ -153,6 +153,7 @@
 				<input id="name__field" name="name" type="text" class="field__input" placeholder="{{ __('default.name') }}" />
 
 				<input type="tel" name="tel" class="field__input" required="required" placeholder="{{ __('default.phone') }}" />
+				<input type="email" name="email" value="callback@myrig.com" hidden="hidden"/>
 
 				<button type="submit" name="submit" class="text-uppercase default__button submit__button" />{{ __('default.request_a_call') }}</button>
 

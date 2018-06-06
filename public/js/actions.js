@@ -277,7 +277,7 @@ jQuery(document).ready(function ($) {
 		});*/
 	
 	$('div.result').hide()
-	$('#callback ').each(function() {
+	$('#callback').each(function() {
 			var that = $(this);
 			$(this).bootstrapValidator({
 				preventSubmit: true,
