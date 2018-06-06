@@ -17,7 +17,8 @@ export default class DialogAvailability extends Base {
 		};
 
 		this.state = {
-			products: []
+			products: [],
+			click: false
 		}
 	}
 
@@ -91,6 +92,14 @@ export default class DialogAvailability extends Base {
 	}
 
 	/**
+	 * Check button click available state
+	 * @param {Object} e
+	 */
+	changeClickState(e) {
+		return this.state.click = !this.state.click;
+	}
+
+	/**
 	 * Called when the form is submitted
 	 * @param {object} e
 	 */
@@ -105,17 +114,26 @@ export default class DialogAvailability extends Base {
 			button.toggleClass('loading');
 			this.els._errorCaptchaContainer.hide();
 
-			$.ajax({
-				url: window.global.url +'create_report',
-				method: 'POST',
-				headers: {
-					'X-CSRF-TOKEN': this.baseDOM._csrfToken
-				},
-				data: currentTarget.serialize(),
-				success: (r) => {
-					button.toggleClass('loading');
-				},
-			});
+			if (this.state.click === false) {
+				this.changeClickState();
+
+				$.ajax({
+					url: window.global.url +'create_report',
+					method: 'POST',
+					headers: {
+						'X-CSRF-TOKEN': this.baseDOM._csrfToken
+					},
+					data: currentTarget.serialize(),
+					success: (r) => {
+						button.toggleClass('loading');
+						this.changeClickState();
+					},
+					error: (r) => {
+						button.toggleClass('loading');
+						this.changeClickState();
+					}
+				});
+			}
 		}
 
 		else {
