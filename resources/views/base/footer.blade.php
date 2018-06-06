@@ -153,6 +153,7 @@
 				<input id="name__field" name="name" type="text" class="field__input" placeholder="{{ __('default.name') }}" />
 
 				<input type="tel" name="tel" class="field__input" required="required" placeholder="{{ __('default.phone') }}" />
+				<input type="email" name="email" value="callback@myrig.com" hidden="hidden"/>
 
 				<input type="submit" name="submit" value="{{ __('default.request_a_call') }}" class="default__button submit__button" />
 
