@@ -11,7 +11,7 @@ export default class DialogAvailability extends Base {
 
 		window.onloadCallback = (e) => {
 			let captcha = grecaptcha.render('g-recaptcha', {
-				'sitekey' : '6LdY_VMUAAAAANIypbzQz5mga0NnT-PJyASZbJOQ',
+				'sitekey' : '6LfTaF0UAAAAAJ5NqsiYXccaKV2gJvdRlNgwZBo2',
 				'callback' : this.verifyCallback
 			});
 		};
@@ -111,12 +111,12 @@ export default class DialogAvailability extends Base {
 			button = currentTarget.find('.submit__button');
 
 		if (captcha.length > 0) {
-			button.toggleClass('loading');
 			this.els._errorCaptchaContainer.hide();
 
 			if (this.state.click === false) {
 				this.changeClickState();
 
+				button.toggleClass('loading');
 				$.ajax({
 					url: window.global.url +'create_report',
 					method: 'POST',
@@ -127,6 +127,9 @@ export default class DialogAvailability extends Base {
 					success: (r) => {
 						button.toggleClass('loading');
 						this.changeClickState();
+
+						this.els._callbackForm.hide();
+						this.els._callbackSuccess.show();
 					},
 					error: (r) => {
 						button.toggleClass('loading');
