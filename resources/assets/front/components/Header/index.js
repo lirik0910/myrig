@@ -26,6 +26,10 @@ export default class Header extends Base {
 	 * @param {Object} e
 	 */
 	onDOMReady(e) {
+		/** Remove loading container
+		 */
+		this.baseDOM._loadingContainer.remove();
+
 		this.els._navigationToggleButton.on('click', (e) => this.onClickedToggleButton(e));
 		this.els._linkCartContainer.on('click', (e) => this.checkCartIsEmpty(e));
 

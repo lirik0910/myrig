@@ -94,6 +94,7 @@ export default class ButtonSendToCart extends Base {
 	sendProductsToCart(currentTarget, input, session = [], callback = () => {}) {
 		/** Save session on server
 		 */
+		currentTarget.toggleClass('loading');
 		$.post(window.global.app.connector +'/cart', {
 			id: currentTarget.data('product-id'),
 			count: input.val(),
@@ -114,6 +115,8 @@ export default class ButtonSendToCart extends Base {
 			currentTarget.html('<span>'+ currentTarget.data('added-text') +'</span>');
 
 			this.baseDOM._linkCartContainer.trigger('addProducts', { count: input.val() });
+			currentTarget.toggleClass('loading');
+
 			callback(r);
 		});
 	}
@@ -173,7 +176,7 @@ export default class ButtonSendToCart extends Base {
 				this.els._bitcoinPriceContainer.text(bitcoinPrice.toFixed(4));
 
 				callback(r);
-			}
+			},
 		});
 	}
 

@@ -27,6 +27,8 @@ if(isset($client_email) && !empty($client_email)){
 
 @endphp
 
+<div id="loading__container" style="position: fixed; width: 100%; height: 100%; top: 0; left: 0; background-color: #FFF; z-index: 3200"></div>
+
 <div id="mobile-header__container" class="mobile-header__container">
 	<nav class="navigation__container" role="navigation">
 		<ul class="list__container padding__collapse margin__collapse">
@@ -115,7 +117,7 @@ if(isset($client_email) && !empty($client_email)){
 				<li class="list__item">
 					<a class="default__link link__item" href="{{ env(strtoupper($locale) . '_DOMAIN') . '/sso-login' }}">
 						@isset($client_name)
-						<p class="username__label">{{ __('default.welcome_title') }}, {{ $client_name }}!</p>
+						<p class="username__label font-weight-light">{{ __('default.welcome_title') }}, {{ $client_name }}!</p>
 						@endisset
 
 						<img class="item__img" src="{{ $preview(asset('uploads/design/icons-97.svg'), 30, 30) }}" alt="login"/>
