@@ -81,12 +81,6 @@ class ClientAuthController
         $ssoToken = $request->get('ssotoken');
         $action = $request->get('action');
 
-/*        if (isset($ssoToken)) {
-            print_r($ssoToken);
-        }
-
-        die();*/
-
         if (isset($ssoToken)) {
             $data = ['procedure' => 'com.backend.sso.validatetoken', 'args' => [$ssoToken, $this->homeappurl]];
             $signed = $this->prepareSignature($data);
@@ -147,10 +141,6 @@ class ClientAuthController
                 return redirect('/');
             } else {
                 echo "notvalid";
-
-                /*echo("<pre>");
-                print_r($reply);
-                echo("</pre>");*/
 
                 $this->notvalid = 1;
             }
