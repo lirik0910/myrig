@@ -8,7 +8,8 @@ export default class Base {
 			_rootContainer: $('#root_container'),
 			_linkCartContainer: $('#link-cart__container'),
 			_cartButton: $('.cart__button'),
-			_csrfToken: $('meta[name="csrf-token"]').attr('content')
+			_csrfToken: $('meta[name="csrf-token"]').attr('content'),
+			_loadingContainer: $('#loading__container')
 		}
 
 		this.baseDOM._document.ready(e => {
