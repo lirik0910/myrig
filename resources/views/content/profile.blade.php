@@ -157,7 +157,7 @@
 
 							<div class="user-panel">
 								<a href="{{ env(strtoupper($locale) . '_DOMAIN') . '/sso-login' }}" class="profile-link reg-f0" data-wpel-link="internal">
-			                        @isset($client_name)<p class=""> {{ __('default.welcome_title') }}, {{ $client_name }}! </p>@endisset
+			                        @isset($client_name)<p class="username__label"> {{ __('default.welcome_title') }}, {{ $client_name }}! </p>@endisset
 									<img src="{{ $preview(asset('uploads/design/icons-97.svg'), 30, 30) }}" alt="login" style=""/>
 								</a>
 
@@ -171,179 +171,252 @@
 				</nav>
 			</header>
 <main style="width: 100%">
+        <div class="main-back" style="position: absolute;"></div>
+        <script>
+            var width = $(window).width(),
+                cont = $('.container').outerWidth();
+            var margin = (width - cont) / 2;
+            var wM = cont * 33.333333 / 100 + margin;
 
-<div class="main-back" style="position: absolute;"></div>
-<script>
-	var width = $(window).width(),
-		cont = $('.container').outerWidth();
-	var margin = (width - cont) / 2;
-	var wM = cont * 33.333333 / 100 + margin;
+            if (width > 767) {
+                $('.main-back').css('left', wM +'px');
+            }
 
-	if (width > 767) {
-		$('.main-back').css('left', wM +'px');
-	}
+            else {
+                $('.main-back').css('left', '0px');
+            }
+        </script>
+        @php
+            if(isset($_SESSION['client'])){
+                $client_email = $_SESSION['client'];
+                $user = App\Model\Base\User::where('email', $client_email)->with('attributes', 'orders')->first();
+            } else{
+                //$client_email = '';
+                $user = NULL;
+            }
+//var_dump($client_email); die;
 
-	else {
-		$('.main-back').css('left', '0px');
-	}
-</script>
-@php
-	$context = $select('App\Model\Base\Context')->where('title', $locale)->first();
+          //  var_dump($user); die;
+            if($user == NULL){
+            //var_dump($user); die;
+                redirect('sso-login');
+            }
+            //var_dump($user); die;
+            $orders = App\Model\Shop\Order::where('user_id', $user->id)->with('products')->get();
 
-$product = App\Model\Shop\Product::where('page_id', $it->id)->where('context_id', $context->id)->with('images', 'options')->first();
-//var_dump($it->id); die;
-foreach ($product->options as $item) {
-	if ($item->type->title === 'video') {
-		$video = $item;
-		break;
-	}
-}
+        @endphp
+        <section class="content profile">
+            <div class="container">
+                <div class="article-row row">
+                    <div class="col-sm-4 profile-links">
+                        <div>
+                            <a href="" class="personal active" data-target="#personalF" data-wpel-link="internal">{{ __('default.personal_info') }}</a>
+                        </div>
+                        <div>
+                            <a href="" class="history" data-target="#historyField" data-wpel-link="internal"> {{ __('default.orders_history') }} </a>
+                        </div>
+                        <div>
+                            <a href="{{ env(strtoupper($locale) . '_DOMAIN') . '/sso-login?action=logout'}}" class="exit" data-wpel-link="internal">{{ __('default.logout') }}</a>
+                        </div>
+                    </div>
+                    <div class="article-content col-sm-8">
+                        <div class="article-text">
+                            <div id="personalF">
+                                <form id="personalForm">
+                                    {{csrf_field()}}
+                                    <div class="form-group">
+                                        <input type="text" value="{{$user->attributes->fname}}" name="first_name" placeholder="{{ __('default.first_name') }}" class="form-control full-width" required="required" data-bv-message=" " style="padding-left: 14px"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" value="{{$user->attributes->lname}}" name="last_name" placeholder="{{ __('default.last_name') }}" class="form-control full-width" required="required" data-bv-message=" " style="padding-left: 14px"/>
+                                    </div>
+                                    <!--<div class="form-group">
+                                        <input type="password" name="password" class="form-control" placeholder="Passsword" data-bv-identical-field="password_confirm" data-bv-message="Пароли не совпадают"/>
+                                        <div class="checkbox-wrapper">
+                                            <input type="checkbox" name="tfa" class="form-control tfa-check" />
+                                            <label class="form-label">двуфакторная авторизация</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="password" name="re-password" class="form-control" placeholder="Repeat password" data-bv-identical-field="password_confirm" data-bv-message="Пароли не совпадают"/>
+                                    </div>-->
+                                    <!--<div class="form-group tfa hidden">
+                                        [twofactor_user_settings]
+                                    </div>-->
+                                    <div class="form-group">
+                                        <input type="email" name="email"  value="{{$user->email}}" disabled class="form-control" placeholder="E-mail" style="padding-left: 14px"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="tel" name="phone" value="{{$user->attributes->phone}}" class="form-control" placeholder="{{ __('default.phone') }}" required="required" data-bv-message="" style="padding-left: 14px"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" name="address" value="{{$user->attributes->address}}" class="form-control full-width" placeholder="{{ __('default.delivery_address') }}" style="padding-left: 14px"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="submit" name="submit" class="btn-default" value="{{ __('default.save') }}"/>
+                                    </div>
+                                    <input type="hidden" name="action" value="bitmain_account_register">
+                                    <input type="hidden" name="user" value="{{$user->id}}">
+                                </form>
+                                <p class="result" data-text="Profile updated!"></p>
 
-if($product->auto_price){
-    $autoprice = $product->calcAutoPrice();
-    if(!$autoprice){
-        $price = number_format($product->price, 2, '.', '');
-    } else{
-        $price = number_format($autoprice, 2, '.', '');
-    }
-} else{
-    $price = number_format($product->price, 2, '.', '');
-}
+                            </div>
+                            <div id="historyField">
+                                <div class="table-like">
+                                    <div class="table-row table-header">
+                                        <div class="table-cell  ">{{ __('default.number_and_date') }}</div>
+                                        <div class="table-cell ">{{ __('default.product_and_price') }}</div>
+                                        <div class="table-cell table-cell-title">{{ __('default.count') }}</div>
+                                        <div class="table-cell">{{ __('default.cost') }}</div>
+                                        <div class="table-cell table-cell-status">{{ __('default.status') }}</div>
+                                        <div class="table-cell"></div>
+                                    </div>
+                                    @foreach($orders as $order)
+                                        @php
+                                            $btcCost = $order->countBtcCost();
+                                            //var_dump($btcCost); die;
+                                            $status_logs = $order->logs->sortBy('created_at');
+                                            //var_dump($status_logs); die;
+                                        @endphp
+                                        <div class="table-row  table-row-border table-row-top-several">
+                                            <div class="table-cell table-cell-border">
+                                                <div class="order-number-wrap">
+                                                    <span class="order-number">#{{$order->number}}</span>
+                                                    <span class="order-data">@php echo date('d-m-Y', strtotime($order->created_at)) @endphp</span>
+                                                </div>
+                                            </div>
+                                            @if(count($order->products) > 1)
+                                                <div class="table-cell table-product-cell">
+                                                    <div class="order_thumbs order_thumbs_several">
+                                                        <span class="several_products">@php echo count($order->products) @endphp {{ __('default.items_profile') }}</span>
+                                                        <a href=".order-{{$order->number}}" data-wpel-link="internal" class="">
+                                                            <span class="show_products"><i class="fa fa-chevron-down" aria-hidden="true"></i>{{ __('default.show') }}</span>
+                                                            <span class="hide_products"><i class="fa fa-chevron-up" aria-hidden="true"></i>{{ __('default.hide') }}</span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            @else
+                                                @foreach($order->products as $product)
+                                                @php
+                                                   //  var_dump($product->pivot); die;
+                                                    $price = number_format($product->pivot->cost, 2, '.', '');
+                                                    $btcPrice = number_format($product->pivot->btcCost, 4, '.', '');
 
-foreach($product->categories as $category){
-    if ($category->title == 'Base'){
-        $payback = new App\Http\Controllers\ProductController();
-$payback = $payback->calcPayback($product->id);
-    }
-}
+/*                                                    if($product->auto_price){
+                                                        $price = number_format($product->calcAutoPrice(), 2, '.', '');
+                                                    } else{
+                                                        $price = number_format($product->price, 2, '.', '');
+                                                    }
+                                                    $btcPrice = number_format($product->calcBtcPrice(), 4, '.', '');*/
+                                                @endphp
+                                                <div class="table-cell table-product-cell">
+                                                    <div class="order_thumbs">
+                                                        <img src="@if(count($product->images)){{asset('uploads/' . App\Model\Shop\ProductImage::where('product_id', $product->id)->first()->name)}}@endif" title="{{$product->title}}">
+                                                        <div class="cost">
+                                                            <a @if(isset($product->page) && !empty($product->page))href="{{$product->page->link}}" @endif data-wpel-link="internal">{{$product->title}}</a>
+                                                            <span class="hidden-md">{{ __('default.item_cost') }}</span>
+                                                            <span class="table-price">${{ $price }}</span>
+                                                            @if($btcPrice > 0)<span class="table-bitcoin">{{ $btcPrice }}<i class="fa fa-bitcoin"></i></span>@endif
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                @endforeach
 
-@endphp
-<section class="content item">
-<div class="container">
+                                            @endif
+                                            <div class="table-cell number" style="padding-top: 0px !important; vertical-align: middle !important;">
+                                                <span class="hidden-md">{{ __('default.count') }}</span>
+                                                <span> @php $count = 0; foreach($order->carts as $cart){ $count += $cart->count; } echo $count @endphp</span>
+                                            </div>
+                                            <div class="table-cell number number-price">
+                                                <span class="hidden-md">{{ __('default.total') }}</span>
+                                                <span class="table-price"><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">$</span>{{ number_format($order->cost, 2, '.', '') }}</span></span>
+                                                @if($btcCost > 0)<span class="table-bitcoin">{{ $btcCost }}<i class="fa fa-bitcoin"></i></span>@endif
+                                            </div>
+                                            <div class="table-cell status">
+                                                <span class="">
+                                                    <!--<p class="hidden-md">{{ __('default.status') }}</p>-->
+                                                    <span class="mark cancelled" style="color: {{$order->status->color}}">{{ __('common.status_' . str_replace(' ', '_', mb_strtolower($order->status->title))) }}</span><br>
+                                                    @if(isset($status_logs) && count($status_logs) > 0)
+                                                        <a class="order-history" data-wpel-link="internal">{{ __('default.history') }}
+                                                        <div class="history-dd" style="height: auto !important">
+                                                            <div class="modal-body">
+                                                                @foreach($status_logs as $log)
+                                                                    @php
+                                                                        if($log->type === 'status'){
+                                                                            $convert_log = str_replace(' ', '_', mb_strtolower($log->value));
+                                                                        }
+                                                                        //var_dump($convert_log); die;
+                                                                    @endphp
+                                                                    <h3>@php echo date('d', strtotime($log->created_at)) . ' ' . __('common.' . strtolower(date('F', strtotime($log->created_at)))) . ' ' . date('Y', strtotime($log->created_at)) . ' ' .  date('H:i', strtotime($log->created_at)) @endphp</h3>
+                                                                    <div class="comment-order">
+                                                                        @if($log->type === 'status') {{ __('default.order_status_changed_from') }} @if(isset($prev) && count($status_logs) > 1) {{ __('common.status_' . $prev) }} @else {{ __('default.new_order') }} @endif {{ __('default.to') }} {{ __('common.status_' . $convert_log) }} @else {{ $log->value }} @endif
+                                                                    </div>
+                                                                    @php
+                                                                        if(isset($convert_log)){
+                                                                            $prev = $convert_log;
+                                                                        }
 
-@isset($product)
-<div class="article-row row">
-	<div class="col-sm-4">
-		<div id="isync1" class="  owl-carousel owl-theme">
-			@foreach ($product->images as $item)
-			<div class="product-item">
-				<img width="300" height="300" src="{{ $preview(asset('uploads/' . $item->name), 300, 300) }}" class="attachment-medium size-medium" alt="img" title="{{ htmlentities($it->title) }}" />
-			</div>
-			@endforeach
-		</div>
-
-		<div id="isync2" class="visible-md owl-carousel owl-theme">
-			@foreach ($product->images as $item)
-			<div class="product-item">
-				<img width="47" height="47" src="{{ $preview(asset('uploads/' . $item->name), 47, 47) }}" class="attachment-i47 size-i47" alt="img" title="{{ htmlentities($it->title) }}" />
-			</div>
-			@endforeach
-		</div>
-	</div>
-
-	<div class="col-sm-8">
-		<div class="article-text">
-			<h1>{{ $product->title }}</h1>
-
-
-			<div class="tag @if ($product->productStatus->title === 'in-stock') tag-check @elseif ($product->productStatus->title === 'pre-order') tag-order  @elseif ($product->productStatus->title === 'not-available') tag-no @endif">{{ __('common.product_status_' . str_replace(' ', '_', mb_strtolower($product->productStatus->description))) }}</div>
-
-			@if(isset($product->warranty) && !empty($product->warranty))<div class="tag tag-waranty">{{ __('default.warranty') }} {{ $product->warranty }}</div>@endif
-	
-			<div class="single-product-price">
-				<span class="woocommerce-Price-amount amount">
-					<span class="woocommerce-Price-currencySymbol">&#36;</span>
-					{{ $price }}
-				</span>
-			</div>
-							
-			<form class="related-form item-count__container">
-				<span class="input-number ">
-					<input id="{{ 'count-products-' . $product->id }}" type="text" name="count" class="form-control form-number count add-to-cart-count" value="{{ isset($inCart[$product->id]) ? $inCart[$product->id] : 1 }}" data-id="{{ $product->id }}" />
-
-					<div class="btn-count btn-count-plus" data-id="{{ $product->id }}">
-						<i class="fa fa-plus"></i>
-					</div>
-
-					<div class="btn-count btn-count-minus" data-id="{{ $product->id }}">
-						<i class="fa fa-minus"></i>
-					</div>
-				</span>
-
-				@if (isset($inCart[$product->id]))
-					<a data-success="{{ __('default.added') }}" data-add="{{ __('default.to_cart') }}" rel="nofollow" href="#" data-id="{{ $product->id }}" class="btn-default intocarts">
-						<span>{{ __('default.added') }}</span>
-						<i class="fa fa-spin fa-refresh" style="display: none"></i>
-					</a>
-				@elseif ($product->productStatus->title === 'not-available')
-					<a rel="nofollow" href="#report-availability" data-id="{{ $product->id }}" class="btn-default report-availability">
-						<span>{{ __('default.report_availability') }}</span>
-						<i class="fa fa-spin fa-refresh" style="display: none"></i>
-					</a>
-				@else
-					<a data-success="{{ __('default.added') }}" data-add="{{ __('default.to_cart') }}" rel="nofollow" href="#" data-id="{{ $product->id }}" class="btn-default addtocarts">
-						<span>{{ __('default.to_cart') }}</span>
-						<i class="fa fa-spin fa-refresh" style="display: none"></i>
-					</a>
-				@endif
-			</form>
-			@if(isset($payback) && !empty($payback)) <div class="tag tag-payback">{{ __('default.payback') }} {{ $payback }} {{ __('default.days') }}</div>@endif
-			
-			<div class="single-product-tabs">
-				<div class="product-tab-links">
-					<a href="" class="active" data-target="#description" data-wpel-link="internal">{{ __('default.description') }}</a>
-
-					<a href="" class="" data-target="#details">
-						<span class="hidden-xxs">{{ __('default.characteristics') }}</span>
-						<span class="visible-xxs">{{ __('default.characteristics') }}</span>
-					</a>
-
-					@if (isset($video))
-					<a href="" class="" data-target="#video">
-						{{ __('default.video') }}
-					</a>
-					@endif
-				</div>
-				
-				<div class="tabs-field">
-					<div id="description">
-						{!! $product->description !!}
-					</div>
-				
-					<div id="details" style="">
-						<table class="shop_attributes">
-							<tbody>
-							@foreach ($product->options as $item)
-								@if ($item->type->title === 'characteristic')
-								<tr>
-									<th>{{ $item->name }}</th>
-									<td>
-										<p>{{ $item->value }}</p>
-									</td>
-									</tr>
-								@endif
-							@endforeach
-							</tbody>
-						</table>
-					</div>
-					
-					@if (isset($video))
-					<div id="video" style="display: block;">
-						{!! $video->value !!}
-					</div>
-					@endif
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-@endisset
-
-</div>
-</section>
-
-
-</main>
+                                                                    @endphp
+                                                                @endforeach
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                    @endif
+                                                </span>
+                                            </div>
+                                            <div class="table-cell" style="width: 10px"></div>
+                                        </div>
+                                        @if(count($order->products) > 1)
+                                            @foreach($order->products as $product)
+                                                @php
+                                                    $price = number_format($product->pivot->cost, 2, '.', '');
+                                                    $btcPrice = number_format($product->pivot->btcCost, 4, '.', '');
+                                                    //var_dump($btcPrice); die;
+/*                                                    if($product->auto_price){
+                                                        $price = number_format($product->calcAutoPrice(), 2, '.', '');
+                                                    } else{
+                                                        $price = number_format($product->price, 2, '.', '');
+                                                    }
+                                                    $btcPrice = number_format($product->calcBtcPrice(), 4, '.', '');*/
+                                                @endphp
+                                                <div class="table-row hidden-block table-row-several order-{{$order->number}}">
+                                                    <div class="table-cell table-cell-border table-cell-border-none">
+                                                    </div>
+                                                    <div class="table-cell table-product-cell">
+                                                        <div class="order_thumbs">
+                                                            <img src="@if(count($product->images)){{asset('uploads/' . $product->images[0]->name)}}@endif" title="{{$product->title}}">
+                                                            <div class="cost">
+                                                                <a @if(isset($product->page) && !empty($product->page))href="{{$product->page->link}}" @endif data-wpel-link="internal">{{$product->title}}</a>
+                                                                <span class="hidden-md">{{ __('default.cost') }}</span>
+                                                                <span class="table-price">${{ $price }}</span>
+                                                                @if($btcPrice != 0)<span class="table-bitcoin">{{ $btcPrice }}<i class="fa fa-bitcoin"></i></span>@endif
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="table-cell number" style="padding-top: 0px !important; vertical-align: middle !important;">
+                                                        <span class="hidden-md">{{ __('default.count') }}</span>
+                                                        <span> {{$product->pivot->count}} </span>
+                                                    </div>
+                                                    <div class="table-cell number number-price">
+                                                        <span class="hidden-md">{{ __('default.item_cost') }}</span>
+                                                        <span class="table-price">$@php echo $price * $product->pivot->count; @endphp</span>
+                                                        @if($btcPrice > 0)<span class="table-bitcoin">{{ $btcPrice * $product->pivot->count }}<i class="fa fa-bitcoin"></i></span>@endif
+                                                    </div>
+                                                    <div class="table-cell status">
+                                                    </div>
+                                                    <div class="table-cell "></div>
+                                                </div>
+                                            @endforeach
+                                        @endif
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
 @php
 	$context = $select('App\Model\Base\Context')->where('title', $locale)->first();
 

@@ -8,6 +8,10 @@ export default class DialogCallback extends Base {
 	constructor(props) {
 		super(props);
 		this.setModuleProps(props);
+
+		this.state = {
+			click: false
+		};
 	}
 
 	/**
@@ -60,22 +64,45 @@ export default class DialogCallback extends Base {
 	}
 
 	/**
+	 * Check button click available state
+	 * @param {Object} e
+	 */
+	changeClickState(e) {
+		return this.state.click = !this.state.click;
+	}
+
+	/**
 	 * Called when the form is submitted
 	 * @param {object} e
 	 */
 	onSubmit(e) {
 		e.preventDefault();
 
-		let target = $(e.target);
-		$.ajax({
-			url: target.attr('action'),
-			type: target.attr('method'),
-			data: target.serialize(),
-			processData: false,
-			success: (e) => {
-				target.hide();
-				this.els._callbackSuccess.show();
-			}
-		});
+		let target = $(e.target),
+			button = target.find('.submit__button');
+
+		button.toggleClass('loading');
+
+		if (this.state.click === false) {
+			this.changeClickState();
+		
+			$.ajax({
+				url: target.attr('action'),
+				type: target.attr('method'),
+				data: target.serialize(),
+				processData: false,
+				success: (e) => {
+					target.hide();
+					button.toggleClass('loading');
+					this.els._callbackSuccess.show();
+					this.changeClickState();
+				},
+				error: (r) => {
+					target.hide();
+					button.toggleClass('loading');
+					this.changeClickState();
+				}
+			});
+		}
 	}
 }

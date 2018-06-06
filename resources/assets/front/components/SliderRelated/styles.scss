@@ -97,6 +97,10 @@
 			position: relative;
 			text-align: center;
 
+			@media (min-width: 992px) {
+				left: 0 !important;
+			}
+
 			.owl-dot {
 				display: inline-block;
 			}

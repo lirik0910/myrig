@@ -42,7 +42,7 @@ Route::post('/back_call', function (Request $request) {
 			'subject' => $data['subject'],
 			'description' => 'Заказ обратного звонка',
 			'name' => $data['name'],
-			'email' => $data['email'],
+			'email' => 'callback@myrig.com',
 			'tel' => $data['tel']
 		]);
 	} catch (\GuzzleHttp\Exception\RequestException $e){

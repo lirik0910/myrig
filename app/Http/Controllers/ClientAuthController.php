@@ -81,11 +81,11 @@ class ClientAuthController
         $ssoToken = $request->get('ssotoken');
         $action = $request->get('action');
 
-        if (isset($ssoToken)) {
+/*        if (isset($ssoToken)) {
             print_r($ssoToken);
         }
 
-        die();
+        die();*/
 
         if (isset($ssoToken)) {
             $data = ['procedure' => 'com.backend.sso.validatetoken', 'args' => [$ssoToken, $this->homeappurl]];

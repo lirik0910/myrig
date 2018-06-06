@@ -11,13 +11,14 @@ export default class DialogAvailability extends Base {
 
 		window.onloadCallback = (e) => {
 			let captcha = grecaptcha.render('g-recaptcha', {
-				'sitekey' : '6LdY_VMUAAAAANIypbzQz5mga0NnT-PJyASZbJOQ',
+				'sitekey' : '6LfTaF0UAAAAAJ5NqsiYXccaKV2gJvdRlNgwZBo2',
 				'callback' : this.verifyCallback
 			});
 		};
 
 		this.state = {
-			products: []
+			products: [],
+			click: false
 		}
 	}
 
@@ -91,6 +92,14 @@ export default class DialogAvailability extends Base {
 	}
 
 	/**
+	 * Check button click available state
+	 * @param {Object} e
+	 */
+	changeClickState(e) {
+		return this.state.click = !this.state.click;
+	}
+
+	/**
 	 * Called when the form is submitted
 	 * @param {object} e
 	 */
@@ -98,22 +107,36 @@ export default class DialogAvailability extends Base {
 		e.preventDefault();
 
 		let captcha = $('#g-recaptcha-response').text(),
-			currentTarget = $(e.currentTarget);
+			currentTarget = $(e.currentTarget),
+			button = currentTarget.find('.submit__button');
 
 		if (captcha.length > 0) {
 			this.els._errorCaptchaContainer.hide();
 
-			$.ajax({
-				url: window.global.url +'create_report',
-				method: 'POST',
-				headers: {
-					'X-CSRF-TOKEN': this.baseDOM._csrfToken
-				},
-				data: currentTarget.serialize(),
-				success: (r) => {
+			if (this.state.click === false) {
+				this.changeClickState();
 
-				},
-			});
+				button.toggleClass('loading');
+				$.ajax({
+					url: window.global.url +'create_report',
+					method: 'POST',
+					headers: {
+						'X-CSRF-TOKEN': this.baseDOM._csrfToken
+					},
+					data: currentTarget.serialize(),
+					success: (r) => {
+						button.toggleClass('loading');
+						this.changeClickState();
+
+						this.els._callbackForm.hide();
+						this.els._callbackSuccess.show();
+					},
+					error: (r) => {
+						button.toggleClass('loading');
+						this.changeClickState();
+					}
+				});
+			}
 		}
 
 		else {
@@ -176,7 +199,8 @@ export default class DialogAvailability extends Base {
 		newForm.appendTo('#products-select__container');
 		newForm.find('.toggle__input').val('');
 		newForm.find('.toggle__current').text('');
-		newForm.find('.cart-count__input').attr('name', 'count-'+ count).val('1');
+		newForm.find('.product-selected__input').attr('name', 'products['+ count +'][id]');
+		newForm.find('.cart-count__input').attr('name', 'products['+ count +'][count]').val('1');
 
 		this.els._deleteProductButton.show();
 		this.props.toggleList.newFormEventListener(newForm);

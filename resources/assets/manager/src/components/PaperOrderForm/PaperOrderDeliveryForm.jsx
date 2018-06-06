@@ -17,6 +17,7 @@ import SelectDelivery from '../FormControl/SelectDelivery/SelectDelivery.jsx';
 import SelectCountry from '../FormControl/SelectCountry/SelectCountry.jsx';
 import InputDatePicker from '../FormControl/InputDatePicker/InputDatePicker.jsx';
 import SelectUser from '../FormControl/SelectUser/SelectUser.jsx';
+import Button from 'material-ui/Button';
 import TextField from 'material-ui/TextField';
 
 
@@ -94,6 +95,18 @@ class PaperOrderDeliveryForm extends Component {
 		} = this.props;
 
 		return <Paper className={classes.paper}>
+			<Button className={classes.right}
+				onClick={e => {
+					let fields = ['_first_name', '_last_name', '_email', '_phone', '_city', '_state', '_address', '_country'];
+					fields.forEach((f) => {
+						if(document.getElementById('d'+f) && document.getElementById('p'+f))
+							document.getElementById('d'+f).value = document.getElementById('p'+f).value;
+					});
+				}}
+				className={classes.button} 
+				variant="raised">
+					{"fetch from previous form"}
+			</Button>
 			<SelectDelivery
 				required
 				defaultValue={deliveryDefaultValue}
