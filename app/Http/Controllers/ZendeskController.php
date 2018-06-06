@@ -19,6 +19,7 @@ class ZendeskController
                 'email' => $data['email'],
                 'topic' => $data['topic'],
                 'description' => $data['message'],
+                'requester' => array('locale_id' => '1', 'name' => $data['email'], 'email' => $data['email']),
                 'image' => $data['file']
             ]);
         } catch (RequestException $e){
