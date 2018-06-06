@@ -22,7 +22,7 @@ class PageController extends Controller
 	 * @param Request $request
 	 * @param (Integer) $number Number of order for success page
 	 */
-	public function view(Request $request, $number = null, $domain_locale = null)
+	public function view(Request $request, $number = null)
 	{
 		//$import = new Import();
         //$import->process();
@@ -55,10 +55,19 @@ class PageController extends Controller
         $page = Page::where('link', $link)->where('context_id', $locale_context_id)->where('delete', 0)->with('view')->first();
 
 		if ($page) {
-		    if ($page->link == 'checkout' || $page->link == 'cart'){
-		        if(count($cart) < 1){
-                    return redirect('shop');
-                }
+		    switch ($page->link){
+                case 'checkout':
+                    if(count($cart) < 1){
+                        return redirect('shop');
+                    } elseif (!isset($_SESSION['client'])){
+                        return redirect('sso-login');
+                    }
+                    break;
+                case 'cart':
+                    if(count($cart) < 1){
+                        return redirect('shop');
+                    }
+                    break;
             }
 
             if($page->view->title == 'Product' && $page->product->delete == 1){
