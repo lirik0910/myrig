@@ -37,7 +37,7 @@ else {
 	@endforeach
 </div>
 
-<div class="pagination__container">
+<div class="pagination__container default__container">
 	@isset($news)
 		{{ $news->links() }}
 	@endisset
