@@ -81,7 +81,7 @@ class CreateOrderContainers extends Component {
 			completed: 0 
 		});
 
-		let infoFields = ['p_first_name', 'p_last_name', 'p_email', 'p_phone', 'p_city', 'p_state', 'p_address', 'd_first_name', 'd_last_name', 'd_email', 'd_phone', 'd_city', 'd_state', 'd_address', 'd_passport', 'd_office', 'd_zendesk', 'd_warranty'];
+		let infoFields = ['p_first_name', 'p_last_name', 'p_email', 'p_phone', 'p_city', 'p_state', 'p_address', 'd_first_name', 'd_last_name', 'd_waybill', 'd_email', 'd_phone', 'd_city', 'd_state', 'd_address', 'd_passport', 'd_office', 'd_zendesk', 'd_warranty'];
 		
 		infoFields.forEach((f) => {
 			let v = document.getElementById(f).value;

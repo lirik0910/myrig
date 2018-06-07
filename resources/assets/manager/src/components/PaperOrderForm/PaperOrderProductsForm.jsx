@@ -215,7 +215,7 @@ class PaperOrderProductsForm extends Component {
 							this.props.onCartChanged(cart);
 						}}
 						onItemRemoved={(key)=>{
-							cart.splice(key, 1);
+							cart.splice(key-1, 1);
 							this.setState({ cart });
 							this.props.onCartChanged(cart);
 						}}

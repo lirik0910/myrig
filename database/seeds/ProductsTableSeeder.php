@@ -13,7 +13,7 @@ class ProductsTableSeeder extends Seeder
 	{
 		/** Get base context
 		 */
-        $contexts = App\Model\Base\Context::all();
+        $context = App\Model\Base\Context::where('id', 1)->first();
 		//$context = App\Model\Base\Context::where('title', 'Base')->firstOrFail();
 
 		/** Get default category
@@ -29,7 +29,7 @@ class ProductsTableSeeder extends Seeder
 		$inStockStatus = App\Model\Shop\ProductStatus::where('title', 'in-stock')->first();
 		$notAvailableStatus = App\Model\Shop\ProductStatus::where('title', 'not-available')->first();
 
-		foreach ($contexts as $context){
+		//foreach ($contexts as $context){
             $page = App\Model\Base\Page::where('link', 'product/dragonmint-16-th-s-2')->first();
             App\Model\Shop\Product::create([
                 'context_id' => $context->id,
@@ -261,7 +261,7 @@ class ProductsTableSeeder extends Seeder
                 'active' => 1,
                 'price' => '60.00',
             ]);
-        }
+        //}
 
 	}
 }

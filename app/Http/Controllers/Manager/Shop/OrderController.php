@@ -13,8 +13,13 @@ use Illuminate\Validation\Validatior;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use App\Mail\OrderStatusMail;
 use Illuminate\Support\Facades\Mail;
+
+use \Google_Client as Google_Client;
+use \Google_Service_Sheets as Google_Service_Sheets;
+use \Google_Service_Sheets_ValueRange as Google_Service_Sheets_ValueRange;
 
 class OrderController extends Controller
 {
@@ -384,8 +389,6 @@ class OrderController extends Controller
      * @return boolean
      */
     public function create(Request $request){
-
-
         $order = new Order();
         $last_order = Order::orderBy('id','desc')->first();
 
@@ -404,15 +407,10 @@ class OrderController extends Controller
 			'context_id' => 'required',
 			'delivery_id' => 'required'
 		]);
+
 		$data = $request->input();
 		$dataOrder = $request->only('user_id', 'status_id', 'payment_type_id', 'context_id');
 		$delivery = $request->input('delivery_id') ?? NULL;
-		try {
-		}
-		catch (\Exception $e) {
-			logger($e->getMessage());
-			return response()->json(['message' => $validator->errors()], 422);
-		}
 
 		$dataOrder = array_merge([
             'number' => $order_number,
@@ -430,49 +428,51 @@ class OrderController extends Controller
             return response()->json(['success' => false, 'message' => $e->getMessage()], 422);
         }
 
+        $cart = [];
         if(!empty($data['cart'])){
-
 	        $cart = json_decode($data['cart'], TRUE);
-	        // var_dump($cart);
-	        foreach ($cart as $product){
-	        	$productId = $product['id'];
-	        	$count = $product['count'];
-	        	$discount = $product['discount'];
-	            $product = Product::where('id', $productId)->first();
+        }
 
-	            if($product->auto_price){
-	                $btcCost = $product->calcBtcPrice();
-	                $autoprice_data = $product->calcAutoPrice(true);
+        foreach ($cart as $product){
+        	$productId = $product['id'];
+        	$count = $product['count'] ?? 1;
+        	$discount = $product['discount'] ?? 0;
+        	$serial = $product['serials_number'] ?? NULL;
+            $product = Product::where('id', $productId)->first();
 
-	                $order->carts()->create([
-	                    'order_id' => $order->id,
-	                    'product_id' => $productId,
-	                    'count' => $count,
-	                    'discount' => $discount,
-	                    'cost' => $autoprice_data['total'],
-	                    'btcCost' => $btcCost,
-	                    'fes' => $autoprice_data['fes'],
-	                    'warranty' => $autoprice_data['warranty'],
-	                    'prime_cost' => $autoprice_data['prime'],
-	                    'delivery_cost' => $autoprice_data['delivery'],
-	                    'profit' => $autoprice_data['profit'],
-	                ]);
+            if($product->auto_price){
+                $btcCost = $product->calcBtcPrice();
+                $autoprice_data = $product->calcAutoPrice(true);
 
-	            } else{
-	                $cost = $product->price;
-	            
-	                $btcCost = $product->calcBtcPrice();
+                $order->carts()->create([
+                    'order_id' => $order->id,
+                    'product_id' => $productId,
+                    'count' => $count,
+                    'discount' => $discount,
+                    'serial_number' => $serial,
+                    'cost' => $autoprice_data['total'],
+                    'btcCost' => $btcCost,
+                    'fes' => $autoprice_data['fes'],
+                    'warranty' => $autoprice_data['warranty'],
+                    'prime_cost' => $autoprice_data['prime'],
+                    'delivery_cost' => $autoprice_data['delivery'],
+                    'profit' => $autoprice_data['profit'],
+                ]);
 
-	                $order->carts()->create([
-	                    'order_id' => $order->id,
-	                    'product_id' => $productId,
-	                    'count' => $count,
-	                    'discount' => $discount,
-	                    'cost' => $cost,
-	                    'btcCost' => $btcCost
-	                ]);
-	            }
-	        }
+            } else{
+                $cost = $product->price;
+            
+                $btcCost = $product->calcBtcPrice();
+
+                $order->carts()->create([
+                    'order_id' => $order->id,
+                    'product_id' => $productId,
+                    'count' => $count,
+                    'discount' => $discount,
+                    'cost' => $cost,
+                    'btcCost' => $btcCost
+                ]);
+            }
         }
 
 
@@ -493,6 +493,7 @@ class OrderController extends Controller
             'comment' => $data['d_comment'] ?? NULL,
             'office' => $data['d_office'] ?? NULL,
             'zendesk' => $data['d_zendesk'] ?? NULL,
+            'waybill' => $data['d_waybill'] ?? NULL,
             'warranty' => $data['d_warranty'] ?? NULL,
             'passport' => $data['d_passport'] ?? NULL
         ]);
@@ -504,9 +505,8 @@ class OrderController extends Controller
             'last_name' => $data['p_last_name'] ?? NULL,
             'city' => $data['p_city'] ?? NULL,
             'country' => $data['p_country'] ?? NULL,
-        ]);
+        ]);	 
 
-        //var_dump($order->cost); die;
         try {
 	        $order->save();
 		}
@@ -514,17 +514,63 @@ class OrderController extends Controller
 			logger($e->getMessage());
 			return response()->json(['message' => $e->getMessage()], 422);
 		}
-       
 
-       //  $number = $order_number;
-       // // try{
-       //      //Mail::to($data['email'])->send(new MailClass($number));
-       //  //} catch (\Exception $e){
+		$serials = [];
+		$products_info = [];
+		foreach ($cart as $key => $product) {
+        	$serials[] = $product['serial_number'] ?? '';
+			$products_info[] = $product['title'] . ' * ' . $product['count'];
+		}
 
-       // // }
+      	$this->googleTableAppend([
+      		// A. Исполнитель
+      		Auth::user()->name,
+      		// B. Номер заказа
+      		''.$order_number,
+      		// C. Номер тикета с зендеска
+      		$data['d_zendesk'] ?? '-',
+      		// D. Дата
+      		$data['created_at'] ?? '-',
+      		// E. Имя Фамилия
+      		($data['d_first_name'] ?? '') . ($data['d_last_name'] ?? '') ?: '-',
+      		// F. Номер телефона
+      		$data['d_phone'] ?? '-',
+      		// G. Почта
+      		$data['d_email'] ?? '-',
+      		// H. Что было сделано
+      		implode(', ', $products_info),
+      		// I. Серийные номера
+      		implode(', ', $serials),
+      		// J. Количество дней гарантии
+      		$data['d_warranty'] ?? '-',
+      		// K. Страна
+      		$data['d_country'] ?? '-',
+			// L. Тип доставки
+			$order->orderDeliveries->delivery->title,
+			// M. ТТН
+      		$data['d_waybill'] ?? '-',
+			// N. Город
+			$data['d_city'] ?? '-',
+			// O. Дата и время оплаты
+			''
+      	]);
 
-       //  unset($_SESSION['cart']);
-       //  //session()->forget('cart');
         return response()->json(['success' => true, 'order' => $order], 200);
+    }
+
+    protected function googleTableAppend($values = []){
+
+		$client = new Google_Client();
+		$client->useApplicationDefaultCredentials();
+		$client->setScopes(Google_Service_Sheets::SPREADSHEETS);
+
+		$service = new Google_Service_Sheets($client);
+		
+		$spreadsheetId = env('SPREADSHEET_ID');
+		$range = 'A:O';
+		$body = new Google_Service_Sheets_ValueRange(['values' => [$values]]);
+		$params = ['valueInputOption' => 'RAW'];
+
+		return $service->spreadsheets_values->append($spreadsheetId, $range, $body, $params);
     }
 }
