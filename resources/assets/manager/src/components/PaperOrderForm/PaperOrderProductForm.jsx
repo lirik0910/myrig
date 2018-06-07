@@ -112,8 +112,9 @@ class PaperOrderProductForm extends Component {
 				<Input
 					id="serial_number"
 					name="serial_number"
-					onChange={(v) => {
-						data['serial_number'] = v;
+					value={data.serial_number}
+					onChange={(e) => {
+						data['serial_number'] = e.target.value;
 						this.props.onItemChanged(data, key)
 
 					}} />
