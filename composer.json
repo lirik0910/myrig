@@ -18,7 +18,8 @@
         "laravel/scout": "^4.0",
         "laravel/tinker": "~1.0",
         "nicklayb/laravel-db-import": "^1.1",
-        "torann/geoip": "^1.0"
+        "torann/geoip": "^1.0",
+        "zendesk/zendesk_api_client_php": "^2.2"
     },
     "require-dev": {
         "filp/whoops": "~2.0",

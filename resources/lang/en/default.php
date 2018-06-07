@@ -113,8 +113,8 @@ return [
     'phone' => 'Phone:',
     'address_info' => 'Address info',
     'without_delivery' => 'Without delivery',
-
-    'DOWNLOAD_INVOICE' => 'DOWNLOAD INVOICE',
+    'delivery_checkout_success' => 'Delivery:',
+    'download_invoice' => 'DOWNLOAD INVOICE',
 
     //content.news
     'read' => 'Read',
