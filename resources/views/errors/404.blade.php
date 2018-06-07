@@ -1,9 +1,9 @@
-{{-- @extends('layouts.app')
+@extends('layouts.app')
 
 @section('content')
     <h1>Ошибка 404</h1>
-@endsection --}}
-<!DOCTYPE html>
+@endsection
+{{-- <!DOCTYPE html>
 <html>
 	<head>
 		<meta charset="UTF-8"/>
@@ -510,4 +510,4 @@ window.zEmbed||function(e,t){var n,o,d,i,s,a=[],r=document.createElement("iframe
 </script>
 </div>
 	</body>
-</html>
+</html> --}}
