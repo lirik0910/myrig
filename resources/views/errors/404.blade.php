@@ -76,7 +76,7 @@ if(isset($client_email) && !empty($client_email)){
 @endphp
 		<div id="root__container" class="root__container">
 
-<div id="loading__container" style="position: fixed; width: 100%; height: 100%; top: 0; left: 0; background-color: #FFF; z-index: 3200"></div>
+        <div id="loading__container" style="position: fixed; width: 100%; height: 100%; top: 0; left: 0; background-color: #FFF; z-index: 3200"></div>
 
 <div id="mobile-header__container" class="mobile-header__container">
 	<nav class="navigation__container" role="navigation">
@@ -225,7 +225,7 @@ if(isset($client_email) && !empty($client_email)){
 				<li class="list__item">
 					<a class="default__link link__item" href="{{ env(strtoupper($locale) . '_DOMAIN') . '/sso-login' }}">
 						@isset($client_name)
-						<p class="username__label font-weight-light">{{ __('default.welcome_title') }}, {{ $client_name }}!</p>
+						    <p class="username__label font-weight-light">{{ __('default.welcome_title') }}, {{ $client_name }}!</p>
 						@endisset
 
 						<img class="item__img" src="{{ preview(asset('uploads/design/icons-97.svg'), 30, 30) }}" alt="login"/>
@@ -248,14 +248,14 @@ if(isset($client_email) && !empty($client_email)){
 		<div id="dark-helper__container" class="col-md-8 padding__collapse margin__collapse"></div>
 	</div>
 </header>
+
 <div class="not_found" >
-<h1>404 Not Found</h1>
+    <h1>404 Not Found</h1>
 </div>
+
 @php
 	$context = App\Model\Base\Context::select()->where('title', $locale)->first();
-
 	$productsPage = App\Model\Base\Page::select()->where('parent_id', 0)->where('context_id', $context->id)->where('view_id', 3)->first();
-
 	$otherPages = App\Model\Base\Page::select()
 		->where('parent_id', 0)
 		->where('context_id', $context->id)
@@ -264,7 +264,6 @@ if(isset($client_email) && !empty($client_email)){
 				->orWhere('view_id', 4)
 				->orWhere('view_id', 7);
 		})->get();
-
 	$courses = App\Model\Shop\ExchangeRate::select()->get()->groupBy('title');
 @endphp
 
