@@ -126,10 +126,10 @@
 				@endif
 			</form>
 				
-			@if($payback)
-			<div class='tags__container tag-payback__icon'>
-				{{ __('default.payback') }} {{ $payback }} {{ __('default.days') }}
-			</div>
+			@if(isset($payback) && !empty($payback))
+				<div class='tags__container tag-payback__icon'>
+					{{ __('default.payback') }} {{ $payback }} {{ __('default.days') }}
+				</div>
 			@endif
 
 			<div class="tabs__container product__description">
