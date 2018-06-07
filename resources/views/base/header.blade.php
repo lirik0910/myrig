@@ -136,7 +136,7 @@ if(isset($client_email) && !empty($client_email)){
 	</div>
 
 	<div class="row" style="margin: 0 auto">
-		<div class="col-md-4 padding__collapse"></div>
+		<div id="white-helper__container" class="col-md-4 padding__collapse"></div>
 		<div id="dark-helper__container" class="col-md-8 padding__collapse margin__collapse"></div>
 	</div>
 </header>

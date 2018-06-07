@@ -18,7 +18,7 @@ $shop = $select('App\Model\Base\Page')
 </div>
 
 <div class="promo__container">
-	<div class="row__container row default__container">
+	<div id="row-promo__container" class="row__container row default__container">
 		@foreach ($multi['indexLinks'] as $item)
 			@include('partsIndex.promoItem', $item)
 		@endforeach

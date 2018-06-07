@@ -62,7 +62,7 @@ foreach ($products as $item) {
 			<div class="form-products__container">
 				<i class="article-arrow__icon"></i>
 
-				<span style="height: 115px; line-height: 115px;" class="d-inline-block">
+				<span style="height: 115px; line-height: 115px;" class="d-inline-block font-weight-light">
 					{{ __('default.in_the_cart') }}
 				
 					<a href="{{ url($cart->link) }}" class="default__link products-count__link font-weight-bold">
@@ -101,11 +101,11 @@ foreach ($products as $item) {
 
 				<h3 class="form-title__container padding__collapse">{{ __('default.checkout_title') }}</h3>
 				<div class="checkout__form">
-					<input type="text" id="first-name__input" class="field__input field__grey" name="first_name" value="@isset($user->attributes->fname) {{ $user->attributes->fname }} @endisset" required placeholder="{{ __('default.first_name_label') }}" />
+					<input type="text" id="first-name__input" class="font-weight-light field__input field__grey" name="first_name" value="@isset($user->attributes->fname) {{ $user->attributes->fname }} @endisset" required placeholder="{{ __('default.first_name_label') }}" />
 
-					<input type="text" id="last-name__input" class="field__input field__grey" name="last_name" placeholder="{{ __('default.last_name_label') }}" value="@isset($user->attributes->lname) {{$user->attributes->lname}} @endisset" required />
+					<input type="text" id="last-name__input" class="font-weight-light field__input field__grey" name="last_name" placeholder="{{ __('default.last_name_label') }}" value="@isset($user->attributes->lname) {{$user->attributes->lname}} @endisset" required />
 
-					<select name="country" id="country__select" class="country__select d-none field__grey">
+					<select name="country" id="country__select" class="font-weight-light country__select d-none field__grey">
 						<option value="">{{ __('default.select_country') }}</option>
 						<option value="AZ">{{ __('common.country_AZ') }}</option>
 						<option value="AM">{{ __('common.country_AM') }}</option>
@@ -119,23 +119,23 @@ foreach ($products as $item) {
 						<option value="UA">{{ __('common.country_UA') }}</option>
 					</select>
 
-					<input type="text" class="field__input field__grey" name="address" placeholder="{{ __('default.address_label') }}" value="@isset($user->attributes->address) {{$user->attributes->address}} @endisset" required />
+					<input type="text" class="font-weight-light field__input field__grey" name="address" placeholder="{{ __('default.address_label') }}" value="@isset($user->attributes->address) {{$user->attributes->address}} @endisset" required />
 
 					<div class="row margin__collapse padding__collapse">
 						<div class="col-sm-6 margin__collapse" style="padding: 0 18px 0 0">
-							<input type="text" class="field__input field__grey d-block" name="city" placeholder="{{ __('default.city_label') }}" required />
+							<input type="text" class="font-weight-light field__input field__grey d-block" name="city" placeholder="{{ __('default.city_label') }}" required />
 						</div>
 
 						<div class="col-sm-6 margin__collapse padding__collapse">
-							<input type="text" class="field__input field__grey d-block" placeholder="{{ __('default.region_label') }}" name="state" required />
+							<input type="text" class="font-weight-light field__input field__grey d-block" placeholder="{{ __('default.region_label') }}" name="state" required />
 						</div>
 
 						<div class="col-sm-6 margin__collapse" style="padding: 0 18px 0 0">
-							<input type="tel" class="field__input field__grey d-block" name="phone" placeholder="Phone {{ __('default.phone_input') }}" value="@isset($user->attributes->phone) {{$user->attributes->phone}} @endisset" required />
+							<input type="tel" class="font-weight-light field__input field__grey d-block" name="phone" placeholder="Phone {{ __('default.phone_input') }}" value="@isset($user->attributes->phone) {{$user->attributes->phone}} @endisset" required />
 						</div>
 
 						<div class="col-sm-6 margin__collapse padding__collapse">
-							<input type="email" class="field__input field__grey d-block" name="email" placeholder="{{ __('default.email_label') }}" value="@isset($user->email) {{$user->email}} @endisset" required />
+							<input type="email" class="font-weight-light field__input field__grey d-block" name="email" placeholder="{{ __('default.email_label') }}" value="@isset($user->email) {{$user->email}} @endisset" required />
 						</div>
 					</div>
 				</div>
@@ -146,7 +146,7 @@ foreach ($products as $item) {
 					<ul class="list__container" style="padding: 12px 24px 0">
 						@foreach($paymentTypes as $type)
 						<li class="list__item">
-							<input id="{{ 'payment-type__item-' . $type->id }}" type="radio" class="payment-type__input" name="payment_method" data-id="{{ $type->id }}" value="{{ $type->id }}" style="display: inline" @if($loop->first) checked='checked' @endif />
+							<input id="{{ 'payment-type__item-' . $type->id }}" type="radio" class="font-weight-light payment-type__input" name="payment_method" data-id="{{ $type->id }}" value="{{ $type->id }}" style="display: inline" @if($loop->first) checked='checked' @endif />
 
 							<label class="font-weight-normal" for="{{ 'payment-type__item-' . $type->id }}">{{ $type->title }}</label>
 						</li>
@@ -158,7 +158,7 @@ foreach ($products as $item) {
 					<h3 class="additional-data-title__container">{{ __('default.additional_info') }}</h3>
 
 					<div style="padding: 18px 26px">
-						<textarea name="comment" class="field__input field__grey d-block" placeholder="Post office number etc"  rows="2" cols="5"></textarea>
+						<textarea name="comment" class="font-weight-light field__input field__grey d-block" placeholder="Post office number etc"  rows="2" cols="5"></textarea>
 					</div>
 				</div>
 			</div>
@@ -192,12 +192,12 @@ foreach ($products as $item) {
 							<div class="delivery-method__item @if($loop->first) ua-delivery__method @elseif($loop->iteration == 2 || $loop->iteration == 3) ru-delivery__method @else selfment-delivery__method @endif" style="margin: 0 4px; display: none;">
 								<input id="{{ 'delivery__radio-' . $delivery->id }}" type="radio" name="delivery" value="{{ $delivery->id }}" @if($loop->iteration == 2) checked='checked' @endif />
 
-								<label style="cursor: pointer" for="{{ 'delivery__radio-' . $delivery->id }}">{{ $delivery->title }}</label>
+								<label class="font-weight-light" style="cursor: pointer" for="{{ 'delivery__radio-' . $delivery->id }}">{{ $delivery->title }}</label>
 							</div>
 							@endforeach
 
 							<div class="without-delivery__method" style="margin: 0 4px; line-height: 20px">
-								<input type="text" name="without-delivery" value="0" class="without-delivery d-none" />
+								<input type="text" name="without-delivery" value="0" class="without-delivery d-none font-weight-light" />
 
 								<p style="color: red;" class="padding__collapse margin__collapse">There are no shipping methods available. Please double check your address, or contact us if you need any help.</p>
 							</div>
