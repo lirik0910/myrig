@@ -236,6 +236,17 @@ class PaperOrderDeliveryForm extends Component {
 				InputLabelProps={{
 					shrink: true
 				}} />
+
+			<TextField
+				id="d_waybill"
+				label="Waybill (ТТН)"
+				type="Waybill"
+				name="d_waybill"
+				defaultValue=""
+				className={classes.textField}
+				InputLabelProps={{
+					shrink: true
+				}} />
 		
 
 		</Paper>
