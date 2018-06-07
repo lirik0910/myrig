@@ -559,7 +559,6 @@ class OrderController extends Controller
     }
 
     protected function googleTableAppend($values = []){
-    	// var_dump($values); die;
 
 		$client = new Google_Client();
 		$client->useApplicationDefaultCredentials();
