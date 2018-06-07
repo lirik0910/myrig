@@ -113,6 +113,7 @@ Route::prefix('orders')
 	->middleware('auth')	
 	->group(function () {
 		Route::get('/', 'Manager\Base\ViewController@index');
+		Route::get('/create', 'Manager\Base\ViewController@index');
 });
 
 Route::prefix('vocabulary')
