@@ -26,6 +26,7 @@ else {
 		->orderBy('created_at', 'DESC')
 		->paginate($page_limit);
 }
+var_dump($news); die;
 
 @endphp
 
