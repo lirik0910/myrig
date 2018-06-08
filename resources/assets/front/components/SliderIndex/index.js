@@ -18,7 +18,9 @@ export default class IndexSlider extends Base {
 	initDOMElements(e) {
 		this.els = {
 			_sliderIndex: $('#index-slider__container'),
-			_footerContainer: $('#footer__container')
+			_footerContainer: $('#footer__container'),
+			_rowPromoContainer: $('#row-promo__container'),
+			_whiteHelperContainer: $('#white-helper__container')
 		};
 	}
 
@@ -30,6 +32,7 @@ export default class IndexSlider extends Base {
 		this.initSlider(e => {
 			this.sliderHeightAlign();
 			this.props.background.getDarkContainerLeftDistance();
+			this.updateDotsStyles();
 		});
 	}
 
@@ -39,6 +42,7 @@ export default class IndexSlider extends Base {
 	 */
 	onResized(e) {
 		this.sliderHeightAlign();
+		this.updateDotsStyles();
 	}
 
 	/**
@@ -69,5 +73,16 @@ export default class IndexSlider extends Base {
 	sliderHeightAlign() {
 		let bottomDistance = this.baseDOM._window.height() - this.els._footerContainer.height();
 		this.els._sliderIndex.css('minHeight', bottomDistance);
+	}
+
+	/**
+	 * Update dots container styles
+	 */
+	updateDotsStyles() {		
+		$('.owl-dots').css({
+			left: this.els._rowPromoContainer.offset().left - 5,
+			width: this.els._whiteHelperContainer.width(),
+			margin: 0
+		});
 	}
 }

@@ -13,8 +13,8 @@
     $btcPrice = number_format($item->calcBtcPrice(), 4, '.', '');
 @endphp
 
-<a href="{{ $item->page->link }}">
-	<div class="related-item__container" data-dot="<button class='slide-dot__button padding__collapse' data-id={{ $item->index }}><div class='slide-item__progress'></div></button>">
+<div class="related-item__container" data-dot="<button class='slide-dot__button padding__collapse' data-id={{ $item->index }}><div class='slide-item__progress'></div></button>">
+	<a href="{{ $item->page->link }}" class="d-block">
 		<div class="title__container">{{ $item->title }}</div>
 
 		<div class="icon__container text-center">
@@ -73,5 +73,5 @@
 				</button>
 			@endif
 		</form>
-	</div>
-</a>
+	</a>
+</div>
