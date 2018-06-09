@@ -110,7 +110,7 @@ class ViewsTableSeeder extends Seeder
         App\Model\Base\View::create([
             'title' => 'Checkout success',
             'description' => 'Template for checkout success page',
-            'path' => 'content/checkout_success'
+            'path' => 'content/checkoutSuccess'
         ]);
 	}
 }
