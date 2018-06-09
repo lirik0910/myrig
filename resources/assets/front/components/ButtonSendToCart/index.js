@@ -65,6 +65,8 @@ export default class ButtonSendToCart extends Base {
 			if (session) {
 				session = JSON.parse(session);
 
+				console.log(session)
+
 				/** Remove product item container in cart page
 				 */
 				$('#product-item__container-'+ currentTarget.data('product-id')).remove();
@@ -141,13 +143,12 @@ export default class ButtonSendToCart extends Base {
 
 			/** Count amount
 			 */
-			if (this.els._defaultPriceContainer.length === 1) {
+			if (this.els._defaultPriceContainer.length === 1 && typeof session[i] !== 'undefined') {
 				el = $('#count-products-'+ session[i].id);
 
 				defaultPrice += el.data('default-price') * session[i].count;
 				bitcoinPrice += el.data('bitcoin-price') * session[i].count;
 			}
-
 			i++;
 		}
 
