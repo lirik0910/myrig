@@ -29,6 +29,11 @@
 }
 
 .product-item__container {
+	.slider__container {
+		@media (max-width: 991px) {
+			padding-left: 0 !important;
+		}
+	}
 	.checkout__form {
 		border: 2px solid #60A645;
 		padding: 18px 26px;

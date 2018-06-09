@@ -2,7 +2,7 @@
 	<div class="row__container row default__container">
 		<div class="slide-about__container col-md-4 padding__collapse center__align font-weight-light">
 			<div class="vertical-align__container">
-				<h4 class="slide__title">
+				<h4 class="slide__title font-weight-light">
 					{!! $slide['header'] !!}
 				</h4>
 

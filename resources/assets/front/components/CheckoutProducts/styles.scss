@@ -3,14 +3,19 @@
 		padding-right: 32px !important;
 		padding-left: 32px !important;
 		background-color: #FFF;
+
+		@media (max-width: 767px) {
+			padding-left: 32px !important;
+			border-top: 1px solid #F2F2F2 !important;
+		}
+
+		@media (max-width: 991px) {
+			padding-left: 0 !important;
+		}
 	}
 
 	@media (max-width: 767px) {
 		margin-top: -32px !important;
-
-		.slider__container {
-			border-top: 1px solid #F2F2F2 !important;
-		}
 
 		.product-item__container {
 			background-color: #FFF;

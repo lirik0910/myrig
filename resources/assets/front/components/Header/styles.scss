@@ -79,7 +79,8 @@
 			}
 
 			@media (min-width: 992px) {
-				padding-left: 32px;
+				padding-left: 78px;
+				padding-right: 0;
 			}
 
 			@media (min-width: 1250px) {
@@ -87,8 +88,15 @@
 			}
 
 			.list__item {
-				margin: 0 22px;
 				line-height: 1.8;
+
+				@media (min-width: 992px) {
+					margin: 0 16px;
+				}
+
+				@media (min-width: 1250px) {
+					margin: 0 22px;
+				}
 			}
 
 			.list__item:first-child {
