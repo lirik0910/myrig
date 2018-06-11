@@ -131,7 +131,7 @@ foreach ($products as $item) {
 						</div>
 
 						<div class="col-sm-6 margin__collapse" style="padding: 0 18px 0 0">
-							<input type="tel" class="font-weight-light field__input field__grey d-block" name="phone" placeholder="Phone {{ __('default.phone_input') }}" value="@isset($user->attributes->phone) {{$user->attributes->phone}} @endisset" required />
+							<input type="tel" class="field__input field__grey d-block" name="phone" placeholder="{{ __('default.phone') . ' ' . __('default.phone_input') }}" value="@isset($user->attributes->phone) {{$user->attributes->phone}} @endisset" required />
 						</div>
 
 						<div class="col-sm-6 margin__collapse padding__collapse">
@@ -148,7 +148,7 @@ foreach ($products as $item) {
 						<li class="list__item">
 							<input id="{{ 'payment-type__item-' . $type->id }}" type="radio" class="font-weight-light payment-type__input" name="payment_method" data-id="{{ $type->id }}" value="{{ $type->id }}" style="display: inline" @if($loop->first) checked='checked' @endif />
 
-							<label class="font-weight-normal" for="{{ 'payment-type__item-' . $type->id }}">{{ $type->title }}</label>
+							<label class="font-weight-normal" for="{{ 'payment-type__item-' . $type->id }}">@if($type->title == 'Cash'){{ __('default.cash') }}@else{{ $type->title }}@endif</label>
 						</li>
 						@endforeach
 					</ul>
@@ -158,7 +158,7 @@ foreach ($products as $item) {
 					<h3 class="additional-data-title__container">{{ __('default.additional_info') }}</h3>
 
 					<div style="padding: 18px 26px">
-						<textarea name="comment" class="font-weight-light field__input field__grey d-block" placeholder="Post office number etc"  rows="2" cols="5"></textarea>
+						<textarea name="comment" class="field__input field__grey d-block" placeholder="{{ __('default.comment_placeholder') }}"  rows="2" cols="5"></textarea>
 					</div>
 				</div>
 			</div>
@@ -199,7 +199,7 @@ foreach ($products as $item) {
 							<div class="without-delivery__method" style="margin: 0 4px; line-height: 20px">
 								<input type="text" name="without-delivery" value="0" class="without-delivery d-none font-weight-light" />
 
-								<p style="color: red;" class="padding__collapse margin__collapse">There are no shipping methods available. Please double check your address, or contact us if you need any help.</p>
+								<p style="color: red;" class="padding__collapse margin__collapse">{{ __('default.no_shipping') }}</p>
 							</div>
 						</div>
 					</div>

@@ -31,26 +31,26 @@
 
         <div class="price__container padding__collapse margin__collapse mobile-price__container d-block" style="min-width: 194px">
             <span class="font-weight-bold default-small__price attribute-item__container" style="color: #000; font-size: 15px;">
-                <span class="attribute-item__label">Product price</span>
+                <span class="attribute-item__label">{{ __('default.product_price') }}</span>
                 <span class="currency__symbol">&#36;</span>
                 <span id="{{ 'default-price__container-' . $item->id }}" class="font-weight-light">{{ $price }}</span>
             </span>
 
             <span class="bitcoin-small__price attribute-item__container" style="font-size: 15px;">
-                <span class="attribute-item__label">Cost</span>
+                <span class="attribute-item__label">{{ __('default.cost') }}</span>
                 <span id="{{ 'bitcoin-price__container-' . $item->id }}" class="font-weight-light">{{ $btcPrice }}</span>
                 <i class="fa fa-bitcoin"></i>
             </span>
 
             <span class="attribute-item__container d-block-991" style="font-size: 15px;">
-                <span class="attribute-item__label">Count</span>
+                <span class="attribute-item__label">{{ __('default.count') }}</span>
                 <span class="font-weight-light" style="color: #000">{{ $count }}</span>
             </span>
         </div>
     </td>
 
     <td class="product-line__container checkout-order__cost">
-        <span class="hidden-md">Count</span>
+        <span class="hidden-md">{{ __('default.count') }}</span>
         <span style="color: #000">{{ $count }}</span>
     </td>
 

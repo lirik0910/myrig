@@ -85,6 +85,8 @@ return [
 
     //content.checkout
     'additional_info' => 'Additional info',
+    'product_price' => 'Product price',
+    'phone' => 'Phone',
     'your_order' => 'Your order',
     'photo' => 'Photo',
     'name' => 'Name',

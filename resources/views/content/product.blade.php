@@ -126,12 +126,15 @@
 				@endif
 			</form>
 				
-			@if(isset($payback) && !empty($payback))
-				<div class='tags__container tag-payback__icon'>
-					{{ __('default.payback') }} {{ $payback }} {{ __('default.days') }}
-				</div>
-			@endif
-
+		@php	
+		 $sub1 = substr($payback, -1);
+		 $sub2 = substr($payback, -2);
+		@endphp
+		@if(isset($payback) && !empty($payback))
+		<div class='tags__container tag-payback__icon'>
+			{{ __('default.payback') }} {{ $payback  }} @if($sub2 == 11){{ __('default.days') }}  @elseif($sub1 == 1){{ __('default.day') }}  @elseif($sub1 > 1 and $sub1 < 5){{ __('default.two_days') }}  @else{{ __('default.days') }}@endif
+		</div>
+		@endif
 			<div class="tabs__container product__description">
 				<div class="tab-control__container">
 					<button class="tab__item padding__collapse active" data-id="1">

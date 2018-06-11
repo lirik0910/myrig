@@ -49,6 +49,8 @@ Route::post('/back_call', function (Request $request) {
 		return $requestException;
 	}
 });
+// Route::get('/{any}', 'Page404Controller@notFound');
+
 
 
 
