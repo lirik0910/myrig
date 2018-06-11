@@ -515,45 +515,47 @@ class OrderController extends Controller
 			return response()->json(['message' => $e->getMessage()], 422);
 		}
 
-		$serials = [];
-		$products_info = [];
-		foreach ($cart as $key => $product) {
-        	$serials[] = $product['serial_number'] ?? '';
-			$products_info[] = $product['title'] . ' * ' . $product['count'];
-		}
+		if($data['send'] == true){
+            $serials = [];
+            $products_info = [];
+            foreach ($cart as $key => $product) {
+                $serials[] = $product['serial_number'] ?? '';
+                $products_info[] = $product['title'] . ' * ' . $product['count'];
+            }
 
-      	$this->googleTableAppend([
-      		// A. Исполнитель
-      		Auth::user()->name,
-      		// B. Номер заказа
-      		''.$order_number,
-      		// C. Номер тикета с зендеска
-      		$data['d_zendesk'] ?? '-',
-      		// D. Дата
-      		$data['created_at'] ?? '-',
-      		// E. Имя Фамилия
-      		($data['d_first_name'] ?? '') . ($data['d_last_name'] ?? '') ?: '-',
-      		// F. Номер телефона
-      		$data['d_phone'] ?? '-',
-      		// G. Почта
-      		$data['d_email'] ?? '-',
-      		// H. Что было сделано
-      		implode(', ', $products_info),
-      		// I. Серийные номера
-      		implode(', ', $serials),
-      		// J. Количество дней гарантии
-      		$data['d_warranty'] ?? '-',
-      		// K. Страна
-      		$data['d_country'] ?? '-',
-			// L. Тип доставки
-			$order->orderDeliveries->delivery->title,
-			// M. ТТН
-      		$data['d_waybill'] ?? '-',
-			// N. Город
-			$data['d_city'] ?? '-',
-			// O. Дата и время оплаты
-			''
-      	]);
+            $this->googleTableAppend([
+                // A. Исполнитель
+                Auth::user()->name,
+                // B. Номер заказа
+                ''.$order_number,
+                // C. Номер тикета с зендеска
+                $data['d_zendesk'] ?? '-',
+                // D. Дата
+                $data['created_at'] ?? '-',
+                // E. Имя Фамилия
+                ($data['d_first_name'] ?? '') . ($data['d_last_name'] ?? '') ?: '-',
+                // F. Номер телефона
+                $data['d_phone'] ?? '-',
+                // G. Почта
+                $data['d_email'] ?? '-',
+                // H. Что было сделано
+                implode(', ', $products_info),
+                // I. Серийные номера
+                implode(', ', $serials),
+                // J. Количество дней гарантии
+                $data['d_warranty'] ?? '-',
+                // K. Страна
+                $data['d_country'] ?? '-',
+                // L. Тип доставки
+                $order->orderDeliveries->delivery->title,
+                // M. ТТН
+                $data['d_waybill'] ?? '-',
+                // N. Город
+                $data['d_city'] ?? '-',
+                // O. Дата и время оплаты
+                ''
+            ]);
+        }
 
         return response()->json(['success' => true, 'order' => $order], 200);
     }

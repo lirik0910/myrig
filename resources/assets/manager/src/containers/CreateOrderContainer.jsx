@@ -88,7 +88,7 @@ class CreateOrderContainers extends Component {
 			data[f] = v;
 		}) 
 
-		console.log(cart);
+		//console.log(cart);
 		data['cart'] = JSON.stringify(cart);
 		App.api({
 			type: 'POST',
@@ -239,9 +239,16 @@ class CreateOrderContainers extends Component {
 							}}
 
 							onContextSelected={value => {
-								data['context_id'] = value
+								data['context_id'] = value;
 								this.setState({ data });
 							}}
+
+							onActiveChanged={
+								value => {
+									data['send'] = value;
+									this.setState({ data });
+                                }
+							}
 							/>
 
 					</Grid>
