@@ -292,6 +292,8 @@ class PageController extends Controller
 		 */
 		$data['link'] = rtrim(ltrim($data['link'], '/\\'), '/\\');
 
+		$data['parent_id'] = Page::where('context_id', $data['context_id'])->where('link', explode('/', $data['link'])[0])->first()->id;
+
 		/** Create new model
 		 */
 		$model = new Page;
@@ -354,6 +356,7 @@ class PageController extends Controller
 			$data['link'] = rtrim(ltrim($data['link'], '/\\'), '/\\');
 		}
 
+
 		/** Try get page model
 		 */
 		try {
@@ -363,6 +366,8 @@ class PageController extends Controller
 			logger($e->getMessage());
 			return response()->json(['message' => $e->getMessage()], 422);
 		}
+
+        $data['parent_id'] = Page::where('context_id', $data['context_id'])->where('link', explode('/', $data['link'])[0])->first()->id;
 
 		$page->fill($data);
 		

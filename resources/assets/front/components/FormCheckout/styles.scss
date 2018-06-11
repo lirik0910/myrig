@@ -13,6 +13,10 @@
 	.products-count__link {
 		margin-left: 12px;
 	}
+
+	@media (max-width: 991px) {
+		font-size: 15px;
+	}
 }
 
 .form-title__container {
