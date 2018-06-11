@@ -44,8 +44,8 @@ class OrderController extends Controller
         if(!$user){
             return response()->json(['success' => false, 'message' => 'User is not exist']);
         }
-
-        if($data['without-delivery'] == 1){
+//var_dump($data); die;
+        if(!isset($data['delivery'])){
             $delivery = Delivery::where('title', 'Without delivery')->first();
         } else{
             $delivery = Delivery::where('id', $data['delivery'])->where('active', 1)->first();
