@@ -67,7 +67,6 @@
 					<img src="{{ asset('uploads/design/paypal.png') }}" alt="paypal" />
 				</div>
 			</div>
-
 			<ul class="navigation__list list__container margin__collapse padding__collapse col-sm-10 col-md-7 col-lg-7">
 				<li class="list__item">
 					<a href="{{ url($productsPage->link) }}">
@@ -88,6 +87,24 @@
 					</a>
 				</li>
 				@endforeach
+				
+			</ul>
+			<ul class="navigation__list list__container margin_links padding__collapse col-sm-10 col-md-7 col-lg-7">
+				<li class="list__item">
+					<a href="#">
+						Доставка и отгрузка
+					</a>
+				</li>
+				<li class="list__item">
+					<a href="#">
+						Расширенная гарантия
+					</a>
+				</li>
+				<li class="list__item">
+					<a href="#">
+						Упаковка отправлений
+					</a>
+				</li>
 			</ul>
 
 			<div class="contacts__container padding__collapse col-sm-12 col-md-3 col-lg-3 row">
