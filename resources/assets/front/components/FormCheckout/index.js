@@ -69,13 +69,23 @@ export default class FormCheckout extends Base {
 	displayDeliveryMethods(currentTarget) {
 		switch (currentTarget.val()) {
 			case 'UA':
+                this.els._uaDeliveryMethod.show();
+                this.els._uaDeliveryMethod.find('input').prop('checked', true);
+
+                this.els._selfmentDeliveryMethod.show();
+                this.els._ruDeliveryMethod.hide();
+                this.els._ruDeliveryMethod.find('input').prop('checked', false);
+
+                this.els._withoutDeliveryMethod.val(0);
+                this.els._withoutDeliveryMethod.hide();
+                break;
 			case 'RU':
-				this.els._uaDeliveryMethod.show();
-				this.els._uaDeliveryMethod.find('input').prop('checked', true);
+				this.els._ruDeliveryMethod.show();
+				this.els._ruDeliveryMethod.find('input').prop('checked', true);
 
 				this.els._selfmentDeliveryMethod.show();
-				this.els._ruDeliveryMethod.hide();
-				this.els._ruDeliveryMethod.find('input').prop('checked', false);
+				this.els._uaDeliveryMethod.hide();
+				this.els._uaDeliveryMethod.find('input').prop('checked', false);
 
 				this.els._withoutDeliveryMethod.val(0);
 				this.els._withoutDeliveryMethod.hide();

@@ -41,13 +41,14 @@ class PaperOrderForm extends Component {
 		userDefaultValue: 0,
 		paymentDefaultValue: 2,
 		createDefaultValue: new Date(),
-		activeDefaultValue: true,
+		sendDefaultValue: false,
 		onUserSelected: () => {},
 		onUserLoaded: () => {},
 		onPaymentSelected: () => {},
 		onDateSelected: () => {},
 		onStatusSelected: () => {},
 		onContextSelected: () => {},
+        onActiveChanged: () => {},
 		classes: PropTypes.object.isRequired,
 	}
 
@@ -85,6 +86,7 @@ class PaperOrderForm extends Component {
 			contextDefaultValue,
 			paymentDefaultValue,
 			statusDefaultValue,
+			sendDefaultValue
 		} = this.props;
 
 		return <Paper className={classes.paper}>
@@ -113,6 +115,14 @@ class PaperOrderForm extends Component {
 					defaultValue={paymentDefaultValue}
 					onItemSelected={value => this.props.onPaymentSelected(value)}
 				/>
+
+				<CheckboxActive
+					name="send-regime"
+					title="Send to table"
+					defaultValue={sendDefaultValue}
+					onCheckboxValueChanged={value => {
+						this.props.onActiveChanged(value);
+					}} />
 
 			</Paper>
 	}

@@ -78,6 +78,8 @@ class DialogNotification extends Component {
 
         return <Dialog
             open={createDialogOpen}
+            fullWidth={true}
+            maxWidth={"md"}
             transition={Transition}
             keepMounted
             aria-labelledby="dialog-delete-slide-title"
@@ -95,6 +97,7 @@ class DialogNotification extends Component {
                     multiline={true}
                     rows={2}
                     rowsMax={10}
+                    fullWidth={true}
                     onInput={this.handleInputField}
                 />
             </DialogContent>
