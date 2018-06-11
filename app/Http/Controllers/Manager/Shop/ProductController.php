@@ -326,7 +326,7 @@ class ProductController extends Controller
 		 */
 		if ($request->input('options')) {
 			try {
-				$model->setOptions($request->input('options'));
+				$model->setOptions(trim($request->input('options')));
 			}
 			catch (\Exception $e) {
 				logger($e->getMessage());

@@ -8,7 +8,10 @@
 
 		<div class="news-option__container d-block">
 			@php
-				echo date('d F', strtotime($article->created_at))
+				$month = date('F', strtotime($article->created_at));
+				$default = 'common.';
+				$translate = $default . strtolower($month);
+				echo date('d', strtotime($article->created_at)) . ' ' . __($translate);
 			@endphp
 			<i class="fa fa-eye" style="margin-left: 18px"></i>
 
