@@ -366,7 +366,7 @@ class PageController extends Controller
 			logger($e->getMessage());
 			return response()->json(['message' => $e->getMessage()], 422);
 		}
-
+        //var_dump(); die;
         $data['parent_id'] = Page::where('context_id', $data['context_id'])->where('link', explode('/', $data['link'])[0])->first()->id;
 
 		$page->fill($data);
