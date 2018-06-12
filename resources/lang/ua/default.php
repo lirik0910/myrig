@@ -83,6 +83,8 @@ return [
 
     //content.checkout
     'additional_info' => 'Дополнительная информация',
+    'product_price' => 'Цена товара',
+    'phone' => 'Телефон',
     'your_order' => 'Ваш заказ',
     'photo' => 'Фото',
     'name' => 'Имя',
