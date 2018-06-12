@@ -204,7 +204,7 @@ class Product extends Model
 			$model->product_id = $this->id;
 			$model->type_id = $field['type_id'];
 			$model->name = $field['name'];
-			$model->value = $field['value'];
+			$model->value = trim($field['value']);
 
 			try {
 				$model->save();

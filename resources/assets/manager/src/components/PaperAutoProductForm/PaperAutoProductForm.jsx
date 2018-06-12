@@ -7,6 +7,7 @@
 
 import React, { Component } from 'react';
 
+import App from '../../App.js';
 import Paper from 'material-ui/Paper';
 import InputPrice from '../FormControl/InputPrice/InputPrice.jsx';
 import CheckboxActive from '../FormControl/CheckboxActive/CheckboxActive.jsx';
@@ -39,37 +40,38 @@ class PaperAutoProductForm extends Component {
 		classes: PropTypes.object.isRequired,
 	}
 
-    /**
-     * State object of component
-     */
-    state = {
-        totalAutoPrice: 0,
-    }
+	/**
+	 * State object of component
+	 */
+	state = {
+		totalAutoPrice: 0,
+	}
 
-    /**
-     * Invoked just before mounting occurs
-     * @fires componentWillMount
-     */
-    componentWillMount() {
-    	if(this.props.data !== null){
-            this.calcAutoPrice();
+	/**
+	 * Invoked just before mounting occurs
+	 * @fires componentWillMount
+	 */
+	componentWillMount() {
+		if(this.props.data !== null){
+			this.calcAutoPrice();
 		}
-    }
+	}
 
 	calcAutoPrice(){
 
-    	let data = this.props.data ? this.props.data : {
-                fes_price: 0,
-                fes_price_currency: 1,
-                prime_price: 0,
-                prime_price_currency: 1,
-                delivery_price: 0,
-                delivery_price_currency: 1,
-                profit_price: 0,
-                profit_price_currency: 1,
-                warranty_price: 0,
-                warranty_price_currency: 1,
-            };
+		let data = App.isEmpty(this.props.data) ? {
+				fes_price: 0,
+				fes_price_currency: 1,
+				prime_price: 0,
+				prime_price_currency: 1,
+				delivery_price: 0,
+				delivery_price_currency: 1,
+				profit_price: 0,
+				profit_price_currency: 1,
+				warranty_price: 0,
+				warranty_price_currency: 1,
+			} :
+			this.props.data;
 		let {
 			fes_price,
 			fes_price_currency,
@@ -86,47 +88,47 @@ class PaperAutoProductForm extends Component {
 		let btc = parseFloat(this.props.btc);
 		//let { totalAutoPrice } = this.state;
 
-        if (prime_price_currency == 2){
-            prime_price = prime_price * btc;
-        } else {
-         //   $prime_price = $params->prime_price;
-        }
+		if (prime_price_currency == 2){
+			prime_price = prime_price * btc;
+		} else {
+		 //   $prime_price = $params->prime_price;
+		}
 
-        if (delivery_price_currency == 2){
-            delivery_price = delivery_price * btc;
-        } else {
-        //    delivery_price = delivery_price;
-        }
+		if (delivery_price_currency == 2){
+			delivery_price = delivery_price * btc;
+		} else {
+		//    delivery_price = delivery_price;
+		}
 
-        if (fes_price_currency == 2){
-            fes_price = fes_price * btc;
-        } else if (fes_price_currency == 3){
-            fes_price = prime_price * fes_price / 100;
-        } else{
-            //fes_price = fes_price;
-        }
+		if (fes_price_currency == 2){
+			fes_price = fes_price * btc;
+		} else if (fes_price_currency == 3){
+			fes_price = prime_price * fes_price / 100;
+		} else{
+			//fes_price = fes_price;
+		}
 
-        if (profit_price_currency == 2){
-            profit_price = profit_price * btc;
-        } else if (profit_price_currency == 3){
-            profit_price = prime_price * profit_price / 100;
-        } else{
-          //  $profit_price = $params->profit_price;
-        }
+		if (profit_price_currency == 2){
+			profit_price = profit_price * btc;
+		} else if (profit_price_currency == 3){
+			profit_price = prime_price * profit_price / 100;
+		} else{
+		  //  $profit_price = $params->profit_price;
+		}
 
-        if (warranty_price_currency == 2){
-            warranty_price = warranty_price * btc;
-        } else if (warranty_price_currency == 3){
-            warranty_price = prime_price * warranty_price / 100;
-        } else{
-            //$warranty_price = $params->warranty_price;
-        }
+		if (warranty_price_currency == 2){
+			warranty_price = warranty_price * btc;
+		} else if (warranty_price_currency == 3){
+			warranty_price = prime_price * warranty_price / 100;
+		} else{
+			//$warranty_price = $params->warranty_price;
+		}
 
-        let total = prime_price + delivery_price + fes_price + profit_price + warranty_price;
+		let total = prime_price + delivery_price + fes_price + profit_price + warranty_price;
 
-        this.setState({
+		this.setState({
 			totalAutoPrice: total
-        });
+		});
 	}
 
 	/**
@@ -140,7 +142,6 @@ class PaperAutoProductForm extends Component {
 			currencies,
 			priceDefaultValue,
 			activeDefaultValue,
-
 		} = this.props;
 
 		let { totalAutoPrice } = this.state;
@@ -161,125 +162,123 @@ class PaperAutoProductForm extends Component {
 		}
 
 		return <Paper className={classes.paper}>
-				<CheckboxActive
-					name="auto-regime"
-					title="Auto price regime"
-					defaultValue={activeDefaultValue}
-					onCheckboxValueChanged={value => {
-                        this.props.onActiveChanged(value);
-						this.calcAutoPrice()
-					}} />
+			<CheckboxActive
+				name="auto-regime"
+				title="Auto price regime"
+				defaultValue={activeDefaultValue}
+				onCheckboxValueChanged={value => {
+					this.props.onActiveChanged(value);
+					this.calcAutoPrice()
+				}} />
 
-				<InputPrice
-					name="fes"
-					title="FES"
-					inputID="fes-field"
-					currencies={currencies}
-					disabled={activeDefaultValue}
-					defaultValue={data.fes_price}
-					currencyID={data.fes_price_currency}
-					onFieldInputed={value => {
-                        //console.log(value);
-						value = value === '' ? 0 : value;
+			<InputPrice
+				name="fes"
+				title="FES"
+				inputID="fes-field"
+				currencies={currencies}
+				disabled={activeDefaultValue}
+				defaultValue={data.fes_price}
+				currencyID={data.fes_price_currency}
+				onFieldInputed={value => {
+					//console.log(value);
+					value = value === '' ? 0 : value;
 
-						data.fes_price = Number(value);
-						this.props.onDataUpdated(data);
-                        this.calcAutoPrice();
-					}}
-					onCurencySelected={value => {
-						data.fes_price_currency = value.id;
-						this.props.onDataUpdated(data);
-					}} />
+					data.fes_price = Number(value);
+					this.props.onDataUpdated(data);
+					this.calcAutoPrice();
+				}}
+				onCurencySelected={value => {
+					data.fes_price_currency = value.id;
+					this.props.onDataUpdated(data);
+				}} />
 
-				<InputPrice
-					name="warranty"
-					title="Warranty"
-					inputID="warranty-field"
-					currencies={currencies}
-					disabled={activeDefaultValue}
-					defaultValue={data.warranty_price}
-					currencyID={data.warranty_price_currency}
-					onFieldInputed={value => {
-                        value = value === '' ? 0 : value;
-						data.warranty_price = parseFloat(value);
-						this.props.onDataUpdated(data);
-                        this.calcAutoPrice();
-                        //console.log('inputed');
-					}}
-					onCurencySelected={value => {
-						data.warranty_price_currency = value.id;
-						this.props.onDataUpdated(data);
-                        //this.calcAutoPrice();
-					}} />
+			<InputPrice
+				name="warranty"
+				title="Warranty"
+				inputID="warranty-field"
+				currencies={currencies}
+				disabled={activeDefaultValue}
+				defaultValue={data.warranty_price}
+				currencyID={data.warranty_price_currency}
+				onFieldInputed={value => {
+					value = value === '' ? 0 : value;
+					data.warranty_price = parseFloat(value);
+					this.props.onDataUpdated(data);
+					this.calcAutoPrice();
+					//console.log('inputed');
+				}}
+				onCurencySelected={value => {
+					data.warranty_price_currency = value.id;
+					this.props.onDataUpdated(data);
+					//this.calcAutoPrice();
+				}} />
 
-				<InputPrice
-					name="prime-cost"
-					title="Prime cost"
-					currencies={currencies}
-					inputID="prime-cost-field"
-					disabled={activeDefaultValue}
-					defaultValue={data.prime_price}
-					currencyID={data.prime_price_currency}
-					onCurencySelected={value => {
-						data.prime_price_currency = value.id;
-						this.props.onDataUpdated(data);
-					}}
-					onFieldInputed={value => {
-                        value = value === '' ? 0 : value;
-						data.prime_price = parseFloat(value);
-						this.props.onDataUpdated(data);
-                        this.calcAutoPrice();
-					}} />
+			<InputPrice
+				name="prime-cost"
+				title="Prime cost"
+				currencies={currencies}
+				inputID="prime-cost-field"
+				disabled={activeDefaultValue}
+				defaultValue={data.prime_price}
+				currencyID={data.prime_price_currency}
+				onCurencySelected={value => {
+					data.prime_price_currency = value.id;
+					this.props.onDataUpdated(data);
+				}}
+				onFieldInputed={value => {
+					value = value === '' ? 0 : value;
+					data.prime_price = parseFloat(value);
+					this.props.onDataUpdated(data);
+					this.calcAutoPrice();
+				}} />
 
-				<InputPrice
-					name="delivery-cost"
-					title="Delivery cost"
-					currencies={currencies}
-					inputID="delivery-cost-field"
-					disabled={activeDefaultValue}
-					defaultValue={data.delivery_price}
-					currencyID={data.delivery_price_currency}
-					onCurencySelected={value => {
-						data.delivery_price_currency = value.id;
-						this.props.onDataUpdated(data);
-					}}
-					onFieldInputed={value => {
-                        value = value === '' ? 0 : value;
-						data.delivery_price = parseFloat(value);
-						this.props.onDataUpdated(data);
-                        this.calcAutoPrice();
-					}} />
+			<InputPrice
+				name="delivery-cost"
+				title="Delivery cost"
+				currencies={currencies}
+				inputID="delivery-cost-field"
+				disabled={activeDefaultValue}
+				defaultValue={data.delivery_price}
+				currencyID={data.delivery_price_currency}
+				onCurencySelected={value => {
+					data.delivery_price_currency = value.id;
+					this.props.onDataUpdated(data);
+				}}
+				onFieldInputed={value => {
+					value = value === '' ? 0 : value;
+					data.delivery_price = parseFloat(value);
+					this.props.onDataUpdated(data);
+					this.calcAutoPrice();
+				}} />
 
-				<InputPrice
-					name="profit-cost"
-					title="Profit"
-					currencies={currencies}
-					inputID="profit-cost-field"
-					disabled={activeDefaultValue}
-					defaultValue={data.profit_price}
-					currencyID={data.profit_price_currency}
-					onCurencySelected={value => {
-						data.profit_price_currency = value.id;
-						this.props.onDataUpdated(data);
-					}}
-					onFieldInputed={value => {
-                        value = value === '' ? 0 : value;
-						data.profit_price = parseFloat(value);
-						this.props.onDataUpdated(data);
-						this.calcAutoPrice();
-					}} />
+			<InputPrice
+				name="profit-cost"
+				title="Profit"
+				currencies={currencies}
+				inputID="profit-cost-field"
+				disabled={activeDefaultValue}
+				defaultValue={data.profit_price}
+				currencyID={data.profit_price_currency}
+				onCurencySelected={value => {
+					data.profit_price_currency = value.id;
+					this.props.onDataUpdated(data);
+				}}
+				onFieldInputed={value => {
+					value = value === '' ? 0 : value;
+					data.profit_price = parseFloat(value);
+					this.props.onDataUpdated(data);
+					this.calcAutoPrice();
+				}} />
 
-
-				<InputPrice
-						name="total_cost"
-						title="Total cost"
-						currencies={currencies}
-						inputID="total-cost-field"
-						disabled={false}
-						defaultValue={totalAutoPrice}
-						currencyID={1}
-						/>
-				</Paper>
+			<InputPrice
+				name="total_cost"
+				title="Total cost"
+				currencies={currencies}
+				inputID="total-cost-field"
+				disabled={false}
+				defaultValue={totalAutoPrice}
+				currencyID={1} />
+		</Paper>
 	}
 }
 

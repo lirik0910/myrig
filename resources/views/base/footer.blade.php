@@ -87,7 +87,7 @@
 					</a>
 				</li>
 				@endforeach
-				
+
 			</ul>
 			<ul class="navigation__list list__container margin_links padding__collapse col-sm-10 col-md-7 col-lg-7">
 				<li class="list__item">

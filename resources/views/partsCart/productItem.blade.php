@@ -72,6 +72,12 @@ $btcPrice = number_format($item->calcBtcPrice(), 4, '.', '');
 			</span>
 		</div>
 
+		@if (isset($options['status']))
+		<div class="tags__container tag-check__icon">
+			{{ $options['status'][0]['value'] }}
+		</div>
+		@endif
+
 		<button data-id="{{ $item->id }}" class="delete__button padding__collapse margin__collapse">
 			<img src="{{ asset('uploads/design/close.png') }}" alt="" />
 		</button>

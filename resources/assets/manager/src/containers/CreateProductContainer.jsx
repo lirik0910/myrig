@@ -176,160 +176,160 @@ class CreateProductContainers extends Component {
 		} = this.state;
 
 		return <div className="products__container">
-				{completed === 0 && 
-					<LinearProgress color="secondary" variant="determinate" value={completed} />}
+			{completed === 0 && 
+				<LinearProgress color="secondary" variant="determinate" value={completed} />}
 					
-				<Header
-					title={'Create new product'} />
-				<Menu />
+			<Header
+				title={'Create new product'} />
+			<Menu />
 					
-				<TopTitle
-					onSaveButtonClicked={() => this.productPostRequest()} />
-					
-				<TabOptions
-					defaultValue={tab}
-					onTabButtonClicked={tab => this.setState({ tab })}
-					data={[
-						'Product',
-						'Options',
-						//'Page',
-						//'Additional fields'
-					]} />
-
-				<Grid container 
-					spacing={24} 
-					className={classes.root}
-					style={{display: tab === 0 ? 
-						'flex' : 
-						'none'}}>
-					
-					<Grid item xs={9}>
-						<PaperContentForm
-							articulShow
-							onEditorAreaInputed={value => {
-								data['description'] = value;
-								this.setState({ data });
-							}}
-							onTitleFieldInputed={value => {
-								data['title'] = value;
-								this.setState({ data });
-							}}
-							onArticulFieldInputed={value => {
-								data['articul'] = value;
-								this.setState({ data });
-							}} />
-
-						<PaperImageVariable
-							onImageSet={images => {
-								data['images'] = JSON.stringify(images);
-								this.setState({ data });
-							}}
-							onAddedField={images => {
-								data['images'] = JSON.stringify(images);
-								this.setState({ data });
-							}}
-							onDeletedField={images => {
-								data['images'] = JSON.stringify(images);
-								this.setState({ data });
-							}} />
-					</Grid>
-
-					<Grid item xs={3}>
-						<PaperProductForm
-							activePriceField={Boolean(data.auto_price)}
-							onPageSelected={value => {
-								data['page_id'] = value;
-								this.setState({ data });
-							}}
-							onContextSelected={value => {
-								data['context_id'] = value;
-								this.setState({ data });
-							}}
-							onStatusSelected={value => {
-								data['product_status_id'] = value;
-								this.setState({ data });
-							}}
-							onWarrantyInputed={value => {
-								data['warranty'] = value;
-								this.setState({ data });
-							}}
-							onCategoryInputed={value => {
-								if (value) {
-									data['categories_line'] = value;
-								}
-								else data['categories_line'] = '0';
-								
-								this.setState({ data });
-							}}
-							onPriceInputed={value => {
-								data['price'] = value;
-								this.setState({ data });
-							}}
-							onDateSelected={value => {
-								var date = value._d.toISOString().split('T')[0],
-									time = value._d.toLocaleTimeString();
+			<TopTitle
+				onSaveButtonClicked={() => this.productPostRequest()} />
 				
-								data['created_at'] = date +' '+ time;
-								this.setState({ data });
-							}}
-							onActiveChanged={value => {
-								data['active'] = Number(value);
-								this.setState({ data });
-							}} />
+			<TabOptions
+				defaultValue={tab}
+				onTabButtonClicked={tab => this.setState({ tab })}
+				data={[
+					'Product',
+					'Options',
+					//'Page',
+					//'Additional fields'
+				]} />
 
-						{completed === 100 && <PaperAutoProductForm
-							currencies={currencies}
-							data={data.product_auto_prices}
-							activeDefaultValue={Boolean(data.auto_price)}
-							onActiveChanged={value => {
-								data['auto_price'] = Number(value);
-								this.setState({ data });
-							}}
-							onDataUpdated={value => {
-								data.product_auto_prices = Object.assign({
-									fes_price: 0,
-									prime_price: 0,
-									profit_price: 0,
-									delivery_price: 0,
-									fes_price_currency: currencies[0].id,
-									prime_price_currency: currencies[0].id,
-									profit_price_currency: currencies[0].id,
-									delivery_price_currency: currencies[0].id,
-								}, value);
-								this.setState({ data });
-							}} />}
-					</Grid>
-				</Grid>
-
-				<Grid container 
-					spacing={24} 
-					className={classes.root}
-					style={{display: tab === 1 ? 
-						'flex' : 
-						'none'}}>
+			<Grid container 
+				spacing={24} 
+				className={classes.root}
+				style={{display: tab === 0 ? 
+					'flex' : 
+					'none'}}>
 					
-					<Grid item xs={12}>
-						<PaperOptionVariable
-							onVariableUpdated={fields => {
-								data['options'] = JSON.stringify(fields);
-								this.setState({ data });
-							}} />
-					</Grid>
+				<Grid item xs={9}>
+					<PaperContentForm
+						articulShow
+						onEditorAreaInputed={value => {
+							data['description'] = value;
+							this.setState({ data });
+						}}
+						onTitleFieldInputed={value => {
+							data['title'] = value;
+							this.setState({ data });
+						}}
+						onArticulFieldInputed={value => {
+							data['articul'] = value;
+							this.setState({ data });
+						}} />
+
+					<PaperImageVariable
+						onImageSet={images => {
+							data['images'] = JSON.stringify(images);
+							this.setState({ data });
+						}}
+						onAddedField={images => {
+							data['images'] = JSON.stringify(images);
+							this.setState({ data });
+						}}
+						onDeletedField={images => {
+							data['images'] = JSON.stringify(images);
+							this.setState({ data });
+						}} />
 				</Grid>
 
-				{resultDialog === true && <DialogError 
-					title={resultDialogTitle}
-					defaultValue={resultDialog}
-					message={resultDialogMessage}
-					onDialogClosed={() => this.setState({
-						resultDialog: false
-					})} />}
+				<Grid item xs={3}>
+					<PaperProductForm
+						activePriceField={Boolean(data.auto_price)}
+						onPageSelected={value => {
+							data['page_id'] = value;
+							this.setState({ data });
+						}}
+						onContextSelected={value => {
+							data['context_id'] = value;
+							this.setState({ data });
+						}}
+						onStatusSelected={value => {
+							data['product_status_id'] = value;
+							this.setState({ data });
+						}}
+						onWarrantyInputed={value => {
+							data['warranty'] = value;
+							this.setState({ data });
+						}}
+						onCategoryInputed={value => {
+							if (value) {
+								data['categories_line'] = value;
+							}
+							else data['categories_line'] = '0';
+							
+							this.setState({ data });
+						}}
+						onPriceInputed={value => {
+							data['price'] = value;
+							this.setState({ data });
+						}}
+						onDateSelected={value => {
+							var date = value._d.toISOString().split('T')[0],
+								time = value._d.toLocaleTimeString();
+				
+							data['created_at'] = date +' '+ time;
+							this.setState({ data });
+						}}
+						onActiveChanged={value => {
+							data['active'] = Number(value);
+							this.setState({ data });
+						}} />
 
-				<Link 
-					id="product-edit" 
-					to={App.name() + '/products/'+ productID} 
-					style={{display: 'none'}}></Link>
-			</div>
+					{completed === 100 && <PaperAutoProductForm
+						currencies={currencies}
+						data={data.product_auto_prices}
+						activeDefaultValue={Boolean(data.auto_price)}
+						onActiveChanged={value => {
+							data['auto_price'] = Number(value);
+							this.setState({ data });
+						}}
+						onDataUpdated={value => {
+							data.product_auto_prices = Object.assign({
+								fes_price: 0,
+								prime_price: 0,
+								profit_price: 0,
+								delivery_price: 0,
+								fes_price_currency: currencies[0].id,
+								prime_price_currency: currencies[0].id,
+								profit_price_currency: currencies[0].id,
+								delivery_price_currency: currencies[0].id,
+							}, value);
+							this.setState({ data });
+						}} />}
+				</Grid>
+			</Grid>
+
+			<Grid container 
+				spacing={24} 
+				className={classes.root}
+				style={{display: tab === 1 ? 
+					'flex' : 
+					'none'}}>
+				
+				<Grid item xs={12}>
+					<PaperOptionVariable
+						onVariableUpdated={fields => {
+							data['options'] = JSON.stringify(fields);
+							this.setState({ data });
+						}} />
+				</Grid>
+			</Grid>
+
+			{resultDialog === true && <DialogError 
+				title={resultDialogTitle}
+				defaultValue={resultDialog}
+				message={resultDialogMessage}
+				onDialogClosed={() => this.setState({
+					resultDialog: false
+				})} />}
+
+			<Link 
+				id="product-edit" 
+				to={App.name() + '/products/'+ productID} 
+				style={{display: 'none'}}></Link>
+		</div>
 	}
 }
 

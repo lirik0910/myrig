@@ -1,0 +1,41 @@
+image: alpine:latest
+
+stages:
+  - deploy
+
+
+staging-deploy:
+  stage: deploy
+  only:
+    - develop
+  before_script:
+    - apk add --update openssh-client bash
+    - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
+    - eval $(ssh-agent -s)
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - ssh-keyscan 217.12.204.90 >> ~/.ssh/known_hosts
+  script:
+    - ssh -tt admin@217.12.204.90  "cd ~/www/dev.myrig.com
+        && git reset --hard && git checkout develop
+        && git pull --no-edit origin develop
+        && exit"
+
+prouction-deploy:
+  stage: deploy
+  only:
+    - master
+  before_script:
+    - apk add --update openssh-client bash
+    - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
+    - eval $(ssh-agent -s)
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - ssh-keyscan 217.12.204.90 >> ~/.ssh/known_hosts
+  script:
+    - ssh -tt admin@217.12.204.90  "cd ~/www/myrig.com
+        && git reset --hard && git checkout master
+        && git pull --no-edit origin master
+        && exit"
