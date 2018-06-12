@@ -515,7 +515,7 @@ class OrderController extends Controller
 			return response()->json(['message' => $e->getMessage()], 422);
 		}
 
-		if($data['send'] == true){
+		if(isset($data['send']) && $data['send'] === 'true'){
             $serials = [];
             $products_info = [];
             foreach ($cart as $key => $product) {

@@ -302,6 +302,7 @@ class CalculateController
         $coursers =  json_decode(stripslashes( $request->get('calc')), 1);
         $source = 'base';
         $days = $request->get('days') ? $request->get('days') : 1;
+        var_dump($days); die;
         $expected_difficulty = $network_status['expected_difficulty']/100+1;
 
         $powers = $request->get('powers');
