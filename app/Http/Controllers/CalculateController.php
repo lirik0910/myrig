@@ -302,12 +302,12 @@ class CalculateController
         $coursers =  json_decode(stripslashes( $request->get('calc')), 1);
         $source = 'base';
         $days = $request->get('days') ? $request->get('days') : 1;
-        var_dump($days); die;
+
         $expected_difficulty = $network_status['expected_difficulty']/100+1;
 
         $powers = $request->get('powers');
         $placements = $request->get('radio');
-//var_dump($request->all()); die;
+
         $t = 86400;
         $R = $network['reward_block']/1000000000;
         $D = round(trim($network['difficulty']), 5)/10000000000 ;
