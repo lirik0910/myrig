@@ -1,0 +1,42 @@
+.tags__container {
+	height: 30px;
+	font-size: 18px;
+	min-width: 168px;
+	font-weight: 300;
+	line-height: 1.556;
+	padding-left: 35px;
+	margin-right: 10px;
+	margin-bottom: 10px;
+	display: inline-block;
+	background-repeat: no-repeat;
+	background-position: left center;
+}
+
+.tag-check__icon {
+	color: #60A645;
+	background-image: url('/uploads/design/available.svg');
+}
+
+.tag-waranty__icon {
+	color: #FF8400;
+	background-image: url('/uploads/design/warranty.svg');
+}
+
+.tag-order__icon {
+	color: rgb(153, 153, 153);
+	background-image: url('/uploads/design/order.svg');
+}
+
+.tag-no__icon {
+	color: #FF0000;
+	background-image: url('/uploads/design/close_label.svg');
+}
+
+.tag-payback__icon {
+	color: #60A645;
+	margin-top: 20px;
+	padding-left: 58px;
+	background-size: 52px;
+	display: block !important;
+	background-image: url('/uploads/design/money.svg');
+}

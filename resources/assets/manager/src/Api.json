@@ -1,0 +1,191 @@
+{
+	"rate": {
+		"GET": {
+			"one": ""
+		},
+		"PUT": {
+			"one": ""
+		}
+	},
+	"lang": {
+		"GET": {
+			"all": "",
+			"file": "{id}"
+		}
+	},
+	"component": {
+		"GET": {
+			"all": "",
+			"one": "{id}"
+		}
+	},
+	"context": {
+		"GET": {
+			"all": "",
+			"one": "{id}"
+		}
+	},
+	"view": {
+		"GET": {
+			"all": "",
+			"one": "{id}"
+		}
+	},
+	"page": {
+		"GET": {
+			"all": "",
+			"one": "{id}",
+			"tree": "tree",
+			"context": "{id}",
+			"childs": "childs/{id}"
+		},
+		"POST": {
+			"create": ""
+		},
+		"PUT": {
+			"update": "{id}",
+			"trash": "trash/{id}"
+		},
+		"DELETE": {
+			"one": "{id}",
+			"trash": ""
+		}
+	},
+	"cache": {
+		"DELETE": {
+			"clear": ""
+		}
+	},
+	"user": {
+		"GET": {
+			"all": "",
+			"one": "{id}"
+		},
+		"DELETE": {
+			"many": "",
+			"one": "{id}"
+		},
+		"PUT": {
+			"one": "{id}"
+		}
+	},
+	"report": {
+		"GET": {
+			"all": ""
+		},
+		"DELETE": {
+			"many": "",
+			"one": "{id}"
+		},
+		"PUT": {
+			"one": "{id}"
+		}
+	},
+	"note": {
+		"POST": {
+			"createNote": ""
+		}
+	},
+	"policy": {
+		"GET": {
+			"all": ""
+		}
+	},
+	"folder": {
+		"GET": {
+			"path": ""
+		},
+		"PUT": {
+			"path": ""
+		},
+		"DELETE": {
+			"path": ""
+		},
+		"POST": {
+			"path": ""
+		}
+	},
+	"file": {
+		"GET": {
+			"path": ""
+		},
+		"PUT": {
+			"path": ""
+		},
+		"DELETE": {
+			"path": ""
+		},
+		"POST": {
+			"path": ""
+		}
+	},
+	"product": {
+		"GET": {
+			"all": "",
+			"one": "{id}",
+			"options": "option/type",
+			"statuses": "statuses"
+		},
+		"POST": {
+			"create": "",
+			"duplicate": "duplicate"
+		},
+		"PUT": {
+			"update": "{id}",
+			"trashMany": "trash",
+			"trash": "trash/{id}"
+		},
+		"DELETE": {
+			"many": "",
+			"one": "{id}",
+			"trash": ""
+		}
+	},
+	"category": {
+		"GET": {
+			"all": ""
+		}
+	},
+	"currency": {
+		"GET": {
+			"all": ""
+		}
+	},
+	"status": {
+		"GET": {
+			"all": ""
+		}
+	},
+	"order": {
+		"GET": {
+			"all": "",
+			"one": "{id}",
+			"log": "{id}/log",
+			"statuses": "statuses"
+		},
+		"POST": {
+			"create": "",
+			"duplicate": "duplicate"
+		},
+		"DELETE": {
+			"one": "{id}",
+			"many": "",
+			"trash": "trash"
+		},
+		"PUT": {
+			"one": "{id}",
+			"many": "",
+			"trash": "trash/{id}"
+		}
+	},
+	"payment": {
+		"GET": {
+			"all": ""
+		}
+	},
+	"delivery": {
+		"GET": {
+			"all": ""
+		}
+	}
+}

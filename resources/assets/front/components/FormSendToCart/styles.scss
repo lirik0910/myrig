@@ -1,0 +1,26 @@
+.cart-count__container {
+	height: 50px;
+	margin-top: 12px;
+	position: relative;
+	vertical-align: top;
+	display: inline-block;
+
+	@media (max-width: 767px) {
+		display: flex;
+	}
+
+	@media (min-width: 768px) {
+		font-size: 16px;
+	}
+}
+
+.mobile-cart-count__container {
+	@media (max-width: 767px) {
+		float: left;
+		margin: 0;
+	}
+
+	@media (max-width: 452px) {
+		width: 140px !important;
+	}
+}

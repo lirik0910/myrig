@@ -1,0 +1,45 @@
+{
+  "name": "store",
+  "version": "1.0.1",
+  "private": true,
+  "devDependencies": {
+    "docdash": "^0.4.0",
+    "jsdoc": "^3.5.5"
+  },
+  "dependencies": {
+    "@tinymce/tinymce-react": "^2.2.0",
+    "clone-deep": "^3.0.1",
+    "draft-js": "^0.10.5",
+    "draftjs-to-html": "^0.8.3",
+    "fine-uploader": "^5.15.6",
+    "froala-editor": "^2.7.5",
+    "import": "0.0.6",
+    "jquery": "^3.3.1",
+    "material-ui": "1.0.0-beta.31",
+    "material-ui-icons": "1.0.0-beta.17",
+    "material-ui-pickers": "1.0.0-beta.15.1",
+    "moment": "^2.20.1",
+    "react": "^16.2.0",
+    "react-color": "^2.14.0",
+    "react-dom": "^16.2.0",
+    "react-draft-wysiwyg": "^1.12.10",
+    "react-dropzone": "^4.2.8",
+    "react-file-uploader": "^0.3.4",
+    "react-fileupload": "^2.4.0",
+    "react-fine-uploader": "^1.0.9",
+    "react-froala-wysiwyg": "^2.7.5",
+    "react-redux": "^5.0.6",
+    "react-router-dom": "^4.2.2",
+    "react-scripts": "^1.0.17",
+    "react-select": "^1.2.1",
+    "redux": "^3.7.2",
+    "redux-thunk": "^2.2.0",
+    "socket.io-client": "^2.0.4"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  }
+}

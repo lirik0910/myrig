@@ -1,0 +1,58 @@
+.owl-dots {
+	right: 0;
+	height: 3px;
+	display: flex;
+	position: absolute;
+	flex-wrap: wrap;
+
+	@media (max-width: 767px) {
+		margin: 0;
+		position: static;
+		justify-content: center;
+	}
+
+	@media (min-width: 768px) {
+		left: 10px;
+		width: 264px;
+		margin: -40px 0 0;
+	}
+
+	@media (min-width: 992px) {
+		left: 65px;
+		width: 960px;
+		margin: -40px auto 0;
+	}
+
+	@media (min-width: 1250px) {
+		width: 1220px;
+	}
+
+	.owl-dot {
+		height: 100%;
+
+		.slide-dot__button {
+			outline: 0;
+			width: 40px;
+			height: 100%;
+			border: none;
+			margin: 0 10px;
+			display: block;
+			cursor: pointer;
+			background-color: #DBDBDB;
+
+			.slide-item__progress {
+				height: 100%;
+				transform: scaleX(0);
+			}
+		}
+	}
+
+	.owl-dot.active {
+		.slide-item__progress {
+			transform: scaleX(1);
+			transform-origin: left;
+			background-color: #60A645;
+			transition: transform 3s linear;
+		}
+	}
+}

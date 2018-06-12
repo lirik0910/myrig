@@ -1,0 +1,40 @@
+.tabs__container {	
+	.tab-control__container {
+		.tab__item {
+			line-height: 2;
+			font-size: 18px;
+			border-top: none;
+			border-left: none;
+			border-right: none;
+			margin-right: 40px;
+			display: inline-block;
+			transition: all .2s ease;
+			background-color: transparent;
+			border-bottom: 3px solid transparent;
+		}
+
+		.tab__item.active {
+			border-bottom: 3px solid rgb(96, 166, 69);
+		}
+	}
+
+	.tab-content__container {
+		padding: 21px 0 10px;
+
+		@media (min-width: 992px) {
+			padding: 42px 0 40px;
+		}
+
+		@media (min-width: 1250px) {
+			padding-right: 10%;
+		}
+
+		.content__container {
+			display: none;
+		}
+
+		.content__container.active {
+			display: block;
+		}
+	}
+}

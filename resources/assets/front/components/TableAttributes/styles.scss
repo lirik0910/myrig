@@ -1,0 +1,17 @@
+.attributes__container {
+	width: 100%;
+	border-collapse: collapse;
+
+	tr {
+		border-bottom: 1px solid #FFF;
+
+		td,
+		th {
+			padding: 5px 0;
+		}
+
+		th {
+			line-height: 1.5;
+		}
+	}
+}
