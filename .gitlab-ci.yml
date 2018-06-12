@@ -3,6 +3,7 @@ image: alpine:latest
 stages:
   - deploy
 
+
 staging-deploy:
   stage: deploy
   only:
