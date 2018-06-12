@@ -13,6 +13,10 @@
 		})->get();
 
 	$courses = $select('App\Model\Shop\ExchangeRate')->get()->groupBy('title');
+
+	$deliveryPage = $select('App\Model\Base\Page')->where('title', 'Доставка и отгрузка')->first();
+	$warrantyPage = $select('App\Model\Base\Page')->where('title', 'Расширенная гарантия')->first();
+	$packagingPage = $select('App\Model\Base\Page')->where('title', 'Упаковка отправлений')->first();
 @endphp
 
 <footer id="footer__container" class="footer__container">
@@ -91,19 +95,37 @@
 			</ul>
 			<ul class="navigation__list list__container margin_links padding__collapse col-sm-10 col-md-7 col-lg-7">
 				<li class="list__item">
-					<a href="#">
-						Доставка и отгрузка
-					</a>
+					@if($deliveryPage)
+						<a href="{{ $deliveryPage->link }}">
+							{{ $deliveryPage->title }}
+						</a>
+					@else
+						<a href="#">
+							Доставка и отгрузка
+						</a>
+					@endif
 				</li>
 				<li class="list__item">
-					<a href="#">
-						Расширенная гарантия
-					</a>
+					@if($warrantyPage)
+						<a href="{{ $deliveryPage->link }}">
+							{{ $deliveryPage->title }}
+						</a>
+					@else
+						<a href="#">
+							Расширенная гарантия
+						</a>
+					@endif
 				</li>
 				<li class="list__item">
-					<a href="#">
-						Упаковка отправлений
-					</a>
+					@if($packagingPage)
+						<a href="{{ $deliveryPage->link }}">
+							{{ $deliveryPage->title }}
+						</a>
+					@else
+						<a href="#">
+							Упаковка отправлений
+						</a>
+					@endif
 				</li>
 			</ul>
 
