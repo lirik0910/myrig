@@ -71,66 +71,70 @@
 					<img src="{{ asset('uploads/design/paypal.png') }}" alt="paypal" />
 				</div>
 			</div>
-			<ul class="navigation__list list__container margin__collapse padding__collapse col-sm-10 col-md-7 col-lg-7">
-				<li class="list__item">
-					<a href="{{ url($productsPage->link) }}">
-						{{ $productsPage->title }}
-					</a>
-				</li>
 
-				<li class="list__item">
-					<a href="https://host.myrig.com/">
-						{{ __('default.footer_hosting') }}
-					</a>
-				</li>
+			<div class="navigation__list col-sm-10 col-md-7 col-lg-7 margin__collapse padding__collapse row font-weight-light">
+				<ul class="list__container margin__collapse padding__collapse col-sm-5">
+					<li class="list__item">
+						<a href="{{ url($productsPage->link) }}">
+							{{ $productsPage->title }}
+						</a>
+					</li>
 
-				@foreach ($otherPages as $page)
-				<li class="list__item">
-					<a href="{{ url($page->link) }}">
-						{{ $page->title }}
-					</a>
-				</li>
-				@endforeach
+					<li class="list__item">
+						<a href="https://host.myrig.com/">
+							{{ __('default.footer_hosting') }}
+						</a>
+					</li>
 
-			</ul>
-			<ul class="navigation__list list__container margin_links padding__collapse col-sm-10 col-md-7 col-lg-7">
-				<li class="list__item">
-					@if($deliveryPage)
-						<a href="{{ $deliveryPage->link }}">
-							{{ $deliveryPage->title }}
+					@foreach ($otherPages as $page)
+					<li class="list__item">
+						<a href="{{ url($page->link) }}">
+							{{ $page->title }}
 						</a>
-					@else
-						<a href="#">
-							Доставка и отгрузка
-						</a>
-					@endif
-				</li>
-				<li class="list__item">
-					@if($warrantyPage)
-						<a href="{{ $deliveryPage->link }}">
-							{{ $deliveryPage->title }}
-						</a>
-					@else
-						<a href="#">
-							Расширенная гарантия
-						</a>
-					@endif
-				</li>
-				<li class="list__item">
-					@if($packagingPage)
-						<a href="{{ $deliveryPage->link }}">
-							{{ $deliveryPage->title }}
-						</a>
-					@else
-						<a href="#">
-							Упаковка отправлений
-						</a>
-					@endif
-				</li>
-			</ul>
+					</li>
+					@endforeach
 
-			<div class="contacts__container padding__collapse col-sm-12 col-md-3 col-lg-3 row">
-				<ul id="footer-contacts__list" class="contacts__list col-md-6">
+				</ul>
+			
+				<ul class="list__container margin_links padding__collapse col-sm-7">
+					<li class="list__item">
+						@if($deliveryPage)
+							<a href="{{ $deliveryPage->link }}">
+								{{ $deliveryPage->title }}
+							</a>
+						@else
+							<a href="#">
+								Доставка и отгрузка
+							</a>
+						@endif
+					</li>
+					<li class="list__item">
+						@if($warrantyPage)
+							<a href="{{ $deliveryPage->link }}">
+								{{ $deliveryPage->title }}
+							</a>
+						@else
+							<a href="#">
+								Расширенная гарантия
+							</a>
+						@endif
+					</li>
+					<li class="list__item">
+						@if($packagingPage)
+							<a href="{{ $deliveryPage->link }}">
+								{{ $deliveryPage->title }}
+							</a>
+						@else
+							<a href="#">
+								Упаковка отправлений
+							</a>
+						@endif
+					</li>
+				</ul>
+			</div>
+
+			<div class="contacts__container padding__collapse margin__collapse col-sm-12 col-md-3 col-lg-3 row">
+				<ul id="footer-contacts__list" class="contacts__list col-md-6 margin__collapse padding__collapse">
 				@php
 					$contacts = App\Model\Base\Page::whereHas('view', function ($q) {
 						$q->where('title', 'Contacts');
