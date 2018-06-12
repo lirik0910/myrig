@@ -20,7 +20,7 @@
 @endphp
 
 <footer id="footer__container" class="footer__container">
-	<div class="service__container">
+	<div class="service__container font-weight-light">
 		<div class="row__container row default__container">
 			<div class="social__container padding__collapse col-sm-4 col-md-2 col-lg-4">
 				<a target="_blank" href="https://t.me/myriglive" class="item__link">

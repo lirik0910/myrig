@@ -9,6 +9,7 @@ else {
 	$price = number_format($item->price, 2, '.', '');
 }
 $btcPrice = number_format($item->calcBtcPrice(), 4, '.', '');
+
 @endphp
 
 <div id="{{ 'product-item__container-' . $item->id }}" class="row row__container product-item__container margin__collapse">
@@ -72,11 +73,9 @@ $btcPrice = number_format($item->calcBtcPrice(), 4, '.', '');
 			</span>
 		</div>
 
-		@if (isset($options['status']))
 		<div class="tags__container tag-check__icon">
-			{{ $options['status'][0]['value'] }}
+			{{ __('common.product_status_' . str_replace(' ', '_', mb_strtolower($item->productStatus->description))) }}
 		</div>
-		@endif
 
 		<button data-id="{{ $item->id }}" class="delete__button padding__collapse margin__collapse">
 			<img src="{{ asset('uploads/design/close.png') }}" alt="" />
