@@ -28,6 +28,12 @@
 					max-width: 20%;
 				}
 
+				@media (max-width: 479px) {
+					max-width: 30%;
+					width: 30%;
+					flex: 0 0 30%;
+				}
+
 				.item__link {
 					color: #FFF;
 					margin-left: 17px;
@@ -82,6 +88,12 @@
 					font-size: 9px;
 				}
 
+				@media (max-width: 479px) {
+					max-width: 70%;
+					width: 70%;
+					flex: 0 0 70%;
+				}
+
 				.currency__item {
 					line-height: 1.5;
 					margin-left: 17px;
@@ -96,7 +108,9 @@
 					}
 
 					@media (max-width: 479px) {
-						max-width: 44px;
+						max-width: 34px;
+						text-align: center;
+						margin-left: 3px;
 					}
 				}
 			}
