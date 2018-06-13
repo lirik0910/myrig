@@ -61,11 +61,14 @@
 		}
 
 		.product-content__container {
-			padding: 24px 0 0 64px;
 			border-top: 1px solid #FFF;
 
 			@media (min-width: 768px) {
 				padding: 24px 0 0 32px;
+			}
+
+			@media (min-width: 992px) {
+				padding: 24px 0 0 64px;
 			}
 
 			@media (max-width: 767px) {
