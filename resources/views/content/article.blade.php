@@ -76,14 +76,14 @@ if (!$visits) {
 		<div class="d-block col-sm-4 margin__collapse padding__collapse"></div>
 		<div class="d-block col-sm-8 margin__collapse" style="border-top: 1px solid #FFF; padding: 32px;">
 			<div class="beside-items__container d-flex">
-				@if($prev_link)
+				@if($prev_link && $parent_link)
 				<a href="{{ url($prev_link->link) }}" class="d-block default__link news-return__link font-weight-light" style="position: relative;">
 					<i class="article-arrow-left__icon"></i>
 					{{ __('default.previous_article') }}
 				</a>
 				@endif
 
-				@if($next_link)
+				@if($next_link && $parent_link)
 				<a href="{{ url($next_link->link) }}" class="d-block default__link news-return__link font-weight-light text-right" style="position: relative;">
 					<i class="article-arrow-right__icon" style="float: right"></i>
 					{{ __('default.next_article') }}
