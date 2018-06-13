@@ -128,6 +128,24 @@ a.default__link:hover {
 	padding: 0 !important;
 }
 
+.in-cart__container {
+	@media (max-width: 767px){
+		padding-left: 13px!important;
+	}
+	@media (min-width: 768px){
+		padding-left: 0!important;
+	}
+}
+
+.checkout-form__container{
+	@media (max-width: 767px){
+		padding-left: 13px!important;
+	}
+	@media (min-width: 992px){
+		padding-left: 0!important;
+	}
+}
+
 .list__container {
 	list-style: none !important;
 }

@@ -56,7 +56,7 @@ foreach ($products as $item) {
 
 <div class="products__container default__container checkout__container">
 	<div class="row row__container product-item__container margin__collapse" style="padding-bottom: 8px;">
-		<div class="col-sm-4 row slider__container margin__collapse padding__collapse">
+		<div class="col-sm-4 row slider__container margin__collapse padding__collapse in-cart__container">
 			<div class="border__container"></div>
 
 			<div class="form-products__container">
@@ -96,7 +96,7 @@ foreach ($products as $item) {
 	<form id="post-checkout__form" action="/checkout" method="post">
 		<input type="hidden" name="_token" value="{{ csrf_token() }}" />
 		<div class="row row__container product-item__container margin__collapse">
-			<div class="col-sm-4 row slider__container margin__collapse" style="padding: 42px 0 0">
+			<div class="col-sm-4 row slider__container margin__collapse checkout-form__container" style="padding: 42px 0 0">
 				<div class="border__container"></div>
 
 				<h3 class="form-title__container padding__collapse">{{ __('default.checkout_title') }}</h3>
