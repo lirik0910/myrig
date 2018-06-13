@@ -43,17 +43,24 @@ class PageController extends Controller
 			$link = explode('/' . $number, $link)[0];
 		}
 
-		$contexts = Context::all();
-		$locale_context_id = 1;
+        $page = Page::where('link', $link)->where('delete', 0)->with('view')->get();
 
-		foreach ($contexts as $context){
-		    if(trim(strtolower($context->title)) == $locale){
-                $locale_context_id = $context->id;
+        $locale_context_id = 3;
+		if(count($page) > 1){
+            $contexts = Context::all();
+
+            foreach ($contexts as $context){
+                if(trim(strtolower($context->title)) == $locale){
+                    $locale_context_id = $context->id;
+                }
             }
+
+            $page = $page->where('context_id', $locale_context_id)->first();
+        } else{
+		    $page = $page->first();
         }
 
-        $page = Page::where('link', $link)->where('context_id', $locale_context_id)->where('delete', 0)->with('view')->first();
-
+        //$page = Page::where('link', $link)->where('context_id', $locale_context_id)->where('delete', 0)->with('view')->first();
 		if ($page) {
 		    switch ($page->link){
                 case 'checkout':
@@ -73,7 +80,7 @@ class PageController extends Controller
             if($page->view->title == 'Product' && $page->product->delete == 1){
                 return redirect('shop');
             }
-
+//var_dump($page); die;
 			return view($page->view->path, [
 				'it' => $page,
 				'get' => $this->get(),
@@ -86,7 +93,7 @@ class PageController extends Controller
 				'preview' => $this->preview(),
                 'locale' => $locale
 			]);
-		} elseif (stristr($link, 'news') || stristr($link, 'info')){
+		}/* elseif (stristr($link, 'news') || stristr($link, 'info')){
             $page = Page::where('link', $link)->where('delete', 0)->with('view')->first();
             return view($page->view->path, [
                 'it' => $page,
@@ -100,7 +107,7 @@ class PageController extends Controller
                 'preview' => $this->preview(),
                 'locale' => $locale
             ]);
-        } else abort(404);
+        }*/ else abort(404);
 	}
 
 	/** 

@@ -30,11 +30,6 @@ class AddOrderDeliveryCollumns extends Migration
             $table->string('passport', 255)
                 ->nullable(true)
                 ->comment('Passport data');
-
-            $table->string('waybill', 255)
-                ->nullable(true)
-                ->comment('waybill data');
-
         });
     }
 
