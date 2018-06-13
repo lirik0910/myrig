@@ -63,7 +63,7 @@
 		<div class="row__container row default__container">
 			<div class="logo__container padding__collapse col-sm-2 col-md-2 col-lg-2">
 				<a class="link__item logo-link__item" href="{{ asset('/') }}">
-					<img class="logo__icon" src="{{ $preview(asset('uploads/design/logo.png'), 162, 35) }}" alt="logo" style="width: 162px" />
+					<img class="logo__icon" src="{{ $preview(asset('uploads/design/logo.png'), 316, 68) }}" alt="logo" style="width: 162px" />
 				</a>
 					
 				<div class="payment-types__container">
