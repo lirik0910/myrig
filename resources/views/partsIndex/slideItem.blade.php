@@ -1,12 +1,12 @@
 <div class="slide-item__container margin__collapse" data-dot="<button class='slide-dot__button padding__collapse'><div class='slide-item__progress'></div></button>">
 	<div class="row__container row default__container">
-		<div class="slide-about__container col-md-4 padding__collapse center__align font-weight-light">
+		<div class="slide-about__container col-md-4 padding__collapse center__align">
 			<div class="vertical-align__container">
 				<h4 class="slide__title font-weight-light">
 					{!! $slide['header'] !!}
 				</h4>
 
-				<div class="slide__content">
+				<div class="slide__content font-weight-light">
 					{!! $slide['content'] !!}
 				</div>
 

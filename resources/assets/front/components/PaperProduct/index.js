@@ -42,9 +42,11 @@ export default class PaperProduct extends Base {
 	 * Building the upper border of the block
 	 */
 	setTopBorder() {
-		let width = this.els._sliderContainer.offset().left;
+		let width = this.els._sliderContainer.offset().left,
+			border = this.els._sliderContainer.children('.border__container');
 
-		this.els._sliderContainer.children('.border__container').css({
+		border.css({
+			width: border.width() + width,
 			left: -width,
 			backgroundColor: '#F2F2F2'
 		});

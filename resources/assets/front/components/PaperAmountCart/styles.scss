@@ -1,4 +1,4 @@
-.cart-amount__containrt {
+.cart-amount__container {
 	@media (max-width: 767px) {
 		margin: 0 !important;
 		text-align: center;
@@ -11,4 +11,8 @@
 			margin: 0 auto !important;
 		}
 	}
+}
+
+.product-item__container {
+	min-height: 162px;
 }
