@@ -67,7 +67,7 @@ if(isset($client_email) && !empty($client_email)){
 	<div class="row__container row margin__collapse">
 		<div class="logo__container col-md-2 padding__collapse">
 			<a class="link__item" href="{{ asset('/') }}">
-				<img src="{{ $preview(asset('uploads/design/logo.png'), 162, 35) }}" alt="{{ env('APP_NAME') }}" style="width: 162px"/>
+				<img src="{{ $preview(asset('uploads/design/logo.png'), 316, 68) }}" alt="{{ env('APP_NAME') }}" style="width: 162px"/>
 			</a>
 		</div>
 
