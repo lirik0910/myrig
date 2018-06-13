@@ -160,8 +160,6 @@
 
 .attribute-item__container {
 	@media (max-width: 991px) {
-		display: block;
-		margin: 0 !important;
 		line-height: 28px;
 	}
 }
@@ -170,4 +168,32 @@
 	font-size: 13px;
 	font-weight: 300;
 	color: rgb(153, 153, 153);
+}
+
+.mobile-price__container {
+	display: none !important;
+
+	@media (max-width: 991px) {
+		display: block !important;
+	}
+
+	@media (max-width: 767px) {
+		width: 100% !important;
+		max-width: 100% !important;
+
+		.default-small__price {
+			display: flex !important;
+
+			span,
+			.bitcoin-small__price {
+				display: inline-block !important;
+			}
+		}
+	}
+}
+
+.descktop-price__container {
+	@media (max-width: 991px) {
+		display: none !important;
+	}
 }

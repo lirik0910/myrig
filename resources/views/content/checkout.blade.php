@@ -176,7 +176,8 @@ foreach ($products as $item) {
 							<th class="font-weight-light" style="padding: 8px 0">{{ __('default.photo') }}</th>
 							<th class="font-weight-light" style="padding: 8px 0">{{ __('default.name') }}</th>
 							<th class="font-weight-light checkout-order__count" style="padding: 8px 0">{{ __('default.count') }}</th>
-							<th class="font-weight-light checkout-order__cost" style="padding: 8px 0">{{ __('default.cost') }}</th>
+							
+							<th class="font-weight-light checkout-order__cost d-block-991" style="padding: 8px 0">{{ __('default.cost') }}</th>
 						</tr>
 
 						@foreach($products as $item)
