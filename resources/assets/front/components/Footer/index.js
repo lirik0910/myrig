@@ -42,6 +42,31 @@ export default class Footer extends Base {
 			e.preventDefault();
 			this.props.dialogAvailability.open('#availability__dialog', e);
 		});
+
+		this.setFooterInBottom();
+	}
+
+	/**
+	 * Runs after window size changes
+	 * @param {Object} e
+	 */
+	onResized(e) {
+		this.setFooterInBottom();
+	}
+
+	/**
+	 * To stick a footer to the bottom
+	 */
+	setFooterInBottom() {
+		let offsetTop = this.baseDOM._footerContainer.offset().top;
+
+		if (this.baseDOM._window.height() - offsetTop > offsetTop) {
+			this.baseDOM._footerContainer.css('position', 'absolute');
+		}
+
+		else {
+			this.baseDOM._footerContainer.css('position', 'static');
+		}
 	}
 
 	/**

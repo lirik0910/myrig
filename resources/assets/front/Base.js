@@ -9,7 +9,8 @@ export default class Base {
 			_linkCartContainer: $('#link-cart__container'),
 			_cartButton: $('.cart__button'),
 			_csrfToken: $('meta[name="csrf-token"]').attr('content'),
-			_loadingContainer: $('#loading__container')
+			_loadingContainer: $('#loading__container'),
+			_footerContainer: $('#footer__container'),
 		}
 
 		this.baseDOM._document.ready(e => {
