@@ -38,6 +38,11 @@
 		}
 	}
 
+	if($locale === 'en'){
+		$defaultImage = asset('uploads/default/en.no-photo.jpg');
+	} else{
+		$defaultImage = asset('uploads/default/ru.no-photo.jpeg');
+	}
 @endphp
 
 <div id="dark__container" class="dark__container"></div>
@@ -48,19 +53,44 @@
 			<div class="border__container"></div>
 
 			<div id="product-slider__container" class="product-slider__container owl-carousel owl-theme">
-				@foreach($product->images as $image)
-				<div class="slide__item text-center" data-dot="<button class='slide-dot__button padding__collapse'><div class='slide-item__progress'></div></button>">
-					<img src="{{ $preview(asset('uploads/' . $image->name), 300, 300) }}" class="slide__icon" alt="{{ $image->name }}" title="{{ $product->title }}" />
+				@if(count($product->images) == 0)
+					<div class="slide__item text-center" data-dot="<button class='slide-dot__button padding__collapse'><div class='slide-item__progress'></div></button>">
+						<img src="{{ $preview($defaultImage, 300, 300) }}" class="slide__icon" alt="Default image" title="{{ $product->title }}" />
 					</div>
-				@endforeach
+				@else
+					@foreach($product->images as $image)
+						@if(!empty($image->name) && File::exists(public_path('uploads/' . $image->name)))
+							<div class="slide__item text-center" data-dot="<button class='slide-dot__button padding__collapse'><div class='slide-item__progress'></div></button>">
+								<img src="{{ $preview(asset('uploads/' . $image->name), 300, 300) }}" class="slide__icon" alt="{{ $image->name }}" title="{{ $product->title }}" />
+							</div>
+						@else
+							<div class="slide__item text-center" data-dot="<button class='slide-dot__button padding__collapse'><div class='slide-item__progress'></div></button>">
+								<img src="{{ $preview($defaultImage, 300, 300) }}" class="slide__icon" alt="{{ $image->name }}" title="{{ $product->title }}" />
+							</div>
+						@endif
+					@endforeach
+				@endif
+
 			</div>
 
 			<div id="dots-slider__container" class="dots-slider__container owl-carousel owl-theme">
-				@foreach($product->images as $image)
-				<div class="slide__item text-center">
-					<img src="{{ $preview(asset('uploads/' . $image->name), 47, 47) }}" class="slide__icon" alt="{{ $image->name }}" title="{{ $product->title }}" />
-				</div>
-				@endforeach
+				@if(count($product->images) == 0)
+					<div class="slide__item text-center">
+						<img src="{{ $preview($defaultImage, 47, 47) }}" class="slide__icon" alt="Default image" title="{{ $product->title }}" />
+					</div>
+				@else
+					@foreach($product->images as $image)
+						@if(!empty($image->name) && File::exists(public_path('uploads/' . $image->name)))
+							<div class="slide__item text-center">
+								<img src="{{ $preview(asset('uploads/' . $image->name), 47, 47) }}" class="slide__icon" alt="{{ $image->name }}" title="{{ $product->title }}" />
+							</div>
+						@else
+							<div class="slide__item text-center">
+								<img src="{{ $preview($defaultImage, 47, 47) }}" class="slide__icon" alt="{{ $image->name }}" title="{{ $product->title }}" />
+							</div>
+						@endif
+					@endforeach
+				@endif
 			</div>
 		</div>
 
@@ -126,11 +156,11 @@
 				@endif
 			</form>
 				
-		@php	
-		 $sub1 = substr($payback, -1);
-		 $sub2 = substr($payback, -2);
-		@endphp
 		@if(isset($payback) && !empty($payback))
+			@php
+				$sub1 = substr($payback, -1);
+                $sub2 = substr($payback, -2);
+			@endphp
 		<div class='tags__container tag-payback__icon'>
 			{{ __('default.payback') }} {{ $payback  }} @if($sub2 == 11){{ __('default.days') }}  @elseif($sub1 == 1){{ __('default.day') }}  @elseif($sub1 > 1 and $sub1 < 5){{ __('default.two_days') }}  @else{{ __('default.days') }}@endif
 		</div>
