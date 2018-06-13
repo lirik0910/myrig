@@ -163,7 +163,7 @@ foreach ($products as $item) {
 				</div>
 			</div>
 
-			<div class="checkout-products__container products col-sm-8 product-content__container margin__collapse" style="padding: 42px 0 0 32px;">
+			<div class="checkout-products__container col-sm-8 product-content__container margin__collapse">
 				<div class="border__container"></div>
 
 				<h3 class="title-default__container font-weight-light checkout-order__title">
