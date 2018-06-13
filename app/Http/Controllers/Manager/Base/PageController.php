@@ -300,7 +300,7 @@ class PageController extends Controller
         }
 		//$parentPage = Page::where('context_id', $data['context_id'])->where('link', explode('/', $data['link'])[0])->first();
 
-		if($parentPage){
+		if(isset($parentPage) && $parentPage){
 		    $data['parent_id'] = $parentPage->id;
         }
 
@@ -385,7 +385,7 @@ class PageController extends Controller
         }
 
         //$parentPage = Page::where('context_id', $data['context_id'])->where('link', explode('/', $data['link'])[0])->first();
-        if($parentPage){
+        if(isset($parentPage) && $parentPage){
             $data['parent_id'] = $parentPage->id;
         }
 
