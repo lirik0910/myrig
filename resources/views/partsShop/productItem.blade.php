@@ -20,6 +20,7 @@ foreach($item->categories as $category){
 		$payback = $payback->calcPayback($item->id);
 	}
 }
+
 @endphp
 
 <div class="row row__container product-item__container margin__collapse">
@@ -28,17 +29,37 @@ foreach($item->categories as $category){
 
 		<div class="vertical-slider__container" >
 			@foreach($item->images as $image)
-			<div class="slide__item text-center @if($loop->first) active @endif">
-				<img src="{{ $preview(asset('uploads/' . $image->name), 47, 47) }}" class="slide__icon" alt="{{ $image->name }}" title="{{ $item->title }}" />
-			</div>
+				@php
+					$imageLink = 'uploads/' . $image->name;
+				@endphp
+				@if(empty($image->name) || !File::exists(public_path($imageLink)))
+					<div class="slide__item text-center @if($loop->first) active @endif">
+						<img src="{{ $preview($defaultImage, 47, 47) }}" class="slide__icon" alt="{{ $image->name }}" title="{{ $item->title }}" />
+					</div>
+				@else
+					<div class="slide__item text-center @if($loop->first) active @endif">
+						<img src="{{ $preview($imageLink, 47, 47) }}" class="slide__icon" alt="{{ $image->name }}" title="{{ $item->title }}" />
+					</div>
+				@endif
 			@endforeach
 		</div>
 
 		<div class="single-slider__container owl-carousel owl-theme padding__collapse">
 			@foreach($item->images as $image)
-			<div class="slide__item text-center @if($loop->first) active @endif" data-dot="<button class='slide-dot__button padding__collapse'><div class='slide-item__progress'></div></button>">
-				<img src="{{ $preview(asset('uploads/' . $image->name), 300, 300) }}" class="slide__icon" alt="{{ $image->name }}" title="{{ $item->title }}" />
-				</div>
+				@php
+					$imageLink = 'uploads/' . $image->name;
+				//var_dump($imageLink, File::exists(public_path($imageLink))); die;
+				@endphp
+
+				@if(empty($image->name) || !File::exists(public_path($imageLink)))
+					<div class="slide__item text-center @if($loop->first) active @endif" data-dot="<button class='slide-dot__button padding__collapse'><div class='slide-item__progress'></div></button>">
+						<img src="{{ $preview($defaultImage, 300, 300) }}" class="slide__icon" alt="{{ $image->name }}" title="{{ $item->title }}" />
+					</div>
+				@else
+					<div class="slide__item text-center @if($loop->first) active @endif" data-dot="<button class='slide-dot__button padding__collapse'><div class='slide-item__progress'></div></button>">
+						<img src="{{ $preview($imageLink, 300, 300) }}" class="slide__icon" alt="{{ $image->name }}" title="{{ $item->title }}" />
+					</div>
+				@endif
 			@endforeach
 		</div>
 	</div>
@@ -47,7 +68,7 @@ foreach($item->categories as $category){
 		<div class="border__container"></div>
 		
 		<h2 class="title__container font-weight-bold">
-			 <a href="{{ asset($item->page->link) }}">{{ $item->title }}</a>
+			 <a @isset($item->page) href="{{ asset($item->page->link) }}" @endisset>{{ $item->title }}</a>
 		</h2>
 
 		<div class="tags__container @if ($item->productStatus->title === 'in-stock') tag-check__icon @elseif ($item->productStatus->title === 'pre-order') tag-order__icon  @elseif ($item->productStatus->title === 'not-available') tag-no__icon @endif">
@@ -60,7 +81,7 @@ foreach($item->categories as $category){
 		</div>
 		@endif
 
-		@if (isset($item->page->view->variables))
+		@if (isset($item->page) && isset($item->page->view->variables))
 			@if (isset($item->page->view->variables))
 			<ul class="options__list margin__collapse font-weight-light">
 			@foreach ($item->page->view->variables as $field)

@@ -18,6 +18,12 @@ $secondaryProducts = $select('\App\Model\Shop\Product')
     ->where('context_id', $it->context_id)
 	->with('page', 'options', 'images')
 	->get();
+
+if($locale === 'en'){
+	$defaultImage = asset('uploads/default/en.no-photo.jpg');
+} else{
+	$defaultImage = asset('uploads/default/ru.no-photo.jpeg');
+}
 @endphp
 
 @section('content')
