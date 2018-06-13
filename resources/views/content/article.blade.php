@@ -27,6 +27,7 @@ if (!$visits) {
 	$visits->count++;
 	$visits->save();
 }
+//var_dump($parent_link); die;
 @endphp
 
 <div id="dark__container" class="dark__container"></div>
@@ -47,18 +48,20 @@ if (!$visits) {
 				{{ $it->title }}
 			</h3>
 
-			<div class="news-option__container d-block">
-				@php
-					echo date('d F', strtotime($it->created_at))
-				@endphp
-				<i class="fa fa-eye" style="margin-left: 18px"></i>
+			@if($parent_link)
+				<div class="news-option__container d-block">
+					@php
+						echo date('d F', strtotime($it->created_at))
+					@endphp
+					<i class="fa fa-eye" style="margin-left: 18px"></i>
 
-				@if ($visits)
-					{{ $visits->count }}
-				@else 
-					0
-				@endif
-			</div>
+					@if ($visits)
+						{{ $visits->count }}
+					@else
+						0
+					@endif
+				</div>
+			@endif
 		</div>
 
 		<div class="col-sm-8 product-content__container news-content__container margin__collapse">

@@ -18,6 +18,5 @@ yarn-error.log
 .env
 
 
-
-!/public/uploads/eng.no-photo.jpg
-!/public/uploads/ru.no-photo.jpeg
+!/public/uploads/default/en.no-photo.jpg
+!/public/uploads/default/ru.no-photo.jpeg
