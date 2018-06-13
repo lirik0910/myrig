@@ -106,15 +106,15 @@
 					@endif
 					@if($warrantyPage)
 						<li class="list__item">
-							<a href="{{ $deliveryPage->link }}">
-								{{ $deliveryPage->title }}
+							<a href="{{ $warrantyPage->link }}">
+								{{ $warrantyPage->title }}
 							</a>
 						</li>
 					@endif
 					@if($packagingPage)
 						<li class="list__item">
-							<a href="{{ $deliveryPage->link }}">
-								{{ $deliveryPage->title }}
+							<a href="{{ $packagingPage->link }}">
+								{{ $packagingPage->title }}
 							</a>
 						</li>
 					@endif
