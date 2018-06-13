@@ -75,7 +75,7 @@ foreach ($products as $item) {
 		<div class="col-sm-8 product-content__container margin__collapse amount__container" style="background-color: #F2F2F2">
 			<div class="border__container"></div>
 
-			<div class="price__container cart-amount__containrt padding__collapse">
+			<div class="price__container cart-amount__containrt margin__collapse padding__collapse">
 				<span class="amount__label text-uppercase font-weight-light">
 					{{ __('default.total') }}
 				</span>
@@ -176,7 +176,8 @@ foreach ($products as $item) {
 							<th class="font-weight-light" style="padding: 8px 0">{{ __('default.photo') }}</th>
 							<th class="font-weight-light" style="padding: 8px 0">{{ __('default.name') }}</th>
 							<th class="font-weight-light checkout-order__count" style="padding: 8px 0">{{ __('default.count') }}</th>
-							<th class="font-weight-light checkout-order__cost" style="padding: 8px 0">{{ __('default.cost') }}</th>
+							
+							<th class="font-weight-light checkout-order__cost d-block-991" style="padding: 8px 0">{{ __('default.cost') }}</th>
 						</tr>
 
 						@foreach($products as $item)

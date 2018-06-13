@@ -51,6 +51,7 @@
 
 					.slide__title {
 						color: #60A645;
+						font-size: 32px;
 
 						@media (max-width: 767px) {
 							font-size: 32px;
@@ -63,7 +64,6 @@
 						}
 
 						@media (min-width: 992px) {
-							font-size: 42px;
 							margin-bottom: 20px;
 						}
 
