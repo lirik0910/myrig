@@ -36,10 +36,12 @@ if (!$visits) {
 		<div class="d-block col-sm-4 slider__container margin__collapse padding__collapse" style="min-height: 300px">
 			<div class="border__container"></div>
 
-			<a href="{{ url($parent_link->link )}}" class="d-block default__link news-return__link font-weight-light">
-				<i class="article-arrow-left__icon"></i>
-				{{ __('default.back_to_list') }}
-			</a>
+			@if($parent_link)
+				<a href="{{ url($parent_link->link )}}" class="d-block default__link news-return__link font-weight-light">
+					<i class="article-arrow-left__icon"></i>
+					{{ __('default.back_to_list') }}
+				</a>
+			@endif
 			
 			<h3 class="title__container font-weight-bold news-title__container margin__collapse">
 				{{ $it->title }}

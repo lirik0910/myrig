@@ -97,39 +97,27 @@
 				</ul>
 			
 				<ul class="list__container margin_links padding__collapse col-sm-7">
-					<li class="list__item">
-						@if($deliveryPage)
+					@if($deliveryPage)
+						<li class="list__item">
 							<a href="{{ $deliveryPage->link }}">
 								{{ $deliveryPage->title }}
 							</a>
-						@else
-							<a href="#">
-								Доставка и отгрузка
-							</a>
-						@endif
-					</li>
-					<li class="list__item">
-						@if($warrantyPage)
+						</li>
+					@endif
+					@if($warrantyPage)
+						<li class="list__item">
 							<a href="{{ $deliveryPage->link }}">
 								{{ $deliveryPage->title }}
 							</a>
-						@else
-							<a href="#">
-								Расширенная гарантия
-							</a>
-						@endif
-					</li>
-					<li class="list__item">
-						@if($packagingPage)
+						</li>
+					@endif
+					@if($packagingPage)
+						<li class="list__item">
 							<a href="{{ $deliveryPage->link }}">
 								{{ $deliveryPage->title }}
 							</a>
-						@else
-							<a href="#">
-								Упаковка отправлений
-							</a>
-						@endif
-					</li>
+						</li>
+					@endif
 				</ul>
 			</div>
 
