@@ -292,7 +292,13 @@ class PageController extends Controller
 		 */
 		$data['link'] = rtrim(ltrim($data['link'], '/\\'), '/\\');
 
-		$parentPage = Page::where('context_id', $data['context_id'])->where('link', explode('/', $data['link'])[0])->first();
+        if($data['parent_id']){
+            $currentParentPage = Page::find($data['parent_id']);
+            if($currentParentPage){
+                $parentPage = Page::where('link', $currentParentPage->link)->where('context_id', $data['context_id'])->first();
+            }
+        }
+		//$parentPage = Page::where('context_id', $data['context_id'])->where('link', explode('/', $data['link'])[0])->first();
 
 		if($parentPage){
 		    $data['parent_id'] = $parentPage->id;
@@ -371,8 +377,14 @@ class PageController extends Controller
 			return response()->json(['message' => $e->getMessage()], 422);
 		}
 
-        $parentPage = Page::where('context_id', $data['context_id'])->where('link', explode('/', $data['link'])[0])->first();
+		if($data['parent_id']){
+		    $currentParentPage = Page::find($data['parent_id']);
+		    if($currentParentPage){
+		        $parentPage = Page::where('link', $currentParentPage->link)->where('context_id', $data['context_id'])->first();
+            }
+        }
 
+        //$parentPage = Page::where('context_id', $data['context_id'])->where('link', explode('/', $data['link'])[0])->first();
         if($parentPage){
             $data['parent_id'] = $parentPage->id;
         }
