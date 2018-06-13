@@ -75,7 +75,7 @@ foreach ($products as $item) {
 		<div class="col-sm-8 product-content__container margin__collapse amount__container" style="background-color: #F2F2F2">
 			<div class="border__container"></div>
 
-			<div class="price__container cart-amount__containrt padding__collapse">
+			<div class="price__container cart-amount__containrt margin__collapse padding__collapse">
 				<span class="amount__label text-uppercase font-weight-light">
 					{{ __('default.total') }}
 				</span>
