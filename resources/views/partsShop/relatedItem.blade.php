@@ -24,6 +24,7 @@
 				<img width="1000" height="1000" src="{{ $preview($defaultImage, 215, 215) }}" class="related__icon" alt="product" />
 			@endif
 		</div>
+	</a>
 
 		<div class="tags__container @if ($item->productStatus->title === 'in-stock') tag-check__icon @elseif ($item->productStatus->title === 'pre-order') tag-order__icon  @elseif ($item->productStatus->title === 'not-available') tag-no__icon @endif">
 			{{ __('common.product_status_' . str_replace(' ', '_', mb_strtolower($item->productStatus->description))) }}
@@ -75,5 +76,4 @@
 				</button>
 			@endif
 		</form>
-	</a>
 </div>
