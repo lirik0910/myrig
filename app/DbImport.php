@@ -612,14 +612,14 @@ class DbImport
         /*
          * Import carts
          */
-/*        foreach ($data['carts'] as $cart){
+        foreach ($data['carts'] as $cart){
             try{
                 Cart::create($cart);
             } catch (\Exception $e){
                 //$broken_carts[] = $cart;
                 continue;
             }
-        }*/
+        }
 
         //var_dump(count($broken_carts)); die;
         /*
