@@ -286,7 +286,7 @@ class CreatePageContainer extends Component {
 							linkDefaultValue={data.link}
 							viewDefaultValue={data.view_id}
 							contextDefaultValue={data.context_id}
-							parentDefaultValue={data.parent_id}
+							parentDefaultValue={data.parent_id ? data.parent_id : 0}
 							onParentSelected={value => {
 								data['parent_id'] = value;
 								this.setState({ data });
