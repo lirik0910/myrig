@@ -50,8 +50,14 @@ if (!$visits) {
 
 			@if($parent_link)
 				<div class="news-option__container d-block">
-					@php
+{{--					@php
 						echo date('d F', strtotime($it->created_at))
+					@endphp--}}
+					@php
+						$month = date('F', strtotime($it->created_at));
+                        $default = 'common.';
+                        $translate = $default . strtolower($month);
+                        echo date('d', strtotime($it->created_at)) . ' ' . __($translate);
 					@endphp
 					<i class="fa fa-eye" style="margin-left: 18px"></i>
 
