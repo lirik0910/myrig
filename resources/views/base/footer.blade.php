@@ -154,7 +154,7 @@
 				</div>
 
 				<div class="locales__container">
-					<a title="USA" href="{{ env('EN_DOMAIN') . '?locale=en' }}">
+					<a title="USA" href="https://myrig.com/">
 						<img src="{{ asset('uploads/design/us.png') }}" alt="USA">
 					</a>
 
