@@ -47,6 +47,8 @@
 		}
 
 		.mobile-product-content__container {
+			overflow: hidden;
+			
 			@media (max-width: 767px) {
 				position: absolute;
 				left: 132px;
