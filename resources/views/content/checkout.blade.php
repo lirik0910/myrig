@@ -52,6 +52,12 @@ foreach ($products as $item) {
 
 @section('content')
 
+<style>
+	#select2-country__select-container {
+		font-weight: 300 !important;
+	}
+</style>
+
 <div id="dark__container" class="dark__container"></div>
 
 <div class="products__container default__container checkout__container">
@@ -131,7 +137,7 @@ foreach ($products as $item) {
 						</div>
 
 						<div class="col-sm-6 margin__collapse" style="padding: 0 18px 0 0">
-							<input type="tel" class="field__input field__grey d-block" name="phone" placeholder="{{ __('default.phone') . ' ' . __('default.phone_input') }}" value="@isset($user->attributes->phone) {{$user->attributes->phone}} @endisset" required />
+							<input type="tel" class="font-weight-light field__input field__grey d-block" name="phone" placeholder="{{ __('default.phone') . ' ' . __('default.phone_input') }}" value="@isset($user->attributes->phone) {{$user->attributes->phone}} @endisset" required />
 						</div>
 
 						<div class="col-sm-6 margin__collapse padding__collapse">

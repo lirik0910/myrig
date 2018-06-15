@@ -44,6 +44,7 @@ class PaperOrderDeliveryForm extends Component {
 		userDefaultValue: 0,
 		createDefaultValue: new Date(),
 		activeDefaultValue: true,
+		countryDefaultValue: 4,
 		onUserSelected: () => {},
 		onUserLoaded: () => {},
 		onDateSelected: () => {},
@@ -92,12 +93,15 @@ class PaperOrderDeliveryForm extends Component {
 			contextDefaultValue,
 			statusDefaultValue,
 			deliveryDefaultValue,
+			countryDefaultValue,
 		} = this.props;
 
 		return <Paper className={classes.paper}>
 			<Button className={classes.right}
 				onClick={e => {
 					let fields = ['_first_name', '_last_name', '_email', '_phone', '_city', '_state', '_address', '_country'];
+					let country = {};
+					document.getElementById('select-country').value = countryDefaultValue;
 					fields.forEach((f) => {
 						if(document.getElementById('d'+f) && document.getElementById('p'+f))
 							document.getElementById('d'+f).value = document.getElementById('p'+f).value;

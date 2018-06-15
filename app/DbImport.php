@@ -86,7 +86,7 @@ class DbImport
 
         foreach ($this->products as $product){
             //var_dump($product); die;
-            if($product->post_content != ''){
+            //if($product->post_content != ''){
                 $products[$product->id] = [
                     'id' => $product->id,
                     'context_id' => 2,
@@ -101,10 +101,10 @@ class DbImport
                     'auto_price' => 0,
                     'price' => 0
                 ];
-            }
+            //}
 
         }
-//var_dump($this->orders); die;
+//var_dump($products); die;
         $users = [];
         $user_attrs = [];
         foreach ($this->users as $user){
@@ -354,9 +354,15 @@ class DbImport
 
             }
         }
+
         //var_dump($orders_items_meta); die;
 //var_dump($cart); die;
+        $test = [];
         foreach($cart as $key => $line){
+            if($line['order_id'] == 6842){
+                //var_dump($line); die;
+                $test[] = $line;
+            }
             //var_dump($cart, $key, $line); die;
             //var_dump($orders); die;
             //var_dump($cart[$key]); die;
@@ -378,6 +384,7 @@ class DbImport
                 unset($cart[$key]);
             }
         }
+        //var_dump($test); die;
 //var_dump($cart); die;
 /*        foreach ($cart as $key => $line){
             $isset = false;
@@ -503,7 +510,7 @@ class DbImport
         /*
          * Import users
          */
-        foreach ($data['users'] as $user_item){
+/*        foreach ($data['users'] as $user_item){
             try {
                 $user = new User();
                 $user->id = $user_item['id'];
@@ -517,27 +524,29 @@ class DbImport
             } catch (\Exception $e){
                 continue;
             }
-        }
+        }*/
 
         /*
          * Import User attributes
          */
-        foreach ($data['user_attrs'] as $attr){
+/*        foreach ($data['user_attrs'] as $attr){
             try{
                 UserAttribute::create($attr);
             } catch (\Exception $e){
                 continue;
             }
 
-        }
+        }*/
         $contexts = Context::where('title', 'UA')->orWhere('title', 'RU')->get();
         //var_dump($contexts); die;
         /*
          * Import products
          */
+        $currentRuProducts = Product::where('context_id', 3)->get();
         foreach ($data['products'] as $product){
             //var_
             foreach ($contexts as $context){
+                $write = true;
                 //try{
                // $parent_page = Page::where('context_id', $context->id)->where('link', 'shop')->first();
 
@@ -554,10 +563,19 @@ class DbImport
                     $product['page_id'] = 0;
                     $product['context_id'] = $context->id;
                     if($context->id == 3){
+                        foreach ($currentRuProducts as $ruProd){
+                            if($product['title'] === $ruProd['title']){
+                                //continue;
+                                $write = false;
+                            }
+                        }
                        unset($product['id']);
                     }
                     //var_dump($product); die;
-                    Product::create($product);
+                    if($write){
+                        Product::create($product);
+                    }
+
                 } catch (\Exception $e){
 /*                    if($context->id == 3){
                         var_dump('RUUUUU'); die;
@@ -570,25 +588,25 @@ class DbImport
         /*
          * Import orders
          */
-        foreach ($data['orders'] as $order){
+/*        foreach ($data['orders'] as $order){
             try{
                 Order::create($order);
             } catch (\Exception $e){
                 continue;
             }
 
-        }
+        }*/
 
         /*
          * Import orders deliveries
          */
-        foreach ($data['orders_deliveries'] as $delivery){
+/*        foreach ($data['orders_deliveries'] as $delivery){
             try{
                 OrderDelivery::create($delivery);
             } catch (\Exception $e){
                 continue;
             }
-        }
+        }*/
 
        // $broken_carts = [];
         /*
@@ -607,13 +625,22 @@ class DbImport
         /*
          * Import news
          */
+/*        $newsPage = Page::where('title', 'News')->where('context_id', 2)->first();
+        $currentNews = Page::where('parent_id', $newsPage->id)->get();
         foreach ($data['news'] as $new){
+            $write = true;
             $view_count = $new['views_count'];
             //var_dump($view_count); die;
             unset($new['views_count']);
 
+            foreach ($currentNews as $curNew){
+                if($new['title'] == $curNew['title']){
+                    $write = false;
+                }
+            }
             //foreach ($contexts as $context){
-                $newsPage = Page::where('title', 'News')->where('context_id', 2)->first();
+
+            if($write){
                 $new['parent_id'] = $newsPage->id;
                 $new['context_id'] = 2;
                 try{
@@ -621,7 +648,7 @@ class DbImport
                 } catch (\Exception $e){
                     continue;
                 }
-               // var_dump($page->id); die;
+                // var_dump($page->id); die;
                 try{
                     PageVisits::create([
                         'page_id' => $page->id,
@@ -630,13 +657,14 @@ class DbImport
                 } catch (\Exception $e){
                     continue;
                 }
+            }
             //}
-        }
+        }*/
 
         /*
          * Import articles
          */
-        foreach ($data['articles'] as $article){
+/*        foreach ($data['articles'] as $article){
             $view_count = $article['views_count'];
             unset($article['views_count']);
 
@@ -658,18 +686,18 @@ class DbImport
                     continue;
                 }
             //}
-        }
+        }*/
 
         /*
          * Import order logs
          */
-        foreach ($data['logs'] as $log){
+/*        foreach ($data['logs'] as $log){
             try{
                 OrderLog::create($log);
             } catch (\Exception $e){
                 continue;
             }
-        }
+        }*/
     }
 
     public function process()

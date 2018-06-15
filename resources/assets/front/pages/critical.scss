@@ -86,6 +86,10 @@ a.default__link:hover {
 }
 
 @media (max-width: 991px) {
+	.d-none-991 {
+		display: none !important;
+	}
+	
 	.d-block-991 {
 		display: block;
 	}
