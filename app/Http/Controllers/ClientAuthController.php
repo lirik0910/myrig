@@ -138,7 +138,7 @@ class ClientAuthController
 
                 $_SESSION['client'] = $data['email'];
                 //session()->put('client', $data['email']);
-                return redirect('/');
+                return redirect('/checkout');
             } else {
                 echo "notvalid";
 
