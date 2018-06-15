@@ -31,6 +31,8 @@ class CheckLocale
                 session()->put('locale', $request->get('locale'));
                 $locale = session()->get('locale');
             }
+
+            App::setLocale($locale);
             //var_dump(session()->get('locale'));// die;
 /*            if(!session()->get('locale')){
                 session()->put('locale', $locale);
