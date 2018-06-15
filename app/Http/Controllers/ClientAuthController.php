@@ -18,28 +18,9 @@ class ClientAuthController
 
     public function __construct(Request $request)
     {
-        switch ($request->getSchemeAndHttpHost()) {
-            case config('app.ua_domain'):
-                $locale = 'ua';
-                break;
-
-            case config('app.ru_domain'):
-                $locale = 'ru';
-                break;
-
-            case config('app.en_domain'):
-                $locale = 'en';
-                break;
-
-            default:
-                break;
-        }
-        App::setLocale($locale);
         //$this->appurl = $_SERVER['SERVER_NAME'];
-        $domain = App::getLocale() . '_domain';
-        //var_dump($domain); die;
+        //$domain = App::getLocale() . '_domain';
         $this->homeappurl = config('app.' . App::getLocale() . '_domain') . '/sso-login';
-       // var_dump($this->homeappurl); die;
     }
 
     /*
@@ -138,7 +119,7 @@ class ClientAuthController
 
                 $_SESSION['client'] = $data['email'];
                 //session()->put('client', $data['email']);
-                return redirect('/');
+                return redirect('/checkout');
             } else {
                 echo "notvalid";
 

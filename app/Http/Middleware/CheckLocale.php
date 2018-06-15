@@ -26,6 +26,8 @@ class CheckLocale
                 $locale = 'en';
             }
 
+            App::setLocale($locale);
+
             if($request->get('locale')){
                 session()->put('locale', $request->get('locale'));
             }
@@ -33,28 +35,43 @@ class CheckLocale
 /*            if(!session()->get('locale')){
                 session()->put('locale', $locale);
             }*/
+            $uaDomain = config('app.ua_domain');
+            $ruDomain = config('app.ru_domain');
+            $enDomain = config('app.en_domain');
+            //var_dump($uaDomain, $ruDomain, $enDomain); die;
 
-/*            if($locale == 'ua' && $current_domain !== config('app.ua_domain') || $locale == 'ru' && $current_domain !== config('app.ru_domain') || $locale =='en' && $current_domain !== config('app.en_domain')){
+            if($locale == 'ua' && $current_domain !== $uaDomain || $locale == 'ru' && $current_domain !== $ruDomain || $locale =='en' && $current_domain !== $enDomain){
 
                 if(session()->get('locale')){
                   //  var_dump('Evil!!'); die;
+                    App::setLocale(session()->get('locale'));
                     switch (session()->get('locale')){
                         case 'ua':
                             return redirect(config('app.ua_domain'));
                             break;
                         case 'ru':
-                            //App::setLocale('ru');
                             return redirect(config('app.ru_domain'));
                             break;
                         case 'en':
-                           // App::setLocale('en');
+                            return redirect(config('app.en_domain'));
+                            break;
+                    }
+                } else{
+                    switch ($locale){
+                        case 'ua':
+                            return redirect(config('app.ua_domain'));
+                            break;
+                        case 'ru':
+                            return redirect(config('app.ru_domain'));
+                            break;
+                        case 'en':
                             return redirect(config('app.en_domain'));
                             break;
                     }
                 }
-            }*/
+            }
 
-            switch ($current_domain) {
+/*            switch ($current_domain) {
                 case config('app.ua_domain'):
                    // $locale = 'ua';
                     App::setLocale('ua');
@@ -72,7 +89,7 @@ class CheckLocale
 
                 default:
                     break;
-            }
+            }*/
         }
         //var_dump($locale); die;
         return $next($request);
