@@ -105,7 +105,9 @@ class PaperOrderProductsForm extends Component {
 			type: 'GET',
 			name: 'all',
 			model: 'product',
-			data: {category_id: this.props.category_id},
+			data: this.props.category_id > 0 ? 
+				{ category_id: this.props.category_id } :
+				{},
 			success: (r) => {
 				r = JSON.parse(r.response).data;
 				if (r) {
@@ -148,7 +150,9 @@ class PaperOrderProductsForm extends Component {
 								type: 'GET',
 								name: 'all',
 								model: 'product',
-								data: {category_id: v},
+								data: v > 0 ?
+									{ category_id: v } :
+									{},
 								success: (r) => {
 									r = JSON.parse(r.response).data;
 									if (r) {
