@@ -101,8 +101,11 @@ class SelectProduct extends Component {
 				{products.map((item, i) => {
 					return <MenuItem 
 						key={i}
-						value={item.id}>
-							{item.title} / {contexts[item.context_id]} / {item.price}
+						value={typeof item.product_id === 'undefined' ?
+							item.id :
+							item.product_id}>
+
+						{item.title} / {contexts[item.context_id]} / {item.price}
 					</MenuItem>
 				})}
 			</Select>
