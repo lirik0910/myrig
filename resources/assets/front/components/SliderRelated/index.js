@@ -38,7 +38,7 @@ export default class SliderRelated extends Base {
 			// smartSpeed: 200,
 			// animateIn: 'fadeIn',
 			// animateOut: 'fadeOut',
-			onInitialized: this.redistributeDots,
+			// onInitialized: this.redistributeDots,
 			// responsiveClass: true,
 			responsive:{
 				0: {
@@ -67,7 +67,7 @@ export default class SliderRelated extends Base {
 				id = target.data('id');
 			
 			if(id % 3 !== 0 ){
-				target.remove();
+				target.hide();
 			}
 		});
 	}
