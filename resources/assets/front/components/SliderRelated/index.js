@@ -39,6 +39,7 @@ export default class SliderRelated extends Base {
 			// animateIn: 'fadeIn',
 			// animateOut: 'fadeOut',
 			onInitialized: this.redistributeDots,
+			onChanged: this.defineCurrentDots,
 			// responsiveClass: true,
 			responsive:{
 				0: {
@@ -66,9 +67,18 @@ export default class SliderRelated extends Base {
 			let target = $(el),
 				id = target.data('id');
 			
-			if(id % 3 !== 0 ){
+			if(id % 3 !== 0 ) {
 				target.parent('.owl-dot').hide();
 			}
 		});
+	}
+
+	/**
+	 * Define the hidden navigation elements and 
+	 * switch the active class to the nearest visible element
+	 * @param {Object} e
+	 */
+	defineCurrentDots(e) {
+		console.log('wejfowej')
 	}
 }
