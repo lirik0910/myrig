@@ -184,12 +184,18 @@ class PaperOrderProductsForm extends Component {
 								success: (r) => {
 									r = JSON.parse(r.response);
 									if (r && r.product) {
+										r.product['count'] = 1;
+										r.product['discount'] = 0
+
 										cart.push(r.product);
-										cart = cart.map((c) => {
-											c.count = 1;
-											c.discount = 0;
-											return c;
-										});
+										//cart = cart.map((c) => {
+										//	c.count = 1;
+										//	c.discount = 0;
+										//	return c;
+										//});
+
+										console.log(194, cart)
+
 										this.setState({ cart });
 										this.props.onCartChanged(cart);
 									}
@@ -209,21 +215,25 @@ class PaperOrderProductsForm extends Component {
 					<span className={classes.costItem}> Total : {cart.length && cart.reduce((sum, i) => sum + (i.price - i.discount) * i.count, 0)}</span>
 					</div>
 				
-				{cart.map((item, i) => (
-					 <PaperOrderProductForm
+				{cart.map((item, i) => {
+					return <PaperOrderProductForm
 						key={i}
 						data={item}
-						onItemChanged={(i,key)=>{
+						onItemChanged={(i,key) => {
 							cart[key] = i;
 							this.setState({ cart });
+
+							console.log(223, cart)
 							this.props.onCartChanged(cart);
 						}}
-						onItemRemoved={(key)=>{
+						onItemRemoved={(key) => {
 							cart.splice(key-1, 1);
 							this.setState({ cart });
+
+							console.log(230, cart)
 							this.props.onCartChanged(cart);
 						}}
-					/>)
+					/>}
 				)}
 
 				</Grid>
