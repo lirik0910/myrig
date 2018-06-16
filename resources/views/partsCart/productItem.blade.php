@@ -33,7 +33,7 @@ $btcPrice = number_format($item->calcBtcPrice(), 4, '.', '');
 		<div class="padding__collapse mobile-title-default__container">
 			<h3 class="font-weight-normal margin__collapse">{{ $item->title }}</h3>
 
-			<button data-id="{{ $item->id }}" class="delete__button padding__collapse margin__collapse" style="position: absolute; right: 18px;">
+			<button data-id="{{ $item->id }}" class="delete__button padding__collapse margin__collapse" style="position: absolute; right: 0;">
 				<img src="{{ asset('uploads/design/close.png') }}" alt="" />
 			</button>
 		</div>
