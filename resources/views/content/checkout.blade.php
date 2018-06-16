@@ -164,7 +164,7 @@ foreach ($products as $item) {
 					<h3 class="additional-data-title__container">{{ __('default.additional_info') }}</h3>
 
 					<div style="padding: 18px 26px">
-						<textarea name="comment" class="field__input field__grey d-block" placeholder="{{ __('default.comment_placeholder') }}"  rows="2" cols="5"></textarea>
+						<textarea name="comment" class="font-weight-light field__input field__grey d-block" placeholder="{{ __('default.comment_placeholder') }}"  rows="2" cols="5"></textarea>
 					</div>
 				</div>
 			</div>
