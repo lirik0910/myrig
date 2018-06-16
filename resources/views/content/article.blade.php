@@ -34,7 +34,7 @@ if (!$visits) {
 
 <div class="products__container default__container">
 	<div class="row row__container product-item__container margin__collapse">
-		<div class="d-block col-sm-4 slider__container margin__collapse padding__collapse" style="min-height: 300px">
+		<div class="d-block col-sm-4 slider__container margin__collapse padding__collapse">
 			<div class="border__container"></div>
 
 			@if($parent_link)
