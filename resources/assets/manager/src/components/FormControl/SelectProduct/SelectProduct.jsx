@@ -98,11 +98,10 @@ class SelectProduct extends Component {
 					<em>{'None'}</em>
 				</MenuItem>
 
-				{
-					products.map((item, i) => {
+				{products.map((item, i) => {
 					return <MenuItem 
 						key={i}
-						value={item.product_id}>
+						value={item.id}>
 							{item.title} / {contexts[item.context_id]} / {item.price}
 					</MenuItem>
 				})}

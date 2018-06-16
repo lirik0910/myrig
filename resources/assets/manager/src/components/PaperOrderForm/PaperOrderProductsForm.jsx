@@ -166,7 +166,7 @@ class PaperOrderProductsForm extends Component {
 					<SelectProduct
 						products={products}
 						contexts={contexts}
-						onItemSelected={i=>{
+						onItemSelected={i => {
 							this.props.onProductSelected(i)
 							product_id = i;
 							this.setState({product_id: i}); 
