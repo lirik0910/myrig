@@ -92,7 +92,11 @@ class SelectProduct extends Component {
 				required={required}
 				value={value}
 				onChange={this.handleChangeSelect}
-				input={<Input name="product_id" id={inputID} />}>
+				input={<Input name="product_id" id={inputID} />}
+				className="product-select__container"
+				style={{
+					overflowY: 'scroll'
+				}}>
 
 				<MenuItem value={0}>
 					<em>{'None'}</em>
