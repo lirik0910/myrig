@@ -1,7 +1,11 @@
 @php
 	$context = $select('App\Model\Base\Context')->where('title', $locale)->first();
 
-	$productsPage = $select('App\Model\Base\Page')->where('parent_id', 0)->where('context_id', $context->id)->where('view_id', 3)->first();
+	$productsPage = $select('App\Model\Base\Page')
+		->where('parent_id', 0)
+		->where('context_id', $context->id)
+		->where('view_id', 3)
+		->first();
 
 	$otherPages = $select('App\Model\Base\Page')
 		->where('parent_id', 0)
@@ -17,7 +21,7 @@
 	$infoPages = $select('App\Model\Base\Page')
 		->where('parent_id', 0)
 		->where('context_id', $context->id)
-		->where('view_id', 3)
+		->where('view_id', 10)
 		->get();
 @endphp
 
