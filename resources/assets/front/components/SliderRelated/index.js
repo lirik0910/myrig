@@ -67,7 +67,7 @@ export default class SliderRelated extends Base {
 				id = target.data('id');
 			
 			if(id % 3 !== 0 ){
-				target.hide();
+				target.remove();
 			}
 		});
 	}
