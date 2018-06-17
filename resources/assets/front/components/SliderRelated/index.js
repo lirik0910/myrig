@@ -19,7 +19,22 @@ export default class SliderRelated extends Base {
 	 * @param {Object} e
 	 */
 	onDOMReady(e) {
+		//this.createDots();
 		this.initSlider();
+	}
+
+	/**
+	 * Add dots items
+	 */
+	createDots() {
+		let slidesCount = this.els._relatedSliderContainer.children().length,
+			dotsCount = Math.ceil(slidesCount / 3),
+			i = 0;
+
+		while (i < dotsCount) {
+			console.log(this.els._relatedDotsContainer)
+			i++;
+		}
 	}
 
 	/**
@@ -63,9 +78,7 @@ export default class SliderRelated extends Base {
 	 * @param {Object} e
 	 */
 	redistributeDots(e) {
-		console.log(this.els)
-
-		/*$('#related-slider__container .owl-dots').removeClass('disabled');
+		$('#related-slider__container .owl-dots').removeClass('disabled');
 		$('#related-slider__container .slide-dot__button').each((i, el) => {
 			let target = $(el),
 				id = target.data('id');
@@ -73,7 +86,7 @@ export default class SliderRelated extends Base {
 			if(id % 3 !== 0 ) {
 				target.parent('.owl-dot').hide();
 			}
-		});*/
+		});
 	}
 
 	/**
