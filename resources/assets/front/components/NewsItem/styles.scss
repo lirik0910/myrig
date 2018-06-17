@@ -20,14 +20,28 @@
 	width: 100%;
 }
 
+.bottom-border__container {
+	display: block;
+}
+
 @media (max-width: 767px) {
-	.news-content__container {
+	/* .news-content__container {
+		display: none;
+	} */
+
+	.bottom-border__container {
 		display: none;
 	}
 
 	.news-option__container {
 		width: 100%;
 		padding: 0 12px !important;
+	}
+}
+
+.news-content__container {
+	img {
+		width: 100%;
 	}
 }
 

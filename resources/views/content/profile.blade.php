@@ -197,7 +197,7 @@
 //var_dump($client_email); die;
 
           //  var_dump($user); die;
-            if($user == NULL){
+            if($user == NULL || !isset($user)){
             //var_dump($user); die;
                 redirect('sso-login');
             }
@@ -285,7 +285,7 @@
                                                     <span class="order-data">@php echo date('d-m-Y', strtotime($order->created_at)) @endphp</span>
                                                 </div>
                                             </div>
-                                            @if(count($order->products) > 1)
+                                            @if(count($order->carts) > 1)
                                                 <div class="table-cell table-product-cell">
                                                     <div class="order_thumbs order_thumbs_several">
                                                         <span class="several_products">@php echo count($order->products) @endphp {{ __('default.items_profile') }}</span>
@@ -296,32 +296,43 @@
                                                     </div>
                                                 </div>
                                             @else
-                                                @foreach($order->products as $product)
-                                                @php
-                                                   //  var_dump($product->pivot); die;
-                                                    $price = number_format($product->pivot->cost, 2, '.', '');
-                                                    $btcPrice = number_format($product->pivot->btcCost, 4, '.', '');
-
-/*                                                    if($product->auto_price){
-                                                        $price = number_format($product->calcAutoPrice(), 2, '.', '');
-                                                    } else{
-                                                        $price = number_format($product->price, 2, '.', '');
-                                                    }
-                                                    $btcPrice = number_format($product->calcBtcPrice(), 4, '.', '');*/
-                                                @endphp
-                                                <div class="table-cell table-product-cell">
-                                                    <div class="order_thumbs">
-                                                        <img src="@if(count($product->images)){{asset('uploads/' . App\Model\Shop\ProductImage::where('product_id', $product->id)->first()->name)}}@endif" title="{{$product->title}}">
-                                                        <div class="cost">
-                                                            <a @if(isset($product->page) && !empty($product->page))href="{{$product->page->link}}" @endif data-wpel-link="internal">{{$product->title}}</a>
-                                                            <span class="hidden-md">{{ __('default.item_cost') }}</span>
-                                                            <span class="table-price">${{ $price }}</span>
-                                                            @if($btcPrice > 0)<span class="table-bitcoin">{{ $btcPrice }}<i class="fa fa-bitcoin"></i></span>@endif
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                @endforeach
-
+												@if(count($order->products) > 0)
+													@foreach($order->products as $product)
+														@php
+                                                             $price = number_format($product->pivot->cost, 2, '.', '');
+                                                             $btcPrice = number_format($product->pivot->btcCost, 4, '.', '');
+														@endphp
+														<div class="table-cell table-product-cell">
+															<div class="order_thumbs">
+																<img src="@if(count($product->images)){{asset('uploads/' . App\Model\Shop\ProductImage::where('product_id', $product->id)->first()->name)}}@endif" title="{{$product->title}}">
+																<div class="cost">
+																	<a @if(isset($product->page) && !empty($product->page))href="{{$product->page->link}}" @endif data-wpel-link="internal">{{$product->title}}</a>
+																	<span class="hidden-md">{{ __('default.item_cost') }}</span>
+																	<span class="table-price">${{ $price }}</span>
+																	@if($btcPrice > 0)<span class="table-bitcoin">{{ $btcPrice }}<i class="fa fa-bitcoin"></i></span>@endif
+																</div>
+															</div>
+														</div>
+													@endforeach
+												@else
+													@foreach($order->carts as $item)
+														@php
+                                                             $price = number_format($item->cost, 2, '.', '');
+                                                             $btcPrice = number_format($item->btcCost, 4, '.', '');
+														@endphp
+														<div class="table-cell table-product-cell">
+															<div class="order_thumbs">
+																<img src="{{asset('uploads/default/' . ($locale !== 'en' ? 'ru.no-photo.jpeg' : 'en.no-photo.jpg'))}}" title="{{$item->title}}">
+																<div class="cost">
+																	<a data-wpel-link="internal">{{$item->title}}</a>
+																	<span class="hidden-md">{{ __('default.item_cost') }}</span>
+																	<span class="table-price">${{ $price }}</span>
+																	@if($btcPrice > 0)<span class="table-bitcoin">{{ $btcPrice }}<i class="fa fa-bitcoin"></i></span>@endif
+																</div>
+															</div>
+														</div>
+													@endforeach
+												@endif
                                             @endif
                                             <div class="table-cell number" style="padding-top: 0px !important; vertical-align: middle !important;">
                                                 <span class="hidden-md">{{ __('default.count') }}</span>
@@ -366,48 +377,79 @@
                                             </div>
                                             <div class="table-cell" style="width: 10px"></div>
                                         </div>
-                                        @if(count($order->products) > 1)
-                                            @foreach($order->products as $product)
-                                                @php
-                                                    $price = number_format($product->pivot->cost, 2, '.', '');
-                                                    $btcPrice = number_format($product->pivot->btcCost, 4, '.', '');
-                                                    //var_dump($btcPrice); die;
-/*                                                    if($product->auto_price){
-                                                        $price = number_format($product->calcAutoPrice(), 2, '.', '');
-                                                    } else{
-                                                        $price = number_format($product->price, 2, '.', '');
-                                                    }
-                                                    $btcPrice = number_format($product->calcBtcPrice(), 4, '.', '');*/
-                                                @endphp
-                                                <div class="table-row hidden-block table-row-several order-{{$order->number}}">
-                                                    <div class="table-cell table-cell-border table-cell-border-none">
-                                                    </div>
-                                                    <div class="table-cell table-product-cell">
-                                                        <div class="order_thumbs">
-                                                            <img src="@if(count($product->images)){{asset('uploads/' . $product->images[0]->name)}}@endif" title="{{$product->title}}">
-                                                            <div class="cost">
-                                                                <a @if(isset($product->page) && !empty($product->page))href="{{$product->page->link}}" @endif data-wpel-link="internal">{{$product->title}}</a>
-                                                                <span class="hidden-md">{{ __('default.cost') }}</span>
-                                                                <span class="table-price">${{ $price }}</span>
-                                                                @if($btcPrice != 0)<span class="table-bitcoin">{{ $btcPrice }}<i class="fa fa-bitcoin"></i></span>@endif
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="table-cell number" style="padding-top: 0px !important; vertical-align: middle !important;">
-                                                        <span class="hidden-md">{{ __('default.count') }}</span>
-                                                        <span> {{$product->pivot->count}} </span>
-                                                    </div>
-                                                    <div class="table-cell number number-price">
-                                                        <span class="hidden-md">{{ __('default.item_cost') }}</span>
-                                                        <span class="table-price">$@php echo $price * $product->pivot->count; @endphp</span>
-                                                        @if($btcPrice > 0)<span class="table-bitcoin">{{ $btcPrice * $product->pivot->count }}<i class="fa fa-bitcoin"></i></span>@endif
-                                                    </div>
-                                                    <div class="table-cell status">
-                                                    </div>
-                                                    <div class="table-cell "></div>
-                                                </div>
-                                            @endforeach
-                                        @endif
+										@if(count($order->carts) > 1)
+											@if(count($order->products) > 0)
+												@foreach($order->products as $product)
+													@php
+														$price = number_format($product->pivot->cost, 2, '.', '');
+                                                        $btcPrice = number_format($product->pivot->btcCost, 4, '.', '');
+													@endphp
+													<div class="table-row hidden-block table-row-several order-{{$order->number}}">
+														<div class="table-cell table-cell-border table-cell-border-none">
+														</div>
+														<div class="table-cell table-product-cell">
+															<div class="order_thumbs">
+																<img src="@if(count($product->images)){{asset('uploads/' . $product->images[0]->name)}}@endif" title="{{$product->title}}">
+																<div class="cost">
+																	<a @if(isset($product->page) && !empty($product->page))href="{{$product->page->link}}" @endif data-wpel-link="internal">{{$product->title}}</a>
+																	<span class="hidden-md">{{ __('default.cost') }}</span>
+																	<span class="table-price">${{ $price }}</span>
+																	@if($btcPrice != 0)<span class="table-bitcoin">{{ $btcPrice }}<i class="fa fa-bitcoin"></i></span>@endif
+																</div>
+															</div>
+														</div>
+														<div class="table-cell number" style="padding-top: 0px !important; vertical-align: middle !important;">
+															<span class="hidden-md">{{ __('default.count') }}</span>
+															<span> {{$product->pivot->count}} </span>
+														</div>
+														<div class="table-cell number number-price">
+															<span class="hidden-md">{{ __('default.item_cost') }}</span>
+															<span class="table-price">$@php echo $price * $product->pivot->count; @endphp</span>
+															@if($btcPrice > 0)<span class="table-bitcoin">{{ $btcPrice * $product->pivot->count }}<i class="fa fa-bitcoin"></i></span>@endif
+														</div>
+														<div class="table-cell status">
+														</div>
+														<div class="table-cell "></div>
+													</div>
+												@endforeach
+											@else
+												@foreach($order->carts as $item)
+													@php
+														$price = number_format($item->cost, 2, '.', '');
+                                                        $btcPrice = number_format($item->btcCost, 4, '.', '');
+													@endphp
+													<div class="table-row hidden-block table-row-several order-{{$order->number}}">
+														<div class="table-cell table-cell-border table-cell-border-none">
+														</div>
+														<div class="table-cell table-product-cell">
+															<div class="order_thumbs">
+																<img src="{{asset('uploads/default/' . ($locale !== 'en' ? 'ru.no-photo.jpeg' : 'en.no-photo.jpg'))}}" title="{{$product->title}}">
+																<div class="cost">
+																	<a data-wpel-link="internal">{{$item->title}}</a>
+																	<span class="hidden-md">{{ __('default.cost') }}</span>
+																	<span class="table-price">${{ $price }}</span>
+																	@if($btcPrice != 0)<span class="table-bitcoin">{{ $btcPrice }}<i class="fa fa-bitcoin"></i></span>@endif
+																</div>
+															</div>
+														</div>
+														<div class="table-cell number" style="padding-top: 0px !important; vertical-align: middle !important;">
+															<span class="hidden-md">{{ __('default.count') }}</span>
+															<span> {{$product->pivot->count}} </span>
+														</div>
+														<div class="table-cell number number-price">
+															<span class="hidden-md">{{ __('default.item_cost') }}</span>
+															<span class="table-price">$@php echo $price * $product->pivot->count; @endphp</span>
+															@if($btcPrice > 0)<span class="table-bitcoin">{{ $btcPrice * $product->pivot->count }}<i class="fa fa-bitcoin"></i></span>@endif
+														</div>
+														<div class="table-cell status">
+														</div>
+														<div class="table-cell "></div>
+													</div>
+												@endforeach
+											@endif
+
+										@endif
+
                                     @endforeach
                                 </div>
                             </div>
@@ -432,6 +474,12 @@
         })->get();
 
     $courses = $select('App\Model\Shop\ExchangeRate')->get()->groupBy('title');
+
+    $infoPages = $select('App\Model\Base\Page')
+		->where('parent_id', 0)
+		->where('context_id', $context->id)
+		->where('view_id', 10)
+		->get();
 @endphp
 
 <footer class="footer">
@@ -508,19 +556,15 @@
 						@endforeach
 					</ul>
 
-					<!--<ul id="menu-footer-menu-2" class="">
-						<li id="menu-item-820" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-820">
-							<a href="https://myrig.com.ua/dostavka-otgruzka/" data-wpel-link="internal">Shipping and shipment</a>
+					<ul id="menu-footer-menu-2" class="">
+						@foreach ($infoPages as $page)
+						<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-820">
+							<a href="{{ $page->link }}">
+								{{ $page->title }}
+							</a>
 						</li>
-						
-						<li id="menu-item-730" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-730">
-							<a href="https://myrig.com.ua/wrnt/" data-wpel-link="internal">Extended warranty</a>
-						</li>
-						
-						<li id="menu-item-4714" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-4714">
-							<a href="https://myrig.com.ua/how-to-repair/" data-wpel-link="internal">Packing of items</a>
-						</li>
-					</ul>-->
+						@endforeach
+					</ul>
 				</div>
 				
 				<div class="col-sm-12 col-md-3 col-lg-3">

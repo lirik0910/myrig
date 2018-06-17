@@ -17,7 +17,9 @@ import {
 	ContentState, 
 	convertFromHTML 
 } from 'draft-js';
+import htmlToDraft from 'html-to-draftjs';
 import Image from './Image.jsx';
+import ColorPic from './ColorPic.jsx';
 
 import styles from './styles.js';
 import PropTypes from 'prop-types';
@@ -94,17 +96,13 @@ class PaperContentForm extends Component {
 		let { editorDefaultValue } = this.props;
 
 		if (editorDefaultValue !== '' && editorDefaultValue !== null) {
-			let blocksFromHTML = convertFromHTML(editorDefaultValue);
+			let blocksFromHTML = htmlToDraft(editorDefaultValue);
 
-			if(blocksFromHTML.contentBlocks !== '' && blocksFromHTML.contentBlocks !== null){
-                let state = ContentState.createFromBlockArray(
-                    blocksFromHTML.contentBlocks,
-                    blocksFromHTML.entityMap
-                );
-
-                this.setState({
-                    editorState: EditorState.createWithContent(state)
-                });
+			if (blocksFromHTML.contentBlocks !== '' && blocksFromHTML.contentBlocks !== null) {
+				let content = ContentState.createFromBlockArray(blocksFromHTML.contentBlocks);
+				let editorState = EditorState.createWithContent(content);
+				
+				this.setState({ editorState });
 			}
 		}
 	}
@@ -120,8 +118,10 @@ class PaperContentForm extends Component {
 	 * Edit content textarea
 	 * @param {Object} editorState
 	 */
-	onEditorStateChange = editorState => {
-		this.setState({ editorState }, () => {
+	onEditorStateChange: Function = (editorState) => {
+		this.setState({
+			editorState
+		}, () => {
 			var content = draftToHtml(convertToRaw(editorState.getCurrentContent()));
 			this.props.onEditorAreaInputed(content);
 		});
@@ -132,7 +132,7 @@ class PaperContentForm extends Component {
 	 * @return {Object} jsx object
 	 */
 	render() {
-		let { open, editorState } = this.state;
+		let { open } = this.state;
 		let { 
 			classes, 
 			inputID,
@@ -228,14 +228,17 @@ class PaperContentForm extends Component {
 
 			{editorShow && <div>
 				<Editor 
-					editorState={editorState}
+					editorState={this.state.editorState}
 					editorClassName={classes.contentEditor}
 					toolbarClassName={classes.toolbarEditor}
 					onEditorStateChange={this.onEditorStateChange}
 					toolbar={{
 						image: {
 							component: Image,
-						}
+						},
+						colorPicker: {
+							component: ColorPic
+						},
 					}} />
 			</div>}
 		</Paper>

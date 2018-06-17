@@ -34,7 +34,7 @@ if (!$visits) {
 
 <div class="products__container default__container">
 	<div class="row row__container product-item__container margin__collapse">
-		<div class="d-block col-sm-4 slider__container margin__collapse padding__collapse" style="min-height: 300px">
+		<div class="d-block col-sm-4 slider__container margin__collapse padding__collapse">
 			<div class="border__container"></div>
 
 			@if($parent_link)
@@ -80,10 +80,10 @@ if (!$visits) {
 
 		@if (isset($prev_link) && isset($next_link))
 		<div class="d-block col-sm-4 margin__collapse padding__collapse"></div>
-		<div class="d-block col-sm-8 margin__collapse" style="border-top: 1px solid #FFF; padding: 32px;">
+		<div class="bottom-border__container col-sm-8 margin__collapse" style="border-top: 1px solid #FFF; padding: 32px;">
 			<div class="beside-items__container d-flex">
 				@if($prev_link && $parent_link)
-				<a href="{{ url($prev_link->link) }}" class="d-block default__link news-return__link font-weight-light" style="position: relative;">
+				<a href="{{ url($prev_link->link) }}" class="d-block default__link news-return__link font-weight-light" style="position: relative; margin-right: 14px">
 					<i class="article-arrow-left__icon"></i>
 					{{ __('default.previous_article') }}
 				</a>

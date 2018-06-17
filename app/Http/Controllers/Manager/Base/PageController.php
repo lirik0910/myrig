@@ -42,6 +42,7 @@ class PageController extends Controller
 		if (isset($params['parent_id'])) {
 			$c = $c->where('parent_id', $params['parent_id']);
 		}
+		$c = $c->orderBy('created_at', 'DESC');
 
 		return $c;
 	}

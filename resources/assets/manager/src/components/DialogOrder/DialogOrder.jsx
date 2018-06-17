@@ -141,26 +141,37 @@ class DialogOrder extends Component {
 						{completed === 100 ?
 							order.carts && order.carts.map((item, i) => {
 							return <Grid key={i} container spacing={24}>
-								<Grid item xs={3}>
-									{typeof item.product.images[0] !== 'undefined' ?
-										<img src={App.uploads() +'/'+ item.product.images[0].name} 
-											alt={item.product.id}
-											style={{
-												maxWidth: '100%',
-												maxHeight: '82px'
-										}} /> : 
-										<Assignment />}
-								</Grid>
-				
+                                    {item.product !== null ?
+                                        <Grid item xs={3}>
+                                            {typeof item.product.images[0] !== 'undefined' ?
+                                                <img src={App.uploads() +'/'+ item.product.images[0].name}
+                                                     alt={item.product.id}
+                                                     style={{
+                                                         maxWidth: '100%',
+                                                         maxHeight: '82px'
+                                                     }} /> :
+                                                <Assignment />}
+                                        </Grid> :
+
+                                        <Grid item xs={3}>
+                                            <img src={App.uploads() +'/default/en.no-photo.jpg'}
+                                                 alt={'Default photo'}
+                                                 style={{
+                                                     maxWidth: '100%',
+                                                     maxHeight: '82px'
+                                                 }} />
+                                        </Grid>
+                                    }
+
 								<Grid item xs={9}>
 									<Typography style={{fontSize: '15px'}}>
-										{item.product.title}
+										{item.product !== null ? item.product.title : item.title}
 									</Typography>
 
 									<div style={{maxWidth: '124px'}}>
 										<InputNumber 
-											name={'count['+ item.product.id +']'}
-											inputID={'count-'+ item.product.id}
+											name={'count['+ (item.product !== null ? item.product.id : 0) +']'}
+											inputID={'count-'+ (item.product !== null ? item.product.id : 0)}
 											title={'Items count:'}
 											defaultValue={item.count} />
 									</div>

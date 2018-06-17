@@ -313,7 +313,7 @@ class CreateOrderContainers extends Component {
 								this.setState({category_id: c});
 							}}
 							onCartChanged={c => {
-								this.setState({cart:c})
+								this.setState({cart: c})
 							}}
 						/>
 					</Grid>

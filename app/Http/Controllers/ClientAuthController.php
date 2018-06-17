@@ -18,9 +18,9 @@ class ClientAuthController
 
     public function __construct(Request $request)
     {
-        //$this->appurl = $_SERVER['SERVER_NAME'];
-        //$domain = App::getLocale() . '_domain';
-        $this->homeappurl = config('app.' . App::getLocale() . '_domain') . '/sso-login';
+        $current_domain = $request->getSchemeAndHttpHost();
+
+        $this->homeappurl = $current_domain . '/sso-login';
     }
 
     /*
@@ -63,6 +63,7 @@ class ClientAuthController
         $action = $request->get('action');
 
         if (isset($ssoToken)) {
+           // var_dump($ssoToken); die;
             $data = ['procedure' => 'com.backend.sso.validatetoken', 'args' => [$ssoToken, $this->homeappurl]];
             $signed = $this->prepareSignature($data);
 
@@ -118,6 +119,7 @@ class ClientAuthController
                 }
 
                 $_SESSION['client'] = $data['email'];
+          //    var_dump($_SESSION); die;
                 //session()->put('client', $data['email']);
                 return redirect('/checkout');
             } else {
@@ -151,6 +153,7 @@ class ClientAuthController
             $user = NULL;
         }
 
+        //var_dump($user, $this->loggedin); die;
         if($user || $this->loggedin === true){
             return redirect('/profile');
         } else {
