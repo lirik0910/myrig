@@ -63,7 +63,7 @@ export default class SliderRelated extends Base {
 	 * @param {Object} e
 	 */
 	redistributeDots(e) {
-		console.log(this.els._relatedSliderContainer.children())
+		console.log(this.els)
 
 		/*$('#related-slider__container .owl-dots').removeClass('disabled');
 		$('#related-slider__container .slide-dot__button').each((i, el) => {
