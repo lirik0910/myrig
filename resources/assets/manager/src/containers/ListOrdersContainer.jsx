@@ -717,13 +717,11 @@ let styles = theme => ({
 	},
 	numberItem: {
 		fontSize: 32,
-		marginLeft: 8,
-		marginRight: 8
+		display: 'block'
 	},
 	statusItem: {
 		fontSize: 15,
-		marginLeft: 4,
-		marginRight: 4 
+		display: 'block' 
 	},
 	costItem: {
 		fontSize: 18,
