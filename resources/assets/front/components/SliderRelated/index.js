@@ -44,7 +44,7 @@ export default class SliderRelated extends Base {
 		this.els._relatedSliderContainer.owlCarousel({
 			items: 3,
 			nav: false,
-			dots: false,
+			dots: true,
 			loop: true,
 			margin: 20,
 			slideBy: 3,
