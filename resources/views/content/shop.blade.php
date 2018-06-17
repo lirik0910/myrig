@@ -48,6 +48,8 @@ if($locale === 'en'){
 				@include('partsShop.relatedItem', $item)
 			@endforeach
 			</div>
+
+			<div id="related-dots__container" class="related-dots__container"></div>
 		</div>
 	</div>
 </div>

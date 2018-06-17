@@ -10,6 +10,7 @@ export default class SliderRelated extends Base {
 	initDOMElements(e) {
 		this.els = {
 			_relatedSliderContainer: $('#related-slider__container'),
+			_relatedDotsContainer: $('#related-dots__container')
 		};
 	}
 
@@ -28,7 +29,7 @@ export default class SliderRelated extends Base {
 		this.els._relatedSliderContainer.owlCarousel({
 			items: 3,
 			nav: false,
-			dots: true,
+			dots: false,
 			loop: true,
 			margin: 20,
 			slideBy: 3,
@@ -38,7 +39,7 @@ export default class SliderRelated extends Base {
 			// smartSpeed: 200,
 			// animateIn: 'fadeIn',
 			// animateOut: 'fadeOut',
-			// onInitialized: this.redistributeDots,
+			onInitialized: this.redistributeDots,
 			// onChanged: this.defineCurrentDots,
 			// responsiveClass: true,
 			responsive:{
@@ -62,7 +63,9 @@ export default class SliderRelated extends Base {
 	 * @param {Object} e
 	 */
 	redistributeDots(e) {
-		$('#related-slider__container .owl-dots').removeClass('disabled');
+		console.log(this.els._relatedSliderContainer.children())
+
+		/*$('#related-slider__container .owl-dots').removeClass('disabled');
 		$('#related-slider__container .slide-dot__button').each((i, el) => {
 			let target = $(el),
 				id = target.data('id');
@@ -70,7 +73,7 @@ export default class SliderRelated extends Base {
 			if(id % 3 !== 0 ) {
 				target.parent('.owl-dot').hide();
 			}
-		});
+		});*/
 	}
 
 	/**
