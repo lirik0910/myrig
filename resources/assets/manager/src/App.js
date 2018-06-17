@@ -123,7 +123,9 @@ class App {
 		}
 
 		else if (typeof opt.data !== 'undefined') {
+			//console.log(opt.data)
 			for (i in opt.data) {
+				//console.log(opt.data[i])
 				if (typeof opt.data[i] !== 'object') {
 					data += i +'='+ encodeURIComponent(opt.data[i]) +'&';
 				}

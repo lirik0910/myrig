@@ -33,12 +33,12 @@ $btcPrice = number_format($item->calcBtcPrice(), 4, '.', '');
 		<div class="padding__collapse mobile-title-default__container">
 			<h3 class="font-weight-normal margin__collapse">{{ $item->title }}</h3>
 
-			<button data-id="{{ $item->id }}" class="delete__button padding__collapse margin__collapse" style="position: absolute; right: 18px;">
+			<button data-id="{{ $item->id }}" class="delete__button padding__collapse margin__collapse" style="position: absolute; right: 0;">
 				<img src="{{ asset('uploads/design/close.png') }}" alt="" />
 			</button>
 		</div>
 
-		<div class="row margin__collapse padding__collapse" style="align-items: center; height: 100%">
+		<div class="row margin__collapse padding__collapse" style="align-items: center;">
 			<form class="col-sm-3 cart-count__container mobile-cart-count__container margin__collapse padding__collapse">
 				<div class="counter__container" style="width: 128px">
 					<input id="{{ 'count-products-' . $item->id }}" type="text" name="count" class="form-control form-number cart-count__input margin__collapse padding__collapse text-center" value="{{ isset($inCart[$item->id]) ? $inCart[$item->id] : 1 }}" data-id="{{ $item->id }}" data-default-price="{{ $item->price }}" data-bitcoin-price="{{ $btcPrice }}" />

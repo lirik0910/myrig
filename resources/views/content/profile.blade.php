@@ -474,6 +474,12 @@
         })->get();
 
     $courses = $select('App\Model\Shop\ExchangeRate')->get()->groupBy('title');
+
+    $infoPages = $select('App\Model\Base\Page')
+		->where('parent_id', 0)
+		->where('context_id', $context->id)
+		->where('view_id', 10)
+		->get();
 @endphp
 
 <footer class="footer">
@@ -550,19 +556,15 @@
 						@endforeach
 					</ul>
 
-					<!--<ul id="menu-footer-menu-2" class="">
-						<li id="menu-item-820" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-820">
-							<a href="https://myrig.com.ua/dostavka-otgruzka/" data-wpel-link="internal">Shipping and shipment</a>
+					<ul id="menu-footer-menu-2" class="">
+						@foreach ($infoPages as $page)
+						<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-820">
+							<a href="{{ $page->link }}">
+								{{ $page->title }}
+							</a>
 						</li>
-						
-						<li id="menu-item-730" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-730">
-							<a href="https://myrig.com.ua/wrnt/" data-wpel-link="internal">Extended warranty</a>
-						</li>
-						
-						<li id="menu-item-4714" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-4714">
-							<a href="https://myrig.com.ua/how-to-repair/" data-wpel-link="internal">Packing of items</a>
-						</li>
-					</ul>-->
+						@endforeach
+					</ul>
 				</div>
 				
 				<div class="col-sm-12 col-md-3 col-lg-3">
