@@ -150,6 +150,7 @@ class PaperOrderProductsForm extends Component {
 								model: 'product',
 								data: {category_id: v},
 								success: (r) => {
+									console.log(r);
 									r = JSON.parse(r.response).data;
 									if (r) {
 										this.setState({ products: r });

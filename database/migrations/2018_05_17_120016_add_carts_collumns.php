@@ -41,6 +41,10 @@ class AddCartsCollumns extends Migration
             $table->string('serial_number', 255)
                 ->nullable(true)
                 ->comment('serial_number of product');
+
+            $table->string('title', 255)
+                ->nullable(true)
+                ->comment('Cart item`s title');
         });
 
     }

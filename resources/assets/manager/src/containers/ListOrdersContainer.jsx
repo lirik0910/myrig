@@ -61,6 +61,7 @@ class ListOrdersContainer extends Component {
 		searchText: '',
 		completed: 100,
 		deleteOrderId: 0,
+		itemTitle: '',
 		editOrder: {},
 		noteOrder: {},
 		noteData: {},
@@ -98,6 +99,7 @@ class ListOrdersContainer extends Component {
 			statusID, 
 			deleteID,
 			paymentID,
+			itemTitle,
 			deliveryID } = this.state;
 
 		this.setState({ completed: 0 }, () => {
@@ -150,6 +152,10 @@ class ListOrdersContainer extends Component {
 
 			if (deleteID !== null) {
 				data['delete_type'] = String(deleteID);
+			}
+
+			if(itemTitle){
+				data['title'] = itemTitle
 			}
 
 			App.api({

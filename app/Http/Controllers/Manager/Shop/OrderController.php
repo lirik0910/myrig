@@ -45,8 +45,11 @@ class OrderController extends Controller
 						->orWhere('address', 'like', '%'. $params['search'] .'%')
 						->orWhere('country', 'like', '%'. $params['search'] .'%');
 				})
-				->orWhereHas('products', function ($q) use ($params) {
-					$q->where('title', 'like', '%'. $params['search'] .'%');
+                ->orWhereHas('products', function ($q) use ($params) {
+                    $q->where('products.title', 'like', '%'. $params['search'] .'%');
+                })
+				->orWhereHas('carts', function ($q) use ($params) {
+					$q->where('carts.title', 'like', '%'. $params['search'] .'%');
 				});
 		}
 
@@ -169,7 +172,10 @@ class OrderController extends Controller
 			//$order->btc_price = ($order->cost * $point) / 1;
 
 			foreach ($order->carts as $cart) {
-				$cart->product->images;
+			    if($cart->product){
+                    $cart->product->images;
+                }
+
 				$order->btc_price += $cart->btcCost * $cart->count;
 			}
 
@@ -432,6 +438,8 @@ class OrderController extends Controller
         if(!empty($data['cart'])){
 	        $cart = json_decode($data['cart'], TRUE);
         }
+
+        //пvar_dump($cart); die;
 
         foreach ($cart as $product){
         	$productId = $product['id'];

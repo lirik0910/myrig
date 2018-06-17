@@ -26,6 +26,7 @@ class CreateCartTable extends Migration
 			
 			$table->integer('product_id', false, true)
 				->nullable(false)
+                ->default(0)
 				->comment('Product ID');
 
             $table->float('cost', 2, false, true)
