@@ -38,8 +38,8 @@ export default class SliderRelated extends Base {
 			// smartSpeed: 200,
 			// animateIn: 'fadeIn',
 			// animateOut: 'fadeOut',
-			onInitialized: this.redistributeDots,
-			onChanged: this.defineCurrentDots,
+			// onInitialized: this.redistributeDots,
+			// onChanged: this.defineCurrentDots,
 			// responsiveClass: true,
 			responsive:{
 				0: {
