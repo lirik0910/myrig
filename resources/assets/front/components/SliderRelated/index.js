@@ -19,7 +19,7 @@ export default class SliderRelated extends Base {
 	 * @param {Object} e
 	 */
 	onDOMReady(e) {
-		//this.createDots();
+		this.createDots();
 		this.initSlider();
 	}
 
@@ -32,7 +32,11 @@ export default class SliderRelated extends Base {
 			i = 0;
 
 		while (i < dotsCount) {
-			console.log(this.els._relatedDotsContainer)
+			this.els._relatedDotsContainer.append('<div class="owl-dot owl-dot__container">'
+				+'<button class="slide-dot__button padding__collapse" data-id="'+ i +'">'
+					+'<div class="slide-item__progress"></div>'
+				+'</button>'
+			+'</div>');
 			i++;
 		}
 	}
@@ -44,7 +48,7 @@ export default class SliderRelated extends Base {
 		this.els._relatedSliderContainer.owlCarousel({
 			items: 3,
 			nav: false,
-			dots: true,
+			dots: false,
 			loop: true,
 			margin: 20,
 			slideBy: 3,
@@ -54,8 +58,8 @@ export default class SliderRelated extends Base {
 			// smartSpeed: 200,
 			// animateIn: 'fadeIn',
 			// animateOut: 'fadeOut',
-			onInitialized: this.redistributeDots,
-			// onChanged: this.defineCurrentDots,
+			onInitialized: this.initDotsClick.bind(this),
+			onChanged: this.defineCurrentDots,
 			// responsiveClass: true,
 			responsive:{
 				0: {
@@ -74,19 +78,24 @@ export default class SliderRelated extends Base {
 	}
 
 	/**
-	 * Distribute dots one for each group of slides
+	 * Hang the handler when clicking on the slide button
 	 * @param {Object} e
 	 */
-	redistributeDots(e) {
-		$('#related-slider__container .owl-dots').removeClass('disabled');
-		$('#related-slider__container .slide-dot__button').each((i, el) => {
-			let target = $(el),
-				id = target.data('id');
-			
-			if(id % 3 !== 0 ) {
-				target.parent('.owl-dot').hide();
-			}
-		});
+	initDotsClick(e) {
+		$('.slide-dot__button').click((e) => this.changeDot(e));
+	}
+
+	/**
+	 * Toggle the active slide button
+	 * @param {Object} e
+	 */
+	changeDot(e) {
+		let target = $(e.target);
+
+		this.els._relatedSliderContainer.trigger('to.owl.carousel', target.data('id'));
+
+		$('.owl-dot__container').removeClass('active');
+		target.parent('.owl-dot__container').addClass('active');
 	}
 
 	/**
@@ -95,6 +104,27 @@ export default class SliderRelated extends Base {
 	 * @param {Object} e
 	 */
 	defineCurrentDots(e) {
-		console.log('wejfowej')
+		let slide = null,
+			owlDots = $('.owl-dot__container');
+		
+		owlDots.each((i, target) => {
+			if ($(target).hasClass('active')) {
+				
+				slide = i + 1;
+				$(target).removeClass('active');
+			}
+
+			if (i === slide) {
+				$(target).addClass('active');
+			}
+		});
+
+		if (owlDots.length === slide) {
+			slide = null;
+		}
+
+		if (slide === null) {
+			$('.owl-dot__container:first').addClass('active');
+		}
 	}
 }

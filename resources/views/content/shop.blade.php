@@ -49,7 +49,7 @@ if($locale === 'en'){
 			@endforeach
 			</div>
 
-			<div id="related-dots__container" class="related-dots__container"></div>
+			<div id="related-dots__container" class="related-dots__container owl-dots"></div>
 		</div>
 	</div>
 </div>
