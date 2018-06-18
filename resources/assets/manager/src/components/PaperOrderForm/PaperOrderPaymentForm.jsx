@@ -45,7 +45,6 @@ class PaperOrderForm extends Component {
 		createDefaultValue: new Date(),
 		activeDefaultValue: true,
 		onFNameInputed: () => {},
-
 		onUserLoaded: () => {},
 		onDateSelected: () => {},
 		onCountrySelected: () => {},
@@ -116,7 +115,9 @@ class PaperOrderForm extends Component {
 
 				<SelectCountry
 					required
-					onItemSelected={value => this.props.onCountrySelected(value)} />
+					onItemSelected={value =>
+						this.props.onCountrySelected(value)}
+				/>
 
 				<TextField
 					id="p_email"

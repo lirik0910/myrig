@@ -288,7 +288,7 @@
                                             @if(count($order->carts) > 1)
                                                 <div class="table-cell table-product-cell">
                                                     <div class="order_thumbs order_thumbs_several">
-                                                        <span class="several_products">@php echo count($order->products) @endphp {{ __('default.items_profile') }}</span>
+                                                        <span class="several_products">@php echo count($order->carts) @endphp {{ __('default.items_profile') }}</span>
                                                         <a href=".order-{{$order->number}}" data-wpel-link="internal" class="">
                                                             <span class="show_products"><i class="fa fa-chevron-down" aria-hidden="true"></i>{{ __('default.show') }}</span>
                                                             <span class="hide_products"><i class="fa fa-chevron-up" aria-hidden="true"></i>{{ __('default.hide') }}</span>
@@ -296,17 +296,18 @@
                                                     </div>
                                                 </div>
                                             @else
-												@if(count($order->products) > 0)
-													@foreach($order->products as $product)
+{{--												@if(count($order->carts) > 0)--}}
+													@foreach($order->carts as $item)
 														@php
-                                                             $price = number_format($product->pivot->cost, 2, '.', '');
-                                                             $btcPrice = number_format($product->pivot->btcCost, 4, '.', '');
+                                                             $price = number_format($item->cost, 2, '.', '');
+                                                             $btcPrice = number_format($item->btcCost, 4, '.', '');
+                                                             $product = $item->product;
 														@endphp
 														<div class="table-cell table-product-cell">
 															<div class="order_thumbs">
-																<img src="@if(count($product->images)){{asset('uploads/' . App\Model\Shop\ProductImage::where('product_id', $product->id)->first()->name)}}@endif" title="{{$product->title}}">
+																<img src="@if($product && count($product->images)){{asset('uploads/' . App\Model\Shop\ProductImage::where('product_id', $product->id)->first()->name)}} @else {{asset('uploads/default/' . ($locale !== 'en' ? 'ru.no-photo.jpeg' : 'en.no-photo.jpg'))}} @endif" title="@if($product){{$product->title}}@else {{ $item->title }} @endif">
 																<div class="cost">
-																	<a @if(isset($product->page) && !empty($product->page))href="{{$product->page->link}}" @endif data-wpel-link="internal">{{$product->title}}</a>
+																	<a @if($product && isset($product->page) && !empty($product->page))href="{{$product->page->link}}" @endif data-wpel-link="internal">@if($product){{$product->title}}@else {{ $item->titla }} @endif</a>
 																	<span class="hidden-md">{{ __('default.item_cost') }}</span>
 																	<span class="table-price">${{ $price }}</span>
 																	@if($btcPrice > 0)<span class="table-bitcoin">{{ $btcPrice }}<i class="fa fa-bitcoin"></i></span>@endif
@@ -314,8 +315,8 @@
 															</div>
 														</div>
 													@endforeach
-												@else
-													@foreach($order->carts as $item)
+{{--												@else--}}
+{{--													@foreach($order->carts as $item)
 														@php
                                                              $price = number_format($item->cost, 2, '.', '');
                                                              $btcPrice = number_format($item->btcCost, 4, '.', '');
@@ -331,8 +332,8 @@
 																</div>
 															</div>
 														</div>
-													@endforeach
-												@endif
+													@endforeach--}}
+{{--												@endif--}}
                                             @endif
                                             <div class="table-cell number" style="padding-top: 0px !important; vertical-align: middle !important;">
                                                 <span class="hidden-md">{{ __('default.count') }}</span>
@@ -378,20 +379,21 @@
                                             <div class="table-cell" style="width: 10px"></div>
                                         </div>
 										@if(count($order->carts) > 1)
-											@if(count($order->products) > 0)
-												@foreach($order->products as $product)
+										{{--	@if(count($order->products) > 0)--}}
+												@foreach($order->carts as $item)
 													@php
-														$price = number_format($product->pivot->cost, 2, '.', '');
-                                                        $btcPrice = number_format($product->pivot->btcCost, 4, '.', '');
+														$price = number_format($item->cost, 2, '.', '');
+                                                        $btcPrice = number_format($item->btcCost, 4, '.', '');
+														$product = $item->product;
 													@endphp
 													<div class="table-row hidden-block table-row-several order-{{$order->number}}">
 														<div class="table-cell table-cell-border table-cell-border-none">
 														</div>
 														<div class="table-cell table-product-cell">
 															<div class="order_thumbs">
-																<img src="@if(count($product->images)){{asset('uploads/' . $product->images[0]->name)}}@endif" title="{{$product->title}}">
+																<img src="@if($product && count($product->images)){{asset('uploads/' . $product->images[0]->name)}}@else {{asset('uploads/default/' . ($locale !== 'en' ? 'ru.no-photo.jpeg' : 'en.no-photo.jpg'))}}  @endif" title="@if($product){{$product->title}} @else {{ $item->title }} @endif">
 																<div class="cost">
-																	<a @if(isset($product->page) && !empty($product->page))href="{{$product->page->link}}" @endif data-wpel-link="internal">{{$product->title}}</a>
+																	<a @if($product && isset($product->page) && !empty($product->page))href="{{$product->page->link}}" @endif data-wpel-link="internal">@if($product){{$product->title}}@else {{ $item->title }} @endif </a>
 																	<span class="hidden-md">{{ __('default.cost') }}</span>
 																	<span class="table-price">${{ $price }}</span>
 																	@if($btcPrice != 0)<span class="table-bitcoin">{{ $btcPrice }}<i class="fa fa-bitcoin"></i></span>@endif
@@ -400,20 +402,20 @@
 														</div>
 														<div class="table-cell number" style="padding-top: 0px !important; vertical-align: middle !important;">
 															<span class="hidden-md">{{ __('default.count') }}</span>
-															<span> {{$product->pivot->count}} </span>
+															<span> {{$item->count}} </span>
 														</div>
 														<div class="table-cell number number-price">
 															<span class="hidden-md">{{ __('default.item_cost') }}</span>
-															<span class="table-price">$@php echo $price * $product->pivot->count; @endphp</span>
-															@if($btcPrice > 0)<span class="table-bitcoin">{{ $btcPrice * $product->pivot->count }}<i class="fa fa-bitcoin"></i></span>@endif
+															<span class="table-price">$@php echo $price * $item->count; @endphp</span>
+															@if($btcPrice > 0)<span class="table-bitcoin">{{ $btcPrice * $item->count }}<i class="fa fa-bitcoin"></i></span>@endif
 														</div>
 														<div class="table-cell status">
 														</div>
 														<div class="table-cell "></div>
 													</div>
 												@endforeach
-											@else
-												@foreach($order->carts as $item)
+{{--											@endif--}}
+{{--												@foreach($order->carts as $item)
 													@php
 														$price = number_format($item->cost, 2, '.', '');
                                                         $btcPrice = number_format($item->btcCost, 4, '.', '');
@@ -445,8 +447,8 @@
 														</div>
 														<div class="table-cell "></div>
 													</div>
-												@endforeach
-											@endif
+												@endforeach--}}
+{{--											@endif--}}
 
 										@endif
 

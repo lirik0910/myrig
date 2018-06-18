@@ -50,6 +50,7 @@ class CreateOrderContainers extends Component {
 		orderID: 0,
 		category_id: 1,
 		cart: [],
+		deliveryDefault: 0,
 		completed: 100,
 		resultDialog: false,
 		resultDialogTitle: '',
@@ -153,6 +154,7 @@ class CreateOrderContainers extends Component {
 			completed,
 			orderID,
 			category_id,
+			deliveryDefault,
 			resultDialog,
 			resultDialogTitle,
 			resultDialogMessage,
@@ -164,7 +166,6 @@ class CreateOrderContainers extends Component {
 
 				<Header
 					title={'Create new order'} />
-
 				<Menu />
 
 				<TopTitle
@@ -286,6 +287,7 @@ class CreateOrderContainers extends Component {
 						'none'}}>
 					<Grid item xs={6}>
 						<PaperOrderDeliveryForm
+							countryDefaultValue={data['p_country']}
 							onDeliverySelected={value => {
 								data['delivery_id'] = value
 								this.setState({ data });
