@@ -175,11 +175,8 @@ class Order extends Model
         $items = $this->carts()->get();
         $btcCost = 0;
         foreach ($items as $item){
-            $btcCost += $item->btcCost;
-            //var_dump($item->pivot->btcCost); die;
+            $btcCost += $item->btcCost * $item->count;
         }
-        //var_dump($items); die;
-        //$order_cost = $this->cost;
 
         return number_format($btcCost, 4, '.', '');
     }

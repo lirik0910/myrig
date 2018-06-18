@@ -38,6 +38,7 @@ class PaperOrderDeliveryForm extends Component {
 	 * @property {Object} classes Material defult classes collection 
 	 */
 	static defaultProps = {
+		data: {},
 		deliveryDefaultValue: 5,
 		priceDefaultValue: '',
 		statusDefaultValue: 0,
@@ -53,6 +54,10 @@ class PaperOrderDeliveryForm extends Component {
 		onCountrySelected: () => {},
 		classes: PropTypes.object.isRequired,
 	}
+
+	state = {
+		countryDefaultValue: ''
+	};
 
 	/**
 	 * Get categories
@@ -86,22 +91,28 @@ class PaperOrderDeliveryForm extends Component {
 	 * @return {Object} jsx object
 	 */
 	render() {
-		let { 
+		let {
+			data,
 			classes,
 			userDefaultValue,
 			createDefaultValue,
 			contextDefaultValue,
 			statusDefaultValue,
 			deliveryDefaultValue,
-			countryDefaultValue,
 		} = this.props;
+
+		let {
+			countryDefaultValue
+		} = this.state;
 
 		return <Paper className={classes.paper}>
 			<Button className={classes.right}
 				onClick={e => {
 					let fields = ['_first_name', '_last_name', '_email', '_phone', '_city', '_state', '_address', '_country'];
-					let country = {};
-					document.getElementById('select-country').value = countryDefaultValue;
+					countryDefaultValue = document.getElementById('select-country').value;
+					this.setState({ countryDefaultValue });
+
+					//document.getElementById('select-country').value = countryDefaultValue;
 					fields.forEach((f) => {
 						if(document.getElementById('d'+f) && document.getElementById('p'+f))
 							document.getElementById('d'+f).value = document.getElementById('p'+f).value;
@@ -114,6 +125,7 @@ class PaperOrderDeliveryForm extends Component {
 			<SelectDelivery
 				required
 				defaultValue={deliveryDefaultValue}
+				value={countryDefaultValue}
 				onItemSelected={value => this.props.onDeliverySelected(value)} />
 
 			<TextField
@@ -136,9 +148,9 @@ class PaperOrderDeliveryForm extends Component {
 				InputLabelProps={{
 					shrink: true
 				}} />
-			
 
 			<SelectCountry
+				defaultValue={countryDefaultValue}
 				required
 				onItemSelected={value => this.props.onCountrySelected(value)} />
 
