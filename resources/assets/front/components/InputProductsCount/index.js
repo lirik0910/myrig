@@ -32,6 +32,8 @@ export default class InputProductCount extends Base {
 				.siblings('.cart-count__container')
 				.find('.cart__button')
 				.trigger('deleteProduct');
+
+			this.baseDOM._footerContainer.trigger('onFooterAlign');
 		});
 	}
 

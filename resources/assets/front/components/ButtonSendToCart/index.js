@@ -65,8 +65,6 @@ export default class ButtonSendToCart extends Base {
 			if (session) {
 				session = JSON.parse(session);
 
-				console.log(session)
-
 				/** Remove product item container in cart page
 				 */
 				$('#product-item__container-'+ currentTarget.data('product-id')).remove();
@@ -175,6 +173,10 @@ export default class ButtonSendToCart extends Base {
 				 */
 				this.els._defaultPriceContainer.text(defaultPrice.toFixed(2));
 				this.els._bitcoinPriceContainer.text(bitcoinPrice.toFixed(4));
+
+				if (window.location.pathname === '/cart' && session.length <= 0) {
+					window.location.href = '/shop';
+				}
 
 				callback(r);
 			},
