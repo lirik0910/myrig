@@ -119,7 +119,7 @@
 								</button>
 								
 								<a class="navbar-brand" href="{{ asset('/') }}" data-wpel-link="internal">
-									<img src="{{ $preview(asset('uploads/design/logo.png'), 162, 35) }}" alt="{{ env('APP_NAME') }}" style="width: 162px"/>
+									<img src="{{ $preview(asset('uploads/design/logo.png'), 316, 68) }}" alt="{{ env('APP_NAME') }}" style="width: 162px"/>
 								</a>
 							</div>
 							
@@ -292,7 +292,7 @@
 			<div class="row">
 				<div class="col-sm-2 col-md-2 col-lg-2 logo">
 					<a href="{{ asset('/') }}" data-wpel-link="internal">
-						<img src="{{ $preview(asset('uploads/design/logo.png'), 162, 35) }}" alt="logo"/>
+						<img src="{{ $preview(asset('uploads/design/logo.png'), 316, 68) }}" alt="logo"/>
 					</a>
 					
 					<div class="payment">
