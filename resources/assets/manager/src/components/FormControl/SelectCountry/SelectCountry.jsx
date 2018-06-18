@@ -74,6 +74,24 @@ class SelectOrderStatus extends Component {
 		// });
 	}
 
+    componentDidUpdate(prevProps, prevState){
+		let value = this.props.defaultValue;
+		this.state.data.forEach(function (item, index) {
+			if(item === value){
+				value = index;
+			}
+			//console.log(item, index);
+        });
+		//console.log(value);
+		this.props.defaultValue = value;
+		console.log(prevProps.defaultValue, this.props.defaultValue);
+        if(prevProps.defaultValue !== this.props.defaultValue){
+            //console.log(value);
+        	this.setState({ value });
+            //this.componentWillMount();
+        }
+    }
+
 	/**
 	 * Get data about contexts
 	 * @param {Function} callback
