@@ -307,7 +307,7 @@
 															<div class="order_thumbs">
 																<img src="@if($product && count($product->images)){{asset('uploads/' . App\Model\Shop\ProductImage::where('product_id', $product->id)->first()->name)}} @else {{asset('uploads/default/' . ($locale !== 'en' ? 'ru.no-photo.jpeg' : 'en.no-photo.jpg'))}} @endif" title="@if($product){{$product->title}}@else {{ $item->title }} @endif">
 																<div class="cost">
-																	<a @if($product && isset($product->page) && !empty($product->page))href="{{$product->page->link}}" @endif data-wpel-link="internal">@if($product){{$product->title}}@else {{ $item->titla }} @endif</a>
+																	<a @if($product && isset($product->page) && !empty($product->page))href="{{$product->page->link}}" @endif data-wpel-link="internal">@if($product){{$product->title}}@else {{ $item->title }} @endif</a>
 																	<span class="hidden-md">{{ __('default.item_cost') }}</span>
 																	<span class="table-price">${{ $price }}</span>
 																	@if($btcPrice > 0)<span class="table-bitcoin">{{ $btcPrice }}<i class="fa fa-bitcoin"></i></span>@endif
