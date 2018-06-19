@@ -274,9 +274,7 @@
                                     @foreach($orders as $order)
                                         @php
                                             $btcCost = $order->countBtcCost();
-                                            //var_dump($btcCost); die;
                                             $status_logs = $order->logs->sortBy('created_at');
-                                            //var_dump($status_logs); die;
                                         @endphp
                                         <div class="table-row  table-row-border table-row-top-several">
                                             <div class="table-cell table-cell-border">
