@@ -10,6 +10,8 @@
 
 import React, { Component } from 'react';
 
+import { connect } from 'react-redux';
+
 import Dialog, {
     DialogActions,
     DialogContent,
@@ -108,16 +110,27 @@ class DialogNotification extends Component {
                     onClick={e => this.setState({
                         editDialogOpen: false
                     }, () => this.props.onDialogClosed())}>
-                    Cancel
+                    {this.props.lexicon.cancel_label}
                 </Button>
 
                 <Button color="primary"
                         onClick={e => this.props.onDialogConfirmed()}>
-                    Save
+                    {this.props.lexicon.save_label}
                 </Button>
             </DialogActions>
         </Dialog>
     }
 }
 
-export default withStyles(styles)(DialogNotification);
+/**
+ * Init redux states
+ * @param {Object} state
+ * @return {Object}
+ */
+function mapStateToProps(state) {
+    return {
+        lexicon: state.lexicon
+    }
+}
+
+export default connect(mapStateToProps)(withStyles(styles)(DialogNotification));

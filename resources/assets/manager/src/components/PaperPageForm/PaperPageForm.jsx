@@ -7,6 +7,8 @@
 
 import React, { Component } from 'react';
 
+import { connect } from 'react-redux';
+
 import Paper from 'material-ui/Paper';
 import InputLink from '../FormControl/InputLink/InputLink.jsx';
 import SelectContext from '../FormControl/SelectContext/SelectContext.jsx';
@@ -62,28 +64,43 @@ class PaperPageForm extends Component {
 
 		return <Paper className={classes.paper}>
 				<SelectContext
+					title={this.props.lexicon.select_context_label}
 					defaultValue={contextDefaultValue}
 					onItemSelected={value => this.props.onContextSelected(value)} />
 
 				<SelectView
+					title={this.props.lexicon.select_view_label}
 					defaultValue={Number(viewDefaultValue)}
 					onItemSelected={value => this.props.onViewSelected(value)} />
 
 				<InputSelectPage
-					title={'Parent select'}
+					title={this.props.lexicon.parent_select_label}
 					defaultValue={parentDefaultValue}
-					placeholder={'Input parent page'}
+					placeholder={this.props.lexicon.input_parent_page_label}
 					onItemSelected={value => this.props.onParentSelected(value)} />
 
 				{flag === true && <InputLink
+					title={this.props.lexicon.page_link_label}
 					defaultValue={linkDefaultValue}
 					onFieldInputed={value => this.props.onLinkInputed(value)} />}
 
 				<InputDatePicker
+					title={this.props.lexicon.publish_date_label}
 					defaultValue={createDefaultValue}
 					onDateFieldChanged={value => this.props.onDateSelected(value)} />
 			</Paper>
 	}
 }
 
-export default withStyles(styles)(PaperPageForm);
+/**
+ * Init redux states
+ * @param {Object} state
+ * @return {Object}
+ */
+function mapStateToProps(state) {
+	return {
+		lexicon: state.lexicon
+	}
+}
+
+export default connect(mapStateToProps)(withStyles(styles)(PaperPageForm));

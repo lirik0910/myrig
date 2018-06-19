@@ -8,7 +8,11 @@
  * @requires react-redux#connect
  */
 
+import App from 'App.js';
 import React, { Component } from 'react';
+
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 import Grid from 'material-ui/Grid';
 import Menu from '../components/Menu/Menu.jsx';
@@ -20,6 +24,8 @@ import { LinearProgress } from 'material-ui/Progress';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 
+import * as StateLexiconAction from 'actions/StateLexiconAction.js';
+
 /**
  * Users base container
  * @extends Component
@@ -30,6 +36,7 @@ class FileManagerContainer extends Component {
 		path: '/',
 		ready: true,
 		completed: 100,
+		langLoaded: false
 	}
 
 /*	onLoaded(value){
@@ -46,6 +53,18 @@ class FileManagerContainer extends Component {
 		classes: PropTypes.object.isRequired,
 	}
 
+	componentWillMount() {
+		App.defineCurrentLang((r) => {
+			if (App.isEmpty(r) === false) {
+				this.props.StateLexiconAction.get(r, () => {
+					this.setState({
+						langLoaded: true
+					});
+				});
+			}
+		});
+	}
+
 	/**
 	 * Render component
 	 * @return {Object} jsx object
@@ -54,12 +73,17 @@ class FileManagerContainer extends Component {
 		let { classes } = this.props;
 		let { path, ready, completed } = this.state;
 
+		if (this.state.langLoaded === false) 
+			return <div className="create-page__container">
+				<LinearProgress color="secondary" variant="determinate" value={0} />
+			</div>
+
 		return <div className="file-manager__container">
             		{completed === 0 &&
 						<LinearProgress color="secondary" variant="determinate" value={completed} />}
 
 					<Header
-						title={'Create new product'} />
+						title={this.props.lexicon.file_manager} />
 					<Menu />
 
 					<Grid container spacing={24} className={classes.root}>
@@ -98,4 +122,26 @@ let styles = theme => ({
 	},
 });
 
-export default withStyles(styles)(FileManagerContainer);
+/**
+ * Init redux states
+ * @param {Object} state
+ * @return {Object}
+ */
+function mapStateToProps(state) {
+	return {
+		lexicon: state.lexicon
+	}
+}
+
+/**
+ * Init redux actions
+ * @param {Function} dispatch
+ * @return {Object}
+ */
+function mapDispatchToProps(dispatch) {
+	return {
+		StateLexiconAction: bindActionCreators(StateLexiconAction, dispatch)
+	}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(FileManagerContainer));

@@ -7,6 +7,8 @@
 
 import React, { Component } from 'react';
 
+import { connect } from 'react-redux';
+
 import Button from 'material-ui/Button';
 
 import Image from './Image.jsx';
@@ -117,10 +119,21 @@ class EditorFieldItem extends Component {
 					variant="raised" 
 					color="secondary"
 					onClick={e => this.props.onDeletedField(data)}>
-						<Delete />{'Remove field'}
+						<Delete />{this.props.lexicon.remove_field_label}
 				</Button>}
 			</div>
 	}
 }
 
-export default withStyles(styles)(EditorFieldItem);
+/**
+ * Init redux states
+ * @param {Object} state
+ * @return {Object}
+ */
+function mapStateToProps(state) {
+	return {
+		lexicon: state.lexicon
+	}
+}
+
+export default connect(mapStateToProps)(withStyles(styles)(EditorFieldItem));

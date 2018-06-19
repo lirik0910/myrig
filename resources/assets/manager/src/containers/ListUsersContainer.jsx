@@ -11,6 +11,9 @@
 import App from '../App.js';
 import React, { Component } from 'react';
 
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
 import Grid from 'material-ui/Grid';
 import Menu from '../components/Menu/Menu.jsx';
 import Header from '../components/Header/Header.jsx';
@@ -25,6 +28,8 @@ import ControlOptions from '../components/ControlOptions/ControlOptions.jsx';
 
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
+
+import * as StateLexiconAction from 'actions/StateLexiconAction.js';
 
 /**
  * Users base container
@@ -58,6 +63,7 @@ class ListUsersContainer extends Component {
 		resultDialogTitle: '',
 		resultDialogMessage: '',
 		deleteDialog: false,
+		langLoaded: false
 	}
 
 	/**
@@ -66,6 +72,16 @@ class ListUsersContainer extends Component {
 	 */
 	componentWillMount() {
 		this.usersDataGetRequest();
+
+		App.defineCurrentLang((r) => {
+			if (App.isEmpty(r) === false) {
+				this.props.StateLexiconAction.get(r, () => {
+					this.setState({
+						langLoaded: true
+					});
+				});
+			}
+		});
 	}
 
 	/**
@@ -156,8 +172,8 @@ class ListUsersContainer extends Component {
 							resultDialog: true,
 							deleteDialog: false,
 							editUserDialog: false,
-							resultDialogTitle: 'Success',
-							resultDialogMessage: 'The request was successful'
+							resultDialogTitle: this.props.lexicon.success_title,
+							resultDialogMessage: this.props.lexicon.request_successful
 						}, () => this.usersDataGetRequest());
 					}
 				},
@@ -172,7 +188,7 @@ class ListUsersContainer extends Component {
 							resultDialog: true,
 							deleteDialog: false,
 							editUserDialog: false,
-							resultDialogTitle: 'Error',
+							resultDialogTitle: this.props.lexicon.error_title,
 							resultDialogMessage: r.message
 						});
 					}
@@ -209,8 +225,8 @@ class ListUsersContainer extends Component {
 							editUserItem: {},
 							resultDialog: true,
 							deleteDialog: false,
-							resultDialogTitle: 'Success',
-							resultDialogMessage: 'The request was successful'
+							resultDialogTitle: this.props.lexicon.success_title,
+							resultDialogMessage: this.props.lexicon.request_successful
 						}, () => this.usersDataGetRequest());
 					}
 				},
@@ -224,7 +240,7 @@ class ListUsersContainer extends Component {
 							editUserItem: {},
 							resultDialog: true,
 							deleteDialog: false,
-							resultDialogTitle: 'Error',
+							resultDialogTitle: this.props.lexicon.error_title,
 							resultDialogMessage: r.message
 						});
 					}
@@ -255,12 +271,17 @@ class ListUsersContainer extends Component {
 			resultDialogMessage,
 		} = this.state;
 
+		if (this.state.langLoaded === false) 
+			return <div className="create-page__container">
+				<LinearProgress color="secondary" variant="determinate" value={0} />
+			</div>
+
 		return <div className="uesrs-list__container">
 				{completed === 0 && 
 					<LinearProgress color="secondary" variant="determinate" value={completed} />}
 					
 				<Header
-					title={'Users list'} />
+					title={this.props.lexicon.users_list_title} />
 				<Menu />
 
 				<TopTitle
@@ -270,8 +291,14 @@ class ListUsersContainer extends Component {
 					deleteButtonDisplay={selected.length > 0 ? 
 						true : 
 						false}
-					addButtonTitle={'Add new product'}
-					deleteButtonTitle={'Delete selected'}
+
+					saveButtonTitle={this.props.lexicon.save_label}
+					trashButtonTitle={this.props.lexicon.empty_trash_label}
+					duplicateButtonTitle={this.props.lexicon.duplicate_label}
+					recoveryButtonTitle={this.props.lexicon.recovery_button}
+					addButtonTitle={this.props.lexicon.new_product_button}
+					deleteButtonTitle={this.props.lexicon.delete_selected_button}
+
 					onDeleteButtonClicked={() => {
 						this.setState({
 							deleteDialog: true
@@ -319,27 +346,27 @@ class ListUsersContainer extends Component {
 								id: 'name', 
 								numeric: false, 
 								disablePadding: true, 
-								label: 'Name'
+								label: this.props.lexicon.table_name
 							}, {
 								id: 'email', 
 								numeric: false, 
 								disablePadding: true, 
-								label: 'Email'
+								label: this.props.lexicon.table_email
 							}, {
 								id: 'created_at', 
 								numeric: false, 
 								disablePadding: true, 
-								label: 'Created date'
+								label: this.props.lexicon.table_created_date
 							}, {
 								id: 'updated_at', 
 								numeric: false, 
 								disablePadding: true, 
-								label: 'Updated date'
+								label: this.props.lexicon.table_updated_date
 							}, {
 								id: 'control', 
 								numeric: false, 
 								disablePadding: true, 
-								label: 'Manage'
+								label: this.props.lexicon.table_manage
 							}]}
 							onRowsSelected={selected => this.setState({ selected })}
 							onStartValueChanged={start => {
@@ -360,6 +387,10 @@ class ListUsersContainer extends Component {
 					})} />}
 
 				{deleteDialog === true && <DialogDelete
+
+					title={this.props.lexicon.delete_button}
+					content={this.props.lexicon.delete_confirm}
+					
 					defaultValue={deleteDialog}
 					onDialogClosed={() => this.setState({
 						deleteDialog: false,
@@ -387,4 +418,26 @@ let styles = theme => ({
 	},
 });
 
-export default withStyles(styles)(ListUsersContainer);
+/**
+ * Init redux states
+ * @param {Object} state
+ * @return {Object}
+ */
+function mapStateToProps(state) {
+	return {
+		lexicon: state.lexicon
+	}
+}
+
+/**
+ * Init redux actions
+ * @param {Function} dispatch
+ * @return {Object}
+ */
+function mapDispatchToProps(dispatch) {
+	return {
+		StateLexiconAction: bindActionCreators(StateLexiconAction, dispatch)
+	}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(ListUsersContainer));

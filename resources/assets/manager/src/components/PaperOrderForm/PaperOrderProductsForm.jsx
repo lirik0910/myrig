@@ -6,6 +6,8 @@
  */
 import App from '../../App.js';
 
+import { connect } from 'react-redux';
+
 import React, { Component } from 'react';
 import Grid from 'material-ui/Grid';
 
@@ -143,6 +145,7 @@ class PaperOrderProductsForm extends Component {
 
 				<Grid item xs={6}>
 					<SelectCategory
+						title={this.props.lexicon.select_category}
 						defaultValue={category_id}
 						onItemSelected={v=>{
 							this.props.onCategorySelected(v)
@@ -165,6 +168,7 @@ class PaperOrderProductsForm extends Component {
 					/>
 
 					<SelectProduct
+						title={this.props.lexicon.select_product_form}
 						products={products}
 						contexts={contexts}
 						onItemSelected={i => {
@@ -206,14 +210,14 @@ class PaperOrderProductsForm extends Component {
 						className={classes.button} 
 						variant="raised">
 							<Add className={classes.leftIcon} />
-							{"Add product"}
+							{this.props.lexicon.add_product}
 					</Button>
 				</Grid>
 				<Grid item xs={6}>
 					<div>
-					<span className={classes.costItem}> Cost :{cart.length && cart.reduce((sum, i) => sum + (i.price * i.count), 0)}</span>
-					<span className={classes.costItem}> Discount : {cart.length && cart.reduce((sum, i) => sum + i.discount * i.count, 0)}</span>
-					<span className={classes.costItem}> Total : {cart.length && cart.reduce((sum, i) => sum + (i.price - i.discount) * i.count, 0)}</span>
+					<span className={classes.costItem}>{this.props.lexicon.cost_label} {cart.length && cart.reduce((sum, i) => sum + (i.price * i.count), 0)}</span>
+					<span className={classes.costItem}>{this.props.lexicon.discount_label} {cart.length && cart.reduce((sum, i) => sum + i.discount * i.count, 0)}</span>
+					<span className={classes.costItem}>{this.props.lexicon.total_label} {cart.length && cart.reduce((sum, i) => sum + (i.price - i.discount) * i.count, 0)}</span>
 					</div>
 				
 				{cart.map((item, i) => {
@@ -244,4 +248,15 @@ class PaperOrderProductsForm extends Component {
 	}
 }
 
-export default withStyles(styles)(PaperOrderProductsForm);
+/**
+ * Init redux states
+ * @param {Object} state
+ * @return {Object}
+ */
+function mapStateToProps(state) {
+	return {
+		lexicon: state.lexicon
+	}
+}
+
+export default connect(mapStateToProps)(withStyles(styles)(PaperOrderProductsForm));

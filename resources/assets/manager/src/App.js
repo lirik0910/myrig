@@ -1,4 +1,5 @@
 import Api from './Api.json';
+import Cookies from 'js-cookie';
 
 /**
  * Base manager methods
@@ -163,6 +164,41 @@ class App {
 					opt.error(xhr);
 			}
 		}
+	}
+
+	defineCurrentLang(callback = () => {}) {
+		let current = Cookies.get('lang');
+
+		if (typeof current === 'undefined') {
+			let lang = window.location.host.split('.')[0];
+
+			if (lang === 'ua' || lang === 'ru') {
+				current = lang;
+				Cookies.set('lang', lang);
+			}
+
+			else {
+				current = 'en';
+				Cookies.set('lang', 'en');
+			}
+		}
+
+		this.getCurrentLangResource(current, (e) => callback(e));
+	}
+
+	getCurrentLangResource(lang = 'en', callback = () => {}) {
+		this.api({
+			type: 'GET',
+			name: 'one',
+			model: 'lexicon',
+			resource: lang,
+			success: (r) => {
+				r = JSON.parse(r.response);
+				if (r) {
+					callback(r);
+				}
+			}
+		});
 	}
 };
 

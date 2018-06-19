@@ -8,6 +8,8 @@
 import App from '../../../App.js';
 import React, { Component } from 'react';
 
+import { connect } from 'react-redux';
+
 import Grid from 'material-ui/Grid';
 import Paper from 'material-ui/Paper';
 import Button from 'material-ui/Button';
@@ -229,12 +231,12 @@ class FolderItem extends Component {
 					aria-describedby="dialog-delere-slide-content">
 
 					<DialogTitle id="dialog-delete-slide-title">
-						Delete
+						{this.props.lexicon.delete_button}
 					</DialogTitle>
 
 					<DialogContent>
 						<DialogContentText id="dialog-delete-slide-text">
-							Are you sure to delete this folder?
+							{this.props.lexicon.folder_delete}
 						</DialogContentText>
 					</DialogContent>
 
@@ -244,12 +246,12 @@ class FolderItem extends Component {
 							onClick={e => this.setState({
 								deleteDailogOpen: false
 							})}>
-							Cancel
+							{this.props.lexicon.cancel_label}
 						</Button>
 
 						<Button color="primary"
 							onClick={this.deleteFolderRequest}>
-							OK
+							{this.props.lexicon.ok_label}
 						</Button>
 					</DialogActions>
 				</Dialog>
@@ -262,7 +264,7 @@ class FolderItem extends Component {
 					aria-describedby="dialog-edit-slide-description">
 
 					<DialogTitle id="dialog-edit-slide-title">
-						Edit
+						{this.props.lexicon.edit_label}
 					</DialogTitle>
 
 					<DialogContent>
@@ -270,7 +272,7 @@ class FolderItem extends Component {
 							autoFocus
 							fullWidth
 							margin="dense"
-							label="Rename current folder"
+							label={this.props.lexicon.rename_folder}
 							type="text"
 							id="name"
 							defaultValue={data}
@@ -287,12 +289,12 @@ class FolderItem extends Component {
 								editDailogOpen: false,
 							}, () => this.props.onEditDialogClosed(data));
 						}} color="primary">
-							Cancel
+							{this.props.lexicon.cancel_label}
 						</Button>
 
 						<Button color="primary"
 							onClick={e => this.editFolderNameRequest(value)}>
-							OK
+							{this.props.lexicon.ok_label}
 						</Button>
 					</DialogActions>
 				</Dialog>}
@@ -307,4 +309,15 @@ class FolderItem extends Component {
 	}
 }
 
-export default withStyles(styles)(FolderItem);
+/**
+ * Init redux states
+ * @param {Object} state
+ * @return {Object}
+ */
+function mapStateToProps(state) {
+	return {
+		lexicon: state.lexicon
+	}
+}
+
+export default connect(mapStateToProps)(withStyles(styles)(FolderItem));

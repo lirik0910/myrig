@@ -7,6 +7,8 @@
 
 import React, { Component } from 'react';
 
+import { connect } from 'react-redux';
+
 import Paper from 'material-ui/Paper';
 import Button from 'material-ui/Button';
 import Typography from 'material-ui/Typography';
@@ -121,6 +123,7 @@ class PaperInputVariable extends Component {
 						return <InputFieldItem 
 							key={i}
 							data={item}
+							placeholder={this.props.lexicon.input_text_placeholder}
 							onFieldInputed={(value, field) => this.handleFieldValue(value, field)}
 							onDeletedField={(field) => this.handleDeleteField(field)} />
 					})}
@@ -133,7 +136,7 @@ class PaperInputVariable extends Component {
 							className={classes.button}
 							onClick={this.handleAddField}>
 								<AddIcon />
-								{'Add field'}
+								{this.props.lexicon.add_field_label}
 						</Button>
 					</FormHelperText>
 				</FormControl>}
@@ -141,4 +144,15 @@ class PaperInputVariable extends Component {
 	}
 }
 
-export default withStyles(styles)(PaperInputVariable);
+/**
+ * Init redux states
+ * @param {Object} state
+ * @return {Object}
+ */
+function mapStateToProps(state) {
+	return {
+		lexicon: state.lexicon
+	}
+}
+
+export default connect(mapStateToProps)(withStyles(styles)(PaperInputVariable));

@@ -11,6 +11,8 @@
 import App from '../../../App.js';
 import React, { Component } from 'react';
 
+import { connect } from 'react-redux';
+
 import ExpansionPanel, {
 	ExpansionPanelSummary,
 	ExpansionPanelDetails,
@@ -219,7 +221,7 @@ class ContextItem extends Component {
 					expandIcon={<ExpandMore />}>
 					
 					<Typography className={classes.heading}>
-						Context: {context.title}
+						{this.props.lexicon.context_title} {context.title}
 					</Typography>
 				</ExpansionPanelSummary>
 
@@ -232,4 +234,15 @@ class ContextItem extends Component {
 	}
 }
 
-export default withStyles(styles)(ContextItem);
+/**
+ * Init redux states
+ * @param {Object} state
+ * @return {Object}
+ */
+function mapStateToProps(state) {
+	return {
+		lexicon: state.lexicon
+	}
+}
+
+export default connect(mapStateToProps)(withStyles(styles)(ContextItem));
