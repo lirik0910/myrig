@@ -172,7 +172,7 @@ return [
 	
 	'delivery_Without delivery' => 'Without delivery',
 	'delivery_Самовывоз' => 'Pickup',
-	'delivery_Деловые линии' => 'delovyye_linii',
+	'delivery_Деловые линии' => 'delovyye linii',
 	'delivery_СДЕК' => 'СДЕК',
 	'delivery' => 'novaya_pochta',
 	'payment_Bitcoin' => 'Bitcoin',
@@ -191,10 +191,10 @@ return [
 	'order_status' => 'Order status',
 	'order_payment_type' => 'Order payment type',
 	'order_delivery_type' => 'Order delivery type',
-	'custemer_first_name' => 'Custemer first name',
-	'custemer_last_name' => 'Custemer last name',
-	'custemer_email' => 'Custemer email',
-	'custemer_phone' => 'Custemer phone',
+	'custemer_first_name' => 'Customer first name',
+	'custemer_last_name' => 'Customer last name',
+	'custemer_email' => 'Customer email',
+	'custemer_phone' => 'Customer phone',
 	'customer_country' => 'Customer country',
 	'customer_city' => 'Customer city',
 	'customer_address' => 'Customer address',
@@ -237,5 +237,6 @@ return [
 	'var_indexLinks' => 'Main navigation links on index page',
 	'var_indexSlider' => 'Main slider',
 	'var_calculatorDevices' => 'Calculator devices',
-	'var_hosting' => 'Hosting cost'
+	'var_hosting' => 'Hosting cost',
+	'mass_actions' => 'Mass actions'
 ];

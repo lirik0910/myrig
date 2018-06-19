@@ -202,6 +202,7 @@ class DialogOrder extends Component {
 
 						<Grid item xs={5}>
 							<InputSelectUser
+								placeholder={this.props.lexicon.search_user_placeholder}
 								title={this.props.lexicon.order_user}
 								defaultValue={order.user_id}
 								onItemSelected={value => {

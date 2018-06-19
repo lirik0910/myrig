@@ -150,6 +150,7 @@ class PaperToolBar extends Component {
 
 					{orderActionShow && <Grid item xs={12} sm={2}>
 						<SelectOrderAction
+							title={this.props.lexicon.mass_actions}
 							actionsData={actionsData}
 							defaultValue={actionDefaultValue}
 							onItemSelected={value => this.props.onActionSelected(value)} />
