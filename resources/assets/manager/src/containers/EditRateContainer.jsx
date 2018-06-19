@@ -11,6 +11,9 @@
 import App from '../App.js';
 import React, { Component } from 'react';
 
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
 import Grid from 'material-ui/Grid';
 import Paper from 'material-ui/Paper';
 import Button from 'material-ui/Button';
@@ -25,6 +28,8 @@ import InputPrice from '../components/FormControl/InputPrice/InputPrice.jsx';
 
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
+
+import * as StateLexiconAction from 'actions/StateLexiconAction.js';
 
 /**
  * Users base container
@@ -54,7 +59,8 @@ class EditRateContainer extends Component {
 		result: 0,
 		resultDialog: false,
 		resultDialogTitle: '',
-		resultDialogMessage: ''
+		resultDialogMessage: '',
+		langLoaded: false
 	}
 
 	/**
@@ -65,6 +71,16 @@ class EditRateContainer extends Component {
 		this.setState({
 			completed: 0
 		}, () => this.getRatesDataRequest(() => this.countResult()));
+
+		App.defineCurrentLang((r) => {
+			if (App.isEmpty(r) === false) {
+				this.props.StateLexiconAction.get(r, () => {
+					this.setState({
+						langLoaded: true
+					});
+				});
+			}
+		});
 	}
 
 	updateResultRequest(callback = () => {}) {
@@ -84,8 +100,8 @@ class EditRateContainer extends Component {
 				if (r) {
 					this.setState({ 
 						resultDialog: true,
-						resultDialogTitle: 'Success',
-						resultDialogMessage: 'The request was successful'
+						resultDialogTitle: this.props.lexicon.success_title,
+						resultDialogMessage: this.props.lexicon.request_successful
 					}, () => callback());
 				}
 			},
@@ -95,7 +111,7 @@ class EditRateContainer extends Component {
 					this.setState({ 
 						completed: 100,
 						resultDialog: true,
-						resultDialogTitle: 'Error',
+						resultDialogTitle: this.props.lexicon.error_title,
 						resultDialogMessage: r.message
 					});
 				}
@@ -232,7 +248,7 @@ class EditRateContainer extends Component {
 					<LinearProgress color="secondary" variant="determinate" value={completed} />}
 				
 				<Header
-					title={'Edit BTC rate'} />
+					title={this.props.lexicon.edit_BTC_rate} />
 				<Menu />
 
 				<Grid 
@@ -247,7 +263,7 @@ class EditRateContainer extends Component {
 								if (item.title === 'coinbase') {
 									return <InputPrice
 										key={i}
-										title="Coinbase"
+										title={this.props.lexicon.coinbase_label}
 										defaultValue={item.value}
 										inputID="coinbase-value" />
 								}
@@ -255,7 +271,7 @@ class EditRateContainer extends Component {
 								if (item.title === 'blockchain') {
 									return <InputPrice
 										key={i}
-										title="Blockchain"
+										title={this.props.lexicon.blockchain_label}
 										defaultValue={item.value}
 										inputID="blockchain-value" />
 								}
@@ -263,16 +279,16 @@ class EditRateContainer extends Component {
 								if (item.title === 'bitstamp') {
 									return <InputPrice
 										key={i}
-										title="Bitstamp"
+										title={this.props.lexicon.bitstamp_label}
 										defaultValue={item.value}
 										inputID="bitstamp-value" />
 								}
 							})}
 
 							<FormControl className={classes.formControl} style={{ display: 'block' }}>
-								<FormLabel>Min/max</FormLabel>
+								<FormLabel>{this.props.lexicon.min_max}</FormLabel>
 								<RadioGroup
-									aria-label="Amount"
+									aria-label={this.props.lexicon.amount_label}
 									name="amount"
 									className={classes.group}
 									value={this.state.amount}
@@ -280,14 +296,14 @@ class EditRateContainer extends Component {
 
 									<FormControlLabel 
 										value="min" 
-										label="Min"
+										label={this.props.lexicon.min_label}
 										control={
 											<Radio />
 										} />
 
 									<FormControlLabel 
 										value="max" 
-										label="Max"
+										label={this.props.lexicon.max_label}
 										control={
 											<Radio />
 										} />
@@ -297,7 +313,7 @@ class EditRateContainer extends Component {
 							<FormControl className={classes.formControl} style={{ display: 'block' }}>
 								<FormLabel>$/%</FormLabel>
 								<RadioGroup
-									aria-label="Amount"
+									aria-label={this.props.lexicon.amount_label}
 									name="type"
 									className={classes.group}
 									value={this.state.type}
@@ -320,7 +336,7 @@ class EditRateContainer extends Component {
 							</FormControl>
 
 							<InputPrice
-								title="Change value"
+								title={this.props.lexicon.change_value}
 								inputID="change-value"
 								defaultValue={this.state.customValue}
 								onFieldInputed={value => {
@@ -332,13 +348,13 @@ class EditRateContainer extends Component {
 								}} />
 
 							{flag === true && <InputPrice
-								title="Result"
+								title={this.props.lexicon.result_label}
 								inputID="result-value"
 								defaultValue={this.state.result} />}
 
 							{(completed === 100 && App.isEmpty(current) === false) && <InputPrice
 								disabled
-								title="Rate of last price conversion"
+								title={this.props.lexicon.rate_conversion}
 								inputID="last-rate-value"
 								defaultValue={current.value} />}
 
@@ -352,7 +368,7 @@ class EditRateContainer extends Component {
 										}, () => this.updateResultRequest(() => this.getRatesDataRequest()))
 									}
 								}}>
-								Save
+								{this.props.lexicon.save_label}
 							</Button>
 						</Paper>
 					</Grid>
@@ -384,4 +400,26 @@ let styles = theme => ({
 	},
 });
 
-export default withStyles(styles)(EditRateContainer);
+/**
+ * Init redux states
+ * @param {Object} state
+ * @return {Object}
+ */
+function mapStateToProps(state) {
+	return {
+		lexicon: state.lexicon
+	}
+}
+
+/**
+ * Init redux actions
+ * @param {Function} dispatch
+ * @return {Object}
+ */
+function mapDispatchToProps(dispatch) {
+	return {
+		StateLexiconAction: bindActionCreators(StateLexiconAction, dispatch)
+	}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(EditRateContainer));

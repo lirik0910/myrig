@@ -1,4 +1,9 @@
 {
+	"lexicon": {
+		"GET": {
+			"one": "{id}"
+		}
+	},
 	"rate": {
 		"GET": {
 			"one": ""

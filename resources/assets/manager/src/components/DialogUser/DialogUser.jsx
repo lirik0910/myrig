@@ -10,6 +10,8 @@
 
 import React, { Component } from 'react';
 
+import { connect } from 'react-redux';
+
 import Dialog, {
 	DialogActions,
 	DialogContent,
@@ -74,7 +76,7 @@ class DialogUser extends Component {
 				aria-describedby="edit-dialog-slide-content">
 				
 				<DialogTitle id="edit-dialog-slide-title">
-					{'Edit'}
+					{this.props.lexicon.edit_label}
 				</DialogTitle>
 
 				<form id="edit-user-form" onSubmit={e => {
@@ -92,7 +94,7 @@ class DialogUser extends Component {
 						<FormControl className={classes.formControl}>
 							<TextField
 								id="name"
-								label="Name"
+								label={this.props.lexicon.table_name}
 								type="text"
 								name="name"
 								defaultValue={data.name}
@@ -105,7 +107,7 @@ class DialogUser extends Component {
 						<FormControl className={classes.formControl}>
 							<TextField
 								id="email"
-								label="Email"
+								label={this.props.lexicon.table_email}
 								type="email"
 								name="email"
 								defaultValue={data.email}
@@ -118,7 +120,7 @@ class DialogUser extends Component {
 						<FormControl className={classes.formControl}>
 							<TextField
 								id="password"
-								label="New password"
+								label={this.props.lexicon.new_password}
 								type="password"
 								name="new_password"
 								defaultValue=""
@@ -131,7 +133,7 @@ class DialogUser extends Component {
 						<FormControl className={classes.formControl}>
 							<TextField
 								id="confirm-password"
-								label="Confirm password"
+								label={this.props.lexicon.register_confirm}
 								type="password"
 								name="confirm_password"
 								defaultValue=""
@@ -142,18 +144,19 @@ class DialogUser extends Component {
 						</FormControl>
 
 						<SelectPolicy
+							title={this.props.lexicon.select_policy}
 							defaultValue={data.policy_id} />
 					</DialogContent>
 
 					<DialogActions>
 						<Button color="primary"
 							onClick={e => this.props.onDialogClosed()}>
-							Cancel
+							{this.props.lexicon.cancel_label}
 						</Button>
 
 						<Button color="primary"
 							type="submit">
-							OK
+							{this.props.lexicon.ok_label}
 						</Button>
 					</DialogActions>
 				</form>
@@ -161,4 +164,15 @@ class DialogUser extends Component {
 	}
 }
 
-export default withStyles(styles)(DialogUser);
+/**
+ * Init redux states
+ * @param {Object} state
+ * @return {Object}
+ */
+function mapStateToProps(state) {
+	return {
+		lexicon: state.lexicon
+	}
+}
+
+export default connect(mapStateToProps)(withStyles(styles)(DialogUser));

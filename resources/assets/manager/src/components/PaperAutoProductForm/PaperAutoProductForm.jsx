@@ -7,6 +7,8 @@
 
 import React, { Component } from 'react';
 
+import { connect } from 'react-redux';
+
 import App from '../../App.js';
 import Paper from 'material-ui/Paper';
 import InputPrice from '../FormControl/InputPrice/InputPrice.jsx';
@@ -164,7 +166,7 @@ class PaperAutoProductForm extends Component {
 		return <Paper className={classes.paper}>
 			<CheckboxActive
 				name="auto-regime"
-				title="Auto price regime"
+				title={this.props.lexicon.auto_price_regime}
 				defaultValue={activeDefaultValue}
 				onCheckboxValueChanged={value => {
 					this.props.onActiveChanged(value);
@@ -173,7 +175,7 @@ class PaperAutoProductForm extends Component {
 
 			<InputPrice
 				name="fes"
-				title="FES"
+				title={this.props.lexicon.fes}
 				inputID="fes-field"
 				currencies={currencies}
 				disabled={activeDefaultValue}
@@ -194,7 +196,7 @@ class PaperAutoProductForm extends Component {
 
 			<InputPrice
 				name="warranty"
-				title="Warranty"
+				title={this.props.lexicon.warranty_label}
 				inputID="warranty-field"
 				currencies={currencies}
 				disabled={activeDefaultValue}
@@ -215,7 +217,7 @@ class PaperAutoProductForm extends Component {
 
 			<InputPrice
 				name="prime-cost"
-				title="Prime cost"
+				title={this.props.lexicon.prime_cost}
 				currencies={currencies}
 				inputID="prime-cost-field"
 				disabled={activeDefaultValue}
@@ -234,7 +236,7 @@ class PaperAutoProductForm extends Component {
 
 			<InputPrice
 				name="delivery-cost"
-				title="Delivery cost"
+				title={this.props.lexicon.delivery_cost}
 				currencies={currencies}
 				inputID="delivery-cost-field"
 				disabled={activeDefaultValue}
@@ -253,7 +255,7 @@ class PaperAutoProductForm extends Component {
 
 			<InputPrice
 				name="profit-cost"
-				title="Profit"
+				title={this.props.lexicon.profit_label}
 				currencies={currencies}
 				inputID="profit-cost-field"
 				disabled={activeDefaultValue}
@@ -272,7 +274,7 @@ class PaperAutoProductForm extends Component {
 
 			<InputPrice
 				name="total_cost"
-				title="Total cost"
+				title={this.props.lexicon.total_cost}
 				currencies={currencies}
 				inputID="total-cost-field"
 				disabled={false}
@@ -282,4 +284,15 @@ class PaperAutoProductForm extends Component {
 	}
 }
 
-export default withStyles(styles)(PaperAutoProductForm);
+/**
+ * Init redux states
+ * @param {Object} state
+ * @return {Object}
+ */
+function mapStateToProps(state) {
+	return {
+		lexicon: state.lexicon
+	}
+}
+
+export default connect(mapStateToProps)(withStyles(styles)(PaperAutoProductForm));

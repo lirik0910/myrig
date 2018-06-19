@@ -33,3 +33,16 @@ a {
 #menu-product_id > div:nth-child(2) {
 	overflow-y: scroll;
 }
+
+.select-header-lang__container:before,
+.select-header-lang__container:after,
+.select-header-lang__container:focus {
+	color: #FFF !important;
+	background-color: #FFF !important;
+}
+
+.select-header-lang__container svg,
+.select-header-lang__container,
+.select-header-lang__container > div > div {
+	color: #FFF !important;
+}

@@ -7,6 +7,8 @@
 
 import React, { Component } from 'react';
 
+import { connect } from 'react-redux';
+
 import Paper from 'material-ui/Paper';
 import InputPrice from '../FormControl/InputPrice/InputPrice.jsx';
 import InputWarranty from '../FormControl/InputWarranty/InputWarranty.jsx';
@@ -91,7 +93,7 @@ class PaperOrderForm extends Component {
 		return <Paper className={classes.paper}>
 				<TextField
 					id="p_first_name"
-					label="First name"
+					label={this.props.lexicon.first_name}
 					type="text"
 					name="p_first_name"
 					value={data.attributes.fname}
@@ -102,7 +104,7 @@ class PaperOrderForm extends Component {
 
 				<TextField
 					id="p_last_name"
-					label="Last name"
+					label={this.props.lexicon.last_name}
 					type="text"
 					name="p_last_name"
 					value={data.attributes.lname}
@@ -115,13 +117,14 @@ class PaperOrderForm extends Component {
 
 				<SelectCountry
 					required
+					title={this.props.lexicon.select_country}
 					onItemSelected={value =>
 						this.props.onCountrySelected(value)}
 				/>
 
 				<TextField
 					id="p_email"
-					label="Email"
+					label={this.props.lexicon.table_email}
 					type="email"
 					name="p_email"
 					defaultValue=""
@@ -133,7 +136,7 @@ class PaperOrderForm extends Component {
 			
 				<TextField
 					id="p_phone"
-					label="Phone"
+					label={this.props.lexicon.phone_label}
 					type="phone"
 					name="p_phone"
 					defaultValue=""
@@ -145,7 +148,7 @@ class PaperOrderForm extends Component {
 			
 				<TextField
 					id="p_city"
-					label="City"
+					label={this.props.lexicon.city_label}
 					type="city"
 					name="p_city"
 					defaultValue=""
@@ -156,7 +159,7 @@ class PaperOrderForm extends Component {
 			
 				<TextField
 					id="p_state"
-					label="State"
+					label={this.props.lexicon.state_label}
 					type="state"
 					name="p_state"
 					defaultValue=""
@@ -167,7 +170,7 @@ class PaperOrderForm extends Component {
 			
 				<TextField
 					id="p_address"
-					label="Address"
+					label={this.props.lexicon.address_label}
 					type="address"
 					name="p_address"
 					defaultValue=""
@@ -180,4 +183,15 @@ class PaperOrderForm extends Component {
 	}
 }
 
-export default withStyles(styles)(PaperOrderForm);
+/**
+ * Init redux states
+ * @param {Object} state
+ * @return {Object}
+ */
+function mapStateToProps(state) {
+	return {
+		lexicon: state.lexicon
+	}
+}
+
+export default connect(mapStateToProps)(withStyles(styles)(PaperOrderForm));

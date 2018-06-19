@@ -11,6 +11,9 @@
 import App from '../App.js';
 import React, { Component } from 'react';
 
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
 import Grid from 'material-ui/Grid';
 import { Link } from 'react-router-dom';
 import Menu from '../components/Menu/Menu.jsx';
@@ -22,6 +25,8 @@ import DialogDelete from '../components/DialogDelete/DialogDelete.jsx';
 
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
+
+import * as StateLexiconAction from 'actions/StateLexiconAction.js';
 
 /**
  * Users base container
@@ -43,7 +48,20 @@ class ListPagesContainer extends Component {
 		a: '',
 		click: false,
 		trash: false,
-		completed: 100
+		completed: 100,
+		langLoaded: false
+	}
+
+	componentWillMount() {
+		App.defineCurrentLang((r) => {
+			if (App.isEmpty(r) === false) {
+				this.props.StateLexiconAction.get(r, () => {
+					this.setState({
+						langLoaded: true
+					});
+				});
+			}
+		});
 	}
 
 	emptyTrashRequest() {
@@ -82,21 +100,34 @@ class ListPagesContainer extends Component {
 	 */
 	render() {
 		let { classes } = this.props;
-		let { a, completed } = this.state;
+		let { a, completed, langLoaded } = this.state;
+
+		if (langLoaded === false) {
+			return <div className="pages-list__container">
+				<LinearProgress color="secondary" variant="determinate" value={0} />
+			</div>
+		}
 
 		return <div className="pages-list__container">
 				{completed === 0 && 
 					<LinearProgress color="secondary" variant="determinate" value={completed} />}
 
 				<Header
-					title={'Pages list'} />
+					title={this.props.lexicon.pages_list_title} />
 				<Menu />
 
 				<TopTitle
+
 					title={''}
+					addButtonTitle={this.props.lexicon.new_page}
+					saveButtonTitle={this.props.lexicon.save_label}
+					trashButtonTitle={this.props.lexicon.empty_trash_label}
+					duplicateButtonTitle={this.props.lexicon.duplicate_label}
+					deleteButtonTitle={this.props.lexicon.delete_button}
+					recoveryButtonTitle={this.props.lexicon.recovery_button}
+
 					addButtonDisplay={true}
 					saveButtonDisplay={false}
-					addButtonTitle={'Create new page'}
 					onAddButtonClicked={() => {
 						this.setState({
 							a: App.name() +'/pages/create'
@@ -121,11 +152,15 @@ class ListPagesContainer extends Component {
 					style={{display: 'none'}}></Link>
 
 				{this.state.trash === true && <DialogDelete
+
+					title={this.props.lexicon.delete_button}
+					content={this.props.lexicon.delete_confirm}
+
 					defaultValue={this.state.trash}
 					onDialogClosed={() => this.setState({
 						trash: false,
 					})}
-					content="Are you sure to empty trash?"
+					content={this.props.lexicon.empty_trash}
 					onDialogConfirmed={() => this.emptyTrashRequest()} />}
 			</div>
 	}
@@ -139,4 +174,26 @@ let styles = theme => ({
 	},
 });
 
-export default withStyles(styles)(ListPagesContainer);
+/**
+ * Init redux states
+ * @param {Object} state
+ * @return {Object}
+ */
+function mapStateToProps(state) {
+	return {
+		lexicon: state.lexicon
+	}
+}
+
+/**
+ * Init redux actions
+ * @param {Function} dispatch
+ * @return {Object}
+ */
+function mapDispatchToProps(dispatch) {
+	return {
+		StateLexiconAction: bindActionCreators(StateLexiconAction, dispatch)
+	}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(ListPagesContainer));

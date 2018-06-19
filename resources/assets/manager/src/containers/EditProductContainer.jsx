@@ -11,6 +11,9 @@
 import App from '../App.js';
 import React, { Component } from 'react';
 
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
 import Grid from 'material-ui/Grid';
 import { Link } from 'react-router-dom';
 import Menu from '../components/Menu/Menu.jsx';
@@ -32,6 +35,8 @@ import PaperRichtextVariable from '../components/PaperRichtextVariable/PaperRich
 
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
+
+import * as StateLexiconAction from 'actions/StateLexiconAction.js';
 
 /**
  * Users base container
@@ -61,7 +66,8 @@ class EditProductContainer extends Component {
 		deleteDialog: false,
 		resultDialog: false,
 		resultDialogTitle: '',
-		resultDialogMessage: ''
+		resultDialogMessage: '',
+		langLoaded: false
 	}
 
 	/**
@@ -73,6 +79,16 @@ class EditProductContainer extends Component {
 			this.productDataGetRequest();
 			//this.btcDataGetRequest();
 			//console.log(this.state.btc);
+		});
+
+		App.defineCurrentLang((r) => {
+			if (App.isEmpty(r) === false) {
+				this.props.StateLexiconAction.get(r, () => {
+					this.setState({
+						langLoaded: true
+					});
+				});
+			}
 		});
 	}
 
@@ -165,7 +181,7 @@ class EditProductContainer extends Component {
 					this.setState({ 
 						completed: 100,
 						resultDialog: true,
-						resultDialogTitle: 'Error',
+						resultDialogTitle: this.props.lexicon.error_title,
 						resultDialogMessage: r.message
 					});
 				}
@@ -223,8 +239,8 @@ class EditProductContainer extends Component {
 				if (r) {
 					this.setState({ 
 						resultDialog: true,
-						resultDialogTitle: 'Success',
-						resultDialogMessage: 'The request was successful'
+						resultDialogTitle: this.props.lexicon.success_title,
+						resultDialogMessage: this.props.lexicon.request_successful
 					}, () => this.productDataGetRequest());
 				}
 			},
@@ -246,7 +262,7 @@ class EditProductContainer extends Component {
 					this.setState({ 
 						completed: 100,
 						resultDialog: true,
-						resultDialogTitle: 'Error',
+						resultDialogTitle: this.props.lexicon.error_title,
 						resultDialogMessage: <div><b>{r.message}</b> {l}</div>
 					});
 				}
@@ -325,8 +341,8 @@ class EditProductContainer extends Component {
 						this.setState({ 
 							completed: 100,
 							deleteDialog: false,
-							resultDialogTitle: 'Success',
-							resultDialogMessage: 'The request was successful',
+							resultDialogTitle: this.props.lexicon.success_title,
+							resultDialogMessage: this.props.lexicon.request_successful,
 						}, () => this.productDataGetRequest());
 					}
 				},
@@ -337,7 +353,7 @@ class EditProductContainer extends Component {
 							completed: 100,
 							resultDialog: true,
 							deleteDialog: false,
-							resultDialogTitle: 'Error',
+							resultDialogTitle: this.props.lexicon.error_title,
 							resultDialogMessage: r.message
 						});
 					}
@@ -367,19 +383,24 @@ class EditProductContainer extends Component {
 			resultDialogMessage
 		} = this.state;
 
-		var tabs = ['Product', 'Options'];
+		var tabs = [this.props.lexicon.product_label, this.props.lexicon.options_label];
 
 		if (data.page_id > 0 && data.page_id !== '' && App.isEmpty(page) === false) {
-			tabs.push('Page');
-			tabs.push('Additional fields');
+			tabs.push(this.props.lexicon.page_title);
+			tabs.push(this.props.lexicon.additional_fields_tab);
 		}
+
+		if (this.state.langLoaded === false) 
+			return <div className="create-page__container">
+				<LinearProgress color="secondary" variant="determinate" value={0} />
+			</div>
 
 		return <div className="products__container">
 				{completed === 0 && 
 					<LinearProgress color="secondary" variant="determinate" value={completed} />}
 				
 				<Header
-					title={'Edit product'} />
+					title={this.props.lexicon.edit_product} />
 				<Menu />
 					
 				{completed === 100 && <TopTitle
@@ -392,6 +413,14 @@ class EditProductContainer extends Component {
 							'line-through' :
 							'none'
 					}}>{data.title}</span>}
+
+					addButtonTitle={this.props.lexicon.add_label}
+					saveButtonTitle={this.props.lexicon.save_label}
+					trashButtonTitle={this.props.lexicon.empty_trash_label}
+					duplicateButtonTitle={this.props.lexicon.duplicate_label}
+					deleteButtonTitle={this.props.lexicon.delete_selected_button}
+					recoveryButtonTitle={this.props.lexicon.recovery_button}
+
 					deleteButtonDisplay={true}
 					onSaveButtonClicked={() => {
 						this.productPutRequest();
@@ -418,6 +447,11 @@ class EditProductContainer extends Component {
 				
 					<Grid item xs={9}>
 						{completed === 100 && <PaperContentForm
+							inputTitle={this.props.lexicon.title_label}
+							introTitle={this.props.lexicon.introtext_label}
+							descrTitle={this.props.lexicon.description_label}
+							articulTitle={this.props.lexicon.articul_label}
+
 							articulShow
 							articulDefaultValue={data.articul}
 							inputDefaultValue={data.title}
@@ -546,6 +580,12 @@ class EditProductContainer extends Component {
 						{completed === 100 && <PaperContentForm
 							descrShow
 							introShow
+
+							inputTitle={this.props.lexicon.title_label}
+							introTitle={this.props.lexicon.introtext_label}
+							descrTitle={this.props.lexicon.description_label}
+							articulTitle={this.props.lexicon.articul_label}
+
 							inputDefaultValue={page.title}
 							descrDefaultValue={page.description}
 							introDefaultValue={page.introtext}
@@ -612,7 +652,7 @@ class EditProductContainer extends Component {
 							{item.type === 'input' &&
 								<PaperInputVariable
 									key={i}
-									title={item.description}
+									title={this.props.lexicon['var_'+ item.title]}
 									data={item.variable_content}
 									onAddedField={fields => {
 										this.setState({ page });
@@ -623,14 +663,14 @@ class EditProductContainer extends Component {
 									key={i}
 									pageId={page.id}
 									variableId={item.id}
-									title={item.description}
+									title={this.props.lexicon['var_'+ item.title]}
 									data={item.multi_variable_lines}
 									columns={item.columns} />}
 
 							{item.type === 'image' &&
 								<PaperImageVariable
 									key={i}
-									title={item.description}
+									title={this.props.lexicon['var_'+ item.title]}
 									data={item.variable_content.map((field, a) => {
 										return {...field, name: field.content}
 									})}
@@ -662,7 +702,7 @@ class EditProductContainer extends Component {
 							{item.type === 'richtext' &&
 								<PaperRichtextVariable
 									key={i}
-									title={item.description}
+									title={this.props.lexicon['var_'+ item.title]}
 									onAddedField={fields => {
 										this.setState({ page });
 									}}
@@ -680,6 +720,10 @@ class EditProductContainer extends Component {
 					})} />}
 
 				{deleteDialog === true && <DialogDelete
+
+					title={this.props.lexicon.delete_button}
+					content={this.props.lexicon.delete_confirm}
+					
 					defaultValue={deleteDialog}
 					onDialogClosed={() => this.setState({
 						deleteDialog: false
@@ -702,4 +746,26 @@ let styles = theme => ({
 	},
 });
 
-export default withStyles(styles)(EditProductContainer);
+/**
+ * Init redux states
+ * @param {Object} state
+ * @return {Object}
+ */
+function mapStateToProps(state) {
+	return {
+		lexicon: state.lexicon
+	}
+}
+
+/**
+ * Init redux actions
+ * @param {Function} dispatch
+ * @return {Object}
+ */
+function mapDispatchToProps(dispatch) {
+	return {
+		StateLexiconAction: bindActionCreators(StateLexiconAction, dispatch)
+	}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(EditProductContainer));

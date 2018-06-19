@@ -11,6 +11,9 @@
 import App from '../App.js';
 import React, { Component } from 'react';
 
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
 import Grid from 'material-ui/Grid';
 import { Link } from 'react-router-dom';
 import Menu from '../components/Menu/Menu.jsx';
@@ -29,6 +32,8 @@ import PaperRichtextVariable from '../components/PaperRichtextVariable/PaperRich
 
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
+
+import * as StateLexiconAction from 'actions/StateLexiconAction.js';
 
 /**
  * Users base container
@@ -55,7 +60,8 @@ class EditPageContainer extends Component {
 		deleteDialog: false,
 		resultDialog: false,
 		resultDialogTitle: '',
-		resultDialogMessage: ''
+		resultDialogMessage: '',
+		langLoaded: false
 	}
 
 	/**
@@ -64,6 +70,16 @@ class EditPageContainer extends Component {
 	 */
 	componentWillMount() {
 		this.pageDataGetRequest();
+		
+		App.defineCurrentLang((r) => {
+			if (App.isEmpty(r) === false) {
+				this.props.StateLexiconAction.get(r, () => {
+					this.setState({
+						langLoaded: true
+					});
+				});
+			}
+		});
 	}
 
 	pageDeleteRequest = e => {
@@ -91,7 +107,7 @@ class EditPageContainer extends Component {
 					this.setState({ 
 						deleteDialog: false,
 						resultDialog: true,
-						resultDialogTitle: 'Error',
+						resultDialogTitle: this.props.lexicon.error_title,
 						resultDialogMessage: r.message
 					});
 				}
@@ -151,8 +167,8 @@ class EditPageContainer extends Component {
 					this.setState({ 
 						completed: 100,
 						resultDialog: true,
-						resultDialogTitle: 'Success',
-						resultDialogMessage: 'The request was successful',
+						resultDialogTitle: this.props.lexicon.success_title,
+						resultDialogMessage: this.props.lexicon.request_successful,
 					});
 				}
 			},
@@ -162,7 +178,7 @@ class EditPageContainer extends Component {
 					this.setState({ 
 						completed: 100,
 						resultDialog: true,
-						resultDialogTitle: 'Error',
+						resultDialogTitle: this.props.lexicon.error_title,
 						resultDialogMessage: r.message
 					});
 				}
@@ -235,18 +251,31 @@ class EditPageContainer extends Component {
 			deleteDialog,
 			resultDialog,
 			resultDialogTitle,
-			resultDialogMessage
+			resultDialogMessage,
 		} = this.state;
+
+		if (this.state.langLoaded === false) 
+			return <div className="create-page__container">
+				<LinearProgress color="secondary" variant="determinate" value={0} />
+			</div>
 
 		return <div className="create-page__container">
 				{completed === 0 && 
 					<LinearProgress color="secondary" variant="determinate" value={completed} />}
 					
 				<Header
-					title={'Pages list'} />
+					title={this.props.lexicon.pages_list_title} />
 				<Menu />
 
 				{completed === 100 && <TopTitle
+
+					addButtonTitle={this.props.lexicon.new_page}
+					saveButtonTitle={this.props.lexicon.save_label}
+					trashButtonTitle={this.props.lexicon.empty_trash_label}
+					duplicateButtonTitle={this.props.lexicon.duplicate_label}
+					deleteButtonTitle={this.props.lexicon.delete_button}
+					recoveryButtonTitle={this.props.lexicon.recovery_button}
+
 					item={data}
 					title={<span style={{
 						color: data.delete === 1 ?
@@ -255,7 +284,10 @@ class EditPageContainer extends Component {
 						textDecoration: data.delete === 1 ?
 							'line-through' :
 							'none'
-					}}>{data.title}</span>}
+					}}>
+						{data.title}
+					</span>}
+					
 					saveButtonDisplay={true}
 					deleteButtonDisplay={true}
 					onSaveButtonClicked={() => this.pagePutRequest()}
@@ -267,8 +299,8 @@ class EditPageContainer extends Component {
 					defaultValue={tab}
 					onTabButtonClicked={tab => this.setState({ tab })}
 					data={[
-						'Page',
-						'Additional fields',
+						this.props.lexicon.page_title,
+						this.props.lexicon.additional_fields_tab
 					]} />
 
 				<Grid container 
@@ -282,6 +314,12 @@ class EditPageContainer extends Component {
 						{completed === 100 && <PaperContentForm
 							descrShow
 							introShow
+
+							inputTitle={this.props.lexicon.title_label}
+							introTitle={this.props.lexicon.introtext_label}
+							descrTitle={this.props.lexicon.description_label}
+							articulTitle={this.props.lexicon.articul_label}
+
 							inputDefaultValue={data.title}
 							descrDefaultValue={data.description}
 							introDefaultValue={data.introtext}
@@ -348,7 +386,7 @@ class EditPageContainer extends Component {
 							{item.type === 'input' &&
 								<PaperInputVariable
 									key={i}
-									title={item.description}
+									title={this.props.lexicon['var_'+ item.title]}
 									data={item.variable_content}
 									onAddedField={fields => {
 										this.setState({ data });
@@ -359,14 +397,14 @@ class EditPageContainer extends Component {
 									key={i}
 									pageId={data.id}
 									variableId={item.id}
-									title={item.description}
+									title={this.props.lexicon['var_'+ item.title]}
 									data={item.multi_variable_lines}
 									columns={item.columns} />}
 
 							{item.type === 'image' &&
 								<PaperImageVariable
 									key={i}
-									title={item.description}
+									title={this.props.lexicon['var_'+ item.title]}
 									data={item.variable_content.map((field, a) => {
 										return {...field, name: field.content}
 									})}
@@ -398,7 +436,7 @@ class EditPageContainer extends Component {
 							{item.type === 'richtext' &&
 								<PaperRichtextVariable
 									key={i}
-									title={item.description}
+									title={this.props.lexicon['var_'+ item.title]}
 									onAddedField={fields => {
 										this.setState({ data });
 									}}
@@ -416,6 +454,10 @@ class EditPageContainer extends Component {
 					})} />}
 
 				{deleteDialog === true && <DialogDelete
+
+					title={this.props.lexicon.delete_button}
+					content={this.props.lexicon.delete_confirm}
+
 					defaultValue={deleteDialog}
 					onDialogClosed={() => this.setState({
 						deleteDialog: false
@@ -437,4 +479,26 @@ let styles = theme => ({
 	},
 });
 
-export default withStyles(styles)(EditPageContainer);
+/**
+ * Init redux states
+ * @param {Object} state
+ * @return {Object}
+ */
+function mapStateToProps(state) {
+	return {
+		lexicon: state.lexicon
+	}
+}
+
+/**
+ * Init redux actions
+ * @param {Function} dispatch
+ * @return {Object}
+ */
+function mapDispatchToProps(dispatch) {
+	return {
+		StateLexiconAction: bindActionCreators(StateLexiconAction, dispatch)
+	}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(EditPageContainer));

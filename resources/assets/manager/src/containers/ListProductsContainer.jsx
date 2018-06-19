@@ -11,6 +11,9 @@
 import App from '../App.js';
 import React, { Component } from 'react';
 
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
 import Grid from 'material-ui/Grid';
 import { Link } from 'react-router-dom';
 import Menu from '../components/Menu/Menu.jsx';
@@ -25,6 +28,8 @@ import ControlOptions from '../components/ControlOptions/ControlOptions.jsx';
 
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
+
+import * as StateLexiconAction from 'actions/StateLexiconAction.js';
 
 /**
  * Users base container
@@ -58,7 +63,8 @@ class ListProductsContainer extends Component {
 		resultDialog: false,
 		deleteDialog: false,
 		resultDialogTitle: '',
-		resultDialogMessage: ''
+		resultDialogMessage: '',
+		langLoaded: false
 	}
 
 	/**
@@ -67,6 +73,16 @@ class ListProductsContainer extends Component {
 	 */
 	componentWillMount() {
 		this.productsGetDataRequest();
+
+		App.defineCurrentLang((r) => {
+			if (App.isEmpty(r) === false) {
+				this.props.StateLexiconAction.get(r, () => {
+					this.setState({
+						langLoaded: true
+					});
+				});
+			}
+		});
 	}
 
 	emptyTrashRequest() {
@@ -84,8 +100,8 @@ class ListProductsContainer extends Component {
 								completed: 100,
 								resultDialog: true,
 								deleteDialog: false,
-								resultDialogTitle: 'Success',
-								resultDialogMessage: 'The request was successful'
+								resultDialogTitle: this.props.lexicon.success_title,
+								resultDialogMessage: this.props.lexicon.request_successful
 							}, () => this.productsGetDataRequest());
 						}
 					},
@@ -97,7 +113,7 @@ class ListProductsContainer extends Component {
 								completed: 100,
 								resultDialog: true,
 								deleteDialog: false,
-								resultDialogTitle: 'Error',
+								resultDialogTitle: this.props.lexicon.error_title,
 								resultDialogMessage: r.message
 							});
 						}
@@ -233,7 +249,7 @@ class ListProductsContainer extends Component {
 							deleteProductId: 0,
 							resultDialog: true,
 							deleteDialog: false,
-							resultDialogTitle: 'Error',
+							resultDialogTitle: this.props.lexicon.error_title,
 							resultDialogMessage: r.message
 						});
 					}
@@ -264,23 +280,35 @@ class ListProductsContainer extends Component {
 			resultDialogMessage
 		} = this.state;
 
+		if (this.state.langLoaded === false) 
+			return <div className="create-page__container">
+				<LinearProgress color="secondary" variant="determinate" value={0} />
+			</div>
+
 		return <div className="products-list__container">
 				{completed === 0 && 
 					<LinearProgress color="secondary" variant="determinate" value={completed} />}
 					
 				<Header
-					title={'Products list'} />
+					title={this.props.lexicon.products_list} />
 				<Menu />
 
 				<TopTitle
 					title={''}
+
+					addButtonTitle={this.props.lexicon.new_product_button}
+					saveButtonTitle={this.props.lexicon.save_label}
+					trashButtonTitle={this.props.lexicon.empty_trash_label}
+					duplicateButtonTitle={this.props.lexicon.duplicate_label}
+					deleteButtonTitle={this.props.lexicon.delete_selected_button}
+					recoveryButtonTitle={this.props.lexicon.recovery_button}
+
 					addButtonDisplay={true}
 					saveButtonDisplay={false}
 					deleteButtonDisplay={selected.length > 0 ? 
 						true : 
 						false}
-					addButtonTitle={'Add new product'}
-					deleteButtonTitle={'Delete selected'}
+
 					onAddButtonClicked={() => {
 						this.setState({
 							a: App.name() +'/products/create'
@@ -302,6 +330,8 @@ class ListProductsContainer extends Component {
 				<Grid container spacing={24} className={classes.root}>
 					<Grid item xs={12}>
 						<PaperToolBar
+							contextTitle={this.props.lexicon.select_context_label}
+
 							deleteFilterShow
 							onDeleteSelected={deleteID => {
 								this.setState({ deleteID }, () => {
@@ -334,19 +364,19 @@ class ListProductsContainer extends Component {
 								title: 'ID'
 							}, {
 								name: 'title', 
-								title: 'Name'
+								title: this.props.lexicon.table_name
 							}, {
 								name: 'articul', 
-								title: 'Articul'
+								title: this.props.lexicon.articul_label
 							}, {
 								name: 'price', 
-								title: 'Price'
+								title: this.props.lexicon.price_label
 							}, {
 								name: 'img',  
-								title: 'Icon'
+								title: this.props.lexicon.icon_label
 							}, {
 								name: 'control', 
-								title: 'Manage'
+								title: this.props.lexicon.table_manage
 							}]}
 							dataItems={data}
 							onPrevPageClicked={e => this.setState({
@@ -371,6 +401,10 @@ class ListProductsContainer extends Component {
 					})} />}
 
 				{deleteDialog === true && <DialogDelete
+
+					title={this.props.lexicon.delete_button}
+					content={this.props.lexicon.delete_confirm}
+
 					defaultValue={deleteDialog}
 					onDialogClosed={() => this.setState({
 						deleteDialog: false,
@@ -379,11 +413,14 @@ class ListProductsContainer extends Component {
 					onDialogConfirmed={() => this.productDeleteRequest()} />}
 
 				{this.state.trash === true && <DialogDelete
+
+					title={this.props.lexicon.delete_button}
+					content={this.props.lexicon.delete_confirm}
+
 					defaultValue={this.state.trash}
 					onDialogClosed={() => this.setState({
 						trash: false,
 					})}
-					content="Are you sure to empty trash?"
 					onDialogConfirmed={() => this.emptyTrashRequest()} />}
 
 				<Link to={a}
@@ -401,4 +438,26 @@ let styles = theme => ({
 	},
 });
 
-export default withStyles(styles)(ListProductsContainer);
+/**
+ * Init redux states
+ * @param {Object} state
+ * @return {Object}
+ */
+function mapStateToProps(state) {
+	return {
+		lexicon: state.lexicon
+	}
+}
+
+/**
+ * Init redux actions
+ * @param {Function} dispatch
+ * @return {Object}
+ */
+function mapDispatchToProps(dispatch) {
+	return {
+		StateLexiconAction: bindActionCreators(StateLexiconAction, dispatch)
+	}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(ListProductsContainer));

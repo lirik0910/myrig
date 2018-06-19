@@ -9,7 +9,10 @@
 import { combineReducers } from 'redux';
 import config from './config.js';
 import elements from './elements.js';
+import lexicon from './lexicon.js';
+
 export default combineReducers({
 	config,
-	elements
+	elements,
+	lexicon
 });

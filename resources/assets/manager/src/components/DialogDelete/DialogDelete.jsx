@@ -7,6 +7,8 @@
 
 import React, { Component } from 'react';
 
+import { connect } from 'react-redux';
+
 import Button from 'material-ui/Button';
 import Slide from 'material-ui/transitions/Slide';
 import Dialog, {
@@ -90,16 +92,27 @@ class DialogDelete extends Component {
 						onClick={e => this.setState({
 							deleteDailogOpen: false
 						}, () => this.props.onDialogClosed())}>
-						Cancel
+						{this.props.lexicon.cancel_label}
 					</Button>
 
 					<Button color="primary"
 						onClick={e => this.props.onDialogConfirmed()}>
-						OK
+						{this.props.lexicon.ok_label}
 					</Button>
 				</DialogActions>
 			</Dialog>
 	}
 }
 
-export default withStyles(styles)(DialogDelete);
+/**
+ * Init redux states
+ * @param {Object} state
+ * @return {Object}
+ */
+function mapStateToProps(state) {
+	return {
+		lexicon: state.lexicon
+	}
+}
+
+export default connect(mapStateToProps)(withStyles(styles)(DialogDelete));
