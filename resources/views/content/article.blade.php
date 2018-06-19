@@ -78,7 +78,7 @@ if (!$visits) {
 			</div>
 		</div>
 
-		@if (isset($prev_link) && $prev_link && isset($next_link) && $next_link)
+		@if (isset($prev_link) && $prev_link && isset($next_link) && $next_link && $parent_link)
 		<div class="d-block col-sm-4 margin__collapse padding__collapse"></div>
 		<div class="bottom-border__container col-sm-8 margin__collapse" style="border-top: 1px solid #FFF; padding: 32px;">
 			<div class="beside-items__container d-flex">
