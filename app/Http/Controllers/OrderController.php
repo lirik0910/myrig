@@ -126,7 +126,6 @@ class OrderController extends Controller
                     'delivery_cost' => $autoprice_data['delivery'],
                     'profit' => $autoprice_data['profit'],
                 ]);
-
             } else{
                 $cost = $product->price;
             

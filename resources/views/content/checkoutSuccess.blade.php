@@ -242,7 +242,7 @@
                                             {{ __('default.total_checkout_success')}}						<strong><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#36;</span>{{ number_format($order->cost, 2, '.', '') }}</span></strong>
                                         </li>
                                         <li class="woocommerce-order-overview__payment-method method">
-                                            {{ __('default.payment')}}						<strong>{{$payment->title}}</strong>
+                                            {{ __('default.payment')}}						<strong>{{__('default.payment_' . strtolower($payment->title)) }}</strong>
                                         </li>
                                     </ul>
                                 </div>
@@ -264,19 +264,15 @@
                                                 </tr>
                                                 </thead>
                                                 <tbody>
-                                                    @foreach($order->products as $product)
+                                                    @foreach($order->carts as $item)
                                                         @php
-                                                            if($product->auto_price){
-                                                                $price = number_format($product->calcAutoPrice(), 2, '.', '');
-                                                            } else{
-                                                                $price = number_format($product->price, 2, '.', '');
-                                                            }
+															$price = $item->cost;
                                                         @endphp
                                                         <tr class="woocommerce-table__line-item order_item">
                                                             <td class="woocommerce-table__product-name product-name">
-                                                                <a href="{{$product->page->link}}" data-wpel-link="internal">{{$product->title}}</a> <strong class="product-quantity">&times; {{$product->pivot->count}}</strong>	</td>
+                                                                <a @if($item->product->page) href="{{$item->product->page->link}}" data-wpel-link="internal" @endif>{{$item->product->title}}</a> <strong class="product-quantity">&times; {{$item->count}}</strong>	</td>
                                                             <td class="woocommerce-table__product-total product-total">
-                                                                <span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#36;</span>{{ number_format($price * $product->pivot->count, 2, '.', '') }}</span>	</td>
+                                                                <span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#36;</span>{{ number_format($price * $item->count, 2, '.', '') }}</span>	</td>
                                                         </tr>
                                                     @endforeach
                                                 </tbody>
@@ -287,11 +283,11 @@
                                                 </tr>
                                                 <tr>
                                                     <th scope="row">{{ __('default.delivery_checkout_success') }}</th>
-                                                    <td>{{$delivery->title}}</td>
+                                                    <td>@if($delivery->title == 'Without delivery') {{__('default.without_delivery') }}  @else{{$delivery->title}}@endif</td>
                                                 </tr>
                                                 <tr>
                                                     <th scope="row">{{ __('default.payment_type') }}</th>
-                                                    <td>{{$payment->title}}</td>
+                                                    <td>{{__('default.payment_' . strtolower($payment->title)) }}</td>
                                                 </tr>
                                                 <tr>
                                                     <th scope="row">{{ __('default.total') }}</th>

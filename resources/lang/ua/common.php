@@ -1,16 +1,16 @@
 <?php
 
 return [
-	'country_AZ' => 'Azerbaijan',
-	'country_AM' => 'Armenia',
-	'country_BY' => 'Belarus',
-	'country_GE' => 'Georgia',
-	'country_KZ' => 'Kazakhstan',
-	'country_KG' => 'Kyrgyzstan',
-	'country_RU' => 'Russia',
-	'country_TM' => 'Turkmenistan',
-	'country_UZ' => 'Uzbekistan',
-	'country_UA' => 'Ukraine',
+    'country_AZ' => 'Азербайджан',
+    'country_AM' => 'Армения',
+    'country_BY' => 'Беларусь',
+    'country_GE' => 'Грузия',
+    'country_KZ' => 'Казахстан',
+    'country_KG' => 'Киргизстан',
+    'country_RU' => 'Россия',
+    'country_TM' => 'Туркменистан',
+    'country_UZ' => 'Узбекистан',
+    'country_UA' => 'Украина',
 
     'january' => 'Января',
     'february' => 'Февраля',

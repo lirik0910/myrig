@@ -95,7 +95,6 @@ return [
     'approve_order' => 'Подтвердить заказ',
     'comment_placeholder' => 'Номер почтового отделения и т.д.',
     'no_shipping' => 'Нет доступных методов доставки. Проверьте ещё раз указанный вами адрес или свяжитесь с нами',
-    'cash' => 'Наличные',
 
     //content.checkout_success
     'order_was_successfully_accepted' => 'Спасибо. Ваш заказ был успешно принят.',
@@ -114,6 +113,8 @@ return [
     'phone' => 'Телефон:',
     'address_info' => 'Информация об адресе',
     'without_delivery' => 'Без доставки',
+    'payment_cash' => 'Оплата наличными',
+    'payment_bitcoin' => 'Bitcoin',
 
 
     'download_invoice' => 'Загрузить инвойс',

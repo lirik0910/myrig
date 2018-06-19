@@ -97,7 +97,7 @@ return [
     'approve_order' => 'Approve order',
     'comment_placeholder' => 'Post office number etc',
     'no_shipping' => 'There are no shipping methods available. Please double check your address, or contact us if you need any help',
-    'cash' => 'Cash',
+    //'cash' => 'Cash',
 
     //content.checkout_success
     'order_was_successfully_accepted' => 'Thank you!. Your order was successfully accepted.',
@@ -117,6 +117,8 @@ return [
     'without_delivery' => 'Without delivery',
     'delivery_checkout_success' => 'Delivery:',
     'download_invoice' => 'DOWNLOAD INVOICE',
+    'payment_cash' => 'Cash',
+    'payment_bitcoin' => 'Bitcoin',
 
     //content.news
     'read' => 'Read',
