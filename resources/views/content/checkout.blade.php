@@ -153,8 +153,7 @@ foreach ($products as $item) {
 						@foreach($paymentTypes as $type)
 						<li class="list__item">
 							<input id="{{ 'payment-type__item-' . $type->id }}" type="radio" class="font-weight-light payment-type__input" name="payment_method" data-id="{{ $type->id }}" value="{{ $type->id }}" style="display: inline" @if($loop->first) checked='checked' @endif />
-
-							<label class="font-weight-normal" for="{{ 'payment-type__item-' . $type->id }}">@if($type->title == 'Cash'){{ __('default.cash') }}@else{{ $type->title }}@endif</label>
+							<label class="font-weight-normal" for="{{ 'payment-type__item-' . $type->id }}">{{__('default.payment_' .strtolower($type->title)) }}</label>
 						</li>
 						@endforeach
 					</ul>

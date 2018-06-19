@@ -121,19 +121,9 @@ class Order extends Model
 		
 		$cost = 0;
 		foreach ($cart as $item) {
-            //$price = $item->cost;
-		    //var_dump($item); die;
-		    if($item->product){
-                if($item->product->auto_price){
-                    $price = number_format($item->product->calcAutoPrice(), 2, '.', '');
-                } else{
-                    $price = number_format($item->product->price, 2, '.', '');
-                }
-            } else{
-		        $price = $item->cost;
-            }
-			//$price = $item->product->price;
+			$price = $item->cost;
 			$count = $item->count;
+
 			$discount = $item->discount;
 
 			$cost += ($count * ($price - $discount));

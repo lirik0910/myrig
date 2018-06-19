@@ -43,6 +43,10 @@ export default class Footer extends Base {
 			this.props.dialogAvailability.open('#availability__dialog', e);
 		});
 
+		/** If the product has been cleared to align the footer
+		 */
+		this.baseDOM._footerContainer.on('onFooterAlign', (e) => this.setFooterInBottom());
+
 		this.setFooterInBottom();
 	}
 
@@ -58,9 +62,7 @@ export default class Footer extends Base {
 	 * To stick a footer to the bottom
 	 */
 	setFooterInBottom() {
-		let offsetTop = this.baseDOM._footerContainer.offset().top;
-
-		if (this.baseDOM._window.height() - offsetTop > offsetTop) {
+		if (this.baseDOM._window.height() > this.baseDOM._rootContainer.height()) {
 			this.baseDOM._footerContainer.css('position', 'absolute');
 		}
 

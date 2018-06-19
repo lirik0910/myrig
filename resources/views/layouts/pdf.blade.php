@@ -31,7 +31,14 @@
 				<td style="text-align: right;">{{$order->orderDeliveries->city}}</td>
 			</tr>
 			<tr>
-				<td>{{ date('d F`y') }}</td>
+				<td>
+					@php
+						$month = date('F', strtotime($order->created_at));
+                        $default = 'common.';
+                        $translate = $default . strtolower($month);
+                        echo date('d', strtotime($order->created_at)) . ' ' . __($translate) . '`' . date('y', strtotime($order->created_at));
+					@endphp
+				</td>
 				<td style="text-align: right;">{{$order->number }}</td>
 			</tr>
 		</table>
@@ -101,8 +108,8 @@
 
 
 				</div>
-				<p style="text-transform: uppercase; margin: 20px 0 0 0; font-size: 14px;">{{ __('default.payment_terms') }}</p>
-				<p style="margin: 0 0 20px; font-size: 14px;">{{ __('default.write_your_payment') }}</p>
+{{--				<p style="text-transform: uppercase; margin: 20px 0 0 0; font-size: 14px;">{{ __('default.payment_terms') }}</p>
+				<p style="margin: 0 0 20px; font-size: 14px;">{{ __('default.write_your_payment') }}</p>--}}
 		</div>
 		<footer style="position: fixed; bottom: 0px; left: 0px; right: 0px; height: 55px; padding: 20px 0 50px; background: #77a565; font-size: 0; color: #fff;">
 			<div style="width: 500px; margin: 0 auto;">

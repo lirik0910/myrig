@@ -507,14 +507,14 @@ class DbImport
         /*
          * Comment tables which do you need to import
          */
-        $data['users'] = [];
-        $data['products'] = [];
-        $data['orders'] = [];
+        //$data['users'] = [];
+        //$data['products'] = [];
+        //$data['orders'] = [];
         //$data['carts'] = [];
-        $data['user_attrs'] = [];
-        $data['orders_deliveries'] = [];
-        $data['news'] = [];
-        $data['articles'] = [];
+        //$data['user_attrs'] = [];
+        //$data['orders_deliveries'] = [];
+        //$data['news'] = [];
+        //$data['articles'] = [];
         //$data['logs'] = [];
 
 
