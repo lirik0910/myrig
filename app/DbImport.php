@@ -285,9 +285,9 @@ class DbImport
                 }
 
                 if($billing_country == 'UA'){
-                    $orders[$order->id]['context_id'] = 2;
+                    $orders[$order->id]['context_id'] = 1;
                 } else{
-                    $orders[$order->id]['context_id'] = 3;
+                    $orders[$order->id]['context_id'] = 2;
                 }
 
                 $order_deliveries[$order->id] = [
@@ -607,6 +607,7 @@ class DbImport
             try{
                 Order::create($order);
             } catch (\Exception $e){
+                //var_dump($e); die;
                 continue;
             }
 
