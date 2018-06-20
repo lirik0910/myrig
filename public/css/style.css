@@ -5181,6 +5181,10 @@ div#historyField .table-cell .modal-body h3{
 }
 
 @media    (max-width:479px){
+    .history-product__count {
+        margin-left: 0;
+    }
+
     .order-data {
         padding-left: 5px;
     }
