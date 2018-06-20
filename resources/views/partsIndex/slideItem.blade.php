@@ -3,7 +3,7 @@
 		<div class="slide-about__container col-md-4 padding__collapse center__align">
 			<div class="vertical-align__container">
 				<h4 class="slide__title font-weight-light">
-					{!! $slide['sliderHeader'] !!}
+					{!! $slide['slideHeader'] !!}
 				</h4>
 
 				<div class="slide__content font-weight-light">
