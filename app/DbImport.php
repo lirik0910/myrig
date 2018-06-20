@@ -377,20 +377,22 @@ class DbImport
                 continue;
             }
 
+            $strangeOrders = [];
             if (isset($line['order_id'])){
                 if(isset($orders[$line['order_id']])){
                     $cart[$key]['created_at'] = $orders[$line['order_id']]['created_at'];
                     $line_cost = $line['cost'] * $line['count'];
                     $orders[$line['order_id']]['cost'] += (int)$line_cost;
                     if($orders[$line['order_id']]['cost'] < 0 || $orders[$line['order_id']]['cost'] > 999999){
-                        unset($orders[$line['order_id']]);
+                        $strangeOrders[] = $orders[$line['order_id']]['cost'];
+                        //unset($orders[$line['order_id']]);
                     }
                 }
             } else{
                 unset($cart[$key]);
             }
         }
-        //var_dump($test); die;
+        //var_dump(count($strangeOrders)); //die;
 //var_dump($cart); die;
 
         $logs = [];
@@ -482,12 +484,13 @@ class DbImport
                 unset($user_attrs[$key]);
             }
         }
-
+//var_dump(count($orders));
         foreach ($orders as $key => $order){
             if($order['status_id'] == 10 || $order['status_id'] == 11){
                 unset($orders[$key]);
             }
         }
+//var_dump(count($orders)); die;
 
         $export['products'] = $products;
         $export['orders'] = $orders;
@@ -507,14 +510,14 @@ class DbImport
         /*
          * Comment tables which do you need to import
          */
-        //$data['users'] = [];
-        //$data['products'] = [];
+        $data['users'] = [];
+        $data['products'] = [];
         //$data['orders'] = [];
         //$data['carts'] = [];
-        //$data['user_attrs'] = [];
+        $data['user_attrs'] = [];
         //$data['orders_deliveries'] = [];
-        //$data['news'] = [];
-        //$data['articles'] = [];
+        $data['news'] = [];
+        $data['articles'] = [];
         //$data['logs'] = [];
 
 

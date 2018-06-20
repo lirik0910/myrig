@@ -50,9 +50,6 @@ if (!$visits) {
 
 			@if($parent_link)
 				<div class="news-option__container d-block">
-{{--					@php
-						echo date('d F', strtotime($it->created_at))
-					@endphp--}}
 					@php
 						$month = date('F', strtotime($it->created_at));
                         $default = 'common.';
