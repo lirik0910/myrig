@@ -199,9 +199,12 @@
           //  var_dump($user); die;
             if($user == NULL || !isset($user)){
             //var_dump($user); die;
+            header('Location: '. URL::to('sso-login'));
                 redirect('sso-login');
+                exit;
             }
             //var_dump($user); die;
+
             $orders = App\Model\Shop\Order::where('user_id', $user->id)->with('products')->get();
 
         @endphp
