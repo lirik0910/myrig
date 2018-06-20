@@ -102,7 +102,7 @@ class MultiVariablesTableSeeder extends Seeder
 
 		$variable = App\Model\Base\Variable::where('title', 'indexSlider')->first();
 		App\Model\Base\MultiVariable::create([
-			'title' => 'sliderHeader',
+			'title' => 'slideHeader',
 			'type' => 'input',
 			'description' => 'Slide header',
 			'variable_id' => $variable->id
