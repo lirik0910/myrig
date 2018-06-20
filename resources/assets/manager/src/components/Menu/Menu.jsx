@@ -122,7 +122,7 @@ class Menu extends Component {
 									<ListItemIcon>
 										{Icon ? <Icon /> : ''}
 									</ListItemIcon>
-									<ListItemText primary={item.name} />
+									<ListItemText primary={this.props.lexicon['menu_'+ item.name]} />
 								</ListItem>
 							</Link>
 						})}
@@ -139,7 +139,8 @@ class Menu extends Component {
  */
 function mapStateToProps(state) {
 	return {
-		elements: state.elements
+		elements: state.elements,
+		lexicon: state.lexicon
 	}
 }
 

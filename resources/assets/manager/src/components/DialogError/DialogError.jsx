@@ -7,6 +7,8 @@
 
 import React, { Component } from 'react';
 
+import { connect } from 'react-redux';
+
 import Button from 'material-ui/Button';
 import Slide from 'material-ui/transitions/Slide';
 import Dialog, {
@@ -86,11 +88,22 @@ class DialogError extends Component {
 				<DialogActions>
 					<Button color="primary"
 						onClick={e => this.props.onDialogClosed()}>
-						OK
+						{this.props.lexicon.ok_label}
 					</Button>
 				</DialogActions>
 			</Dialog>
 	}
 }
 
-export default withStyles(styles)(DialogError);
+/**
+ * Init redux states
+ * @param {Object} state
+ * @return {Object}
+ */
+function mapStateToProps(state) {
+	return {
+		lexicon: state.lexicon
+	}
+}
+
+export default connect(mapStateToProps)(withStyles(styles)(DialogError));

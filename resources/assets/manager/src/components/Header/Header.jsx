@@ -10,6 +10,7 @@
 
 import App from '../../App.js';
 import React, { Component } from 'react';
+import Cookies from 'js-cookie';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -27,10 +28,13 @@ import Menu, { MenuItem } from 'material-ui/Menu';
 import MoreVertIcon from 'material-ui-icons/MoreVert';
 import { LinearProgress } from 'material-ui/Progress';
 import DialogError from '../DialogError/DialogError.jsx';
+import SelectLang from '../FormControl/SelectLang/SelectLang.jsx';
 
 import styles from './styles.js';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
+
+import * as StateLexiconAction from 'actions/StateLexiconAction.js';
 
 /**
  * Header block
@@ -113,8 +117,8 @@ class Header extends Component {
 							this.setState({ 
 								completed: 100,
 								resultDialog: true,
-								resultDialogTitle: 'Success',
-								resultDialogMessage: 'The request was successful'
+								resultDialogTitle: this.props.lexicon.success_title,
+								resultDialogMessage: this.props.lexicon.request_successful
 							}, () => callback());
 						}
 					},
@@ -124,7 +128,7 @@ class Header extends Component {
 							this.setState({ 
 								completed: 100,
 								resultDialog: true,
-								resultDialogTitle: 'Error',
+								resultDialogTitle: this.props.lexicon.error_title,
 								resultDialogMessage: r.message
 							}, () => callback());
 						}
@@ -161,6 +165,22 @@ class Header extends Component {
 							{title}
 					</Typography>
 
+					<div 
+						style={{ width: 124 }}>
+						<SelectLang
+							defaultValueContent={Cookies.get('lang')}
+							title={this.props.lexicon.select_lang_title}
+							titleStyle={{ color: '#FFF' }}
+							selectStyle={{ color: '#FFF' }}
+							selectClassName="select-header-lang__container"
+							onItemSelected={(e, a) => {
+								Cookies.set('lang', a[e]);
+								App.getCurrentLangResource(a[e], (r) => {
+									this.props.StateLexiconAction.get(r);
+								});
+							}} />
+					</div>
+
 					<IconButton
 						color="inherit"
 						onClick={this.handleClick}>
@@ -179,7 +199,7 @@ class Header extends Component {
 							<MenuItem onClick={e => this.cacheClearRequest(() => {
 								this.handleClose
 							})}>
-								Clear cache
+								{this.props.lexicon.clear_cache}
 							</MenuItem>
 							<Divider />
 				
@@ -188,7 +208,7 @@ class Header extends Component {
 									if (form) {
 										form.submit();
 									}
-							}}>Exit</MenuItem>
+							}}>{this.props.lexicon.exit_label}</MenuItem>
 					</Menu>
 				</Toolbar>
 			</AppBar>
@@ -219,7 +239,8 @@ class Header extends Component {
  */
 function mapStateToProps(state) {
 	return {
-		elements: state.elements
+		elements: state.elements,
+		lexicon: state.lexicon
 	}
 }
 
@@ -231,6 +252,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
 	return {
 		StateElementAction: bindActionCreators(StateElementAction, dispatch),
+		StateLexiconAction: bindActionCreators(StateLexiconAction, dispatch)
 	}
 }
 

@@ -7,6 +7,8 @@
 
 import React, { Component } from 'react';
 
+import { connect } from 'react-redux';
+
 import Paper from 'material-ui/Paper';
 import Button from 'material-ui/Button';
 import Typography from 'material-ui/Typography';
@@ -23,7 +25,7 @@ import { withStyles } from 'material-ui/styles';
  * Component for selecting page
  * @extends Component
  */
-class PaperInputVariable extends Component {
+class PaperRichtextVariable extends Component {
 
 	/**
 	 * Init default props
@@ -136,7 +138,7 @@ class PaperInputVariable extends Component {
 							className={classes.button}
 							onClick={this.handleAddField}>
 								<AddIcon />
-								{'Add field'}
+								{this.props.lexicon.add_field_label}
 						</Button>
 					</FormHelperText>
 				</FormControl>}
@@ -144,4 +146,15 @@ class PaperInputVariable extends Component {
 	}
 }
 
-export default withStyles(styles)(PaperInputVariable);
+/**
+ * Init redux states
+ * @param {Object} state
+ * @return {Object}
+ */
+function mapStateToProps(state) {
+	return {
+		lexicon: state.lexicon
+	}
+}
+
+export default connect(mapStateToProps)(withStyles(styles)(PaperRichtextVariable));

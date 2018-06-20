@@ -6,6 +6,9 @@
  */
 
 import App from '../../../App.js';
+
+import { connect } from 'react-redux';
+
 import React, { Component } from 'react';
 import Select from 'material-ui/Select';
 import { MenuItem } from 'material-ui/Menu';
@@ -118,7 +121,7 @@ class SelectStatus extends Component {
 					return <MenuItem 
 						key={i}
 						value={item.id}>
-							{item.title}
+							{this.props.lexicon['status_'+ item.title]}
 					</MenuItem>
 				})}
 			</Select>
@@ -126,4 +129,15 @@ class SelectStatus extends Component {
 	}
 }
 
-export default withStyles(styles)(SelectStatus);
+/**
+ * Init redux states
+ * @param {Object} state
+ * @return {Object}
+ */
+function mapStateToProps(state) {
+	return {
+		lexicon: state.lexicon
+	}
+}
+
+export default connect(mapStateToProps)(withStyles(styles)(SelectStatus));

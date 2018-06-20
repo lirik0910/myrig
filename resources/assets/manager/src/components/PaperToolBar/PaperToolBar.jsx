@@ -11,6 +11,8 @@
 //import App from '../App.js';
 import React, { Component } from 'react';
 
+import { connect } from 'react-redux';
+
 import Grid from 'material-ui/Grid';
 import Paper from 'material-ui/Paper';
 import Button from 'material-ui/Button';
@@ -104,8 +106,9 @@ class PaperToolBar extends Component {
 
 		return <Paper className={classes.paper}>
 				<Grid container spacing={24} className={classes.root}>
-					{searchShow && <Grid item xs={12} sm={2}>
+					{searchShow && <Grid item xs={12} sm={2} style={{ padding: '12px 0' }}>
 						<InputSearch
+							placeholder={this.props.lexicon.search_field}
 							defaultValue={searchDefaultValue}
 							onFieldSubmited={value => this.props.onSearchFieldSubmited(value)} />
 					</Grid>}
@@ -147,6 +150,7 @@ class PaperToolBar extends Component {
 
 					{orderActionShow && <Grid item xs={12} sm={2}>
 						<SelectOrderAction
+							title={this.props.lexicon.mass_actions}
 							actionsData={actionsData}
 							defaultValue={actionDefaultValue}
 							onItemSelected={value => this.props.onActionSelected(value)} />
@@ -154,11 +158,12 @@ class PaperToolBar extends Component {
 
 					{deleteFilterShow && <Grid item xs={12} sm={2}>
 						<SelectDelete
+							title={this.props.lexicon.delete_filter}
 							data={[{
-								name: 'Not in the trash',
+								name: this.props.lexicon.not_in_trash,
 								value: 0
 							}, {
-								name: 'In trash',
+								name: this.props.lexicon.in_trash,
 								value: 1
 							}]}
 							defaultValue={0}
@@ -192,11 +197,22 @@ class PaperToolBar extends Component {
 									this.props.dateFieldsCleared();
 								}
 							}}>
-							Clear date
+							{this.props.lexicon.clear_date_label}
 						</Button>}
 				</Grid>
 			</Paper>
 	}
 }
 
-export default withStyles(styles)(PaperToolBar);
+/**
+ * Init redux states
+ * @param {Object} state
+ * @return {Object}
+ */
+function mapStateToProps(state) {
+	return {
+		lexicon: state.lexicon
+	}
+}
+
+export default connect(mapStateToProps)(withStyles(styles)(PaperToolBar));

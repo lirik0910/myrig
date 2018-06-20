@@ -11,6 +11,9 @@
 import App from '../App.js';
 import React, { Component } from 'react';
 
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
 import Grid from 'material-ui/Grid';
 import Menu from '../components/Menu/Menu.jsx';
 import Header from '../components/Header/Header.jsx';
@@ -25,6 +28,8 @@ import ControlOptions from '../components/ControlOptions/ControlOptions.jsx';
 
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
+
+import * as StateLexiconAction from 'actions/StateLexiconAction.js';
 
 /**
  * Notifications base container
@@ -62,6 +67,7 @@ class ListAvailabilityNotificationsContainer extends Component
         resultDialogTitle: '',
         resultDialogMessage: '',
         deleteDialog: false,
+        langLoaded: false
     };
 
     /**
@@ -70,6 +76,16 @@ class ListAvailabilityNotificationsContainer extends Component
      */
     componentWillMount() {
         this.notificationsDataGetRequest();
+
+        App.defineCurrentLang((r) => {
+            if (App.isEmpty(r) === false) {
+                this.props.StateLexiconAction.get(r, () => {
+                    this.setState({
+                        langLoaded: true
+                    });
+                });
+            }
+        });
     }
 
     /**
@@ -206,8 +222,8 @@ class ListAvailabilityNotificationsContainer extends Component
                             resultDialog: true,
                             deleteDialog: false,
                             editNotificationDialog: false,
-                            resultDialogTitle: 'Success',
-                            resultDialogMessage: 'Notification status has been changed'
+                            resultDialogTitle: this.props.lexicon.success_title,
+                            resultDialogMessage: this.props.lexicon.request_successful
                         }, () => this.notificationsDataGetRequest());
                     }
                 },
@@ -222,7 +238,7 @@ class ListAvailabilityNotificationsContainer extends Component
                             resultDialog: true,
                             deleteDialog: false,
                             editNotificationDialog: false,
-                            resultDialogTitle: 'Error',
+                            resultDialogTitle: this.props.lexicon.error_title,
                             resultDialogMessage: r.message
                         });
                     }
@@ -259,8 +275,8 @@ class ListAvailabilityNotificationsContainer extends Component
                             editNotificationItem: {},
                             resultDialog: true,
                             deleteDialog: false,
-                            resultDialogTitle: 'Success',
-                            resultDialogMessage: 'The request was successful'
+                            resultDialogTitle: this.props.lexicon.success_title,
+                            resultDialogMessage: this.props.lexicon.request_successful,
                         }, () => this.notificationsDataGetRequest());
                     }
                 },
@@ -274,7 +290,7 @@ class ListAvailabilityNotificationsContainer extends Component
                             editNotificationItem: {},
                             resultDialog: true,
                             deleteDialog: false,
-                            resultDialogTitle: 'Error',
+                            resultDialogTitle: this.props.lexicon.error_title,
                             resultDialogMessage: r.message
                         });
                     }
@@ -306,12 +322,17 @@ class ListAvailabilityNotificationsContainer extends Component
             resultDialogMessage,
         } = this.state;
 
+        if (this.state.langLoaded === false) 
+            return <div className="create-page__container">
+                <LinearProgress color="secondary" variant="determinate" value={0} />
+            </div>
+
         return <div className="users-list__container">
             {completed === 0 &&
             <LinearProgress color="secondary" variant="determinate" value={completed} />}
 
             <Header
-                title={'Notifications list'} />
+                title={this.props.lexicon.notifications_list} />
             <Menu />
 
             <TopTitle
@@ -319,8 +340,14 @@ class ListAvailabilityNotificationsContainer extends Component
                 addButtonDisplay={false}
                 saveButtonDisplay={false}
                 deleteButtonDisplay={false}
-                addButtonTitle={'Add new notification'}
-                deleteButtonTitle={'Delete selected'}
+
+                addButtonTitle={this.props.lexicon.new_notification}
+                saveButtonTitle={this.props.lexicon.save_label}
+                trashButtonTitle={this.props.lexicon.empty_trash_label}
+                duplicateButtonTitle={this.props.lexicon.duplicate_label}
+                deleteButtonTitle={this.props.lexicon.delete_selected_button}
+                recoveryButtonTitle={this.props.lexicon.recovery_button}
+
                 onCheckButtonClicked={() => {
                     this.setState({
                         editNotificationDialog: true
@@ -336,7 +363,7 @@ class ListAvailabilityNotificationsContainer extends Component
                 searchShow={false}
                 contextShow={false}
                 notificationStatusShow
-                statusTitle={'Filter by status'}
+                statusTitle={this.props.lexicon.filter_status}
                 notificationStatusDefaultValue={status}
                 onNotificationStatusSelected={status => {
                     this.setState({ status }, () => {
@@ -359,38 +386,38 @@ class ListAvailabilityNotificationsContainer extends Component
                             id: 'name',
                             numeric: false,
                             disablePadding: true,
-                            label: 'Name'
+                            label: this.props.lexicon.login_name
                         }, {
                             id: 'email',
                             numeric: false,
                             disablePadding: true,
-                            label: 'Email'
+                            label: this.props.lexicon.table_email
                         }, {
                             id: 'phone',
                             numeric: false,
                             disablePadding: true,
-                            label: 'Phone'
+                            label: this.props.lexicon.phone_label
                         }, {
                             id: 'created_at',
                             numeric: false,
                             disablePadding: true,
-                            label: 'Created date'
+                            label: this.props.lexicon.table_created_date
                         }, {
                             id: 'updated_at',
                             numeric: false,
                             disablePadding: true,
-                            label: 'Updated date'
+                            label: this.props.lexicon.table_updated_date
                         }, {
                             id: 'products',
                             numeric: false,
                             disablePadding: true,
-                            label: 'Products'
+                            label: this.props.lexicon.products_tab
                         }, {
                             id: 'control',
                             numeric: false,
                             disablePadding: true,
                             cssClassName: 'buttonField',
-                            label: 'Manage'
+                            label: this.props.lexicon.table_manage
                         }]}
                         onRowsSelected={selected => this.setState({ selected })}
                         onStartValueChanged={start => {
@@ -411,6 +438,10 @@ class ListAvailabilityNotificationsContainer extends Component
                 })} />}
 
             {deleteDialog === true && <DialogDelete
+
+                title={this.props.lexicon.delete_button}
+                content={this.props.lexicon.delete_confirm}
+
                 defaultValue={deleteDialog}
                 onDialogClosed={() => this.setState({
                     deleteDialog: false,
@@ -419,6 +450,8 @@ class ListAvailabilityNotificationsContainer extends Component
 
             {editNotificationDialog && <DialogNotification
                 data={editNotificationItem}
+                title={this.props.lexicon.change_status}
+                content={this.props.lexicon.notification_status}
                 defaultValue={editNotificationDialog}
                 onDialogClosed={() => this.setState({
                     editNotificationDialog: false,
@@ -442,4 +475,26 @@ let styles = theme => ({
 
 });
 
-export default withStyles(styles)(ListAvailabilityNotificationsContainer);
+/**
+ * Init redux states
+ * @param {Object} state
+ * @return {Object}
+ */
+function mapStateToProps(state) {
+    return {
+        lexicon: state.lexicon
+    }
+}
+
+/**
+ * Init redux actions
+ * @param {Function} dispatch
+ * @return {Object}
+ */
+function mapDispatchToProps(dispatch) {
+    return {
+        StateLexiconAction: bindActionCreators(StateLexiconAction, dispatch)
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(ListAvailabilityNotificationsContainer));

@@ -8,6 +8,8 @@
 import App from '../../App.js';
 import React, { Component } from 'react';
 
+import { connect } from 'react-redux';
+
 import CloneDeep from 'clone-deep';
 import Grid from 'material-ui/Grid';
 import Button from 'material-ui/Button';
@@ -102,7 +104,7 @@ class DialogOrder extends Component {
 				aria-describedby="dialog-order-slide-text">
 
 				<DialogTitle id="dialog-order-slide-title">
-					{'Edit # '+ order.number}
+					{this.props.lexicon.edit_label +' # '+ order.number}
 				</DialogTitle>
 
 				<DialogContent>
@@ -112,9 +114,9 @@ class DialogOrder extends Component {
 								defaultValue={tab}
 								onTabButtonClicked={tab => this.setState({ tab })}
 								data={[
-									'Order',
-									'Customer',
-									'History',
+									this.props.lexicon.order_label,
+									this.props.lexicon.customer_label,
+									this.props.lexicon.history_label,
 								]} />
 						</Grid>
 					</Grid>
@@ -124,7 +126,7 @@ class DialogOrder extends Component {
 							<Typography style={{
 								padding: '12px 0', 
 								borderBottom: '1px solid #DDD'
-							}}>Order cost: 
+							}}>{this.props.lexicon.order_cost_label} 
 								<span style={{fontSize: 24}}>{order.cost.toFixed(2)}</span>
 							</Typography>
 						</Grid>
@@ -155,7 +157,7 @@ class DialogOrder extends Component {
 
                                         <Grid item xs={3}>
                                             <img src={App.uploads() +'/default/en.no-photo.jpg'}
-                                                 alt={'Default photo'}
+                                                 alt={this.props.lexicon.default_photo_label}
                                                  style={{
                                                      maxWidth: '100%',
                                                      maxHeight: '82px'
@@ -172,7 +174,7 @@ class DialogOrder extends Component {
 										<InputNumber 
 											name={'count['+ (item.product !== null ? item.product.id : 0) +']'}
 											inputID={'count-'+ (item.product !== null ? item.product.id : 0)}
-											title={'Items count:'}
+											title={this.props.lexicon.items_count}
 											defaultValue={item.count} />
 									</div>
 
@@ -191,7 +193,7 @@ class DialogOrder extends Component {
 												});
 											});
 										}}>
-										Delete
+										{this.props.lexicon.delete_button}
 									</Button>
 								</Grid>
 							</Grid>
@@ -200,7 +202,8 @@ class DialogOrder extends Component {
 
 						<Grid item xs={5}>
 							<InputSelectUser
-								title={'Order user'}
+								placeholder={this.props.lexicon.search_user_placeholder}
+								title={this.props.lexicon.order_user}
 								defaultValue={order.user_id}
 								onItemSelected={value => {
 									let u = document.getElementById('user-id-field');
@@ -215,19 +218,19 @@ class DialogOrder extends Component {
 								} />
 
 							<SelectContext
-								title={'Order context'}
+								title={this.props.lexicon.order_context}
 								defaultValue={order.context_id} />
 
 							<SelectStatus
-								title={'Order status'}
+								title={this.props.lexicon.order_status}
 								defaultValue={order.status_id} />
 
 							<SelectPayment
-								title={'Order payment type'}
+								title={this.props.lexicon.order_payment_type}
 								defaultValue={order.payment_type_id} />
 
 							<SelectDelivery
-								title={'Order delivery type'}
+								title={this.props.lexicon.order_delivery_type}
 								defaultValue={order.order_deliveries.delivery_id} />
 							</Grid>
 					</Grid>
@@ -241,7 +244,7 @@ class DialogOrder extends Component {
 						<Grid item xs={12}>
 							<FormControl fullWidth className={classes.formControl}>
 								<InputLabel htmlFor="fist-name">
-									Custemer first name
+									{this.props.lexicon.custemer_first_name}
 								</InputLabel>
 								
 								<Input
@@ -252,7 +255,7 @@ class DialogOrder extends Component {
 
 							<FormControl fullWidth className={classes.formControl}>
 								<InputLabel htmlFor="last-name">
-									Custemer last name
+									{this.props.lexicon.custemer_last_name}
 								</InputLabel>
 								
 								<Input
@@ -263,7 +266,7 @@ class DialogOrder extends Component {
 
 							<FormControl fullWidth className={classes.formControl}>
 								<InputLabel htmlFor="phone">
-									Custemer phone
+									{this.props.lexicon.custemer_phone}
 								</InputLabel>
 								
 								<Input
@@ -275,7 +278,7 @@ class DialogOrder extends Component {
 
 							<FormControl fullWidth className={classes.formControl}>
 								<InputLabel htmlFor="email">
-									Custemer email
+									{this.props.lexicon.custemer_email}
 								</InputLabel>
 								
 								<Input
@@ -287,7 +290,7 @@ class DialogOrder extends Component {
 
 							<FormControl fullWidth className={classes.formControl}>
 								<InputLabel htmlFor="country">
-									Customer country
+									{this.props.lexicon.customer_country}
 								</InputLabel>
 								
 								<Input
@@ -299,7 +302,7 @@ class DialogOrder extends Component {
 
 							<FormControl fullWidth className={classes.formControl}>
 								<InputLabel htmlFor="city">
-									Customer city
+									{this.props.lexicon.customer_city}
 								</InputLabel>
 								
 								<Input
@@ -311,7 +314,7 @@ class DialogOrder extends Component {
 
 							<FormControl fullWidth className={classes.formControl}>
 								<InputLabel htmlFor="address">
-									Customer address
+									{this.props.lexicon.customer_address}
 								</InputLabel>
 								
 								<Input
@@ -324,7 +327,7 @@ class DialogOrder extends Component {
 							<TextField
 								id="comment"
 								name="comment"
-								label={'Customer comment'}
+								label={this.props.lexicon.customer_comment}
 								multiline={true}
 								rows={4}
 								defaultValue={order.order_deliveries.comment}
@@ -349,17 +352,17 @@ class DialogOrder extends Component {
 									id: 'value', 
 									numeric: false, 
 									disablePadding: true, 
-									label: 'Value'
+									label: this.props.lexicon.total_value
 								}, {
 									id: 'user', 
 									numeric: false, 
 									disablePadding: true, 
-									label: 'User'
+									label: this.props.lexicon.history_table_user
 								}, {
 									id: 'created_at', 
 									numeric: false, 
 									disablePadding: true, 
-									label: 'Date'
+									label: this.props.lexicon.date_label
 								}]}
 								selecting={false}
 								defaultSort={false}
@@ -380,7 +383,7 @@ class DialogOrder extends Component {
 				<DialogActions>
 					<Button color="primary"
 						onClick={e => this.props.onDialogClosed()}>
-						Cancel
+						{this.props.lexicon.cancel_label}
 					</Button>
 					<Button color="primary"
 						onClick={e => {
@@ -389,10 +392,22 @@ class DialogOrder extends Component {
 								this.props.onDialogSaved(el.elements);
 							}
 						}}>
-						Save
+						{this.props.lexicon.save_label}
 					</Button>
 				</DialogActions>
 			</Dialog>
 	}
 }
-export default withStyles(styles)(DialogOrder);
+
+/**
+ * Init redux states
+ * @param {Object} state
+ * @return {Object}
+ */
+function mapStateToProps(state) {
+	return {
+		lexicon: state.lexicon
+	}
+}
+
+export default connect(mapStateToProps)(withStyles(styles)(DialogOrder));

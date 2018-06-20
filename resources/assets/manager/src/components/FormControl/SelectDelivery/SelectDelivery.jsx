@@ -6,6 +6,9 @@
  */
 
 import App from '../../../App.js';
+
+import { connect } from 'react-redux';
+
 import React, { Component } from 'react';
 import Select from 'material-ui/Select';
 import { MenuItem } from 'material-ui/Menu';
@@ -119,7 +122,7 @@ class SelectDelivery extends Component {
 					return <MenuItem 
 						key={i}
 						value={item.id}>
-							{item.title}
+							{this.props.lexicon['delivery_'+ item.title]}
 					</MenuItem>
 				})}
 			</Select>
@@ -127,4 +130,15 @@ class SelectDelivery extends Component {
 	}
 }
 
-export default withStyles(styles)(SelectDelivery);
+/**
+ * Init redux states
+ * @param {Object} state
+ * @return {Object}
+ */
+function mapStateToProps(state) {
+	return {
+		lexicon: state.lexicon
+	}
+}
+
+export default connect(mapStateToProps)(withStyles(styles)(SelectDelivery));

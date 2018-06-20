@@ -7,6 +7,8 @@
 
 import React, { Component } from 'react';
 
+import { connect } from 'react-redux';
+
 import Paper from 'material-ui/Paper';
 import InputPrice from '../FormControl/InputPrice/InputPrice.jsx';
 import InputWarranty from '../FormControl/InputWarranty/InputWarranty.jsx';
@@ -94,21 +96,24 @@ class PaperProductForm extends Component {
 		return <Paper className={classes.paper}>
 				<SelectContext
 					required
+					title={this.props.lexicon.select_context_label}
 					defaultValue={contextDefaultValue}
 					onItemSelected={value => this.props.onContextSelected(value)} />
 
 				<SelectProductStatus
 					required
+					title={this.props.lexicon.select_product_status}
 					defaultValue={statusDefaultValue}
 					onItemSelected={value => this.props.onStatusSelected(value)} />
 
 				<InputSelectPage
-					title={'Page select'}
+					title={this.props.lexicon.page_select}
 					defaultValue={pageDefaultValue}
-					placeholder={'Input page link for current product'}
+					placeholder={this.props.lexicon.page_select_placeholder}
 					onItemSelected={value => this.props.onPageSelected(value)} />
 
 				<InputPrice
+					title={this.props.lexicon.price_label}
 					disabled={typeof this.props.activePriceField === 'undefined' ? 
 						false : 
 						!this.props.activePriceField}
@@ -116,22 +121,37 @@ class PaperProductForm extends Component {
 					onFieldInputed={value => this.props.onPriceInputed(value)} />
 
 				<InputWarranty
+					title={this.props.lexicon.warranty_label}
 					defaultValue={warrantyDefaultValue}
 					onFieldInputed={value => this.props.onWarrantyInputed(value)} />
 
 				<InputProductCategory
+					title={this.props.lexicon.select_category}
 					defaultValue={this.getCategoriesLine(categoriesDefaultValue)}
 					onItemSelected={value => this.props.onCategoryInputed(value)} />
 
 				<InputDatePicker
+					title={this.props.lexicon.publish_date_label}
 					defaultValue={createDefaultValue}
 					onDateFieldChanged={value => this.props.onDateSelected(value)} />
 
 				<CheckboxActive
+					title={this.props.lexicon.active_label}
 					defaultValue={activeDefaultValue}
 					onCheckboxValueChanged={value => this.props.onActiveChanged(value)} />
 			</Paper>
 	}
 }
 
-export default withStyles(styles)(PaperProductForm);
+/**
+ * Init redux states
+ * @param {Object} state
+ * @return {Object}
+ */
+function mapStateToProps(state) {
+	return {
+		lexicon: state.lexicon
+	}
+}
+
+export default connect(mapStateToProps)(withStyles(styles)(PaperProductForm));

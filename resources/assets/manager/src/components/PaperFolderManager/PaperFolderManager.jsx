@@ -8,6 +8,8 @@
 import App from '../../App.js';
 import React, { Component } from 'react';
 
+import { connect } from 'react-redux';
+
 import Grid from 'material-ui/Grid';
 import Paper from 'material-ui/Paper';
 import Button from 'material-ui/Button';
@@ -286,7 +288,7 @@ class PaperFolderManager extends Component {
 					aria-describedby="dialog-create-slide-description">
 
 					<DialogTitle id="dialog-create-slide-title">
-						Create
+						{this.props.lexicon.create}
 					</DialogTitle>
 
 					<DialogContent>
@@ -294,7 +296,7 @@ class PaperFolderManager extends Component {
 							autoFocus
 							fullWidth
 							margin="dense"
-							label="Create new folder"
+							label={this.props.lexicon.create_new_folder}
 							type="text"
 							id="name"
 							onChange={e => {
@@ -313,12 +315,12 @@ class PaperFolderManager extends Component {
 								newFolder: '',
 								createDailogOpen: false
 							})}>
-							Cancel
+							{this.props.lexicon.cancel_label}
 						</Button>
 
 						<Button color="primary"
 							onClick={e => this.createFolderRequest(newFolder)}>
-							OK
+							{this.props.lexicon.ok_label}
 						</Button>
 					</DialogActions>
 				</Dialog>}
@@ -333,4 +335,15 @@ class PaperFolderManager extends Component {
 	}
 }
 
-export default withStyles(styles)(PaperFolderManager);
+/**
+ * Init redux states
+ * @param {Object} state
+ * @return {Object}
+ */
+function mapStateToProps(state) {
+	return {
+		lexicon: state.lexicon
+	}
+}
+
+export default connect(mapStateToProps)(withStyles(styles)(PaperFolderManager));

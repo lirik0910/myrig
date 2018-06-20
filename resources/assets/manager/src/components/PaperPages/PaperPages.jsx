@@ -11,6 +11,8 @@
 import App from '../../App.js';
 import React, { Component } from 'react';
 
+import { connect } from 'react-redux';
+
 import Paper from 'material-ui/Paper';
 import { Link } from 'react-router-dom';
 import ContextItem from './ContextItem/ContextItem.jsx';
@@ -101,7 +103,7 @@ class PaperPages extends Component {
 						deleteItem: {},
 						deleteDialog: false,
 						resultDialog: true,
-						resultDialogTitle: 'Error',
+						resultDialogTitle: this.props.lexicon.error_title,
 						resultDialogMessage: r.message
 					});
 				}
@@ -187,4 +189,15 @@ class PaperPages extends Component {
 	}
 }
 
-export default withStyles(styles)(PaperPages);
+/**
+ * Init redux states
+ * @param {Object} state
+ * @return {Object}
+ */
+function mapStateToProps(state) {
+	return {
+		lexicon: state.lexicon
+	}
+}
+
+export default connect(mapStateToProps)(withStyles(styles)(PaperPages));

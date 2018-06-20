@@ -7,6 +7,7 @@
 
 import React, { Component } from 'react';
 
+import { connect } from 'react-redux';
 
 import Add from 'material-ui-icons/Add';
 import Grid from 'material-ui/Grid';
@@ -73,7 +74,7 @@ class PaperOrderProductForm extends Component {
 					className={classes.button} 
 					variant="raised">
 						<Delete className={classes.leftIcon} />
-						{"remove"}
+						{this.props.lexicon.delete_button}
 				</Button>
 			</div>
 
@@ -84,7 +85,7 @@ class PaperOrderProductForm extends Component {
 				<Grid item xs={6}>
 
 					<InputNumber
-						title="Count"
+						title={this.props.lexicon.count_label}
 						defaultValue={1}
 						value={data.count}
 						onFieldInputed={(num) => {
@@ -107,7 +108,7 @@ class PaperOrderProductForm extends Component {
 			</Grid>
 			<FormControl fullWidth className={classes.formControl}>
 				<InputLabel htmlFor={"serial_number"}>
-					{"Serial number"}
+					{this.props.lexicon.serial_number}
 				</InputLabel>
 				<Input
 					id="serial_number"
@@ -124,4 +125,15 @@ class PaperOrderProductForm extends Component {
 	}
 }
 
-export default withStyles(styles)(PaperOrderProductForm);
+/**
+ * Init redux states
+ * @param {Object} state
+ * @return {Object}
+ */
+function mapStateToProps(state) {
+	return {
+		lexicon: state.lexicon
+	}
+}
+
+export default connect(mapStateToProps)(withStyles(styles)(PaperOrderProductForm));
