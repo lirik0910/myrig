@@ -637,7 +637,7 @@ class DbImport
         /*
          * Import news
          */
-/*        $newsPage = Page::where('title', 'News')->where('context_id', 2)->first();
+        $newsPage = Page::where('title', 'News')->where('context_id', 2)->first();
         $currentNews = Page::where('parent_id', $newsPage->id)->get();
         foreach ($data['news'] as $new){
             $write = true;
@@ -671,12 +671,12 @@ class DbImport
                 }
             }
             //}
-        }*/
+        }
 
         /*
          * Import articles
          */
-/*        foreach ($data['articles'] as $article){
+        foreach ($data['articles'] as $article){
             $view_count = $article['views_count'];
             unset($article['views_count']);
 
@@ -698,7 +698,7 @@ class DbImport
                     continue;
                 }
             //}
-        }*/
+        }
 
         /*
          * Import order logs
