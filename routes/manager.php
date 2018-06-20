@@ -139,6 +139,10 @@ Route::prefix('rates')
 Route::prefix('api')
 	->middleware('auth')	
 	->group(function() {
+		Route::prefix('lexicon')->group(function() {
+			Route::get('/{id}', 'Manager\Base\LexiconController@one');
+		});
+
 		Route::prefix('component')->group(function() {
 			Route::get('/', 'Manager\Base\ComponentController@all')->middleware(ComponentCollectionMiddleware::class);
 		});

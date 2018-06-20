@@ -7,6 +7,8 @@
 
 import React, { Component } from 'react';
 
+import { connect } from 'react-redux';
+
 import Dialog, {
 	DialogActions,
 	DialogContent,
@@ -72,7 +74,7 @@ class EditMultiItem extends Component {
 				aria-describedby="edit-dialog-multi-content">
 				
 				<DialogTitle id="edit-dialog-multi-title">
-					{'Edit'}
+					{this.props.lexicon.edit_label}
 				</DialogTitle>
 
 				<form id="edit-multi-form" onSubmit={e => {
@@ -94,7 +96,7 @@ class EditMultiItem extends Component {
 								<TextField
 									type="text"
 									name={columns[i].title}
-									label={columns[i].description}
+									label={this.props.lexicon['var_multi_'+ columns[i].title]}
 									defaultValue={item.content}
 									className={classes.textField}
 									InputLabelProps={{
@@ -126,12 +128,12 @@ class EditMultiItem extends Component {
 					<DialogActions>
 						<Button color="primary"
 							onClick={e => this.props.onDialogClosed()}>
-							Cancel
+							{this.props.lexicon.cancel_label}
 						</Button>
 
 						<Button color="primary"
 							type="submit">
-							OK
+							{this.props.lexicon.ok_label}
 						</Button>
 					</DialogActions>
 				</form>
@@ -139,4 +141,15 @@ class EditMultiItem extends Component {
 	}
 }
 
-export default withStyles(styles)(EditMultiItem);
+/**
+ * Init redux states
+ * @param {Object} state
+ * @return {Object}
+ */
+function mapStateToProps(state) {
+	return {
+		lexicon: state.lexicon
+	}
+}
+
+export default connect(mapStateToProps)(withStyles(styles)(EditMultiItem));

@@ -7,6 +7,8 @@
 
 import React, { Component } from 'react';
 
+import { connect } from 'react-redux';
+
 import Button from 'material-ui/Button';
 import TextField from 'material-ui/TextField';
 import SelectProductOption from '../../FormControl/SelectProductOption/SelectProductOption.jsx';
@@ -65,7 +67,7 @@ class OptionFieldItem extends Component {
 				<SelectProductOption
 					data={options}
 					defaultValue={data.type_id}
-					title={'Select option type'}
+					title={this.props.lexicon.select_option_type}
 					onItemSelected={value => {
 						this.props.onFieldTypeSelected(value)
 					}} />
@@ -105,10 +107,21 @@ class OptionFieldItem extends Component {
 					variant="raised" 
 					color="secondary"
 					onClick={e => this.props.onDeletedField(data)}>
-						<Delete />{'Remove field'}
+						<Delete />{this.props.lexicon.remove_field_label}
 				</Button>
 			</div>
 	}
 }
 
-export default withStyles(styles)(OptionFieldItem);
+/**
+ * Init redux states
+ * @param {Object} state
+ * @return {Object}
+ */
+function mapStateToProps(state) {
+	return {
+		lexicon: state.lexicon
+	}
+}
+
+export default connect(mapStateToProps)(withStyles(styles)(OptionFieldItem));

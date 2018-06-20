@@ -8,6 +8,8 @@
 import App from '../../../App.js';
 import React, { Component } from 'react';
 
+import { connect } from 'react-redux';
+
 import Button from 'material-ui/Button';
 import TextField from 'material-ui/TextField';
 import DialogFileManager from '../../DialogFileManager/DialogFileManager.jsx';
@@ -81,7 +83,7 @@ class ImageFieldItem extends Component {
 					variant="raised" 
 					color="secondary"
 					onClick={e => this.props.onDeletedField(data)}>
-						<Delete />{'Remove field'}
+						<Delete />{this.props.lexicon.remove_field_label}
 				</Button> : null}
 
 				<DialogFileManager
@@ -103,4 +105,15 @@ class ImageFieldItem extends Component {
 	}
 }
 
-export default withStyles(styles)(ImageFieldItem);
+/**
+ * Init redux states
+ * @param {Object} state
+ * @return {Object}
+ */
+function mapStateToProps(state) {
+	return {
+		lexicon: state.lexicon
+	}
+}
+
+export default connect(mapStateToProps)(withStyles(styles)(ImageFieldItem));

@@ -7,6 +7,8 @@
 
 import React, { Component } from 'react';
 
+import { connect } from 'react-redux';
+
 import Paper from 'material-ui/Paper';
 import InputPrice from '../FormControl/InputPrice/InputPrice.jsx';
 import InputWarranty from '../FormControl/InputWarranty/InputWarranty.jsx';
@@ -91,26 +93,32 @@ class PaperOrderForm extends Component {
 
 		return <Paper className={classes.paper}>
 				<InputDatePicker
+					title={this.props.lexicon.publish_date_label}
 					defaultValue={createDefaultValue}
 					onDateFieldChanged={value => this.props.onDateSelected(value)} />
 
 				<InputSelectUser
+					title={this.props.lexicon.select_user}
+					placeholder={this.props.lexicon.search_user_placeholder}
 					onDataLoaded = {data => this.props.onUserLoaded(data)}
 					onItemSelected={value => this.props.onUserSelected(value)}
 				/>
 
 				<SelectContext
 					required={true}
+					title={this.props.lexicon.select_context_label}
 					defaultValue={contextDefaultValue}
 					onItemSelected={value => this.props.onContextSelected(value)}
 				/>
 
 				<SelectOrderStatus
 					required={true}
+					title={this.props.lexicon.select_order_status}
 					defaultValue={statusDefaultValue}
 					onItemSelected={value => this.props.onStatusSelected(value)} />
 
 				<SelectPayment
+					title={this.props.lexicon.select_payment_type}
 					required={true}
 					defaultValue={paymentDefaultValue}
 					onItemSelected={value => this.props.onPaymentSelected(value)}
@@ -118,7 +126,7 @@ class PaperOrderForm extends Component {
 
 				<CheckboxActive
 					name="send-regime"
-					title="Send to table"
+					title={this.props.lexicon.send_to_table}
 					defaultValue={sendDefaultValue}
 					onCheckboxValueChanged={value => {
 						this.props.onActiveChanged(value);
@@ -128,4 +136,15 @@ class PaperOrderForm extends Component {
 	}
 }
 
-export default withStyles(styles)(PaperOrderForm);
+/**
+ * Init redux states
+ * @param {Object} state
+ * @return {Object}
+ */
+function mapStateToProps(state) {
+	return {
+		lexicon: state.lexicon
+	}
+}
+
+export default connect(mapStateToProps)(withStyles(styles)(PaperOrderForm));

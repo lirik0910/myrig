@@ -11,6 +11,9 @@
 import App from '../App.js';
 import React, { Component } from 'react';
 
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
 import Grid from 'material-ui/Grid';
 import { Link } from 'react-router-dom';
 import Menu from '../components/Menu/Menu.jsx';
@@ -27,6 +30,8 @@ import PaperAutoProductForm from '../components/PaperAutoProductForm/PaperAutoPr
 
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
+
+import * as StateLexiconAction from 'actions/StateLexiconAction.js';
 
 /**
  * Users base container
@@ -52,7 +57,8 @@ class CreateProductContainers extends Component {
 		currencies: [],
 		resultDialog: false,
 		resultDialogTitle: '',
-		resultDialogMessage: ''
+		resultDialogMessage: '',
+		langLoaded: false
 	}
 
 	/**
@@ -62,6 +68,16 @@ class CreateProductContainers extends Component {
 	componentWillMount() {
 		this.currenciesDataGetRequest(() => {
 			this.setState({ completed: 100 });
+		});
+
+		App.defineCurrentLang((r) => {
+			if (App.isEmpty(r) === false) {
+				this.props.StateLexiconAction.get(r, () => {
+					this.setState({
+						langLoaded: true
+					});
+				});
+			}
 		});
 	}
 
@@ -175,23 +191,37 @@ class CreateProductContainers extends Component {
 			resultDialogMessage
 		} = this.state;
 
+		if (this.state.langLoaded === false) 
+			return <div className="create-page__container">
+				<LinearProgress color="secondary" variant="determinate" value={0} />
+			</div>
+
 		return <div className="products__container">
 			{completed === 0 && 
 				<LinearProgress color="secondary" variant="determinate" value={completed} />}
 					
 			<Header
-				title={'Create new product'} />
+				title={this.props.lexicon.new_product} />
 			<Menu />
 					
 			<TopTitle
+				title={''}
+
+				addButtonTitle={this.props.lexicon.add_label}
+				saveButtonTitle={this.props.lexicon.save_label}
+				trashButtonTitle={this.props.lexicon.empty_trash_label}
+				duplicateButtonTitle={this.props.lexicon.duplicate_label}
+				deleteButtonTitle={this.props.lexicon.delete_selected_button}
+				recoveryButtonTitle={this.props.lexicon.recovery_button}
+
 				onSaveButtonClicked={() => this.productPostRequest()} />
 				
 			<TabOptions
 				defaultValue={tab}
 				onTabButtonClicked={tab => this.setState({ tab })}
 				data={[
-					'Product',
-					'Options',
+					this.props.lexicon.product_label,
+					this.props.lexicon.options_label,
 					//'Page',
 					//'Additional fields'
 				]} />
@@ -206,6 +236,12 @@ class CreateProductContainers extends Component {
 				<Grid item xs={9}>
 					<PaperContentForm
 						articulShow
+
+						inputTitle={this.props.lexicon.title_label}
+						introTitle={this.props.lexicon.introtext_label}
+						descrTitle={this.props.lexicon.description_label}
+						articulTitle={this.props.lexicon.articul_label}
+
 						onEditorAreaInputed={value => {
 							data['description'] = value;
 							this.setState({ data });
@@ -341,4 +377,26 @@ let styles = theme => ({
 	},
 });
 
-export default withStyles(styles)(CreateProductContainers);
+/**
+ * Init redux states
+ * @param {Object} state
+ * @return {Object}
+ */
+function mapStateToProps(state) {
+	return {
+		lexicon: state.lexicon
+	}
+}
+
+/**
+ * Init redux actions
+ * @param {Function} dispatch
+ * @return {Object}
+ */
+function mapDispatchToProps(dispatch) {
+	return {
+		StateLexiconAction: bindActionCreators(StateLexiconAction, dispatch)
+	}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(CreateProductContainers));

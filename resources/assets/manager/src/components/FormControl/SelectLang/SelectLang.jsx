@@ -35,6 +35,9 @@ class SelectLang extends Component {
 		inputID: 'select-lang',
 		onDataLoaded: () => {},
 		onItemSelected: () => {},
+		titleStyle: {},
+		selectStyle: {},
+		selectClassName: 'lang-select__container',
 		classes: PropTypes.object.isRequired,
 	}
 
@@ -55,10 +58,24 @@ class SelectLang extends Component {
 	 * @fires componentWillMount
 	 */
 	componentWillMount() {
-		this.setState({ 
-			value: this.props.defaultValue,
-		}, () => {
-			this.viewDataGetRequest(data => this.props.onDataLoaded(data));
+		let value = this.props.defaultValue;
+
+		this.setState({ value }, () => {
+			this.viewDataGetRequest(data => {
+				if (typeof this.props.defaultValueContent !== 'undefined') {
+					
+					let i = 0;
+					while (i < data.length) {
+						if (data[i] === this.props.defaultValueContent) {
+							this.setState({ value: i });
+							break;
+						}
+						i++;
+					}
+				}
+
+				this.props.onDataLoaded(data);
+			});
 		});
 	}
 
@@ -88,7 +105,7 @@ class SelectLang extends Component {
 	handleChangeSelect = e => {
 		var target = e.target;
 		this.setState({ value: target.value }, () => {
-			this.props.onItemSelected(target.value);
+			this.props.onItemSelected(target.value, this.state.data);
 		});
 	}
 
@@ -98,17 +115,19 @@ class SelectLang extends Component {
 	 */
 	render() {
 		let { data, value } = this.state;
-		let { classes, inputID, title } = this.props;
+		let { classes, inputID, title, titleStyle, selectStyle, selectClassName } = this.props;
 
 		return <FormControl className={classes.formControl}>
 			<InputLabel htmlFor={inputID}>
-				{title}
+				<span style={titleStyle}>{title}</span>
 			</InputLabel>
 			
 			<Select
 				value={value}
 				onChange={this.handleChangeSelect}
-				input={<Input name="lang" id={inputID} />}>
+				input={<Input name="lang" id={inputID} />}
+				style={selectStyle}
+				className={selectClassName}>
 
 				{data.map((item, i) => {
 					return <MenuItem 

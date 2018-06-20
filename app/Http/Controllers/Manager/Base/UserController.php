@@ -23,8 +23,8 @@ class UserController extends Controller
 		if (isset($params['search'])) {
 			$c = $c->where('id', $params['search'])
 					->orWhere('name', 'like', '%'. $params['search'] .'%')
-					->orWhere('email', 'like', '%'. $params['search'] .'%');
-                    //->with('attributes');
+					->orWhere('email', 'like', '%'. $params['search'] .'%')//;
+                    ->with('attributes');
 		}
 
 		$c = $c->with('attributes');
@@ -97,6 +97,15 @@ class UserController extends Controller
 			logger($e->getMessage());
 			return response()->json(['message' => $e->getMessage()], 422);
 		}
+
+		$usersCount = 0;
+		$attrsCount = 0;
+		foreach($all as $one){
+		    $usersCount++;
+		    if($one->attributes){
+		        $attrsCount++;
+            }
+        }
 
 		return response()->json(['total' => $total, 'data' => $all], 200);
 	}

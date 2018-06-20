@@ -8,6 +8,8 @@
 import App from '../../App.js';
 import React, { Component } from 'react';
 
+import { connect } from 'react-redux';
+
 import Paper from 'material-ui/Paper';
 import Button from 'material-ui/Button';
 import Typography from 'material-ui/Typography';
@@ -113,7 +115,6 @@ class PaperMultiVariable extends Component {
 						});
 					}}
 					onEditButtonClicked={item => {
-						console.log(item)
 						this.setState({
 							editItem: item,
 							editDialog: true,
@@ -141,7 +142,7 @@ class PaperMultiVariable extends Component {
 				id: columns[i].id,
 				numeric: false, 
 				disablePadding: true, 
-				label: columns[i].description
+				label: this.props.lexicon['var_multi_'+ columns[i].title]
 			});
 		}
 
@@ -150,7 +151,7 @@ class PaperMultiVariable extends Component {
 			id: 'control',
 			numeric: false, 
 			disablePadding: true, 
-			label: 'Control'
+			label: this.props.lexicon.control_label
 		});
 
 		return a;
@@ -292,10 +293,21 @@ class PaperMultiVariable extends Component {
 						className={classes.button}
 						onClick={this.handleAddField}>
 							<AddIcon />
-							{'Add field'}
+							{this.props.lexicon.add_field_label}
 					</Button>
 			</Paper>
 	}
 }
 
-export default withStyles(styles)(PaperMultiVariable);
+/**
+ * Init redux states
+ * @param {Object} state
+ * @return {Object}
+ */
+function mapStateToProps(state) {
+	return {
+		lexicon: state.lexicon
+	}
+}
+
+export default connect(mapStateToProps)(withStyles(styles)(PaperMultiVariable));
