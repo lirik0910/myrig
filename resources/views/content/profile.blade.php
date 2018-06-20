@@ -333,19 +333,19 @@
 													@endforeach--}}
 {{--												@endif--}}
                                             @endif
-                                            <div class="table-cell number" style="padding-top: 0px !important; vertical-align: middle !important;">
+                                            <div class="table-cell number history-product__count" style="padding-top: 0px !important; vertical-align: middle !important;">
                                                 <span class="hidden-md">{{ __('default.count') }}</span>
                                                 <span> @php $count = 0; foreach($order->carts as $cart){ $count += $cart->count; } echo $count @endphp</span>
                                             </div>
-                                            <div class="table-cell number number-price">
+                                            <div class="table-cell number number-price history-product__count">
                                                 <span class="hidden-md">{{ __('default.total') }}</span>
                                                 <span class="table-price"><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">$</span>{{ number_format($order->cost, 2, '.', '') }}</span></span>
                                                 @if($btcCost > 0)<span class="table-bitcoin">{{ $btcCost }}<i class="fa fa-bitcoin"></i></span>@endif
                                             </div>
-                                            <div class="table-cell status">
+                                            <div class="table-cell status history-product__count">
                                                 <span class="">
-                                                    <!--<p class="hidden-md">{{ __('default.status') }}</p>-->
-                                                    <span class="mark cancelled" style="color: {{$order->status->color}}">{{ __('common.status_' . str_replace(' ', '_', mb_strtolower($order->status->title))) }}</span><br>
+                                                    <p class="hidden-md">{{ __('default.status') }}</p>
+                                                    <span class="mark cancelled" style="padding: 0; color: {{$order->status->color}}">{{ __('common.status_' . str_replace(' ', '_', mb_strtolower($order->status->title))) }}</span><br>
                                                     @if(isset($status_logs) && count($status_logs) > 0)
                                                         <a class="order-history" data-wpel-link="internal">{{ __('default.history') }}
                                                         <div class="history-dd" style="height: auto !important">
