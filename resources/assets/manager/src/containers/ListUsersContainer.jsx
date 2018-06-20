@@ -333,6 +333,7 @@ class ListUsersContainer extends Component {
 								'policy_id',
 								'vendor_id',
 								'context_id',
+								'attributes',
 /*								'created_at',
 								'updated_at', */
 								'category_id', 
