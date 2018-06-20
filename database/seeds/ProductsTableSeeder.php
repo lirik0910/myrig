@@ -13,7 +13,7 @@ class ProductsTableSeeder extends Seeder
 	{
 		/** Get base context
 		 */
-        $context = App\Model\Base\Context::where('id', 1)->first();
+       // $context = App\Model\Base\Context::where('id', 1)->first();
 		//$context = App\Model\Base\Context::where('title', 'Base')->firstOrFail();
 
 		/** Get default category
@@ -23,7 +23,7 @@ class ProductsTableSeeder extends Seeder
 
 		/** Get default vendor
 		 */
-		$vendor = App\Model\Shop\Vendor::where('title', 'Base')->firstOrFail();
+/*		$vendor = App\Model\Shop\Vendor::where('title', 'Base')->firstOrFail();
 
 		$preOrderStatus = App\Model\Shop\ProductStatus::where('title', 'pre-order')->first();
 		$inStockStatus = App\Model\Shop\ProductStatus::where('title', 'in-stock')->first();
@@ -260,7 +260,7 @@ class ProductsTableSeeder extends Seeder
 			</ul></p>',
                 'active' => 1,
                 'price' => '60.00',
-            ]);
+            ]);*/
         //}
 
 	}

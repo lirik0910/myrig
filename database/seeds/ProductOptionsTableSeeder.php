@@ -11,7 +11,7 @@ class ProductOptionsTableSeeder extends Seeder
 	 */
 	public function run()
 	{
-		$video = App\Model\Shop\ProductOptionType::where('title', 'video')->first();
+/*		$video = App\Model\Shop\ProductOptionType::where('title', 'video')->first();
 		$warranty = App\Model\Shop\ProductOptionType::where('title', 'warranty')->first();
 		$secondary = App\Model\Shop\ProductOptionType::where('title', 'secondary')->first();
 		$recoupment = App\Model\Shop\ProductOptionType::where('title', 'recoupment')->first();
@@ -332,6 +332,6 @@ class ProductOptionsTableSeeder extends Seeder
 			'type_id' => $characteristic->id,
 			'name' => 'Weight',
 			'value' => '148 grams',
-		]);
+		]);*/
 	}
 }

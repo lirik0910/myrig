@@ -11,8 +11,7 @@ class ProductCategoriesTableSeeder extends Seeder
 	 */
 	public function run()
 	{
-		
-		$base = App\Model\Shop\Category::where('title', 'Base')->first();
+/*		$base = App\Model\Shop\Category::where('title', 'Base')->first();
 		$secondary = App\Model\Shop\Category::where('title', 'Secondary')->first();
 
 		$product = App\Model\Shop\Product::whereHas('page', function ($q) {
@@ -117,6 +116,6 @@ class ProductCategoriesTableSeeder extends Seeder
 		App\Model\Shop\ProductCategory::create([
 			'product_id' => $product->id,
 			'category_id' => $secondary->id,
-		]);
+		]);*/
 	}
 }

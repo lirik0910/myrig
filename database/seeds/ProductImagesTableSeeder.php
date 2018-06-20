@@ -11,7 +11,7 @@ class ProductImagesTableSeeder extends Seeder
 	 */
 	public function run()
 	{
-		$product = App\Model\Shop\Product::whereHas('page', function ($q) {
+/*		$product = App\Model\Shop\Product::whereHas('page', function ($q) {
 			$q->where('link', 'product/dragonmint-16-th-s-2');
 		})->first();
 
@@ -152,6 +152,6 @@ class ProductImagesTableSeeder extends Seeder
 		App\Model\Shop\ProductImage::create([
 			'product_id' => $product->id,
 			'name' => 'product/6000rpm-fan/1.png',
-		]);
+		]);*/
 	}
 }
