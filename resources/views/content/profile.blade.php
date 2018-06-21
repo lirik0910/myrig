@@ -33,12 +33,79 @@
 <link rel="stylesheet" href="{{ URL::asset('css/style.css?ver=1.55') }}">
 <link rel="stylesheet" id="dashicons-css"  href="{{ URL::asset('css/dashicons.min.css?ver=4.9.4') }}" type="text/css" media="all" />
 
+<link rel="apple-touch-icon" sizes="57x57" href="/favicon/fav-new.png">
+<link rel="apple-touch-icon" sizes="60x60" href="/favicon/fav-new.png">
+<link rel="apple-touch-icon" sizes="72x72" href="/favicon/fav-new.png">
+<link rel="apple-touch-icon" sizes="76x76" href="/favicon/fav-new.png">
+<link rel="apple-touch-icon" sizes="114x114" href="/favicon/fav-new.png">
+<link rel="apple-touch-icon" sizes="120x120" href="/favicon/fav-new.png">
+<link rel="apple-touch-icon" sizes="144x144" href="/favicon/fav-new.png">
+<link rel="apple-touch-icon" sizes="152x152" href="/favicon/fav-new.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/favicon/fav-new.png">
+<link rel="icon" type="image/png" sizes="192x192"  href="/favicon/fav-new.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon/fav-new.png">
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon/fav-new.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon/fav-new.png">
+<link rel="manifest" href="/favicon/manifest.json">
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="msapplication-TileImage" content="/favicon/fav-new.png">
+<meta name="theme-color" content="#ffffff">
+
 <script type="text/javascript" src="{{ asset('js/jquery-1.11.0.min.js') }}"></script>
 <script type="text/javascript">
     window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/2.4\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/2.4\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/myrig.com.ua\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.9.4"}};
     !function(a,b,c){function d(a,b){var c=String.fromCharCode;l.clearRect(0,0,k.width,k.height),l.fillText(c.apply(this,a),0,0);var d=k.toDataURL();l.clearRect(0,0,k.width,k.height),l.fillText(c.apply(this,b),0,0);var e=k.toDataURL();return d===e}function e(a){var b;if(!l||!l.fillText)return!1;switch(l.textBaseline="top",l.font="600 32px Arial",a){case"flag":return!(b=d([55356,56826,55356,56819],[55356,56826,8203,55356,56819]))&&(b=d([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]),!b);case"emoji":return b=d([55357,56692,8205,9792,65039],[55357,56692,8203,9792,65039]),!b}return!1}function f(a){var c=b.createElement("script");c.src=a,c.defer=c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var g,h,i,j,k=b.createElement("canvas"),l=k.getContext&&k.getContext("2d");for(j=Array("flag","emoji"),c.supports={everything:!0,everythingExceptFlag:!0},i=0;i<j.length;i++)c.supports[j[i]]=e(j[i]),c.supports.everything=c.supports.everything&&c.supports[j[i]],"flag"!==j[i]&&(c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&c.supports[j[i]]);c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&!c.supports.flag,c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.everything||(h=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",h,!1),a.addEventListener("load",h,!1)):(a.attachEvent("onload",h),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),g=c.source||{},g.concatemoji?f(g.concatemoji):g.wpemoji&&g.twemoji&&(f(g.twemoji),f(g.wpemoji)))}(window,document,window._wpemojiSettings);
 </script>
 <meta name="google-site-verification" content="YroKW8N1nmTvNHctf_WMuPtVYhPqE4bklPM-o6buvrc" />
+
+<style>
+	.mark:after {
+	    font-family: WooCommerce;
+	    speak: none;
+ 
+	}
+ 
+	.mark.cancelled:after {
+	    content: '\e013';
+	    color: #a00;
+	}
+
+	.mark.neworder:after {
+		content: "\e016";
+		color: #ff0000;
+	}
+
+	.mark.inalocalwarehouse:after,
+	.mark.shippedbythefactory:after {
+		content: '\e033';
+		color: #999;
+	}
+
+	.mark.processing:after {
+		content: '\e011';
+		color: #73a724;
+	}
+
+	.mark.waitingforpayment:after {
+		content: '\e012';
+		color: #ffba00;
+	}
+
+	.mark.completed:after {
+		content: '\e015';
+		color: #2ea2cc;
+	}
+
+	.mark.returned:after {
+		content: '\e014';
+		color: #999;
+	}
+
+	.mark.hasbeenpaid:after {
+		content: "\e604";
+		color: #439929;
+	}
+</style>
 
 	</head>
 
@@ -348,7 +415,7 @@
                                             <div class="table-cell status history-product__count">
                                                 <span class="">
                                                     <p class="hidden-md">{{ __('default.status') }}</p>
-                                                    <span class="mark cancelled" style="padding: 0; color: {{$order->status->color}}">{{ __('common.status_' . str_replace(' ', '_', mb_strtolower($order->status->title))) }}</span><br>
+                                                    <span class="mark {{ mb_strtolower(str_replace(' ', '', $order->status->title)) }}" style="color: {{$order->status->color}}">{{ __('common.status_' . str_replace(' ', '_', mb_strtolower($order->status->title))) }}</span><br>
                                                     @if(isset($status_logs) && count($status_logs) > 0)
                                                         <a class="order-history" data-wpel-link="internal">{{ __('default.history') }}
                                                         <div class="history-dd" style="height: auto !important">

@@ -386,7 +386,10 @@ class ListOrdersContainer extends Component {
 									'none'
 							}}># {item.number}</span>
 						<span className={classes.statusItem}
-							style={{color: item.status.color}}>{this.props.lexicon['status_'+ item.status.title]}</span>
+							style={{color: item.status.color}}>
+
+							<span className={'mark '+ item.status.title.replace(/\s/g, '').toLowerCase()}>{this.props.lexicon['status_'+ item.status.title]}</span>
+						</span>
 
 						<div className={classes.fieldItem}>
 							{this.props.lexicon.small_context_label} {item.context.title}
