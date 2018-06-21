@@ -156,6 +156,7 @@ class PaperOrderDeliveryForm extends Component {
 				title={this.props.lexicon.select_country}
 				defaultValue={countryDefaultValue}
 				required
+				value={countryDefaultValue}
 				onItemSelected={value => this.props.onCountrySelected(value)} />
 
 			<TextField
