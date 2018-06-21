@@ -101,7 +101,7 @@ class ProductController extends Controller
                 $all = Product::where('active', 1)
                     ->whereHas('categories', function ($q){
                         $q->where('title', 'Base');
-                        $q->where('title', 'Secondary');
+                        $q->orWhere('title', 'Secondary');
                     })->get();
             } else{
                 $all = Product::where('active', 1)->get();
