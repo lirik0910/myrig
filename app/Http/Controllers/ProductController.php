@@ -98,7 +98,11 @@ class ProductController extends Controller
     public function all(Request $request){
         try {
             if($request->post('availability')){
-                $all = Product::where('active', 1)->where('category_id', 1)->orWhere('category_id', 2)->get();
+                $all = Product::where('active', 1)
+                    ->whereHas('categories', function ($q){
+                        $q->where('title', 'Base');
+                        $q->where('title', 'Secondary');
+                    })->get();
             } else{
                 $all = Product::where('active', 1)->get();
             }
