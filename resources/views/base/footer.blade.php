@@ -215,7 +215,7 @@
 				<div id="products-select__container" class="products-select__container">
 					<div class="product-item__container product-item__container-1 row padding__collapse">
 						<div class="select__container col-sm-8 padding__collapse margin__collapse">
-							<ul class="list__container products__list toggle__list padding__collapse margin__collapse" style="overflow-y: auto: max-height: 294px"></ul>
+							<ul class="list__container products__list toggle__list padding__collapse margin__collapse"></ul>
 							
 							<div class="selected__product toggle__current"></div>
 
