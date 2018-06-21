@@ -159,7 +159,8 @@ export default class DialogAvailability extends Base {
 				'X-CSRF-TOKEN': this.baseDOM._csrfToken
 			},
 			data: {
-				id: productId
+				id: productId,
+				availability: true
 			},
 			success: (data) => {
 				this.state.products = data;

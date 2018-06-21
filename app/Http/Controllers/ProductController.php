@@ -95,9 +95,13 @@ class ProductController extends Controller
      * Get all products for report availability
      * @return string
      */
-    public function all(){
+    public function all(Request $request){
         try {
-            $all = Product::where('active', 1)->get();
+            if($request->post('availability')){
+                $all = Product::where('active', 1)->where('category_id', 1)->orWhere('category_id', 2)->get();
+            } else{
+                $all = Product::where('active', 1)->get();
+            }
         }
         catch (\Exception $e) {
             logger($e->getMessage());
