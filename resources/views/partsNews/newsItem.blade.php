@@ -39,7 +39,7 @@
 				<p>{!! $article->introtext !!}</p>
 			@endif
 
-			<a href="{{ url($article->link )}}" class="default__link">
+			<a href="{{ url($article->link )}}" class="default__link" style="padding-left: 0 !important; padding-right: 0 !important">
 				<i class=""></i>
 				{{ __('default.read') }}
 			</a>
