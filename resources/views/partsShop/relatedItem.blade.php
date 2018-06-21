@@ -18,7 +18,7 @@
 		<div class="title__container">{{ $item->title }}</div>
 
 		<div class="icon__container text-center">
-			@if ($item->images[0] && !empty($item->images[0]->name) && File::exists(public_path('uploads/' . $item->images[0]->name)))
+			@if ($item->images && !empty($item->images[0]->name) && File::exists(public_path('uploads/' . $item->images[0]->name)))
 				<img width="1000" height="1000" src="{{ $preview(asset('uploads/' . $item->images[0]->name), 215, 215) }}" class="related__icon" alt="product" />
 			@else
 				<img width="1000" height="1000" src="{{ $preview($defaultImage, 215, 215) }}" class="related__icon" alt="product" />

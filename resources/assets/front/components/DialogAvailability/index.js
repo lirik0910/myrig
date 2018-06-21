@@ -11,7 +11,7 @@ export default class DialogAvailability extends Base {
 
 		window.onloadCallback = (e) => {
 			let captcha = grecaptcha.render('g-recaptcha', {
-				'sitekey' : '6LfTaF0UAAAAAJ5NqsiYXccaKV2gJvdRlNgwZBo2',
+				'sitekey' : '6LdY_VMUAAAAANIypbzQz5mga0NnT-PJyASZbJOQ',
 				'callback' : this.verifyCallback
 			});
 		};
