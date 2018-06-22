@@ -182,7 +182,7 @@ class PaperPages extends Component {
 				})}
 				onDialogConfirmed={() => this.pageDeleteRequest()} />}
 
-			<a to={a}
+			<a href={a}
 				target="_blank"
 				id="change-page"
 				style={{display: 'none'}}></a>
