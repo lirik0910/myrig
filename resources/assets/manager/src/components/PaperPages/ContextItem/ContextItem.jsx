@@ -155,7 +155,7 @@ class ContextItem extends Component {
 					style={{paddingLeft: (32 * deep) +'px'}}>
 					
 					<Grid item xs={10} className={classes.pageButton}>
-						<Link to={App.name() + '/pages/'+ item.id}>
+						<a href={App.name() + '/pages/'+ item.id} target="_blank">
 							<ListItem button>
 								<ListItemIcon>
 									<Description />
@@ -165,7 +165,7 @@ class ContextItem extends Component {
 									primary={item.title}
 									className={item.delete === 1 && 'in-trash'} />
 							</ListItem>
-						</Link>
+						</a>
 					</Grid>
 
 					<Grid item xs={2} className={classes.pageButton}>
