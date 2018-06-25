@@ -1,6 +1,7 @@
 <?php
 
 session_start();
+date_default_timezone_set('Europe/Kiev');
 
 /**
  * Laravel - A PHP Framework For Web Artisans
