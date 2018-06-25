@@ -642,18 +642,18 @@ class DbImport
          * Import news
          */
         $newsPage = Page::where('title', 'News')->where('context_id', 2)->first();
-        $currentNews = Page::where('parent_id', $newsPage->id)->get();
+        //$currentNews = Page::where('parent_id', $newsPage->id)->get();
         foreach ($data['news'] as $new){
             $write = true;
             $view_count = $new['views_count'];
             //var_dump($view_count); die;
             unset($new['views_count']);
 
-            foreach ($currentNews as $curNew){
-                if($new['title'] == $curNew['title']){
-                    $write = false;
-                }
-            }
+          //  foreach ($currentNews as $curNew){
+            //    if($new['title'] == $curNew['title']){
+              //      $write = false;
+                //}
+            //}
             //foreach ($contexts as $context){
 
             if($write){
