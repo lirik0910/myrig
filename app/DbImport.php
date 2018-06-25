@@ -512,10 +512,10 @@ class DbImport
          */
         $data['users'] = [];
         $data['products'] = [];
-        //$data['orders'] = [];
-        //$data['carts'] = [];
+        $data['orders'] = [];
+        $data['carts'] = [];
         $data['user_attrs'] = [];
-        //$data['orders_deliveries'] = [];
+        $data['orders_deliveries'] = [];
         //$data['news'] = [];
         $data['articles'] = [];
         //$data['logs'] = [];
@@ -642,7 +642,7 @@ class DbImport
          * Import news
          */
         $newsPage = Page::where('title', 'News')->where('context_id', 2)->first();
-        //$currentNews = Page::where('parent_id', $newsPage->id)->get();
+        $currentNews = Page::where('parent_id', $newsPage->id)->get();
         foreach ($data['news'] as $new){
             $write = true;
             $view_count = $new['views_count'];
