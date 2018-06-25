@@ -58,55 +58,6 @@
 </script>
 <meta name="google-site-verification" content="YroKW8N1nmTvNHctf_WMuPtVYhPqE4bklPM-o6buvrc" />
 
-<style>
-	.mark:after {
-	    font-family: WooCommerce;
-	    speak: none;
- 
-	}
- 
-	.mark.cancelled:after {
-	    content: '\e013';
-	    color: #a00;
-	}
-
-	.mark.neworder:after {
-		content: "\e016";
-		color: #ff0000;
-	}
-
-	.mark.inalocalwarehouse:after,
-	.mark.shippedbythefactory:after {
-		content: '\e033';
-		color: #999;
-	}
-
-	.mark.processing:after {
-		content: '\e011';
-		color: #73a724;
-	}
-
-	.mark.waitingforpayment:after {
-		content: '\e012';
-		color: #ffba00;
-	}
-
-	.mark.completed:after {
-		content: '\e015';
-		color: #2ea2cc;
-	}
-
-	.mark.returned:after {
-		content: '\e014';
-		color: #999;
-	}
-
-	.mark.hasbeenpaid:after {
-		content: "\e604";
-		color: #439929;
-	}
-</style>
-
 	</head>
 
 	<body>
@@ -237,10 +188,38 @@
 					</div>
 				</nav>
 			</header>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC0VFdy6lo9DhNk0aeq0XlsShrLa_5jf9k" defer=""></script>
 
-			<main style="width: 100%">
-				<p>404</p>
-			</main>
+<main class="contact-map">
+
+<div class="main-back" style="left: 588px !important">
+	<div id="mapField" data-img="https://myrig.com.ua/wp-content/themes/bitmain/img/contact_logo.png?v=1" data-lat="39.768294" data-lng="-104.90209679999998"></div>
+</div>
+<script>
+	var width = $(window).width(),
+		cont = $('.container').outerWidth();
+	var margin = (width - cont) / 2;
+	var wM = cont * 33.333333 / 100 + margin;
+
+	if (width > 767) {
+		$('.main-back').css('left', wM +'px');
+	}
+
+	else {
+		$('.main-back').css('left', '0px');
+	}
+</script>
+@php
+//var_dump($multi['Contact items'])
+
+@endphp
+<section class="content contact">
+	<div class="container">
+		404
+	</div>
+</section>
+
+</main>
 @php
 	$context = $select('App\Model\Base\Context')->where('title', $locale)->first();
 
