@@ -50,9 +50,7 @@ Route::post('/back_call', function (Request $request) {
 	}
 });
 
-Route::get('/{any}', function () {
-	return view('content/404');
-});
+Route::get('/{any}', 'Page404Controller@notFound');
 
 
 
