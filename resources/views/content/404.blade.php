@@ -212,7 +212,7 @@
 
 @endphp
 <section class="content contact">
-	<div class="container">
+	<div class="container" style="font-size: 62px; margin: 40px 0 40px 42px">
 		404
 	</div>
 </section>
