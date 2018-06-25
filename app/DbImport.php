@@ -516,7 +516,7 @@ class DbImport
         //$data['carts'] = [];
         $data['user_attrs'] = [];
         //$data['orders_deliveries'] = [];
-        $data['news'] = [];
+        //$data['news'] = [];
         $data['articles'] = [];
         //$data['logs'] = [];
 
