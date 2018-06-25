@@ -94,7 +94,7 @@ class Page404Controller extends PageController
             ]);
         }
 
-        else if ($link != 'manager') {
+        else {
             $page = Page::whereHas('view', function ($q) {
                 $q->where('title', '404');
             })->first();
