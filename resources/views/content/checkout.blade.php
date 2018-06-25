@@ -10,6 +10,8 @@ if(isset($_SESSION['client'])){
 }
 
 $user = $select('App\Model\Base\User')->where('email', $client_email)->with('attributes')->first();
+
+
 $count = 0;
 foreach ($inCart as $i) {
 	$count += (int) $i;
