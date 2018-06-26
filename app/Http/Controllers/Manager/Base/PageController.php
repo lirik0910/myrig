@@ -305,6 +305,11 @@ class PageController extends Controller
 		    $data['parent_id'] = $parentPage->id;
         }
 
+        $data['published'] = $data['published'] === 'true' ? 1 : 0;
+
+        if($data['published']){
+            $data['published_at'] = now();
+        }
 		/** Create new model
 		 */
 		$model = new Page;
