@@ -308,7 +308,7 @@ class ListVocabularyContainer extends Component {
 									start,
 								}, () => this.usersDataGetRequest());
 							}}
-							onLimitValueChanged={limit => this.setState({ limit })} />}
+							onLimitValueChanged={limit => this.setState({ limit }, () => this.usersDataGetRequest())} />}
 					</Grid>
 				</Grid>
 

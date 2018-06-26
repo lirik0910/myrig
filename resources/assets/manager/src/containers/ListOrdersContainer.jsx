@@ -662,7 +662,8 @@ class ListOrdersContainer extends Component {
 									start,
 								}, () => this.ordersGetDataRequest());
 							}}
-							onLimitValueChanged={limit => this.setState({ limit })} /> : null}
+							onLimitValueChanged={limit =>
+								this.setState({ limit }, () => { this.ordersGetDataRequest() })} /> : null}
 					</Grid>
 				</Grid>
 
