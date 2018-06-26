@@ -19,7 +19,7 @@ class App {
 	}
 
 	name() {
-		return '/manager';
+		return '/xlle76n10f';
 	}
 
 	uploads() {

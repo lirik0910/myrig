@@ -82,7 +82,7 @@ class RouteServiceProvider extends ServiceProvider
 	 */
 	protected function mapManagerRoutes()
 	{
-		Route::prefix('manager')
+		Route::prefix('xlle76n10f')
 			 ->middleware('manager')
 			 ->namespace($this->namespace)
 			 ->group(base_path('routes/manager.php'));
