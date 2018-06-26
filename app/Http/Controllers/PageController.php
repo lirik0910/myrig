@@ -50,7 +50,13 @@ class PageController extends Controller
 
         $page = Page::where('link', $link)->where('delete', 0)->with('view')->get();
 
-        $locale_context_id = 3;
+		$uaContext = Context::where('title', 'UA')->first();
+		if($uaContext){
+		    $locale_context_id = $uaContext->id;
+        } else{
+            $locale_context_id = 1;
+        }
+
 		if(count($page) > 1){
             $contexts = Context::all();
 
@@ -65,7 +71,6 @@ class PageController extends Controller
 		    $page = $page->first();
         }
 
-        //$page = Page::where('link', $link)->where('context_id', $locale_context_id)->where('delete', 0)->with('view')->first();
 		if ($page) {
 		    switch ($page->link){
                 case 'checkout':
@@ -85,7 +90,7 @@ class PageController extends Controller
             if($page->view->title == 'Product' && $page->product->delete == 1){
                 return redirect('shop');
             }
-//var_dump($page); die;
+
 			return view($page->view->path, [
 				'it' => $page,
 				'get' => $this->get(),
@@ -98,21 +103,7 @@ class PageController extends Controller
 				'preview' => $this->preview(),
                 'locale' => $locale
 			]);
-		}/* elseif (stristr($link, 'news') || stristr($link, 'info')){
-            $page = Page::where('link', $link)->where('delete', 0)->with('view')->first();
-            return view($page->view->path, [
-                'it' => $page,
-                'get' => $this->get(),
-                'request' => $request,
-                'select' => $this->select(),
-                'settings' => $this->settings($locale_context_id),
-                'inCart' => $cart,
-                'multi' => MultiVariableContent::multiConvert($page->view->variables),
-                'number' => $number,
-                'preview' => $this->preview(),
-                'locale' => $locale
-            ]);
-        }*/ else abort(404);
+		} else abort(404);
 	}
 
 	/** 

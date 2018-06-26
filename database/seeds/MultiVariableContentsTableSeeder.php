@@ -348,22 +348,22 @@ class MultiVariableContentsTableSeeder extends Seeder
 			$q->where('title', 'indexSlider');
 		})->get();
 
-		$multiHeader = App\Model\Base\MultiVariable::where('title', 'header')
+		$multiHeader = App\Model\Base\MultiVariable::where('title', 'slideHeader')
 			->whereHas('variable', function ($q) {
 				$q->where('title', 'indexSlider');
 			})->first();
 
-		$multiContent = App\Model\Base\MultiVariable::where('title', 'content')
+		$multiContent = App\Model\Base\MultiVariable::where('title', 'slideContent')
 			->whereHas('variable', function ($q) {
 				$q->where('title', 'indexSlider');
 			})->first();
 
-		$multiLink = App\Model\Base\MultiVariable::where('title', 'link')
+		$multiLink = App\Model\Base\MultiVariable::where('title', 'slideLink')
 			->whereHas('variable', function ($q) {
 				$q->where('title', 'indexSlider');
 			})->first();
 
-		$multiIcon = App\Model\Base\MultiVariable::where('title', 'icon')
+		$multiIcon = App\Model\Base\MultiVariable::where('title', 'sliderIcon')
 			->whereHas('variable', function ($q) {
 				$q->where('title', 'indexSlider');
 			})->first();

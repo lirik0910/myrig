@@ -3,7 +3,7 @@
 		<div class="border__container"></div>
 
 		<h3 class="title__container font-weight-bold news-title__container margin__collapse">
-			<a href="{{ asset($article->link) }}" class="default__link">{{ $article->title }}</a>
+			<a style="padding-left: 0 !important; padding-right: 0 !important" href="{{ asset($article->link) }}" class="default__link">{{ $article->title }}</a>
 		</h3>
 
 		<div class="news-option__container d-block">

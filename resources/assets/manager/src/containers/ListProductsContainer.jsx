@@ -423,9 +423,10 @@ class ListProductsContainer extends Component {
 					})}
 					onDialogConfirmed={() => this.emptyTrashRequest()} />}
 
-				<Link to={a}
+				<a href={a}
 					id="change-page"
-					style={{display: 'none'}}></Link>
+					target="_blank"
+					style={{display: 'none'}}></a>
 			</div>
 	}
 }

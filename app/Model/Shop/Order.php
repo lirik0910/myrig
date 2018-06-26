@@ -145,7 +145,8 @@ class Order extends Model
 		$log = new OrderLog;
 
 		$log->order_id = $this->id;
-		$log->user_id = $this->user_id;
+		$log->user_id = Auth::user()->id;
+
 		$log->type = 'status';
 		$log->value = $status->title;
 		$log->save();

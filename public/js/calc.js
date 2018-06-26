@@ -101,7 +101,10 @@
 		
 		$('.calculator-form').submit(function(e){
 			e.preventDefault();
-			 calc_btc(1);
+
+			if ($('input[name="hash"]').val().length > 0 && $('input[name="energy"]').val().length > 0) {
+				calc_btc(1);
+			}
 		});
 
 		function calc_btc(val) {

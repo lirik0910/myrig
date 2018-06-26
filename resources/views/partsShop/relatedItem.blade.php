@@ -14,11 +14,15 @@
 @endphp
 
 <div class="related-item__container" data-dot="<button class='slide-dot__button padding__collapse' data-id={{ $item->index }}><div class='slide-item__progress'></div></button>">
-	<a href="{{ $item->page->link }}" class="d-block">
+	<a @if($item->page) href="{{ $item->page->link }}" @endif class="d-block">
 		<div class="title__container">{{ $item->title }}</div>
 
 		<div class="icon__container text-center">
-			
+			@if ($item->images && !empty($item->images[0]->name) && File::exists(public_path('uploads/' . $item->images[0]->name)))
+				<img width="1000" height="1000" src="{{ $preview(asset('uploads/' . $item->images[0]->name), 215, 215) }}" class="related__icon" alt="product" />
+			@else
+				<img width="1000" height="1000" src="{{ $preview($defaultImage, 215, 215) }}" class="related__icon" alt="product" />
+			@endif
 		</div>
 	</a>
 

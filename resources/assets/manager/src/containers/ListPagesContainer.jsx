@@ -147,9 +147,10 @@ class ListPagesContainer extends Component {
 					</Grid>
 				</Grid>
 
-				<Link to={a}
+				<a href={a}
+					target="_blank"
 					id="create-page"
-					style={{display: 'none'}}></Link>
+					style={{display: 'none'}}></a>
 
 				{this.state.trash === true && <DialogDelete
 

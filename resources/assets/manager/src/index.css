@@ -46,3 +46,42 @@ a {
 .select-header-lang__container > div > div {
 	color: #FFF !important;
 }
+
+.mark:before {
+	font-family: WooCommerce;
+	speak: none;
+	margin-right: 6px;
+}
+ 
+.mark.cancelled:before {
+    content: '\e013';
+}
+
+.mark.neworder:before {
+	content: "\e016";
+}
+
+.mark.inalocalwarehouse:before,
+.mark.shippedbythefactory:before {
+	content: '\e033';
+}
+
+.mark.processing:before {
+	content: '\e011';
+}
+
+.mark.waitingforpayment:before {
+	content: '\e012';
+}
+
+.mark.completed:before {
+	content: '\e015';
+}
+
+.mark.returned:before {
+	content: '\e014';
+}
+
+.mark.hasbeenpaid:before {
+	content: "\e604";
+}
