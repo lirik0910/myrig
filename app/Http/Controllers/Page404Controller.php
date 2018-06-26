@@ -93,5 +93,23 @@ class Page404Controller extends PageController
                 'locale' => $locale
             ]);
         }
+
+        else {
+            $page = Page::whereHas('view', function ($q) {
+                $q->where('title', '404');
+            })->first();
+            return view($page->view->path, [
+                'it' => $page,
+                'get' => $this->get(),
+                'request' => $request,
+                'select' => $this->select(),
+                'settings' => $this->settings($locale_context_id),
+                'inCart' => $cart,
+                'multi' => MultiVariableContent::multiConvert($page->view->variables),
+                'number' => $number,
+                'preview' => $this->preview(),
+                'locale' => $locale
+            ]);
+        }
     }
 }

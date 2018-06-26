@@ -23,6 +23,10 @@ Route::prefix('connector')
 		Route::delete('cart', 'SessionController@delete');
 });
 
+Route::get('manager', function() {
+	return view('content/manager');
+});
+
 Route::get('download-pdf/{number}', 'OrderController@invoice');
 Route::post('create_report', 'ReportController@create');
 Route::post('rep-avail', 'ProductController@all');
