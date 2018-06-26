@@ -114,6 +114,7 @@ class PaperTable extends Component {
 	 */
 	handleChangeRowsPerPage(event) {
 		this.setState({rowsPerPage: event.target.value}, () => {
+			console.log(event.target.value);
 			this.props.onLimitValueChanged(event.target.value);
 		});
 	}
@@ -315,6 +316,7 @@ class PaperTable extends Component {
 									colSpan={6}
 									count={total}
 									rowsPerPage={rowsPerPage}
+									rowsPerPageOptions={[5, 10, 25, 50]}
 									page={page}
 									backIconButtonProps={{
 										'aria-label': 'Previous Page',

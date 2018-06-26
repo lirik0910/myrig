@@ -345,9 +345,11 @@ class EditPageContainer extends Component {
 					<Grid item xs={3}>
 						{completed === 100 && <PaperPageForm
 							linkDefaultValue={data.link}
+                            publishedDefaultValue={data.published}
 							contextDefaultValue={data.context_id}
 							parentDefaultValue={data.parent_id}
 							createDefaultValue={new Date(data.created_at)}
+							publishedAtDefaultValue={data.published_at}
 							viewDefaultValue={data.view_id}
 							onParentSelected={value => {
 								data['parent_id'] = value;
@@ -361,6 +363,10 @@ class EditPageContainer extends Component {
 								data['view_id'] = value;
 								this.setState({ data });
 							}}
+                            onPublishedChanged={value => {
+                                data['published'] = value;
+                                this.setState({ data });
+                            }}
 							onDateSelected={value => {
 								var date = value._d.toISOString().split('T')[0],
 									time = value._d.toLocaleTimeString();

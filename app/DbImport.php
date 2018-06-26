@@ -510,14 +510,14 @@ class DbImport
         /*
          * Comment tables which do you need to import
          */
-        $data['users'] = [];
-        $data['products'] = [];
-        $data['orders'] = [];
-        $data['carts'] = [];
-        $data['user_attrs'] = [];
-        $data['orders_deliveries'] = [];
+        //$data['users'] = [];
+        //$data['products'] = [];
+        //$data['orders'] = [];
+        //$data['carts'] = [];
+        //$data['user_attrs'] = [];
+        //$data['orders_deliveries'] = [];
         //$data['news'] = [];
-        $data['articles'] = [];
+        //$data['articles'] = [];
         //$data['logs'] = [];
 
 
@@ -641,7 +641,7 @@ class DbImport
         /*
          * Import news
          */
-        $newsPage = Page::where('title', 'Новости')->where('context_id', 2)->first();
+        $newsPage = Page::where('title', 'Новости')->orWhere('title', 'News')->where('context_id', 2)->first();
         //$currentNews = Page::where('parent_id', $newsPage->id)->get();
         foreach ($data['news'] as $new){
             $write = true;

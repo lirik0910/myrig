@@ -23,7 +23,7 @@ Route::prefix('connector')
 		Route::delete('cart', 'SessionController@delete');
 });
 
-Route::get('manager', function() {
+Route::get('xlle76n10f', function() {
 	return view('content/manager');
 });
 

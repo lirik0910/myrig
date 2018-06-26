@@ -379,6 +379,11 @@ class ListProductsContainer extends Component {
 								title: this.props.lexicon.table_manage
 							}]}
 							dataItems={data}
+                            onLimitValueChanged={limit =>
+                                this.setState({ limit
+									}, () => {
+                                	this.productsGetDataRequest()
+                                })}
 							onPrevPageClicked={e => this.setState({
 								start: this.state.start - 1
 							}, () => {
@@ -389,6 +394,7 @@ class ListProductsContainer extends Component {
 							}, () => {
 								this.productsGetDataRequest()
 							})} />}
+
 					</Grid>
 				</Grid>
 

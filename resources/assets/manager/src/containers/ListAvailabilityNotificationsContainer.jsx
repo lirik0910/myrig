@@ -425,7 +425,7 @@ class ListAvailabilityNotificationsContainer extends Component
                                 start,
                             }, () => this.notificationsDataGetRequest());
                         }}
-                        onLimitValueChanged={limit => this.setState({ limit })} />}
+                        onLimitValueChanged={limit => this.setState({ limit }, () => { this.notificationsDataGetRequest() })} />}
                 </Grid>
             </Grid>
 

@@ -18,7 +18,7 @@ class LoginController extends Controller
 	 *
 	 * @var string
 	 */
-	protected $redirectTo = '/manager';
+	protected $redirectTo = '/xlle76n10f';
 
 	public function username()
 	{
