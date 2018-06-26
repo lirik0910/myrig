@@ -351,7 +351,8 @@ class PageController extends Controller
 			'context_id',
 			'parent_id',
 			'view_id',
-			'link'
+			'link',
+            'published'
 		]);
 
 		/** Content data about user that created current page
@@ -377,6 +378,13 @@ class PageController extends Controller
 			logger($e->getMessage());
 			return response()->json(['message' => $e->getMessage()], 422);
 		}
+
+		$data['published'] = $data['published'] === 'true' ? 1 : 0;
+		//var_dump($data['published']); die;
+
+        if(!$page->published && $data['published']){
+		    $data['published_at'] = now();
+        }
 
 		if($data['parent_id']){
 		    $currentParentPage = Page::find($data['parent_id']);

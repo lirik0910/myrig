@@ -16,6 +16,7 @@ $ru_parent_page = \App\Model\Base\Page::where('link', $it->link)
 if (isset($page_no)) {
 	$news = App\Model\Base\Page::where('parent_id', $ua_parent_page->id)
 		->orWhere('parent_id', $ru_parent_page->id)
+		->where('published', 1)
 		->offset($page_limit * ($page_no - 1))
 		->orderBy('created_at', 'DESC')
 		->paginate($page_limit);
@@ -23,6 +24,7 @@ if (isset($page_no)) {
 else {
 	$news = App\Model\Base\Page::where('parent_id', $ua_parent_page->id)
 		->orWhere('parent_id', $ru_parent_page->id)
+		->where('published', 1)
 		->orderBy('created_at', 'DESC')
 		->paginate($page_limit);
 }

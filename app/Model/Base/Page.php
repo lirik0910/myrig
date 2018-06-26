@@ -11,6 +11,11 @@ use Illuminate\Database\Eloquent\Collection;
 class Page extends Model
 {
 	protected $guarded = [];
+	protected $dates = [
+	    'created_at',
+        'updated_at',
+        'published_at'
+    ];
 
 	/**
 	 * Bind page with context model

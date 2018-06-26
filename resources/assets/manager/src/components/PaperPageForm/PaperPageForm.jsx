@@ -14,7 +14,9 @@ import InputLink from '../FormControl/InputLink/InputLink.jsx';
 import SelectContext from '../FormControl/SelectContext/SelectContext.jsx';
 import SelectView from '../FormControl/SelectView/SelectView.jsx';
 import InputSelectPage from '../FormControl/InputSelectPage/InputSelectPage.jsx';
+import InputPublishedDate from '../FormControl/InputPublishedDate/InputPublishedDate.jsx';
 import InputDatePicker from '../FormControl/InputDatePicker/InputDatePicker.jsx';
+import CheckboxActive from '../FormControl/CheckboxActive/CheckboxActive.jsx';
 
 import styles from './styles.js';
 import PropTypes from 'prop-types';
@@ -39,11 +41,13 @@ class PaperPageForm extends Component {
 		linkDefaultValue: '',
 		contextDefaultValue: 0,
 		createDefaultValue: new Date(),
+		publishedAtDefaultValue: 0,
 		onLinkInputed: () => {},
 		onDateSelected: () => {},
 		onViewSelected: () => {},
 		onParentSelected: () => {},
 		onContextSelected: () => {},
+		onPublishedChanged: () => {},
 		classes: PropTypes.object.isRequired,
 	}
 
@@ -59,7 +63,9 @@ class PaperPageForm extends Component {
 			viewDefaultValue,
 			parentDefaultValue,
 			createDefaultValue,
-			contextDefaultValue
+			contextDefaultValue,
+			publishedDefaultValue,
+			publishedAtDefaultValue
 		} = this.props;
 
 		return <Paper className={classes.paper}>
@@ -85,9 +91,17 @@ class PaperPageForm extends Component {
 					onFieldInputed={value => this.props.onLinkInputed(value)} />}
 
 				<InputDatePicker
-					title={this.props.lexicon.publish_date_label}
+					title={this.props.lexicon.created_date_label}
 					defaultValue={createDefaultValue}
 					onDateFieldChanged={value => this.props.onDateSelected(value)} />
+				{publishedAtDefaultValue ? <InputPublishedDate
+                    title={this.props.lexicon.publish_date_label}
+                    defaultValue={publishedAtDefaultValue}
+                    disabled={true}/> : null}
+				<CheckboxActive
+					title={this.props.lexicon.published_label}
+					defaultValue={publishedDefaultValue}
+					onCheckboxValueChanged={value => this.props.onPublishedChanged(value)} />
 			</Paper>
 	}
 }

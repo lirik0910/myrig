@@ -317,6 +317,8 @@ class CreatePageContainer extends Component {
 						<PaperPageForm
 							flag={flag}
 							linkDefaultValue={data.link}
+							publishedDefaultValue={data.published}
+                            publishedAtDefaultValue={data.published_at}
 							viewDefaultValue={data.view_id}
 							contextDefaultValue={data.context_id}
 							parentDefaultValue={data.parent_id ? data.parent_id : 0}
@@ -337,6 +339,10 @@ class CreatePageContainer extends Component {
 									time = value._d.toLocaleTimeString();
 				
 								data['created_at'] = date +' '+ time;
+								this.setState({ data });
+							}}
+							onPublishedChanged={value => {
+								data['published'] = value;
 								this.setState({ data });
 							}}
 							onLinkInputed={value => {

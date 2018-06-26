@@ -7,6 +7,16 @@ $parent_link = App\Model\Base\Page::select('link')
 	->where('id', $it->parent_id)
 	->first();
 
+if($it->published !== 1){
+//var_dump('bgbdg'); die;
+	//return Redirect::to($parent_link->link);
+	header('Location: '. URL::to($parent_link->link));
+	redirect($parent_link->link);
+    exit;
+	//header('Location: ' . url());
+	//redirect($parent_link->link);
+}
+
 $prev_link = App\Model\Base\Page::select('link')
 	->where('parent_id', $it->parent_id)
 	->where('id', '<', $it->id)
