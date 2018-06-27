@@ -701,6 +701,13 @@ class ListOrdersContainer extends Component {
 							noteData: data
 						})
 					}}
+					onNoteTypeSelected={value => {
+						data['type'] = value;
+						this.setState({
+							noteData: data
+						})
+						console.log(this.state.noteData);
+					}}
 					onDialogClosed={() => this.setState({
 						noteDialog: false
 					})}

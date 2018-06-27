@@ -94,7 +94,7 @@ class PaperPageForm extends Component {
 					title={this.props.lexicon.created_date_label}
 					defaultValue={createDefaultValue}
 					onDateFieldChanged={value => this.props.onDateSelected(value)} />
-				{publishedAtDefaultValue ? <InputPublishedDate
+				{publishedAtDefaultValue && publishedDefaultValue ? <InputPublishedDate
                     title={this.props.lexicon.publish_date_label}
                     defaultValue={publishedAtDefaultValue}
                     disabled={true}/> : null}
