@@ -21,6 +21,7 @@ import Dialog, {
 import Button from 'material-ui/Button';
 import TextField from 'material-ui/TextField';
 import { FormControl } from 'material-ui/Form';
+import SelectNoticeType from '../FormControl/SelectNoticeType/SelectNoticeType.jsx'
 import Slide from 'material-ui/transitions/Slide';
 import SelectPolicy from '../FormControl/SelectPolicy/SelectPolicy.jsx';
 
@@ -56,6 +57,7 @@ class DialogNotification extends Component {
         inputDefaultValue: '',
         onDialogClosed: () => {},
         onDialogConfirmed: () => {},
+        onNoteTypeSelected: () => {},
         onNoteFieldInputed: () => {},
         classes: PropTypes.object.isRequired,
         content: 'Text your note for this order',
@@ -64,6 +66,12 @@ class DialogNotification extends Component {
     state = {
         createDialogOpen: this.props.defaultValue,
     };
+
+    handleChangeType = value => {
+        //var target = e.target;
+        this.props.onNoteTypeSelected(value);
+        //console.log(value);
+    }
 
     handleInputField = e => {
         var target = e.target;
@@ -95,6 +103,12 @@ class DialogNotification extends Component {
                 <DialogContentText id="dialog-delete-slide-text">
                     {content}
                 </DialogContentText>
+                <SelectNoticeType
+                    defaultValue={0}
+                    required={false}
+                    title={'Select type'}
+                    onItemSelected={value => this.handleChangeType(value)}
+                />
                 <TextField
                     multiline={true}
                     rows={2}
