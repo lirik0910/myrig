@@ -67,43 +67,35 @@
  
 	.mark.cancelled:after {
 	    content: '\e013';
-	    color: #a00;
 	}
 
 	.mark.neworder:after {
 		content: "\e016";
-		color: #ff0000;
 	}
 
 	.mark.inalocalwarehouse:after,
 	.mark.shippedbythefactory:after {
 		content: '\e033';
-		color: #999;
 	}
 
 	.mark.processing:after {
 		content: '\e011';
-		color: #73a724;
 	}
 
 	.mark.waitingforpayment:after {
 		content: '\e012';
-		color: #ffba00;
 	}
 
 	.mark.completed:after {
 		content: '\e015';
-		color: #2ea2cc;
 	}
 
 	.mark.returned:after {
 		content: '\e014';
-		color: #999;
 	}
 
 	.mark.hasbeenpaid:after {
 		content: "\e604";
-		color: #439929;
 	}
 </style>
 
@@ -415,7 +407,9 @@
                                             <div class="table-cell status history-product__count">
                                                 <span class="">
                                                     <p class="hidden-md">{{ __('default.status') }}</p>
-                                                    <span class="mark {{ mb_strtolower(str_replace(' ', '', $order->status->title)) }}" style="color: {{$order->status->color}}">{{ __('common.status_' . str_replace(' ', '_', mb_strtolower($order->status->title))) }}</span><br>
+                                                    <span style="color: {{$order->status->color}} !important">
+                                                    <span class="mark {{ mb_strtolower(str_replace(' ', '', $order->status->title)) }}">{{ __('common.status_' . str_replace(' ', '_', mb_strtolower($order->status->title))) }}</span>
+                                                </span><br>
                                                     @if(isset($status_logs) && count($status_logs) > 0)
                                                         <a class="order-history" data-wpel-link="internal">{{ __('default.history') }}
                                                         <div class="history-dd" style="height: auto !important">
