@@ -17,8 +17,8 @@
 		</div>
 
 		@php
-		$img = env('APP_URL') . 'uploads/' . $slide['sliderIcon'];
-		$imgInfo = getimagesize($img);
+		$img = asset('uploads/' . $slide['sliderIcon']);
+		$imgInfo = getimagesize(public_path() . '/uploads/' . $slide['sliderIcon']);
 		@endphp
 
 		@if($imgInfo[1] < $imgInfo[0])
