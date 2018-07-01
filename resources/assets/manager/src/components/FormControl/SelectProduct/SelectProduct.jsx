@@ -99,7 +99,7 @@ class SelectProduct extends Component {
 				}}>
 
 				<MenuItem value={0}>
-					<em>{'None'}</em>
+					<em>{this.props.lexicon['labelNoneSelected']}</em>
 				</MenuItem>
 
 				{products.map((item, i) => {

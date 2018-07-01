@@ -17,6 +17,7 @@ return [
 	'menuVocabulary' => 'Словарь',
 	'menuClearCache' => 'Очистить кэш',
 	'menuExit' => 'Выход',
+	'labelNoneSelected' => 'Не выбрано',
 
 	'filterSelectContext' => 'Контекст',
 	'helperSelectContext' => 'Изменить контекст',

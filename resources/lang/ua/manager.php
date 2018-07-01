@@ -239,5 +239,6 @@ return [
 	'var_indexSlider' => 'Главный слайдер',
 	'var_calculatorDevices' => 'Калькулятор устройства',
 	'var_hosting' => 'Стоимость хостинга',
-	'mass_actions' => 'Массовые действия'
+	'mass_actions' => 'Массовые действия',
+	'labelNoneSelected' => 'Не выбрано',
 ];

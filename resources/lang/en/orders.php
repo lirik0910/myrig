@@ -17,6 +17,7 @@ return [
 	'menuVocabulary' => 'Dictionary',
 	'menuClearCache' => 'Clear cache',
 	'menuExit' => 'Exit',
+	'labelNoneSelected' => 'None',
 
 	'filterSelectContext' => 'Context',
 	'helperSelectContext' => 'Edit context',

@@ -114,6 +114,10 @@ class SelectPayment extends Component {
 				onChange={this.handleChangeSelect}
 				input={<Input name="payment_type_id" id={inputID} />}>
 
+				<MenuItem value={0}>
+					<em>{this.props.lexicon['labelNoneSelected']}</em>
+				</MenuItem>
+
 				{data.map((item, i) => {
 					return <MenuItem 
 						key={i}

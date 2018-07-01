@@ -241,5 +241,6 @@ return [
 	'var_hosting' => 'Стоимость хостинга',
 	'mass_actions' => 'Массовые действия',
 
-	'appBarOrdersTitle' => 'Заказы'
+	'appBarOrdersTitle' => 'Заказы',
+	'labelNoneSelected' => 'Не выбрано',
 ];
