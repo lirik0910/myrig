@@ -169,7 +169,12 @@ class UserController extends Controller
 		/** Try get model
 		 */
 		try {
-			$model = User::find($id);
+			$model = User::with('orders')
+				->find($id);
+
+			foreach ($model->orders as $order) {
+				$order->orderDeliveries;
+			}
 		}
 		catch(\Exception $e) {
 			logger($e->getMessage());
