@@ -5,6 +5,7 @@
 /public/static/*
 /public/hot
 /public/storage
+/public/js/manager/config.js
 /storage/*.key
 /resources/assets/manager/node_modules
 /vendor
