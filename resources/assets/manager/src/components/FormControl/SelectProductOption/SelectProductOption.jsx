@@ -6,6 +6,9 @@
  */
 
 import App from '../../../App.js';
+
+import { connect } from 'react-redux';
+
 import React, { Component } from 'react';
 import Select from 'material-ui/Select';
 import { MenuItem } from 'material-ui/Menu';
@@ -91,14 +94,14 @@ class SelectProductOption extends Component {
 				input={<Input name="type_id" id={inputID} />}>
 
 				<MenuItem value={0}>
-					<em>{'None'}</em>
+					<em>{this.props.lexicon['labelNoneSelected']}</em>
 				</MenuItem>
 
 				{data.map((item, i) => {
 					return <MenuItem 
 						key={i}
 						value={item.id}>
-							{item.title}
+							{this.props.lexicon['option_'+ item.title]}
 					</MenuItem>
 				})}
 			</Select>
@@ -106,4 +109,15 @@ class SelectProductOption extends Component {
 	}
 }
 
-export default withStyles(styles)(SelectProductOption);
+/**
+ * Init redux states
+ * @param {Object} state
+ * @return {Object}
+ */
+function mapStateToProps(state) {
+	return {
+		lexicon: state.lexicon
+	}
+}
+
+export default connect(mapStateToProps)(withStyles(styles)(SelectProductOption));

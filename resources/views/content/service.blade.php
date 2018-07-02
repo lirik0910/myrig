@@ -33,6 +33,24 @@
 <link rel="stylesheet" href="{{ URL::asset('css/style.css?ver=1.55') }}">
 <link rel="stylesheet" id="dashicons-css"  href="{{ URL::asset('css/dashicons.min.css?ver=4.9.4') }}" type="text/css" media="all" />
 
+<link rel="apple-touch-icon" sizes="57x57" href="/favicon/fav-new.png">
+<link rel="apple-touch-icon" sizes="60x60" href="/favicon/fav-new.png">
+<link rel="apple-touch-icon" sizes="72x72" href="/favicon/fav-new.png">
+<link rel="apple-touch-icon" sizes="76x76" href="/favicon/fav-new.png">
+<link rel="apple-touch-icon" sizes="114x114" href="/favicon/fav-new.png">
+<link rel="apple-touch-icon" sizes="120x120" href="/favicon/fav-new.png">
+<link rel="apple-touch-icon" sizes="144x144" href="/favicon/fav-new.png">
+<link rel="apple-touch-icon" sizes="152x152" href="/favicon/fav-new.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/favicon/fav-new.png">
+<link rel="icon" type="image/png" sizes="192x192"  href="/favicon/fav-new.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon/fav-new.png">
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon/fav-new.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon/fav-new.png">
+<link rel="manifest" href="/favicon/manifest.json">
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="msapplication-TileImage" content="/favicon/fav-new.png">
+<meta name="theme-color" content="#ffffff">
+
 <script type="text/javascript" src="{{ asset('js/jquery-1.11.0.min.js') }}"></script>
 <script type="text/javascript">
     window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/2.4\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/2.4\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/myrig.com.ua\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.9.4"}};
@@ -119,7 +137,7 @@
 								</button>
 								
 								<a class="navbar-brand" href="{{ asset('/') }}" data-wpel-link="internal">
-									<img src="{{ $preview(asset('uploads/design/logo.png'), 162, 35) }}" alt="{{ env('APP_NAME') }}" style="width: 162px"/>
+									<img src="{{ $preview(asset('uploads/design/logo.png'), 316, 68) }}" alt="{{ env('APP_NAME') }}" style="width: 162px"/>
 								</a>
 							</div>
 							
@@ -240,6 +258,12 @@
         })->get();
 
     $courses = $select('App\Model\Shop\ExchangeRate')->get()->groupBy('title');
+
+    $infoPages = $select('App\Model\Base\Page')
+        ->where('parent_id', 0)
+        ->where('context_id', $context->id)
+        ->where('view_id', 10)
+        ->get();
 @endphp
 
 <footer class="footer">
@@ -286,7 +310,7 @@
 			<div class="row">
 				<div class="col-sm-2 col-md-2 col-lg-2 logo">
 					<a href="{{ asset('/') }}" data-wpel-link="internal">
-						<img src="{{ $preview(asset('uploads/design/logo.png'), 162, 35) }}" alt="logo"/>
+						<img src="{{ $preview(asset('uploads/design/logo.png'), 316, 68) }}" alt="logo"/>
 					</a>
 					
 					<div class="payment">
@@ -316,19 +340,15 @@
 						@endforeach
 					</ul>
 
-					<!--<ul id="menu-footer-menu-2" class="">
-						<li id="menu-item-820" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-820">
-							<a href="https://myrig.com.ua/dostavka-otgruzka/" data-wpel-link="internal">Shipping and shipment</a>
+					<ul id="menu-footer-menu-2" class="">
+						@foreach ($infoPages as $page)
+						<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-820">
+							<a href="{{ $page->link }}">
+								{{ $page->title }}
+							</a>
 						</li>
-						
-						<li id="menu-item-730" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-730">
-							<a href="https://myrig.com.ua/wrnt/" data-wpel-link="internal">Extended warranty</a>
-						</li>
-						
-						<li id="menu-item-4714" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-4714">
-							<a href="https://myrig.com.ua/how-to-repair/" data-wpel-link="internal">Packing of items</a>
-						</li>
-					</ul>-->
+						@endforeach
+					</ul>
 				</div>
 				
 				<div class="col-sm-12 col-md-3 col-lg-3">

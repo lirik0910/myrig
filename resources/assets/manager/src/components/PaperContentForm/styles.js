@@ -21,7 +21,7 @@ const styles = theme => ({
 	contentEditor: {
 		fontFamily: 'arial',
 		color: '#000',
-		height: '226px'
+		height: '594px'
 	},
 });
 

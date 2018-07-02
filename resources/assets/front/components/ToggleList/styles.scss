@@ -7,6 +7,8 @@
 	position: absolute;
 	border: 1px solid #60A645;
 	background-color: #FFF;
+	overflow-y: auto;
+	max-height: 294px;
 
 	.list__item {
 		padding: 0 12px;

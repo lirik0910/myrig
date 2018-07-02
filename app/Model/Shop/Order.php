@@ -121,14 +121,9 @@ class Order extends Model
 		
 		$cost = 0;
 		foreach ($cart as $item) {
-
-            if($item->product->auto_price){
-                $price = number_format($item->product->calcAutoPrice(), 2, '.', '');
-            } else{
-                $price = number_format($item->product->price, 2, '.', '');
-            }
-			//$price = $item->product->price;
+			$price = $item->cost;
 			$count = $item->count;
+
 			$discount = $item->discount;
 
 			$cost += ($count * ($price - $discount));
@@ -150,7 +145,8 @@ class Order extends Model
 		$log = new OrderLog;
 
 		$log->order_id = $this->id;
-		$log->user_id = $this->user_id;
+		$log->user_id = Auth::user()->id;
+
 		$log->type = 'status';
 		$log->value = $status->title;
 		$log->save();
@@ -170,11 +166,8 @@ class Order extends Model
         $items = $this->carts()->get();
         $btcCost = 0;
         foreach ($items as $item){
-            $btcCost += $item->btcCost;
-            //var_dump($item->pivot->btcCost); die;
+            $btcCost += $item->btcCost * $item->count;
         }
-        //var_dump($items); die;
-        //$order_cost = $this->cost;
 
         return number_format($btcCost, 4, '.', '');
     }

@@ -10,6 +10,8 @@ if(isset($_SESSION['client'])){
 }
 
 $user = $select('App\Model\Base\User')->where('email', $client_email)->with('attributes')->first();
+
+
 $count = 0;
 foreach ($inCart as $i) {
 	$count += (int) $i;
@@ -153,8 +155,7 @@ foreach ($products as $item) {
 						@foreach($paymentTypes as $type)
 						<li class="list__item">
 							<input id="{{ 'payment-type__item-' . $type->id }}" type="radio" class="font-weight-light payment-type__input" name="payment_method" data-id="{{ $type->id }}" value="{{ $type->id }}" style="display: inline" @if($loop->first) checked='checked' @endif />
-
-							<label class="font-weight-normal" for="{{ 'payment-type__item-' . $type->id }}">@if($type->title == 'Cash'){{ __('default.cash') }}@else{{ $type->title }}@endif</label>
+							<label class="font-weight-normal" for="{{ 'payment-type__item-' . $type->id }}">{{__('default.payment_' .strtolower($type->title)) }}</label>
 						</li>
 						@endforeach
 					</ul>
@@ -164,7 +165,7 @@ foreach ($products as $item) {
 					<h3 class="additional-data-title__container">{{ __('default.additional_info') }}</h3>
 
 					<div style="padding: 18px 26px">
-						<textarea name="comment" class="field__input field__grey d-block" placeholder="{{ __('default.comment_placeholder') }}"  rows="2" cols="5"></textarea>
+						<textarea name="comment" class="font-weight-light field__input field__grey d-block" placeholder="{{ __('default.comment_placeholder') }}"  rows="2" cols="5"></textarea>
 					</div>
 				</div>
 			</div>

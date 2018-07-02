@@ -42,6 +42,7 @@ class PageController extends Controller
 		if (isset($params['parent_id'])) {
 			$c = $c->where('parent_id', $params['parent_id']);
 		}
+		$c = $c->orderBy('created_at', 'DESC');
 
 		return $c;
 	}
@@ -304,6 +305,11 @@ class PageController extends Controller
 		    $data['parent_id'] = $parentPage->id;
         }
 
+        $data['published'] = $data['published'] === 'true' ? 1 : 0;
+
+        if($data['published']){
+            $data['published_at'] = now();
+        }
 		/** Create new model
 		 */
 		$model = new Page;
@@ -350,7 +356,8 @@ class PageController extends Controller
 			'context_id',
 			'parent_id',
 			'view_id',
-			'link'
+			'link',
+            'published'
 		]);
 
 		/** Content data about user that created current page
@@ -376,6 +383,13 @@ class PageController extends Controller
 			logger($e->getMessage());
 			return response()->json(['message' => $e->getMessage()], 422);
 		}
+
+		$data['published'] = $data['published'] === 'true' ? 1 : 0;
+		//var_dump($data['published']); die;
+
+        if(!$page->published && $data['published']){
+		    $data['published_at'] = now();
+        }
 
 		if($data['parent_id']){
 		    $currentParentPage = Page::find($data['parent_id']);

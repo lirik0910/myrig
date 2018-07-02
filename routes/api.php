@@ -13,6 +13,6 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::group(['prefix' => '/page'], function() {
+/*Route::group(['prefix' => '/page'], function() {
 	Route::get('/{id}', 'Manager\PageController@get');
-});
+});*/

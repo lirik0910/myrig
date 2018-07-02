@@ -11,6 +11,9 @@
 import App from '../App.js';
 import React, { Component } from 'react';
 
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
 import Grid from 'material-ui/Grid';
 import { Link } from 'react-router-dom';
 import Menu from '../components/Menu/Menu.jsx';
@@ -24,6 +27,8 @@ import PaperContentForm from '../components/PaperContentForm/PaperContentForm.js
 
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
+
+import * as StateLexiconAction from 'actions/StateLexiconAction.js';
 
 /**
  * Users base container
@@ -49,7 +54,8 @@ class CreatePageContainer extends Component {
 		completed: 100,
 		resultDialog: false,
 		resultDialogTitle: '',
-		resultDialogMessage: ''
+		resultDialogMessage: '',
+		langLoaded: false
 	}
 
 	/**
@@ -58,6 +64,16 @@ class CreatePageContainer extends Component {
 	 */
 	componentWillMount() {
 		this.getUrlProps();
+
+		App.defineCurrentLang((r) => {
+			if (App.isEmpty(r) === false) {
+				this.props.StateLexiconAction.get(r, () => {
+					this.setState({
+						langLoaded: true
+					});
+				});
+			}
+		});
 	}
 
 	/**
@@ -215,16 +231,28 @@ class CreatePageContainer extends Component {
 			resultDialogMessage
 		} = this.state;
 
+		if (this.state.langLoaded === false) 
+			return <div className="create-page__container">
+				<LinearProgress color="secondary" variant="determinate" value={0} />
+			</div>
+
 		return <div className="create-page__container">
 				{completed === 0 && 
 					<LinearProgress color="secondary" variant="determinate" value={completed} />}
 					
 				<Header
-					title={'Pages list'} />
+					title={this.props.lexicon.pages_list_title} />
 				<Menu />
 
 				<TopTitle
-					title={'New page'}
+					addButtonTitle={this.props.lexicon.new_page}
+					saveButtonTitle={this.props.lexicon.save_label}
+					trashButtonTitle={this.props.lexicon.empty_trash_label}
+					duplicateButtonTitle={this.props.lexicon.duplicate_label}
+					deleteButtonTitle={this.props.lexicon.delete_button}
+					recoveryButtonTitle={this.props.lexicon.recovery_button}
+					title={this.props.lexicon.new_page_title}
+
 					saveButtonDisplay={true}
 					onSaveButtonClicked={() => this.pagePostRequest()} />
 
@@ -232,7 +260,7 @@ class CreatePageContainer extends Component {
 					defaultValue={tab}
 					onTabButtonClicked={tab => this.setState({ tab })}
 					data={[
-						'Page',
+						this.props.lexicon.page_title,
 						//'Additional fields',
 					]} />
 
@@ -245,6 +273,11 @@ class CreatePageContainer extends Component {
 				
 					<Grid item xs={9}>
 						<PaperContentForm
+							inputTitle={this.props.lexicon.title_label}
+							introTitle={this.props.lexicon.introtext_label}
+							descrTitle={this.props.lexicon.description_label}
+							articulTitle={this.props.lexicon.articul_label}
+
 							descrShow
 							introShow
 							onEditorAreaInputed={value => {
@@ -284,6 +317,8 @@ class CreatePageContainer extends Component {
 						<PaperPageForm
 							flag={flag}
 							linkDefaultValue={data.link}
+							publishedDefaultValue={data.published}
+                            publishedAtDefaultValue={data.published_at}
 							viewDefaultValue={data.view_id}
 							contextDefaultValue={data.context_id}
 							parentDefaultValue={data.parent_id ? data.parent_id : 0}
@@ -304,6 +339,10 @@ class CreatePageContainer extends Component {
 									time = value._d.toLocaleTimeString();
 				
 								data['created_at'] = date +' '+ time;
+								this.setState({ data });
+							}}
+							onPublishedChanged={value => {
+								data['published'] = value;
 								this.setState({ data });
 							}}
 							onLinkInputed={value => {
@@ -336,4 +375,26 @@ let styles = theme => ({
 	},
 });
 
-export default withStyles(styles)(CreatePageContainer);
+/**
+ * Init redux states
+ * @param {Object} state
+ * @return {Object}
+ */
+function mapStateToProps(state) {
+	return {
+		lexicon: state.lexicon
+	}
+}
+
+/**
+ * Init redux actions
+ * @param {Function} dispatch
+ * @return {Object}
+ */
+function mapDispatchToProps(dispatch) {
+	return {
+		StateLexiconAction: bindActionCreators(StateLexiconAction, dispatch)
+	}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(CreatePageContainer));

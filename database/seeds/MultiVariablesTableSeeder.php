@@ -102,28 +102,28 @@ class MultiVariablesTableSeeder extends Seeder
 
 		$variable = App\Model\Base\Variable::where('title', 'indexSlider')->first();
 		App\Model\Base\MultiVariable::create([
-			'title' => 'header',
+			'title' => 'slideHeader',
 			'type' => 'input',
 			'description' => 'Slide header',
 			'variable_id' => $variable->id
 		]);
 
 		App\Model\Base\MultiVariable::create([
-			'title' => 'content',
+			'title' => 'slideContent',
 			'type' => 'richtext',
 			'description' => 'Slide content',
 			'variable_id' => $variable->id
 		]);
 
 		App\Model\Base\MultiVariable::create([
-			'title' => 'link',
+			'title' => 'slideLink',
 			'type' => 'input',
 			'description' => 'Link',
 			'variable_id' => $variable->id
 		]);
 
 		App\Model\Base\MultiVariable::create([
-			'title' => 'icon',
+			'title' => 'sliderIcon',
 			'type' => 'image',
 			'description' => 'Slide image',
 			'variable_id' => $variable->id

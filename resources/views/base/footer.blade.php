@@ -1,7 +1,11 @@
 @php
 	$context = $select('App\Model\Base\Context')->where('title', $locale)->first();
 
-	$productsPage = $select('App\Model\Base\Page')->where('parent_id', 0)->where('context_id', $context->id)->where('view_id', 3)->first();
+	$productsPage = $select('App\Model\Base\Page')
+		->where('parent_id', 0)
+		->where('context_id', $context->id)
+		->where('view_id', 3)
+		->first();
 
 	$otherPages = $select('App\Model\Base\Page')
 		->where('parent_id', 0)
@@ -14,9 +18,11 @@
 
 	$courses = $select('App\Model\Shop\ExchangeRate')->get()->groupBy('title');
 
-	$deliveryPage = $select('App\Model\Base\Page')->where('title', 'Доставка и отгрузка')->first();
-	$warrantyPage = $select('App\Model\Base\Page')->where('title', 'Расширенная гарантия')->first();
-	$packagingPage = $select('App\Model\Base\Page')->where('title', 'Упаковка отправлений')->first();
+	$infoPages = $select('App\Model\Base\Page')
+		->where('parent_id', 0)
+		->where('context_id', $context->id)
+		->where('view_id', 10)
+		->get();
 @endphp
 
 <footer id="footer__container" class="footer__container">
@@ -97,27 +103,13 @@
 				</ul>
 			
 				<ul class="list__container margin_links padding__collapse col-sm-7">
-					@if($deliveryPage)
-						<li class="list__item">
-							<a href="{{ $deliveryPage->link }}">
-								{{ $deliveryPage->title }}
-							</a>
-						</li>
-					@endif
-					@if($warrantyPage)
-						<li class="list__item">
-							<a href="{{ $warrantyPage->link }}">
-								{{ $warrantyPage->title }}
-							</a>
-						</li>
-					@endif
-					@if($packagingPage)
-						<li class="list__item">
-							<a href="{{ $packagingPage->link }}">
-								{{ $packagingPage->title }}
-							</a>
-						</li>
-					@endif
+					@foreach ($infoPages as $page)
+					<li class="list__item">
+						<a href="{{ $page->link }}">
+							{{ $page->title }}
+						</a>
+					</li>
+					@endforeach
 				</ul>
 			</div>
 
@@ -154,7 +146,7 @@
 				</div>
 
 				<div class="locales__container">
-					<a title="USA" href="{{ env('EN_DOMAIN') . '?locale=en' }}">
+					<a title="USA" href="https://myrig.com/">
 						<img src="{{ asset('uploads/design/us.png') }}" alt="USA">
 					</a>
 

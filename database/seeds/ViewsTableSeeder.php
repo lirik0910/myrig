@@ -111,6 +111,12 @@ class ViewsTableSeeder extends Seeder
             'title' => 'Checkout success',
             'description' => 'Template for checkout success page',
             'path' => 'content/checkoutSuccess'
+        ]); 
+
+        App\Model\Base\View::create([
+            'title' => 'dragonmint-16-th-s-2',
+            'description' => 'Template for dragonmint-16-th-s-2',
+            'path' => 'product/dragonmint-16-th-s-2'
         ]);
 	}
 }

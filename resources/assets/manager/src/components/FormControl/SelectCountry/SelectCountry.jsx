@@ -63,26 +63,6 @@ class SelectOrderStatus extends Component {
 	}
 
 	/**
-	 * Invoked just before mounting occurs
-	 * @fires componentWillMount
-	 */
-	componentWillMount() {
-		// this.setState({ 
-		// 	value: this.defaultprops.defaultValue,
-		// }, () => {
-		// 	this.countryDataGetRequest(data => this.props.onDataLoaded(data));
-		// });
-	}
-
-	/**
-	 * Get data about contexts
-	 * @param {Function} callback
-	 */
-	countryDataGetRequest(callback = () => {}) {
-		
-	}
-
-	/**
 	 * Change select fields
 	 * @fires click
 	 * @param {Object} e

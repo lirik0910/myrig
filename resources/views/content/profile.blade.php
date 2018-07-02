@@ -33,12 +33,71 @@
 <link rel="stylesheet" href="{{ URL::asset('css/style.css?ver=1.55') }}">
 <link rel="stylesheet" id="dashicons-css"  href="{{ URL::asset('css/dashicons.min.css?ver=4.9.4') }}" type="text/css" media="all" />
 
+<link rel="apple-touch-icon" sizes="57x57" href="/favicon/fav-new.png">
+<link rel="apple-touch-icon" sizes="60x60" href="/favicon/fav-new.png">
+<link rel="apple-touch-icon" sizes="72x72" href="/favicon/fav-new.png">
+<link rel="apple-touch-icon" sizes="76x76" href="/favicon/fav-new.png">
+<link rel="apple-touch-icon" sizes="114x114" href="/favicon/fav-new.png">
+<link rel="apple-touch-icon" sizes="120x120" href="/favicon/fav-new.png">
+<link rel="apple-touch-icon" sizes="144x144" href="/favicon/fav-new.png">
+<link rel="apple-touch-icon" sizes="152x152" href="/favicon/fav-new.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/favicon/fav-new.png">
+<link rel="icon" type="image/png" sizes="192x192"  href="/favicon/fav-new.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon/fav-new.png">
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon/fav-new.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon/fav-new.png">
+<link rel="manifest" href="/favicon/manifest.json">
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="msapplication-TileImage" content="/favicon/fav-new.png">
+<meta name="theme-color" content="#ffffff">
+
 <script type="text/javascript" src="{{ asset('js/jquery-1.11.0.min.js') }}"></script>
 <script type="text/javascript">
     window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/2.4\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/2.4\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/myrig.com.ua\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.9.4"}};
     !function(a,b,c){function d(a,b){var c=String.fromCharCode;l.clearRect(0,0,k.width,k.height),l.fillText(c.apply(this,a),0,0);var d=k.toDataURL();l.clearRect(0,0,k.width,k.height),l.fillText(c.apply(this,b),0,0);var e=k.toDataURL();return d===e}function e(a){var b;if(!l||!l.fillText)return!1;switch(l.textBaseline="top",l.font="600 32px Arial",a){case"flag":return!(b=d([55356,56826,55356,56819],[55356,56826,8203,55356,56819]))&&(b=d([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]),!b);case"emoji":return b=d([55357,56692,8205,9792,65039],[55357,56692,8203,9792,65039]),!b}return!1}function f(a){var c=b.createElement("script");c.src=a,c.defer=c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var g,h,i,j,k=b.createElement("canvas"),l=k.getContext&&k.getContext("2d");for(j=Array("flag","emoji"),c.supports={everything:!0,everythingExceptFlag:!0},i=0;i<j.length;i++)c.supports[j[i]]=e(j[i]),c.supports.everything=c.supports.everything&&c.supports[j[i]],"flag"!==j[i]&&(c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&c.supports[j[i]]);c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&!c.supports.flag,c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.everything||(h=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",h,!1),a.addEventListener("load",h,!1)):(a.attachEvent("onload",h),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),g=c.source||{},g.concatemoji?f(g.concatemoji):g.wpemoji&&g.twemoji&&(f(g.twemoji),f(g.wpemoji)))}(window,document,window._wpemojiSettings);
 </script>
 <meta name="google-site-verification" content="YroKW8N1nmTvNHctf_WMuPtVYhPqE4bklPM-o6buvrc" />
+
+<style>
+	.mark:after {
+	    font-family: WooCommerce;
+	    speak: none;
+ 
+	}
+ 
+	.mark.cancelled:after {
+	    content: '\e013';
+	}
+
+	.mark.neworder:after {
+		content: "\e016";
+	}
+
+	.mark.inalocalwarehouse:after,
+	.mark.shippedbythefactory:after {
+		content: '\e033';
+	}
+
+	.mark.processing:after {
+		content: '\e011';
+	}
+
+	.mark.waitingforpayment:after {
+		content: '\e012';
+	}
+
+	.mark.completed:after {
+		content: '\e015';
+	}
+
+	.mark.returned:after {
+		content: '\e014';
+	}
+
+	.mark.hasbeenpaid:after {
+		content: "\e604";
+	}
+</style>
 
 	</head>
 
@@ -197,11 +256,14 @@
 //var_dump($client_email); die;
 
           //  var_dump($user); die;
-            if($user == NULL){
+            if($user == NULL || !isset($user)){
             //var_dump($user); die;
+            header('Location: '. URL::to('sso-login'));
                 redirect('sso-login');
+                exit;
             }
             //var_dump($user); die;
+
             $orders = App\Model\Shop\Order::where('user_id', $user->id)->with('products')->get();
 
         @endphp
@@ -274,9 +336,7 @@
                                     @foreach($orders as $order)
                                         @php
                                             $btcCost = $order->countBtcCost();
-                                            //var_dump($btcCost); die;
                                             $status_logs = $order->logs->sortBy('created_at');
-                                            //var_dump($status_logs); die;
                                         @endphp
                                         <div class="table-row  table-row-border table-row-top-several">
                                             <div class="table-cell table-cell-border">
@@ -285,10 +345,10 @@
                                                     <span class="order-data">@php echo date('d-m-Y', strtotime($order->created_at)) @endphp</span>
                                                 </div>
                                             </div>
-                                            @if(count($order->products) > 1)
+                                            @if(count($order->carts) > 1)
                                                 <div class="table-cell table-product-cell">
                                                     <div class="order_thumbs order_thumbs_several">
-                                                        <span class="several_products">@php echo count($order->products) @endphp {{ __('default.items_profile') }}</span>
+                                                        <span class="several_products">@php echo count($order->carts) @endphp {{ __('default.items_profile') }}</span>
                                                         <a href=".order-{{$order->number}}" data-wpel-link="internal" class="">
                                                             <span class="show_products"><i class="fa fa-chevron-down" aria-hidden="true"></i>{{ __('default.show') }}</span>
                                                             <span class="hide_products"><i class="fa fa-chevron-up" aria-hidden="true"></i>{{ __('default.hide') }}</span>
@@ -296,46 +356,60 @@
                                                     </div>
                                                 </div>
                                             @else
-                                                @foreach($order->products as $product)
-                                                @php
-                                                   //  var_dump($product->pivot); die;
-                                                    $price = number_format($product->pivot->cost, 2, '.', '');
-                                                    $btcPrice = number_format($product->pivot->btcCost, 4, '.', '');
-
-/*                                                    if($product->auto_price){
-                                                        $price = number_format($product->calcAutoPrice(), 2, '.', '');
-                                                    } else{
-                                                        $price = number_format($product->price, 2, '.', '');
-                                                    }
-                                                    $btcPrice = number_format($product->calcBtcPrice(), 4, '.', '');*/
-                                                @endphp
-                                                <div class="table-cell table-product-cell">
-                                                    <div class="order_thumbs">
-                                                        <img src="@if(count($product->images)){{asset('uploads/' . App\Model\Shop\ProductImage::where('product_id', $product->id)->first()->name)}}@endif" title="{{$product->title}}">
-                                                        <div class="cost">
-                                                            <a @if(isset($product->page) && !empty($product->page))href="{{$product->page->link}}" @endif data-wpel-link="internal">{{$product->title}}</a>
-                                                            <span class="hidden-md">{{ __('default.item_cost') }}</span>
-                                                            <span class="table-price">${{ $price }}</span>
-                                                            @if($btcPrice > 0)<span class="table-bitcoin">{{ $btcPrice }}<i class="fa fa-bitcoin"></i></span>@endif
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                @endforeach
-
+{{--												@if(count($order->carts) > 0)--}}
+													@foreach($order->carts as $item)
+														@php
+                                                             $price = number_format($item->cost, 2, '.', '');
+                                                             $btcPrice = number_format($item->btcCost, 4, '.', '');
+                                                             $product = $item->product;
+														@endphp
+														<div class="table-cell table-product-cell">
+															<div class="order_thumbs">
+																<img src="@if($product && count($product->images)){{asset('uploads/' . App\Model\Shop\ProductImage::where('product_id', $product->id)->first()->name)}} @else {{asset('uploads/default/' . ($locale !== 'en' ? 'ru.no-photo.jpeg' : 'en.no-photo.jpg'))}} @endif" title="@if($product){{$product->title}}@else {{ $item->title }} @endif">
+																<div class="cost">
+																	<a @if($product && isset($product->page) && !empty($product->page))href="{{$product->page->link}}" @endif data-wpel-link="internal">@if($product){{$product->title}}@else {{ $item->title }} @endif</a>
+																	<span class="hidden-md">{{ __('default.item_cost') }}</span>
+																	<span class="table-price">${{ $price }}</span>
+																	@if($btcPrice > 0)<span class="table-bitcoin">{{ $btcPrice }}<i class="fa fa-bitcoin"></i></span>@endif
+																</div>
+															</div>
+														</div>
+													@endforeach
+{{--												@else--}}
+{{--													@foreach($order->carts as $item)
+														@php
+                                                             $price = number_format($item->cost, 2, '.', '');
+                                                             $btcPrice = number_format($item->btcCost, 4, '.', '');
+														@endphp
+														<div class="table-cell table-product-cell">
+															<div class="order_thumbs">
+																<img src="{{asset('uploads/default/' . ($locale !== 'en' ? 'ru.no-photo.jpeg' : 'en.no-photo.jpg'))}}" title="{{$item->title}}">
+																<div class="cost">
+																	<a data-wpel-link="internal">{{$item->title}}</a>
+																	<span class="hidden-md">{{ __('default.item_cost') }}</span>
+																	<span class="table-price">${{ $price }}</span>
+																	@if($btcPrice > 0)<span class="table-bitcoin">{{ $btcPrice }}<i class="fa fa-bitcoin"></i></span>@endif
+																</div>
+															</div>
+														</div>
+													@endforeach--}}
+{{--												@endif--}}
                                             @endif
-                                            <div class="table-cell number" style="padding-top: 0px !important; vertical-align: middle !important;">
+                                            <div class="table-cell number history-product__count" style="padding-top: 0px !important; vertical-align: middle !important;">
                                                 <span class="hidden-md">{{ __('default.count') }}</span>
                                                 <span> @php $count = 0; foreach($order->carts as $cart){ $count += $cart->count; } echo $count @endphp</span>
                                             </div>
-                                            <div class="table-cell number number-price">
+                                            <div class="table-cell number number-price history-product__count">
                                                 <span class="hidden-md">{{ __('default.total') }}</span>
                                                 <span class="table-price"><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">$</span>{{ number_format($order->cost, 2, '.', '') }}</span></span>
                                                 @if($btcCost > 0)<span class="table-bitcoin">{{ $btcCost }}<i class="fa fa-bitcoin"></i></span>@endif
                                             </div>
-                                            <div class="table-cell status">
+                                            <div class="table-cell status history-product__count">
                                                 <span class="">
-                                                    <!--<p class="hidden-md">{{ __('default.status') }}</p>-->
-                                                    <span class="mark cancelled" style="color: {{$order->status->color}}">{{ __('common.status_' . str_replace(' ', '_', mb_strtolower($order->status->title))) }}</span><br>
+                                                    <p class="hidden-md">{{ __('default.status') }}</p>
+                                                    <span style="color: {{$order->status->color}} !important">
+                                                    <span class="mark {{ mb_strtolower(str_replace(' ', '', $order->status->title)) }}">{{ __('common.status_' . str_replace(' ', '_', mb_strtolower($order->status->title))) }}</span>
+                                                </span><br>
                                                     @if(isset($status_logs) && count($status_logs) > 0)
                                                         <a class="order-history" data-wpel-link="internal">{{ __('default.history') }}
                                                         <div class="history-dd" style="height: auto !important">
@@ -366,48 +440,80 @@
                                             </div>
                                             <div class="table-cell" style="width: 10px"></div>
                                         </div>
-                                        @if(count($order->products) > 1)
-                                            @foreach($order->products as $product)
-                                                @php
-                                                    $price = number_format($product->pivot->cost, 2, '.', '');
-                                                    $btcPrice = number_format($product->pivot->btcCost, 4, '.', '');
-                                                    //var_dump($btcPrice); die;
-/*                                                    if($product->auto_price){
-                                                        $price = number_format($product->calcAutoPrice(), 2, '.', '');
-                                                    } else{
-                                                        $price = number_format($product->price, 2, '.', '');
-                                                    }
-                                                    $btcPrice = number_format($product->calcBtcPrice(), 4, '.', '');*/
-                                                @endphp
-                                                <div class="table-row hidden-block table-row-several order-{{$order->number}}">
-                                                    <div class="table-cell table-cell-border table-cell-border-none">
-                                                    </div>
-                                                    <div class="table-cell table-product-cell">
-                                                        <div class="order_thumbs">
-                                                            <img src="@if(count($product->images)){{asset('uploads/' . $product->images[0]->name)}}@endif" title="{{$product->title}}">
-                                                            <div class="cost">
-                                                                <a @if(isset($product->page) && !empty($product->page))href="{{$product->page->link}}" @endif data-wpel-link="internal">{{$product->title}}</a>
-                                                                <span class="hidden-md">{{ __('default.cost') }}</span>
-                                                                <span class="table-price">${{ $price }}</span>
-                                                                @if($btcPrice != 0)<span class="table-bitcoin">{{ $btcPrice }}<i class="fa fa-bitcoin"></i></span>@endif
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="table-cell number" style="padding-top: 0px !important; vertical-align: middle !important;">
-                                                        <span class="hidden-md">{{ __('default.count') }}</span>
-                                                        <span> {{$product->pivot->count}} </span>
-                                                    </div>
-                                                    <div class="table-cell number number-price">
-                                                        <span class="hidden-md">{{ __('default.item_cost') }}</span>
-                                                        <span class="table-price">$@php echo $price * $product->pivot->count; @endphp</span>
-                                                        @if($btcPrice > 0)<span class="table-bitcoin">{{ $btcPrice * $product->pivot->count }}<i class="fa fa-bitcoin"></i></span>@endif
-                                                    </div>
-                                                    <div class="table-cell status">
-                                                    </div>
-                                                    <div class="table-cell "></div>
-                                                </div>
-                                            @endforeach
-                                        @endif
+										@if(count($order->carts) > 1)
+										{{--	@if(count($order->products) > 0)--}}
+												@foreach($order->carts as $item)
+													@php
+														$price = number_format($item->cost, 2, '.', '');
+                                                        $btcPrice = number_format($item->btcCost, 4, '.', '');
+														$product = $item->product;
+													@endphp
+													<div class="table-row hidden-block table-row-several order-{{$order->number}}">
+														<div class="table-cell table-cell-border table-cell-border-none">
+														</div>
+														<div class="table-cell table-product-cell">
+															<div class="order_thumbs">
+																<img src="@if($product && count($product->images)){{asset('uploads/' . $product->images[0]->name)}}@else {{asset('uploads/default/' . ($locale !== 'en' ? 'ru.no-photo.jpeg' : 'en.no-photo.jpg'))}}  @endif" title="@if($product){{$product->title}} @else {{ $item->title }} @endif">
+																<div class="cost">
+																	<a @if($product && isset($product->page) && !empty($product->page))href="{{$product->page->link}}" @endif data-wpel-link="internal">@if($product){{$product->title}}@else {{ $item->title }} @endif </a>
+																	<span class="hidden-md">{{ __('default.cost') }}</span>
+																	<span class="table-price">${{ $price }}</span>
+																	@if($btcPrice != 0)<span class="table-bitcoin">{{ $btcPrice }}<i class="fa fa-bitcoin"></i></span>@endif
+																</div>
+															</div>
+														</div>
+														<div class="table-cell number" style="padding-top: 0px !important; vertical-align: middle !important;">
+															<span class="hidden-md">{{ __('default.count') }}</span>
+															<span> {{$item->count}} </span>
+														</div>
+														<div class="table-cell number number-price">
+															<span class="hidden-md">{{ __('default.item_cost') }}</span>
+															<span class="table-price">$@php echo $price * $item->count; @endphp</span>
+															@if($btcPrice > 0)<span class="table-bitcoin">{{ $btcPrice * $item->count }}<i class="fa fa-bitcoin"></i></span>@endif
+														</div>
+														<div class="table-cell status">
+														</div>
+														<div class="table-cell "></div>
+													</div>
+												@endforeach
+{{--											@endif--}}
+{{--												@foreach($order->carts as $item)
+													@php
+														$price = number_format($item->cost, 2, '.', '');
+                                                        $btcPrice = number_format($item->btcCost, 4, '.', '');
+													@endphp
+													<div class="table-row hidden-block table-row-several order-{{$order->number}}">
+														<div class="table-cell table-cell-border table-cell-border-none">
+														</div>
+														<div class="table-cell table-product-cell">
+															<div class="order_thumbs">
+																<img src="{{asset('uploads/default/' . ($locale !== 'en' ? 'ru.no-photo.jpeg' : 'en.no-photo.jpg'))}}" title="{{$product->title}}">
+																<div class="cost">
+																	<a data-wpel-link="internal">{{$item->title}}</a>
+																	<span class="hidden-md">{{ __('default.cost') }}</span>
+																	<span class="table-price">${{ $price }}</span>
+																	@if($btcPrice != 0)<span class="table-bitcoin">{{ $btcPrice }}<i class="fa fa-bitcoin"></i></span>@endif
+																</div>
+															</div>
+														</div>
+														<div class="table-cell number" style="padding-top: 0px !important; vertical-align: middle !important;">
+															<span class="hidden-md">{{ __('default.count') }}</span>
+															<span> {{$product->pivot->count}} </span>
+														</div>
+														<div class="table-cell number number-price">
+															<span class="hidden-md">{{ __('default.item_cost') }}</span>
+															<span class="table-price">$@php echo $price * $product->pivot->count; @endphp</span>
+															@if($btcPrice > 0)<span class="table-bitcoin">{{ $btcPrice * $product->pivot->count }}<i class="fa fa-bitcoin"></i></span>@endif
+														</div>
+														<div class="table-cell status">
+														</div>
+														<div class="table-cell "></div>
+													</div>
+												@endforeach--}}
+{{--											@endif--}}
+
+										@endif
+
                                     @endforeach
                                 </div>
                             </div>
@@ -432,6 +538,12 @@
         })->get();
 
     $courses = $select('App\Model\Shop\ExchangeRate')->get()->groupBy('title');
+
+    $infoPages = $select('App\Model\Base\Page')
+		->where('parent_id', 0)
+		->where('context_id', $context->id)
+		->where('view_id', 10)
+		->get();
 @endphp
 
 <footer class="footer">
@@ -508,19 +620,15 @@
 						@endforeach
 					</ul>
 
-					<!--<ul id="menu-footer-menu-2" class="">
-						<li id="menu-item-820" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-820">
-							<a href="https://myrig.com.ua/dostavka-otgruzka/" data-wpel-link="internal">Shipping and shipment</a>
+					<ul id="menu-footer-menu-2" class="">
+						@foreach ($infoPages as $page)
+						<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-820">
+							<a href="{{ $page->link }}">
+								{{ $page->title }}
+							</a>
 						</li>
-						
-						<li id="menu-item-730" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-730">
-							<a href="https://myrig.com.ua/wrnt/" data-wpel-link="internal">Extended warranty</a>
-						</li>
-						
-						<li id="menu-item-4714" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-4714">
-							<a href="https://myrig.com.ua/how-to-repair/" data-wpel-link="internal">Packing of items</a>
-						</li>
-					</ul>-->
+						@endforeach
+					</ul>
 				</div>
 				
 				<div class="col-sm-12 col-md-3 col-lg-3">

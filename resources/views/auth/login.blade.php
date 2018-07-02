@@ -5,14 +5,14 @@
 	<div class="row justify-content-center">
 		<div class="col-md-8">
 			<div class="card card-default">
-				<div class="card-header">Login</div>
+				<div class="card-header">{{ __('manager.login_title') }}</div>
 
 				<div class="card-body">
 					<form method="POST" action="{{ route('login') }}">
 						@csrf
 
 						<div class="form-group row">
-							<label for="name" class="col-sm-4 col-form-label text-md-right">Name</label>
+							<label for="name" class="col-sm-4 col-form-label text-md-right">{{ __('manager.login_name') }}</label>
 
 							<div class="col-md-6">
 								<input id="name" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" value="{{ old('name') }}" required autofocus>
@@ -26,7 +26,7 @@
 						</div>
 
 						<div class="form-group row">
-							<label for="password" class="col-md-4 col-form-label text-md-right">Password</label>
+							<label for="password" class="col-md-4 col-form-label text-md-right">{{ __('manager.login_password') }}</label>
 
 							<div class="col-md-6">
 								<input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
@@ -43,7 +43,7 @@
 							<div class="col-md-6 offset-md-4">
 								<div class="checkbox">
 									<label>
-										<input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> Remember Me
+										<input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> {{ __('manager.login_remember') }}
 									</label>
 								</div>
 							</div>
@@ -52,11 +52,11 @@
 						<div class="form-group row mb-0">
 							<div class="col-md-8 offset-md-4">
 								<button type="submit" class="btn btn-primary">
-									Login
+									{{ __('manager.login_title') }}
 								</button>
 
 								<a class="btn btn-link" href="{{ route('password.request') }}">
-									Forgot Your Password?
+									{{ __('manager.login_forgot') }}
 								</a>
 							</div>
 						</div>

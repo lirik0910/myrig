@@ -18,11 +18,11 @@ class ProductsTableSeeder extends Seeder
 
 		/** Get default category
 		 */
-/*		$mainCategory = App\Model\Shop\ProductCategory::where('title', 'Base')->firstOrFail();
-		$subCategory = App\Model\Shop\ProductCategory::where('title', 'Additional')->firstOrFail();*/
+		//$mainCategory = App\Model\Shop\ProductCategory::where('title', 'Base')->firstOrFail();
+		//$subCategory = App\Model\Shop\ProductCategory::where('title', 'Additional')->firstOrFail();
 
-		/** Get default vendor
-		 */
+		// Get default vendor
+		 
 		$vendor = App\Model\Shop\Vendor::where('title', 'Base')->firstOrFail();
 
 		$preOrderStatus = App\Model\Shop\ProductStatus::where('title', 'pre-order')->first();
@@ -54,7 +54,7 @@ class ProductsTableSeeder extends Seeder
                 'context_id' => $context->id,
                 //'category_id' => $mainCategory->id,
                 'vendor_id' => $vendor->id,
-                'page_id' => $page->id,
+                'page_id' => 0,
                 'product_status_id' => $inStockStatus->id,
                 'warranty' => '180 days',
                 'title' => 'ANTMINER S9 13.5TH/s',
@@ -75,7 +75,7 @@ class ProductsTableSeeder extends Seeder
                 'context_id' => $context->id,
                 //'category_id' => $mainCategory->id,
                 'vendor_id' => $vendor->id,
-                'page_id' => $page->id,
+                'page_id' => 0,
                 'product_status_id' => $inStockStatus->id,
                 'warranty' => '180 days',
                 'title' => 'ANTMINER D3 19.3GH/s',
@@ -102,7 +102,7 @@ class ProductsTableSeeder extends Seeder
                 'context_id' => $context->id,
                 //'category_id' => $subCategory->id,
                 'vendor_id' => $vendor->id,
-                'page_id' => $page->id,
+                'page_id' => 0,
                 'warranty' => '365 days',
                 'product_status_id' => $inStockStatus->id,
                 'title' => 'BP MYRIG 12V 1680W',
@@ -119,7 +119,7 @@ class ProductsTableSeeder extends Seeder
                 'context_id' => $context->id,
                 //'category_id' => $subCategory->id,
                 'vendor_id' => $vendor->id,
-                'page_id' => $page->id,
+                'page_id' => 0,
                 'warranty' => '365 days',
                 'product_status_id' => $inStockStatus->id,
                 'title' => 'AntRouter R1',
@@ -136,7 +136,7 @@ class ProductsTableSeeder extends Seeder
                 'context_id' => $context->id,
                 //'category_id' => $subCategory->id,
                 'vendor_id' => $vendor->id,
-                'page_id' => $page->id,
+                'page_id' => 0,
                 'warranty' => '90 days',
                 'product_status_id' => $inStockStatus->id,
                 'title' => 'Control board D3 / L3',
@@ -151,7 +151,7 @@ class ProductsTableSeeder extends Seeder
                 'context_id' => $context->id,
                 //'category_id' => $subCategory->id,
                 'vendor_id' => $vendor->id,
-                'page_id' => $page->id,
+                'page_id' => 0,
                 'warranty' => '90 days',
                 'product_status_id' => $notAvailableStatus->id,
                 'title' => '6000RPM Fan',
@@ -171,7 +171,7 @@ class ProductsTableSeeder extends Seeder
                 'context_id' => $context->id,
                 //'category_id' => $subCategory->id,
                 'vendor_id' => $vendor->id,
-                'page_id' => $page->id,
+                'page_id' => 0,
                 'warranty' => '90 days',
                 'product_status_id' => $inStockStatus->id,
                 'title' => 'Beagle Bone S9/T9/R4',
@@ -190,7 +190,7 @@ class ProductsTableSeeder extends Seeder
                 'context_id' => $context->id,
                 //'category_id' => $subCategory->id,
                 'vendor_id' => $vendor->id,
-                'page_id' => $page->id,
+                'page_id' => 0,
                 'warranty' => '90 days',
                 'product_status_id' => $inStockStatus->id,
                 'title' => 'Data 18 pin cable',
@@ -212,7 +212,7 @@ class ProductsTableSeeder extends Seeder
                 'context_id' => $context->id,
                 //'category_id' => $subCategory->id,
                 'vendor_id' => $vendor->id,
-                'page_id' => $page->id,
+                'page_id' => 0,
                 'warranty' => '90 days',
                 'product_status_id' => $inStockStatus->id,
                 'title' => 'Control board S5 / S7',
@@ -230,7 +230,7 @@ class ProductsTableSeeder extends Seeder
                 'context_id' => $context->id,
                 //'category_id' => $subCategory->id,
                 'vendor_id' => $vendor->id,
-                'page_id' => $page->id,
+                'page_id' => 0,
                 'warranty' => '90 days',
                 'product_status_id' => $inStockStatus->id,
                 'title' => 'Control board S9 / T9 / R4',
@@ -249,7 +249,7 @@ class ProductsTableSeeder extends Seeder
                 'context_id' => $context->id,
                 //'category_id' => $subCategory->id,
                 'vendor_id' => $vendor->id,
-                'page_id' => $page->id,
+                'page_id' => 0,
                 'warranty' => '90 days',
                 'product_status_id' => $notAvailableStatus->id,
                 'title' => 'Beagle Bone S5/S7',

@@ -29,7 +29,8 @@ class PagesTableSeeder extends Seeder
 		$viewCalc = App\Model\Base\View::where('title', 'Calculator')->firstOrFail();
 		$viewProduct = App\Model\Base\View::where('title', 'Product')->firstOrFail();
 		$viewCheckout = App\Model\Base\View::where('title', 'Checkout')->firstOrFail();
-		$viewCheckoutSuccess = App\Model\Base\View::where('title', 'Checkout success')->firstOrFail();
+        $viewCheckoutSuccess = App\Model\Base\View::where('title', 'Checkout success')->firstOrFail();
+		$viewProductDragonmint = App\Model\Base\View::where('title', 'dragonmint-16-th-s-2')->firstOrFail();
 
 		/** Get default user
 		 */
@@ -73,162 +74,6 @@ class PagesTableSeeder extends Seeder
                 'link' => 'shop',
                 'title' => 'Products',
                 'description' => 'Products page',
-                'introtext' => '',
-                'content' => '',
-                'createdby_id' => $user->id,
-                'updatedby_id' => $user->id
-            ]);
-
-            App\Model\Base\Page::create([
-                'parent_id' => $products->id,
-                'context_id' => $context->id,
-                'view_id' => $viewProduct->id,
-                'link' => 'product/dragonmint-16-th-s-2',
-                'title' => 'DragonMint 16TH/s',
-                'description' => 'DragonMint 16TH/s - the latest innovation on the Bitcoin mining market, created by Halong Mining',
-                'introtext' => '',
-                'content' => '',
-                'createdby_id' => $user->id,
-                'updatedby_id' => $user->id
-            ]);
-
-            App\Model\Base\Page::create([
-                'parent_id' => $products->id,
-                'context_id' => $context->id,
-                'view_id' => $viewProduct->id,
-                'link' => 'product/antminer-s9-13-5th-s',
-                'title' => 'ANTMINER S9 13.5TH/s',
-                'description' => 'Antminer S9 - one of the latest innovations in the line of miners, produced by Bitmain',
-                'introtext' => '',
-                'content' => '',
-                'createdby_id' => $user->id,
-                'updatedby_id' => $user->id
-            ]);
-
-            App\Model\Base\Page::create([
-                'parent_id' => $products->id,
-                'context_id' => $context->id,
-                'view_id' => $viewProduct->id,
-                'link' => 'product/antminer-d3-19-3gh-s',
-                'title' => 'ANTMINER D3 19.3GH/s',
-                'description' => 'Antminer D3 - equipment for mining, developed by specialists BITMAIN.',
-                'introtext' => '',
-                'content' => '',
-                'createdby_id' => $user->id,
-                'updatedby_id' => $user->id
-            ]);
-
-            App\Model\Base\Page::create([
-                'parent_id' => $products->id,
-                'context_id' => $context->id,
-                'view_id' => $viewProduct->id,
-                'link' => 'product/myrig1660',
-                'title' => 'BP MYRIG 12V 1680W',
-                'description' => 'BP MYRIG provide a maximum power of 1240 watts if it is connected to a 110 V network power supply.',
-                'introtext' => '',
-                'content' => '',
-                'createdby_id' => $user->id,
-                'updatedby_id' => $user->id
-            ]);
-
-            App\Model\Base\Page::create([
-                'parent_id' => $products->id,
-                'context_id' => $context->id,
-                'view_id' => $viewProduct->id,
-                'link' => 'product/antrouter-r1',
-                'title' => 'AntRouter R1',
-                'description' => 'AntRouter R1 is a wireless network device that contains a chip for bitcoins',
-                'introtext' => '',
-                'content' => '',
-                'createdby_id' => $user->id,
-                'updatedby_id' => $user->id
-            ]);
-
-            App\Model\Base\Page::create([
-                'parent_id' => $products->id,
-                'context_id' => $context->id,
-                'view_id' => $viewProduct->id,
-                'link' => 'product/plata-upravlenia-d3-l3',
-                'title' => 'Control board D3 / L3',
-                'description' => 'Control board D3 / L3',
-                'introtext' => '',
-                'content' => '',
-                'createdby_id' => $user->id,
-                'updatedby_id' => $user->id
-            ]);
-
-            App\Model\Base\Page::create([
-                'parent_id' => $products->id,
-                'context_id' => $context->id,
-                'view_id' => $viewProduct->id,
-                'link' => 'product/fan_6000rpm',
-                'title' => '6000RPM Fan',
-                'description' => '6000RPM Fan',
-                'introtext' => '',
-                'content' => '',
-                'createdby_id' => $user->id,
-                'updatedby_id' => $user->id
-            ]);
-
-            App\Model\Base\Page::create([
-                'parent_id' => $products->id,
-                'context_id' => $context->id,
-                'view_id' => $viewProduct->id,
-                'link' => 'product/beagle-bone-s9-t9-r4',
-                'title' => 'Beagle Bone S9/T9/R4',
-                'description' => 'Beagle Bone S9/T9/R4',
-                'introtext' => '',
-                'content' => '',
-                'createdby_id' => $user->id,
-                'updatedby_id' => $user->id
-            ]);
-
-            App\Model\Base\Page::create([
-                'parent_id' => $products->id,
-                'context_id' => $context->id,
-                'view_id' => $viewProduct->id,
-                'link' => 'product/data_18pin',
-                'title' => 'Data 18 pin cable',
-                'description' => 'Data 18 pin cable',
-                'introtext' => '',
-                'content' => '',
-                'createdby_id' => $user->id,
-                'updatedby_id' => $user->id
-            ]);
-
-            App\Model\Base\Page::create([
-                'parent_id' => $products->id,
-                'context_id' => $context->id,
-                'view_id' => $viewProduct->id,
-                'link' => 'product/plata-upravleniya-s5-s7',
-                'title' => 'Control board S5 / S7',
-                'description' => 'Control board S5 / S7',
-                'introtext' => '',
-                'content' => '',
-                'createdby_id' => $user->id,
-                'updatedby_id' => $user->id
-            ]);
-
-            App\Model\Base\Page::create([
-                'parent_id' => $products->id,
-                'context_id' => $context->id,
-                'view_id' => $viewProduct->id,
-                'link' => 'product/plata-upravleniya-s9-t9-r4',
-                'title' => 'Control board S9 / T9 / R4',
-                'description' => 'Control board S9 / T9 / R4',
-                'introtext' => '',
-                'content' => '',
-                'createdby_id' => $user->id,
-                'updatedby_id' => $user->id
-            ]);
-
-            App\Model\Base\Page::create([
-                'parent_id' => $products->id,
-                'context_id' => $context->id,
-                'view_id' => $viewProduct->id,
-                'link' => 'product/beagle-s5-s7',
-                'title' => 'Beagle Bone S5/S7',
-                'description' => 'Beagle Bone S5/S7',
                 'introtext' => '',
                 'content' => '',
                 'createdby_id' => $user->id,
@@ -352,6 +197,19 @@ class PagesTableSeeder extends Seeder
                 'link' => 'checkout/order_success',
                 'title' => 'Checkout success',
                 'description' => 'Checkout success page',
+                'introtext' => '',
+                'content' => '',
+                'createdby_id' => $user->id,
+                'updatedby_id' => $user->id
+            ]);
+
+            $product_dragonmint = App\Model\Base\Page::create([
+                'parent_id' => 0,
+                'context_id' => $context->id,
+                'view_id' => $viewProductDragonmint->id,
+                'link' => 'product/dragonmint-16-th-s-2',
+                'title' => 'dragonmint-16-th-s-2',
+                'description' => 'Dragonmint page',
                 'introtext' => '',
                 'content' => '',
                 'createdby_id' => $user->id,

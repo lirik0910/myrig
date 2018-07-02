@@ -5,7 +5,7 @@ export default class Base {
 			_body: $('body'),
 			_window: $(window),
 			_document: $(document),
-			_rootContainer: $('#root_container'),
+			_rootContainer: $('#root__container'),
 			_linkCartContainer: $('#link-cart__container'),
 			_cartButton: $('.cart__button'),
 			_csrfToken: $('meta[name="csrf-token"]').attr('content'),

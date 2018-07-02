@@ -91,7 +91,7 @@ class InputSelectPage extends Component {
 					
 					this.setState({ data: r.data.map(item => ({
 						value: item.id,
-						label: item.name,
+						label: item.attributes ? item.attributes.fname + ' ' +item.attributes.lname : item.name,
 						...item
 					})) }, () => callback(r));
 				}

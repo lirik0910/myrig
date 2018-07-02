@@ -13,10 +13,10 @@ class ContextsTableSeeder extends Seeder
 	{
 		/** Add base context
 		 */
-		App\Model\Base\Context::create([
+/*		App\Model\Base\Context::create([
 			'title' => 'EN',
 			'description' => 'USA context'
-		]);
+		]);*/
 
 		/** Add ua context
 		 */

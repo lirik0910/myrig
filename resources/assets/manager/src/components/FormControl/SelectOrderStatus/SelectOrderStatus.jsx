@@ -6,6 +6,9 @@
  */
 
 import App from '../../../App.js';
+
+import { connect } from 'react-redux';
+
 import React, { Component } from 'react';
 import Select from 'material-ui/Select';
 import { MenuItem } from 'material-ui/Menu';
@@ -113,11 +116,15 @@ class SelectOrderStatus extends Component {
 				onChange={this.handleChangeSelect}
 				input={<Input name="order_status_id" id={inputID} />}>
 
+				<MenuItem value={0}>
+					<em>{this.props.lexicon['labelNoneSelected']}</em>
+				</MenuItem>
+
 				{data.map((item, i) => {
 					return <MenuItem 
 						key={i}
 						value={item.id}>
-							{item.description}
+							{this.props.lexicon['status_'+ item.title]}
 					</MenuItem>
 				})}
 			</Select>
@@ -125,4 +132,15 @@ class SelectOrderStatus extends Component {
 	}
 }
 
-export default withStyles(styles)(SelectOrderStatus);
+/**
+ * Init redux states
+ * @param {Object} state
+ * @return {Object}
+ */
+function mapStateToProps(state) {
+	return {
+		lexicon: state.lexicon
+	}
+}
+
+export default connect(mapStateToProps)(withStyles(styles)(SelectOrderStatus));

@@ -18,28 +18,9 @@ class ClientAuthController
 
     public function __construct(Request $request)
     {
-        switch ($request->getSchemeAndHttpHost()) {
-            case config('app.ua_domain'):
-                $locale = 'ua';
-                break;
+        $current_domain = $request->getSchemeAndHttpHost();
 
-            case config('app.ru_domain'):
-                $locale = 'ru';
-                break;
-
-            case config('app.en_domain'):
-                $locale = 'en';
-                break;
-
-            default:
-                break;
-        }
-        App::setLocale($locale);
-        //$this->appurl = $_SERVER['SERVER_NAME'];
-        $domain = App::getLocale() . '_domain';
-        //var_dump($domain); die;
-        $this->homeappurl = config('app.' . App::getLocale() . '_domain') . '/sso-login';
-       // var_dump($this->homeappurl); die;
+        $this->homeappurl = $current_domain . '/sso-login';
     }
 
     /*
@@ -82,6 +63,7 @@ class ClientAuthController
         $action = $request->get('action');
 
         if (isset($ssoToken)) {
+           // var_dump($ssoToken); die;
             $data = ['procedure' => 'com.backend.sso.validatetoken', 'args' => [$ssoToken, $this->homeappurl]];
             $signed = $this->prepareSignature($data);
 
@@ -137,6 +119,7 @@ class ClientAuthController
                 }
 
                 $_SESSION['client'] = $data['email'];
+          //    var_dump($_SESSION); die;
                 //session()->put('client', $data['email']);
                 return redirect('/checkout');
             } else {
@@ -170,6 +153,7 @@ class ClientAuthController
             $user = NULL;
         }
 
+        //var_dump($user, $this->loggedin); die;
         if($user || $this->loggedin === true){
             return redirect('/profile');
         } else {

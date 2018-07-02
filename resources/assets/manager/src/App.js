@@ -1,4 +1,5 @@
 import Api from './Api.json';
+import Cookies from 'js-cookie';
 
 /**
  * Base manager methods
@@ -18,7 +19,7 @@ class App {
 	}
 
 	name() {
-		return '/manager';
+		return '/xlle76n10f';
 	}
 
 	uploads() {
@@ -123,7 +124,9 @@ class App {
 		}
 
 		else if (typeof opt.data !== 'undefined') {
+			//console.log(opt.data)
 			for (i in opt.data) {
+				//console.log(opt.data[i])
 				if (typeof opt.data[i] !== 'object') {
 					data += i +'='+ encodeURIComponent(opt.data[i]) +'&';
 				}
@@ -161,6 +164,41 @@ class App {
 					opt.error(xhr);
 			}
 		}
+	}
+
+	defineCurrentLang(callback = () => {}) {
+		let current = Cookies.get('lang');
+
+		if (typeof current === 'undefined') {
+			let lang = window.location.host.split('.')[0];
+
+			if (lang === 'ua' || lang === 'ru') {
+				current = lang;
+				Cookies.set('lang', lang);
+			}
+
+			else {
+				current = 'en';
+				Cookies.set('lang', 'en');
+			}
+		}
+
+		this.getCurrentLangResource(current, (e) => callback(e));
+	}
+
+	getCurrentLangResource(lang = 'en', callback = () => {}) {
+		this.api({
+			type: 'GET',
+			name: 'one',
+			model: 'lexicon',
+			resource: lang,
+			success: (r) => {
+				r = JSON.parse(r.response);
+				if (r) {
+					callback(r);
+				}
+			}
+		});
 	}
 };
 

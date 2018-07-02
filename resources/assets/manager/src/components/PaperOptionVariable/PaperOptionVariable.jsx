@@ -8,6 +8,8 @@
 import App from '../../App.js';
 import React, { Component } from 'react';
 
+import { connect } from 'react-redux';
+
 import Paper from 'material-ui/Paper';
 import Button from 'material-ui/Button';
 import Typography from 'material-ui/Typography';
@@ -187,7 +189,12 @@ class PaperOptionVariable extends Component {
 							onFieldTypeSelected={value => {
 								data[i].type_id = value;
 								this.setState({ data }, () => this.props.onVariableUpdated(data));
-							}} />
+							}}
+
+							nameLabel={this.props.lexicon.table_name}
+							valueLabel={this.props.lexicon.value_label}
+							namePlaceholder={this.props.lexicon.input_name}
+							valuePlaceholder={this.props.lexicon.input_value} />
 					})}
 
 					<FormHelperText>
@@ -198,7 +205,7 @@ class PaperOptionVariable extends Component {
 							className={classes.button}
 							onClick={this.handleAddField}>
 								<AddIcon />
-								{'Add field'}
+								{this.props.lexicon.add_field_label}
 						</Button>
 					</FormHelperText>
 				</FormControl>}
@@ -206,4 +213,15 @@ class PaperOptionVariable extends Component {
 	}
 }
 
-export default withStyles(styles)(PaperOptionVariable);
+/**
+ * Init redux states
+ * @param {Object} state
+ * @return {Object}
+ */
+function mapStateToProps(state) {
+	return {
+		lexicon: state.lexicon
+	}
+}
+
+export default connect(mapStateToProps)(withStyles(styles)(PaperOptionVariable));

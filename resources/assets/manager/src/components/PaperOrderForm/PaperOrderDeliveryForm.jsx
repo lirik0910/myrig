@@ -7,6 +7,8 @@
 
 import React, { Component } from 'react';
 
+import { connect } from 'react-redux';
+
 import Paper from 'material-ui/Paper';
 import InputPrice from '../FormControl/InputPrice/InputPrice.jsx';
 import InputWarranty from '../FormControl/InputWarranty/InputWarranty.jsx';
@@ -38,6 +40,7 @@ class PaperOrderDeliveryForm extends Component {
 	 * @property {Object} classes Material defult classes collection 
 	 */
 	static defaultProps = {
+		data: {},
 		deliveryDefaultValue: 5,
 		priceDefaultValue: '',
 		statusDefaultValue: 0,
@@ -53,6 +56,10 @@ class PaperOrderDeliveryForm extends Component {
 		onCountrySelected: () => {},
 		classes: PropTypes.object.isRequired,
 	}
+
+	state = {
+		countryDefaultValue: ''
+	};
 
 	/**
 	 * Get categories
@@ -86,22 +93,28 @@ class PaperOrderDeliveryForm extends Component {
 	 * @return {Object} jsx object
 	 */
 	render() {
-		let { 
+		let {
+			data,
 			classes,
 			userDefaultValue,
 			createDefaultValue,
 			contextDefaultValue,
 			statusDefaultValue,
 			deliveryDefaultValue,
-			countryDefaultValue,
 		} = this.props;
+
+		let {
+			countryDefaultValue
+		} = this.state;
 
 		return <Paper className={classes.paper}>
 			<Button className={classes.right}
 				onClick={e => {
 					let fields = ['_first_name', '_last_name', '_email', '_phone', '_city', '_state', '_address', '_country'];
-					let country = {};
-					document.getElementById('select-country').value = countryDefaultValue;
+					countryDefaultValue = document.getElementById('select-country').value;
+					this.setState({ countryDefaultValue });
+
+					//document.getElementById('select-country').value = countryDefaultValue;
 					fields.forEach((f) => {
 						if(document.getElementById('d'+f) && document.getElementById('p'+f))
 							document.getElementById('d'+f).value = document.getElementById('p'+f).value;
@@ -109,16 +122,18 @@ class PaperOrderDeliveryForm extends Component {
 				}}
 				className={classes.button} 
 				variant="raised">
-					{"fetch from previous form"}
+					{this.props.lexicon.fetch_previous_form}
 			</Button>
 			<SelectDelivery
 				required
+				title={this.props.lexicon.select_delivery_type}
 				defaultValue={deliveryDefaultValue}
+				value={countryDefaultValue}
 				onItemSelected={value => this.props.onDeliverySelected(value)} />
 
 			<TextField
 				id="d_first_name"
-				label="First name"
+				label={this.props.lexicon.first_name}
 				type="text"
 				name="d_first_name"
 				className={classes.textField}
@@ -128,7 +143,7 @@ class PaperOrderDeliveryForm extends Component {
 
 			<TextField
 				id="d_last_name"
-				label="Last name"
+				label={this.props.lexicon.last_name}
 				type="text"
 				name="d_last_name"
 				defaultValue=""
@@ -136,15 +151,17 @@ class PaperOrderDeliveryForm extends Component {
 				InputLabelProps={{
 					shrink: true
 				}} />
-			
 
 			<SelectCountry
+				title={this.props.lexicon.select_country}
+				defaultValue={countryDefaultValue}
 				required
+				value={countryDefaultValue}
 				onItemSelected={value => this.props.onCountrySelected(value)} />
 
 			<TextField
 				id="d_email"
-				label="Email"
+				label={this.props.lexicon.table_email}
 				type="email"
 				name="d_email"
 				defaultValue=""
@@ -155,7 +172,7 @@ class PaperOrderDeliveryForm extends Component {
 		
 			<TextField
 				id="d_phone"
-				label="Phone"
+				label={this.props.lexicon.phone_label}
 				type="phone"
 				name="d_phone"
 				defaultValue=""
@@ -166,7 +183,7 @@ class PaperOrderDeliveryForm extends Component {
 		
 			<TextField
 				id="d_city"
-				label="City"
+				label={this.props.lexicon.city_label}
 				type="city"
 				name="d_city"
 				defaultValue=""
@@ -177,7 +194,7 @@ class PaperOrderDeliveryForm extends Component {
 		
 			<TextField
 				id="d_state"
-				label="State"
+				label={this.props.lexicon.state_label}
 				type="state"
 				name="d_state"
 				defaultValue=""
@@ -188,7 +205,7 @@ class PaperOrderDeliveryForm extends Component {
 		
 			<TextField
 				id="d_address"
-				label="Address"
+				label={this.props.lexicon.address_label}
 				type="address"
 				name="d_address"
 				defaultValue=""
@@ -199,7 +216,7 @@ class PaperOrderDeliveryForm extends Component {
 
 			<TextField
 				id="d_office"
-				label="office"
+				label={this.props.lexicon.office_label}
 				type="office number"
 				name="d_office"
 				defaultValue=""
@@ -210,7 +227,7 @@ class PaperOrderDeliveryForm extends Component {
 
 			<TextField
 				id="d_passport"
-				label="passport"
+				label={this.props.lexicon.passport_label}
 				type="passport"
 				name="d_passport"
 				defaultValue=""
@@ -221,7 +238,7 @@ class PaperOrderDeliveryForm extends Component {
 
 			<TextField
 				id="d_zendesk"
-				label="zendesk"
+				label={this.props.lexicon.zendesk_label}
 				type="zendesk"
 				name="d_zendesk"
 				defaultValue=""
@@ -232,7 +249,7 @@ class PaperOrderDeliveryForm extends Component {
 
 			<TextField
 				id="d_warranty"
-				label="warranty"
+				label={this.props.lexicon.warranty_label}
 				type="warranty"
 				name="d_warranty"
 				defaultValue=""
@@ -243,7 +260,7 @@ class PaperOrderDeliveryForm extends Component {
 
 			<TextField
 				id="d_waybill"
-				label="Waybill (ТТН)"
+				label={this.props.lexicon.waybill_label}
 				type="Waybill"
 				name="d_waybill"
 				defaultValue=""
@@ -257,4 +274,15 @@ class PaperOrderDeliveryForm extends Component {
 	}
 }
 
-export default withStyles(styles)(PaperOrderDeliveryForm);
+/**
+ * Init redux states
+ * @param {Object} state
+ * @return {Object}
+ */
+function mapStateToProps(state) {
+	return {
+		lexicon: state.lexicon
+	}
+}
+
+export default connect(mapStateToProps)(withStyles(styles)(PaperOrderDeliveryForm));

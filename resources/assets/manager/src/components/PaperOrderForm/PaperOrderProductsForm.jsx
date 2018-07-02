@@ -6,6 +6,8 @@
  */
 import App from '../../App.js';
 
+import { connect } from 'react-redux';
+
 import React, { Component } from 'react';
 import Grid from 'material-ui/Grid';
 
@@ -105,7 +107,9 @@ class PaperOrderProductsForm extends Component {
 			type: 'GET',
 			name: 'all',
 			model: 'product',
-			data: {category_id: this.props.category_id},
+			data: this.props.category_id > 0 ? 
+				{ category_id: this.props.category_id } :
+				{},
 			success: (r) => {
 				r = JSON.parse(r.response).data;
 				if (r) {
@@ -141,6 +145,7 @@ class PaperOrderProductsForm extends Component {
 
 				<Grid item xs={6}>
 					<SelectCategory
+						title={this.props.lexicon.select_category}
 						defaultValue={category_id}
 						onItemSelected={v=>{
 							this.props.onCategorySelected(v)
@@ -148,8 +153,11 @@ class PaperOrderProductsForm extends Component {
 								type: 'GET',
 								name: 'all',
 								model: 'product',
-								data: {category_id: v},
+								data: v > 0 ?
+									{ category_id: v } :
+									{},
 								success: (r) => {
+									console.log(r);
 									r = JSON.parse(r.response).data;
 									if (r) {
 										this.setState({ products: r });
@@ -160,9 +168,10 @@ class PaperOrderProductsForm extends Component {
 					/>
 
 					<SelectProduct
+						title={this.props.lexicon.select_product_form}
 						products={products}
 						contexts={contexts}
-						onItemSelected={i=>{
+						onItemSelected={i => {
 							this.props.onProductSelected(i)
 							product_id = i;
 							this.setState({product_id: i}); 
@@ -180,12 +189,18 @@ class PaperOrderProductsForm extends Component {
 								success: (r) => {
 									r = JSON.parse(r.response);
 									if (r && r.product) {
+										r.product['count'] = 1;
+										r.product['discount'] = 0
+
 										cart.push(r.product);
-										cart = cart.map((c) => {
-											c.count = 1;
-											c.discount = 0;
-											return c;
-										});
+										//cart = cart.map((c) => {
+										//	c.count = 1;
+										//	c.discount = 0;
+										//	return c;
+										//});
+
+										console.log(194, cart)
+
 										this.setState({ cart });
 										this.props.onCartChanged(cart);
 									}
@@ -195,31 +210,35 @@ class PaperOrderProductsForm extends Component {
 						className={classes.button} 
 						variant="raised">
 							<Add className={classes.leftIcon} />
-							{"Add product"}
+							{this.props.lexicon.add_product}
 					</Button>
 				</Grid>
 				<Grid item xs={6}>
 					<div>
-					<span className={classes.costItem}> Cost :{cart.length && cart.reduce((sum, i) => sum + (i.price * i.count), 0)}</span>
-					<span className={classes.costItem}> Discount : {cart.length && cart.reduce((sum, i) => sum + i.discount * i.count, 0)}</span>
-					<span className={classes.costItem}> Total : {cart.length && cart.reduce((sum, i) => sum + (i.price - i.discount) * i.count, 0)}</span>
+					<span className={classes.costItem}>{this.props.lexicon.cost_label} {cart.length && cart.reduce((sum, i) => sum + (i.price * i.count), 0)}</span>
+					<span className={classes.costItem}>{this.props.lexicon.discount_label} {cart.length && cart.reduce((sum, i) => sum + i.discount * i.count, 0)}</span>
+					<span className={classes.costItem}>{this.props.lexicon.total_label} {cart.length && cart.reduce((sum, i) => sum + (i.price - i.discount) * i.count, 0)}</span>
 					</div>
 				
-				{cart.map((item, i) => (
-					 <PaperOrderProductForm
+				{cart.map((item, i) => {
+					return <PaperOrderProductForm
 						key={i}
 						data={item}
-						onItemChanged={(i,key)=>{
+						onItemChanged={(i,key) => {
 							cart[key] = i;
 							this.setState({ cart });
+
+							console.log(223, cart)
 							this.props.onCartChanged(cart);
 						}}
-						onItemRemoved={(key)=>{
+						onItemRemoved={(key) => {
 							cart.splice(key-1, 1);
 							this.setState({ cart });
+
+							console.log(230, cart)
 							this.props.onCartChanged(cart);
 						}}
-					/>)
+					/>}
 				)}
 
 				</Grid>
@@ -229,4 +248,15 @@ class PaperOrderProductsForm extends Component {
 	}
 }
 
-export default withStyles(styles)(PaperOrderProductsForm);
+/**
+ * Init redux states
+ * @param {Object} state
+ * @return {Object}
+ */
+function mapStateToProps(state) {
+	return {
+		lexicon: state.lexicon
+	}
+}
+
+export default connect(mapStateToProps)(withStyles(styles)(PaperOrderProductsForm));

@@ -285,9 +285,9 @@ class DbImport
                 }
 
                 if($billing_country == 'UA'){
-                    $orders[$order->id]['context_id'] = 2;
+                    $orders[$order->id]['context_id'] = 1;
                 } else{
-                    $orders[$order->id]['context_id'] = 3;
+                    $orders[$order->id]['context_id'] = 2;
                 }
 
                 $order_deliveries[$order->id] = [
@@ -341,13 +341,19 @@ class DbImport
                             } elseif($meta->meta_key == '_product_id'){
                                 $item_product_id = $meta->meta_value;
                             }
+                            $item_product_title = '';
+                            if(!isset($item_product_id) || !$item_product_id){
+                                $item_product_id = 0;
+                                $item_product_title = $item->order_item_name;
+                            }
                         }
                         $cost = $item_total_cost / $item_count;
                         $cart[] = [
                             'order_id' => $item->order_id,
                             'product_id' => $item_product_id,
                             'cost' => $cost,
-                            'count' => $item_count
+                            'count' => $item_count,
+                            'title' => $item_product_title ? $item_product_title : NULL
                         ];
                     }
                 }
@@ -371,109 +377,102 @@ class DbImport
                 continue;
             }
 
+            $strangeOrders = [];
             if (isset($line['order_id'])){
                 if(isset($orders[$line['order_id']])){
                     $cart[$key]['created_at'] = $orders[$line['order_id']]['created_at'];
                     $line_cost = $line['cost'] * $line['count'];
                     $orders[$line['order_id']]['cost'] += (int)$line_cost;
                     if($orders[$line['order_id']]['cost'] < 0 || $orders[$line['order_id']]['cost'] > 999999){
-                        unset($orders[$line['order_id']]);
+                        $strangeOrders[] = $orders[$line['order_id']]['cost'];
+                        //unset($orders[$line['order_id']]);
                     }
                 }
             } else{
                 unset($cart[$key]);
             }
         }
-        //var_dump($test); die;
+        //var_dump(count($strangeOrders)); //die;
 //var_dump($cart); die;
-/*        foreach ($cart as $key => $line){
-            $isset = false;
-            foreach ($orders as $order){
-                if($line['order_id'] == $order['id']){
-                    $isset = true;
-                }
-            }
-            if(!$isset){
-                unset($cart[$key]);
-            }
-        }
-
-        foreach ($cart as $key => $line){
-            $isset = false;
-            foreach ($products as $product){
-                if($line['product_id'] == $product['id']){
-                    $isset = true;
-                }
-            }
-            if(!$isset){
-                unset($cart[$key]);
-            }
-        }*/
 
         $logs = [];
         $log_statuses = [];
+
+        $defaultOrdersCount = count($orders_logs);
+        $defaultLogsCount = 0;
+        $contentStrings = [];
+        //var_dump($defaultOrdersCount);
         foreach ($orders_logs as $order_id => $order_log){
             if(count($orders_logs) > 0){
                 foreach($order_log as $log){
+                    $defaultLogsCount++;
                     $meta = count($this->source->select('select * from wpbit2_commentmeta where comment_id =:comment_id', ['comment_id' => $log->comment_ID]));
-                    if($meta == 0 && $log->comment_author !== 'WooCommerce'){
+
+//                    if(/*$meta == 0 && */$log->comment_author !== 'WooCommerce'){
                         $string = $log->comment_content;
-                        $newStatus = trim(stristr(stristr($string, 'на '), ' '), '.!,; ');
-                        if($newStatus === ''){
-                            if($string == 'Order Paid in Full'){
-                                $newStatus = 'Оплачен';
+                        $contentStrings[] = $log->comment_content;
+                        if(strpos('Статус заказа изменен', $string)){
+                            $newStatus = trim(stristr(stristr($string, 'на '), ' '), '.!,; ');
+                                                        if($newStatus === ''){
+                                if($string == 'Order Paid in Full'){
+                                    $newStatus = 'Оплачен';
+                                }
                             }
-                            //var_dump($string); die;
-                        }
-                        //var_dump($newStatus); die;
-                        if(!in_array($newStatus, $log_statuses)){
-                            $log_statuses[] = $newStatus;
+
+                            if(!in_array($newStatus, $log_statuses)){
+                                $log_statuses[] = $newStatus;
+                            }
+
+                            $value = '';
+                            switch ($newStatus){
+                                case 'Новый заказ':
+                                    $value = 'New order';
+                                    break;
+                                case 'В ожидании оплаты':
+                                    $value = 'Waiting for payment';
+                                    break;
+                                case 'Оплачен':
+                                    $value = 'Has been paid';
+                                    break;
+                                case 'Обработка':
+                                    $value = 'Processing';
+                                    break;
+                                case 'На удержании':
+                                    $value = 'Shipped by the factory';
+                                    break;
+                                case 'Отменен':
+                                    $value = 'Сancelled';
+                                    break;
+                                case 'Выполнен':
+                                    $value = 'Completed';
+                                    break;
+                                case 'Возвращен':
+                                    $value = 'Returned';
+                                    break;
+                            }
+                            $type = 'status';
+                        } else{
+                            $value = $string;
+                            $type = 'note';
                         }
 
-                        $value = '';
-                        switch ($newStatus){
-                            case 'Новый заказ':
-                                $value = 'New order';
-                                break;
-                            case 'В ожидании оплаты':
-                                $value = 'Waiting for payment';
-                                break;
-                            case 'Оплачен':
-                                $value = 'Has been paid';
-                                break;
-                            case 'Обработка':
-                                $value = 'Processing';
-                                break;
-                            case 'На удержании':
-                                $value = 'Shipped by the factory';
-                                break;
-                            case 'Отменен':
-                                $value = 'Сancelled';
-                                break;
-                            case 'Выполнен':
-                                $value = 'Completed';
-                                break;
-                            case 'Возвращен':
-                                $value = 'Returned';
-                                break;
-                        }
-                        //var_dump($log->comment_date); die;
                         if($value){
                             $logs[] = [
                                 'order_id' => $order_id,
                                 'user_id' => 1,
-                                'type' => 'status',
+                                'type' => $type,
                                 'value' => $value,
                                 'created_at' => $log->comment_date
                             ];
                         }
-                    }
+                    //}
                     //var_dump($meta); die;
 
                 }
             }
         }
-//var_dump($logs); die;
+        //var_dump($defaultLogsCount);
+//var_dump($contentStrings); die;
         foreach ($user_attrs as $key => $attr){
             $isset = false;
             foreach ($users as $user){
@@ -485,12 +484,13 @@ class DbImport
                 unset($user_attrs[$key]);
             }
         }
-
+//var_dump(count($orders));
         foreach ($orders as $key => $order){
             if($order['status_id'] == 10 || $order['status_id'] == 11){
                 unset($orders[$key]);
             }
         }
+//var_dump(count($orders)); die;
 
         $export['products'] = $products;
         $export['orders'] = $orders;
@@ -508,9 +508,24 @@ class DbImport
     public function import($data)
     {
         /*
+         * Comment tables which do you need to import
+         */
+        //$data['users'] = [];
+        //$data['products'] = [];
+        //$data['orders'] = [];
+        //$data['carts'] = [];
+        //$data['user_attrs'] = [];
+        //$data['orders_deliveries'] = [];
+        //$data['news'] = [];
+        //$data['articles'] = [];
+        //$data['logs'] = [];
+
+
+
+        /*
          * Import users
          */
-/*        foreach ($data['users'] as $user_item){
+        foreach ($data['users'] as $user_item){
             try {
                 $user = new User();
                 $user->id = $user_item['id'];
@@ -524,19 +539,19 @@ class DbImport
             } catch (\Exception $e){
                 continue;
             }
-        }*/
+        }
 
         /*
          * Import User attributes
          */
-/*        foreach ($data['user_attrs'] as $attr){
+        foreach ($data['user_attrs'] as $attr){
             try{
                 UserAttribute::create($attr);
             } catch (\Exception $e){
                 continue;
             }
 
-        }*/
+        }
         $contexts = Context::where('title', 'UA')->orWhere('title', 'RU')->get();
         //var_dump($contexts); die;
         /*
@@ -588,25 +603,26 @@ class DbImport
         /*
          * Import orders
          */
-/*        foreach ($data['orders'] as $order){
+        foreach ($data['orders'] as $order){
             try{
                 Order::create($order);
             } catch (\Exception $e){
+                //var_dump($e); die;
                 continue;
             }
 
-        }*/
+        }
 
         /*
          * Import orders deliveries
          */
-/*        foreach ($data['orders_deliveries'] as $delivery){
+        foreach ($data['orders_deliveries'] as $delivery){
             try{
                 OrderDelivery::create($delivery);
             } catch (\Exception $e){
                 continue;
             }
-        }*/
+        }
 
        // $broken_carts = [];
         /*
@@ -625,19 +641,19 @@ class DbImport
         /*
          * Import news
          */
-/*        $newsPage = Page::where('title', 'News')->where('context_id', 2)->first();
-        $currentNews = Page::where('parent_id', $newsPage->id)->get();
+        $newsPage = Page::where('title', 'Новости')->orWhere('title', 'News')->where('context_id', 2)->first();
+        //$currentNews = Page::where('parent_id', $newsPage->id)->get();
         foreach ($data['news'] as $new){
             $write = true;
             $view_count = $new['views_count'];
             //var_dump($view_count); die;
             unset($new['views_count']);
 
-            foreach ($currentNews as $curNew){
-                if($new['title'] == $curNew['title']){
-                    $write = false;
-                }
-            }
+          //  foreach ($currentNews as $curNew){
+            //    if($new['title'] == $curNew['title']){
+              //      $write = false;
+                //}
+            //}
             //foreach ($contexts as $context){
 
             if($write){
@@ -659,12 +675,12 @@ class DbImport
                 }
             }
             //}
-        }*/
+        }
 
         /*
          * Import articles
          */
-/*        foreach ($data['articles'] as $article){
+        foreach ($data['articles'] as $article){
             $view_count = $article['views_count'];
             unset($article['views_count']);
 
@@ -686,18 +702,18 @@ class DbImport
                     continue;
                 }
             //}
-        }*/
+        }
 
         /*
          * Import order logs
          */
-/*        foreach ($data['logs'] as $log){
+        foreach ($data['logs'] as $log){
             try{
                 OrderLog::create($log);
             } catch (\Exception $e){
                 continue;
             }
-        }*/
+        }
     }
 
     public function process()

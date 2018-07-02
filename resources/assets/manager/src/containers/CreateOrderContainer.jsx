@@ -11,6 +11,9 @@
 import App from '../App.js';
 import React, { Component } from 'react';
 
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
 import Grid from 'material-ui/Grid';
 import { Link } from 'react-router-dom';
 import Menu from '../components/Menu/Menu.jsx';
@@ -26,6 +29,8 @@ import PaperOrderProductsForm from '../components/PaperOrderForm/PaperOrderProdu
 
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
+
+import * as StateLexiconAction from 'actions/StateLexiconAction.js';
 
 /**
  * Users base container
@@ -50,10 +55,12 @@ class CreateOrderContainers extends Component {
 		orderID: 0,
 		category_id: 1,
 		cart: [],
+		deliveryDefault: 0,
 		completed: 100,
 		resultDialog: false,
 		resultDialogTitle: '',
-		resultDialogMessage: ''
+		resultDialogMessage: '',
+		langLoaded: false
 	}
 
 	/**
@@ -68,6 +75,16 @@ class CreateOrderContainers extends Component {
 		data['created_at'] = date +' '+ time;
 		this.setState({ data });
 		this.setState({ completed: 100});
+
+		App.defineCurrentLang((r) => {
+			if (App.isEmpty(r) === false) {
+				this.props.StateLexiconAction.get(r, () => {
+					this.setState({
+						langLoaded: true
+					});
+				});
+			}
+		});
 	}
 
 	/**
@@ -153,32 +170,46 @@ class CreateOrderContainers extends Component {
 			completed,
 			orderID,
 			category_id,
+			deliveryDefault,
 			resultDialog,
 			resultDialogTitle,
 			resultDialogMessage,
 		} = this.state;
+
+		if (this.state.langLoaded === false) 
+			return <div className="create-page__container">
+				<LinearProgress color="secondary" variant="determinate" value={0} />
+			</div>
 
 		return <div className="order__container">
 				{completed === 0 && 
 					<LinearProgress color="secondary" variant="determinate" value={completed} />}
 
 				<Header
-					title={'Create new order'} />
-
+					title={this.props.lexicon.create_new_order} />
 				<Menu />
 
 				<TopTitle
-					title={'Новый Заказ'}
+
+					addButtonTitle={this.props.lexicon.add_label}
+					saveButtonTitle={this.props.lexicon.save_label}
+					trashButtonTitle={this.props.lexicon.empty_trash_label}
+					duplicateButtonTitle={this.props.lexicon.duplicate_label}
+					deleteButtonTitle={this.props.lexicon.delete_button}
+					recoveryButtonTitle={this.props.lexicon.recovery_button}
+					deleteButtonTitle={this.props.lexicon.delete_selected_button}
+
+					title={this.props.lexicon.new_order}
 					onSaveButtonClicked={() => this.orderPostRequest()} />
 					
 				<TabOptions
 					defaultValue={tab}
 					onTabButtonClicked={tab => this.setState({ tab })}
 					data={[
-						'General Details',
-						'Payment Details',
-						'Delivery Details',
-						'Products',
+						this.props.lexicon.general_details_tab,
+						this.props.lexicon.payment_details_tab,
+						this.props.lexicon.delivery_details_tab,
+						this.props.lexicon.products_tab,
 						//'tabs'
 					]} />
 
@@ -286,6 +317,7 @@ class CreateOrderContainers extends Component {
 						'none'}}>
 					<Grid item xs={6}>
 						<PaperOrderDeliveryForm
+							countryDefaultValue={data['p_country']}
 							onDeliverySelected={value => {
 								data['delivery_id'] = value
 								this.setState({ data });
@@ -313,7 +345,7 @@ class CreateOrderContainers extends Component {
 								this.setState({category_id: c});
 							}}
 							onCartChanged={c => {
-								this.setState({cart:c})
+								this.setState({cart: c})
 							}}
 						/>
 					</Grid>
@@ -345,4 +377,26 @@ let styles = theme => ({
 	},
 });
 
-export default withStyles(styles)(CreateOrderContainers);
+/**
+ * Init redux states
+ * @param {Object} state
+ * @return {Object}
+ */
+function mapStateToProps(state) {
+	return {
+		lexicon: state.lexicon
+	}
+}
+
+/**
+ * Init redux actions
+ * @param {Function} dispatch
+ * @return {Object}
+ */
+function mapDispatchToProps(dispatch) {
+	return {
+		StateLexiconAction: bindActionCreators(StateLexiconAction, dispatch)
+	}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(CreateOrderContainers));

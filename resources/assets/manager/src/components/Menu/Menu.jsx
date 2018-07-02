@@ -115,16 +115,16 @@ class Menu extends Component {
 					<List className={classes.list}>
 						{data.map((item, i) => {
 							Icon = MaterialIcons[item.icon];
-							return <Link key={i}
-										to={App.name() + item.link}
+							return <a key={i}
+										href={App.name() + item.link}
 										onClick={this.props.onItemClicked(item.link)}>
 								<ListItem button>
 									<ListItemIcon>
 										{Icon ? <Icon /> : ''}
 									</ListItemIcon>
-									<ListItemText primary={item.name} />
+									<ListItemText primary={this.props.lexicon['menu_'+ item.name]} />
 								</ListItem>
-							</Link>
+							</a>
 						})}
 					</List>
 				</div>
@@ -139,7 +139,8 @@ class Menu extends Component {
  */
 function mapStateToProps(state) {
 	return {
-		elements: state.elements
+		elements: state.elements,
+		lexicon: state.lexicon
 	}
 }
 

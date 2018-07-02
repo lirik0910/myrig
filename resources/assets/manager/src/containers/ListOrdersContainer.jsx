@@ -11,6 +11,9 @@
 import App from '../App.js';
 import React, { Component } from 'react';
 
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
 import Grid from 'material-ui/Grid';
 import { Link } from 'react-router-dom';
 import Menu from '../components/Menu/Menu.jsx';
@@ -27,6 +30,8 @@ import ControlOptions from '../components/ControlOptions/ControlOptions.jsx';
 
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
+
+import * as StateLexiconAction from 'actions/StateLexiconAction.js';
 
 /**
  * Users base container
@@ -61,6 +66,7 @@ class ListOrdersContainer extends Component {
 		searchText: '',
 		completed: 100,
 		deleteOrderId: 0,
+		itemTitle: '',
 		editOrder: {},
 		noteOrder: {},
 		noteData: {},
@@ -72,7 +78,8 @@ class ListOrdersContainer extends Component {
 		deleteDialog: false,
 		resultDialog: false,
 		resultDialogTitle: '',
-		resultDialogMessage: ''
+		resultDialogMessage: '',
+		langLoaded: false
 	}
 
 	/**
@@ -81,6 +88,16 @@ class ListOrdersContainer extends Component {
 	 */
 	componentWillMount() {
 		this.ordersGetDataRequest();
+
+		App.defineCurrentLang((r) => {
+			if (App.isEmpty(r) === false) {
+				this.props.StateLexiconAction.get(r, () => {
+					this.setState({
+						langLoaded: true
+					});
+				});
+			}
+		});
 	}
 
 	/**
@@ -98,6 +115,7 @@ class ListOrdersContainer extends Component {
 			statusID, 
 			deleteID,
 			paymentID,
+			itemTitle,
 			deliveryID } = this.state;
 
 		this.setState({ completed: 0 }, () => {
@@ -152,6 +170,10 @@ class ListOrdersContainer extends Component {
 				data['delete_type'] = String(deleteID);
 			}
 
+			if(itemTitle){
+				data['title'] = itemTitle
+			}
+
 			App.api({
 				type: 'GET',
 				name: 'all',
@@ -194,8 +216,8 @@ class ListOrdersContainer extends Component {
 						this.setState({ 
 							completed: 100,
 							resultDialog: true,
-							resultDialogTitle: 'Success',
-							resultDialogMessage: 'The request was successful',
+							resultDialogTitle: this.props.lexicon.success_title,
+							resultDialogMessage: this.props.lexicon.request_successful,
 						}, () => callback());
 					}
 				},
@@ -205,7 +227,7 @@ class ListOrdersContainer extends Component {
 						this.setState({ 
 							completed: 100,
 							resultDialog: true,
-							resultDialogTitle: 'Error',
+							resultDialogTitle: this.props.lexicon.error_title,
 							resultDialogMessage: r.message,
 						}, () => callback());
 					}
@@ -237,8 +259,8 @@ class ListOrdersContainer extends Component {
                         this.setState({
                             completed: 100,
                             resultDialog: true,
-                            resultDialogTitle: 'Success',
-                            resultDialogMessage: 'The request was successful',
+                            resultDialogTitle: this.props.lexicon.success_title,
+                            resultDialogMessage: this.props.lexicon.request_successful,
                             noteDialog: false
                         }, () => callback());
                         this.ordersGetDataRequest();
@@ -250,7 +272,7 @@ class ListOrdersContainer extends Component {
                         this.setState({
                             completed: 100,
                             resultDialog: true,
-                            resultDialogTitle: 'Error',
+                            resultDialogTitle: this.props.lexicon.error_title,
                             resultDialogMessage: r.message,
                         }, () => callback());
                     }
@@ -290,7 +312,7 @@ class ListOrdersContainer extends Component {
 							deleteOrderId: 0,
 							resultDialog: true,
 							deleteDialog: false,
-							resultDialogTitle: 'Error',
+							resultDialogTitle: this.props.lexicon.error_title,
 							resultDialogMessage: r.message
 						});
 					}
@@ -314,8 +336,8 @@ class ListOrdersContainer extends Component {
 								completed: 100,
 								resultDialog: true,
 								deleteDialog: false,
-								resultDialogTitle: 'Success',
-								resultDialogMessage: 'The request was successful'
+								resultDialogTitle: this.props.lexicon.success_title,
+								resultDialogMessage: this.props.lexicon.request_successful
 							}, () => this.ordersGetDataRequest());
 						}
 					},
@@ -327,7 +349,7 @@ class ListOrdersContainer extends Component {
 								completed: 100,
 								resultDialog: true,
 								deleteDialog: false,
-								resultDialogTitle: 'Error',
+								resultDialogTitle: this.props.lexicon.error_title,
 								resultDialogMessage: r.message
 							});
 						}
@@ -364,10 +386,13 @@ class ListOrdersContainer extends Component {
 									'none'
 							}}># {item.number}</span>
 						<span className={classes.statusItem}
-							style={{color: item.status.color}}>{item.status.title}</span>
+							style={{color: item.status.color}}>
+
+							<span className={'mark '+ item.status.title.replace(/\s/g, '').toLowerCase()}>{this.props.lexicon['status_'+ item.status.title]}</span>
+						</span>
 
 						<div className={classes.fieldItem}>
-							context {item.context.title}
+							{this.props.lexicon.small_context_label} {item.context.title}
 						</div>
 					</div>,
 
@@ -399,25 +424,25 @@ class ListOrdersContainer extends Component {
 							borderTop: '1px solid #d6d6d6',
 							color: item.order_deliveries.delivery.color
 						}}>
-                        <b>{item.order_deliveries.delivery.title}</b>
+                        <b>{this.props.lexicon['delivery_'+ item.order_deliveries.delivery.title]}</b>
 							</div> : null}
 						</div>
 						: null }
 						</div>,
 				costRow: <div className={classes.costCell}>
 						<div>
-							<span className={classes.fieldItem}>Order cost:</span>
+							<span className={classes.fieldItem}>{this.props.lexicon.order_cost_label}</span>
 							<span className={classes.costItem}>{item.cost.toFixed(2)} $</span>
 						</div>
 
 						<div>
-							<span className={classes.fieldItem}>Prepayment cost:</span>
+							<span className={classes.fieldItem}>{this.props.lexicon.prepayment_cost_label}</span>
 							<span className={classes.costItem}>{item.prepayment.toFixed(2)} $</span>
 						</div>
 
 					    {item.btc_price ?
                             <div>
-                                <span className={classes.fieldItem}>BTC cost:</span>
+                                <span className={classes.fieldItem}>{this.props.lexicon.BTC_cost_label}</span>
                                 <span className={classes.costItem}>{item.btc_price.toFixed(5)}</span>
                             </div>
 					    : null}
@@ -428,7 +453,7 @@ class ListOrdersContainer extends Component {
 								paddingTop: '8px',
 								borderTop: '1px solid #d6d6d6',
 							}}>
-								<b>{item.payment_type.title}</b>
+								<b>{this.props.lexicon['payment_'+ item.payment_type.title]}</b>
 							</div> : null}
 					</div>,
 				dateRow: <div className={classes.dateCell}>
@@ -490,22 +515,35 @@ class ListOrdersContainer extends Component {
 			users,
 			completed } = this.state;
 
+		if (this.state.langLoaded === false) 
+			return <div className="create-page__container">
+				<LinearProgress color="secondary" variant="determinate" value={0} />
+			</div>
+
 		return <div className="pages-list__container">
 				{completed === 0 && 
 					<LinearProgress color="secondary" variant="determinate" value={completed} />}
 					
 				<Header
-					title={'Orders list'} />
+					title={this.props.lexicon.orders_list_title} />
 				<Menu />
 
 				<Grid container spacing={24} className={classes.root}>
 					<Grid item xs={12}>
 						<TopTitle
 							title={''}
+
+							addButtonTitle={this.props.lexicon.new_order}
+							saveButtonTitle={this.props.lexicon.save_label}
+							trashButtonTitle={this.props.lexicon.empty_trash_label}
+							duplicateButtonTitle={this.props.lexicon.duplicate_label}
+							deleteButtonTitle={this.props.lexicon.delete_button}
+							recoveryButtonTitle={this.props.lexicon.recovery_button}
+							deleteButtonTitle={this.props.lexicon.delete_selected_button}
+
 							addButtonDisplay={true}
 							saveButtonDisplay={false}
 							deleteButtonDisplay={false}
-							addButtonTitle={'Add new order'}
 							onAddButtonClicked={() => {
 								this.setState({
 									a: App.name() +'/orders/create'
@@ -516,7 +554,6 @@ class ListOrdersContainer extends Component {
 									}
 								});
 							}}
-							deleteButtonTitle={'Delete selected'}
 							trashButtonDisplay={true}
 							onTrashButtonClicked={() => this.setState({ trash: true })} />
 
@@ -527,12 +564,12 @@ class ListOrdersContainer extends Component {
 							orderActionShow
 							dateCreatedShow
 							deleteFilterShow
-							statusTitle={'Filter by status'}
-							contextTitle={'Filter by context'}
-							paymentTitle={'Filter by payment type'}
-							deliveryTitle={'Filter by delivery type'}
-							dateFromTitle={'Filter by order create date from'}
-							dateToTitle={'to date'}
+							statusTitle={this.props.lexicon.filter_status}
+							contextTitle={this.props.lexicon.filter_context}
+							paymentTitle={this.props.lexicon.filter_payment_type}
+							deliveryTitle={this.props.lexicon.filter_delivery_type}
+							dateFromTitle={this.props.lexicon.filter_create_date_from}
+							dateToTitle={this.props.lexicon.filter_to_date}
 							contextDefaultValue={contextID}
 							onDeleteSelected={deleteID => {
 								this.setState({ deleteID }, () => {
@@ -597,27 +634,27 @@ class ListOrdersContainer extends Component {
 								id: 'number', 
 								numeric: false, 
 								disablePadding: true, 
-								label: 'Number'
+								label: this.props.lexicon.table_number
 							}, {
 								id: 'delivery', 
 								numeric: false, 
 								disablePadding: true, 
-								label: 'Delivery data'
+								label: this.props.lexicon.table_delivery_data
 							}, {
 								id: 'cost', 
 								numeric: false, 
 								disablePadding: true, 
-								label: 'Payment'
+								label: this.props.lexicon.table_payment
 							}, {
 								id: 'created_at', 
 								numeric: false, 
 								disablePadding: true, 
-								label: 'Date'
+								label: this.props.lexicon.date_label
 							}, {
 								id: 'control', 
 								numeric: false, 
 								disablePadding: true, 
-								label: 'Control'
+								label: this.props.lexicon.control_label
 							}]}
 							onRowsSelected={selected => this.setState({ selected })}
 							onStartValueChanged={start => {
@@ -625,12 +662,10 @@ class ListOrdersContainer extends Component {
 									start,
 								}, () => this.ordersGetDataRequest());
 							}}
-							onLimitValueChanged={limit => this.setState({ limit })} /> : null}
+							onLimitValueChanged={limit =>
+								this.setState({ limit }, () => { this.ordersGetDataRequest() })} /> : null}
 					</Grid>
 				</Grid>
-
-				
-
 
 				{resultDialog === true && <DialogError 
 					title={resultDialogTitle}
@@ -641,6 +676,11 @@ class ListOrdersContainer extends Component {
 					})} />}
 
 				{deleteDialog === true && <DialogDelete
+
+					title={this.props.lexicon.delete_button}
+					content={this.props.lexicon.delete_confirm}
+
+
 					defaultValue={deleteDialog}
 					onDialogClosed={() => this.setState({
 						deleteDialog: false
@@ -650,12 +690,23 @@ class ListOrdersContainer extends Component {
 					})} />}
 
 				{noteDialog === true && <DialogNote
+
+					title={this.props.lexicon.create_note}
+					content={this.props.lexicon.your_note_order}
+
 					defaultValue={noteDialog}
 					onNoteFieldInputed={value => {
 						data['text'] = value;
 						this.setState({
 							noteData: data
 						})
+					}}
+					onNoteTypeSelected={value => {
+						data['type'] = value;
+						this.setState({
+							noteData: data
+						})
+						console.log(this.state.noteData);
 					}}
 					onDialogClosed={() => this.setState({
 						noteDialog: false
@@ -667,6 +718,10 @@ class ListOrdersContainer extends Component {
 					})} />}
 
 				{this.state.trash === true && <DialogDelete
+
+					title={this.props.lexicon.delete_button}
+					content={this.props.lexicon.delete_confirm}
+
 					defaultValue={this.state.trash}
 					onDialogClosed={() => this.setState({
 						trash: false,
@@ -717,13 +772,11 @@ let styles = theme => ({
 	},
 	numberItem: {
 		fontSize: 32,
-		marginLeft: 8,
-		marginRight: 8
+		display: 'block'
 	},
 	statusItem: {
 		fontSize: 15,
-		marginLeft: 4,
-		marginRight: 4 
+		display: 'block' 
 	},
 	costItem: {
 		fontSize: 18,
@@ -735,4 +788,26 @@ let styles = theme => ({
 	},
 });
 
-export default withStyles(styles)(ListOrdersContainer);
+/**
+ * Init redux states
+ * @param {Object} state
+ * @return {Object}
+ */
+function mapStateToProps(state) {
+	return {
+		lexicon: state.lexicon
+	}
+}
+
+/**
+ * Init redux actions
+ * @param {Function} dispatch
+ * @return {Object}
+ */
+function mapDispatchToProps(dispatch) {
+	return {
+		StateLexiconAction: bindActionCreators(StateLexiconAction, dispatch)
+	}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(ListOrdersContainer));

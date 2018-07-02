@@ -11,6 +11,8 @@
 import App from '../../../App.js';
 import React, { Component } from 'react';
 
+import { connect } from 'react-redux';
+
 import ExpansionPanel, {
 	ExpansionPanelSummary,
 	ExpansionPanelDetails,
@@ -153,7 +155,7 @@ class ContextItem extends Component {
 					style={{paddingLeft: (32 * deep) +'px'}}>
 					
 					<Grid item xs={10} className={classes.pageButton}>
-						<Link to={App.name() + '/pages/'+ item.id}>
+						<a href={App.name() + '/pages/'+ item.id} target="_blank">
 							<ListItem button>
 								<ListItemIcon>
 									<Description />
@@ -163,7 +165,7 @@ class ContextItem extends Component {
 									primary={item.title}
 									className={item.delete === 1 && 'in-trash'} />
 							</ListItem>
-						</Link>
+						</a>
 					</Grid>
 
 					<Grid item xs={2} className={classes.pageButton}>
@@ -219,7 +221,7 @@ class ContextItem extends Component {
 					expandIcon={<ExpandMore />}>
 					
 					<Typography className={classes.heading}>
-						Context: {context.title}
+						{this.props.lexicon.context_title} {context.title}
 					</Typography>
 				</ExpansionPanelSummary>
 
@@ -232,4 +234,15 @@ class ContextItem extends Component {
 	}
 }
 
-export default withStyles(styles)(ContextItem);
+/**
+ * Init redux states
+ * @param {Object} state
+ * @return {Object}
+ */
+function mapStateToProps(state) {
+	return {
+		lexicon: state.lexicon
+	}
+}
+
+export default connect(mapStateToProps)(withStyles(styles)(ContextItem));

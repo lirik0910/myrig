@@ -8,6 +8,8 @@
 import App from '../../App.js';
 import React, { Component } from 'react';
 
+import { connect } from 'react-redux';
+
 import Paper from 'material-ui/Paper';
 import Dropzone from 'react-dropzone';
 import Button from 'material-ui/Button';
@@ -166,7 +168,7 @@ class PaperFileManager extends Component {
 						size="small"
 						className={classes.add}>
 					
-						<Add />{'New file'}
+						<Add />{this.props.lexicon.new_file}
 					</Button>
 				</Dropzone>
 
@@ -202,4 +204,15 @@ class PaperFileManager extends Component {
 	}
 }
 
-export default withStyles(styles)(PaperFileManager);
+/**
+ * Init redux states
+ * @param {Object} state
+ * @return {Object}
+ */
+function mapStateToProps(state) {
+	return {
+		lexicon: state.lexicon
+	}
+}
+
+export default connect(mapStateToProps)(withStyles(styles)(PaperFileManager));

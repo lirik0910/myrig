@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Manager\Base;
 
 use App\Model\Base\User;
+use function foo\func;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
@@ -22,9 +23,13 @@ class UserController extends Controller
 		 */
 		if (isset($params['search'])) {
 			$c = $c->where('id', $params['search'])
+                    ->orWhereHas('attributes', function ($q) use ($params){
+                        $q->where('fname', 'like', '%' . $params['search'] . '%');
+                        $q->orWhere('lname', 'like', '%' . $params['search'] . '%');
+                    })
 					->orWhere('name', 'like', '%'. $params['search'] .'%')
-					->orWhere('email', 'like', '%'. $params['search'] .'%');
-                    //->with('attributes');
+					->orWhere('email', 'like', '%'. $params['search'] .'%')//;
+                    ->with('attributes');
 		}
 
 		$c = $c->with('attributes');
@@ -75,8 +80,7 @@ class UserController extends Controller
 		catch (\Exception $e) {
 			logger($e->getMessage());
 			return response()->json(['message' => $e->getMessage()], 422);
-		}	
-//var_dump($all); die;
+		}
 		/** Try count all models
 		 */
 		try {
@@ -92,11 +96,21 @@ class UserController extends Controller
 		try {
 			$all = $this->setPaginationQuery($all, $request->all());
 			$all = $all->get();
+
 		}
 		catch(\Exception $e) {
 			logger($e->getMessage());
 			return response()->json(['message' => $e->getMessage()], 422);
 		}
+
+		$usersCount = 0;
+		$attrsCount = 0;
+		foreach($all as $one){
+		    $usersCount++;
+		    if($one->attributes){
+		        $attrsCount++;
+            }
+        }
 
 		return response()->json(['total' => $total, 'data' => $all], 200);
 	}
@@ -155,7 +169,12 @@ class UserController extends Controller
 		/** Try get model
 		 */
 		try {
-			$model = User::find($id);
+			$model = User::with('orders')
+				->find($id);
+
+			foreach ($model->orders as $order) {
+				$order->orderDeliveries;
+			}
 		}
 		catch(\Exception $e) {
 			logger($e->getMessage());

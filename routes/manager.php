@@ -139,6 +139,14 @@ Route::prefix('rates')
 Route::prefix('api')
 	->middleware('auth')	
 	->group(function() {
+		Route::prefix('lexicon')->group(function() {
+			Route::get('/{id}', 'Manager\Base\LexiconController@one');
+		});
+
+		Route::prefix('country')->group(function() {
+			Route::get('/', 'Manager\Base\CountryController@all');
+		});
+
 		Route::prefix('component')->group(function() {
 			Route::get('/', 'Manager\Base\ComponentController@all')->middleware(ComponentCollectionMiddleware::class);
 		});
@@ -211,11 +219,12 @@ Route::prefix('api')
 			Route::get('/', 'Manager\Shop\OrderController@all')->middleware(OrderCollectionMiddleware::class);
 			Route::get('/{id}', 'Manager\Shop\OrderController@one')->middleware(OrderOneMiddleware::class);
 			Route::post('/', 'Manager\Shop\OrderController@create')->middleware(OrderCreateMiddleware::class);
-			Route::put('/trash/{id}', 'Manager\Shop\OrderController@trash')->middleware(OrderEditMiddleware::class);
+			Route::put('/trash', 'Manager\Shop\OrderController@trash')->middleware(OrderEditMiddleware::class);
 			Route::put('/{id}', 'Manager\Shop\OrderController@update')->middleware(OrderEditMiddleware::class);
+			Route::post('/{id}', 'Manager\Shop\OrderController@edit')->middleware(OrderOneMiddleware::class);
 			Route::get('/log/{id}', 'Manager\Shop\OrderController@log');
-			Route::delete('/trash', 'Manager\Shop\OrderController@emptyTrash')->middleware(OrderDeleteMiddleware::class);
-			Route::delete('/{id}', 'Manager\Shop\OrderController@delete')->middleware(OrderDeleteMiddleware::class);
+			//Route::delete('/trash', 'Manager\Shop\OrderController@emptyTrash')->middleware(OrderDeleteMiddleware::class);
+			//Route::delete('/{id}', 'Manager\Shop\OrderController@delete')->middleware(OrderDeleteMiddleware::class);
 		});
 
 		Route::prefix('rate')->group(function() {
