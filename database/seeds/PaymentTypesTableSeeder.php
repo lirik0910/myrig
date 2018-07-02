@@ -22,5 +22,11 @@ class PaymentTypesTableSeeder extends Seeder
 			'description' => 'Cash payment',
 			'active' => 1
 		]);
+
+        App\Model\Shop\PaymentType::create([
+            'title' => 'Cashless',
+            'description' => 'Безналичный расчет',
+            'active' => 1
+        ]);
 	}
 }
