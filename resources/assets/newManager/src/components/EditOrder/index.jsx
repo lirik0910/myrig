@@ -88,13 +88,12 @@ class EditOrder extends PureComponent {
 	componentWillReceiveProps(willProps) {
 		this.willPropsId = willProps.id;
 
-		if (willProps.id > 0) {
-			if (willProps.id !== null) {
-				this.setState({ orderGot: true }, () => {
-					this.fetchOrder = oneOrder(willProps.id)
-						.then(this.setOrderData);
-				});
-			}
+		if (willProps.id > 0 && this.state.orderGot === false) {
+			this.setState({ orderGot: true }, () => {
+				this.fetchOrder = oneOrder(willProps.id)
+					.then(this.setOrderData)
+					.then(() => this.setState({ orderGot: false }));
+			});
 		}
 
 		else if (willProps.id === 0) {
@@ -151,6 +150,20 @@ class EditOrder extends PureComponent {
 	 * @param {object} data
 	 */
 	setOrderData = (data) => {
+		let i = 0,
+			a = [];
+
+		while (i < data['carts'].length) {
+			data['carts'][i]['product_id'] = typeof data['carts'][i]['product_id'] === 'undefined' ?
+				typeof data['carts'][i]['product']['product_id'] === 'undefined' ?
+					data['carts'][i]['product']['id'] :
+					data['carts'][i]['product']['product_id'] : 
+				data['carts'][i]['product_id'];
+			a.push(cloneDeep(data['carts'][i]));
+			i++;
+		}
+		data['carts'] = a;
+
 		this.setState({ data });
 	}
 
@@ -207,9 +220,28 @@ class EditOrder extends PureComponent {
 						className={classes.iconButton}
 						onClick={(e) => { 
 							this.props.onOrdersLoaded(false);
+							let i = 0,
+								cart = [];
+
+							while (i < data['carts'].length) {
+								cart.push({
+									id: data['carts'][i]['id'],
+									btcCost: data['carts'][i]['btcCost'],
+									cost: data['carts'][i]['cost'],
+									count: data['carts'][i]['count'],
+									discount: data['carts'][i]['discount'],
+									serials_number: data['carts'][i]['serials_number'],
+									product: {
+										id: typeof data['carts'][i]['product_id'] === 'undefined' ?
+											data['carts'][i]['product']['product_id'] : 
+											data['carts'][i]['product_id']
+									}
+								});
+								i++;
+							}
 
 							if (id === 0) {
-								createOrder(data['carts'])
+								createOrder(cart)
 									.then(this.setOrderData)
 									.then((e) => {
 										this.props.onCreatedOrder(this.state.data);
@@ -218,7 +250,7 @@ class EditOrder extends PureComponent {
 							}
 							
 							else {
-								updateOrder(data['carts'], id)
+								updateOrder(cart, id)
 									.then(this.setOrderData)
 									.then((e) => {
 										this.props.onUpdatedOrder(this.state.data);

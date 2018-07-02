@@ -13,6 +13,7 @@
  */
 
 import React, { PureComponent } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import Input from '@material-ui/core/Input';
@@ -92,7 +93,7 @@ class SelectDefault extends PureComponent {
 	 * @return {object} jsx object
 	 */
 	render() {
-		let { classes, name, id, helperText, data, field, value, title, none } = this.props;
+		let { classes, name, id, helperText, data, field, value, title, none, langs } = this.props;
 
 		return <FormControl className={classes.formControl}>
 			{title && <InputLabel 
@@ -108,7 +109,7 @@ class SelectDefault extends PureComponent {
 				{none === true && 
 					<MenuItem 
 						value={''}>
-						<i>None</i>
+						<i>{langs['labelNoneSelected']}</i>
 					</MenuItem>}
 
 				{data.map((item, i) => {
@@ -128,4 +129,15 @@ class SelectDefault extends PureComponent {
 	}
 }
 
-export default withStyles(styles)(SelectDefault);
+/**
+ * Init redux states
+ * @param {Object} state
+ * @return {Object}
+ */
+function mapStateToProps(state) {
+	return {
+		langs: state.langs
+	}
+}
+
+export default connect(mapStateToProps)(withStyles(styles)(SelectDefault));
