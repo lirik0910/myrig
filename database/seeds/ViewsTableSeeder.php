@@ -113,10 +113,10 @@ class ViewsTableSeeder extends Seeder
             'path' => 'content/checkoutSuccess'
         ]); 
 
-        App\Model\Base\View::create([
-            'title' => 'dragonmint-16-th-s-2',
-            'description' => 'Template for dragonmint-16-th-s-2',
-            'path' => 'product/dragonmint-16-th-s-2'
-        ]);
+        // App\Model\Base\View::create([
+        //     'title' => 'dragonmint-16-th-s-2',
+        //     'description' => 'Template for dragonmint-16-th-s-2',
+        //     'path' => 'product/dragonmint-16-th-s-2'
+        // ]);
 	}
 }

@@ -11,29 +11,29 @@ class ProductImagesTableSeeder extends Seeder
 	 */
 	public function run()
 	{
-		$product = App\Model\Shop\Product::whereHas('page', function ($q) {
-			$q->where('link', 'product/dragonmint-16-th-s-2');
-		})->first();
+		// $product = App\Model\Shop\Product::whereHas('page', function ($q) {
+		// 	$q->where('link', 'product/dragonmint-16-th-s-2');
+		// })->first();
 
-		App\Model\Shop\ProductImage::create([
-			'product_id' => $product->id,
-			'name' => 'product/dragonmint-t1-16th-s/1.png',
-		]);
+		// App\Model\Shop\ProductImage::create([
+		// 	'product_id' => $product->id,
+		// 	'name' => 'product/dragonmint-t1-16th-s/1.png',
+		// ]);
 
-		App\Model\Shop\ProductImage::create([
-			'product_id' => $product->id,
-			'name' => 'product/dragonmint-t1-16th-s/2.jpg',
-		]);
+		// App\Model\Shop\ProductImage::create([
+		// 	'product_id' => $product->id,
+		// 	'name' => 'product/dragonmint-t1-16th-s/2.jpg',
+		// ]);
 
-		App\Model\Shop\ProductImage::create([
-			'product_id' => $product->id,
-			'name' => 'product/dragonmint-t1-16th-s/3.jpg',
-		]);
+		// App\Model\Shop\ProductImage::create([
+		// 	'product_id' => $product->id,
+		// 	'name' => 'product/dragonmint-t1-16th-s/3.jpg',
+		// ]);
 
-		App\Model\Shop\ProductImage::create([
-			'product_id' => $product->id,
-			'name' => 'product/dragonmint-t1-16th-s/4.jpg',
-		]);
+		// App\Model\Shop\ProductImage::create([
+		// 	'product_id' => $product->id,
+		// 	'name' => 'product/dragonmint-t1-16th-s/4.jpg',
+		// ]);
 
 		// $product = App\Model\Shop\Product::whereHas('page', function ($q) {
 		// 	$q->where('link', 'product/antminer-s9-13-5th-s');

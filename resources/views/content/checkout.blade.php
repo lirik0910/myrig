@@ -3,6 +3,7 @@
 @php
 $deliveries = $select('App\Model\Shop\Delivery')->where('active', 1)->get();
 $paymentTypes = $select('App\Model\Shop\PaymentType')->get();
+$deliveriesCountry = $select('App\Model\Shop\OrderDelivery')->orderBy('country', 'asc')->first();
 if(isset($_SESSION['client'])){
 	$client_email = $_SESSION['client'];
 } else{
@@ -114,6 +115,25 @@ foreach ($products as $item) {
 					<input type="text" id="last-name__input" class="font-weight-light field__input field__grey" name="last_name" placeholder="{{ __('default.last_name_label') }}" value="@isset($user->attributes->lname) {{$user->attributes->lname}} @endisset" required />
 
 					<select name="country" id="country__select" class="font-weight-light country__select d-none field__grey">
+						@php
+							if(isset($deliveriesCountry)){
+								$country = 'common.country_' . $deliveriesCountry->country;
+							
+						@endphp
+						<option value="{{$deliveriesCountry}}">{{ __($country) }}</option>
+						<option value="AZ">{{ __('common.country_AZ') }}</option>
+						<option value="AM">{{ __('common.country_AM') }}</option>
+						<option value="BY">{{ __('common.country_BY') }}</option>
+						<option value="GE">{{ __('common.country_GE') }}</option>
+						<option value="KZ">{{ __('common.country_KZ') }}</option>
+						<option value="KG">{{ __('common.country_KG') }}</option>
+						@if($locale != 'en') <option value="RU">{{ __('common.country_RU') }}</option>@endif
+						<option value="TM">{{ __('common.country_TM') }}</option>
+						<option value="UZ">{{ __('common.country_UZ') }}</option>
+						<option value="UA">{{ __('common.country_UA') }}</option>
+						@php
+							}else{
+						@endphp
 						<option value="">{{ __('default.select_country') }}</option>
 						<option value="AZ">{{ __('common.country_AZ') }}</option>
 						<option value="AM">{{ __('common.country_AM') }}</option>
@@ -125,6 +145,9 @@ foreach ($products as $item) {
 						<option value="TM">{{ __('common.country_TM') }}</option>
 						<option value="UZ">{{ __('common.country_UZ') }}</option>
 						<option value="UA">{{ __('common.country_UA') }}</option>
+						@php
+							}
+						@endphp
 					</select>
 
 					<input type="text" class="font-weight-light field__input field__grey" name="address" placeholder="{{ __('default.address_label') }}" value="@isset($user->attributes->address) {{$user->attributes->address}} @endisset" required />

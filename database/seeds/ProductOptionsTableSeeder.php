@@ -11,22 +11,22 @@ class ProductOptionsTableSeeder extends Seeder
 	 */
 	public function run()
 	{
-		$video = App\Model\Shop\ProductOptionType::where('title', 'video')->first();
+		//$video = App\Model\Shop\ProductOptionType::where('title', 'video')->first();
 		//$warranty = App\Model\Shop\ProductOptionType::where('title', 'warranty')->first();
 		//$secondary = App\Model\Shop\ProductOptionType::where('title', 'secondary')->first();
 		//$recoupment = App\Model\Shop\ProductOptionType::where('title', 'recoupment')->first();
-		$characteristic = App\Model\Shop\ProductOptionType::where('title', 'characteristic')->first();
-		$currency = App\Model\Shop\ProductOptionType::where('title', 'currency')->first();
+		//$characteristic = App\Model\Shop\ProductOptionType::where('title', 'characteristic')->first();
+		//$currency = App\Model\Shop\ProductOptionType::where('title', 'currency')->first();
 
-		$product = App\Model\Shop\Product::whereHas('page', function ($q) {
-			$q->where('link', 'product/dragonmint-16-th-s-2');
-		})->first();
-		App\Model\Shop\ProductOption::create([
-			'product_id' => $product->id,
-			'type_id' => $characteristic->id,
-			'name' => 'Hashrate',
-			'value' => '16 TH/s',
-		]);
+		// $product = App\Model\Shop\Product::whereHas('page', function ($q) {
+		// 	$q->where('link', 'product/dragonmint-16-th-s-2');
+		// })->first();
+		// App\Model\Shop\ProductOption::create([
+		// 	'product_id' => $product->id,
+		// 	'type_id' => $characteristic->id,
+		// 	'name' => 'Hashrate',
+		// 	'value' => '16 TH/s',
+		// ]);
 
 		// App\Model\Shop\ProductOption::create([
 		// 	'product_id' => $product->id,

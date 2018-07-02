@@ -11,16 +11,16 @@ class ProductCategoriesTableSeeder extends Seeder
 	 */
 	public function run()
 	{
-		$base = App\Model\Shop\Category::where('title', 'Base')->first();
-		$secondary = App\Model\Shop\Category::where('title', 'Secondary')->first();
+		// $base = App\Model\Shop\Category::where('title', 'Base')->first();
+		// $secondary = App\Model\Shop\Category::where('title', 'Secondary')->first();
 
-		$product = App\Model\Shop\Product::whereHas('page', function ($q) {
-			$q->where('link', 'product/dragonmint-16-th-s-2');
-		})->first();
-		App\Model\Shop\ProductCategory::create([
-			'product_id' => $product->id,
-			'category_id' => $base->id,
-		]);
+		// $product = App\Model\Shop\Product::whereHas('page', function ($q) {
+		// 	$q->where('link', 'product/dragonmint-16-th-s-2');
+		// })->first();
+		// App\Model\Shop\ProductCategory::create([
+		// 	'product_id' => $product->id,
+		// 	'category_id' => $base->id,
+		// ]);
 
 	// 	$product = App\Model\Shop\Product::whereHas('page', function ($q) {
 	// 		$q->where('link', 'product/antminer-s9-13-5th-s');
