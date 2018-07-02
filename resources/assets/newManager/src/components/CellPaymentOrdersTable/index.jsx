@@ -74,6 +74,10 @@ class CellPaymentOrdersTable extends PureComponent {
 
 			<List>
 			{cart.map((item, i) => {
+				if (item.product === null) {
+					return null;
+				}
+				
 				return <ListItem 
 					key={i}
 					className={classes.productItem}>

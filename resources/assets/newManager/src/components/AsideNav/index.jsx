@@ -16,7 +16,7 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { Link } from 'react-router-dom';
+//import { Link } from 'react-router-dom';
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -109,9 +109,9 @@ class AsideNav extends PureComponent {
 				component="nav">
 				
 				{list.map((item, i) => {
-					return <Link 
+					return <a 
 						key={i} 
-						to={item[Object.keys(item)[0]]}
+						href={item[Object.keys(item)[0]]}
 						className={classes.linkItem}>
 						
 						<ListItem button>
@@ -122,7 +122,7 @@ class AsideNav extends PureComponent {
 							<ListItemText 
 								primary={langs[Object.keys(item)[0]]} />
 						</ListItem>
-					</Link>
+					</a>
 				})}
 			</List>
 		</Drawer>
