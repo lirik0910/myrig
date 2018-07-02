@@ -18,7 +18,7 @@
 
 		@php
 		$img = asset('uploads/' . $slide['sliderIcon']);
-		$imgInfo = getimagesize($img);
+		$imgInfo = getimagesize(public_path() . '/uploads/' . $slide['sliderIcon']);
 		@endphp
 
 		@if($imgInfo[1] < $imgInfo[0])

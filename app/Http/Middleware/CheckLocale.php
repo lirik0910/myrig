@@ -57,7 +57,7 @@ class CheckLocale
                         return redirect(config('app.ru_domain'));
                         break;
                     case 'en':
-                        return redirect('https://myrig.com/');
+                        return redirect(config('app.en_domain'));
                         break;
                 }
             }

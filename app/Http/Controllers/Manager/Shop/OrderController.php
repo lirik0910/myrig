@@ -7,6 +7,7 @@ use App\Model\Shop\Order;
 use App\Model\Shop\Product;
 use App\Model\Shop\ExchangeRate;
 use App\Model\Shop\OrderDelivery;
+use App\Model\Shop\OrderPayment;
 use Illuminate\Validation\Rule;
 use App\Model\Shop\OrderLog;
 use Illuminate\Validation\Validatior;
@@ -23,6 +24,237 @@ use \Google_Service_Sheets_ValueRange as Google_Service_Sheets_ValueRange;
 
 class OrderController extends Controller
 {
+	public function edit(int $id, Request $request) : JsonResponse
+	{
+		$data = $request->input();
+
+		/** Get current order model
+		 */
+		try {
+			$model = Order::find($id);
+		}
+		catch (\Exception $e) {
+			logger($e->getMessage());
+			return response()->json(['message' => $e->getMessage()], 422);
+		}
+
+		$model->fill([
+			'user_id' => $data['user_id'],
+			'context_id' => $data['context_id'],
+			'status_id' => $data['status_id'],
+			'payment_type_id' => $data['payment_type_id'],
+			'created_at' => $data['created_at'],
+		]);
+
+		/** Get delivery model
+		 */
+		try {
+			$delivery = OrderDelivery::where('order_id', $id)->first();
+		}
+		catch (\Exception $e) {
+			logger($e->getMessage());
+			return response()->json(['message' => $e->getMessage()], 422);
+		}
+
+		$delivery->fill([
+			'delivery_id' => $data['delivery_id'],
+			'cost' => $model->cost,
+			'first_name' => $data['d_first_name'] ?? NULL,
+			'last_name' => $data['d_last_name'] ?? NULL,
+			'address' => $data['d_address'] ?? NULL,
+			'phone' => $data['d_phone'] ?? NULL,
+			'email' => $data['d_email'] ?? NULL,
+			'city' => $data['d_city'] ?? NULL,
+			'country' => $data['d_country'] ?? NULL,
+			'state' => $data['d_state'] ?? NULL,
+			'comment' => $data['d_comment'] ?? NULL,
+			'office' => $data['d_office'] ?? NULL,
+			'zendesk' => $data['d_zendesk'] ?? NULL,
+			'waybill' => $data['d_waybill'] ?? NULL,
+			'warranty' => $data['d_warranty'] ?? NULL,
+			'passport' => $data['d_passport'] ?? NULL,
+			'comment' => $data['d_comment'] ?? NULL,
+		]);
+		$delivery->save();
+
+		/** Get payment model
+		 */
+		try {
+			$payment = OrderPayment::where('order_id', $id)->first();
+		}
+		catch (\Exception $e) {
+			logger($e->getMessage());
+			return response()->json(['message' => $e->getMessage()], 422);
+		}
+
+		if (!$payment) {
+			$payment = new OrderPayment;
+		}
+
+		$payment->fill([
+			'order_id' => $id,
+			'cost' => $model->cost,
+			'first_name' => $data['p_first_name'] ?? NULL,
+			'last_name' => $data['p_last_name'] ?? NULL,
+			'city' => $data['p_city'] ?? NULL,
+			'country' => $data['p_country'] ?? NULL,
+		]);
+		$payment->save();
+
+		$order = new Order();
+		$lastOrder = Order::orderBy('id','desc')->first();
+
+		if (!$lastOrder) {
+			$maxId = 1;
+			$orderNumber = $maxId;
+		} else {
+			$maxId = $lastOrder->id;
+			$orderNumber = $maxId + 1;
+		}
+
+		$cart = [];
+		if(!empty($data['cart'])){
+			$cart = json_decode($data['cart'], TRUE);
+		}
+		Cart::where('order_id', $id)->delete();
+
+		foreach ($cart as $product) {
+			$count = $product['count'] ?? 1;
+			$discount = $product['discount'] ?? 0;
+			$serial = $product['serials_number'] ?? NULL;
+			$product = Product::where('id', $product['product']['id'])->first();
+
+			$item = new Cart;
+			if ($product->auto_price) {
+				$btcCost = $product->calcBtcPrice();
+				$autopriceData = $product->calcAutoPrice(true);
+
+				$item->fill([
+					'order_id' => $id,
+					'product_id' => $product->id,
+					'count' => $count,
+					'discount' => $discount,
+					'serial_number' => $serial,
+					'cost' => $autopriceData['total'],
+					'btcCost' => $btcCost,
+					'fes' => $autopriceData['fes'],
+					'warranty' => $autopriceData['warranty'],
+					'prime_cost' => $autopriceData['prime'],
+					'delivery_cost' => $autopriceData['delivery'],
+					'profit' => $autopriceData['profit'],
+				]);
+
+			} 
+			else {
+				$cost = $product->price;
+				$btcCost = $product->calcBtcPrice();
+
+				$item->fill([
+					'order_id' => $id,
+					'product_id' => $product->id,
+					'count' => $count,
+					'discount' => $discount,
+					'cost' => $cost,
+					'btcCost' => $btcCost,
+					'serial_number' => $serial,
+				]);
+			}
+			$item->save();
+		}
+		$model->cost = $model->countCost();
+
+		if(isset($data['send']) && $data['send'] === 'true'){
+			$serials = [];
+			$productsInfo = [];
+			foreach ($cart as $key => $product) {
+				$serials[] = $product['serial_number'] ?? '';
+				$productsInfo[] = $product['title'] . ' * ' . $product['count'];
+			}
+
+			$this->googleTableAppend([
+				// A. Исполнитель
+				Auth::user()->name,
+				// B. Номер заказа
+				''.$orderNumber,
+				// C. Номер тикета с зендеска
+				$data['d_zendesk'] ?? '-',
+				// D. Дата
+				$data['created_at'] ?? '-',
+				// E. Имя Фамилия
+				($data['d_first_name'] ?? '') . ($data['d_last_name'] ?? '') ?: '-',
+				// F. Номер телефона
+				$data['d_phone'] ?? '-',
+				// G. Почта
+				$data['d_email'] ?? '-',
+				// H. Что было сделано
+				implode(', ', $productsInfo),
+				// I. Серийные номера
+				implode(', ', $serials),
+				// J. Количество дней гарантии
+				$data['d_warranty'] ?? '-',
+				// K. Страна
+				$data['d_country'] ?? '-',
+				// L. Тип доставки
+				$model->orderDeliveries->delivery->title,
+				// M. ТТН
+				$data['d_waybill'] ?? '-',
+				// N. Город
+				$data['d_city'] ?? '-',
+				// O. Дата и время оплаты
+				''
+			]);
+		}
+		$model->save();
+
+		return $this->one($id, $request);
+	}
+
+
+	/**
+	 * Get order by id
+	 * @param int $id
+	 * @param Illuminate\Http\Request
+	 * @return Illuminate\Http\JsonResponse
+	 */
+	public function one(int $id, Request $request) : JsonResponse
+	{
+		/** Try get model
+		 */
+		try {
+			$model = Order::with('user')
+				->with('orderDeliveries')
+				->with('orderPayments')
+				->with('carts')
+				->with('logs')
+				->find($id);
+		}
+		catch (\Exception $e) {
+			logger($e->getMessage());
+			return response()->json(['message' => $e->getMessage()], 422);
+		}
+
+		$model->status;
+		$model->context;
+		$model->paymentType;
+		if($model->orderDeliveries){
+			$model->orderDeliveries->delivery;
+		}
+
+		foreach ($model->carts as $cart) {
+			if ($cart->product) {
+				$cart->product->images;
+			}
+
+			$model->btc_price += $cart->btcCost * $cart->count;
+		}
+
+		foreach ($model->logs as $log) {
+			$log->user;
+		}
+
+		return response()->json($model, 200);
+	}
+
 	/**
 	 * Add conditions before query
 	 * @param object $c
@@ -45,11 +277,8 @@ class OrderController extends Controller
 						->orWhere('address', 'like', '%'. $params['search'] .'%')
 						->orWhere('country', 'like', '%'. $params['search'] .'%');
 				})
-                ->orWhereHas('products', function ($q) use ($params) {
-                    $q->where('products.title', 'like', '%'. $params['search'] .'%');
-                })
-				->orWhereHas('carts', function ($q) use ($params) {
-					$q->where('carts.title', 'like', '%'. $params['search'] .'%');
+				->orWhereHas('products', function ($q) use ($params) {
+					$q->where('products.title', 'like', '%'. $params['search'] .'%');
 				});
 		}
 
@@ -65,6 +294,12 @@ class OrderController extends Controller
 		 */
 		if (isset($params['context_id'])) {
 			$c = $c->where('context_id', $params['context_id']);
+		}
+
+		/** Filter by user_id
+		 */
+		if (isset($params['user_id'])) {
+			$c = $c->where('user_id', $params['user_id']);
 		}
 
 		/** Filter by status_id
@@ -161,20 +396,25 @@ class OrderController extends Controller
 		//$point = 1 / (float) $btcRate->value;
 
 		foreach ($all as $order) {
-			$order->status;
+			$order->status;$order->status;
 			$order->context;
 			$order->paymentType;
 			if($order->orderDeliveries){
-                $order->orderDeliveries->delivery;
-            }
+				$order->orderDeliveries->delivery;
+			}
+			$order->context;
+			$order->paymentType;
+			if($order->orderDeliveries){
+				$order->orderDeliveries->delivery;
+			}
 
 
 			//$order->btc_price = ($order->cost * $point) / 1;
 
 			foreach ($order->carts as $cart) {
-			    if($cart->product){
-                    $cart->product->images;
-                }
+				if($cart->product){
+					$cart->product->images;
+				}
 
 				$order->btc_price += $cart->btcCost * $cart->count;
 			}
@@ -247,29 +487,29 @@ class OrderController extends Controller
 		if (isset($count) && is_array($count)) {
 			$cart_positions = Cart::where('order_id', $id)->get();
 
-            $products_update = array_keys($count);
+			$products_update = array_keys($count);
 			foreach ($cart_positions as $cart){
 
 
-			    if(in_array($cart->product_id, $products_update)){
-			        foreach ($count as $key => $item){
-			            if($cart->product_id == $key){
-                            $cart->count = $item;
+				if(in_array($cart->product_id, $products_update)){
+					foreach ($count as $key => $item){
+						if($cart->product_id == $key){
+							$cart->count = $item;
 
-                            try {
-                                $cart->save();
-                            }
-                            catch (\Exseption $e) {
-                                logger($e->getMessage());
-                                return response()->json(['message' => $e->getMessage()], 422);
-                            }
-                        }
-                    }
-                } else{
-                    $cart->delete();
-                    //Cart::where('order_id', $id)->where('product_id', $cart->product_id)->delete();
-                }
-            }
+							try {
+								$cart->save();
+							}
+							catch (\Exseption $e) {
+								logger($e->getMessage());
+								return response()->json(['message' => $e->getMessage()], 422);
+							}
+						}
+					}
+				} else{
+					$cart->delete();
+					//Cart::where('order_id', $id)->where('product_id', $cart->product_id)->delete();
+				}
+			}
 		}
 
 		/** Get delivery model
@@ -304,16 +544,16 @@ class OrderController extends Controller
 		if ($model->status_id != $request->input('status_id')) {
 			$model->changeStatus($request->input('status_id'));
 			try{
-                //Mail::to($delivery->email)->send(New OrderStatusMail($model));
-            } catch ( \Exception $e)
-            {
+				//Mail::to($delivery->email)->send(New OrderStatusMail($model));
+			} catch ( \Exception $e)
+			{
 
-            }
+			}
 
 		}
 
 		$orderData = $request->only([
-		    'user_id',
+			'user_id',
 			'payment_type_id',
 			'context_id',
 		]);
@@ -341,29 +581,31 @@ class OrderController extends Controller
 
 	/**
 	 * Send order to trash
-	 * @param int $id
+	 * @param Request $request
 	 * @return \Illuminate\Http\JsonResponse
 	 */
-	public function trash(int $id) : JsonResponse
+	public function trash(Request $request) : JsonResponse
 	{
-		/** Try get model
-		 */
-		try {
-			$model = Order::find($id);
-		}
-		catch (\Exception $e) {
-			logger($e->getMessage());
-			return response()->json(['message' => $e->getMessage()], 422);
-		}
+		$ids = $request->input('ids');
+		foreach (json_decode($ids) as $id) {
+			/** Try get model
+			 */
+			try {
+				$model = Order::find($id);
+			}
+			catch (\Exception $e) {
+				logger($e->getMessage());
+				return response()->json(['message' => $e->getMessage()], 422);
+			}
 
-		if ($model->delete === 1) {
-			$model->delete = 0;
+			if ($model->delete === 1) {
+				$model->delete = 0;
+			}
+			else {
+				$model->delete = 1;
+			}
+			$model->save();
 		}
-		else {
-			$model->delete = 1;
-		}
-
-		$model->save();
 		return response()->json(['message' => true], 200);
 	}
 
@@ -391,20 +633,20 @@ class OrderController extends Controller
 	}
 
 	/*
-     * Create new client order
-     * @return boolean
-     */
-    public function create(Request $request){
-        $order = new Order();
-        $last_order = Order::orderBy('id','desc')->first();
+	 * Create new client order
+	 * @return boolean
+	 */
+	public function create(Request $request){
+		$order = new Order();
+		$last_order = Order::orderBy('id','desc')->first();
 
-        if(!$last_order){
-            $max_id = 1;
-            $order_number = $max_id;
-        } else {
-            $max_id = $last_order->id;
-            $order_number = $max_id + 1;
-        }
+		if(!$last_order){
+			$max_id = 1;
+			$order_number = $max_id;
+		} else {
+			$max_id = $last_order->id;
+			$order_number = $max_id + 1;
+		}
 		// $request->validate
 		$validator = $request->validate([
 			'user_id' => 'required',
@@ -419,104 +661,102 @@ class OrderController extends Controller
 		$delivery = $request->input('delivery_id') ?? NULL;
 
 		$dataOrder = array_merge([
-            'number' => $order_number,
-            'cost' => 0,
-            'prepayment' => 0,
-            'paid' => 0
+			'number' => $order_number,
+			'cost' => 0,
+			'prepayment' => 0,
+			'paid' => 0
 		], $dataOrder);
-        $order->fill($dataOrder);
+		$order->fill($dataOrder);
 
-        try {
-            $order->save();
-        }
-        catch (\Exception $e) {
-            logger($e->getMessage());
-            return response()->json(['success' => false, 'message' => $e->getMessage()], 422);
-        }
+		try {
+			$order->save();
+		}
+		catch (\Exception $e) {
+			logger($e->getMessage());
+			return response()->json(['success' => false, 'message' => $e->getMessage()], 422);
+		}
 
-        $cart = [];
-        if(!empty($data['cart'])){
-	        $cart = json_decode($data['cart'], TRUE);
-        }
+		$cart = [];
+		if(!empty($data['cart'])){
+			$cart = json_decode($data['cart'], TRUE);
+		}
 
-        //пvar_dump($cart); die;
+		//пvar_dump($cart); die;
 
-        foreach ($cart as $product){
-        	$productId = $product['id'];
-        	$count = $product['count'] ?? 1;
-        	$discount = $product['discount'] ?? 0;
-        	$serial = $product['serials_number'] ?? NULL;
-            $product = Product::where('id', $productId)->first();
+		foreach ($cart as $product) {
+			$productId = $product['product']['id'];
+			$count = $product['count'] ?? 1;
+			$discount = $product['discount'] ?? 0;
+			$serial = $product['serials_number'] ?? NULL;
+			$product = Product::where('id', $productId)->first();
 
-            if($product->auto_price){
-                $btcCost = $product->calcBtcPrice();
-                $autoprice_data = $product->calcAutoPrice(true);
+			if ($product->auto_price) {
+				$btcCost = $product->calcBtcPrice();
+				$autoprice_data = $product->calcAutoPrice(true);
 
-                $order->carts()->create([
-                    'order_id' => $order->id,
-                    'product_id' => $productId,
-                    'count' => $count,
-                    'discount' => $discount,
-                    'serial_number' => $serial,
-                    'cost' => $autoprice_data['total'],
-                    'btcCost' => $btcCost,
-                    'fes' => $autoprice_data['fes'],
-                    'warranty' => $autoprice_data['warranty'],
-                    'prime_cost' => $autoprice_data['prime'],
-                    'delivery_cost' => $autoprice_data['delivery'],
-                    'profit' => $autoprice_data['profit'],
-                ]);
+				$order->carts()->create([
+					'order_id' => $order->id,
+					'product_id' => $productId,
+					'count' => $count,
+					'discount' => $discount,
+					'serial_number' => $serial,
+					'cost' => $autoprice_data['total'],
+					'btcCost' => $btcCost,
+					'fes' => $autoprice_data['fes'],
+					'warranty' => $autoprice_data['warranty'],
+					'prime_cost' => $autoprice_data['prime'],
+					'delivery_cost' => $autoprice_data['delivery'],
+					'profit' => $autoprice_data['profit'],
+				]);
 
-            } else{
-                $cost = $product->price;
-            
-                $btcCost = $product->calcBtcPrice();
+			} else {
+				$cost = $product->price;			
+				$btcCost = $product->calcBtcPrice();
 
-                $order->carts()->create([
-                    'order_id' => $order->id,
-                    'product_id' => $productId,
-                    'count' => $count,
-                    'discount' => $discount,
-                    'cost' => $cost,
-                    'btcCost' => $btcCost
-                ]);
-            }
-        }
+				$order->carts()->create([
+					'order_id' => $order->id,
+					'product_id' => $productId,
+					'count' => $count,
+					'discount' => $discount,
+					'cost' => $cost,
+					'btcCost' => $btcCost
+				]);
+			}
+		}
+		$order->cost = $order->countCost();
 
+		$order->orderDeliveries()->create([
+			'order_id' => $order->id,
+			'delivery_id' => $delivery,
+			'cost' => $order->cost,
+			'first_name' => $data['d_first_name'] ?? NULL,
+			'last_name' => $data['d_last_name'] ?? NULL,
+			'address' => $data['d_address'] ?? NULL,
+			'phone' => $data['d_phone'] ?? NULL,
+			'email' => $data['d_email'] ?? NULL,
+			'city' => $data['d_city'] ?? NULL,
+			'country' => $data['d_country'] ?? NULL,
+			'state' => $data['d_state'] ?? NULL,
+			'comment' => $data['d_comment'] ?? NULL,
+			'office' => $data['d_office'] ?? NULL,
+			'zendesk' => $data['d_zendesk'] ?? NULL,
+			'waybill' => $data['d_waybill'] ?? NULL,
+			'warranty' => $data['d_warranty'] ?? NULL,
+			'passport' => $data['d_passport'] ?? NULL,
+			'comment' => $data['d_comment'] ?? NULL,
+		]);
 
-        $order->cost = $order->countCost();
+		$order->orderPayments()->create([
+			'order_id' => $order->id,
+			'cost' => $order->cost,
+			'first_name' => $data['p_first_name'] ?? NULL,
+			'last_name' => $data['p_last_name'] ?? NULL,
+			'city' => $data['p_city'] ?? NULL,
+			'country' => $data['p_country'] ?? NULL,
+		]);
 
-        $order->orderDeliveries()->create([
-            'order_id' => $order->id,
-            'delivery_id' => $delivery,
-            'cost' => $order->cost,
-            'first_name' => $data['d_first_name'] ?? NULL,
-            'last_name' => $data['d_last_name'] ?? NULL,
-            'address' => $data['d_address'] ?? NULL,
-            'phone' => $data['d_phone'] ?? NULL,
-            'email' => $data['d_email'] ?? NULL,
-            'city' => $data['d_city'] ?? NULL,
-            'country' => $data['d_country'] ?? NULL,
-            'state' => $data['d_state'] ?? NULL,
-            'comment' => $data['d_comment'] ?? NULL,
-            'office' => $data['d_office'] ?? NULL,
-            'zendesk' => $data['d_zendesk'] ?? NULL,
-            'waybill' => $data['d_waybill'] ?? NULL,
-            'warranty' => $data['d_warranty'] ?? NULL,
-            'passport' => $data['d_passport'] ?? NULL
-        ]);
-
-        $order->orderPayments()->create([
-            'order_id' => $order->id,
-            'cost' => $order->cost,
-            'first_name' => $data['p_first_name'] ?? NULL,
-            'last_name' => $data['p_last_name'] ?? NULL,
-            'city' => $data['p_city'] ?? NULL,
-            'country' => $data['p_country'] ?? NULL,
-        ]);	 
-
-        try {
-	        $order->save();
+		try {
+			$order->save();
 		}
 		catch (\Exception $e) {
 			logger($e->getMessage());
@@ -524,51 +764,51 @@ class OrderController extends Controller
 		}
 
 		if(isset($data['send']) && $data['send'] === 'true'){
-            $serials = [];
-            $products_info = [];
-            foreach ($cart as $key => $product) {
-                $serials[] = $product['serial_number'] ?? '';
-                $products_info[] = $product['title'] . ' * ' . $product['count'];
-            }
+			$serials = [];
+			$products_info = [];
+			foreach ($cart as $key => $product) {
+				$serials[] = $product['serial_number'] ?? '';
+				$products_info[] = $product['title'] . ' * ' . $product['count'];
+			}
 
-            $this->googleTableAppend([
-                // A. Исполнитель
-                Auth::user()->name,
-                // B. Номер заказа
-                ''.$order_number,
-                // C. Номер тикета с зендеска
-                $data['d_zendesk'] ?? '-',
-                // D. Дата
-                $data['created_at'] ?? '-',
-                // E. Имя Фамилия
-                ($data['d_first_name'] ?? '') . ($data['d_last_name'] ?? '') ?: '-',
-                // F. Номер телефона
-                $data['d_phone'] ?? '-',
-                // G. Почта
-                $data['d_email'] ?? '-',
-                // H. Что было сделано
-                implode(', ', $products_info),
-                // I. Серийные номера
-                implode(', ', $serials),
-                // J. Количество дней гарантии
-                $data['d_warranty'] ?? '-',
-                // K. Страна
-                $data['d_country'] ?? '-',
-                // L. Тип доставки
-                $order->orderDeliveries->delivery->title,
-                // M. ТТН
-                $data['d_waybill'] ?? '-',
-                // N. Город
-                $data['d_city'] ?? '-',
-                // O. Дата и время оплаты
-                ''
-            ]);
-        }
+			$this->googleTableAppend([
+				// A. Исполнитель
+				Auth::user()->name,
+				// B. Номер заказа
+				''.$order_number,
+				// C. Номер тикета с зендеска
+				$data['d_zendesk'] ?? '-',
+				// D. Дата
+				$data['created_at'] ?? '-',
+				// E. Имя Фамилия
+				($data['d_first_name'] ?? '') . ($data['d_last_name'] ?? '') ?: '-',
+				// F. Номер телефона
+				$data['d_phone'] ?? '-',
+				// G. Почта
+				$data['d_email'] ?? '-',
+				// H. Что было сделано
+				implode(', ', $products_info),
+				// I. Серийные номера
+				implode(', ', $serials),
+				// J. Количество дней гарантии
+				$data['d_warranty'] ?? '-',
+				// K. Страна
+				$data['d_country'] ?? '-',
+				// L. Тип доставки
+				$order->orderDeliveries->delivery->title,
+				// M. ТТН
+				$data['d_waybill'] ?? '-',
+				// N. Город
+				$data['d_city'] ?? '-',
+				// O. Дата и время оплаты
+				''
+			]);
+		}
 
-        return response()->json(['success' => true, 'order' => $order], 200);
-    }
+		return $this->one($order->id, $request);
+	}
 
-    protected function googleTableAppend($values = []){
+	protected function googleTableAppend($values = []) {
 
 		$client = new Google_Client();
 		$client->useApplicationDefaultCredentials();
@@ -582,5 +822,5 @@ class OrderController extends Controller
 		$params = ['valueInputOption' => 'RAW'];
 
 		return $service->spreadsheets_values->append($spreadsheetId, $range, $body, $params);
-    }
+	}
 }

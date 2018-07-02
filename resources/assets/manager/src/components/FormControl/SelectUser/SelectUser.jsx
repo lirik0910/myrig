@@ -7,6 +7,7 @@
 
 import App from '../../../App.js';
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import Select from 'material-ui/Select';
 import { MenuItem } from 'material-ui/Menu';
 import { FormControl } from 'material-ui/Form';
@@ -116,7 +117,7 @@ class SelectUser extends Component {
 				input={<Input name="user_id" id={inputID} />}>
 
 				<MenuItem value={0}>
-					<em>{'None'}</em>
+					<em>{this.props.lexicon['labelNoneSelected']}</em>
 				</MenuItem>
 
 				{data.map((item, i) => {
@@ -131,4 +132,15 @@ class SelectUser extends Component {
 	}
 }
 
-export default withStyles(styles)(SelectUser);
+/**
+ * Init redux states
+ * @param {Object} state
+ * @return {Object}
+ */
+function mapStateToProps(state) {
+	return {
+		lexicon: state.lexicon
+	}
+}
+
+export default connect(mapStateToProps)(withStyles(styles)(SelectUser));

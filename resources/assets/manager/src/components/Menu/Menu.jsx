@@ -115,8 +115,8 @@ class Menu extends Component {
 					<List className={classes.list}>
 						{data.map((item, i) => {
 							Icon = MaterialIcons[item.icon];
-							return <Link key={i}
-										to={App.name() + item.link}
+							return <a key={i}
+										href={App.name() + item.link}
 										onClick={this.props.onItemClicked(item.link)}>
 								<ListItem button>
 									<ListItemIcon>
@@ -124,7 +124,7 @@ class Menu extends Component {
 									</ListItemIcon>
 									<ListItemText primary={this.props.lexicon['menu_'+ item.name]} />
 								</ListItem>
-							</Link>
+							</a>
 						})}
 					</List>
 				</div>

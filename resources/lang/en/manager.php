@@ -242,5 +242,6 @@ return [
 	'var_indexSlider' => 'Main slider',
 	'var_calculatorDevices' => 'Calculator devices',
 	'var_hosting' => 'Hosting cost',
-	'mass_actions' => 'Mass actions'
+	'mass_actions' => 'Mass actions',
+	'labelNoneSelected' => 'None',
 ];

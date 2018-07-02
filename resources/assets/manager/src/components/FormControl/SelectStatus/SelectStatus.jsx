@@ -114,7 +114,7 @@ class SelectStatus extends Component {
 				input={<Input name="status_id" id={inputID} />}>
 
 				<MenuItem value={0}>
-					<em>{'None'}</em>
+					<em>{this.props.lexicon['labelNoneSelected']}</em>
 				</MenuItem>
 
 				{data.map((item, i) => {

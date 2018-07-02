@@ -13,9 +13,14 @@ class LexiconController extends Controller
 	 * @param lluminate\Http\Request $request
 	 * @return Illuminate\Http\JsonResponse
 	 */
-	public function one(string $lang) : JsonResponse
+	public function one(string $lang, Request $request) : JsonResponse
 	{
+		$part = $request->input('part');
+		if (!$part) {
+			$part = 'manager';
+		}
+
 		\App::setLocale($lang);
-		return response()->json(\Lang::get('manager'), 200);
+		return response()->json(\Lang::get($part), 200);
 	}
 }
