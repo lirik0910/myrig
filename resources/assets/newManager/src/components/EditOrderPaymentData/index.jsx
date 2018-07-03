@@ -45,17 +45,19 @@ class EditOrderPaymentData extends PureComponent {
 	componentWillReceiveProps(willProps) {
 		let { order_payments } = this.props.order;
 
-		if (order_payments.id === 0 && willProps.order.order_payments.id > 0) {
+		if (order_payments !== null) {
+			if (order_payments.id === 0 && willProps.order.order_payments.id > 0) {
 
-			let i,
-				o = {};
+				let i,
+					o = {};
 
-			for (i in willProps.order.order_payments) {
-				o['p_'+ i] = willProps.order.order_payments[i] === null ?
-					order_payments[i] :
-					willProps.order.order_payments[i];
+				for (i in willProps.order.order_payments) {
+					o['p_'+ i] = willProps.order.order_payments[i] === null ?
+						order_payments[i] :
+						willProps.order.order_payments[i];
+				}
+				this.setState({ ...o });
 			}
-			this.setState({ ...o });
 		}
 	}
 
@@ -104,7 +106,7 @@ class EditOrderPaymentData extends PureComponent {
 					margin: 12
 				}} />
 
-			{order.order_payments.country === null ? <FilterCountry
+			{order.order_payments === null || order.order_payments.country === null ? <FilterCountry
 				name="p_country"
 				data={countries}
 				value="title" /> :

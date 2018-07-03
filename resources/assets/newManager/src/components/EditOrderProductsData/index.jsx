@@ -47,7 +47,8 @@ class EditOrderProductsData extends Component {
 		let { carts } = this.state;
 
 		carts.splice(i, 1);
-		this.setState({ carts });
+		this.setState({ carts }, () => 
+			this.props.onCartUpdated(carts));
 	}
 
 	addNewProduct = (e) => {
@@ -55,13 +56,14 @@ class EditOrderProductsData extends Component {
 			{ carts, newProduct } = this.state;
 
 		carts.push({
-			id: order.id,
+			id: newProduct.product_id,
 			cost: newProduct.price,
 			btcCost: 0,
 			count: 1,
 			product: newProduct
 		});
-		this.setState({ carts, add: false, newProduct: {} });
+		this.setState({ carts, add: false, newProduct: {} }, () => 
+			this.props.onCartUpdated(carts));
 	}
 
 	/**
@@ -132,7 +134,7 @@ class EditOrderProductsData extends Component {
 							}} />
 
 						<InputNumberDefault
-							defaultValue={0}
+							defaultValue={item.discount}
 							label={langs['labelProductsDicount']}
 							handleFieldChanged={(value) => {
 								carts[i]['discount'] = value;

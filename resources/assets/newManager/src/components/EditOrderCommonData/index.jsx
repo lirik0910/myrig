@@ -44,9 +44,11 @@ class EditOrderCommonData extends PureComponent {
 				{langs['orderEditCommonTitle']}
 			</Typography>
 
-			<SearchUser
+			{order.user_id > 0 ? <SearchUser
 				defaultUser={order.user}
-				onUserSelected={this.props.onUserSelected} />
+				onUserSelected={this.props.onUserSelected} /> :
+			<SearchUser
+				onUserSelected={this.props.onUserSelected} />}
 
 			<FilterContext
 				defaultValue={order.context_id} />

@@ -40,11 +40,16 @@ window.Base = Base;
  * @const
  * @type {Object}
  */
-const containers = [
-	IndexContainer,
-	DashboardContainer,
-	OrdersContainer
-];
+const containers = [{ 
+		name: 'IndexContainer',
+		component: IndexContainer
+	}, { 
+		name: 'DashboardContainer',
+		component: DashboardContainer 
+	}, { 
+		name: 'OrdersContainer',
+		component: OrdersContainer
+	}];
 
 /** Render app containers
  */
@@ -56,7 +61,7 @@ render (<BrowserRouter>
 					{containers.map((item, i) => {
 						return <Route key={i} exact
 							path={window.routes[item.name]} 
-							component={item} />
+							component={item.component} />
 					})}
 				</Switch>
 			</Provider>
