@@ -115,23 +115,83 @@ foreach ($products as $item) {
 					<input type="text" id="last-name__input" class="font-weight-light field__input field__grey" name="last_name" placeholder="{{ __('default.last_name_label') }}" value="@isset($user->attributes->lname) {{$user->attributes->lname}} @endisset" required />
 
 					<select name="country" id="country__select" class="font-weight-light country__select d-none field__grey">
-						@php
-							if(isset($deliveriesCountry->country)){
+						
+							@php
+								if(isset($deliveriesCountry->country)){
 								$country = 'common.country_' . $deliveriesCountry->country;
-							
-						@endphp
-						<option value="{{$deliveriesCountry}}">{{ __($country) }}</option>
-						<option value="">{{ __('default.select_country') }}</option>
+							@endphp
+						
+						<option value="{{$deliveriesCountry->country}}">{{ __($country) }}</option>
+						@php
+						 if($deliveriesCountry->country !== 'AZ'){
+						@endphp	
 						<option value="AZ">{{ __('common.country_AZ') }}</option>
+						@php
+							}
+						@endphp
+						@php
+						 if($deliveriesCountry->country !== 'AM'){
+						@endphp	
 						<option value="AM">{{ __('common.country_AM') }}</option>
+						@php
+							}
+						@endphp
+						@php
+						 if($deliveriesCountry->country !== 'BY'){
+						@endphp	
 						<option value="BY">{{ __('common.country_BY') }}</option>
+						@php
+							}
+						@endphp
+						@php
+						 if($deliveriesCountry->country !== 'GE'){
+						@endphp	
 						<option value="GE">{{ __('common.country_GE') }}</option>
+						@php
+							}
+						@endphp
+						@php
+						 if($deliveriesCountry->country !== 'KZ'){
+						@endphp	
 						<option value="KZ">{{ __('common.country_KZ') }}</option>
+						@php
+							}
+						@endphp
+						@php
+						 if($deliveriesCountry->country !== 'KG'){
+						@endphp	
 						<option value="KG">{{ __('common.country_KG') }}</option>
+						@php
+							}
+						@endphp
+						@php
+						 if($deliveriesCountry->country !== 'RU'){
+						@endphp
 						@if($locale != 'en') <option value="RU">{{ __('common.country_RU') }}</option>@endif
+						@php
+							}
+						@endphp
+						@php
+						 if($deliveriesCountry->country !== 'TM'){
+						@endphp
 						<option value="TM">{{ __('common.country_TM') }}</option>
+						@php
+							}
+						@endphp
+						@php
+						 if($deliveriesCountry->country !== 'UZ'){
+						@endphp
 						<option value="UZ">{{ __('common.country_UZ') }}</option>
+						@php
+							}
+						@endphp
+						@php
+						 if($deliveriesCountry->country !== 'UA'){
+						@endphp
 						<option value="UA">{{ __('common.country_UA') }}</option>
+						@php
+							}
+						@endphp
 						@php
 							}else{
 						@endphp
