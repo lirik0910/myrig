@@ -62,6 +62,7 @@ class SelectDefault extends PureComponent {
 		defaultValue: '',
 		name: 'defaultSelect',
 		id: 'defautl-select',
+		formId: '',
 		helperText: 'helperSelectDefaultText',
 		title: 'filterSelectDefaultTitle',
 		onItemChanged: (e, value) => {}
@@ -93,9 +94,9 @@ class SelectDefault extends PureComponent {
 	 * @return {object} jsx object
 	 */
 	render() {
-		let { classes, name, id, helperText, data, field, value, title, none, langs } = this.props;
+		let { classes, name, id, helperText, data, field, value, title, none, langs, formId } = this.props;
 
-		return <FormControl className={classes.formControl}>
+		return <FormControl id={formId} className={classes.formControl}>
 			{title && <InputLabel 
 				htmlFor="age-helper"
 				className={classes.helper}>{title}</InputLabel>}

@@ -29,7 +29,8 @@ class EditOrderCommonData extends PureComponent {
 	 */
 	static defaultProps = {
 		order: {},
-		onUserSelected: (value, item) => {}
+		onUserSelected: (value, item) => {},
+		onOrdersLoaded: (flag) => {}
 	}
 
 	/**
@@ -45,18 +46,25 @@ class EditOrderCommonData extends PureComponent {
 			</Typography>
 
 			{order.user_id > 0 ? <SearchUser
+				formId="el_user_id"
 				defaultUser={order.user}
-				onUserSelected={this.props.onUserSelected} /> :
+				onUserSelected={this.props.onUserSelected}
+				onDataLoaded={this.props.onOrdersLoaded} /> :
 			<SearchUser
-				onUserSelected={this.props.onUserSelected} />}
+				formId="el_user_id"
+				onUserSelected={this.props.onUserSelected}
+				onDataLoaded={this.props.onOrdersLoaded} />}
 
 			<FilterContext
+				formId="el_context_id"
 				defaultValue={order.context_id} />
 
 			<FilterOrderStatus
+				formId="el_status_id"
 				defaultValue={order.status_id} />
 
 			<FilterOrderPayment
+				formId="el_payment_type_id"
 				defaultValue={order.payment_type_id} />
 
 			<FieldPublichDate

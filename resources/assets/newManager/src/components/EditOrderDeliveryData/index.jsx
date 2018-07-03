@@ -79,9 +79,12 @@ class EditOrderDeliveryData extends PureComponent {
 			</Typography>
 
 			<FilterOrderDelivery
+				formId="el_delivery_id"
 				defaultValue={order.order_deliveries.delivery_id} />
 
 			<TextField
+				required
+				id="el_d_first_name"
 				name="d_first_name"
 				value={this.state.d_first_name}
 				label={langs['labelFieldUserFirstName']}
@@ -92,6 +95,8 @@ class EditOrderDeliveryData extends PureComponent {
 				}} />
 
 			<TextField
+				required
+				id="el_d_last_name"
 				name="d_last_name"
 				value={this.state.d_last_name}
 				label={langs['labelFieldUserLastName']}
@@ -102,7 +107,9 @@ class EditOrderDeliveryData extends PureComponent {
 				}} />
 
 			<TextField
+				required
 				name="d_email"
+				id="el_d_email"
 				value={this.state.d_email}
 				label={langs['labelFieldUserEmail']}
 				onChange={this._handleChange}
@@ -112,6 +119,8 @@ class EditOrderDeliveryData extends PureComponent {
 				}} />
 
 			<TextField
+				required
+				id="el_d_phone"
 				name="d_phone"
 				value={this.state.d_phone}
 				label={langs['labelFieldUserPhone']}

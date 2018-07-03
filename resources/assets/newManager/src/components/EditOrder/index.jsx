@@ -18,6 +18,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
+import Snackbar from '@material-ui/core/Snackbar';
 import Slide from '@material-ui/core/Slide';
 import EditOrderCommonData from 'components/EditOrderCommonData';
 import EditOrderPaymentData from 'components/EditOrderPaymentData';
@@ -77,7 +78,9 @@ class EditOrder extends PureComponent {
 	state = {
 		data: {},
 		countries: [],
-		orderGot: false
+		orderGot: false,
+		responseStatus: false,
+		responseMessage: ''
 	}
 
 	willPropsId = '';
@@ -200,6 +203,37 @@ class EditOrder extends PureComponent {
 			TransitionComponent={Transition}
 			onClose={this.props.handleDialogClose}>
 
+			<Snackbar
+				anchorOrigin={{ 
+					vertical: 'top', 
+					horizontal: 'center'
+				}}
+				open={this.state.responseStatus}
+				message={this.state.responseMessage}
+				onClose={(e) => {
+					let i = 0,
+						a = [
+							'el_user_id', 
+							'el_context_id',
+							'el_status_id',
+							'el_delivery_id',
+							'el_payment_type_id', 
+							'el_d_first_name', 
+							'el_d_last_name',
+							'el_d_email',
+							'el_d_phone',
+							'el_p_first_name',
+							'el_p_last_name'
+						];
+
+					while (i < a.length) {
+						document.getElementById(a[i]).style['backgroundColor'] = 'transparent';
+						i++;
+					}
+
+					this.setState({ responseStatus: false });
+				}} />
+
 			<AppBar className={classes.appBar}>
 				<Toolbar>
 					<IconButton 
@@ -244,8 +278,28 @@ class EditOrder extends PureComponent {
 								createOrder(cart)
 									.then(this.setOrderData)
 									.then((e) => {
-										this.props.onCreatedOrder(this.state.data);
-										this.props.onOrdersLoaded(true);
+										this.setState({ responseStatus: true }, () => {
+											this.props.onCreatedOrder(this.state.data);
+											this.props.onOrdersLoaded(true);
+										});
+									})
+									.catch((promise) => {
+										promise.then((data) => {
+											let i,
+												el;
+
+											for (i in data.errors) {
+												el = document.getElementById('el_'+ i);
+												el.style['backgroundColor'] = 'rgba(255, 0, 0, 0.1)';
+											}
+
+											this.setState({ 
+												responseStatus: true,
+												responseMessage: data.message
+											}, () => {
+												this.props.onOrdersLoaded(true);
+											});
+										});
 									});
 							}
 							
@@ -270,7 +324,8 @@ class EditOrder extends PureComponent {
 						<Grid item xs={12} sm={6}>
 							<EditOrderCommonData 
 								order={data}
-								onUserSelected={this.userChanged} />
+								onUserSelected={this.userChanged}
+								onOrdersLoaded={this.props.onOrdersLoaded} />
 
 							<EditOrderDeliveryData 
 								order={data}

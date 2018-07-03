@@ -56,7 +56,7 @@ class FilterContext extends PureComponent {
 	 */
 	render() {
 		let { data } = this.state,
-			{ defaultValue, name, none, langs } = this.props;
+			{ defaultValue, name, none, langs, ...others } = this.props;
 
 		return <SelectDefault
 			none={none}
@@ -65,7 +65,8 @@ class FilterContext extends PureComponent {
 			helperText={langs['helperSelectContext']}
 			data={data}
 			defaultValue={defaultValue}
-			onItemChanged={this.props.onFilterSelected} />
+			onItemChanged={this.props.onFilterSelected}
+			{...others} />
 	}
 }
 
