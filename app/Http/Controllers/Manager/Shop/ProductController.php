@@ -82,7 +82,8 @@ class ProductController extends Controller
 			$all = $this->setParamsBeforeQuery($all, $request->all());
 			$all->with('images')
 				//->with('category')
-				->with('options');
+				->with('options')
+				->with('context');
 		}
 		catch (\Exception $e) {
 			logger($e->getMessage());
