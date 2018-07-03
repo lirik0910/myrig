@@ -220,7 +220,7 @@ class DbImport
             ];
         }
         foreach ($this->orders as $order){
-            $delivery_id = 1;
+            $delivery_id = 0;
             $delivery_cost = 0;
 
             $orders_logs[$order->id] = $this->source->select('select * from wpbit2_comments where comment_post_ID = :comment_post_ID', ['comment_post_ID' => $order->id]);
@@ -321,35 +321,9 @@ class DbImport
                     $orders_items_meta[$item->order_id][$item->order_item_name] = $this->source->select('select * from wpbit2_woocommerce_order_itemmeta where order_item_id = :order_item_id', ['order_item_id' => $item->order_item_id ]);
                     //var_dump($orders_items_meta); die;
 
-                    if($item->order_item_name != 'Shipping' && $item->order_item_name != 'Product Shipping'){
-                        if(!in_array($item->order_item_name, $order_deliveries_all)){
-                            //var_dump($item->order_item_name);
-                            $order_deliveries_all[$order->id] = $item->order_item_name;
-                        }
-                        if($item->order_item_name == 'Новая почта'){
-                            if(isset($order_deliveries[$item->order_id])){
-                                $order_deliveries[$item->order_id]['delivery_id'] = 1;
-                            }
-                        } elseif ($item->order_item_name == 'Самовывоз'){
-                            if(isset($order_deliveries[$item->order_id])) {
-                                $order_deliveries[$item->order_id]['delivery_id'] = 4;
-                            }
-                        } elseif($item->order_item_name == 'Деловые линии'){
-                            if(isset($order_deliveries[$item->order_id])){
-                                $order_deliveries[$item->order_id]['delivery_id'] = 3;
-                            }
-                        } elseif($item->order_item_name == 'СДЭК'){
-                            if(isset($order_deliveries[$item->order_id])){
-                                $order_deliveries[$item->order_id]['delivery_id'] = 2;
-                            }
-                        } else{
-                            if(isset($order_deliveries[$item->order_id])){
-                                $order_deliveries[$item->order_id]['delivery_id'] = 5;
-                            }
-                        }
+                    if($item->order_item_type != 'shipping'){
                         $item_count = 1;
                         $item_total_cost = 0;
-
 
                         foreach ($orders_items_meta[$item->order_id][$item->order_item_name] as $meta){
                             //var_dump(); die;
@@ -374,6 +348,33 @@ class DbImport
                             'count' => $item_count,
                             'title' => $item_product_title ? $item_product_title : NULL
                         ];
+                    } elseif($item->order_item_type == 'shipping' || $item->order_item_type == 'product shipping'){
+                        //var_dump($item->order_item_name); die;
+                        if(!in_array($item->order_item_name, $order_deliveries_all)){
+                            //var_dump($item->order_item_name);
+                            $order_deliveries_all[$order->id] = $item->order_item_name;
+                        }
+                        if(trim($item->order_item_name) == 'Новая Почта'){
+                            if(isset($order_deliveries[$item->order_id])){
+                                $order_deliveries[$item->order_id]['delivery_id'] = 1;
+                            }
+                        } elseif (trim($item->order_item_name) == 'СДЭК'){
+                            if(isset($order_deliveries[$item->order_id])) {
+                                $order_deliveries[$item->order_id]['delivery_id'] = 2;
+                            }
+                        } elseif(trim($item->order_item_name) == 'Деловые линии'){
+                            if(isset($order_deliveries[$item->order_id])){
+                                $order_deliveries[$item->order_id]['delivery_id'] = 3;
+                            }
+                        } elseif(trim($item->order_item_name) == 'Самовывоз'){
+                            if(isset($order_deliveries[$item->order_id])){
+                                $order_deliveries[$item->order_id]['delivery_id'] = 4;
+                            }
+                        } else{
+                            if(isset($order_deliveries[$item->order_id])){
+                                $order_deliveries[$item->order_id]['delivery_id'] = 5;
+                            }
+                        }
                     }
                 }
 
@@ -381,7 +382,7 @@ class DbImport
         }
 //die;
         //var_dump($orders_items_meta); die;
-//var_dump($order_deliveries_all, $order_payments_all); die;
+//var_dump($order_deliveries_all); die;
         $test = [];
         foreach($cart as $key => $line){
             if($line['order_id'] == 6842){
@@ -636,6 +637,9 @@ class DbImport
          * Import orders deliveries
          */
         foreach ($data['orders_deliveries'] as $delivery){
+            if($delivery['order_id'] == 7455){
+                //var_dump($delivery); die;
+            }
             try{
                 OrderDelivery::create($delivery);
             } catch (\Exception $e){
