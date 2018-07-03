@@ -101,7 +101,7 @@ return [
 	'dialogAddProductTitle' => 'Выбор продукта',
 	'labelFieldOrderDate' => 'Дата создания',
 
-	'delivery_Without delivery' => 'Без доставки',
+	'delivery_Без доставки' => 'Без доставки',
 	'delivery_Самовывоз' => 'Самовывоз',
 	'delivery_Деловые линии' => 'Деловые линии',
 	'delivery_СДЕК' => 'СДЕК',
