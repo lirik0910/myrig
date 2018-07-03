@@ -119,6 +119,7 @@ return [
     'download_invoice' => 'DOWNLOAD INVOICE',
     'payment_cash' => 'Cash',
     'payment_bitcoin' => 'Bitcoin',
+    'payment_cashless' => 'Cashless payment',
 
     //content.news
     'read' => 'Read',
