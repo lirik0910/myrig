@@ -342,6 +342,10 @@ class DbImport
                             if(isset($order_deliveries[$item->order_id])){
                                 $order_deliveries[$item->order_id]['delivery_id'] = 2;
                             }
+                        } else{
+                            if(isset($order_deliveries[$item->order_id])){
+                                $order_deliveries[$item->order_id]['delivery_id'] = 5;
+                            }
                         }
                         $item_count = 1;
                         $item_total_cost = 0;
