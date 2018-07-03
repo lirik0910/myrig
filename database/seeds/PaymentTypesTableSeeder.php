@@ -19,7 +19,7 @@ class PaymentTypesTableSeeder extends Seeder
 		]);
 
 		App\Model\Shop\PaymentType::create([
-		    'id' = 2,
+		    'id' => 2,
 			'title' => 'Cash',
 			'description' => 'Cash payment',
 			'active' => 1
