@@ -3,6 +3,7 @@
 namespace App\Model\Shop;
 
 use App\Model\Base\Page;
+use App\Model\Base\Context;
 use App\Model\Shop\ProductImage;
 use App\Model\Shop\ProductOption;
 use Illuminate\Database\Eloquent\Model;
@@ -19,6 +20,15 @@ class Product extends Model
 	public function page()
 	{
 		return $this->belongsTo(Page::class);
+	}
+
+	/**
+	 * Get context model
+	 * @return boolean
+	 */
+	public function context()
+	{
+		return $this->belongsTo(Context::class);
 	}
 
 	/**
