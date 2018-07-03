@@ -135,6 +135,9 @@ class DbImport
         $orders_items_meta = [];
         $orders_items = [];
         $order_deliveries = [];
+        $order_payments_all = [];
+        $order_deliveries_all = [];
+
         $orders = [];
         $orders_logs = [];
         $order_statuses_count = [
@@ -269,11 +272,13 @@ class DbImport
                         case '_payment_method':
                            // cod
                             //var_dump('cscdcsv'); die;
-                            if($meta_item->meta_value == 'cheque'){
+                            if($meta_item->meta_value == 'bitcoin' || $meta_item->meta_value == 'jetpack_custom_gateway'){
                                // var_dump($orders[$order->id]);// die;
                                 $orders[$order->id]['payment_type_id'] = 1;
                                // var_dump($orders[$order->id]);
                                 //die;
+                            } elseif($meta_item->meta_value == 'bacs' || $meta_item->meta_value == 'cod'){
+                                $orders[$order->id]['payment_type_id'] = 2;
                             } else{
                                 $orders[$order->id]['payment_type_id'] = 2;
                             }
@@ -306,26 +311,40 @@ class DbImport
             }
         }
 
-       // var_dump($order_); die;
+       //var_dump($orders[3028]); die;
         $cart = [];
+        //$order_deliveries_all = [];
 //var_dump($order_logs); die;
         foreach ($orders_items as $items){
             if (count($items) > 0){
                 foreach ($items as $item){
                     $orders_items_meta[$item->order_id][$item->order_item_name] = $this->source->select('select * from wpbit2_woocommerce_order_itemmeta where order_item_id = :order_item_id', ['order_item_id' => $item->order_item_id ]);
                     //var_dump($orders_items_meta); die;
+
                     if($item->order_item_name != 'Shipping' && $item->order_item_name != 'Product Shipping'){
+                        if(!in_array($item->order_item_name, $order_deliveries_all)){
+                            //var_dump($item->order_item_name);
+                            $order_deliveries_all[$order->id] = $item->order_item_name;
+                        }
                         if($item->order_item_name == 'Новая почта'){
                             if(isset($order_deliveries[$item->order_id])){
                                 $order_deliveries[$item->order_id]['delivery_id'] = 1;
                             }
                         } elseif ($item->order_item_name == 'Самовывоз'){
                             if(isset($order_deliveries[$item->order_id])) {
+                                $order_deliveries[$item->order_id]['delivery_id'] = 4;
+                            }
+                        } elseif($item->order_item_name == 'Деловые линии'){
+                            if(isset($order_deliveries[$item->order_id])){
                                 $order_deliveries[$item->order_id]['delivery_id'] = 3;
                             }
-                        } elseif($item->order_item_name == 'Деловые линии' || $item->order_item_name == 'СДЭК'){
+                        } elseif($item->order_item_name == 'СДЭК'){
                             if(isset($order_deliveries[$item->order_id])){
-                                $order_deliveries[$item->order_id]['delivery_id'] = 1;
+                                $order_deliveries[$item->order_id]['delivery_id'] = 2;
+                            }
+                        } else{
+                            if(isset($order_deliveries[$item->order_id])){
+                                $order_deliveries[$item->order_id]['delivery_id'] = 5;
                             }
                         }
                         $item_count = 1;
@@ -360,9 +379,9 @@ class DbImport
 
             }
         }
-
+//die;
         //var_dump($orders_items_meta); die;
-//var_dump($cart); die;
+//var_dump($order_deliveries_all, $order_payments_all); die;
         $test = [];
         foreach($cart as $key => $line){
             if($line['order_id'] == 6842){
@@ -516,8 +535,8 @@ class DbImport
         //$data['carts'] = [];
         //$data['user_attrs'] = [];
         //$data['orders_deliveries'] = [];
-        //$data['news'] = [];
-        //$data['articles'] = [];
+        $data['news'] = [];
+        $data['articles'] = [];
         //$data['logs'] = [];
 
 

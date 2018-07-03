@@ -31,9 +31,11 @@ class SelectNoticeType extends Component {
 	 */
 	static defaultProps = {
 		defaultValue: 0,
+		data: {},
 		required: false,
 		title: 'Select type',
 		inputID: 'select-notice-type',
+		types: {},
 		//onDataLoaded: () => {},
 		onItemSelected: () => {},
 		classes: PropTypes.object.isRequired,
@@ -47,7 +49,7 @@ class SelectNoticeType extends Component {
 	 * @property {String} currentID 
 	 */
 	state = {
-		data: ['note', 'message'],
+		data: this.props.data,
 		value: 0
 	}
 
@@ -82,7 +84,7 @@ class SelectNoticeType extends Component {
 	render() {
 		let { data, value } = this.state;
 		let { classes, inputID, title, required } = this.props;
-
+//console.log(data);
 		return <FormControl className={classes.formControl}>
 			<InputLabel htmlFor={inputID}>
 				{title}
@@ -99,9 +101,9 @@ class SelectNoticeType extends Component {
 				</MenuItem>
 
 				{data.map((item, i) => {
-					return <MenuItem 
+					return <MenuItem
 						key={i}
-						value={item}>
+						value={i}>
 							{item}
 					</MenuItem>
 				})}

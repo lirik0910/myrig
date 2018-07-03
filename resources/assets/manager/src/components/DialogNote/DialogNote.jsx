@@ -55,6 +55,7 @@ class DialogNotification extends Component {
         defaultValue: false,
         title: 'Create note',
         inputDefaultValue: '',
+        noteTypes: {},
         onDialogClosed: () => {},
         onDialogConfirmed: () => {},
         onNoteTypeSelected: () => {},
@@ -83,9 +84,9 @@ class DialogNotification extends Component {
      * @return {Object} jsx object
      */
     render() {
-        let { title, content } = this.props;
+        let { title, content, noteTypes } = this.props;
         let { createDialogOpen } = this.state;
-
+console.log(noteTypes);
         return <Dialog
             open={createDialogOpen}
             fullWidth={true}
@@ -105,6 +106,7 @@ class DialogNotification extends Component {
                 </DialogContentText>
                 <SelectNoticeType
                     defaultValue={0}
+                    data={noteTypes}
                     required={false}
                     title={'Select type'}
                     onItemSelected={value => this.handleChangeType(value)}
