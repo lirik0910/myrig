@@ -67,7 +67,6 @@ return [
 
     'timezone' => 'Europe/Kiev',
 
-
     /*
     |--------------------------------------------------------------------------
     | Application Locale Configuration
