@@ -52,8 +52,7 @@ class EditOrderProductsData extends Component {
 	}
 
 	addNewProduct = (e) => {
-		let { order } = this.props,
-			{ carts, newProduct } = this.state;
+		let { carts, newProduct } = this.state;
 
 		carts.push({
 			id: newProduct.product_id,
@@ -118,11 +117,11 @@ class EditOrderProductsData extends Component {
 						<Typography variant="display2">{ item.product.title }</Typography>
 
 						<Typography variant="subheading">
-							{langs['txtOrderTotalSum']}: <b>{ item.cost }</b>
+							{langs['txtOrderTotalSum']}: <b>{ item.cost.toFixed(2) }</b>
 						</Typography>
 
 						<Typography variant="subheading">
-							{langs['txtOrderTotalBtcSum']}: <b>{ item.btcCost }</b>
+							{langs['txtOrderTotalBtcSum']}: <b>{ item.btcCost.toFixed(2) }</b>
 						</Typography>
 
 						<InputNumberDefault

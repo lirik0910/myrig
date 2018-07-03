@@ -83,8 +83,8 @@ class CellPaymentOrdersTable extends PureComponent {
 					className={classes.productItem}>
 
 					<b>{ item.product.title } ({ item.count })</b>
-					<div>{langs['txtOrderTotalSum']}: { item.cost }</div>
-					<div>{langs['txtOrderTotalBtcSum']}: { item.btcCost }</div>
+					<div>{langs['txtOrderTotalSum']}: { item.cost.toFixed(2) }</div>
+					<div>{langs['txtOrderTotalBtcSum']}: { item.btcCost.toFixed(2) }</div>
 				</ListItem>
 			})}
 			</List>

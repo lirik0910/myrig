@@ -20,14 +20,7 @@ import { withStyles } from '@material-ui/core/styles';
  * SearchUser block
  * @extends PureComponent
  */
-class SearchUser extends PureComponent {
-	constructor(props) {
-		super(props);
-
-		this.fetchUsers = findUsers()
-			.then(this.getUsersData.bind(this));
-	}
-	
+class SearchUser extends PureComponent {	
 	/**
 	 * Props validators
 	 * @type {object}
@@ -40,7 +33,9 @@ class SearchUser extends PureComponent {
 	static defaultProps = {
 		defaultUser: { id: 0 },
 		name: 'user_id',
-		onUserSelected: (value, item) => {}
+		formId: '',
+		onUserSelected: (value, item) => {},
+		onDataLoaded: (flag) => {}
 	}
 
 	state = {
@@ -57,18 +52,37 @@ class SearchUser extends PureComponent {
 	 * @return {object} jsx object
 	 */
 	render() {
-		let { defaultUser } = this.props,
+		let { defaultUser, formId } = this.props,
 			{ users, userId } = this.state;
 
 		return <Fragment>
 			<InputAutoSelectDefault
-				data={users.data}
+				id={formId}
+				data={users.data ? users.data.map((item) => {
+					return {
+						id: item.id,
+						name: item['attributes'] ? 
+							item['attributes'].fname +' '+ item['attributes'].lname :
+							item.name
+					}
+				}) : []}
 				field="name"
 				defaultValue={defaultUser.name}
 				label={'labelUserMultiSelect'}
 				placeholder={'placeholderUserMultiSelect'}
-				onInputChanged={(value, item) => item && this.setState({ userId: item.id }, () => 
-					this.props.onUserSelected(value, item))} />
+				onInputChanged={(value, item) => {
+					if (String(value).length > 0) {
+						this.props.onDataLoaded(false);
+
+						this.fetchUsers = findUsers(value)
+							.then(this.getUsersData.bind(this))
+							.then(() => item ? this.setState({ userId: item.id }, () => {
+								this.props.onUserSelected(value, item);
+								this.props.onDataLoaded(true);
+							}) : 
+							this.props.onDataLoaded(true));
+					}
+				}} />
 
 			<input type="hidden" name="user_id" value={userId} />
 		</Fragment>
