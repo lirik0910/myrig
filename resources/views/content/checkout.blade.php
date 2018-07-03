@@ -8,6 +8,7 @@ if(isset($_SESSION['client'])){
 } else{
 	$client_email = '';
 }
+$deliveriesCountry = $select('App\Model\Shop\OrderDelivery')->where('email', $client_email)->latest()->first();
 
 $user = $select('App\Model\Base\User')->where('email', $client_email)->with('attributes')->first();
 
@@ -114,6 +115,12 @@ foreach ($products as $item) {
 					<input type="text" id="last-name__input" class="font-weight-light field__input field__grey" name="last_name" placeholder="{{ __('default.last_name_label') }}" value="@isset($user->attributes->lname) {{$user->attributes->lname}} @endisset" required />
 
 					<select name="country" id="country__select" class="font-weight-light country__select d-none field__grey">
+						@php
+							if(isset($deliveriesCountry->country)){
+								$country = 'common.country_' . $deliveriesCountry->country;
+							
+						@endphp
+						<option value="{{$deliveriesCountry}}">{{ __($country) }}</option>
 						<option value="">{{ __('default.select_country') }}</option>
 						<option value="AZ">{{ __('common.country_AZ') }}</option>
 						<option value="AM">{{ __('common.country_AM') }}</option>
@@ -125,6 +132,23 @@ foreach ($products as $item) {
 						<option value="TM">{{ __('common.country_TM') }}</option>
 						<option value="UZ">{{ __('common.country_UZ') }}</option>
 						<option value="UA">{{ __('common.country_UA') }}</option>
+						@php
+							}else{
+						@endphp
+						<option value="">{{ __('default.select_country') }}</option>
+						<option value="AZ">{{ __('common.country_AZ') }}</option>
+						<option value="AM">{{ __('common.country_AM') }}</option>
+						<option value="BY">{{ __('common.country_BY') }}</option>
+						<option value="GE">{{ __('common.country_GE') }}</option>
+						<option value="KZ">{{ __('common.country_KZ') }}</option>
+						<option value="KG">{{ __('common.country_KG') }}</option>
+						@if($locale != 'en') <option value="RU">{{ __('common.country_RU') }}</option>@endif
+						<option value="TM">{{ __('common.country_TM') }}</option>
+						<option value="UZ">{{ __('common.country_UZ') }}</option>
+						<option value="UA">{{ __('common.country_UA') }}</option>
+						@php
+							}
+						@endphp
 					</select>
 
 					<input type="text" class="font-weight-light field__input field__grey" name="address" placeholder="{{ __('default.address_label') }}" value="@isset($user->attributes->address) {{$user->attributes->address}} @endisset" required />
@@ -153,10 +177,14 @@ foreach ($products as $item) {
 
 					<ul class="list__container" style="padding: 12px 24px 0">
 						@foreach($paymentTypes as $type)
-						<li class="list__item">
-							<input id="{{ 'payment-type__item-' . $type->id }}" type="radio" class="font-weight-light payment-type__input" name="payment_method" data-id="{{ $type->id }}" value="{{ $type->id }}" style="display: inline" @if($loop->first) checked='checked' @endif />
-							<label class="font-weight-normal" for="{{ 'payment-type__item-' . $type->id }}">{{__('default.payment_' .strtolower($type->title)) }}</label>
-						</li>
+							@if($type->title === 'Cashless' && $locale !== 'ru')
+								@continue
+							@else
+								<li class="list__item">
+									<input id="{{ 'payment-type__item-' . $type->id }}" type="radio" class="font-weight-light payment-type__input" name="payment_method" data-id="{{ $type->id }}" value="{{ $type->id }}" style="display: inline" @if($loop->first) checked='checked' @endif />
+									<label class="font-weight-normal" for="{{ 'payment-type__item-' . $type->id }}">{{__('default.payment_' . strtolower($type->title)) }}</label>
+								</li>
+							@endif
 						@endforeach
 					</ul>
 				</div>

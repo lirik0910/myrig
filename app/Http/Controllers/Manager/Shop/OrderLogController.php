@@ -22,13 +22,11 @@ class OrderLogController
         $model = new OrderLog();
         $user_id = Auth::user()->id;
         $post = $request->post();
-        var_dump($request->post()); die;
-
 
         $model->fill([
             'order_id' => $post['orderId'],
             'user_id' => $user_id,
-            'type' => 'note',
+            'type' => $post['type'],
             'value' => $post['text']
         ]);
 

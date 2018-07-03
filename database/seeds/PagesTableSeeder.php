@@ -29,7 +29,8 @@ class PagesTableSeeder extends Seeder
 		$viewCalc = App\Model\Base\View::where('title', 'Calculator')->firstOrFail();
 		$viewProduct = App\Model\Base\View::where('title', 'Product')->firstOrFail();
 		$viewCheckout = App\Model\Base\View::where('title', 'Checkout')->firstOrFail();
-		$viewCheckoutSuccess = App\Model\Base\View::where('title', 'Checkout success')->firstOrFail();
+        $viewCheckoutSuccess = App\Model\Base\View::where('title', 'Checkout success')->firstOrFail();
+		// $viewProductDragonmint = App\Model\Base\View::where('title', 'dragonmint-16-th-s-2')->firstOrFail();
 
 		/** Get default user
 		 */
@@ -201,6 +202,19 @@ class PagesTableSeeder extends Seeder
                 'createdby_id' => $user->id,
                 'updatedby_id' => $user->id
             ]);
+
+            // $product_dragonmint = App\Model\Base\Page::create([
+            //     'parent_id' => 0,
+            //     'context_id' => $context->id,
+            //     'view_id' => $viewProductDragonmint->id,
+            //     'link' => 'product/dragonmint-16-th-s-2',
+            //     'title' => 'dragonmint-16-th-s-2',
+            //     'description' => 'Dragonmint page',
+            //     'introtext' => '',
+            //     'content' => '',
+            //     'createdby_id' => $user->id,
+            //     'updatedby_id' => $user->id
+            // ]);
         }
 
 	}
