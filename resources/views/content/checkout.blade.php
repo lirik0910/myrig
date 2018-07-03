@@ -3,12 +3,12 @@
 @php
 $deliveries = $select('App\Model\Shop\Delivery')->where('active', 1)->get();
 $paymentTypes = $select('App\Model\Shop\PaymentType')->get();
-$deliveriesCountry = $select('App\Model\Shop\OrderDelivery')->orderBy('country', 'asc')->first();
 if(isset($_SESSION['client'])){
 	$client_email = $_SESSION['client'];
 } else{
 	$client_email = '';
 }
+$deliveriesCountry = $select('App\Model\Shop\OrderDelivery')->where('email', $client_email)->latest()->first();
 
 $user = $select('App\Model\Base\User')->where('email', $client_email)->with('attributes')->first();
 
@@ -116,11 +116,12 @@ foreach ($products as $item) {
 
 					<select name="country" id="country__select" class="font-weight-light country__select d-none field__grey">
 						@php
-							if(isset($deliveriesCountry)){
+							if(isset($deliveriesCountry->country)){
 								$country = 'common.country_' . $deliveriesCountry->country;
 							
 						@endphp
 						<option value="{{$deliveriesCountry}}">{{ __($country) }}</option>
+						<option value="">{{ __('default.select_country') }}</option>
 						<option value="AZ">{{ __('common.country_AZ') }}</option>
 						<option value="AM">{{ __('common.country_AM') }}</option>
 						<option value="BY">{{ __('common.country_BY') }}</option>
