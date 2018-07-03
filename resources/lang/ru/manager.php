@@ -90,6 +90,8 @@ return [
 	'table_payment' => 'Оплата',
 	'date_label' => 'Дата',
 	'create_note' => 'Создать запись',
+    'order_note' => 'Заметка',
+    'order_message' => 'Сообщение',
 	'your_note_order' => 'Доавить запись к заказу',
 	'order_label' => 'Заказ',
 	'customer_label' => 'Клиент',

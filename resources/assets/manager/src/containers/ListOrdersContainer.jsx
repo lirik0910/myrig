@@ -69,7 +69,9 @@ class ListOrdersContainer extends Component {
 		itemTitle: '',
 		editOrder: {},
 		noteOrder: {},
-		noteData: {},
+		noteText: '',
+		noteType: '',
+		noteTypes: {note: '', message: ''},
 		dat: {},
 		trash: false,
 		deleteID: null,
@@ -244,10 +246,11 @@ class ListOrdersContainer extends Component {
         this.setState({
             completed: 0
         }, () => {
-            let { noteOrder, noteData, dat } = this.state;
+            let { noteOrder, noteText, noteType, dat } = this.state;
 
             dat.orderId = noteOrder.id;
-            dat.text = noteData.text;
+            dat.text = noteText;
+            dat.type = noteType;
             App.api({
                 type: 'POST',
                 name: 'createNote',
@@ -508,13 +511,14 @@ class ListOrdersContainer extends Component {
 			searchText, 
 			editDialog,
 			noteDialog,
+			noteTypes,
 			deleteDialog,
 			resultDialog,
 			resultDialogTitle,
 			resultDialogMessage,
 			users,
 			completed } = this.state;
-
+//console.log(noteTypes);
 		if (this.state.langLoaded === false) 
 			return <div className="create-page__container">
 				<LinearProgress color="secondary" variant="determinate" value={0} />
@@ -693,20 +697,18 @@ class ListOrdersContainer extends Component {
 
 					title={this.props.lexicon.create_note}
 					content={this.props.lexicon.your_note_order}
+					noteTypes={noteTypes}
 
 					defaultValue={noteDialog}
 					onNoteFieldInputed={value => {
-						data['text'] = value;
 						this.setState({
-							noteData: data
+							noteText: value
 						})
 					}}
 					onNoteTypeSelected={value => {
-						data['type'] = value;
 						this.setState({
-							noteData: data
+							noteType: value
 						})
-						console.log(this.state.noteData);
 					}}
 					onDialogClosed={() => this.setState({
 						noteDialog: false

@@ -115,6 +115,7 @@ return [
     'without_delivery' => 'Без доставки',
     'payment_cash' => 'Оплата наличными',
     'payment_bitcoin' => 'Bitcoin',
+    'payment_cashless' => 'Безналичный расчет',
 
 
     'download_invoice' => 'Загрузить инвойс',

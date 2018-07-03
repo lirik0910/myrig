@@ -177,10 +177,14 @@ foreach ($products as $item) {
 
 					<ul class="list__container" style="padding: 12px 24px 0">
 						@foreach($paymentTypes as $type)
-						<li class="list__item">
-							<input id="{{ 'payment-type__item-' . $type->id }}" type="radio" class="font-weight-light payment-type__input" name="payment_method" data-id="{{ $type->id }}" value="{{ $type->id }}" style="display: inline" @if($loop->first) checked='checked' @endif />
-							<label class="font-weight-normal" for="{{ 'payment-type__item-' . $type->id }}">{{__('default.payment_' .strtolower($type->title)) }}</label>
-						</li>
+							@if($type->title === 'Cashless' && $locale !== 'ru')
+								@continue
+							@else
+								<li class="list__item">
+									<input id="{{ 'payment-type__item-' . $type->id }}" type="radio" class="font-weight-light payment-type__input" name="payment_method" data-id="{{ $type->id }}" value="{{ $type->id }}" style="display: inline" @if($loop->first) checked='checked' @endif />
+									<label class="font-weight-normal" for="{{ 'payment-type__item-' . $type->id }}">{{__('default.payment_' . strtolower($type->title)) }}</label>
+								</li>
+							@endif
 						@endforeach
 					</ul>
 				</div>
