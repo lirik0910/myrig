@@ -202,6 +202,8 @@ class InputAutoSelectDefault extends PureComponent {
 									400
 							}}>
 
+							{console.log(field, suggestion)}
+
 							{suggestion[field]}
 						</MenuItem>
 					})}
