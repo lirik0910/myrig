@@ -120,7 +120,7 @@ class EditOrderProductsData extends Component {
 						<Typography variant="display2">{ item.product.title }</Typography>
 
 						<Typography variant="subheading">
-							{langs['txtOrderTotalSum']}: <b>{ item.cost.toFixed(2) }</b>
+							{langs['txtOrderTotalSum']}: <b>{ parseFloat(item.cost).toFixed(2) }</b>
 						</Typography>
 
 						<Typography variant="subheading">
