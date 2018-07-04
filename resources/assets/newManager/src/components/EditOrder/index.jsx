@@ -184,6 +184,8 @@ class EditOrder extends PureComponent {
 			let { data } = this.state,
 				a = cloneDeep(data);
 
+			a['user_id'] = user.id;
+			a['user'] = user;
 			a['order_deliveries'] = user.orders[0]['order_deliveries'];
 			a['order_payments'] = user.orders[0]['order_deliveries'];
 
