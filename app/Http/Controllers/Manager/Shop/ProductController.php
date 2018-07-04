@@ -41,9 +41,9 @@ class ProductController extends Controller
 		/** Filter by category_id
 		 */
 		if (isset($params['category_id'])) {
-			$c = $c
-					->join('product_categories', 'products.id', '=', 'product_id')
-					->where('category_id', $params['category_id']);
+			$c = $c->whereHas('categories', function ($q) use ($params) {
+				$q->where('category_id', $params['category_id']);
+			});
 		}
 
 		if (isset($params['delete_type'])) {
@@ -81,7 +81,7 @@ class ProductController extends Controller
 			$all = Product::select();
 			$all = $this->setParamsBeforeQuery($all, $request->all());
 			$all->with('images')
-				//->with('category')
+				->with('categories')
 				->with('options')
 				->with('context');
 		}
