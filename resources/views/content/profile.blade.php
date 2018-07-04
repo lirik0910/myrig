@@ -450,34 +450,42 @@
                                                     <p class="hidden-md">{{ __('default.status') }}</p>
                                                     <span class="mark {{ mb_strtolower(str_replace(' ', '', $order->status->title)) }}">{{ __('common.status_' . str_replace(' ', '_', mb_strtolower($order->status->title))) }}</span><br>
                                                     @if(isset($status_logs) && count($status_logs) > 0)
+                                                        @php
+                                                        $statuses = 0;
+                                                        foreach($status_logs as $log){
+                                                           if($log->type == 'status' || $log->type == 'message'){
+                                                                $statuses = 1;
+                                                           }
+                                                        }
+                                                        @endphp
+                                                        @if($statuses > 0)
                                                         <a class="order-history" data-wpel-link="internal">{{ __('default.history') }}
                                                         <div class="history-dd" style="height: auto !important">
                                                             <div class="modal-body">
                                                                 @foreach($status_logs as $log)
-                                                                    @php
-                                                                        if($log->type === 'status'){
-                                                                            $convert_log = str_replace(' ', '_', mb_strtolower($log->value));
-                                                                        }
-                                                                        //var_dump($convert_log); die;
-                                                                    @endphp
 																	@if($log->type == 'note')
 																		@continue
 																	@else
+                                                                        @php
+                                                                            if($log->type === 'status'){
+                                                                                $convert_log = str_replace(' ', '_', mb_strtolower($log->value));
+                                                                            }
+                                                                        @endphp
 																		<h3>@php echo date('d', strtotime($log->created_at)) . ' ' . __('common.' . strtolower(date('F', strtotime($log->created_at)))) . ' ' . date('Y', strtotime($log->created_at)) . ' ' .  date('H:i', strtotime($log->created_at)) @endphp</h3>
 																		<div class="comment-order">
 																			@if($log->type === 'status') {{ __('default.order_status_changed_from') }} @if(isset($prev) && count($status_logs) > 1) {{ __('common.status_' . $prev) }} @else {{ __('default.new_order') }} @endif {{ __('default.to') }} {{ __('common.status_' . $convert_log) }} @else {{ $log->value }} @endif
 																		</div>
+                                                                        @php
+                                                                            if(isset($convert_log)){
+                                                                                $prev = $convert_log;
+                                                                            }
+                                                                        @endphp
 																	@endif
-                                                                    @php
-                                                                        if(isset($convert_log)){
-                                                                            $prev = $convert_log;
-                                                                        }
-
-                                                                    @endphp
                                                                 @endforeach
                                                             </div>
                                                         </div>
                                                     </a>
+                                                    @endif
                                                     @endif
                                                 </span>
                                             </div>

@@ -542,7 +542,7 @@ class DbImport
         $data['news'] = [];
         $data['articles'] = [];
         //$data['logs'] = [];
-//var_dump($data['logs']); die;
+
 
         /*
          * Import users
