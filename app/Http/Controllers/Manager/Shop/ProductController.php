@@ -43,7 +43,6 @@ class ProductController extends Controller
 		if (isset($params['category_id'])) {
 			$c = $c
 					->join('product_categories', 'products.id', '=', 'product_id')
-					->join('product_images', 'products.id', '=', 'product_id')
 					->where('category_id', $params['category_id']);
 		}
 
