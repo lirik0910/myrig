@@ -73,6 +73,8 @@ class EditOrderDeliveryData extends PureComponent {
 	render() {
 		let { order, countries, langs } = this.props;
 
+		console.log('i', order)
+
 		return <Paper style={{ marginBottom: 24 }}>
 			<Typography variant="title">
 				{langs['orderTableAboutTitle']}
