@@ -43,6 +43,7 @@ class ProductController extends Controller
 		if (isset($params['category_id'])) {
 			$c = $c
 					->join('product_categories', 'products.id', '=', 'product_id')
+					->join('product_images', 'products.id', '=', 'product_id')
 					->where('category_id', $params['category_id']);
 		}
 
@@ -84,11 +85,6 @@ class ProductController extends Controller
 				//->with('category')
 				->with('options')
 				->with('context');
-
-			foreach ($all as $item) {
-				$item->images;
-				$item->options;
-			}
 		}
 		catch (\Exception $e) {
 			logger($e->getMessage());
