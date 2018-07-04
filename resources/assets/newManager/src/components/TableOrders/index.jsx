@@ -129,6 +129,10 @@ class TableOrders extends PureComponent {
 					date={created_at} />
 			},
 			orderTableAboutTitle: (item) => {
+				if (item.order_deliveries === null) {
+					return null;
+				}
+
 				let { first_name, last_name, phone, email, address, city, delivery } = item.order_deliveries;
 				
 				return <CellAboutOrdersTable
@@ -196,6 +200,7 @@ class TableOrders extends PureComponent {
 		limit: 10,
 		total: 0,
 		page: 1,
+		query: '',
 		managerComment: false,
 		fetchData: [],
 		selectedRows: [],
@@ -268,7 +273,7 @@ class TableOrders extends PureComponent {
 
 		this.props.onOrdersLoaded(false);
 		this.setState({ page }, () => {
-			this.fetchOrders = allOrders(this.state.limit, page)
+			this.fetchOrders = allOrders(this.state.limit, page, this.state.query)
 				.then(this.buildDataRows.bind(this))
 				.then(() => this.props.onOrdersLoaded(true));
 		});
@@ -283,7 +288,7 @@ class TableOrders extends PureComponent {
 		let target = e.target;
 
 		this.setState({ limit: target.value }, () => {
-			this.fetchOrders = allOrders(target.value, page)
+			this.fetchOrders = allOrders(target.value, page, this.state.query)
 				.then(this.buildDataRows.bind(this));
 		});
 	}
@@ -316,7 +321,7 @@ class TableOrders extends PureComponent {
 					this.setState({ 
 						total: 0
 					}, () => {
-						this.fetchOrders = allOrders(limit, page)
+						this.fetchOrders = allOrders(limit, page, this.state.query)
 							.then(this.buildDataRows.bind(this))
 							.then(() => {
 								this.setState({ 
@@ -371,6 +376,10 @@ class TableOrders extends PureComponent {
 			for (i in query) {
 				string += '&'+ i +'='+ query[i];
 			}
+
+			this.setState({
+				query: string
+			});
 
 			/** Get orders from server
 			 */

@@ -87,7 +87,7 @@ class InputAutoSelectDefault extends PureComponent {
 			const keep = 
 				(!inputValue || 
 					String(item[field]).toLowerCase().indexOf(inputValue.toLowerCase()) !== -1) && 
-				count < 5;
+				count < 20;
 
 			if (keep) {
 				count += 1;
