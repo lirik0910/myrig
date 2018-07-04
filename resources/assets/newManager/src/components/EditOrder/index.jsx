@@ -250,7 +250,7 @@ class EditOrder extends PureComponent {
 						variant="headline"
 						className={classes.flex}>
 
-						{langs['dialogEditOrderTitle']}
+						{langs['dialogEditOrderTitle']} ({data.number})
 					</Typography>
 
 					<Button 
