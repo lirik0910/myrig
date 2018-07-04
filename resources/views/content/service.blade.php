@@ -28,6 +28,7 @@
 <link rel="stylesheet" href="{{ URL::asset('css/bootstrapvalidator.css') }}">
 <link rel="stylesheet" href="{{ URL::asset('css/intlTelInput.css') }}">
 <link rel="stylesheet" href="{{ URL::asset('css/calc.css') }}">
+<link rel="stylesheet" href="{{ URL::asset('css/shop.css') }}">
 <link rel="stylesheet" id="font-awesome-css"  href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css?ver=2.2.0" type="text/css" media="all" />
 <link rel="stylesheet" href="{{ URL::asset('css/bitmain.css?ver=1.55') }}">
 <link rel="stylesheet" href="{{ URL::asset('css/style.css?ver=1.55') }}">
@@ -272,13 +273,13 @@
 			<div class="row">
 				<div class="social col-sm-4 col-md-2 col-lg-4">
 					
-					<a target="_blank" href="http://facebook.com/#" data-wpel-link="external" rel="nofollow external noopener noreferrer">
-						<div class="social-title">Facebook</div>
+					<a target="_blank" href="https://t.me/myriglive" data-wpel-link="external" rel="nofollow external noopener noreferrer">
+						<div class="social-title">Telegram</div>
 						<div class="hidden-icon">
-							<i class="fa fa-facebook"></i>
+							<i class="fa fa-telegram"></i>
 						</div>
 					</a>
-
+					
 					<a target="_blank" href="https://twitter.com/myrig_com" data-wpel-link="external" rel="nofollow external noopener noreferrer">
 						<div class="social-title">Twitter</div>
 						<div class="hidden-icon">
@@ -292,6 +293,7 @@
 							<i class="fa fa-youtube-play"></i>
 						</div>
 					</a>
+					
 				</div>
 				
 				<div class="exchange col-sm-8 col-md-10 col-lg-8">
