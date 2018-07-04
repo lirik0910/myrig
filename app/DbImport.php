@@ -427,7 +427,11 @@ class DbImport
                         $without_meta_log++;
                         $string = $log->comment_content;
                         $contentStrings[] = $log->comment_content;
-                        if(strpos('Статус заказа изменен', $string)){
+                        $stringCont = explode('Статус заказа изменен',$string);
+
+                        //var_dump($string);
+                        //var_dump(strpos('Статус заказа', $string));
+                        if(count($stringCont) > 1){
                             $newStatus = trim(stristr(stristr($string, 'на '), ' '), '.!,; ');
                             if($newStatus === ''){
                                 if($string == 'Order Paid in Full'){
@@ -468,6 +472,7 @@ class DbImport
                             }
                             $type = 'status';
                         } else{
+                            //var_dump('note');
                             $value = $string;
                             $type = 'note';
                         }
@@ -482,6 +487,7 @@ class DbImport
                     }
 
                     if($value){
+                       // var_dump($type);
                         $logs[] = [
                             'order_id' => $order_id,
                             'user_id' => $userId,
@@ -493,6 +499,7 @@ class DbImport
                 }
             }
         }
+        //die;
         //var_dump($without_meta_log, $meta_log, $logs); die;
         //var_dump($defaultLogsCount);
 //var_dump($contentStrings); die;
