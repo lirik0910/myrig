@@ -160,7 +160,7 @@ class OrderController extends Controller
 
 			} 
 			else {
-				$cost = $product->price;
+				$cost = $product['cost'] ?? $product->price;
 				$btcCost = $product->calcBtcPrice();
 
 				$item->fill([

@@ -128,6 +128,14 @@ class EditOrderProductsData extends Component {
 						</Typography>
 
 						<InputNumberDefault
+							defaultValue={item.cost}
+							label={langs['txtOrderTotalSum']}
+							handleFieldChanged={(value) => {
+								carts[i]['cost'] = value;
+								this.setState({ carts }, () => this.props.onCartUpdated(carts));
+							}} />
+
+						<InputNumberDefault
 							defaultValue={item.count}
 							label={langs['labelProductsCount']}
 							handleFieldChanged={(value) => {
