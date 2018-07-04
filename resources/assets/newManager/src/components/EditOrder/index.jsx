@@ -270,7 +270,7 @@ class EditOrder extends PureComponent {
 									serials_number: data['carts'][i]['serials_number'],
 									product: {
 										id: typeof data['carts'][i]['product_id'] === 'undefined' ?
-											data['carts'][i]['product']['product_id'] : 
+											data['carts'][i]['id'] : 
 											data['carts'][i]['product_id']
 									}
 								});

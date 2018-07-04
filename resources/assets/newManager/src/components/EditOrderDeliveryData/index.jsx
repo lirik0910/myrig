@@ -92,13 +92,13 @@ class EditOrderDeliveryData extends PureComponent {
 
 			<FilterOrderDelivery
 				formId="el_delivery_id"
-				defaultValue={order.order_deliveries.delivery_id} />
+				defaultValue={order.order_deliveries.delivery_id || ''} />
 
 			<TextField
 				required
 				id="el_d_first_name"
 				name="d_first_name"
-				value={this.state.d_first_name}
+				value={this.state.d_first_name || ''}
 				label={langs['labelFieldUserFirstName']}
 				onChange={this._handleChange}
 				style={{
@@ -110,7 +110,7 @@ class EditOrderDeliveryData extends PureComponent {
 				required
 				id="el_d_last_name"
 				name="d_last_name"
-				value={this.state.d_last_name}
+				value={this.state.d_last_name || ''}
 				label={langs['labelFieldUserLastName']}
 				onChange={this._handleChange}
 				style={{
@@ -122,7 +122,7 @@ class EditOrderDeliveryData extends PureComponent {
 				required
 				name="d_email"
 				id="el_d_email"
-				value={this.state.d_email}
+				value={this.state.d_email || ''}
 				label={langs['labelFieldUserEmail']}
 				onChange={this._handleChange}
 				style={{
@@ -134,7 +134,7 @@ class EditOrderDeliveryData extends PureComponent {
 				required
 				id="el_d_phone"
 				name="d_phone"
-				value={this.state.d_phone}
+				value={this.state.d_phone || ''}
 				label={langs['labelFieldUserPhone']}
 				onChange={this._handleChange}
 				style={{
@@ -145,11 +145,11 @@ class EditOrderDeliveryData extends PureComponent {
 			<FilterCountry
 				name="d_country"
 				data={countries}
-				defaultValue={order.order_deliveries.country} />
+				defaultValue={order.order_deliveries.country || ''} />
 
 			<TextField
 				name="d_city"
-				value={this.state.d_city}
+				value={this.state.d_city || ''}
 				label={langs['labelFieldUserCity']}
 				onChange={this._handleChange}
 				style={{
@@ -159,7 +159,7 @@ class EditOrderDeliveryData extends PureComponent {
 
 			<TextField
 				name="d_state"
-				value={this.state.d_state}
+				value={this.state.d_state || ''}
 				label={langs['labelFieldUserState']}
 				onChange={this._handleChange}
 				style={{
@@ -169,7 +169,7 @@ class EditOrderDeliveryData extends PureComponent {
 
 			<TextField
 				name="d_address"
-				value={this.state.d_address}
+				value={this.state.d_address || ''}
 				label={langs['labelFieldUserAddress']}
 				onChange={this._handleChange}
 				style={{
@@ -179,7 +179,7 @@ class EditOrderDeliveryData extends PureComponent {
 
 			<TextField
 				name="d_office"
-				value={this.state.d_office}
+				value={this.state.d_office || ''}
 				label={langs['labelFieldUserOffice']}
 				onChange={this._handleChange}
 				style={{
@@ -189,7 +189,7 @@ class EditOrderDeliveryData extends PureComponent {
 
 			<TextField
 				name="d_passport"
-				value={this.state.d_passport}
+				value={this.state.d_passport || ''}
 				label={langs['labelFieldUserPassport']}
 				onChange={this._handleChange}
 				style={{
@@ -199,7 +199,7 @@ class EditOrderDeliveryData extends PureComponent {
 
 			<TextField
 				name="d_zendesk"
-				value={this.state.d_zendesk}
+				value={this.state.d_zendesk || ''}
 				label={langs['labelFieldUserZendesk']}
 				onChange={this._handleChange}
 				style={{
@@ -209,7 +209,7 @@ class EditOrderDeliveryData extends PureComponent {
 
 			<TextField
 				name="d_warranty"
-				value={this.state.d_warranty}
+				value={this.state.d_warranty || ''}
 				label={langs['labelFieldUserWarranty']}
 				onChange={this._handleChange}
 				style={{
@@ -219,7 +219,7 @@ class EditOrderDeliveryData extends PureComponent {
 
 			<TextField
 				name="d_waybill"
-				value={this.state.d_waybill}
+				value={this.state.d_waybill || ''}
 				label={langs['labelFieldUserWaybill']}
 				onChange={this._handleChange}
 				style={{
@@ -231,7 +231,7 @@ class EditOrderDeliveryData extends PureComponent {
 				multiline
 				rows="4"
 				name="d_comment"
-				value={this.state.d_comment}
+				value={this.state.d_comment || ''}
 				label={langs['labelFieldUserComment']}
 				onChange={this._handleChange}
 				style={{

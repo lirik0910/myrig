@@ -7,6 +7,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import cloneDeep from 'clone-deep';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
@@ -55,11 +56,13 @@ class EditOrderProductsData extends Component {
 		let { carts, newProduct } = this.state;
 
 		carts.push({
-			id: newProduct.product_id,
+			id: typeof newProduct.product_id === 'undefined' ?
+				newProduct.id : 
+				newProduct.product_id,
 			cost: newProduct.price,
 			btcCost: 0,
 			count: 1,
-			product: newProduct
+			product: cloneDeep(newProduct)
 		});
 		this.setState({ carts, add: false, newProduct: {} }, () => 
 			this.props.onCartUpdated(carts));
