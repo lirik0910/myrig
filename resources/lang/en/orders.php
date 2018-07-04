@@ -20,6 +20,7 @@ return [
 	'labelNoneSelected' => 'None',
 	'labelSelectNote' => 'Note',
 	'labelSelectMessage' => 'Message',
+	'successUpdated' => 'Success!',
 
 	'filterSelectContext' => 'Context',
 	'helperSelectContext' => 'Edit context',

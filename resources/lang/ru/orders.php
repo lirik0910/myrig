@@ -48,6 +48,7 @@ return [
 	'orderHistoryValue' => 'Действие',
 	'orderHistoryUser' => 'Пользователь',
 	'orderHistoryDate' => 'Дата',
+	'successUpdated' => 'Успешно обновлено!',
 
 	'appBarOrdersTitle' => 'Заказы',
 	'orderTableIdTitle' => 'ID',

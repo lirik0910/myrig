@@ -18,6 +18,7 @@ return [
 	'menuClearCache' => 'Очистить кэш',
 	'menuExit' => 'Выход',
 	'labelNoneSelected' => 'Не выбрано',
+	'successUpdated' => 'Успешно обновлено!',
 
 	'filterSelectContext' => 'Контекст',
 	'helperSelectContext' => 'Изменить контекст',
