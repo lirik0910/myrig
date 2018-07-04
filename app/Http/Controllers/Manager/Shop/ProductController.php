@@ -81,7 +81,7 @@ class ProductController extends Controller
 			$all = Product::select();
 			$all = $this->setParamsBeforeQuery($all, $request->all());
 			$all->with('images')
-				//->with('category')
+				->with('categories')
 				->with('options')
 				->with('context');
 		}
