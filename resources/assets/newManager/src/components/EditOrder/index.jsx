@@ -350,7 +350,6 @@ class EditOrder extends PureComponent {
 								onUserSelected={this.userChanged}
 								onOrdersLoaded={this.props.onOrdersLoaded} />
 
-							{console.log('e', data)}
 							<EditOrderDeliveryData 
 								order={data}
 								countries={countries} />

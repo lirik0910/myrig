@@ -59,6 +59,18 @@ class EditOrderDeliveryData extends PureComponent {
 			}
 			this.setState({ ...o });
 		}
+
+		else if (willProps.order.order_deliveries.id > 0) {
+			let i,
+				o = {};
+
+			for (i in willProps.order.order_deliveries) {
+				o['d_'+ i] = willProps.order.order_deliveries[i] === null ?
+					order_deliveries[i] :
+					willProps.order.order_deliveries[i];
+			}
+			this.setState({ ...o });
+		}
 	}
 
 	_handleChange = (e) => {
@@ -72,8 +84,6 @@ class EditOrderDeliveryData extends PureComponent {
 	 */
 	render() {
 		let { order, countries, langs } = this.props;
-
-		console.log('i', order)
 
 		return <Paper style={{ marginBottom: 24 }}>
 			<Typography variant="title">
