@@ -186,6 +186,8 @@ class EditOrder extends PureComponent {
 
 			a['order_deliveries'] = user.orders[0]['order_deliveries'];
 			a['order_payments'] = user.orders[0]['order_deliveries'];
+
+			console.log(a)
 			this.setState({ data: a });
 		}
 	}
