@@ -307,9 +307,29 @@ class EditOrder extends PureComponent {
 								updateOrder(cart, id)
 									.then(this.setOrderData)
 									.then((e) => {
-										this.props.onUpdatedOrder(this.state.data);
-										this.props.onOrdersLoaded(true);
-									});
+										this.setState({ responseStatus: true }, () => {
+											this.props.onUpdatedOrder(this.state.data);
+											this.props.onOrdersLoaded(true);
+										});
+									})
+									.catch((promise) => {
+										promise.then((data) => {
+											let i,
+												el;
+
+											for (i in data.errors) {
+												el = document.getElementById('el_'+ i);
+												el.style['backgroundColor'] = 'rgba(255, 0, 0, 0.1)';
+											}
+
+											this.setState({ 
+												responseStatus: true,
+												responseMessage: data.message
+											}, () => {
+												this.props.onOrdersLoaded(true);
+											});
+										});
+									});;
 							}
 						}}>
 
