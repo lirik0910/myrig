@@ -63,7 +63,10 @@ export function updateOrder(cart = [], id = null, callback = () => {}) {
 			callback();
 			return res.json();
 		}
-		else throw new Error(`Response server status: ${res.status}`);
+
+		else {
+			throw res.json();
+		}
 	});
 }
 
