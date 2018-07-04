@@ -83,6 +83,8 @@ class InputAutoSelectDefault extends PureComponent {
 		let count = 0,
 			{ field, data } = this.props;
 
+		console.log(data)
+
 		return data.filter((item) => {
 			const keep = 
 				(!inputValue || 

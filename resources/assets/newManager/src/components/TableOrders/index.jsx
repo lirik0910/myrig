@@ -45,7 +45,7 @@ import Delete from '@material-ui/icons/Delete';
 import Create from '@material-ui/icons/Create';
 // import ContentCopy from '@material-ui/icons/ContentCopy';
 
-import { allOrders, trashOrder, createNote } from 'server/Orders.js';
+import { allOrders, trashOrder, postComment } from 'server/Orders.js';
 
 import styles from './styles.js';
 import { withStyles } from '@material-ui/core/styles';
@@ -73,6 +73,7 @@ class TableOrders extends PureComponent {
 		});
 		document.addEventListener('optionAddCommentAction', (e) => this.setState({ 
 			managerComment: true,
+			commentOrderId: e.detail.id,
 			alertTitle: 'dialogTitleOrderComment'
 		}));
 	}
@@ -200,14 +201,13 @@ class TableOrders extends PureComponent {
 		limit: 10,
 		total: 0,
 		page: 1,
-		noteType: '',
-		noteText: '',
 		query: '',
 		managerComment: false,
 		fetchData: [],
 		selectedRows: [],
 		alertTitle: '',
 		alertText: '',
+		commentOrderId: 0,
 		alertOkButton: () => {}
 	}
 
@@ -390,19 +390,28 @@ class TableOrders extends PureComponent {
 		}
 	}
 
-    /**
-     * Create note or message for order
-     */
-    handleCreateNote = () => {
+	sendComment = (e) => {
+		e.preventDefault();
 
-            /** Get orders from server
-             */
-            this.fetchNote = createNote(this.state.noteType, this.state.noteText)
-				//alert = this.state.alertOkButton()
-                .then(this.setState({
-					managerComment: false,
-				}));
-    }
+		this.props.onOrdersLoaded(false);
+		e.target.elements;
+
+		let i = 0,
+			query = '';
+		while (i < e.target.elements.length) {
+			if (e.target.elements[i].name) {
+				query += e.target.elements[i].name +'='+ e.target.elements[i].value +'&';
+			}
+			i++;
+		}
+		query = query.substring(0, query.length - 1);
+
+		postComment(query)
+			.then((data) => {
+				this.setState({ managerComment: false }, () => 
+					this.props.onOrdersLoaded(true));
+			});
+	}
 
 	/**
 	 * Render component
@@ -410,7 +419,7 @@ class TableOrders extends PureComponent {
 	 */
 	render() {
 		let { classes, langs } = this.props;
-		let { data, total, limit, alert, noteText, noteType, alertTitle, alertText, alertOkButton, managerComment } = this.state;
+		let { data, total, limit, alert, alertTitle, alertText, alertOkButton, managerComment } = this.state;
 
 		return <div 
 			className={classes.root}>
@@ -504,58 +513,48 @@ class TableOrders extends PureComponent {
 					{langs[alertTitle]}
 				</DialogTitle>
 
-				<DialogContent>
-					<SelectDefault
-						none
-						title={langs['filterSelectCommentType']}
-						helperText={langs['filterSelectHelperCommentType']}
-						data={[{
-							id: 0,
-							title: langs['labelNoneSelected']
-						},{
-                            id: 'note',
-                            title: langs['labelSelectNote']
-                        }, {
-                            id: 'message',
-                            title: langs['labelSelectMessage']
-                        }]}
-						onItemChanged={(e) => {
-							noteType = e.target.value
-							this.setState({ noteType });
-							//console.log(this.state.noteType);
-						}} />
+				<form onSubmit={this.sendComment} method="post" action={window.server +'/note'}>
+					<input type="hidden" name="orderId" value={this.state.commentOrderId} />
 
-					<TextField
-						multiline
-						rows="6"
-						name="comment"
-						onChange={(e) => {
-							noteText = e.target.value
-							this.setState({ noteText })
-							//console.log(this.state.noteText);
-						}}
-						label={langs['labelFieldManagerComment']}
-						style={{
-							width: 'calc(100% - 24px)',
-							margin: 12
-						}} />
-				</DialogContent>
+					<DialogContent>
+						<SelectDefault
+							name="type"
+							title={langs['filterSelectCommentType']}
+							helperText={langs['filterSelectHelperCommentType']}
+							data={[{
+								id: 'note',
+								title: langs['labelSelectNote']
+							}, {
+								id: 'message',
+								title: langs['labelSelectMessage']
+							}]}
+							onItemChanged={(e) => {}} />
 
-				<DialogActions>
-					<Button 
-						color="secondary"
-						onClick={(e) => this.setState({ 
-							managerComment: false 
-						})}>
-						{langs['labelCancelButton']}
-					</Button>
+						<TextField
+							multiline
+							rows="6"
+							name="text"
+							label={langs['labelFieldManagerComment']}
+							style={{
+								width: 'calc(100% - 24px)',
+								margin: 12
+							}} />
+					</DialogContent>
 
-					<Button onClick={(e) => {
-						this.handleCreateNote();
-					}}>
-						{langs['labelOkButton']}
-					</Button>
-				</DialogActions>
+					<DialogActions>
+						<Button 
+							color="secondary"
+							onClick={(e) => this.setState({ 
+								managerComment: false 
+							})}>
+							{langs['labelCancelButton']}
+						</Button>
+
+						<Button type="submit">
+							{langs['labelOkButton']}
+						</Button>
+					</DialogActions>
+				</form>
 			</Dialog>}
 
 			{alert === true && <Dialog 

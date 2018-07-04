@@ -183,8 +183,11 @@ class EditOrder extends PureComponent {
 			let { data } = this.state,
 				a = cloneDeep(data);
 
+			a['user_id'] = user.id;
+			a['user'] = user;
 			a['order_deliveries'] = user.orders[0]['order_deliveries'];
 			a['order_payments'] = user.orders[0]['order_deliveries'];
+
 			this.setState({ data: a });
 		}
 	}
@@ -247,7 +250,7 @@ class EditOrder extends PureComponent {
 						variant="headline"
 						className={classes.flex}>
 
-						{langs['dialogEditOrderTitle']}
+						{langs['dialogEditOrderTitle']} ({data.number})
 					</Typography>
 
 					<Button 
@@ -278,9 +281,13 @@ class EditOrder extends PureComponent {
 								createOrder(cart)
 									.then(this.setOrderData)
 									.then((e) => {
-										this.setState({ responseStatus: true }, () => {
+										this.setState({ 
+											responseStatus: true
+										}, () => {
 											this.props.onCreatedOrder(this.state.data);
 											this.props.onOrdersLoaded(true);
+
+											this.setState({ responseStatus: true });
 										});
 									})
 									.catch((promise) => {
@@ -307,9 +314,33 @@ class EditOrder extends PureComponent {
 								updateOrder(cart, id)
 									.then(this.setOrderData)
 									.then((e) => {
-										this.props.onUpdatedOrder(this.state.data);
-										this.props.onOrdersLoaded(true);
-									});
+										this.setState({ 
+											responseMessage: langs['successUpdated']
+										}, () => {
+											this.props.onUpdatedOrder(this.state.data);
+											this.props.onOrdersLoaded(true);
+
+											this.setState({ responseStatus: true });
+										});
+									})
+									.catch((promise) => {
+										promise.then((data) => {
+											let i,
+												el;
+
+											for (i in data.errors) {
+												el = document.getElementById('el_'+ i);
+												el.style['backgroundColor'] = 'rgba(255, 0, 0, 0.1)';
+											}
+
+											this.setState({ 
+												responseStatus: true,
+												responseMessage: data.message
+											}, () => {
+												this.props.onOrdersLoaded(true);
+											});
+										});
+									});;
 							}
 						}}>
 
