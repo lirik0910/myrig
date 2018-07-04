@@ -60,7 +60,7 @@ class EditOrderDeliveryData extends PureComponent {
 			this.setState({ ...o });
 		}
 
-		else if (willProps.order.order_deliveries.id > 0) {
+		/*else if (willProps.order.order_deliveries.id > 0) {
 			let i,
 				o = {};
 
@@ -70,7 +70,7 @@ class EditOrderDeliveryData extends PureComponent {
 					willProps.order.order_deliveries[i];
 			}
 			this.setState({ ...o });
-		}
+		}*/
 	}
 
 	_handleChange = (e) => {
