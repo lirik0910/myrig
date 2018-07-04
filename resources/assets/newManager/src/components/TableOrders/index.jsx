@@ -372,20 +372,20 @@ class TableOrders extends PureComponent {
 	 */
 	handleFilterData = (query) => {
 		if (this.props.completed === true) {
-			let string = '',
+			let stringz = '',
 				i;
 
 			for (i in query) {
-				string += '&'+ i +'='+ query[i];
+				stringz += '&'+ i +'='+ query[i];
 			}
 
 			this.setState({
-				query: string
+				query: stringz
 			});
 
 			/** Get orders from server
 			 */
-			this.fetchOrders = allOrders(this.state.limit, 1, string)
+			this.fetchOrders = allOrders(this.state.limit, 1, stringz)
 				.then(this.buildDataRows.bind(this));
 		}
 	}

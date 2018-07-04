@@ -3,6 +3,7 @@
  * Get all orders from server
  * @param {number} limit
  * @param {number} start
+ * @param {string} query
  */
 export function allOrders(limit = 10, start = 1, query = '') {
 	return fetch(window.server +'/order?limit='+ limit +'&start='+ start + query, {
