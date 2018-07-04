@@ -542,11 +542,11 @@ class DbImport
          */
         $data['users'] = [];
         $data['products'] = [];
-        $data['orders'] = [];
-        $data['carts'] = [];
+        //$data['orders'] = [];
+        //$data['carts'] = [];
         $data['user_attrs'] = [];
-        $data['orders_deliveries'] = [];
-        $data['news'] = [];
+        //$data['orders_deliveries'] = [];
+        //$data['news'] = [];
         $data['articles'] = [];
         //$data['logs'] = [];
 
