@@ -200,8 +200,6 @@ class EditOrder extends PureComponent {
 		let { classes, id, langs } = this.props,
 			{ data, countries } = this.state;
 
-		console.log(langs['successUpdated'])
-
 		return <Dialog 
 			fullScreen
 			open={id === null ? false : true}

@@ -59,6 +59,7 @@ class SearchUser extends PureComponent {
 			<InputAutoSelectDefault
 				id={formId}
 				data={users.data ? users.data.map((item) => {
+					console.log(item)
 					return {
 						id: item.id,
 						name: item['attributes'] ? 
