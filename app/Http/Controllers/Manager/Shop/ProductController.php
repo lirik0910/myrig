@@ -63,14 +63,6 @@ class ProductController extends Controller
 	{
 		if (isset($params['start']) && isset($params['limit'])) {
 			$c = $c->forPage($params['start'], $params['limit']);
-
-			/** Filter by category_id
-			 */
-			if (isset($params['category_id'])) {
-				$c = $c
-						->join('product_categories', 'products.id', '=', 'product_id')
-						->where('category_id', $params['category_id']);
-			}
 		}
 
 		return $c;
@@ -92,6 +84,11 @@ class ProductController extends Controller
 				//->with('category')
 				->with('options')
 				->with('context');
+
+			foreach ($all as $item) {
+				$item->images;
+				$item->options;
+			}
 		}
 		catch (\Exception $e) {
 			logger($e->getMessage());
