@@ -45,7 +45,7 @@ import Delete from '@material-ui/icons/Delete';
 import Create from '@material-ui/icons/Create';
 // import ContentCopy from '@material-ui/icons/ContentCopy';
 
-import { allOrders, trashOrder } from 'server/Orders.js';
+import { allOrders, trashOrder, createNote } from 'server/Orders.js';
 
 import styles from './styles.js';
 import { withStyles } from '@material-ui/core/styles';
@@ -196,6 +196,8 @@ class TableOrders extends PureComponent {
 		limit: 10,
 		total: 0,
 		page: 1,
+		noteType: '',
+		noteText: '',
 		managerComment: false,
 		fetchData: [],
 		selectedRows: [],
@@ -379,13 +381,27 @@ class TableOrders extends PureComponent {
 		}
 	}
 
+    /**
+     * Create note or message for order
+     */
+    handleCreateNote = () => {
+
+            /** Get orders from server
+             */
+            this.fetchNote = createNote(this.state.noteType, this.state.noteText)
+				//alert = this.state.alertOkButton()
+                .then(this.setState({
+					managerComment: false,
+				}));
+    }
+
 	/**
 	 * Render component
 	 * @return {object} jsx object
 	 */
 	render() {
 		let { classes, langs } = this.props;
-		let { data, total, limit, alert, alertTitle, alertText, alertOkButton, managerComment } = this.state;
+		let { data, total, limit, alert, noteText, noteType, alertTitle, alertText, alertOkButton, managerComment } = this.state;
 
 		return <div 
 			className={classes.root}>
@@ -487,19 +503,28 @@ class TableOrders extends PureComponent {
 						data={[{
 							id: 0,
 							title: langs['labelNoneSelected']
-						}, {
-							id: 1,
-							title: langs['labelSelectNote']
-						}, {
-							id: 2,
-							title: langs['labelSelectMessage']
-						}]}
-						onItemChanged={(e) => {}} />
+						},{
+                            id: 'note',
+                            title: langs['labelSelectNote']
+                        }, {
+                            id: 'message',
+                            title: langs['labelSelectMessage']
+                        }]}
+						onItemChanged={(e) => {
+							noteType = e.target.value
+							this.setState({ noteType });
+							//console.log(this.state.noteType);
+						}} />
 
 					<TextField
 						multiline
 						rows="6"
 						name="comment"
+						onChange={(e) => {
+							noteText = e.target.value
+							this.setState({ noteText })
+							//console.log(this.state.noteText);
+						}}
 						label={langs['labelFieldManagerComment']}
 						style={{
 							width: 'calc(100% - 24px)',
@@ -516,7 +541,9 @@ class TableOrders extends PureComponent {
 						{langs['labelCancelButton']}
 					</Button>
 
-					<Button onClick={(e) => {}}>
+					<Button onClick={(e) => {
+						this.handleCreateNote();
+					}}>
 						{langs['labelOkButton']}
 					</Button>
 				</DialogActions>

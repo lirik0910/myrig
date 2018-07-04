@@ -311,23 +311,18 @@ class DbImport
             }
         }
 
-       //var_dump($orders[3028]); die;
         $cart = [];
-        //$order_deliveries_all = [];
-//var_dump($order_logs); die;
+
         foreach ($orders_items as $items){
             if (count($items) > 0){
                 foreach ($items as $item){
                     $orders_items_meta[$item->order_id][$item->order_item_name] = $this->source->select('select * from wpbit2_woocommerce_order_itemmeta where order_item_id = :order_item_id', ['order_item_id' => $item->order_item_id ]);
-                    //var_dump($orders_items_meta); die;
 
                     if($item->order_item_type == 'line_item'){
                         $item_count = 1;
                         $item_total_cost = 0;
 
-
                         foreach ($orders_items_meta[$item->order_id][$item->order_item_name] as $meta){
-                            //var_dump(); die;
                             if($meta->meta_key == '_line_subtotal'){
                                 $item_total_cost = $meta->meta_value;
                             } elseif ($meta->meta_key == '_qty'){
@@ -366,28 +361,18 @@ class DbImport
                             if(isset($order_deliveries[$item->order_id])){
                                 $order_deliveries[$item->order_id]['delivery_id'] = 2;
                             }
-                        }/* else{
-                            if(isset($order_deliveries[$item->order_id])){
-                                $order_deliveries[$item->order_id]['delivery_id'] = 5;
-                            }
-                        }*/
+                        }
                     }
                 }
 
             }
         }
-//die;
-        //var_dump($orders_items_meta); die;
-//var_dump($order_deliveries_all, $order_payments_all); die;
+
         $test = [];
         foreach($cart as $key => $line){
             if($line['order_id'] == 6842){
-                //var_dump($line); die;
                 $test[] = $line;
             }
-            //var_dump($cart, $key, $line); die;
-            //var_dump($orders); die;
-            //var_dump($cart[$key]); die;
             if($line['cost'] == 0){
                 unset($cart[$key]);
                 continue;
@@ -414,6 +399,9 @@ class DbImport
         $logs = [];
         $log_statuses = [];
 
+        $meta_log = 0;
+        $without_meta_log = 0;
+
         $defaultOrdersCount = count($orders_logs);
         $defaultLogsCount = 0;
         $contentStrings = [];
@@ -422,14 +410,26 @@ class DbImport
             if(count($orders_logs) > 0){
                 foreach($order_log as $log){
                     $defaultLogsCount++;
-                    $meta = count($this->source->select('select * from wpbit2_commentmeta where comment_id =:comment_id', ['comment_id' => $log->comment_ID]));
+                    $meta = $this->source->select('select * from wpbit2_commentmeta where comment_id =:comment_id', ['comment_id' => $log->comment_ID]);
 
-//                    if(/*$meta == 0 && */$log->comment_author !== 'WooCommerce'){
+                    $userId = 1;
+                    foreach ($users as $user){
+                        if($log->comment_author_email == $user['email']){
+                            $userId = $user['id'];
+                        }
+                    }
+
+/*                    if($meta){
+                        var_dump($meta); die;
+                    }*/
+
+                    if(count($meta) < 1){
+                        $without_meta_log++;
                         $string = $log->comment_content;
                         $contentStrings[] = $log->comment_content;
                         if(strpos('Статус заказа изменен', $string)){
                             $newStatus = trim(stristr(stristr($string, 'на '), ' '), '.!,; ');
-                                                        if($newStatus === ''){
+                            if($newStatus === ''){
                                 if($string == 'Order Paid in Full'){
                                     $newStatus = 'Оплачен';
                                 }
@@ -471,22 +471,29 @@ class DbImport
                             $value = $string;
                             $type = 'note';
                         }
-
-                        if($value){
-                            $logs[] = [
-                                'order_id' => $order_id,
-                                'user_id' => 1,
-                                'type' => $type,
-                                'value' => $value,
-                                'created_at' => $log->comment_date
-                            ];
+                    } else{
+                        foreach($meta as $item){
+                            if ($item->comment_id == $log->comment_ID){
+                                $meta_log++;
+                                $value = $log->comment_content;
+                                $type = 'message';
+                            }
                         }
-                    //}
-                    //var_dump($meta); die;
+                    }
 
+                    if($value){
+                        $logs[] = [
+                            'order_id' => $order_id,
+                            'user_id' => $userId,
+                            'type' => $type,
+                            'value' => $value,
+                            'created_at' => $log->comment_date
+                        ];
+                    }
                 }
             }
         }
+        //var_dump($without_meta_log, $meta_log, $logs); die;
         //var_dump($defaultLogsCount);
 //var_dump($contentStrings); die;
         foreach ($user_attrs as $key => $attr){
@@ -528,14 +535,14 @@ class DbImport
          */
         $data['users'] = [];
         $data['products'] = [];
-        //$data['orders'] = [];
-        //$data['carts'] = [];
+        $data['orders'] = [];
+        $data['carts'] = [];
         $data['user_attrs'] = [];
-        //$data['orders_deliveries'] = [];
+        $data['orders_deliveries'] = [];
         $data['news'] = [];
         $data['articles'] = [];
         //$data['logs'] = [];
-
+//var_dump($data['logs']); die;
 
         /*
          * Import users

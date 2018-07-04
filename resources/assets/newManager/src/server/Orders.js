@@ -113,3 +113,21 @@ export function trashOrder(query = '', callback = () => {}) {
 		else throw new Error(`Response server status: ${res.status}`);
 	});
 }
+
+export function createNote(type = '', text = '', id = 0, callback = () => {}) {
+    return fetch(window.server +'/order/' + id + '/note', {
+        credentials: 'include',
+        method: 'PUT',
+        headers: {
+            'Content-type': 'application/x-www-form-urlencoded',
+            'X-Requested-With': 'XMLHttpRequest',
+            'X-CSRF-Token': window.Base.DOMCached.csrf
+        }
+    }).then((res) => {
+        if (res.status === 200) {
+            callback();
+            return res.json();
+        }
+        else throw new Error(`Response server status: ${res.status}`);
+    });
+}
