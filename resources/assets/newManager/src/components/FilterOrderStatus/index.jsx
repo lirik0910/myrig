@@ -55,16 +55,22 @@ class FilterOrderStatus extends PureComponent {
 	 */
 	render() {
 		let { data } = this.state,
-			{ defaultValue, name, langs } = this.props;
+			{ defaultValue, name, langs, ...others } = this.props;
 
 		return <SelectDefault
 			none
 			name={name}
 			title={langs['filterSelectOrderStatus']}
 			helperText={langs['helperSelectOrderStatus']}
-			data={data}
+			data={data.map((item) => {
+				return {
+					id: item.id,
+					title: langs['status_'+ item.title]
+				}
+			})}
 			defaultValue={defaultValue}
-			onItemChanged={this.props.onFilterSelected} />
+			onItemChanged={this.props.onFilterSelected}
+			{...others} />
 	}
 }
 

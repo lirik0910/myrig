@@ -220,7 +220,7 @@ class DbImport
             ];
         }
         foreach ($this->orders as $order){
-            $delivery_id = 1;
+            $delivery_id = 5;
             $delivery_cost = 0;
 
             $orders_logs[$order->id] = $this->source->select('select * from wpbit2_comments where comment_post_ID = :comment_post_ID', ['comment_post_ID' => $order->id]);
@@ -321,32 +321,7 @@ class DbImport
                     $orders_items_meta[$item->order_id][$item->order_item_name] = $this->source->select('select * from wpbit2_woocommerce_order_itemmeta where order_item_id = :order_item_id', ['order_item_id' => $item->order_item_id ]);
                     //var_dump($orders_items_meta); die;
 
-                    if($item->order_item_name != 'Shipping' && $item->order_item_name != 'Product Shipping'){
-                        if(!in_array($item->order_item_name, $order_deliveries_all)){
-                            //var_dump($item->order_item_name);
-                            $order_deliveries_all[$order->id] = $item->order_item_name;
-                        }
-                        if($item->order_item_name == 'Новая почта'){
-                            if(isset($order_deliveries[$item->order_id])){
-                                $order_deliveries[$item->order_id]['delivery_id'] = 1;
-                            }
-                        } elseif ($item->order_item_name == 'Самовывоз'){
-                            if(isset($order_deliveries[$item->order_id])) {
-                                $order_deliveries[$item->order_id]['delivery_id'] = 4;
-                            }
-                        } elseif($item->order_item_name == 'Деловые линии'){
-                            if(isset($order_deliveries[$item->order_id])){
-                                $order_deliveries[$item->order_id]['delivery_id'] = 3;
-                            }
-                        } elseif($item->order_item_name == 'СДЭК'){
-                            if(isset($order_deliveries[$item->order_id])){
-                                $order_deliveries[$item->order_id]['delivery_id'] = 2;
-                            }
-                        } else{
-                            if(isset($order_deliveries[$item->order_id])){
-                                $order_deliveries[$item->order_id]['delivery_id'] = 5;
-                            }
-                        }
+                    if($item->order_item_type == 'line_item'){
                         $item_count = 1;
                         $item_total_cost = 0;
 
@@ -374,6 +349,28 @@ class DbImport
                             'count' => $item_count,
                             'title' => $item_product_title ? $item_product_title : NULL
                         ];
+                    } elseif ($item->order_item_type == 'shipping'){
+                        if($item->order_item_name == 'Новая Почта'){
+                            if(isset($order_deliveries[$item->order_id])){
+                                $order_deliveries[$item->order_id]['delivery_id'] = 1;
+                            }
+                        } elseif ($item->order_item_name == 'Самовывоз'){
+                            if(isset($order_deliveries[$item->order_id])) {
+                                $order_deliveries[$item->order_id]['delivery_id'] = 4;
+                            }
+                        } elseif($item->order_item_name == 'Деловые линии'){
+                            if(isset($order_deliveries[$item->order_id])){
+                                $order_deliveries[$item->order_id]['delivery_id'] = 3;
+                            }
+                        } elseif($item->order_item_name == 'СДЭК'){
+                            if(isset($order_deliveries[$item->order_id])){
+                                $order_deliveries[$item->order_id]['delivery_id'] = 2;
+                            }
+                        }/* else{
+                            if(isset($order_deliveries[$item->order_id])){
+                                $order_deliveries[$item->order_id]['delivery_id'] = 5;
+                            }
+                        }*/
                     }
                 }
 
@@ -529,16 +526,15 @@ class DbImport
         /*
          * Comment tables which do you need to import
          */
-        //$data['users'] = [];
-        //$data['products'] = [];
+        $data['users'] = [];
+        $data['products'] = [];
         //$data['orders'] = [];
         //$data['carts'] = [];
-        //$data['user_attrs'] = [];
+        $data['user_attrs'] = [];
         //$data['orders_deliveries'] = [];
         $data['news'] = [];
         $data['articles'] = [];
         //$data['logs'] = [];
-
 
 
         /*

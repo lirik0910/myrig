@@ -4,7 +4,7 @@
  * @param {number} query
  */
 export function findUsers(query = '') {
-	return fetch(window.server +'/user', {
+	return fetch(window.server +'/user?limit=60&start=1&search='+ query, {
 		credentials: 'include',
 		headers: {
 			'Content-type': 'application/x-www-form-urlencoded',

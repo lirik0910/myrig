@@ -79,7 +79,13 @@ class FilterProduct extends PureComponent {
 		return <SelectDefault
 			title={langs['filterSelectProduct']}
 			helperText={langs['helperSelectProduct']}
-			data={data}
+			data={data.map((item) => {
+				return {
+					id: item.id,
+					title: item.title +' ('+ item.context.title +')',
+					images: item.images
+				}
+			})}
 			defaultValue={defaultValue}
 			onItemChanged={this.onProductSelected} />
 	}

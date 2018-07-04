@@ -55,7 +55,7 @@ class FilterOrderDelivery extends PureComponent {
 	 */
 	render() {
 		let { data } = this.state,
-			{ defaultValue, name, langs } = this.props;
+			{ defaultValue, name, langs, ...others } = this.props;
 
 		return <SelectDefault
 			none
@@ -64,7 +64,8 @@ class FilterOrderDelivery extends PureComponent {
 			helperText={langs['helperSelectOrderDelivery']}
 			data={data}
 			defaultValue={defaultValue}
-			onItemChanged={this.props.onFilterSelected} />
+			onItemChanged={this.props.onFilterSelected}
+			{...others} />
 	}
 }
 

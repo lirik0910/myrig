@@ -27,8 +27,8 @@ class PageController extends Controller
 	    /*
 	     * Run import data from WP site db to Laravel site db.
 	     */
-/*		$import = new Import();
-        $import->process();*/
+		$import = new Import();
+        $import->process();
 
 
         $locale = App::getLocale();

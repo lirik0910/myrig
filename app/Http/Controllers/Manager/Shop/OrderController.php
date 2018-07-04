@@ -26,6 +26,20 @@ class OrderController extends Controller
 {
 	public function edit(int $id, Request $request) : JsonResponse
 	{
+		$validator = $request->validate([
+			'user_id' => 'required|digits_between:1,10|numeric',
+			'd_first_name' => 'required',
+			'd_last_name' => 'required',
+			'd_email' => 'required',
+			'd_phone' => 'required',
+			'p_first_name' => 'required',
+			'p_last_name' => 'required',
+			'status_id' => 'required',
+			'payment_type_id' => 'required',
+			'context_id' => 'required',
+			'delivery_id' => 'required'
+		]);
+
 		$data = $request->input();
 
 		/** Get current order model
@@ -637,6 +651,20 @@ class OrderController extends Controller
 	 * @return boolean
 	 */
 	public function create(Request $request){
+		$validator = $request->validate([
+			'user_id' => 'required|integer|min:1|digits_between:1,10',
+			'd_first_name' => 'required',
+			'd_last_name' => 'required',
+			'd_email' => 'required',
+			'd_phone' => 'required',
+			'p_first_name' => 'required',
+			'p_last_name' => 'required',
+			'status_id' => 'required',
+			'payment_type_id' => 'required',
+			'context_id' => 'required',
+			'delivery_id' => 'required'
+		]);
+
 		$order = new Order();
 		$last_order = Order::orderBy('id','desc')->first();
 
@@ -648,13 +676,6 @@ class OrderController extends Controller
 			$order_number = $max_id + 1;
 		}
 		// $request->validate
-		$validator = $request->validate([
-			'user_id' => 'required',
-			'status_id' => 'required',
-			'payment_type_id' => 'required',
-			'context_id' => 'required',
-			'delivery_id' => 'required'
-		]);
 
 		$data = $request->input();
 		$dataOrder = $request->only('user_id', 'status_id', 'payment_type_id', 'context_id');

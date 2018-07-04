@@ -31,9 +31,11 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogActions from '@material-ui/core/DialogActions';
+import TextField from '@material-ui/core/TextField';
 import TableDefault from 'components/TableDefault';
 import MenuDefault from 'components/MenuDefault';
 import FilterOrders from 'components/FilterOrders';
+import SelectDefault from 'components/SelectDefault';
 import CellCommonOrdersTable from 'components/CellCommonOrdersTable';
 import CellAboutOrdersTable from 'components/CellAboutOrdersTable';
 import CellPaymentOrdersTable from 'components/CellPaymentOrdersTable';
@@ -69,6 +71,10 @@ class TableOrders extends PureComponent {
 			this.setState({ selectedRows: [e.detail] }, () => 
 				this.handleOrderTrash(e));
 		});
+		document.addEventListener('optionAddCommentAction', (e) => this.setState({ 
+			managerComment: true,
+			alertTitle: 'dialogTitleOrderComment'
+		}));
 	}
 	
 	/**
@@ -87,6 +93,7 @@ class TableOrders extends PureComponent {
 	static itemOptions = [
 		//'optionOrderView',
 		'optionOrderEdit',
+		'optionAddComment',
 		//'optionOrderBlankEdit',
 		//'optionOrderCopy',
 		'optionOrderDelete',
@@ -122,6 +129,10 @@ class TableOrders extends PureComponent {
 					date={created_at} />
 			},
 			orderTableAboutTitle: (item) => {
+				if (item.order_deliveries === null) {
+					return null;
+				}
+
 				let { first_name, last_name, phone, email, address, city, delivery } = item.order_deliveries;
 				
 				return <CellAboutOrdersTable
@@ -189,6 +200,8 @@ class TableOrders extends PureComponent {
 		limit: 10,
 		total: 0,
 		page: 1,
+		query: '',
+		managerComment: false,
 		fetchData: [],
 		selectedRows: [],
 		alertTitle: '',
@@ -258,9 +271,11 @@ class TableOrders extends PureComponent {
 	handleChangePage = (e, newPage) => {
 		let page = newPage + 1;
 
+		this.props.onOrdersLoaded(false);
 		this.setState({ page }, () => {
-			this.fetchOrders = allOrders(this.state.limit, page)
-				.then(this.buildDataRows.bind(this));
+			this.fetchOrders = allOrders(this.state.limit, page, this.state.query)
+				.then(this.buildDataRows.bind(this))
+				.then(() => this.props.onOrdersLoaded(true));
 		});
 	}
 
@@ -273,7 +288,7 @@ class TableOrders extends PureComponent {
 		let target = e.target;
 
 		this.setState({ limit: target.value }, () => {
-			this.fetchOrders = allOrders(target.value, page)
+			this.fetchOrders = allOrders(target.value, page, this.state.query)
 				.then(this.buildDataRows.bind(this));
 		});
 	}
@@ -306,7 +321,7 @@ class TableOrders extends PureComponent {
 					this.setState({ 
 						total: 0
 					}, () => {
-						this.fetchOrders = allOrders(limit, page)
+						this.fetchOrders = allOrders(limit, page, this.state.query)
 							.then(this.buildDataRows.bind(this))
 							.then(() => {
 								this.setState({ 
@@ -362,6 +377,10 @@ class TableOrders extends PureComponent {
 				string += '&'+ i +'='+ query[i];
 			}
 
+			this.setState({
+				query: string
+			});
+
 			/** Get orders from server
 			 */
 			this.fetchOrders = allOrders(this.state.limit, 1, string)
@@ -375,7 +394,7 @@ class TableOrders extends PureComponent {
 	 */
 	render() {
 		let { classes, langs } = this.props;
-		let { data, total, limit, alert, alertTitle, alertText, alertOkButton } = this.state;
+		let { data, total, limit, alert, alertTitle, alertText, alertOkButton, managerComment } = this.state;
 
 		return <div 
 			className={classes.root}>
@@ -453,6 +472,64 @@ class TableOrders extends PureComponent {
 					</Paper>
 				</Grid>
 			</Grid>
+
+			{managerComment === true && <Dialog 
+				open={managerComment}
+				onClose={(e) => this.setState({ 
+					managerComment: false 
+				})}
+				PaperProps={{
+					style: {
+						width: 600
+					}
+				}}>
+
+				<DialogTitle>
+					{langs[alertTitle]}
+				</DialogTitle>
+
+				<DialogContent>
+					<SelectDefault
+						none
+						title={langs['filterSelectCommentType']}
+						helperText={langs['filterSelectHelperCommentType']}
+						data={[{
+							id: 0,
+							title: langs['labelNoneSelected']
+						}, {
+							id: 1,
+							title: langs['labelSelectNote']
+						}, {
+							id: 2,
+							title: langs['labelSelectMessage']
+						}]}
+						onItemChanged={(e) => {}} />
+
+					<TextField
+						multiline
+						rows="6"
+						name="comment"
+						label={langs['labelFieldManagerComment']}
+						style={{
+							width: 'calc(100% - 24px)',
+							margin: 12
+						}} />
+				</DialogContent>
+
+				<DialogActions>
+					<Button 
+						color="secondary"
+						onClick={(e) => this.setState({ 
+							managerComment: false 
+						})}>
+						{langs['labelCancelButton']}
+					</Button>
+
+					<Button onClick={(e) => {}}>
+						{langs['labelOkButton']}
+					</Button>
+				</DialogActions>
+			</Dialog>}
 
 			{alert === true && <Dialog 
 				open={alert}

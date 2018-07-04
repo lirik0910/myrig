@@ -79,14 +79,15 @@ class EditOrderPaymentData extends PureComponent {
 			</Typography>
 
 			<Typography style={{ padding: 12 }}>
-				{langs['txtOrderTotalSum']}: <b>{order.cost}</b>
+				{langs['txtOrderTotalSum']}: <b>{parseFloat(order.cost).toFixed(2)}</b>
 			</Typography>
 
 			<Typography style={{ padding: 12 }}>
-				{langs['txtOrderTotalBtcSum']}: <b>{order.btc_price}</b>
+				{langs['txtOrderTotalBtcSum']}: <b>{parseFloat(order.btc_price).toFixed(2)}</b>
 			</Typography>
 
 			<TextField
+				id="el_p_first_name"
 				name="p_first_name"
 				value={this.state.p_first_name}
 				label={langs['labelFieldUserFirstName']}
@@ -97,6 +98,7 @@ class EditOrderPaymentData extends PureComponent {
 				}} />
 
 			<TextField
+				id="el_p_last_name"
 				name="p_last_name"
 				value={this.state.p_last_name}
 				label={langs['labelFieldUserLastName']}
