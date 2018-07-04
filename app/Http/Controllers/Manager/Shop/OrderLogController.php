@@ -21,7 +21,7 @@ class OrderLogController
 
         $model = new OrderLog();
         $user_id = Auth::user()->id;
-        $post = $request->post();
+        $post = $request->all();
 
         $model->fill([
             'order_id' => $post['orderId'],
