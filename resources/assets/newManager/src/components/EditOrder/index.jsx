@@ -200,7 +200,7 @@ class EditOrder extends PureComponent {
 		let { classes, id, langs } = this.props,
 			{ data, countries } = this.state;
 
-		console.log(langs)
+		console.log(langs['successUpdated'])
 
 		return <Dialog 
 			fullScreen
@@ -284,11 +284,12 @@ class EditOrder extends PureComponent {
 									.then(this.setOrderData)
 									.then((e) => {
 										this.setState({ 
-											responseStatus: true, 
-											responseMessage: langs['successUpdated']
+											responseStatus: true
 										}, () => {
 											this.props.onCreatedOrder(this.state.data);
 											this.props.onOrdersLoaded(true);
+
+											this.setState({ responseStatus: true });
 										});
 									})
 									.catch((promise) => {
@@ -316,11 +317,12 @@ class EditOrder extends PureComponent {
 									.then(this.setOrderData)
 									.then((e) => {
 										this.setState({ 
-											responseStatus: true,
 											responseMessage: langs['successUpdated']
 										}, () => {
 											this.props.onUpdatedOrder(this.state.data);
 											this.props.onOrdersLoaded(true);
+
+											this.setState({ responseStatus: true });
 										});
 									})
 									.catch((promise) => {
