@@ -63,6 +63,14 @@ class ProductController extends Controller
 	{
 		if (isset($params['start']) && isset($params['limit'])) {
 			$c = $c->forPage($params['start'], $params['limit']);
+
+			/** Filter by category_id
+			 */
+			if (isset($params['category_id'])) {
+				$c = $c
+						->join('product_categories', 'products.id', '=', 'product_id')
+						->where('category_id', $params['category_id']);
+			}
 		}
 
 		return $c;
