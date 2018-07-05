@@ -12,15 +12,9 @@
 */
 use Illuminate\Http\Request;
 
-use App\Mail\MailClass;
-
 foreach (\App\Model\Base\Page::all() as $page) {
 	Route::get($page->link, 'PageController@view');
 }
-
-Route::get('mail', function() {
-	Mail::to('ihor.bielchenko@ohmycode.studio')->send(new MailClass(8));
-});
 
 Route::prefix('connector')
 	->group(function () {

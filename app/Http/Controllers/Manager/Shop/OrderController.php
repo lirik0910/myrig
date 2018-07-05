@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Manager\Shop;
 
+use App\Mail\MailClass;
+use App\Model\Base\User;
 use App\Model\Shop\Cart;
 use App\Model\Shop\Order;
 use App\Model\Shop\Product;
@@ -698,6 +700,14 @@ class OrderController extends Controller
 			return response()->json(['success' => false, 'message' => $e->getMessage()], 422);
 		}
 
+		try {
+			$user = User::find($dataOrder['user_id']);
+		}
+		catch (\Exception $e) {
+			logger($e->getMessage());
+			return response()->json(['message' => $e->getMessage()], 422);
+		}
+
 		$cart = [];
 		if(!empty($data['cart'])){
 			$cart = json_decode($data['cart'], TRUE);
@@ -826,6 +836,7 @@ class OrderController extends Controller
 				''
 			]);
 		}
+		Mail::to($user->email)->send(new MailClass($order_number));
 
 		return $this->one($order->id, $request);
 	}
