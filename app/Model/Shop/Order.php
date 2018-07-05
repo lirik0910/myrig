@@ -176,4 +176,12 @@ class Order extends Model
 	{
 		
 	}
+
+	/**
+	 * Send email by smtp
+	 */
+	public function sendEmail()
+	{
+
+	}
 }
