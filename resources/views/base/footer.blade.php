@@ -148,15 +148,15 @@
 				</div>
 
 				<div class="locales__container">
-					<a title="USA" href="{{ env('EN_DOMAIN') . '?locale=en' }}">
+					<a title="USA" href="{{ config('app.en_domain') . '?locale=en' }}">
 						<img src="{{ asset('uploads/design/us.png') }}" alt="USA">
 					</a>
 
-					<a title="UA" href="{{ env('UA_DOMAIN') . '?locale=ua' }}">
+					<a title="UA" href="{{ config('app.ua_domain') . '?locale=ua' }}">
 						<img src="{{ asset('uploads/design/ua.png') }}" alt="UA">
 					</a>
 
-					<a title="RUR" href="{{ env('RU_DOMAIN') . '?locale=ru' }}">
+					<a title="RUR" href="{{ config('app.ru_domain') . '?locale=ru' }}">
 						<img src="{{ asset('uploads/design/ru.png') }}" alt="RU">
 					</a>
 				</div>
