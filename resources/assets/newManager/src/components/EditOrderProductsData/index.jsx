@@ -128,6 +128,7 @@ class EditOrderProductsData extends Component {
 						</Typography>
 
 						<InputNumberDefault
+							floatInput
 							defaultValue={item.cost}
 							label={langs['txtOrderTotalSum']}
 							handleFieldChanged={(value) => {
