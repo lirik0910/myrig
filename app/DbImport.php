@@ -384,7 +384,7 @@ class DbImport
             if (isset($line['order_id'])){
                 if(isset($orders[$line['order_id']])){
                     $cart[$key]['created_at'] = $orders[$line['order_id']]['created_at'];
-                    $line_cost = $line['cost'] * $line['count'];
+                    $line_cost = $line['discountCost'] * $line['count'];
                     $orders[$line['order_id']]['cost'] += (int)$line_cost;
                     if($orders[$line['order_id']]['cost'] < 0 || $orders[$line['order_id']]['cost'] > 999999){
                         $strangeOrders[] = $orders[$line['order_id']]['cost'];
@@ -749,6 +749,9 @@ class DbImport
 
     public function process()
     {
+
+        $this->ordersCostUpdate();
+        die;
         $data = $this->export();
 
         $this->import($data);
@@ -825,6 +828,22 @@ class DbImport
             }catch (\Exception $e){
                 continue;
             }
+        }
+    }
+
+    public function ordersCostUpdate(){
+        $orders = Order::all();
+
+        foreach($orders as $order){
+            $carts = $order->carts;
+            $cost = 0;
+
+            foreach ($carts as $cart){
+                $cost += ($cart->discountCost * $cart->count);
+            }
+
+            $order->cost = $cost;
+            $order->save();
         }
     }
 }
