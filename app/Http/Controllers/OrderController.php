@@ -119,6 +119,7 @@ class OrderController extends Controller
                     'product_id' => $productId,
                     'count' => $count,
                     'cost' => $autoprice_data['total'],
+                    'discountCost' => $autoprice_data['total'],
                     'btcCost' => $btcCost,
                     'fes' => $autoprice_data['fes'],
                     'warranty' => $autoprice_data['warranty'],
@@ -136,6 +137,7 @@ class OrderController extends Controller
                     'product_id' => $productId,
                     'count' => $count,
                     'cost' => $cost,
+                    'discountCost' => $cost,
                     'btcCost' => $btcCost
                 ]);
             }
