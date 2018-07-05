@@ -12,7 +12,6 @@
 */
 use Illuminate\Http\Request;
 
-use App\Model\Base\User;
 use App\Mail\MailClass;
 
 foreach (\App\Model\Base\Page::all() as $page) {
@@ -20,8 +19,7 @@ foreach (\App\Model\Base\Page::all() as $page) {
 }
 
 Route::get('mail', function() {
-	$user = User::find(1);
-	Mail::to('ihor.bielchenko@ohmycode.studio')->send(new MailClass(123));
+	Mail::to('ihor.bielchenko@ohmycode.studio')->send(new MailClass(8));
 });
 
 Route::prefix('connector')

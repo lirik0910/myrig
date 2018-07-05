@@ -35,6 +35,6 @@ class MailClass extends Mailable
             ->with([
                 'number' => $this->number
             ])
-            ->subject('TEEESTTT!');
+            ->subject('Order '. $this->number);
     }
 }
