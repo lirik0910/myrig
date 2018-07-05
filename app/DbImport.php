@@ -311,6 +311,8 @@ class DbImport
             }
         }
 
+        $this->cartsUpdate($orders_items);
+        die;
         $cart = [];
 
         foreach ($orders_items as $items){
@@ -382,7 +384,7 @@ class DbImport
             if (isset($line['order_id'])){
                 if(isset($orders[$line['order_id']])){
                     $cart[$key]['created_at'] = $orders[$line['order_id']]['created_at'];
-                    $line_cost = $line['cost'] * $line['count'];
+                    $line_cost = $line['discountCost'] * $line['count'];
                     $orders[$line['order_id']]['cost'] += (int)$line_cost;
                     if($orders[$line['order_id']]['cost'] < 0 || $orders[$line['order_id']]['cost'] > 999999){
                         $strangeOrders[] = $orders[$line['order_id']]['cost'];
@@ -542,13 +544,13 @@ class DbImport
          */
         $data['users'] = [];
         $data['products'] = [];
-        //$data['orders'] = [];
-        //$data['carts'] = [];
+       // $data['orders'] = [];
+       // $data['carts'] = [];
         $data['user_attrs'] = [];
-        //$data['orders_deliveries'] = [];
-        //$data['news'] = [];
+       // $data['orders_deliveries'] = [];
+        $data['news'] = [];
         $data['articles'] = [];
-        //$data['logs'] = [];
+       // $data['logs'] = [];
 
 
         /*
@@ -747,8 +749,101 @@ class DbImport
 
     public function process()
     {
+
+        $this->ordersCostUpdate();
+        die;
         $data = $this->export();
 
         $this->import($data);
+    }
+
+    public function cartsUpdate($order_items){
+        $current_carts = Cart::all();
+        $newCarts = [];
+
+        foreach ($current_carts as $cart){
+            $product = Product::find($cart->product_id);
+
+            if(!$product && $cart->title == NULL || $cart->order_id < 7686){
+                Cart::where('order_id', $cart->order_id)->delete();
+            }
+        }
+
+        $current_orders = Order::all();
+
+        foreach ($current_orders as $order){
+            $order_carts = $order->carts;
+
+            if(count($order_carts) < 1){
+                foreach ($order_items[$order->id] as $item){
+                    //foreach ($items as $item){
+                        $orders_items_meta[$item->order_id][$item->order_item_name] = $this->source->select('select * from wpbit2_woocommerce_order_itemmeta where order_item_id = :order_item_id', ['order_item_id' => $item->order_item_id ]);
+
+                        if($item->order_item_type == 'line_item'){
+                            $item_count = 1;
+                            $item_subtotal_cost = 0;
+                            $item_total_cost = 0;
+
+                            foreach ($orders_items_meta[$item->order_id][$item->order_item_name] as $meta){
+                                if($meta->meta_key == '_line_subtotal'){
+                                    $item_subtotal_cost = $meta->meta_value;
+                                } elseif ($meta->meta_key == '_line_total'){
+                                    $item_total_cost = $meta->meta_value;
+                                } elseif ($meta->meta_key == '_qty'){
+                                    $item_count = $meta->meta_value;
+                                } elseif($meta->meta_key == '_product_id'){
+                                    $item_product_id = $meta->meta_value;
+                                }
+                                $item_product_title = '';
+                                if(!isset($item_product_id) || !$item_product_id || !Product::find($item_product_id)){
+                                    $item_product_id = 0;
+                                    $item_product_title = $item->order_item_name;
+                                }
+                            }
+
+                            if(!$item_total_cost){
+                                $item_total_cost = $item_subtotal_cost;
+                            }
+
+                            $subtotal_cost = $item_subtotal_cost / $item_count;
+                            $total_cost = $item_total_cost / $item_count;
+
+                            $newCarts[] = [
+                                'order_id' => $item->order_id,
+                                'product_id' => $item_product_id,
+                                'cost' => $subtotal_cost,
+                                'discountCost' => $total_cost,
+                                'count' => $item_count,
+                                'title' => $item_product_title ? $item_product_title : NULL
+                            ];
+                        }
+                    //}
+                }
+            }
+        }
+
+        foreach ($newCarts as $newCart){
+            try{
+                Cart::create($newCart);
+            }catch (\Exception $e){
+                continue;
+            }
+        }
+    }
+
+    public function ordersCostUpdate(){
+        $orders = Order::all();
+
+        foreach($orders as $order){
+            $carts = $order->carts;
+            $cost = 0;
+
+            foreach ($carts as $cart){
+                $cost += ($cart->discountCost * $cart->count);
+            }
+
+            $order->cost = $cost;
+            $order->save();
+        }
     }
 }

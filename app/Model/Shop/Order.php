@@ -121,7 +121,7 @@ class Order extends Model
 		
 		$cost = 0;
 		foreach ($cart as $item) {
-			$price = $item->cost;
+			$price = $item->discountCost;
 			$count = $item->count;
 
 			$discount = $item->discount;

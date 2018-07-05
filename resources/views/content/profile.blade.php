@@ -400,7 +400,8 @@
 {{--												@if(count($order->carts) > 0)--}}
 													@foreach($order->carts as $item)
 														@php
-                                                             $price = number_format($item->cost, 2, '.', '');
+                                                             $price = number_format($item->discountCost, 2, '.', '');
+                                                             //var_dump($item);
                                                              $btcPrice = number_format($item->btcCost, 4, '.', '');
                                                              $product = $item->product;
 														@endphp
@@ -495,7 +496,7 @@
 										{{--	@if(count($order->products) > 0)--}}
 												@foreach($order->carts as $item)
 													@php
-														$price = number_format($item->cost, 2, '.', '');
+														$price = number_format($item->discountCost, 2, '.', '');
                                                         $btcPrice = number_format($item->btcCost, 4, '.', '');
 														$product = $item->product;
 													@endphp
