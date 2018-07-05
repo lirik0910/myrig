@@ -47,7 +47,9 @@ class CheckLocale
 			}
 
 			else {
-				$clientLocation = $_SESSION['locale'] ?? ($_SESSION['locale'] = $clientLocation);
+				$clientLocation = isset($_SESSION['locale']) ? 
+					$_SESSION['locale'] :
+					$_SESSION['locale'] = $clientLocation);
 			}
 
 			App::setLocale($clientLocation);
