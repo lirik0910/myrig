@@ -121,10 +121,15 @@ class Order extends Model
 		
 		$cost = 0;
 		foreach ($cart as $item) {
-			$cost += ($item->count * ($item->cost - $item->discount));
+			$price = $item->discountCost;
+			$count = $item->count;
+
+			$discount = $item->discount;
+
+			$cost += ($count * ($price - $discount));
 		}
-		
 		$this->cost = $cost;
+
 		return $cost;
 	}
 

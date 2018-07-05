@@ -137,7 +137,7 @@ class EditOrderProductsData extends Component {
 							}} />
 
 						<InputNumberDefault
-							defaultValue={item.count}
+							defaultValue={item.discountCount}
 							label={langs['labelProductsCount']}
 							handleFieldChanged={(value) => {
 								carts[i]['count'] = value;
