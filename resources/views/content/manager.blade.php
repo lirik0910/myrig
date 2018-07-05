@@ -1,8 +1,8 @@
 @php
-	if (env('LOCAL_SPACE') === 'dev') {
+	//if (env('LOCAL_SPACE') === 'dev') {
 		$js = 'http://localhost:3000/static/js/bundle.js';
 		$config = 'http://localhost:3000/config.js';
-	}
+	/*}
 
 	else {
 		$currentPage = explode('/', URL::current());
@@ -14,7 +14,7 @@
 			$js = URL::asset('static/js/' . $js);
 		}
 		$config = URL::asset('js/manager/config.js');
-	}
+	}*/
 @endphp
 
 <!DOCTYPE html>
