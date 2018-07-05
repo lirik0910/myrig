@@ -126,17 +126,19 @@
 					}
 				@endphp
 
-				@foreach ($contactsMulti['Contact items'] as $line)
-				<li class="list__item @if($line['country'] == 'USA') active @endif">{{ __('common.cont_' . $line['country'] ) }}
-					<div class="phone-area__container">
-						@if(isset($line['phone']) && $line['phone']) 
-							{{ $line['phone'] }} 
-						@else 
-							support@myrig.com 
-						@endif
-					</div>
-				</li>
-				@endforeach
+				@if (isset($contactsMulti['Contact items']))
+					@foreach ($contactsMulti['Contact items'] as $line)
+					<li class="list__item @if($line['country'] == 'USA') active @endif">{{ __('common.cont_' . $line['country'] ) }}
+						<div class="phone-area__container">
+							@if(isset($line['phone']) && $line['phone']) 
+								{{ $line['phone'] }} 
+							@else 
+								support@myrig.com 
+							@endif
+						</div>
+					</li>
+					@endforeach
+				@endif
 				</ul>
 
 				<div class="col-md-6 connect-button__container padding__collapse text-right">
