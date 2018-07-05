@@ -23,7 +23,7 @@ class CheckLocale
 
             App::setLocale($currentHostParts[0]);
 
-            geoip($_SERVER['REMOTE_ADDR'])->iso_code;
+            //geoip($_SERVER['REMOTE_ADDR'])->iso_code;
         }
 
 //         if($request->method() == 'GET' || $request->method() == 'POST'){
