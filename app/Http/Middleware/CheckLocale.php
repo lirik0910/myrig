@@ -18,23 +18,12 @@ class CheckLocale
     {
         $method = $request->method();
         if ($method === 'GET' || $method === 'POST') {
-            $current = $request->getSchemeAndHttpHost();
+            $currentHost = $request->getHttpHost();
+            $currentHostParts = explode('.', $currentHost);
 
-            switch ($current) {
-                case config('app.ua_domain'):
-                    App::setLocale('ua');
-                    break;
+            App::setLocale($currentHostParts[0]);
 
-                case config('app.ru_domain'):
-                    App::setLocale('ru');
-                    break;
-
-                case config('app.en_domain'):
-                    App::setLocale('en');
-                    break;
-            }
-
-            //geoip($_SERVER['REMOTE_ADDR'])->iso_code;
+            geoip($_SERVER['REMOTE_ADDR'])->iso_code;
         }
 
 //         if($request->method() == 'GET' || $request->method() == 'POST'){
