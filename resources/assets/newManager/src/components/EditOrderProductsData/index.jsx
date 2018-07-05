@@ -7,6 +7,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import cloneDeep from 'clone-deep';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
@@ -55,11 +56,13 @@ class EditOrderProductsData extends Component {
 		let { carts, newProduct } = this.state;
 
 		carts.push({
-			id: newProduct.product_id,
+			id: typeof newProduct.product_id === 'undefined' ?
+				newProduct.id : 
+				newProduct.product_id,
 			cost: newProduct.price,
 			btcCost: 0,
 			count: 1,
-			product: newProduct
+			product: cloneDeep(newProduct)
 		});
 		this.setState({ carts, add: false, newProduct: {} }, () => 
 			this.props.onCartUpdated(carts));
@@ -117,12 +120,20 @@ class EditOrderProductsData extends Component {
 						<Typography variant="display2">{ item.product.title }</Typography>
 
 						<Typography variant="subheading">
-							{langs['txtOrderTotalSum']}: <b>{ item.cost.toFixed(2) }</b>
+							{langs['txtOrderTotalSum']}: <b>{ parseFloat(item.cost).toFixed(2) }</b>
 						</Typography>
 
 						<Typography variant="subheading">
 							{langs['txtOrderTotalBtcSum']}: <b>{ item.btcCost.toFixed(2) }</b>
 						</Typography>
+
+						<InputNumberDefault
+							defaultValue={item.cost}
+							label={langs['txtOrderTotalSum']}
+							handleFieldChanged={(value) => {
+								carts[i]['cost'] = value;
+								this.setState({ carts }, () => this.props.onCartUpdated(carts));
+							}} />
 
 						<InputNumberDefault
 							defaultValue={item.count}

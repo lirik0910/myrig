@@ -133,6 +133,7 @@ class OrderController extends Controller
 		Cart::where('order_id', $id)->delete();
 
 		foreach ($cart as $product) {
+			$cost = $product['cost'];
 			$count = $product['count'] ?? 1;
 			$discount = $product['discount'] ?? 0;
 			$serial = $product['serials_number'] ?? NULL;
@@ -160,7 +161,7 @@ class OrderController extends Controller
 
 			} 
 			else {
-				$cost = $product->price;
+				$cost = $cost ?? $product->price;
 				$btcCost = $product->calcBtcPrice();
 
 				$item->fill([
