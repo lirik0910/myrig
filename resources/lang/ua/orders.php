@@ -19,6 +19,8 @@ return [
 	'menuExit' => 'Выход',
 	'labelNoneSelected' => 'Не выбрано',
 	'successUpdated' => 'Успешно обновлено!',
+	'emptyTrashLabel' => 'Очистить корзину',
+	'emptyTrashText' => 'Вы уверены, что хотите очистить корзину?',
 
 	'filterSelectContext' => 'Контекст',
 	'helperSelectContext' => 'Изменить контекст',

@@ -18,6 +18,8 @@ return [
 	'menuClearCache' => 'Очистить кэш',
 	'menuExit' => 'Выход',
 	'labelNoneSelected' => 'Не выбрано',
+	'emptyTrashLabel' => 'Очистить корзину',
+	'emptyTrashText' => 'Вы уверены, что хотите очистить корзину?',
 
 	'filterSelectContext' => 'Контекст',
 	'helperSelectContext' => 'Изменить контекст',
