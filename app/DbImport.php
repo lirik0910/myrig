@@ -220,7 +220,7 @@ class DbImport
             ];
         }
         foreach ($this->orders as $order){
-            $delivery_id = 5;
+            $delivery_id = 4;
             $delivery_cost = 0;
 
             $orders_logs[$order->id] = $this->source->select('select * from wpbit2_comments where comment_post_ID = :comment_post_ID', ['comment_post_ID' => $order->id]);
@@ -322,10 +322,13 @@ class DbImport
 
                     if($item->order_item_type == 'line_item'){
                         $item_count = 1;
+                        $item_subtotal_cost = 0;
                         $item_total_cost = 0;
 
                         foreach ($orders_items_meta[$item->order_id][$item->order_item_name] as $meta){
                             if($meta->meta_key == '_line_subtotal'){
+                                $item_subtotal_cost = $meta->meta_value;
+                            }elseif($meta->meta_key == '_line_total'){
                                 $item_total_cost = $meta->meta_value;
                             } elseif ($meta->meta_key == '_qty'){
                                 $item_count = $meta->meta_value;
@@ -343,12 +346,15 @@ class DbImport
                          * Добавить в импорт для скидок поле
                          *
                          */
-                        $cost = $item_total_cost / $item_count;
+                        $subtotalCost = $item_subtotal_cost / $item_count;
+                        //$totalCost = $item_total_cost / $item_count;
+                        $discount = $item_subtotal_cost - $item_total_cost;
                         //$cost = $item_total_cost / $item_count;
                         $cart[] = [
                             'order_id' => $item->order_id,
                             'product_id' => $item_product_id,
-                            'cost' => $cost,
+                            'cost' => $subtotalCost,
+                            'discount'=> $discount,
                             'count' => $item_count,
                             'title' => $item_product_title ? $item_product_title : NULL
                         ];
@@ -550,16 +556,16 @@ class DbImport
          */
         $data['users'] = [];
         $data['products'] = [];
-        $data['orders'] = [];
-        $data['carts'] = [];
+        //$data['orders'] = [];
+        //$data['carts'] = [];
         $data['user_attrs'] = [];
-       // $data['orders_deliveries'] = [];
+        //$data['orders_deliveries'] = [];
         $data['news'] = [];
         $data['articles'] = [];
-        $data['logs'] = [];
+        //$data['logs'] = [];
 
-        $this->orderDeliveriesUpdate($data['orders_deliveries']);
-        die;
+        //$this->orderDeliveriesUpdate($data['orders_deliveries']);
+        //die;
         /*
          * Import users
          */
@@ -656,8 +662,18 @@ class DbImport
          */
         foreach ($data['orders_deliveries'] as $delivery){
             try{
+/*                if($delivery['order_id'] == 7685){
+                    //var_dump($delivery); die;
+                } else{
+                    continue;
+                }*/
                 OrderDelivery::create($delivery);
             } catch (\Exception $e){
+/*                if($delivery['order_id'] == 7685){
+                    var_dump($delivery); die;
+                } else{
+                    continue;
+                }*/
                 continue;
             }
         }
