@@ -12,7 +12,7 @@
     $order_status = App\Model\Shop\OrderStatus::where('id', $order->status_id)->first();
 @endphp
 <div style="width: 500px; margin: 0 auto;">
-    <p>Message from manager:</p>
+    <p>{{   ('default.email_message_title') }}</p>
     <p>{{ $text }}</p>
     <div>
         <table style="width: 100%; font-size: 14px; margin-top: 130px;">

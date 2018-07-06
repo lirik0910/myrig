@@ -188,5 +188,8 @@ return [
     'report_availability_popup' => 'Уведомление о наличии',
     'captcha' => 'Пройдите капчу',
     'yourName' => 'Ваше имя',
-    'yourOrderStatus' => 'Статус заказа'
+    'yourOrderStatus' => 'Статус заказа',
+
+    //email for client
+    'email_message_title' => 'Сообщение от менеджера:'
 ];
