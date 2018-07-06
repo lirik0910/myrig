@@ -346,6 +346,16 @@ class TableOrders extends PureComponent {
 		});
 	}
 
+	emptyTrash = (e) => {
+		this.setState({ 
+			selectedRows: [e.detail], 
+			alert: true,
+			alertTitle: 'dialogTitleSendOrderToTrash',
+			alertText: 'emptyTrashText',
+			alertOkButton: (e) => this.handleOrderTrash(e)
+		});
+	}
+
 	/**
 	 * Define that any row is selected
 	 * @param {array} rows
@@ -425,7 +435,17 @@ class TableOrders extends PureComponent {
 			className={classes.root}>
 			
 			<Grid container spacing={24} style={{ margin: 0 }}>
-				<Grid item xs={12} sm={12} className={classes.toolBar}>
+				<Grid item xs={12} sm={1}>
+					<Button 
+						color="secondary"
+						onClick={this.emptyTrash}>
+						
+						<Delete />
+						{langs['emptyTrashLabel']}
+					</Button>
+				</Grid>
+
+				<Grid item xs={12} sm={11} className={classes.toolBar}>
 					<Button 
 						onClick={this.props.toolbareOrdersCreate}>
 						

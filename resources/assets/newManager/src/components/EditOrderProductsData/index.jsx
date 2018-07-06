@@ -64,8 +64,9 @@ class EditOrderProductsData extends Component {
 			count: 1,
 			product: cloneDeep(newProduct)
 		});
-		this.setState({ carts, add: false, newProduct: {} }, () => 
-			this.props.onCartUpdated(carts));
+		this.setState({ carts, add: false, newProduct: {} }, () => {
+			this.props.onCartUpdated(carts);
+		});
 	}
 
 	/**
@@ -124,6 +125,10 @@ class EditOrderProductsData extends Component {
 						</Typography>
 
 						<Typography variant="subheading">
+							{langs['txtOrderDiscountTotalSum']}: <b>{ (parseFloat(item.cost) - parseFloat(item.discount)).toFixed(2) }</b>
+						</Typography>
+
+						<Typography variant="subheading">
 							{langs['txtOrderTotalBtcSum']}: <b>{ item.btcCost.toFixed(2) }</b>
 						</Typography>
 
@@ -137,7 +142,7 @@ class EditOrderProductsData extends Component {
 							}} />
 
 						<InputNumberDefault
-							defaultValue={item.discountCount}
+							defaultValue={item.count}
 							label={langs['labelProductsCount']}
 							handleFieldChanged={(value) => {
 								carts[i]['count'] = value;
@@ -145,10 +150,10 @@ class EditOrderProductsData extends Component {
 							}} />
 
 						<InputNumberDefault
-							defaultValue={item.discount}
+							defaultValue={item.discountCost}
 							label={langs['labelProductsDicount']}
 							handleFieldChanged={(value) => {
-								carts[i]['discount'] = value;
+								carts[i]['discountCost'] = value;
 								this.setState({ carts }, () => this.props.onCartUpdated(carts));
 							}} />
 

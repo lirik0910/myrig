@@ -15,7 +15,8 @@ class CheckLocale
 
 	public function defineCountry()
 	{
-		return json_decode(file_get_contents('https://www.iplocate.io/api/lookup/' . $_SERVER['REMOTE_ADDR']))->country_code ?? 'ua';
+		$locale = explode(';', file_get_contents('http://api.ipinfodb.com/v3/ip-city/?key=279a52ca7e17a0f4a96079079d564ea24be53143fa9b4e11db066f80cf8577fa&ip=' . $_SERVER['REMOTE_ADDR']))[3];
+		return $locale === '-' ? 'ua' : $locale;
 	}
 
 	/**
