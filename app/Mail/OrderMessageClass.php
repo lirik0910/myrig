@@ -7,7 +7,6 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-
 class OrderMessageClass extends Mailable
 {
     use Queueable, SerializesModels;
@@ -24,11 +23,12 @@ class OrderMessageClass extends Mailable
     public function build()
     {
         return $this->view('emails.newMessage')
-            ->from('support@myrig.com')
-/*            ->with([
+            ->from('myrig.company@gmail.com')
+            ->with([
                 'message' => $this->text,
                 'number' => $this->number
-            ])*/
+            ])
             ->subject('Order ' . $this->number);
     }
+
 }
