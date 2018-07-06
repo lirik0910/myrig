@@ -285,10 +285,10 @@ foreach ($products as $item) {
 
 						<div class="d-inline-block checkout-deliveries__container">
 							@foreach($deliveries as $delivery)
-								<div class="delivery-method__item @if($loop->first) ua-delivery__method @elseif($loop->iteration == 2 || $loop->iteration == 3) ru-delivery__method @else selfment-delivery__method @endif" style="margin: 0 4px; display: none;">
+								<div class="delivery-method__item @if($delivery->title === 'Новая почта') ua-delivery__method @elseif($delivery->title === 'СДЕК' || $delivery->title == 'Деловые линии') ru-delivery__method @else selfment-delivery__method @endif" style="margin: 0 4px; display: none;">
 									<input id="{{ 'delivery__radio-' . $delivery->id }}" type="radio" name="delivery" value="{{ $delivery->id }}" @if($loop->iteration == 2) checked='checked' @endif />
 
-									<label class="font-weight-light" style="cursor: pointer" for="{{ 'delivery__radio-' . $delivery->id }}">{{ $delivery->title }}</label>
+									<label class="font-weight-light" style="cursor: pointer" for="{{ 'delivery__radio-' . $delivery->id }}">{{ __('orders.delivery_' . $delivery->title) }}</label>
 								</div>
 							@endforeach
 
