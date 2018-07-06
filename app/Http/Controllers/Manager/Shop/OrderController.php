@@ -153,7 +153,6 @@ class OrderController extends Controller
 					'discount' => $discount,
 					'serial_number' => $serial,
 					'cost' => $autopriceData['total'],
-					'discountCost' => $autopriceData['total'],
 					'btcCost' => $btcCost,
 					'fes' => $autopriceData['fes'],
 					'warranty' => $autopriceData['warranty'],
@@ -173,7 +172,6 @@ class OrderController extends Controller
 					'count' => $count,
 					'discount' => $discount,
 					'cost' => $cost,
-					'discountCost' => $cost,
 					'btcCost' => $btcCost,
 					'serial_number' => $serial,
 				]);
@@ -735,7 +733,6 @@ class OrderController extends Controller
 					'discount' => $discount,
 					'serial_number' => $serial,
 					'cost' => $autoprice_data['total'],
-					'discountCost' => $autoprice_data['total'],
 					'btcCost' => $btcCost,
 					'fes' => $autoprice_data['fes'],
 					'warranty' => $autoprice_data['warranty'],
@@ -754,7 +751,6 @@ class OrderController extends Controller
 					'count' => $count,
 					'discount' => $discount,
 					'cost' => $cost,
-					'discountCost' => $cost,
 					'btcCost' => $btcCost
 				]);
 			}
