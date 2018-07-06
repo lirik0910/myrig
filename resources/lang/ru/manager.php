@@ -245,4 +245,6 @@ return [
 
 	'appBarOrdersTitle' => 'Заказы',
 	'labelNoneSelected' => 'Не выбрано',
+
+	'table_profile' => 'Профиль'
 ];

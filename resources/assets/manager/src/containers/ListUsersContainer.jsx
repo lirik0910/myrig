@@ -116,6 +116,10 @@ class ListUsersContainer extends Component {
 					r = JSON.parse(r.response);
 					if (r) {
 						for (var i in r.data) {
+							r.data[i]['profile'] = <div>
+								{r.data[i].attributes !== null && 
+									r.data[i].attributes.fname +' '+ r.data[i].attributes.lname}
+							</div>
 							r.data[i]['control'] = <ControlOptions
 								item={r.data[i]}
 								editButton={true}
@@ -364,6 +368,11 @@ class ListUsersContainer extends Component {
 								disablePadding: true, 
 								label: this.props.lexicon.table_updated_date
 							}, {
+								id: 'profile', 
+								numeric: false, 
+								disablePadding: true, 
+								label: this.props.lexicon.table_profile
+							}, {
 								id: 'control', 
 								numeric: false, 
 								disablePadding: true, 
@@ -375,7 +384,8 @@ class ListUsersContainer extends Component {
 									start,
 								}, () => this.usersDataGetRequest());
 							}}
-							onLimitValueChanged={limit => this.setState({ limit }, () => { this.usersDataGetRequest() })} />}
+							onLimitValueChanged={limit => this.setState({ limit }, () => { 
+								this.usersDataGetRequest() })} />}
 					</Grid>
 				</Grid>
 

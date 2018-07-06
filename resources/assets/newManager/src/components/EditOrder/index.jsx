@@ -282,7 +282,7 @@ class EditOrder extends PureComponent {
 									.then(this.setOrderData)
 									.then((e) => {
 										this.setState({ 
-											responseStatus: true
+											responseMessage: langs['successUpdated']
 										}, () => {
 											this.props.onCreatedOrder(this.state.data);
 											this.props.onOrdersLoaded(true);
