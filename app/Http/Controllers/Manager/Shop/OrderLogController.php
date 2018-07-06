@@ -55,7 +55,7 @@ class OrderLogController
                 $emailTo = $user->email;
             }
 
-  //          Mail::to($emailTo)->send(new OrderMessageClass($order->id, $post['text']));
+            Mail::to($emailTo)->send(new OrderMessageClass($order->id, $post['text']));
         }
 
         return response()->json(['message' => true], 200);
