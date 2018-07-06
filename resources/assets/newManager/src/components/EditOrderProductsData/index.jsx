@@ -64,8 +64,9 @@ class EditOrderProductsData extends Component {
 			count: 1,
 			product: cloneDeep(newProduct)
 		});
-		this.setState({ carts, add: false, newProduct: {} }, () => 
-			this.props.onCartUpdated(carts));
+		this.setState({ carts, add: false, newProduct: {} }, () => {
+			this.props.onCartUpdated(carts);
+		});
 	}
 
 	/**

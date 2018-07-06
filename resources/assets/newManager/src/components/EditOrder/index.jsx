@@ -4,7 +4,7 @@
  * @requires react#PureComponent
  */
 
-import React, { PureComponent } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
@@ -41,7 +41,7 @@ function Transition(props) {
  * EditOrder block
  * @extends PureComponent
  */
-class EditOrder extends PureComponent {
+class EditOrder extends React.PureComponent {
 	constructor(props) {
 		super(props);
 
@@ -99,7 +99,7 @@ class EditOrder extends PureComponent {
 			});
 		}
 
-		else if (willProps.id === 0) {
+		else if (willProps.id === 0 && typeof this.state.data.carts === 'undefined') {
 			let now = new Date(),
 				date = now.toISOString();
 
@@ -372,7 +372,7 @@ class EditOrder extends PureComponent {
 								order={data}
 								onCartUpdated={(cart) => {
 									data['carts'] = cart;
-									this.setState({ data });
+									this.setState({ data: cloneDeep(data) });
 								}} />
 
 							<OrderHistory
