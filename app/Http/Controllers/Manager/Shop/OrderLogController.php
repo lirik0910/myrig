@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Manager\Shop;
 
 use App\Mail\MailClass;
+use Illuminate\Support\Facades\Mail;
 use App\Mail\OrderMessageClass;
 use App\Model\Shop\OrderLog;
 use App\Model\Shop\Order;
@@ -45,7 +46,6 @@ class OrderLogController
         }
 
         if($post['type'] === 'message'){
-            $emailTo = '';
             $order = Order::find($post['orderId']);
 
             if($order->orderDeliveries){
@@ -55,7 +55,6 @@ class OrderLogController
                 $emailTo = $user->email;
             }
 
-            //$mail = new OrderMessageClass($order->id);
             Mail::to($emailTo)->send(new OrderMessageClass($order->id, $post['text']));
         }
 
