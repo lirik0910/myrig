@@ -863,7 +863,7 @@ class DbImport
         foreach ($orders as $order){
             $currentOrderDeliveries = $order->orderDeliveries;
 
-            if(count($currentOrderDeliveries) < 1){
+            if($currentOrderDeliveries && count($currentOrderDeliveries) < 1){
                 foreach($order_deliveries as $key => $order_delivery){
                     if($order->id == $key){
                         //var_dump($order->id);
