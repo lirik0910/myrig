@@ -14,10 +14,12 @@
 <div style="width: 500px; margin: 0 auto;">
     <p>Message from manager:</p>
     <p>{{ $message }}</p>
+    <br>
+
     <div>
         <table style="width: 100%; font-size: 14px; margin-top: 130px;">
             <tr>
-                <td style="font-size: 16px;">Your Name</td>
+                <td style="font-size: 16px;">{{ __('default.yourName') }}</td>
                 <td style="text-align: right; vertical-align: bottom;">{{$order->orderDeliveries->first_name}} {{$order->orderDeliveries->last_name}}</td>
             </tr>
             <tr>
@@ -25,7 +27,7 @@
                 <td style="text-align: right;">{{$order->orderDeliveries->address}}</td>
             </tr>
             <tr>
-                <td style="text-transform: uppercase; font-weight: 700; letter-spacing: 4px;">ORDER # {{ $order->number }}</td>
+                <td style="text-transform: uppercase; font-weight: 700; letter-spacing: 4px;">{{ __('default.order_number') }} # {{ $order->number }}</td>
                 <td style="text-align: right;">{{$order->orderDeliveries->city}}</td>
             </tr>
             <tr>
@@ -45,19 +47,19 @@
                     @endif
                     <table class="main-table" style="border-collapse: collapse;">
                         <tr style="border-bottom: 2px solid grey; font-size: 10px; text-transform: uppercase;">
-                            <td style="width: 200px; text-align: left; border-bottom: 2px solid grey; padding: 10px 5px;">Description</td>
-                            <td style="text-align: center; width: 100px; border-bottom: 2px solid grey; padding: 10px 5px;">Quantity</td>
-                            <td style="text-align: center; width: 100px; border-bottom: 2px solid grey; padding: 10px 5px;">Price</td>
-                            <td style="text-align: center; width: 100px; border-bottom: 2px solid grey; padding: 10px 5px;">Total</td>
+                            <td style="width: 200px; text-align: left; border-bottom: 2px solid grey; padding: 10px 5px;">{{ __('default.description_title') }}</td>
+                            <td style="text-align: center; width: 100px; border-bottom: 2px solid grey; padding: 10px 5px;">{{ __('default.quantity_title') }}</td>
+                            <td style="text-align: center; width: 100px; border-bottom: 2px solid grey; padding: 10px 5px;">{{ __('default.price_title') }}</td>
+                            <td style="text-align: center; width: 100px; border-bottom: 2px solid grey; padding: 10px 5px;">{{ __('default.total_title') }}</td>
                         </tr>
                         <tbody style="border-bottom: 2px solid grey; font-size: 10px;">
                         @foreach($order->products as $product)
                             @php
-                                if($product->auto_price){
-                                                 $price = number_format($product->calcAutoPrice(), 2, '.', '');
-                                                 } else{
-                                                 $price = number_format($product->price, 2, '.', '');
-                                                  }
+                                if ($product->auto_price) {
+                                  $price = number_format($product->calcAutoPrice(), 2, '.', '');
+                                } else {
+                                  $price = number_format($product->price, 2, '.', '');
+                                }
                             @endphp
                             <tr style="font-size: 10px;">
                                 <td style="text-align: left; padding: 10px 5px;">{{ $product->title }}</td>
@@ -79,15 +81,15 @@
                                 <table class="additional-table" style="width: 193px; font-size: 10px; border-collapse: collapse; margin-top: 5px;">
                                     <tbody>
                                     <tr id="bottom">
-                                        <td id="bottom" style="padding: 10px 0;">TOTAL</td>
+                                        <td id="bottom" style="padding: 10px 0;">{{ __('default.total_bottom') }}</td>
                                         <td id="bottom" style="padding: 10px 0;">{{ number_format($order->cost, 2, '.', '') }}</td>
                                     </tr>
                                     <tr>
-                                        <td id="bottom" style="padding: 10px 0;"><strong>TAX</strong></td>
+                                        <td id="bottom" style="padding: 10px 0;"><strong>{{ __('default.tax_bottom') }}</strong></td>
                                         <td id="bottom" style="padding: 10px 0;"><strong>$0.00</strong></td>
                                     </tr>
                                     <tr style="vertical-align: middle;">
-                                        <td style="padding: 10px 0;"><strong>AMOUNT DUE</strong></td>
+                                        <td style="padding: 10px 0;"><strong>{{ __('default.amount_bottom') }}</strong></td>
                                         <td id="green" style="font-weight: 700; font-size: 16px; padding: 10px 0;">{{ number_format($order->cost, 2, '.', '') }}</td>
                                     </tr>
                                     </tbody>
