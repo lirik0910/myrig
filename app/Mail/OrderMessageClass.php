@@ -25,7 +25,7 @@ class OrderMessageClass extends Mailable
         return $this->view('emails.newMessage')
             ->from('myrig.company@gmail.com')
             ->with([
-                'message' => $this->text,
+                'text' => $this->text,
                 'number' => $this->number
             ])
             ->subject('Order ' . $this->number);

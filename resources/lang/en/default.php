@@ -195,5 +195,8 @@ return [
     'captcha' => 'Go through captcha',
 
     'yourName' => 'Your name',
-    'yourOrderStatus' => 'Your order status is'
+    'yourOrderStatus' => 'Your order status is',
+
+    //email for client
+    'email_message_title' => 'Message from manager:'
 ];
