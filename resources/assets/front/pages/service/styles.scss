@@ -1,0 +1,48 @@
+@import '~bootstrap/scss/_functions.scss';
+@import '~bootstrap/scss/_variables.scss';
+@import '~bootstrap/scss/_mixins.scss';
+@import '~bootstrap/scss/_root.scss';
+@import '~bootstrap/scss/_reboot.scss';
+@import '~bootstrap/scss/_grid.scss';
+@import '~bootstrap/scss/_utilities.scss';
+
+@import '~owl.carousel/dist/assets/owl.carousel.css';
+@import '~font-awesome/scss/font-awesome.scss';
+
+@import '../../components/Header/styles.scss';
+@import '../../components/ButtonDefault/styles.scss';
+@import '../../components/PaperProduct/styles.scss';
+@import '../../components/NewsItem/styles.scss';
+@import '../../components/Footer/styles.scss';
+@import '../../components/DialogDefault/styles.scss';
+@import '../../components/DialogTicket/styles.scss';
+@import '../../components/DialogCallback/styles.scss';
+@import '../../components/DialogAvailability/styles.scss';
+@import '../../components/ToggleList/styles.scss';
+
+.products__container {
+	margin: 0 auto;
+	padding-top: 90px;
+
+	@media (min-width: 1250px) {
+		padding-top: 95px;
+	}
+}
+
+.article-arrow-left__icon {
+	width: 55px;
+	height: 25px;
+	margin-right: 18px;
+	display: inline-block;
+	vertical-align: top;
+	background: url('/uploads/design/arrow.png') left center no-repeat;
+}
+
+.article-arrow-right__icon {
+	width: 55px;
+	height: 25px;
+	margin-left: 18px;
+	display: inline-block;
+	vertical-align: top;
+	background: url('/uploads/design/right_arrow.png') left center no-repeat;
+}
