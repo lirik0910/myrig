@@ -129,7 +129,7 @@ class EditOrderProductsData extends Component {
 
 						<InputNumberDefault
 							floatInput
-							defaultValue={item.cost}
+							defaultValue={item.discountCost}
 							label={langs['txtOrderTotalSum']}
 							handleFieldChanged={(value) => {
 								carts[i]['cost'] = value;
@@ -137,7 +137,7 @@ class EditOrderProductsData extends Component {
 							}} />
 
 						<InputNumberDefault
-							defaultValue={item.discountCount}
+							defaultValue={item.count}
 							label={langs['labelProductsCount']}
 							handleFieldChanged={(value) => {
 								carts[i]['count'] = value;
