@@ -38,3 +38,4 @@ class MailClass extends Mailable
             ->subject('Order '. $this->number);
     }
 }
+
