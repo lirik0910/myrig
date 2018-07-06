@@ -12,8 +12,8 @@ class OrderMessageClass extends Mailable
 {
     use Queueable, SerializesModels;
 
-    protected $text;
-    protected $number;
+    public $text;
+    public $number;
 
     public function __construct($number, $text)
     {
@@ -24,10 +24,11 @@ class OrderMessageClass extends Mailable
     public function build()
     {
         return $this->view('emails.newMessage')
-            ->with([
+            ->from('support@myrig.com')
+/*            ->with([
                 'message' => $this->text,
                 'number' => $this->number
-            ])
+            ])*/
             ->subject('Order ' . $this->number);
     }
 }
