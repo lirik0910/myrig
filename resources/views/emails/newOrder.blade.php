@@ -12,7 +12,7 @@
     $order_status = App\Model\Shop\OrderStatus::where('id', $order->status_id)->first();
 @endphp
 <div style="width: 500px; margin: 0 auto;">
-  <p>Your order status is {{ $order_status->title }}</p>
+  <p>{{ __('default.yourOrderStatus') }} {{ __('orders.status_' . $order_status->title) }}</p>
   <div>
     <table style="width: 100%; font-size: 14px; margin-top: 130px;">
       <tr>

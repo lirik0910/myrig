@@ -192,4 +192,5 @@ return [
     'captcha' => 'Пройдите капчу',
 
     'yourName' => 'Ваше имя',
+    'yourOrderStatus' => 'Статус заказа'
 ];

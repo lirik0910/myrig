@@ -195,4 +195,5 @@ return [
     'captcha' => 'Go through captcha',
 
     'yourName' => 'Your name',
+    'yourOrderStatus' => 'Your order status is'
 ];
