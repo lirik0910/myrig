@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Manager\Shop;
 
+use App\Mail\MailClass;
 use App\Model\Shop\OrderLog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -38,6 +39,22 @@ class OrderLogController
         catch (\Exception $e) {
             logger($e->getMessage());
             return response()->json(['message' => $e->getMessage()], 422);
+        }
+
+        if($post['type'] === 'message'){
+            $emailTo = '';
+            $order = Order::find($post['orderId']);
+
+            if($order->orderDeliveries){
+                $emailTo = $order->orderDeliveries->email;
+            } else{
+                $user = User::find($user_id);
+                $emailTo = $user->email;
+            }
+
+            $mail = new MailClass($order->id);
+            $mail->buildMessage($post['text']);
+            Mail::to($emailTo)->send($mail);
         }
 
         return response()->json(['message' => true], 200);
