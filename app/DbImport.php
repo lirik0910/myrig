@@ -867,7 +867,12 @@ class DbImport
                 foreach($order_deliveries as $key => $order_delivery){
                     if($order->id == $key){
                         //var_dump($order->id);
-                        OrderDelivery::create($order_delivery);
+                        try{
+                            OrderDelivery::create($order_delivery);
+                        } catch(\Exception $e){
+                            continue;
+                        }
+
                     }
                 }
             }
