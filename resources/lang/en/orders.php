@@ -23,6 +23,7 @@ return [
 	'successUpdated' => 'Success!',
 	'emptyTrashLabel' => 'Empty trash',
 	'emptyTrashText' => 'Are you sure to empty trash?',
+	'txtOrderDiscountTotalSum' => 'Sum with discount',
 
 	'filterSelectContext' => 'Context',
 	'helperSelectContext' => 'Edit context',

@@ -20,6 +20,7 @@ return [
 	'labelNoneSelected' => 'Не выбрано',
 	'emptyTrashLabel' => 'Очистить корзину',
 	'emptyTrashText' => 'Вы уверены, что хотите очистить корзину?',
+	'txtOrderDiscountTotalSum' => 'Сумма со скидкой',
 
 	'filterSelectContext' => 'Контекст',
 	'helperSelectContext' => 'Изменить контекст',
