@@ -24,16 +24,6 @@ class MailClass extends Mailable
         $this->number = $number;
     }
 
-    public function buildMessage($text)
-    {
-        return $this->view('emails.newMessage')
-            ->with([
-                'message' => $text,
-                'number' => $this->number
-            ])
-            ->subject('Order ' . $this->number);
-    }
-
     /**
      * Build the message.
      *
@@ -48,3 +38,4 @@ class MailClass extends Mailable
             ->subject('Order '. $this->number);
     }
 }
+

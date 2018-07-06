@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Manager\Shop;
 
 use App\Mail\MailClass;
+use App\Mail\OrderMessageClass;
 use App\Model\Shop\OrderLog;
+use App\Model\Shop\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\JsonResponse;
@@ -52,9 +54,8 @@ class OrderLogController
                 $emailTo = $user->email;
             }
 
-            $mail = new MailClass($order->id);
-            $mail->buildMessage($post['text']);
-            Mail::to($emailTo)->send($mail);
+            //$mail = new OrderMessageClass($order->id);
+            Mail::to($emailTo)->send(new OrderMessageClass($order->id, $post['text']));
         }
 
         return response()->json(['message' => true], 200);
