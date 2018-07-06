@@ -311,8 +311,8 @@ class DbImport
             }
         }
 
-        $this->cartsUpdate($orders_items);
-        die;
+        //$this->cartsUpdate($orders_items);
+        //die;
         $cart = [];
 
         foreach ($orders_items as $items){
@@ -338,7 +338,13 @@ class DbImport
                                 $item_product_title = $item->order_item_name;
                             }
                         }
+                        /*
+                         *
+                         * Добавить в импорт для скидок поле
+                         *
+                         */
                         $cost = $item_total_cost / $item_count;
+                        //$cost = $item_total_cost / $item_count;
                         $cart[] = [
                             'order_id' => $item->order_id,
                             'product_id' => $item_product_id,
@@ -384,7 +390,7 @@ class DbImport
             if (isset($line['order_id'])){
                 if(isset($orders[$line['order_id']])){
                     $cart[$key]['created_at'] = $orders[$line['order_id']]['created_at'];
-                    $line_cost = $line['discountCost'] * $line['count'];
+                    $line_cost = $line['cost'] * $line['count'];
                     $orders[$line['order_id']]['cost'] += (int)$line_cost;
                     if($orders[$line['order_id']]['cost'] < 0 || $orders[$line['order_id']]['cost'] > 999999){
                         $strangeOrders[] = $orders[$line['order_id']]['cost'];
@@ -544,15 +550,16 @@ class DbImport
          */
         $data['users'] = [];
         $data['products'] = [];
-       // $data['orders'] = [];
-       // $data['carts'] = [];
+        $data['orders'] = [];
+        $data['carts'] = [];
         $data['user_attrs'] = [];
        // $data['orders_deliveries'] = [];
         $data['news'] = [];
         $data['articles'] = [];
-       // $data['logs'] = [];
+        $data['logs'] = [];
 
-
+        $this->orderDeliveriesUpdate($data['orders_deliveries']);
+        die;
         /*
          * Import users
          */
@@ -750,14 +757,15 @@ class DbImport
     public function process()
     {
 
-        $this->ordersCostUpdate();
-        die;
+        //$this->ordersCostUpdate();
+        //die;
         $data = $this->export();
 
         $this->import($data);
     }
 
-    public function cartsUpdate($order_items){
+    public function cartsUpdate($order_items)
+    {
         $current_carts = Cart::all();
         $newCarts = [];
 
@@ -831,7 +839,8 @@ class DbImport
         }
     }
 
-    public function ordersCostUpdate(){
+    public function ordersCostUpdate()
+    {
         $orders = Order::all();
 
         foreach($orders as $order){
@@ -845,5 +854,29 @@ class DbImport
             $order->cost = $cost;
             $order->save();
         }
+    }
+
+    public function orderDeliveriesUpdate($order_deliveries)
+    {
+        $orders = Order::all();
+
+        foreach ($orders as $order){
+            $currentOrderDeliveries = $order->orderDeliveries;
+
+            if(!$currentOrderDeliveries){
+                foreach($order_deliveries as $key => $order_delivery){
+                    if($order->id == $key){
+                        //var_dump($order->id);
+                        try{
+                            OrderDelivery::create($order_delivery);
+                        } catch(\Exception $e){
+                            continue;
+                        }
+
+                    }
+                }
+            }
+        }
+        //die;
     }
 }
