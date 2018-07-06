@@ -347,13 +347,13 @@ class TableOrders extends PureComponent {
 	}
 
 	emptyTrash = (e) => {
-		this.setState({ 
+		/*this.setState({ 
 			selectedRows: [e.detail], 
 			alert: true,
 			alertTitle: 'dialogTitleSendOrderToTrash',
 			alertText: 'emptyTrashText',
 			alertOkButton: (e) => this.handleOrderTrash(e)
-		});
+		});*/
 	}
 
 	/**

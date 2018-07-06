@@ -83,6 +83,10 @@ class EditOrderProductsData extends Component {
 			</Typography>
 
 			{carts.map((item, i) => {
+				if (item.discount === null) {
+					item.discount = 0;
+				}
+
 				return <Grid 
 					key={i}
 					container 
@@ -125,7 +129,7 @@ class EditOrderProductsData extends Component {
 						</Typography>
 
 						<Typography variant="subheading">
-							{langs['txtOrderDiscountTotalSum']}: <b>{ (parseFloat(item.cost) - parseFloat(item.discount)).toFixed(2) }</b>
+							{langs['txtOrderDiscountTotalSum']}: <b>{ parseFloat(item.cost) - parseFloat(item.discount).toFixed(2) }</b>
 						</Typography>
 
 						<Typography variant="subheading">
