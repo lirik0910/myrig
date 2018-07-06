@@ -1,16 +1,17 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: User
- * Date: 06.07.2018
- * Time: 15:10
- */
+
 
 namespace App\Mail;
 
+use Illuminate\Bus\Queueable;
+use Illuminate\Mail\Mailable;
+use Illuminate\Queue\SerializesModels;
 
-class OrderMessageClass
+
+class OrderMessageClass extends Mailable
 {
+    use Queueable, SerializesModels;
+
     protected $text;
     protected $number;
 
