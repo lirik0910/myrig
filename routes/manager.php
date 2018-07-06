@@ -223,7 +223,7 @@ Route::prefix('api')
 			Route::put('/{id}', 'Manager\Shop\OrderController@update')->middleware(OrderEditMiddleware::class);
 			Route::post('/{id}', 'Manager\Shop\OrderController@edit')->middleware(OrderOneMiddleware::class);
 			Route::get('/log/{id}', 'Manager\Shop\OrderController@log');
-			//Route::delete('/trash', 'Manager\Shop\OrderController@emptyTrash')->middleware(OrderDeleteMiddleware::class);
+			Route::delete('/trash', 'Manager\Shop\OrderController@emptyTrash')->middleware(OrderDeleteMiddleware::class);
 			//Route::delete('/{id}', 'Manager\Shop\OrderController@delete')->middleware(OrderDeleteMiddleware::class);
 		});
 
