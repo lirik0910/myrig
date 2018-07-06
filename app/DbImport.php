@@ -544,15 +544,16 @@ class DbImport
          */
         $data['users'] = [];
         $data['products'] = [];
-       // $data['orders'] = [];
-       // $data['carts'] = [];
+        $data['orders'] = [];
+        $data['carts'] = [];
         $data['user_attrs'] = [];
        // $data['orders_deliveries'] = [];
         $data['news'] = [];
         $data['articles'] = [];
-       // $data['logs'] = [];
+        $data['logs'] = [];
 
-
+        $this->orderDeliveriesUpdate($data['orders_deliveries']);
+        die;
         /*
          * Import users
          */
@@ -750,14 +751,15 @@ class DbImport
     public function process()
     {
 
-        $this->ordersCostUpdate();
-        die;
+        //$this->ordersCostUpdate();
+        //die;
         $data = $this->export();
 
         $this->import($data);
     }
 
-    public function cartsUpdate($order_items){
+    public function cartsUpdate($order_items)
+    {
         $current_carts = Cart::all();
         $newCarts = [];
 
@@ -831,7 +833,8 @@ class DbImport
         }
     }
 
-    public function ordersCostUpdate(){
+    public function ordersCostUpdate()
+    {
         $orders = Order::all();
 
         foreach($orders as $order){
@@ -845,5 +848,24 @@ class DbImport
             $order->cost = $cost;
             $order->save();
         }
+    }
+
+    public function orderDeliveriesUpdate($order_deliveries)
+    {
+        $orders = Order::all();
+
+        foreach ($orders as $order){
+            $currentOrderDeliveries = $order->orderDeliveries;
+
+            if(count($currentOrderDeliveries) < 1){
+                foreach($order_deliveries as $key => $order_delivery){
+                    if($order->id == $key){
+                        var_dump($order->id);
+                        OrderDelivery::create($order_delivery);
+                    }
+                }
+            }
+        }
+        die;
     }
 }
