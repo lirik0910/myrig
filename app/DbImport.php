@@ -311,8 +311,8 @@ class DbImport
             }
         }
 
-        $this->cartsUpdate($orders_items);
-        die;
+        //$this->cartsUpdate($orders_items);
+        //die;
         $cart = [];
 
         foreach ($orders_items as $items){
