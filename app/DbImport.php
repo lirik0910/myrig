@@ -338,7 +338,13 @@ class DbImport
                                 $item_product_title = $item->order_item_name;
                             }
                         }
+                        /*
+                         *
+                         * Добавить в импорт для скидок поле
+                         *
+                         */
                         $cost = $item_total_cost / $item_count;
+                        //$cost = $item_total_cost / $item_count;
                         $cart[] = [
                             'order_id' => $item->order_id,
                             'product_id' => $item_product_id,
@@ -384,7 +390,7 @@ class DbImport
             if (isset($line['order_id'])){
                 if(isset($orders[$line['order_id']])){
                     $cart[$key]['created_at'] = $orders[$line['order_id']]['created_at'];
-                    $line_cost = $line['discountCost'] * $line['count'];
+                    $line_cost = $line['cost'] * $line['count'];
                     $orders[$line['order_id']]['cost'] += (int)$line_cost;
                     if($orders[$line['order_id']]['cost'] < 0 || $orders[$line['order_id']]['cost'] > 999999){
                         $strangeOrders[] = $orders[$line['order_id']]['cost'];
@@ -860,12 +866,12 @@ class DbImport
             if(count($currentOrderDeliveries) < 1){
                 foreach($order_deliveries as $key => $order_delivery){
                     if($order->id == $key){
-                        var_dump($order->id);
+                        //var_dump($order->id);
                         OrderDelivery::create($order_delivery);
                     }
                 }
             }
         }
-        die;
+        //die;
     }
 }
