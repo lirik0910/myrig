@@ -12,6 +12,7 @@
         "folklore/image": "0.3.*",
         "geoip2/geoip2": "~2.0",
         "google/apiclient": "^2.0",
+        "guzzlehttp/guzzle": "^6.3",
         "huddledigital/zendesk-laravel": "^2.3",
         "intervention/image": "^2.4",
         "intervention/imagecache": "^2.3",
@@ -19,6 +20,7 @@
         "laravel/scout": "^4.0",
         "laravel/tinker": "~1.0",
         "nicklayb/laravel-db-import": "^1.1",
+        "phpmailer/phpmailer": "^6.0",
         "torann/geoip": "^1.0",
         "zendesk/zendesk_api_client_php": "^2.2"
     },

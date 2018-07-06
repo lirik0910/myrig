@@ -189,5 +189,8 @@ return [
 
     //report availability
     'report_availability_popup' => 'Уведомление о наличии',
-    'captcha' => 'Пройдите капчу'
+    'captcha' => 'Пройдите капчу',
+
+    'yourName' => 'Ваше имя',
+    'yourOrderStatus' => 'Статус заказа'
 ];

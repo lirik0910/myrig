@@ -192,5 +192,8 @@ return [
 
     //report availability
     'report_availability_popup' => 'Report availability',
-    'captcha' => 'Go through captcha'
+    'captcha' => 'Go through captcha',
+
+    'yourName' => 'Your name',
+    'yourOrderStatus' => 'Your order status is'
 ];

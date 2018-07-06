@@ -163,7 +163,7 @@ return [
         Barryvdh\DomPDF\ServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
         Huddle\Zendesk\Providers\ZendeskServiceProvider::class,
-        \Torann\GeoIP\GeoIPServiceProvider::class,
+        //\Torann\GeoIP\GeoIPServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -225,7 +225,7 @@ return [
         'Zendesk' => Huddle\Zendesk\Facades\Zendesk::class,
         'Image' => Intervention\Image\Facades\Image::class,
         //'PDF' => Barryvdh\DomPDF\Facade::class,
-        'GeoIP' => \Torann\GeoIP\Facades\GeoIP::class
+        //'GeoIP' => \Torann\GeoIP\Facades\GeoIP::class
     ],
 
 ];

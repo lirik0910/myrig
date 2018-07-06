@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Manager\Shop;
 
+use App\Mail\MailClass;
+use App\Model\Base\User;
 use App\Model\Shop\Cart;
 use App\Model\Shop\Order;
 use App\Model\Shop\Product;
@@ -151,6 +153,7 @@ class OrderController extends Controller
 					'discount' => $discount,
 					'serial_number' => $serial,
 					'cost' => $autopriceData['total'],
+					'discountCost' => $autopriceData['total'],
 					'btcCost' => $btcCost,
 					'fes' => $autopriceData['fes'],
 					'warranty' => $autopriceData['warranty'],
@@ -170,6 +173,7 @@ class OrderController extends Controller
 					'count' => $count,
 					'discount' => $discount,
 					'cost' => $cost,
+					'discountCost' => $cost,
 					'btcCost' => $btcCost,
 					'serial_number' => $serial,
 				]);
@@ -698,6 +702,14 @@ class OrderController extends Controller
 			return response()->json(['success' => false, 'message' => $e->getMessage()], 422);
 		}
 
+		try {
+			$user = User::find($dataOrder['user_id']);
+		}
+		catch (\Exception $e) {
+			logger($e->getMessage());
+			return response()->json(['message' => $e->getMessage()], 422);
+		}
+
 		$cart = [];
 		if(!empty($data['cart'])){
 			$cart = json_decode($data['cart'], TRUE);
@@ -723,6 +735,7 @@ class OrderController extends Controller
 					'discount' => $discount,
 					'serial_number' => $serial,
 					'cost' => $autoprice_data['total'],
+					'discountCost' => $autoprice_data['total'],
 					'btcCost' => $btcCost,
 					'fes' => $autoprice_data['fes'],
 					'warranty' => $autoprice_data['warranty'],
@@ -741,6 +754,7 @@ class OrderController extends Controller
 					'count' => $count,
 					'discount' => $discount,
 					'cost' => $cost,
+					'discountCost' => $cost,
 					'btcCost' => $btcCost
 				]);
 			}
@@ -826,6 +840,7 @@ class OrderController extends Controller
 				''
 			]);
 		}
+		Mail::to($user->email)->send(new MailClass($order_number));
 
 		return $this->one($order->id, $request);
 	}

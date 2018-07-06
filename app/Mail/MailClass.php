@@ -31,10 +31,10 @@ class MailClass extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.email-order')
+        return $this->view('emails.newOrder')
             ->with([
                 'number' => $this->number
             ])
-            ->subject('Order');
+            ->subject('Order '. $this->number);
     }
 }

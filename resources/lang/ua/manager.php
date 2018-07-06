@@ -243,4 +243,5 @@ return [
 	'var_hosting' => 'Стоимость хостинга',
 	'mass_actions' => 'Массовые действия',
 	'labelNoneSelected' => 'Не выбрано',
+	'table_profile' => 'Профиль'
 ];

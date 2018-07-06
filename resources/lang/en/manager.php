@@ -244,4 +244,5 @@ return [
 	'var_hosting' => 'Hosting cost',
 	'mass_actions' => 'Mass actions',
 	'labelNoneSelected' => 'None',
+	'table_profile' => 'Profile'
 ];

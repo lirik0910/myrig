@@ -5,64 +5,57 @@ namespace App\Http\Middleware;
 use Closure; 
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\App;
+
 class CheckLocale
 {
-    /**
-     * Handle an incoming request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
-     * @return mixed
-     */
-    public function handle($request, Closure $next)
-    {
-        if($request->method() == 'GET' || $request->method() == 'POST'){
-            $current_domain = $request->getSchemeAndHttpHost();
+	public $sngCountries = [
+		'az', 'am', 'by', 'ge', 'kz', 'kg', 'ru', 'tm', 'uz'
+	];
 
-            $clientIp = $_SERVER['REMOTE_ADDR'];
-            $locale = strtolower(geoip($clientIp)->iso_code);
-/*            if($locale !== 'ua' && $locale !== 'ru'){
-                $locale = 'en';
-            }*/
-            $sngCountries = [
-                'az', 'am', 'by', 'ge', 'kz', 'kg', 'ru', 'tm', 'uz'
-            ];
 
-            if(in_array($locale, $sngCountries)){
-                $locale = 'ru';
-            } elseif ($locale !== 'ua' && !in_array($locale, $sngCountries)){
-                $locale = 'en';
-            }
+	public function defineCountry()
+	{
+		return json_decode(file_get_contents('https://www.iplocate.io/api/lookup/' . $_SERVER['REMOTE_ADDR']))->country_code ?? 'ua';
+	}
 
-            if($request->get('locale')){
-                session()->put('locale', $request->get('locale'));
-            }
+	/**
+	 * Handle an incoming request.
+	 *
+	 * @param  \Illuminate\Http\Request  $request
+	 * @param  \Closure  $next
+	 * @return mixed
+	 */
+	public function handle($request, Closure $next)
+	{
+		$method = $request->method();
+		if ($method === 'GET' || $method === 'POST') {
+			$currentHost = $request->getHttpHost();
+			$currentHostParts = explode('.', $currentHost);
 
-            if(session()->get('locale')){
-                $locale = session()->get('locale');
-            }
+			$clientLocation = strtolower($this->defineCountry());
+			if (in_array($clientLocation, $this->sngCountries)) {
+				$clientLocation = 'ru';
+			}
 
-            App::setLocale($locale);
+			else if ($clientLocation !== 'ua') {
+				$clientLocation = 'en';
+			}
 
-            $uaDomain = config('app.ua_domain');
-            $ruDomain = config('app.ru_domain');
-            $enDomain = config('app.en_domain');
+			$newLocale = $request->get('locale');
+			if ($newLocale) {
+				$_SESSION['locale'] = ($clientLocation = $newLocale);
+			}
 
-            if($locale == 'ua' && $current_domain !== $uaDomain || $locale == 'ru' && $current_domain !== $ruDomain || $locale =='en' && $current_domain !== $enDomain){
-                switch ($locale){
-                    case 'ua':
-                        return redirect(config('app.ua_domain'));
-                        break;
-                    case 'ru':
-                        return redirect(config('app.ru_domain'));
-                        break;
-                    case 'en':
-                        return redirect(config('app.en_domain'));
-                        break;
-                }
-            }
-        }
+			else {
+				$clientLocation = $_SESSION['locale'] ?? ($_SESSION['locale'] = $clientLocation);
+			}
 
-        return $next($request);
-    }
+			App::setLocale($clientLocation);
+			if ($currentHostParts[0] && $currentHostParts[0] !== $clientLocation) {
+				return redirect(config('app.' . $clientLocation .'_domain') . '?locale=' . $clientLocation);
+			}
+		}
+
+		return $next($request);
+	}
 }

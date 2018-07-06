@@ -92,7 +92,9 @@ class EditOrderDeliveryData extends PureComponent {
 
 			<FilterOrderDelivery
 				formId="el_delivery_id"
-				defaultValue={order.order_deliveries.delivery_id || ''} />
+				defaultValue={order.order_deliveries === null ? 
+					'' :
+					order.order_deliveries.delivery_id || ''} />
 
 			<TextField
 				required
@@ -145,7 +147,9 @@ class EditOrderDeliveryData extends PureComponent {
 			<FilterCountry
 				name="d_country"
 				data={countries}
-				defaultValue={order.order_deliveries.country || ''} />
+				defaultValue={order.order_deliveries === null ?
+					'' :
+					order.order_deliveries.country || ''} />
 
 			<TextField
 				name="d_city"
