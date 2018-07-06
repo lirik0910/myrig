@@ -10,7 +10,7 @@
 			<div class="border__container"></div>
 
 			<h3 class="title__container font-weight-bold news-title__container margin__collapse">
-				{{ $it->title }}
+				{{ $it->introtext }}
 			</h3>
 		</div>
 
