@@ -6,6 +6,7 @@ use App\Mail\MailClass;
 use App\Mail\OrderMessageClass;
 use App\Model\Shop\OrderLog;
 use App\Model\Shop\Order;
+use App\Model\Base\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\JsonResponse;
