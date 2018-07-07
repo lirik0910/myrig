@@ -59,7 +59,7 @@ class OrderLogController
                 Mail::to($emailTo)->send(new OrderMessageClass($order->id, $post['text']));
             }
             catch (\Exception $e) {
-                //
+                logger($e->getMessage());
             }
         }
 
