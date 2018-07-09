@@ -100,15 +100,19 @@ export function createOrder(cart = [], callback = () => {}) {
 	});
 }
 
-export function postComment(query = '') {
-	return fetch(window.server +'/note?'+ query, {
+export function postComment(query = {}) {
+	var data = new FormData();
+	data.append('json', 'test');
+
+	return fetch(window.server +'/note', {
         credentials: 'include',
         method: 'POST',
         headers: {
-            'Content-type': 'application/x-www-form-urlencoded',
+        	'Content-type': 'application/x-www-form-urlencoded',
             'X-Requested-With': 'XMLHttpRequest',
             'X-CSRF-Token': window.Base.DOMCached.csrf
-        }
+        },
+        body: query
     }).then((res) => {
         if (res.status === 200) {
             return res.json();
