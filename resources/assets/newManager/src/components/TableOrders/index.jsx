@@ -45,7 +45,7 @@ import Delete from '@material-ui/icons/Delete';
 import Create from '@material-ui/icons/Create';
 // import ContentCopy from '@material-ui/icons/ContentCopy';
 
-import { allOrders, trashOrder, postComment } from 'server/Orders.js';
+import { allOrders, trashOrder, postComment, clearOrders } from 'server/Orders.js';
 
 import styles from './styles.js';
 import { withStyles } from '@material-ui/core/styles';
@@ -336,6 +336,33 @@ class TableOrders extends PureComponent {
 			});
 	}
 
+	/**
+	 * Delete orders from trash
+	 * @fires onClick
+	 * @param {object} e
+	 */
+	handleOrderClear = (e) => {
+		let { selectedRows, page, limit, total } = this.state;
+
+		this.fetchClear = clearOrders()
+			.then((r) => {
+				if (r.message === true) {
+					this.setState({ 
+						total: 0
+					}, () => {
+						this.fetchOrders = allOrders(limit, page, this.state.query)
+							.then(this.buildDataRows.bind(this))
+							.then(() => {
+								this.setState({ 
+									total,
+									alert: false
+								});
+							});
+					});
+				}
+			});
+	}
+
 	deleteOneOrder = (e) => {
 		this.setState({ 
 			selectedRows: [e.detail], 
@@ -347,13 +374,13 @@ class TableOrders extends PureComponent {
 	}
 
 	emptyTrash = (e) => {
-		/*this.setState({ 
+		this.setState({ 
 			selectedRows: [e.detail], 
 			alert: true,
 			alertTitle: 'dialogTitleSendOrderToTrash',
 			alertText: 'emptyTrashText',
-			alertOkButton: (e) => this.handleOrderTrash(e)
-		});*/
+			alertOkButton: (e) => this.handleOrderClear(e)
+		});
 	}
 
 	/**

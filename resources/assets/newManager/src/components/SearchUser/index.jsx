@@ -40,6 +40,7 @@ class SearchUser extends PureComponent {
 
 	state = {
 		users: [],
+		value: null,
 		userId: this.props.defaultUser.id
 	}
 
@@ -58,12 +59,13 @@ class SearchUser extends PureComponent {
 		return <Fragment>
 			<InputAutoSelectDefault
 				id={formId}
+				inputedValue={this.state.value}
 				data={users.data ? users.data.map((item) => {
 					return {
 						id: item.id,
 						name: item['attributes'] ? 
-							item['attributes'].fname +' '+ item['attributes'].lname :
-							item.name
+							item['attributes'].fname +' '+ item['attributes'].lname +' ('+ item.email +')' :
+							item.name +' ('+ item.email +')'
 					}
 				}) : []}
 				field="name"
@@ -72,6 +74,8 @@ class SearchUser extends PureComponent {
 				placeholder={'placeholderUserMultiSelect'}
 				onInputChanged={(value, item) => {
 					if (String(value).length > 0) {
+						this.setState({ value });
+
 						this.props.onDataLoaded(false);
 
 						this.fetchUsers = findUsers(value)

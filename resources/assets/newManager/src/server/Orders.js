@@ -100,15 +100,19 @@ export function createOrder(cart = [], callback = () => {}) {
 	});
 }
 
-export function postComment(query = '') {
-	return fetch(window.server +'/note?'+ query, {
+export function postComment(query = {}) {
+	var data = new FormData();
+	data.append('json', 'test');
+
+	return fetch(window.server +'/note', {
         credentials: 'include',
         method: 'POST',
         headers: {
-            'Content-type': 'application/x-www-form-urlencoded',
+        	'Content-type': 'application/x-www-form-urlencoded',
             'X-Requested-With': 'XMLHttpRequest',
             'X-CSRF-Token': window.Base.DOMCached.csrf
-        }
+        },
+        body: query
     }).then((res) => {
         if (res.status === 200) {
             return res.json();
@@ -121,6 +125,24 @@ export function trashOrder(query = '', callback = () => {}) {
 	return fetch(window.server +'/order/trash?'+ query, {
 		credentials: 'include',
 		method: 'PUT',
+		headers: {
+			'Content-type': 'application/x-www-form-urlencoded',
+			'X-Requested-With': 'XMLHttpRequest',
+			'X-CSRF-Token': window.Base.DOMCached.csrf
+		}
+	}).then((res) => {
+		if (res.status === 200) {
+			callback();
+			return res.json();
+		}
+		else throw new Error(`Response server status: ${res.status}`);
+	});
+}
+
+export function clearOrders(callback = () => {}) {
+	return fetch(window.server +'/order/trash', {
+		credentials: 'include',
+		method: 'DELETE',
 		headers: {
 			'Content-type': 'application/x-www-form-urlencoded',
 			'X-Requested-With': 'XMLHttpRequest',
