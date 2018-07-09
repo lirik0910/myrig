@@ -288,7 +288,7 @@ class DbImport
                                 $orders[$order->id]['payment_type_id'] = 1;
                                // var_dump($orders[$order->id]);
                                 //die;
-                            } elseif($meta_item->meta_value == 'bacs' || $meta_item->meta_value == 'cod'){
+                            } elseif($meta_item->meta_value == 'bacs' || $meta_item->meta_value == 'cod' || $meta_item->meta_value == 'other'){
                                 $orders[$order->id]['payment_type_id'] = 2;
                             } else{
                                 $orders[$order->id]['payment_type_id'] = 2;
