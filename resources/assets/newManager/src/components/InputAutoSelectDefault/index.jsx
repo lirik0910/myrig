@@ -58,6 +58,7 @@ class InputAutoSelectDefault extends PureComponent {
 		field: 'title',
 		fieldValue: 'id',
 		defaultValue: '',
+		inputedValue: null,
 		placeholder: 'placeholderInputMultiSelect',
 		id: 'placeholder-input-auto-select',
 		onInputChanged: (value, item) => {}
@@ -81,12 +82,13 @@ class InputAutoSelectDefault extends PureComponent {
 	 */
 	getSuggestions(inputValue) {
 		let count = 0,
-			{ field, data } = this.props;
+			{ field, data, inputedValue } = this.props;
 
 		return data.filter((item) => {
+			let query = inputedValue === null ? item[field] : inputedValue;
 			const keep = 
 				(!inputValue || 
-					String(item[field]).toLowerCase().indexOf(inputValue.toLowerCase()) !== -1) && 
+					String(query).toLowerCase().indexOf(inputValue.toLowerCase()) !== -1) && 
 				count < 20;
 
 			if (keep) {

@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\EditUserRequest;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -23,13 +24,12 @@ class UserController extends Controller
 		 */
 		if (isset($params['search'])) {
 			$c = $c->where('id', $params['search'])
-                    ->orWhereHas('attributes', function ($q) use ($params){
-                        $q->where('fname', 'like', '%' . $params['search'] . '%');
-                        $q->orWhere('lname', 'like', '%' . $params['search'] . '%');
-                    })
+					->orWhereHas('attributes', function ($q) use ($params) {
+						$q->where(DB::raw('concat(user_attributes.fname," ",user_attributes.lname)'), 'like', '%' . $params['search'] . '%');
+					})
 					->orWhere('name', 'like', '%'. $params['search'] .'%')
 					->orWhere('email', 'like', '%'. $params['search'] .'%')//;
-                    ->with('attributes');
+					->with('attributes');
 		}
 
 		$c = $c->with('attributes');
@@ -106,11 +106,11 @@ class UserController extends Controller
 		$usersCount = 0;
 		$attrsCount = 0;
 		foreach($all as $one){
-		    $usersCount++;
-		    if($one->attributes){
-		        $attrsCount++;
-            }
-        }
+			$usersCount++;
+			if($one->attributes){
+				$attrsCount++;
+			}
+		}
 
 		return response()->json(['total' => $total, 'data' => $all], 200);
 	}
