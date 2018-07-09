@@ -76,6 +76,7 @@ class CellAboutOrdersTable extends PureComponent {
 
 			{email !== null && <Typography variant="subheading">{ email }</Typography>}
 			{phone !== null && <Typography variant="subheading">{ phone }</Typography>}
+			{console.log(address)}
 			{address !== null && <Typography variant="subheading">{ address }</Typography>}
 			<Typography variant="subheading">
 				<span style={{ color: delivery.color }}>{ langs['delivery_'+ delivery.title] }</span>
