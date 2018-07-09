@@ -106,7 +106,7 @@ class EditOrderProductsData extends Component {
 						}}>
 					
 						<img 
-							src={item.product.images[0] ?
+							src={ item.product && item.product.images[0] ?
 								window.uploads + item.product.images[0].name :
 								window.defaultImage} 
 							alt="icon"
@@ -122,7 +122,7 @@ class EditOrderProductsData extends Component {
 					</Grid>
 
 					<Grid item xs={12} sm={7}>
-						<Typography variant="display2">{ item.product.title }</Typography>
+						<Typography variant="display2">{ item.product ? item.product.title : item.title }</Typography>
 
 						<Typography variant="subheading">
 							{langs['txtOrderTotalSum']}: <b>{ parseFloat(item.cost).toFixed(2) }</b>
