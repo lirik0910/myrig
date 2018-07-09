@@ -138,6 +138,8 @@ class DbImport
         $order_payments_all = [];
         $order_deliveries_all = [];
 
+        $count = [];
+
         $orders = [];
         $orders_logs = [];
         $order_statuses_count = [
@@ -271,6 +273,15 @@ class DbImport
                             break;
                         case '_payment_method':
                            // cod
+                            if(!in_array($meta_item->meta_value, $order_payments_all)){
+                                $order_payments_all[$order->id] = $meta_item->meta_value;
+                            }
+                            if(isset($count[$meta_item->meta_value])){
+                                $count[$meta_item->meta_value] += 1;
+                            } else{
+                                $count[$meta_item->meta_value] = 1;
+                            }
+
                             //var_dump('cscdcsv'); die;
                             if($meta_item->meta_value == 'bitcoin' || $meta_item->meta_value == 'jetpack_custom_gateway'){
                                // var_dump($orders[$order->id]);// die;
@@ -310,9 +321,9 @@ class DbImport
                 ];
             }
         }
-
+var_dump($order_payments_all, $count);
         //$this->cartsUpdate($orders_items);
-        //die;
+        die;
         $cart = [];
 
         foreach ($orders_items as $items){

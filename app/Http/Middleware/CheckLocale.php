@@ -29,7 +29,8 @@ class CheckLocale
 	public function handle($request, Closure $next)
 	{
 		$method = $request->method();
-		if ($method === 'GET' || $method === 'POST') {
+        App::setLocale('ua');
+/*		if ($method === 'GET' || $method === 'POST') {
 			$currentHost = $request->getHttpHost();
 			$currentHostParts = explode('.', $currentHost);
 
@@ -55,7 +56,7 @@ class CheckLocale
 			if ($currentHostParts[0] && $currentHostParts[0] !== $clientLocation) {
 				return redirect(config('app.' . $clientLocation .'_domain') . '?locale=' . $clientLocation);
 			}
-		}
+		}*/
 
 		return $next($request);
 	}
